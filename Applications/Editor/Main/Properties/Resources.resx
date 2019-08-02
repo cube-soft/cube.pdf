@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -120,6 +120,9 @@
   <data name="FilterAll" xml:space="preserve">
     <value>All files</value>
   </data>
+  <data name="FilterExtract" xml:space="preserve">
+    <value>Supported files</value>
+  </data>
   <data name="FilterInsertable" xml:space="preserve">
     <value>Insertable files</value>
   </data>
@@ -171,11 +174,17 @@
   <data name="MenuCreator" xml:space="preserve">
     <value>Creator</value>
   </data>
+  <data name="MenuDestination" xml:space="preserve">
+    <value>Save path</value>
+  </data>
   <data name="MenuDetails" xml:space="preserve">
     <value>Details</value>
   </data>
   <data name="MenuDown" xml:space="preserve">
     <value>Down</value>
+  </data>
+  <data name="MenuDpi" xml:space="preserve">
+    <value>dpi</value>
   </data>
   <data name="MenuEdit" xml:space="preserve">
     <value>Edit</value>
@@ -195,6 +204,18 @@
   <data name="MenuExtract" xml:space="preserve">
     <value>Extract</value>
   </data>
+  <data name="MenuExtractAll" xml:space="preserve">
+    <value>All pages</value>
+  </data>
+  <data name="MenuExtractOthers" xml:space="preserve">
+    <value>Extract with other settings</value>
+  </data>
+  <data name="MenuExtractRange" xml:space="preserve">
+    <value>Specified range</value>
+  </data>
+  <data name="MenuExtractSelected" xml:space="preserve">
+    <value>Selected pages</value>
+  </data>
   <data name="MenuFile" xml:space="preserve">
     <value>File</value>
   </data>
@@ -206,6 +227,9 @@
   </data>
   <data name="MenuFiletype" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="MenuFormat" xml:space="preserve">
+    <value>Format</value>
   </data>
   <data name="MenuFrameOnly" xml:space="preserve">
     <value>Frame only</value>
@@ -220,7 +244,7 @@
     <value>Insert at the beginning</value>
   </data>
   <data name="MenuInsertOthers" xml:space="preserve">
-    <value>Insertion details</value>
+    <value>Insert at other position</value>
   </data>
   <data name="MenuInsertPosition" xml:space="preserve">
     <value>Insert position</value>
@@ -230,15 +254,6 @@
   </data>
   <data name="MenuLanguage" xml:space="preserve">
     <value>Language</value>
-  </data>
-  <data name="MenuLanguageAuto" xml:space="preserve">
-    <value>Auto</value>
-  </data>
-  <data name="MenuLanguageEnglish" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="MenuLanguageJapanese" xml:space="preserve">
-    <value>Japanese</value>
   </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
     <value>Last updated</value>
@@ -266,6 +281,9 @@
   </data>
   <data name="MenuOperations" xml:space="preserve">
     <value>Operations</value>
+  </data>
+  <data name="MenuOptions" xml:space="preserve">
+    <value>Options</value>
   </data>
   <data name="MenuOthers" xml:space="preserve">
     <value>Others</value>
@@ -303,17 +321,14 @@
   <data name="MenuRedo" xml:space="preserve">
     <value>Redo</value>
   </data>
-  <data name="MenuRefresh" xml:space="preserve">
+  <data name="MenuRedraw" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="MenuRemove" xml:space="preserve">
     <value>Remove</value>
   </data>
   <data name="MenuRemoveOthers" xml:space="preserve">
-    <value>Removal details</value>
-  </data>
-  <data name="MenuRemoveRange" xml:space="preserve">
-    <value>Removal range</value>
+    <value>Remove other pages</value>
   </data>
   <data name="MenuRotateLeft" xml:space="preserve">
     <value>Left</value>
@@ -345,11 +360,17 @@
   <data name="MenuSharePassword" xml:space="preserve">
     <value>Use owner password</value>
   </data>
+  <data name="MenuSplit" xml:space="preserve">
+    <value>Save as a separate file per page</value>
+  </data>
   <data name="MenuSubject" xml:space="preserve">
     <value>Subject</value>
   </data>
   <data name="MenuSummary" xml:space="preserve">
     <value>Summary</value>
+  </data>
+  <data name="MenuTarget" xml:space="preserve">
+    <value>Target pages</value>
   </data>
   <data name="MenuTitle" xml:space="preserve">
     <value>Title</value>
@@ -408,7 +429,7 @@
   <data name="MessageRangeError" xml:space="preserve">
     <value>Failed to parse the removal range.</value>
   </data>
-  <data name="MessageRemoveRange" xml:space="preserve">
+  <data name="MessageRangeExample" xml:space="preserve">
     <value>e.g. 1,2,4-7,9</value>
   </data>
   <data name="MessageSaved" xml:space="preserve">

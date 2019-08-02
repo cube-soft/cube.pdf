@@ -12,7 +12,7 @@ CubPDF Utility は、既存の PDF ファイルのページ挿入や削除、文
 各種セキュリティ機能などの設定を変更するためのソフトウェアです。
 
 CubePDF Utility を使用するためには、.NET Framework 3.5 以降が
-インストールされている必要があります（4.5.2 以降を推奨）。
+インストールされている必要があります（4.5.2 以降を強く推奨）。
 .NET Framework は、以下の URL からダウンロードして下さい。
 
 * Download .NET Framework  
@@ -20,7 +20,7 @@ CubePDF Utility を使用するためには、.NET Framework 3.5 以降が
 
 ## 利用方法
 
-まず、ファイルを開くボタンやドラッグ&ドラップを通じて、編集したい PDF ファイルを開きます。
+まず、ファイルを開くボタンやドラッグ＆ドラップを通じて、編集したい PDF ファイルを開きます。
 この際、選択した PDF ファイルに対して既にセキュリティ機能が設定されている場合、
 管理用パスワードを入力するためのダイアログボックスが表示されますので、正しいパスワードを入力して下さい。
 その後、メイン画面上で PDF ファイルに対して必要な編集を行い、「上書き保存」または「名前を付けて保存」
@@ -30,8 +30,8 @@ CubePDF Utility で編集可能なものは以下の通りです。
 
 1. ページ編集
     - 挿入 ... 選択位置/ページ先頭/ページ末尾のいずれかに PDF, PNG, JPEG, BMP ファイルを挿入します
-    - 削除 ... 選択したページ、またはページ番号を指定して該当ページを削除します
-    - 抽出 ... 選択したページ群を別の PDF ファイルとして保存します
+    - 削除 ... 選択したページ、または任意のページ群を削除します
+    - 抽出 ... 選択したページ、または任意のページ群を別のファイルとして保存します
     - 順序 ... PDF ファイルのページ順序を変更（移動）します
     - 回転 ... 選択したページを回転します
 2. 文書プロパティ
@@ -39,8 +39,9 @@ CubePDF Utility で編集可能なものは以下の通りです。
     - 作成者
     - サブタイトル
     - キーワード
-    - ページレイアウト
+    - PDF バージョン
     - アプリケーション
+    - ページレイアウト
 3. セキュリティ
     - パスワード（管理用パスワード）
     - PDF ファイルを開く際のパスワード（閲覧用パスワード）
@@ -60,17 +61,19 @@ CubePDF Utility で利用可能なショートカットキーは以下の通り�
 * Ctrl + Shit + S ... 名前を付けて保存
 * Ctrl + W ... PDF ファイルを閉じる
 * Ctrl + Q ... アプリケーションを終了
-* Insert ... 選択位置に PDF, PNG, JPEG, BMP ファイルを挿入
-* Delete or Backspace ... 選択ページを削除
+* Ctrl + I or Insert ... 選択位置に PDF, PNG, JPEG, BMP ファイルを挿入
+* Ctrl + Shift +I ... 詳細を設定して挿入
+* Ctrl + D or Delete ... 選択ページを削除
+* Ctrl + Shift + D ... 範囲を指定して削除
 * Ctrl + E ... 選択ページを抽出
+* Ctrl + Shift + E ... 詳細を設定して抽出
 * Ctrl + B ... 選択ページを 1 ページ分前に移動
 * Ctrl + F ... 選択ページを 1 ページ分後ろに移動
 * Ctrl + L ... 選択ページを左 90 度回転
 * Ctrl + R ... 選択ページを右 90 度回転
-* Ctrl + I ... 文書プロパティ編集画面を表示
+* Ctrl + M ... 文書プロパティ編集画面を表示
 * Ctrl + K ... セキュリティ編集画面を表示
 * Ctrl + A ... 全て選択
-* Ctrl + D ... 選択を解除
 * Ctrl + Z ... 元に戻す
 * Ctrl + Y ... やり直し
 * Ctrl + + ... サムネイル画像サイズを拡大
@@ -101,20 +104,34 @@ CubePDF Utility は、以下のライブラリを利用しています。
 * PDFium
     - 3-clause BSD License
     - https://pdfium.googlesource.com/pdfium/
-    - https://www.nuget.org/packages/Cube.Native.Pdfium/
+    - https://github.com/cube-soft/Cube.Native.Pdfium
     - https://www.nuget.org/packages/Cube.Native.Pdfium.Lite/
 * log4net
     - Apache License, Version 2.0
     - http://logging.apache.org/log4net/
     - https://www.nuget.org/packages/log4net/
+* Fluent.Ribbon
+    - MIT License
+    - https://fluentribbon.github.io/
+    - https://www.nuget.org/packages/Fluent.Ribbon/
+* GongSolutions.WPF.DragDrop
+    - 3-clause BSD License
+    - https://github.com/punker76/gong-wpf-dragdrop
+    - https://www.nuget.org/packages/gong-wpf-dragdrop/
 * AsyncBridge (.NET Framework 3.5 のみ)
     - MIT License
     - http://omermor.github.io/AsyncBridge/
-    - https://www.nuget.org/packages/AsyncBridge.Net35
+    - https://www.nuget.org/packages/AsyncBridge.Net35/
 
 ## バージョン履歴
 
-* 2018/04/15 version 0.5.3β
+* 2019/08/02 version 0.5.2β
+    - 詳細を設定して抽出機能を追加
+    - サムネイル画像が不明瞭な問題を改善
+    - サムネイル画像に抽出内容を表示するように修正
+    - メモリが開放されない問題を改善
+    - PDFium を Chromium 76 相当に更新
+* 2019/04/15 version 0.5.3β
     - PDF ファイルに関連付けられたアイコンを表示する時の不都合を修正
     - Ctrl クリックで複数の項目を選択する時の不都合を修正
 * 2018/12/10 version 0.5.2β

@@ -15,6 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+
 namespace Cube.Pdf.Pdfium
 {
     /* --------------------------------------------------------------------- */
@@ -26,7 +28,7 @@ namespace Cube.Pdf.Pdfium
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal abstract class PdfiumLibrary
+    internal abstract class PdfiumLibrary : DisposableBase
     {
         #region Constructors
 
@@ -56,14 +58,67 @@ namespace Cube.Pdf.Pdfium
         /// <returns>LoadException object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public LoadException GetLastError() => new LoadException(PdfiumApi.FPDF_GetLastError());
+        public PdfiumException GetLastError()
+        {
+            var src = Invoke(NativeMethods.FPDF_GetLastError);
+            return new PdfiumException(src);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified action with the global lock.
+        /// </summary>
+        ///
+        /// <param name="action">User action.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Invoke(Action action)
+        {
+            if (Disposed) throw new ObjectDisposedException(GetType().Name);
+            Lock(action);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified function with the global lock.
+        /// </summary>
+        ///
+        /// <param name="func">User function.</param>
+        ///
+        /// <returns>Returned value of the specified function.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public T Invoke<T>(Func<T> func)
+        {
+            if (Disposed) throw new ObjectDisposedException(GetType().Name);
+            lock (_core) return func();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Lock
+        ///
+        /// <summary>
+        /// Invokes the specified action with the global lock.
+        /// </summary>
+        ///
+        /// <param name="action">User action.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected void Lock(Action action) { lock (_core) action(); }
 
         #endregion
 
         #region Fields
         private static readonly DisposableOnceAction _core = new DisposableOnceAction(
-            () => PdfiumApi.FPDF_InitLibrary(),
-            e  => PdfiumApi.FPDF_DestroyLibrary()
+            () => NativeMethods.FPDF_InitLibrary(),
+            e  => NativeMethods.FPDF_DestroyLibrary()
         );
         #endregion
     }

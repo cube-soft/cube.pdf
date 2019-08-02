@@ -35,10 +35,10 @@ namespace Cube.Pdf.Itext
     /// <remarks>
     /// DocumentWriter はページ回転情報 (Page.Rotation.Delta) を
     /// DocumentReader の内部オブジェクトを変更する事によって実現します。
-    /// しかし、DocumentReader を Partial モードで生成している場合、この
-    /// 変更が無効化されるためページ回転の変更結果を反映する事ができません。
-    /// ページを回転させた場合は、Partial モードを無効化した DocumentReader
-    /// オブジェクトを指定するようにして下さい。
+    /// しかし、OpenOption.ReduceMemory が有効な状態で DocumentReader を
+    /// 生成している場合、この変更が無効化されるためページ回転の変更結果を反映する
+    /// 事ができません。ページを回転させた場合は、該当オプションを無効に設定して
+    /// 下さい。
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
@@ -114,7 +114,7 @@ namespace Cube.Pdf.Itext
             catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
             finally
             {
-                IO.TryDelete(tmp);
+                _ = IO.TryDelete(tmp);
                 Reset();
             }
         }
@@ -178,7 +178,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void Finalize(string src, string dest)
         {
-            using (var reader = ReaderFactory.Create(src))
+            using (var reader = ReaderFactory.FromPdf(src))
             using (var writer = WriterFactory.Create(dest, reader, IO))
             {
                 writer.Writer.Outlines = Bookmarks;

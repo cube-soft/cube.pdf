@@ -232,12 +232,12 @@ namespace Cube.Pdf.Converter.Tests
         {
             var v = ViewResources.ViewerOptions;
             Assert.That(v.Count, Is.EqualTo(6));
-            Assert.That(v[0].Value, Is.EqualTo(Pdf.ViewerOptions.SinglePage));
-            Assert.That(v[1].Value, Is.EqualTo(Pdf.ViewerOptions.OneColumn));
-            Assert.That(v[2].Value, Is.EqualTo(Pdf.ViewerOptions.TwoPageLeft));
-            Assert.That(v[3].Value, Is.EqualTo(Pdf.ViewerOptions.TwoPageRight));
-            Assert.That(v[4].Value, Is.EqualTo(Pdf.ViewerOptions.TwoColumnLeft));
-            Assert.That(v[5].Value, Is.EqualTo(Pdf.ViewerOptions.TwoColumnRight));
+            Assert.That(v[0].Value, Is.EqualTo(Pdf.ViewerOption.SinglePage));
+            Assert.That(v[1].Value, Is.EqualTo(Pdf.ViewerOption.OneColumn));
+            Assert.That(v[2].Value, Is.EqualTo(Pdf.ViewerOption.TwoPageLeft));
+            Assert.That(v[3].Value, Is.EqualTo(Pdf.ViewerOption.TwoPageRight));
+            Assert.That(v[4].Value, Is.EqualTo(Pdf.ViewerOption.TwoColumnLeft));
+            Assert.That(v[5].Value, Is.EqualTo(Pdf.ViewerOption.TwoColumnRight));
 
             vm.General.Language = Language.English;
             var en = ViewResources.ViewerOptions;

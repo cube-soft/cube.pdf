@@ -134,7 +134,7 @@
 
             <r:RibbonGroup>
                 <!-- **********************************************************
-                  Insesrt
+                  Insert
                 *********************************************************** -->
                 <r:RibbonSplitButton
                     Label="{Binding Ribbon.Insert.Text}"
@@ -161,12 +161,21 @@
                 <!-- **********************************************************
                   Extract
                 *********************************************************** -->
-                <r:RibbonButton
+                <r:RibbonSplitButton
                     Label="{Binding Ribbon.Extract.Text}"
                     SmallImageSource="{Binding Ribbon.Extract.SmallIcon}"
                     LargeImageSource="{Binding Ribbon.Extract.LargeIcon}"
                     IsEnabled="{Binding Ribbon.Extract.Enabled}"
-                    Command="{Binding Ribbon.Extract.Command}" />
+                    Command="{Binding Ribbon.Extract.Command}">
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.Extract.Tooltip}"
+                        Icon="{Binding Ribbon.Extract.SmallIcon}"
+                        Command="{Binding Ribbon.Extract.Command}" />
+                    <r:RibbonMenuItem
+                        Header="{Binding Ribbon.ExtractOthers.Tooltip}"
+                        Icon="{Binding Ribbon.ExtractOthers.SmallIcon}"
+                        Command="{Binding Ribbon.ExtractOthers.Command}" />
+                </r:RibbonSplitButton>
 
                 <!-- **********************************************************
                   Remove
@@ -258,14 +267,14 @@
         <r:RibbonTab Header="{Binding Ribbon.Others.Text}">
             <r:RibbonGroup>
                 <!-- **********************************************************
-                  Refresh
+                  Redraw
                 *********************************************************** -->
                 <r:RibbonButton
-                    Label="{Binding Ribbon.Refresh.Text}"
-                    SmallImageSource="{Binding Ribbon.Refresh.SmallIcon}"
-                    LargeImageSource="{Binding Ribbon.Refresh.LargeIcon}"
-                    IsEnabled="{Binding Ribbon.Refresh.Enabled}"
-                    Command="{Binding Ribbon.Refresh.Command}" />
+                    Label="{Binding Ribbon.Redraw.Text}"
+                    SmallImageSource="{Binding Ribbon.Redraw.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Redraw.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Redraw.Enabled}"
+                    Command="{Binding Ribbon.Redraw.Command}" />
             </r:RibbonGroup>
 
             <r:RibbonGroup>
@@ -295,8 +304,8 @@
                   ItemSize
                 *********************************************************** -->
                 <ComboBox
-                    ItemsSource="{Binding Data.Images.Preferences.ItemSizeOptions}"
-                    SelectedItem="{Binding Data.ItemSize.Value, Mode=TwoWay}"
+                    ItemsSource="{Binding Value.Images.Preferences.ItemSizeOptions}"
+                    SelectedItem="{Binding Value.ItemSize, Mode=TwoWay}"
                     Style="{StaticResource RibbonItemSizeStyle}" />
 
                 <!-- **********************************************************

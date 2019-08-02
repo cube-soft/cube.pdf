@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
+using Cube.Mixin.Drawing;
 using Cube.Mixin.Tasks;
 using System.Threading.Tasks;
 
@@ -31,7 +32,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PreviewFacade
+    public sealed class PreviewFacade
     {
         #region Constructors
 
@@ -46,17 +47,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="src">Source images.</param>
         /// <param name="file">Target file information.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewFacade(ImageCollection src, Information file, IDispatcher dispatcher)
+        public PreviewFacade(ImageCollection src, Entity file, Invoker invoker)
         {
-            var index = src.Selection.First;
-
-            Images   = src;
-            Bindable = new PreviewBindable(file, src[index].RawObject, dispatcher);
-
-            TaskEx.Run(() => Setup(index)).Forget();
+            Value = new PreviewBindable(src, file, invoker);
+            TaskEx.Run(() => Setup(src.Selection.First)).Forget();
         }
 
         #endregion
@@ -65,25 +62,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Bindable
+        /// Value
         ///
         /// <summary>
         /// Gets the bindable object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable Bindable { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Images
-        ///
-        /// <summary>
-        /// Gets the image collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected ImageCollection Images { get; }
+        public PreviewBindable Value { get; }
 
         #endregion
 
@@ -102,10 +88,10 @@ namespace Cube.Pdf.Editor
         {
             try
             {
-                Bindable.Busy.Value = true;
-                Bindable.Image.Value = Images.Create(index, 2.0);
+                Value.Busy  = true;
+                Value.Image = Value.Source.GetImage(index, 2.0).ToBitmapImage(true);
             }
-            finally { Bindable.Busy.Value = false; }
+            finally { Value.Busy = false; }
         }
 
         #endregion

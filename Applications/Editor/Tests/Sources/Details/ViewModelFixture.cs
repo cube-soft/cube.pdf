@@ -101,19 +101,19 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Make
         ///
         /// <summary>
-        /// Creates a new instance of the MainViewModel class and execute
-        /// the specified action.
+        /// Creates a new instance of the MainViewModel class, initalizes
+        /// some properties, and execute the specified action.
         /// </summary>
         ///
         /// <param name="callback">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Create(Action<MainViewModel> callback)
+        protected void Make(Action<MainViewModel> callback)
         {
-            using (var src = CreateMainViewModel())
+            using (var src = Create())
             {
                 var behaviors = Subscribe(src);
                 callback(src);
@@ -132,15 +132,15 @@ namespace Cube.Pdf.Editor.Tests
         ///
         /// <param name="filename">Filename of the source.</param>
         /// <param name="password">Password of the source.</param>
-        /// <param name="callback">User action.</param>
+        /// <param name="next">User action.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Open(string filename, string password, Action<MainViewModel> callback) => Create(vm =>
+        protected void Open(string filename, string password, Action<MainViewModel> next) => Make(vm =>
         {
             Source   = GetSource(filename);
             Password = password;
             vm.Test(vm.Ribbon.Open);
-            callback(vm);
+            next(vm);
         });
 
         /* ----------------------------------------------------------------- */
@@ -158,14 +158,14 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MakeArgs
+        /// Args
         ///
         /// <summary>
         /// Creates a collection with the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IEnumerable<object> MakeArgs(params object[] src) => src;
+        protected IEnumerable<object> Args(params object[] src) => src;
 
         #endregion
 
@@ -173,7 +173,7 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateMainViewModel
+        /// Create
         ///
         /// <summary>
         /// Creates a new instance of the MainViewModel class.
@@ -182,7 +182,7 @@ namespace Cube.Pdf.Editor.Tests
         /// <returns>MainViewModel object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        private MainViewModel CreateMainViewModel()
+        private MainViewModel Create()
         {
             var src = new SettingFolder(
                 Assembly.GetExecutingAssembly(),
@@ -194,10 +194,11 @@ namespace Cube.Pdf.Editor.Tests
             var dest  = new MainViewModel(src, new SynchronizationContext());
             var dummy = new BitmapImage(new Uri(GetSource("Loading.png")));
 
-            dest.Data.Images.Preferences.Dummy = dummy;
-            dest.Data.Images.Preferences.VisibleFirst = 0;
-            dest.Data.Images.Preferences.VisibleLast = 10;
+            dest.Value.Images.Preferences.Dummy = dummy;
+            dest.Value.Images.Preferences.VisibleFirst = 0;
+            dest.Value.Images.Preferences.VisibleLast = 10;
 
+            Assert.That(dest.Value.Message, Is.Empty);
             return dest;
         }
 
@@ -217,6 +218,9 @@ namespace Cube.Pdf.Editor.Tests
             src.Subscribe<SaveFileMessage  >(e => e.Value = Destination),
             src.Subscribe<PasswordViewModel>(e =>
             {
+                Assert.That(e.Title,          Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Password.Text,  Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Password.Value, Is.Null);
                 e.Password.Value = Password;
                 var dest = Password.HasValue() ? e.OK : e.Cancel;
                 Assert.That(dest.Command.CanExecute(), Is.True, dest.Text);
@@ -243,9 +247,9 @@ namespace Cube.Pdf.Editor.Tests
                 { DialogButtons.YesNoCancel, DialogStatus.Yes },
             }.TryGetValue(src.Buttons, out var dest);
 
-            this.LogDebug($"{src.Value.Quote()} ({found})");
+            this.LogDebug($"{src.Text.Quote()} ({found})");
             Assert.That(found, Is.True, $"{src.Buttons}");
-            src.Status = dest;
+            src.Value = dest;
         }
 
         #endregion

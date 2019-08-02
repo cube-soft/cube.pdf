@@ -31,10 +31,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RemoveTest
+    /// InsertTest
     ///
     /// <summary>
-    /// Tests for Remove commands and the InsertViewModel class.
+    /// Tests the Insert commands and the InsertViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -58,20 +58,20 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("Sample.jpg",  10)]
         public void Insert(string filename, int n) => Open("SampleRotation.pdf", "", vm =>
         {
-            vm.Data.Images.Skip(2).First().IsSelected = true;
+            vm.Value.Images.Skip(2).First().Selected = true;
             Source = GetSource(filename);
             Assert.That(vm.Ribbon.Insert.Command.CanExecute(), Is.True);
             vm.Ribbon.Insert.Command.Execute();
-            Assert.That(Wait.For(() => vm.Data.Count.Value == n), "Timeout (Insert)");
+            Assert.That(Wait.For(() => vm.Value.Count == n), "Timeout (Insert)");
 
-            var dest = vm.Data.Images.ToList();
+            var dest = vm.Value.Images.ToList();
             Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
             Assert.That(dest[1].RawObject.Number, Is.EqualTo(2));
             Assert.That(dest[2].RawObject.Number, Is.EqualTo(3));
             Assert.That(dest[3].RawObject.Number, Is.EqualTo(1)); // Insert
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
 
-            Destination = Get(MakeArgs(filename.Replace('.', '_')));
+            Destination = Get(Args(filename.Replace('.', '_')));
             vm.Ribbon.SaveAs.Command.Execute();
             Assert.That(Wait.For(() => IO.Exists(Destination)), "Timeout (Save)");
         });
@@ -88,9 +88,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void InsertOthers() => Open("SampleRotation.pdf", "", vm =>
         {
-            vm.Subscribe<InsertViewModel>(ivm =>
+            _ = vm.Subscribe<InsertViewModel>(ivm =>
             {
-                ivm.Subscribe<OpenFileMessage>(e => {
+                _ = ivm.Subscribe<OpenFileMessage>(e => {
                     e.Value  = new[] { GetSource("Sample.pdf") };
                     e.Cancel = false;
                 });
@@ -100,7 +100,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute(), Is.True);
             vm.Ribbon.InsertOthers.Command.Execute();
-            Assert.That(Wait.For(() => vm.Data.Count.Value == 11), "Timeout");
+            Assert.That(Wait.For(() => vm.Value.Count == 11), "Timeout");
         });
 
         /* ----------------------------------------------------------------- */
@@ -126,9 +126,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Pages     = pages,
             });
 
-            Assert.That(Wait.For(() => vm.Data.Count.Value == 11), "Timeout (Insert)");
+            Assert.That(Wait.For(() => vm.Value.Count == 11), "Timeout (Insert)");
 
-            var dest = vm.Data.Images.ToList();
+            var dest = vm.Value.Images.ToList();
 
             Assert.That(dest[ 0].RawObject.Number, Is.EqualTo(1));
             Assert.That(dest[ 1].RawObject.Number, Is.EqualTo(2));
@@ -149,53 +149,74 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ivm_Properties
+        /// Show
         ///
         /// <summary>
-        /// Executes the test to show the InsertWindow.
+        /// Tests to show the InsertWindow dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_Properties() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        public void Show() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
-            Assert.That(ivm.Data,               Is.Not.Null);
-            Assert.That(ivm.Data.Count,         Is.EqualTo(9));
-            Assert.That(ivm.Data.SelectedIndex, Is.EqualTo(-1));
+            Assert.That(ivm.Value,                 Is.Not.Null);
+            Assert.That(ivm.Value.Count,           Is.EqualTo(9));
+            Assert.That(ivm.Value.SelectedIndex,   Is.EqualTo(-1));
 
-            Assert.That(ivm.Title.Text,         Is.EqualTo("Insertion details"));
-            Assert.That(ivm.Add.Text,           Is.EqualTo("Add ..."));
-            Assert.That(ivm.Preview.Text,       Is.EqualTo("Preview"));
-            Assert.That(ivm.Up.Text,            Is.EqualTo("Up"));
-            Assert.That(ivm.Down.Text,          Is.EqualTo("Down"));
-            Assert.That(ivm.Remove.Text,        Is.EqualTo("Remove"));
-            Assert.That(ivm.Clear.Text,         Is.EqualTo("Clear"));
-            Assert.That(ivm.OK.Text,            Is.EqualTo("OK"));
-            Assert.That(ivm.OK.Command,         Is.Not.Null);
-            Assert.That(ivm.Cancel.Text,        Is.EqualTo("Cancel"));
-            Assert.That(ivm.Cancel.Command,     Is.Not.Null);
-            Assert.That(ivm.DragAdd,            Is.Not.Null);
-            Assert.That(ivm.DragMove,           Is.Not.Null);
+            Assert.That(ivm.Title,                 Is.EqualTo("Insertion details"));
+            Assert.That(ivm.OK.Text,               Is.EqualTo("OK"));
+            Assert.That(ivm.OK.Command,            Is.Not.Null);
+            Assert.That(ivm.Cancel.Text,           Is.EqualTo("Cancel"));
+            Assert.That(ivm.Cancel.Command,        Is.Not.Null);
 
-            var src = ivm.Data.Files[0];
-            Assert.That(ivm.Data.Files.Count,   Is.EqualTo(4));
-            Assert.That(src.Name,               Is.EqualTo("Sample.pdf"));
-            Assert.That(src.FullName,           Does.EndWith("Sample.pdf"));
-            Assert.That(src.Length,             Is.AtLeast(60000));
-            Assert.That(src.LastWriteTime,      Is.Not.EqualTo(DateTime.MinValue));
-            Assert.That(src.Icon,               Is.Not.Null);
-            Assert.That(src.IsSelected,         Is.False);
+            Assert.That(ivm.Add.Text,              Is.EqualTo("Add ..."));
+            Assert.That(ivm.Add.Command,           Is.Not.Null);
+            Assert.That(ivm.Preview.Text,          Is.EqualTo("Preview"));
+            Assert.That(ivm.Preview.Command,       Is.Not.Null);
+            Assert.That(ivm.Up.Text,               Is.EqualTo("Up"));
+            Assert.That(ivm.Up.Command,            Is.Not.Null);
+            Assert.That(ivm.Down.Text,             Is.EqualTo("Down"));
+            Assert.That(ivm.Down.Command,          Is.Not.Null);
+            Assert.That(ivm.Remove.Text,           Is.EqualTo("Remove"));
+            Assert.That(ivm.Remove.Command,        Is.Not.Null);
+            Assert.That(ivm.Clear.Text,            Is.EqualTo("Clear"));
+            Assert.That(ivm.Clear.Command,         Is.Not.Null);
+            Assert.That(ivm.FileName.Text,         Is.EqualTo("Filename"));
+            Assert.That(ivm.FileName.Command,      Is.Null);
+            Assert.That(ivm.FileType.Text,         Is.EqualTo("Type"));
+            Assert.That(ivm.FileType.Command,      Is.Null);
+            Assert.That(ivm.FileLength.Text,       Is.EqualTo("Filesize"));
+            Assert.That(ivm.FileLength.Command,    Is.Null);
+            Assert.That(ivm.LastWriteTime.Text,    Is.EqualTo("Last updated"));
+            Assert.That(ivm.LastWriteTime.Command, Is.Null);
+            Assert.That(ivm.DragAdd,               Is.Not.Null);
+            Assert.That(ivm.DragMove,              Is.Not.Null);
 
-            var pos = ivm.Position;
-            Assert.That(pos.Main.Text,                Is.EqualTo("Insert position"));
-            Assert.That(pos.Main.Command,             Is.Not.Null);
-            Assert.That(pos.First.Text,               Is.EqualTo("Beginning"));
-            Assert.That(pos.Last.Text,                Is.EqualTo("End"));
-            Assert.That(pos.Selected.Text,            Is.EqualTo("Selected position"));
-            Assert.That(pos.Selected.Value,           Is.False);
-            Assert.That(pos.UserSpecified.Text,       Is.EqualTo("Behind the number of"));
-            Assert.That(pos.UserSpecified.Value,      Is.EqualTo(1));
-            Assert.That(pos.UserSpecifiedSuffix.Text, Is.EqualTo("/ 9 pages"));
+            var file = ivm.Value.Files[0];
+            Assert.That(ivm.Value.Files.Count,     Is.EqualTo(4));
+            Assert.That(file.Name,                 Is.EqualTo("Sample.pdf"));
+            Assert.That(file.FullName,             Does.EndWith("Sample.pdf"));
+            Assert.That(file.Length,               Is.AtLeast(60000));
+            Assert.That(file.LastWriteTime,        Is.Not.EqualTo(DateTime.MinValue));
+            Assert.That(file.Icon,                 Is.Not.Null);
+            Assert.That(file.Selected,             Is.False);
+
+            var it = ivm.Position;
+            Assert.That(it.Select.Text,            Is.EqualTo("Insert position"));
+            Assert.That(it.Select.Command,         Is.Not.Null);
+            Assert.That(it.First.Text,             Is.EqualTo("Beginning"));
+            Assert.That(it.First.Command,          Is.Null);
+            Assert.That(it.Last.Text,              Is.EqualTo("End"));
+            Assert.That(it.Last.Command,           Is.Null);
+            Assert.That(it.SelectedIndex.Text,     Is.EqualTo("Selected position"));
+            Assert.That(it.SelectedIndex.Value,    Is.EqualTo(-1));
+            Assert.That(it.SelectedIndex.Command,  Is.Null);
+            Assert.That(it.UserIndex.Text,         Is.EqualTo("Behind the number of"));
+            Assert.That(it.UserIndex.Value,        Is.EqualTo(1));
+            Assert.That(it.UserIndex.Command,      Is.Null);
+            Assert.That(it.Count.Text,             Is.EqualTo("/ 9 pages"));
+            Assert.That(it.Count.Value,            Is.EqualTo(9));
+            Assert.That(it.Count.Command,          Is.Null);
 
             Assert.That(ivm.Cancel.Command.CanExecute(), Is.True);
             ivm.Cancel.Command.Execute();
@@ -203,104 +224,103 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ivm_SelectClear
+        /// SelectClear
         ///
         /// <summary>
-        /// Executes the test to clear the selection in the InsertWindow.
+        /// Tests to clear the selection in the InsertWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_SelectClear() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        public void SelectClear() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
-            Assert.That(ivm.Data.Selection.Count, Is.EqualTo(0));
-            ivm.Data.Files[0].IsSelected = true;
-            Assert.That(ivm.Data.Selection.Count, Is.EqualTo(1));
+            Assert.That(ivm.Value.Selection.Count, Is.EqualTo(0));
+            ivm.Value.Files[0].Selected = true;
+            Assert.That(ivm.Value.Selection.Count, Is.EqualTo(1));
             ivm.SelectClear.Execute();
-            Assert.That(ivm.Data.Selection.Count, Is.EqualTo(0));
+            Assert.That(ivm.Value.Selection.Count, Is.EqualTo(0));
         });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ivm_Clear
+        /// Clear
         ///
         /// <summary>
-        /// Executes the test to clear items in the InsertWindow.
+        /// Tests to clear items in the InsertWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_Clear() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        public void Clear() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
             Assert.That(ivm.Clear.Command.CanExecute(), Is.True);
             ivm.Clear.Command.Execute();
-            Assert.That(ivm.Data.Files.Count, Is.EqualTo(0));
+            Assert.That(ivm.Value.Files.Count, Is.EqualTo(0));
             ivm.Cancel.Command.Execute();
         });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ivm_Remove
+        /// Remove
         ///
         /// <summary>
-        /// Executes the test to remove the selected item in the
-        /// InsertWindow.
+        /// Tests to remove the selected item in the InsertWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_Remove() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        public void Remove() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
             Assert.That(ivm.Remove.Command.CanExecute(), Is.False);
-            ivm.Data.Files[0].IsSelected = true;
+            ivm.Value.Files[0].Selected = true;
             Assert.That(ivm.Remove.Command.CanExecute(), Is.True);
             ivm.Remove.Command.Execute();
-            Assert.That(ivm.Data.Files.Count, Is.EqualTo(3));
+            Assert.That(ivm.Value.Files.Count, Is.EqualTo(3));
             ivm.Cancel.Command.Execute();
         });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ivm_Move
+        /// Move
         ///
         /// <summary>
-        /// Executes the test to Move the selected item in the InsertWindow.
+        /// Tests to Move the selected item in the InsertWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_Move() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        public void Move() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
             Assert.That(ivm.Down.Command.CanExecute(), Is.False);
-            ivm.Data.Files[0].IsSelected = true;
+            ivm.Value.Files[0].Selected = true;
             Assert.That(ivm.Down.Command.CanExecute(), Is.True);
             ivm.Down.Command.Execute();
-            Assert.That(ivm.Data.Files[0].Name, Is.EqualTo("SampleAes128.pdf"));
-            Assert.That(ivm.Data.Files[1].Name, Is.EqualTo("Sample.pdf"));
+            Assert.That(ivm.Value.Files[0].Name, Is.EqualTo("SampleAes128.pdf"));
+            Assert.That(ivm.Value.Files[1].Name, Is.EqualTo("Sample.pdf"));
             ivm.Cancel.Command.Execute();
         });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ivm_DragUp
+        /// DragUp
         ///
         /// <summary>
-        /// Executes the test to move the selected items through the
-        /// Drag&amp;Drop operation in the InsertWindow.
+        /// Tests to move the selected items through the Drag&amp;Drop
+        /// operation in the InsertWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_DragUp() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        public void DragUp() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
-            ivm.Data.Files[2].IsSelected = true;
-            ivm.Data.Files[3].IsSelected = true;
+            ivm.Value.Files[2].Selected = true;
+            ivm.Value.Files[3].Selected = true;
 
             var obj = new MockDropInfo
             {
-                DragInfo    = new MockDragInfo(ivm.Data.Files[3], 3),
-                Data        = ivm.Data.Files[3],
-                TargetItem  = ivm.Data.Files[1],
+                DragInfo    = new MockDragInfo(ivm.Value.Files[3], 3),
+                Data        = ivm.Value.Files[3],
+                TargetItem  = ivm.Value.Files[1],
                 InsertIndex = 1,
             };
 
@@ -315,25 +335,25 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ivm_DragDown
+        /// DragDown
         ///
         /// <summary>
-        /// Executes the test to move the selected items through the
-        /// Drag&amp;Drop operation in the InsertWindow.
+        /// Tests to move the selected items through the Drag&amp;Drop
+        /// operation in the InsertWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_DragDown() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        public void DragDown() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
-            ivm.Data.Files[0].IsSelected = true;
-            ivm.Data.Files[2].IsSelected = true;
+            ivm.Value.Files[0].Selected = true;
+            ivm.Value.Files[2].Selected = true;
 
             var obj = new MockDropInfo
             {
-                DragInfo    = new MockDragInfo(ivm.Data.Files[0], 0),
-                Data        = ivm.Data.Files[0],
-                TargetItem  = ivm.Data.Files[2],
+                DragInfo    = new MockDragInfo(ivm.Value.Files[0], 0),
+                Data        = ivm.Value.Files[0],
+                TargetItem  = ivm.Value.Files[2],
                 InsertIndex = 2,
             };
 
@@ -343,7 +363,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ivm_DragCancel
+        /// DragCancel
         ///
         /// <summary>
         /// Confirms the behavior when the dragged index equals to the
@@ -352,15 +372,15 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Ivm_DragCancel() => CreateIvm("SampleRotation.pdf", "", 9, ivm =>
+        public void DragCancel() => CreateIvm("SampleRotation.pdf", "", ivm =>
         {
-            ivm.Data.Files[2].IsSelected = true;
+            ivm.Value.Files[2].Selected = true;
 
             var obj = new MockDropInfo
             {
-                DragInfo    = new MockDragInfo(ivm.Data.Files[2], 2),
-                Data        = ivm.Data.Files[2],
-                TargetItem  = ivm.Data.Files[2],
+                DragInfo    = new MockDragInfo(ivm.Value.Files[2], 2),
+                Data        = ivm.Value.Files[2],
+                TargetItem  = ivm.Value.Files[2],
                 InsertIndex = 2,
             };
 
@@ -390,13 +410,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void CreateIvm(string filename, string password, int n,
-            Action<InsertViewModel> action) => Open(filename, password, vm =>
+        private void CreateIvm(string filename, string password, Action<InsertViewModel> action) =>
+            Open(filename, password, vm =>
         {
             var cts = new CancellationTokenSource();
-            vm.Subscribe<InsertViewModel>(ivm =>
+            _ = vm.Subscribe<InsertViewModel>(ivm =>
             {
-                ivm.Subscribe<OpenFileMessage>(e => {
+                _ = ivm.Subscribe<OpenFileMessage>(e => {
                     e.Cancel = false;
                     e.Value  = new[]
                     {
@@ -412,7 +432,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 cts.Cancel();
             });
 
-            vm.Data.Settings.Language = Language.English;
+            vm.Value.Settings.Language = Language.English;
             Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute(), Is.True);
             vm.Ribbon.InsertOthers.Command.Execute();
             Assert.That(Wait.For(cts.Token), "Timeout");

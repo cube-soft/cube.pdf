@@ -114,7 +114,8 @@ namespace Cube.Pdf.Converter
                 writer.Set(value.Metadata);
                 writer.Set(value.Encryption);
                 Add(writer, value.Destination, SaveOption.MergeTail);
-                writer.Add(new DocumentReader(src, string.Empty, false, io));
+                var options = new OpenOption { IO = io, SaveMemory = false };
+                writer.Add(new DocumentReader(src, string.Empty, options));
                 Add(writer, value.Destination, SaveOption.MergeHead);
                 writer.Save(tmp);
             }
@@ -163,11 +164,12 @@ namespace Cube.Pdf.Converter
 
             if (value.SaveOption != so || !io.Exists(path)) return;
 
+            var options  = new OpenOption { IO = io, SaveMemory = true };
             var password = value.Encryption.Enabled ?
                            value.Encryption.OwnerPassword :
                            string.Empty;
 
-            src.Add(new DocumentReader(path, password, true, io));
+            src.Add(new DocumentReader(path, password, options));
         }
 
         /* ----------------------------------------------------------------- */

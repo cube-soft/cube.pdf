@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileItem : ObservableBase, IListItem
+    public sealed class FileItem : ObservableBase, IListItem
     {
         #region Constructors
 
@@ -54,12 +54,12 @@ namespace Cube.Pdf.Editor
         {
             _selection = selection;
 
-            var info = io.Get(src);
-            Name          = info.Name;
-            FullName      = info.FullName;
-            Length        = info.Length;
-            LastWriteTime = info.LastWriteTime;
-            Icon          = info.GetIconImage(IconSize.Small);
+            var fi = io.Get(src);
+            Name          = fi.Name;
+            FullName      = fi.FullName;
+            Length        = fi.Length;
+            LastWriteTime = fi.LastWriteTime;
+            Icon          = fi.GetIconSource(IconSize.Small);
         }
 
         #endregion
@@ -93,7 +93,7 @@ namespace Cube.Pdf.Editor
         /// Length
         ///
         /// <summary>
-        /// Gets the filesize.
+        /// Gets the file-size.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -123,14 +123,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IsSelected
+        /// Selected
         ///
         /// <summary>
         /// Gets or sets the value indicating whether the item is selected.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool IsSelected
+        public bool Selected
         {
             get => _selected;
             set
@@ -164,7 +164,7 @@ namespace Cube.Pdf.Editor
         {
             if (disposing)
             {
-                IsSelected = false;
+                Selected = false;
                 _selection = null;
             }
         }

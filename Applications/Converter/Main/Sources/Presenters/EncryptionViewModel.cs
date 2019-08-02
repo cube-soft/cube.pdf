@@ -32,7 +32,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class EncryptionViewModel : ViewModelBase
+    public sealed class EncryptionViewModel : Presentable<Encryption>
     {
         #region Constructors
 
@@ -51,10 +51,9 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public EncryptionViewModel(Encryption model, Aggregator aggregator,
-            SynchronizationContext context) : base(aggregator, context)
+            SynchronizationContext context) : base(model, aggregator, context)
         {
-            _model = model;
-            _model.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Facade.PropertyChanged += (s, e) => OnPropertyChanged(e);
         }
 
         #endregion
@@ -72,8 +71,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Enabled
         {
-            get => _model.Enabled;
-            set => _model.Enabled = value;
+            get => Facade.Enabled;
+            set => Facade.Enabled = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -87,8 +86,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string OwnerPassword
         {
-            get => _model.OwnerPassword;
-            set => _model.OwnerPassword = value;
+            get => Facade.OwnerPassword;
+            set => Facade.OwnerPassword = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -113,8 +112,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string UserPassword
         {
-            get => _model.UserPassword;
-            set => _model.UserPassword = value;
+            get => Facade.UserPassword;
+            set => Facade.UserPassword = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -140,12 +139,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool OpenWithPassword
         {
-            get => _model.OpenWithPassword;
+            get => Facade.OpenWithPassword;
             set
             {
-                _model.OpenWithPassword = value;
-                RaisePropertyChanged(nameof(EnableUserPassword));
-                RaisePropertyChanged(nameof(EnablePermission));
+                Facade.OpenWithPassword = value;
+                Refresh(nameof(EnableUserPassword), nameof(EnablePermission));
             }
         }
 
@@ -161,15 +159,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool UseOwnerPassword
         {
-            get => _useOwnerPassword;
-            set
-            {
-                if (SetProperty(ref _useOwnerPassword, value))
-                {
-                    RaisePropertyChanged(nameof(EnableUserPassword));
-                    RaisePropertyChanged(nameof(EnablePermission));
-                }
-            }
+            get => GetProperty<bool>();
+            set { if (SetProperty(value)) Refresh(nameof(EnableUserPassword), nameof(EnablePermission)); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -212,8 +203,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowPrint
         {
-            get => _model.Permission.Print.IsAllowed();
-            set => Update(() => _model.Permission.Print = GetMethod(value));
+            get => Facade.Permission.Print.IsAllowed();
+            set => Update(() => Facade.Permission.Print = GetPermission(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -228,8 +219,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowCopy
         {
-            get => _model.Permission.CopyContents.IsAllowed();
-            set => Update(() => _model.Permission.CopyContents = GetMethod(value));
+            get => Facade.Permission.CopyContents.IsAllowed();
+            set => Update(() => Facade.Permission.CopyContents = GetPermission(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -244,8 +235,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowInputForm
         {
-            get => _model.Permission.InputForm.IsAllowed();
-            set => Update(() => _model.Permission.InputForm = GetMethod(value));
+            get => Facade.Permission.InputForm.IsAllowed();
+            set => Update(() => Facade.Permission.InputForm = GetPermission(value));
         }
 
         /* ----------------------------------------------------------------- */
@@ -260,11 +251,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowModify
         {
-            get => _model.Permission.ModifyContents.IsAllowed();
+            get => Facade.Permission.ModifyContents.IsAllowed();
             set => Update(() =>
             {
-                _model.Permission.ModifyContents    = GetMethod(value);
-                _model.Permission.ModifyAnnotations = GetMethod(value);
+                Facade.Permission.ModifyContents    = GetPermission(value);
+                Facade.Permission.ModifyAnnotations = GetPermission(value);
             });
         }
 
@@ -311,26 +302,21 @@ namespace Cube.Pdf.Converter
         private void Update(Action action, [CallerMemberName] string name = null)
         {
             action();
-            RaisePropertyChanged(name);
+            Refresh(name);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetMethod
+        /// GetPermission
         ///
         /// <summary>
         /// Gets the permission value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PermissionValue GetMethod(bool allow) =>
+        private PermissionValue GetPermission(bool allow) =>
             allow ? PermissionValue.Allow : PermissionValue.Deny;
 
-        #endregion
-
-        #region Fields
-        private readonly Encryption _model;
-        private bool _useOwnerPassword;
         #endregion
     }
 }

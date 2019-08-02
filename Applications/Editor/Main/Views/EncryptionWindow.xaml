@@ -27,7 +27,7 @@
     xmlns:my="clr-namespace:Cube.Pdf.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="{Binding Title.Text}"
+    Title="{Binding Title}"
     Height="520"
     Width="500"
     FontFamily="Meiryo UI"

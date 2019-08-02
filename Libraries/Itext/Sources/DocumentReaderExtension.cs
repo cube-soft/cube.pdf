@@ -16,9 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using iTextSharp.text.pdf;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 
 namespace Cube.Pdf.Itext
@@ -50,14 +48,8 @@ namespace Cube.Pdf.Itext
         /// <returns>Collection of embedded images.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Image> GetEmbeddedImages(this DocumentReader src, int pagenum)
-        {
-            var core = src.RawObject as PdfReader;
-            Debug.Assert(core != null);
-            var dest = new EmbeddedImageCollection();
-            core.GetContentParser().ProcessContent(pagenum, dest);
-            return dest;
-        }
+        public static IEnumerable<Image> GetEmbeddedImages(this DocumentReader src, int pagenum) =>
+            src.Core.GetContentParser().ProcessContent(pagenum, new EmbeddedImageCollection());
 
         #endregion
     }

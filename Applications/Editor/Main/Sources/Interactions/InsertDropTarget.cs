@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertDropTarget : IDropTarget
+    public sealed class InsertDropTarget : IDropTarget
     {
         #region Constructors
 

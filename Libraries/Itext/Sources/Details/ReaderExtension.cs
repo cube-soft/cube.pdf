@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
@@ -86,7 +87,7 @@ namespace Cube.Pdf.Itext
             Keywords = src.Info.TryGetValue("Keywords", out var s3) ? s3 : string.Empty,
             Creator  = src.Info.TryGetValue("Creator",  out var s4) ? s4 : string.Empty,
             Producer = src.Info.TryGetValue("Producer", out var s5) ? s5 : string.Empty,
-            Options  = ViewerOptionsFactory.Create(src.SimpleViewerPreferences),
+            Options  = ViewerOptionFactory.Create(src.SimpleViewerPreferences),
         };
 
         /* ----------------------------------------------------------------- */
@@ -105,14 +106,17 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static Encryption GetEncryption(this PdfReader src, PdfFile file)
         {
-            if (file.FullAccess && string.IsNullOrEmpty(file.Password)) return new Encryption();
+            if (file.FullAccess && !file.Password.HasValue()) return new Encryption();
 
             var password = src.GetUserPassword(file);
+            var value    = (uint)src.Permissions;
+            src.LogDebug($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
+
             return new Encryption
             {
                 Enabled          = true,
                 Method           = src.GetEncryptionMethod(),
-                Permission       = new Permission(src.Permissions),
+                Permission       = new Permission(value),
                 OwnerPassword    = file.FullAccess ? file.Password : string.Empty,
                 UserPassword     = password,
                 OpenWithPassword = password.HasValue(),
@@ -132,18 +136,14 @@ namespace Cube.Pdf.Itext
         /// <returns>Encryption method.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static EncryptionMethod GetEncryptionMethod(this PdfReader src)
+        public static EncryptionMethod GetEncryptionMethod(this PdfReader src) =>
+            new Dictionary<int, EncryptionMethod>
         {
-            var dic = new Dictionary<int, EncryptionMethod>
-            {
-                { PdfWriter.STANDARD_ENCRYPTION_40,  EncryptionMethod.Standard40 },
-                { PdfWriter.STANDARD_ENCRYPTION_128, EncryptionMethod.Standard128 },
-                { PdfWriter.ENCRYPTION_AES_128,      EncryptionMethod.Aes128 },
-                { PdfWriter.ENCRYPTION_AES_256,      EncryptionMethod.Aes256 },
-            };
-
-            return dic.TryGetValue(src.GetCryptoMode(), out var dest) ? dest : EncryptionMethod.Unknown;
-        }
+            { PdfWriter.STANDARD_ENCRYPTION_40,  EncryptionMethod.Standard40 },
+            { PdfWriter.STANDARD_ENCRYPTION_128, EncryptionMethod.Standard128 },
+            { PdfWriter.ENCRYPTION_AES_128,      EncryptionMethod.Aes128 },
+            { PdfWriter.ENCRYPTION_AES_256,      EncryptionMethod.Aes256 },
+        }.TryGetValue(src.GetCryptoMode(), out var dest) ? dest : EncryptionMethod.Unknown;
 
         /* ----------------------------------------------------------------- */
         ///

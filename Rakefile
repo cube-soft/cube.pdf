@@ -49,7 +49,7 @@ COPIES = {
         "Applications/Converter/Tests",
         "Applications/Converter/Main"
     ],
-    "Cube.Native.Pdfium.Lite/1.0.3770" => [
+    "Cube.Native.Pdfium.Lite/1.0.3809.1" => [
         "Libraries/Tests",
         "Applications/Editor/Tests",
         "Applications/Editor/Main"
@@ -66,9 +66,9 @@ TEST  = "../packages/NUnit.ConsoleRunner/3.10.0/tools/nunit3-console.exe"
 # --------------------------------------------------------------------------- #
 # clean
 # --------------------------------------------------------------------------- #
-CLEAN.include("#{PROJECT}.*.nupkg")
-CLEAN.include("#{LIB}/cube.*")
 CLEAN.include(["bin", "obj"].map{ |e| "**/#{e}" })
+CLEAN.include("#{PROJECT}.*.nupkg")
+CLOBBER.include("#{LIB}/cube.*")
 
 # --------------------------------------------------------------------------- #
 # default
@@ -99,7 +99,7 @@ desc "Build projects in the current branch."
 task :build, [:platform] do |_, e|
     e.with_defaults(:platform => PLATFORMS[0])
     Rake::Task[:restore].execute
-sh(%(#{BUILD} -p:Platform="#{e.platform}" #{MAIN}.sln))
+    sh(%(#{BUILD} -p:Platform="#{e.platform}" #{MAIN}.sln))
 end
 
 # --------------------------------------------------------------------------- #

@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Mixin.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -34,7 +33,7 @@ namespace Cube.Pdf.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : ViewModelBase<MainFacade>
+    public sealed class MainViewModel : Presentable<MainFacade>
     {
         #region Constructors
 
@@ -122,7 +121,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open() => Send(MessageFactory.CreateForOpen(), e => Facade.Open(e.First())).Forget();
+        public void Open() => Send(MessageFactory.CreateForOpen(), e => Facade.Open(e.First()));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -133,7 +132,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach() => Send(MessageFactory.CreateForAttach(), e => Facade.Attach(e)).Forget();
+        public void Attach() => Send(MessageFactory.CreateForAttach(), e => Facade.Attach(e));
 
         /* ----------------------------------------------------------------- */
         ///

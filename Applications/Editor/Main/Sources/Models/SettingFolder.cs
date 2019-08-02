@@ -35,7 +35,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingFolder : SettingFolder<SettingValue>
+    public sealed class SettingFolder : SettingFolder<SettingValue>
     {
         #region Constructors
 

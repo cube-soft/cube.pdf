@@ -18,15 +18,10 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.Environment;
-using Cube.Mixin.Generics;
 using Cube.Mixin.Observing;
-using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using Cube.Xui;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Input;
@@ -42,7 +37,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainViewModel : ViewModelBase
+    public sealed class MainViewModel : MainViewModelBase
     {
         #region Constructors
 
@@ -70,19 +65,20 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingFolder src, SynchronizationContext context) :
-            base(new Aggregator(), context)
-        {
-            var recent   = Environment.SpecialFolder.Recent.GetName();
-            var mon      = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO, GetDispatcher(false));
-            var password = new Query<string>(e => Send(new PasswordViewModel(e, src.IO, context)));
+        public MainViewModel(SettingFolder src, SynchronizationContext context) : base(
+            new MainFacade(src, context),
+            new Aggregator(),
+            context
+        ) {
+            var recent = Environment.SpecialFolder.Recent.GetName();
+            var mon    = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO, GetInvoker(false));
 
-            Model  = new MainFacade(src, password, context);
-            Ribbon = new RibbonViewModel(Model.Bindable, Aggregator, context);
+            Ribbon = new RibbonViewModel(Facade, Aggregator, context);
             Recent = new RecentViewModel(mon, Aggregator, context);
+            Value.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
+            Recent.Open = GetOpenLinkCommand();
 
-            SetCommands();
-            Track(() => Model.Setup(App.Arguments));
+            Track(() => Facade.Setup(App.Arguments));
         }
 
         #endregion
@@ -91,21 +87,21 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
+        /// Value
         ///
         /// <summary>
         /// Gets data for binding to the MainWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable Data => Model.Bindable;
+        public MainBindable Value => Facade.Value;
 
         /* ----------------------------------------------------------------- */
         ///
         /// Ribbon
         ///
         /// <summary>
-        /// Ribbon の ViewModel を取得します。
+        /// Gets the ViewModel for the Ribbon components.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -122,17 +118,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RecentViewModel Recent { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Model
-        ///
-        /// <summary>
-        /// Model オブジェクトを取得します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected MainFacade Model { get; }
-
         #endregion
 
         #region Commands
@@ -147,9 +132,9 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand Open => Get(() => new DelegateCommand<string[]>(
-            e => Track(() => Model.Open(e)),
-            e => !Data.Busy.Value && Model.GetFirst(e).HasValue()
-        ).Associate(Data.Busy));
+            e => Track(() => Facade.Open(e.FirstPdf())),
+            e => !Value.Busy && e.FirstPdf().HasValue()
+        ).Associate(Value, nameof(Value.Busy)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -161,10 +146,10 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand InsertOrMove => Get(() => new DelegateCommand<DragDropObject>(
-            e => Track(() => Model.InsertOrMove(e)),
-            e => !Data.Busy.Value && Data.IsOpen() &&
+            e => Track(() => Facade.InsertOrMove(e)),
+            e => !Value.Busy && Value.Source != null &&
                  (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0)
-        ).Associate(Data.Busy).Associate(Data.Source));
+        ).Associate(Value, nameof(Value.Busy), nameof(Value.Source)));
 
         #endregion
 
@@ -187,352 +172,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                Model.Dispose();
-                Ribbon.Dispose();
-            }
+            try { if (disposing) Ribbon.Dispose(); }
+            finally { base.Dispose(disposing); }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetCommands
-        ///
-        /// <summary>
-        /// Sets commands of the MainWindow.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetCommands()
-        {
-            Recent.Open                  = IsLink();
-            Ribbon.Open.Command          = Any(() => PostOpen(e => Model.Open(e)));
-            Ribbon.Close.Command         = Close();
-            Ribbon.Save.Command          = IsOpen(() => Track(() => Model.Overwrite()));
-            Ribbon.SaveAs.Command        = IsOpen(() => PostSave(e => Model.Save(e)));
-            Ribbon.Preview.Command       = IsItem(() => PostPreview());
-            Ribbon.Select.Command        = IsOpen(() => TrackSync(() => Model.Select()));
-            Ribbon.SelectAll.Command     = IsOpen(() => TrackSync(() => Model.Select(true)));
-            Ribbon.SelectFlip.Command    = IsOpen(() => TrackSync(() => Model.Flip()));
-            Ribbon.SelectClear.Command   = IsOpen(() => TrackSync(() => Model.Select(false)));
-            Ribbon.Insert.Command        = IsItem(() => PostInsert(e => Model.Insert(e)));
-            Ribbon.InsertFront.Command   = IsOpen(() => PostInsert(e => Model.Insert(0, e)));
-            Ribbon.InsertBack.Command    = IsOpen(() => PostInsert(e => Model.Insert(int.MaxValue, e)));
-            Ribbon.InsertOthers.Command  = IsOpen(() => PostInsert());
-            Ribbon.Extract.Command       = IsItem(() => PostSave(e => Model.Extract(e)));
-            Ribbon.Remove.Command        = IsItem(() => TrackSync(() => Model.Remove()));
-            Ribbon.RemoveOthers.Command  = IsOpen(() => PostRemove());
-            Ribbon.MovePrevious.Command  = IsItem(() => TrackSync(() => Model.Move(-1)));
-            Ribbon.MoveNext.Command      = IsItem(() => TrackSync(() => Model.Move(1)));
-            Ribbon.RotateLeft.Command    = IsItem(() => TrackSync(() => Model.Rotate(-90)));
-            Ribbon.RotateRight.Command   = IsItem(() => TrackSync(() => Model.Rotate(90)));
-            Ribbon.Metadata.Command      = IsOpen(() => PostMetadata());
-            Ribbon.Encryption.Command    = IsOpen(() => PostEncryption());
-            Ribbon.Refresh.Command       = IsOpen(() => TrackSync(() => Model.Refresh()));
-            Ribbon.Undo.Command          = IsUndo();
-            Ribbon.Redo.Command          = IsRedo();
-            Ribbon.ZoomIn.Command        = Any(() => TrackSync(() => Model.Zoom(1)));
-            Ribbon.ZoomOut.Command       = Any(() => TrackSync(() => Model.Zoom(-1)));
-            Ribbon.Setting.Command       = Any(() => PostSetting());
-            Ribbon.Exit.Command          = Any(() => Send<CloseMessage>());
-        }
-
-        #region Factory
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Any
-        ///
-        /// <summary>
-        /// Creates a command that can execute at any time.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand Any(Action action) => new DelegateCommand(action,
-            () => !Data.Busy.Value
-        ).Associate(Data.Busy);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Close
-        ///
-        /// <summary>
-        /// Creates a close command.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand Close() => new DelegateCommand<CancelEventArgs>(
-            e => {
-                if (!Data.Modified.Value) TrackSync(() => Model.Close(false));
-                else
-                {
-                    var msg = MessageFactory.CreateOverwriteWarn();
-                    Send(msg);
-                    PostClose(e, msg.Status);
-                }
-            },
-            e => Data.IsOpen() && (e != null || !Data.Busy.Value)
-        )
-        .Associate(Data.Busy)
-        .Associate(Data.Source);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsOpen
-        ///
-        /// <summary>
-        /// Creates a command that can execute when a document is open.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand IsOpen(Action action) => new DelegateCommand(action,
-            () => !Data.Busy.Value && Data.IsOpen()
-        )
-        .Associate(Data.Busy)
-        .Associate(Data.Source);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsItem
-        ///
-        /// <summary>
-        /// Creates a command that can execute when any items are
-        /// selected.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand IsItem(Action action) => new DelegateCommand(action,
-            () => !Data.Busy.Value && Data.IsOpen() && Data.Images.Selection.Count > 0
-        )
-        .Associate(Data.Busy)
-        .Associate(Data.Source)
-        .Associate(Data.Images.Selection);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsUndo
-        ///
-        /// <summary>
-        /// Creates a command that can execute when undo-history items
-        /// exist.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand IsUndo() => new DelegateCommand(
-            () => TrackSync(() => Model.Undo()),
-            () => !Data.Busy.Value && Data.History.Undoable
-        )
-        .Associate(Data.Busy)
-        .Associate(Data.History);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsRedo
-        ///
-        /// <summary>
-        /// Creates a command that can execute when redo-history items
-        /// exist.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand IsRedo() => new DelegateCommand(
-            () => TrackSync(() => Model.Redo()),
-            () => !Data.Busy.Value && Data.History.Redoable
-        )
-        .Associate(Data.Busy)
-        .Associate(Data.History);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsLink
-        ///
-        /// <summary>
-        /// Creates a command that can execute when a link is selected.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ICommand IsLink() => new DelegateCommand<object>(
-            e => Track(() => Model.OpenLink(e as Information)),
-            e => !Data.Busy.Value && e is Information
-        ).Associate(Data.Busy);
-
-        #endregion
-
-        #region Send or Post
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TrackSync
-        ///
-        /// <summary>
-        /// Invokes the Track method as a synchronous manner.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void TrackSync(Action action) => Track(action, DialogMessage.Create, true);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostOpen
-        ///
-        /// <summary>
-        /// Sends the message to show a dialog of the OpenFileDialog
-        /// class, and executes the specified action as an asynchronous
-        /// operation.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostOpen(Action<string> action)
-        {
-            var msg = MessageFactory.CreateForOpen();
-            Send(msg);
-            Track(() => { if (!msg.Cancel) action(msg.Value.First()); });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostSave
-        ///
-        /// <summary>
-        /// Sends the message to show a dialog of the SaveFileDialog
-        /// class, and executes the specified action as an asynchronous
-        /// operation.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostSave(Action<string> action)
-        {
-            var msg = MessageFactory.CreateForSave();
-            Send(msg);
-            Track(() => { if (!msg.Cancel) action(msg.Value); });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostInsert
-        ///
-        /// <summary>
-        /// Sends the message to show a dialog of the OpenFileDialog
-        /// class, and executes the specified action as an asynchronous
-        /// operation.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostInsert(Action<IEnumerable<string>> action)
-        {
-            var msg = MessageFactory.CreateForInsert();
-            Send(msg);
-            Track(() => { if (!msg.Cancel) action(msg.Value); });
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostClose
-        ///
-        /// <summary>
-        /// Posts the message to close the PDF document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostClose(CancelEventArgs src, DialogStatus m)
-        {
-            var e = src ?? new CancelEventArgs();
-            e.Cancel = m == DialogStatus.Cancel;
-            if (e.Cancel) return;
-
-            void close() => Model.Close(m == DialogStatus.Yes);
-            if (src != null) Track(close, DialogMessage.Create, true);
-            else Track(close);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostPreview
-        ///
-        /// <summary>
-        /// Posts the message to show a dialog of the PreviewWindow
-        /// class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostPreview() => Post(new PreviewViewModel(
-            Data.Images, Data.Source.Value, Context
-        ));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostInsert
-        ///
-        /// <summary>
-        /// Posts the message to show a dialog of the InsertWindow
-        /// class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostInsert() => Post(new InsertViewModel(
-            (i, v) => Track(() => Model.Insert(i + 1, v.Select(e => e.FullName))),
-            Data.Images.Selection.First, Data.Count.Value, Data.IO, Context
-        ));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostRemove
-        ///
-        /// <summary>
-        /// Sends the message to show a dialog of the RemoveWindow
-        /// class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostRemove() => Post(new RemoveViewModel(
-            e => Model.Remove(e), Data.Count.Value, Context
-        ));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostMetadata
-        ///
-        /// <summary>
-        /// Posts the message to show a dialog of the MetadataWindow
-        /// class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostMetadata() => Track(() =>
-        {
-            var m = Data.Metadata.Copy();
-            Post(new MetadataViewModel(e => Model.Update(e), m, Data.Source.Value, Context));
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostEncryption
-        ///
-        /// <summary>
-        /// Posts the message to show a dialog of the EncryptionWindow
-        /// class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostEncryption() => Track(() =>
-        {
-            var m = Data.Encryption.Copy();
-            Post(new EncryptionViewModel(e => Model.Update(e), m, Context));
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PostSetting
-        ///
-        /// <summary>
-        /// Posts the message to show a dialog of the SettingWindow
-        /// class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void PostSetting() => Post(new SettingViewModel(Model.Settings, Context));
-
-        #endregion
 
         #endregion
     }

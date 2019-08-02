@@ -16,7 +16,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Pdf;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -93,10 +92,6 @@ namespace Cube.Mixin.Pdf
         /* ----------------------------------------------------------------- */
         public static ImageFile GetImageFile(this FileSystem.IO io, string src, Image image)
         {
-            Debug.Assert(image != null);
-            Debug.Assert(image.FrameDimensionsList != null);
-            Debug.Assert(image.FrameDimensionsList.Length > 0);
-
             var guid = image.FrameDimensionsList[0];
             var dim  = new FrameDimension(guid);
             var x    = image.HorizontalResolution;

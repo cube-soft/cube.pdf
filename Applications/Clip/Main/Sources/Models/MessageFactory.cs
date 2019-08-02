@@ -57,7 +57,7 @@ namespace Cube.Pdf.Clip
         /* ----------------------------------------------------------------- */
         public static OpenFileMessage CreateForOpen() => new OpenFileMessage
         {
-            Title           = Properties.Resources.TitleOpen,
+            Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = false,
             Filter          = new[]
@@ -80,7 +80,7 @@ namespace Cube.Pdf.Clip
         /* ----------------------------------------------------------------- */
         public static OpenFileMessage CreateForAttach() => new OpenFileMessage
         {
-            Title           = Properties.Resources.TitleAttach,
+            Text            = Properties.Resources.TitleAttach,
             CheckPathExists = true,
             Multiselect     = true,
             Filter          = new[]

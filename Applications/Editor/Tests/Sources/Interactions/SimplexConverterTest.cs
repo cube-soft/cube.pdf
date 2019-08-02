@@ -23,7 +23,6 @@ using Cube.Xui.Converters;
 using NUnit.Framework;
 using System;
 using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -75,6 +74,26 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
         /* ----------------------------------------------------------------- */
         ///
+        /// TitleConverter_Empty
+        ///
+        /// <summary>
+        /// Tests the TitleConverter class with the empty parameters.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void TitleConverter_Empty()
+        {
+            var src  = new TitleConverter();
+            var type = typeof(string);
+            var ci   = CultureInfo.CurrentCulture;
+            var dest = src.Convert(new object[0], type, null, ci) as string;
+
+            Assert.That(dest, Is.EqualTo("CubePDF Utility"));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// TitleConverter_Throws
         ///
         /// <summary>
@@ -83,10 +102,11 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void TitleConverter_Throws() => Assert.That(
-            () => new TitleConverter().ConvertBack(null, null, null, null),
-            Throws.TypeOf<NotSupportedException>()
-        );
+        public void TitleConverter_Throws()
+        {
+            var src = new TitleConverter();
+            Assert.That(() => src.ConvertBack(null, null, null, null), Throws.TypeOf<NotSupportedException>());
+        }
 
         #endregion
 
@@ -108,25 +128,6 @@ namespace Cube.Pdf.Editor.Tests.Interactions
             new IconConverter(),
             src.HasValue() ? IO.Get(GetSource(src)) : null
         ) != null;
-
-        #endregion
-
-        #region LanguageConverter
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LanguageConverter
-        ///
-        /// <summary>
-        /// Executes the test of the LanguageConverter class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase(Language.Auto,     Language.English,  ExpectedResult = "Auto")]
-        [TestCase(Language.English,  Language.English,  ExpectedResult = "English")]
-        [TestCase(Language.Japanese, Language.Japanese, ExpectedResult = "日本語")]
-        public string LanguageConverter(Language src, Language lang) =>
-            Convert<string>(new LanguageConverter(), src, lang);
 
         #endregion
 
@@ -204,14 +205,31 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(ViewerOptions.SinglePage,     Language.English,  ExpectedResult = "Single page")]
-        [TestCase(ViewerOptions.OneColumn,      Language.Japanese, ExpectedResult = "連続ページ")]
-        [TestCase(ViewerOptions.TwoPageLeft,    Language.English,  ExpectedResult = "Two page (left)")]
-        [TestCase(ViewerOptions.TwoPageRight,   Language.Japanese, ExpectedResult = "見開きページ (右綴じ)")]
-        [TestCase(ViewerOptions.TwoColumnLeft,  Language.English,  ExpectedResult = "Two column (left)")]
-        [TestCase(ViewerOptions.TwoColumnRight, Language.Japanese, ExpectedResult = "連続見開きページ (右綴じ)")]
-        public string ViewerOptionsConverter(ViewerOptions src, Language lang) =>
+        [TestCase(ViewerOption.SinglePage,     Language.English,  ExpectedResult = "Single page")]
+        [TestCase(ViewerOption.OneColumn,      Language.Japanese, ExpectedResult = "連続ページ")]
+        [TestCase(ViewerOption.TwoPageLeft,    Language.English,  ExpectedResult = "Two page (left)")]
+        [TestCase(ViewerOption.TwoPageRight,   Language.Japanese, ExpectedResult = "見開きページ (右綴じ)")]
+        [TestCase(ViewerOption.TwoColumnLeft,  Language.English,  ExpectedResult = "Two column (left)")]
+        [TestCase(ViewerOption.TwoColumnRight, Language.Japanese, ExpectedResult = "連続見開きページ (右綴じ)")]
+        public string ViewerOptionsConverter(ViewerOption src, Language lang) =>
             Convert<string>(new ViewerOptionsConverter(), src, lang);
+
+        #endregion
+
+        #region IsImageFormat
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsImageFormat
+        ///
+        /// <summary>
+        /// Tests the IsImageFormat class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(SaveFormat.Pdf, ExpectedResult = false)]
+        [TestCase(SaveFormat.Png, ExpectedResult = true)]
+        public bool IsImageFormat(SaveFormat src) => Convert<bool>(new IsImageFormat(), src);
 
         #endregion
 

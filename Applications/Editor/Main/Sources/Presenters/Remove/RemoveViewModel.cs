@@ -21,7 +21,6 @@ using Cube.Mixin.String;
 using Cube.Xui;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
@@ -35,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RemoveViewModel : DialogViewModel
+    public sealed class RemoveViewModel : DialogViewModel<RemoveFacade>
     {
         #region Constructors
 
@@ -56,18 +55,17 @@ namespace Cube.Pdf.Editor
         public RemoveViewModel(Action<IEnumerable<int>> callback,
             int n,
             SynchronizationContext context
-        ) : base(() => Properties.Resources.TitleRemove, new Aggregator(), context)
-        {
-            _count = n;
-            Range = new BindableValue<string>(string.Empty, GetDispatcher(false));
+        ) : base(new RemoveFacade(n, new ContextInvoker(context, false)),
+            new Aggregator(),
+            context
+        ) {
             OK.Command = new DelegateCommand(
-                () => Track(() =>
-                {
-                    callback(new Range(Range.Value, _count).Select(i => i - 1));
+                () => Track(() => {
+                    callback(Facade.Get());
                     Send<CloseMessage>();
                 }),
-                () => Range.Value.HasValue()
-            ).Associate(Range);
+                () => Facade.Range.HasValue()
+            ).Associate(Facade, nameof(Facade.Range));
         }
 
         #endregion
@@ -76,49 +74,66 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Range
+        /// Count
         ///
         /// <summary>
-        /// Gets the removal range.
+        /// Gets the page count menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<string> Range { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RangeCaption
-        ///
-        /// <summary>
-        /// Gets a menu that represents the caption of the removal range.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IElement<string> RangeCaption => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MessageRemoveRange,
-            () => Properties.Resources.MenuRemoveRange,
-            GetDispatcher(false)
+        public IElement<int> Count => Get(() => new BindableElement<int>(
+            () => Properties.Resources.MenuPageCount,
+            () => Facade.Count,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PageCaption
+        /// Range
         ///
         /// <summary>
-        /// Gets a menu that represents the number of pages.
+        /// Gets the menu of removal range.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<string> PageCaption => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuPageCount,
-            () => string.Format(Properties.Resources.MessagePage, _count),
-            GetDispatcher(false)
+        public IElement<string> Range => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuTarget,
+            () => Facade.Range,
+            e  => Facade.Range = e,
+            GetInvoker(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Example
+        ///
+        /// <summary>
+        /// Gets menu of range example.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement Example => Get(() => new BindableElement(
+            () => Properties.Resources.MessageRangeExample,
+            GetInvoker(false)
         ));
 
         #endregion
 
-        #region Fields
-        private readonly int _count;
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override string GetTitle() => Properties.Resources.TitleRemove;
+
         #endregion
     }
 }

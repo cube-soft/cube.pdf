@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
@@ -27,7 +29,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class ApplicationSetting
+    public sealed class ApplicationSetting : DisposableBase
     {
         #region Constructors
 
@@ -42,7 +44,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private ApplicationSetting()
         {
-            Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo());
+            _dispose = Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo());
         }
 
         #endregion
@@ -60,10 +62,29 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Configure() => _core.Invoke();
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the
+        /// ImageCollection and optionally releases the managed
+        /// resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) { if (disposing) _dispose.Dispose(); }
+
         #endregion
 
         #region Fields
         private static readonly OnceAction _core = new OnceAction(() => new ApplicationSetting());
+        private readonly IDisposable _dispose;
         #endregion
     }
 }

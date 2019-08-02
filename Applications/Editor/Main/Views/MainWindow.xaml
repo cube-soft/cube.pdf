@@ -24,16 +24,15 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:r="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
-    xmlns:xi="clr-namespace:Cube.Xui;assembly=Cube.Xui"
     xmlns:my="clr-namespace:Cube.Pdf.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 
-    Height="{Binding Data.Settings.Height, Mode=TwoWay}"
-    Width="{Binding Data.Settings.Width, Mode=TwoWay}"
+    Height="{Binding Value.Settings.Height, Mode=TwoWay}"
+    Width="{Binding Value.Settings.Width, Mode=TwoWay}"
     FontFamily="Meiryo UI"
     AllowDrop="True"
-    Cursor="{Binding Data.Busy.Value, Converter={my:BooleanToCursor}}">
+    Cursor="{Binding Value.Busy, Converter={my:BooleanToCursor}}">
 
     <!-- **********************************************************************
       Resources
@@ -56,8 +55,8 @@
     *********************************************************************** -->
     <r:RibbonWindow.Title>
         <MultiBinding Converter="{my:TitleConverter}">
-            <Binding Path="Data.Source.Value" />
-            <Binding Path="Data.Modified.Value" />
+            <Binding Path="Value.Source" />
+            <Binding Path="Value.Modified" />
         </MultiBinding>
     </r:RibbonWindow.Title>
 
@@ -68,23 +67,26 @@
     *********************************************************************** -->
     <!--
     <r:RibbonWindow.InputBindings>
-        <KeyBinding Gesture="F5"            Command="{Binding Ribbon.Refresh.Command}" />
+        <KeyBinding Gesture="F5"            Command="{Binding Ribbon.Redraw.Command}" />
         <KeyBinding Gesture="Insert"        Command="{Binding Ribbon.Insert.Command}" />
+        <KeyBinding Gesture="Ctrl+I"        Command="{Binding Ribbon.Insert.Command}" />
+        <KeyBinding Gesture="Ctrl+Shift+I"  Command="{Binding Ribbon.InsertOthers.Command}" />
         <KeyBinding Gesture="Delete"        Command="{Binding Ribbon.Remove.Command}" />
-        <KeyBinding Gesture="Backspace"     Command="{Binding Ribbon.Remove.Command}" />
+        <KeyBinding Gesture="Ctrl+D"        Command="{Binding Ribbon.Remove.Command}" />
+        <KeyBinding Gesture="Ctrl+Shift+D"  Command="{Binding Ribbon.RemoveOthers.Command}" />
         <KeyBinding Gesture="Ctrl+E"        Command="{Binding Ribbon.Extract.Command}" />
+        <KeyBinding Gesture="Ctrl+Shift+E"  Command="{Binding Ribbon.ExtractOthers.Command}" />
         <KeyBinding Gesture="Ctrl+O"        Command="{Binding Ribbon.Open.Command}" />
         <KeyBinding Gesture="Ctrl+S"        Command="{Binding Ribbon.Save.Command}" />
         <KeyBinding Gesture="Ctrl+Shift+S"  Command="{Binding Ribbon.SaveAs.Command}" />
         <KeyBinding Gesture="Ctrl+W"        Command="{Binding Ribbon.Close.Command}" />
         <KeyBinding Gesture="Ctrl+Q"        Command="{Binding Ribbon.Exit.Command}" />
         <KeyBinding Gesture="Ctrl+A"        Command="{Binding Ribbon.SelectAll.Command}" />
-        <KeyBinding Gesture="Ctrl+D"        Command="{Binding Ribbon.SelectClear.Command}" />
         <KeyBinding Gesture="Ctrl+F"        Command="{Binding Ribbon.MoveNext.Command}" />
         <KeyBinding Gesture="Ctrl+B"        Command="{Binding Ribbon.MovePrevious.Command}" />
         <KeyBinding Gesture="Ctrl+L"        Command="{Binding Ribbon.RotateLeft.Command}" />
         <KeyBinding Gesture="Ctrl+R"        Command="{Binding Ribbon.RotateRight.Command}" />
-        <KeyBinding Gesture="Ctrl+I"        Command="{Binding Ribbon.Metadata.Command}" />
+        <KeyBinding Gesture="Ctrl+M"        Command="{Binding Ribbon.Metadata.Command}" />
         <KeyBinding Gesture="Ctrl+K"        Command="{Binding Ribbon.Encryption.Command}" />
         <KeyBinding Gesture="Ctrl+Z"        Command="{Binding Ribbon.Undo.Command}" />
         <KeyBinding Gesture="Ctrl+Y"        Command="{Binding Ribbon.Redo.Command}" />
@@ -105,15 +107,16 @@
         <xb:UriBehavior />
         <xb:CloseBehavior />
         <xb:DisposeBehavior />
-        <xb:ClosingToCommand Command="{Binding Ribbon.Close.Command}" />
-        <my:PasswordWindowBehavior />
-        <my:PreviewWindowBehavior />
-        <my:InsertWindowBehavior />
-        <my:RemoveWindowBehavior />
-        <my:MetadataWindowBehavior />
-        <my:EncryptionWindowBehavior />
-        <my:SettingWindowBehavior />
-        <my:MouseOpenBehavior Command="{Binding Open}" />
+        <xb:ClosingToCommand     Command="{Binding Ribbon.Close.Command}" />
+        <my:MouseOpenBehavior    Command="{Binding Open}" />
+        <my:ShowPasswordWindow   Modal="True" />
+        <my:ShowPreviewWindow    Modal="True" />
+        <my:ShowInsertWindow     Modal="True" />
+        <my:ShowRemoveWindow     Modal="True" />
+        <my:ShowExtractWindow    Modal="True" />
+        <my:ShowMetadataWindow   Modal="True" />
+        <my:ShowEncryptionWindow Modal="True" />
+        <my:ShowSettingWindow    Modal="True" />
         <my:Hack35Behavior />
     </i:Interaction.Behaviors>
 
@@ -135,8 +138,8 @@
         ******************************************************************* -->
         <ListView
             ContextMenu="{StaticResource MainContextMenu}"
-            ItemsSource="{Binding Data.Images}"
-            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibility}}"
+            ItemsSource="{Binding Value.Images}"
+            Visibility="{Binding Value.Source, Converter={my:HasValueToVisibility}}"
             Style="{StaticResource PageCollectionStyle}"
             Grid.Row="1">
             <i:Interaction.Behaviors>
@@ -145,7 +148,7 @@
                 <my:MousePreviewBehavior Command="{Binding Ribbon.Preview.Command}" />
                 <my:MouseMoveBehavior
                     Command="{Binding InsertOrMove}"
-                    Selection="{Binding Data.Images.Selection}" />
+                    Selection="{Binding Value.Images.Selection}" />
             </i:Interaction.Behaviors>
         </ListView>
 
@@ -153,7 +156,7 @@
           Recent files (when not open)
         ******************************************************************* -->
         <my:HeroControl
-            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibilityInverse}}"
+            Visibility="{Binding Value.Source, Converter={my:HasValueToVisibilityInverse}}"
             Grid.Row="1" />
     </Grid>
 </r:RibbonWindow>

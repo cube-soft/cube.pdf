@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class SettingValue : SerializableBase
+    public sealed class SettingValue : SerializableBase
     {
         #region Constructors
 

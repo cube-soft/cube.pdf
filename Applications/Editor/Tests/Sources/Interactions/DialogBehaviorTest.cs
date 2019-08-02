@@ -42,161 +42,133 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         /// PasswordWindow
         ///
         /// <summary>
-        /// Executes the test for creating a new instance of the
-        /// PasswordWindowBehavior class.
+        /// Tests the PasswordWindowBehavior class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void PasswordWindow() => Create(vm =>
+        public void PasswordWindow()
         {
-            var view = new Window { DataContext = vm };
-            var src  = new PasswordWindowBehavior();
+            var view = new Window();
+            var src  = new ShowPasswordWindow();
 
-            Assert.DoesNotThrow(() =>
-            {
-                src.Attach(view);
-                src.Detach();
-            });
-        });
+            src.Attach(view);
+            src.Detach();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// PreviewWindow
         ///
         /// <summary>
-        /// Executes the test for creating a new instance of the
-        /// PreviewWindowBehavior class.
+        /// Tests the PreviewWindowBehavior class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void PreviewWindow() => Create(vm =>
+        public void PreviewWindow()
         {
-            var view = new Window { DataContext = vm };
-            var src  = new PreviewWindowBehavior();
+            var view = new Window();
+            var src  = new ShowPreviewWindow();
 
-            Assert.DoesNotThrow(() =>
-            {
-                src.Attach(view);
-                src.Detach();
-            });
-        });
+            src.Attach(view);
+            src.Detach();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// InsertWindow
         ///
         /// <summary>
-        /// Executes the test for creating a new instance of the
-        /// InsertWindowBehavior class.
+        /// Tests the InsertWindowBehavior class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void InsertWindow() => Create(vm =>
+        public void InsertWindow()
         {
-            var view = new Window { DataContext = vm };
-            var src  = new InsertWindowBehavior();
+            var view = new Window();
+            var src  = new ShowInsertWindow();
 
-            Assert.DoesNotThrow(() =>
-            {
-                src.Attach(view);
-                src.Detach();
-            });
-        });
+            src.Attach(view);
+            src.Detach();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// RemoveWindow
         ///
         /// <summary>
-        /// Executes the test for creating a new instance of the
-        /// RemoveWindowBehavior class.
+        /// Tests the RemoveWindowBehavior class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void RemoveWindow() => Create(vm =>
+        public void RemoveWindow()
         {
-            var view = new Window { DataContext = vm };
-            var src  = new RemoveWindowBehavior();
+            var view = new Window();
+            var src  = new ShowRemoveWindow();
 
-            Assert.DoesNotThrow(() =>
-            {
-                src.Attach(view);
-                src.Detach();
-            });
-        });
+            src.Attach(view);
+            src.Detach();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// MetadataWindow
         ///
         /// <summary>
-        /// Executes the test for creating a new instance of the
-        /// MetadataWindowBehavior class.
+        /// Tests the MetadataWindowBehavior class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MetadataWindow() => Create(vm =>
+        public void MetadataWindow()
         {
-            var view = new Window { DataContext = vm };
-            var src  = new MetadataWindowBehavior();
+            var view = new Window();
+            var src  = new ShowMetadataWindow();
 
-            Assert.DoesNotThrow(() =>
-            {
-                src.Attach(view);
-                src.Detach();
-            });
-        });
+            src.Attach(view);
+            src.Detach();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// EncryptionWindow
         ///
         /// <summary>
-        /// Executes the test for creating a new instance of the
-        /// EncryptionWindowBehavior class.
+        /// Tests the EncryptionWindowBehavior class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void EncryptionWindow() => Create(vm =>
+        public void EncryptionWindow()
         {
-            var view = new Window { DataContext = vm };
-            var src  = new EncryptionWindowBehavior();
+            var view = new Window();
+            var src  = new ShowEncryptionWindow();
 
-            Assert.DoesNotThrow(() =>
-            {
-                src.Attach(view);
-                src.Detach();
-            });
-        });
+            src.Attach(view);
+            src.Detach();
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// SettingWindow
         ///
         /// <summary>
-        /// Executes the test for creating a new instance of the
-        /// SettingWindowBehavior class.
+        /// Tests the SettingWindowBehavior class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void SettingWindow() => Create(vm =>
+        public void SettingWindow()
         {
-            var view = new Window { DataContext = vm };
-            var src  = new SettingWindowBehavior();
+            var view = new Window();
+            var src  = new ShowSettingWindow();
 
-            Assert.DoesNotThrow(() =>
-            {
-                src.Attach(view);
-                src.Detach();
-            });
-        });
+            src.Attach(view);
+            src.Detach();
+        }
 
         #endregion
     }

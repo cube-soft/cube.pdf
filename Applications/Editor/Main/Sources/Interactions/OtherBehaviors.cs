@@ -18,99 +18,96 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Xui.Behaviors;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 
 namespace Cube.Pdf.Editor
 {
-    #region ShowDialog
-
     /* --------------------------------------------------------------------- */
     ///
-    /// PasswordWindowBehavior
+    /// ShowPasswordWindow
     ///
     /// <summary>
     /// Represents the behavior to show a PasswordWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PasswordWindowBehavior :
-        ShowDialogBehavior<PasswordWindow, PasswordViewModel> { }
+    public class ShowPasswordWindow : ShowBehavior<PasswordWindow, PasswordViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// PreviewWindowBehavior
+    /// ShowPreviewWindow
     ///
     /// <summary>
     /// Represents the behavior to show a PreviewWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class PreviewWindowBehavior :
-        ShowDialogBehavior<PreviewWindow, PreviewViewModel> { }
+    public class ShowPreviewWindow : ShowBehavior<PreviewWindow, PreviewViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// InsertWindowBehavior
+    /// ShowInsertWindow
     ///
     /// <summary>
     /// Represents the behavior to show a InsertWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class InsertWindowBehavior :
-        ShowDialogBehavior<InsertWindow, InsertViewModel> { }
+    public class ShowInsertWindow : ShowBehavior<InsertWindow, InsertViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// RemoveWindowBehavior
+    /// ShowRemoveWindow
     ///
     /// <summary>
     /// Represents the behavior to show a RemoveWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class RemoveWindowBehavior :
-        ShowDialogBehavior<RemoveWindow, RemoveViewModel> { }
+    public class ShowRemoveWindow : ShowBehavior<RemoveWindow, RemoveViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// MetadataWindowBehavior
+    /// ShowExtractWindow
+    ///
+    /// <summary>
+    /// Represents the behavior to show a ExtractWindow dialog.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class ShowExtractWindow : ShowBehavior<ExtractWindow, ExtractViewModel> { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ShowMetadataWindow
     ///
     /// <summary>
     /// Represents the behavior to show a MetadataWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MetadataWindowBehavior :
-        ShowDialogBehavior<MetadataWindow, MetadataViewModel> { }
+    public class ShowMetadataWindow : ShowBehavior<MetadataWindow, MetadataViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// EncryptionWindowBehavior
+    /// ShowEncryptionWindow
     ///
     /// <summary>
     /// Represents the behavior to show a EncryptionWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class EncryptionWindowBehavior :
-        ShowDialogBehavior<EncryptionWindow, EncryptionViewModel> { }
+    public class ShowEncryptionWindow : ShowBehavior<EncryptionWindow, EncryptionViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingWindowBehavior
+    /// ShowSettingWindow
     ///
     /// <summary>
     /// Represents the behavior to show a SettingWindow dialog.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingWindowBehavior :
-        ShowDialogBehavior<SettingWindow, SettingViewModel> { }
-
-    #endregion
-
-    #region Others
+    public class ShowSettingWindow : ShowBehavior<SettingWindow, SettingViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -122,63 +119,4 @@ namespace Cube.Pdf.Editor
     ///
     /* --------------------------------------------------------------------- */
     public class MouseOpenBehavior : FileDropToCommand<Window> { }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// InsertPositionBehavior
-    ///
-    /// <summary>
-    /// Represents the behavior when a RadioButton is checked.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class InsertPositionBehavior : CommandBehavior<ToggleButton, int>
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnAttached
-        ///
-        /// <summary>
-        /// Called after the action is attached to an AssociatedObject.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnAttached()
-        {
-            base.OnAttached();
-            AssociatedObject.Checked += WhenChecked;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDetaching
-        ///
-        /// <summary>
-        /// Called when the action is being detached from its
-        /// AssociatedObject, but before it has actually occurred.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnDetaching()
-        {
-            AssociatedObject.Checked -= WhenChecked;
-            base.OnDetaching();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WhenChecked
-        ///
-        /// <summary>
-        /// Occurs when the Checked event is fired.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void WhenChecked(object s, RoutedEventArgs e)
-        {
-            if (Command?.CanExecute(CommandParameter) ?? false) Command.Execute(CommandParameter);
-        }
-    }
-
-    #endregion
 }

@@ -151,9 +151,9 @@ namespace Cube.Pdf.Converter
         {
             lock (_lock)
             {
-                Settings.IO.TryDelete(GetTemp());
+                _ = Settings.IO.TryDelete(GetTemp());
                 if (!Settings.Value.DeleteSource) return;
-                Settings.IO.TryDelete(Settings.Value.Source);
+                _ = Settings.IO.TryDelete(Settings.Value.Source);
             }
         }
 

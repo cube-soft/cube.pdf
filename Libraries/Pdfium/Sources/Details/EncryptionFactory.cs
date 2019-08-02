@@ -15,6 +15,8 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 using System;
 
 namespace Cube.Pdf.Pdfium
@@ -54,23 +56,51 @@ namespace Cube.Pdf.Pdfium
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static Encryption Create(PdfiumReader core, string password)
+        public static Encryption Create(PdfiumReader core, string password) => core.Invoke(e =>
         {
-            var method     = core.Invoke(e => PdfiumApi.FPDF_GetSecurityHandlerRevision(e));
-            var permission = (uint)core.Invoke(e => PdfiumApi.FPDF_GetDocPermissions(e));
-            var restrict   = permission != 0xfffffffc;
+            var method  = NativeMethods.FPDF_GetSecurityHandlerRevision(e);
+            var value   = (uint)NativeMethods.FPDF_GetDocPermissions(e);
+            var mask    = 0xfffffffc;
+            var limited = (value & mask) != mask;
+            core.LogDebug($"Permission:0x{value:X}", $"Revision:{method}");
 
             return method == -1 ?
                    new Encryption() :
                    new Encryption
                    {
                        Enabled          = true,
-                       OwnerPassword    = restrict ? string.Empty : password,
-                       OpenWithPassword = restrict,
-                       UserPassword     = restrict ? password : string.Empty,
+                       OwnerPassword    = limited ? string.Empty : password,
+                       OpenWithPassword = limited,
+                       UserPassword     = limited ? password : string.Empty,
                        Method           = CreateMethod(method),
-                       Permission       = new Permission(permission),
+                       Permission       = new Permission(value),
                    };
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Request
+        ///
+        /// <summary>
+        /// Requests the password of the specified PDF file.
+        /// </summary>
+        ///
+        /// <param name="query">Query object.</param>
+        /// <param name="src">Path of the PDF file.</param>
+        ///
+        /// <returns>Query result.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static QueryMessage<string, string> Request(this IQuery<string> query, string src)
+        {
+            try
+            {
+                var dest = Query.NewMessage(src);
+                query.Request(dest);
+                if (dest.Cancel || dest.Value.HasValue()) return dest;
+                throw new ArgumentException("Password is empty.");
+            }
+            catch (Exception e) { throw new EncryptionException("Input password may be incorrect.", e); }
         }
 
         #endregion

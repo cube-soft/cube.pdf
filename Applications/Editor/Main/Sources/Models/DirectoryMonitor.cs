@@ -37,7 +37,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DirectoryMonitor : ObservableBase<Information>
+    public sealed class DirectoryMonitor : ObservableBase<Entity>
     {
         #region Constructors
 
@@ -53,11 +53,11 @@ namespace Cube.Pdf.Editor
         /// <param name="directory">Target directory.</param>
         /// <param name="filter">Filter string.</param>
         /// <param name="io">I/O handler</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DirectoryMonitor(string directory, string filter, IO io, IDispatcher dispatcher) :
-            base(dispatcher)
+        public DirectoryMonitor(string directory, string filter, IO io, Invoker invoker) :
+            base(invoker)
         {
             Directory  = directory;
             Filter     = filter;
@@ -136,7 +136,7 @@ namespace Cube.Pdf.Editor
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public override IEnumerator<Information> GetEnumerator() => _items.GetEnumerator();
+        public override IEnumerator<Entity> GetEnumerator() => _items.GetEnumerator();
 
         #endregion
 
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Editor
 
         #region Fields
         private readonly System.IO.FileSystemWatcher _core;
-        private IEnumerable<Information> _items = Enumerable.Empty<Information>();
+        private IEnumerable<Entity> _items = Enumerable.Empty<Entity>();
         #endregion
     }
 }

@@ -20,7 +20,7 @@ using Cube.Mixin.Commands;
 using Cube.Tests;
 using Cube.Xui;
 using NUnit.Framework;
-using System;
+using System.ComponentModel;
 using System.Threading;
 
 namespace Cube.Pdf.Editor.Tests
@@ -53,15 +53,15 @@ namespace Cube.Pdf.Editor.Tests
         public static void Test(this MainViewModel vm, BindableElement src)
         {
             var cs = new CancellationTokenSource();
-            void observe(object s, EventArgs e)
+            void observe(object s, PropertyChangedEventArgs e)
             {
-                if (vm.Data.Busy.Value) return;
-                vm.Data.Busy.PropertyChanged -= observe;
+                if (e.PropertyName != nameof(vm.Value.Busy) || vm.Value.Busy) return;
+                vm.Value.PropertyChanged -= observe;
                 cs.Cancel();
             }
 
-            Assert.That(vm.Data.Busy.Value, Is.False, $"Busy ({src.Text})");
-            vm.Data.Busy.PropertyChanged += observe;
+            Assert.That(vm.Value.Busy, Is.False, $"Busy ({src.Text})");
+            vm.Value.PropertyChanged += observe;
             Assert.That(src.Command.CanExecute(), Is.True, $"CanExecute ({src.Text})");
             src.Command.Execute();
             Assert.That(Wait.For(cs.Token), $"Timeout ({src.Text})");

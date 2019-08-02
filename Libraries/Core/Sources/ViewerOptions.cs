@@ -21,7 +21,7 @@ namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewerOptions
+    /// ViewerOption
     ///
     /// <summary>
     /// Specifies the display options of the PDF document.
@@ -34,7 +34,7 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     [Flags]
     [Serializable]
-    public enum ViewerOptions
+    public enum ViewerOption
     {
         /// <summary>No options.</summary>
         None = 0x0000,
@@ -64,14 +64,14 @@ namespace Cube.Pdf
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewerOptionsFactory
+    /// ViewerOptionFactory
     ///
     /// <summary>
-    /// Provides extended methods for the ViewerPreferences.
+    /// Provides extended methods of the ViewerOptionFactory.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class ViewerOptionsFactory
+    public static class ViewerOptionFactory
     {
         #region Methods
 
@@ -92,7 +92,7 @@ namespace Cube.Pdf
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static ViewerOptions Create(int src) => (ViewerOptions)(src & 0x0fff);
+        public static ViewerOption Create(int src) => (ViewerOption)(src & 0x0fff);
 
         #endregion
     }

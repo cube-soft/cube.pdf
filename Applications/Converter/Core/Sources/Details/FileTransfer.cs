@@ -84,7 +84,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Information Target { get; }
+        public Entity Target { get; }
 
         /* ----------------------------------------------------------------- */
         ///

@@ -17,20 +17,21 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Xui;
+using System;
 using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DialogViewModel
+    /// DialogViewModel(TModel)
     ///
     /// <summary>
     /// Represents the ViewModel for a dialog window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DialogViewModel : ViewModelBase
+    public abstract class DialogViewModel<TModel> : GenericViewModel<TModel>
     {
         #region Constructors
 
@@ -40,20 +41,20 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the DialogViewModel with the
-        /// specified argumetns.
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="getTitle">Title for the dialog.</param>
-        /// <param name="aggregator">Messenger object.</param>
+        /// <param name="model">Model object.</param>
+        /// <param name="aggregator">Message aggregator.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected DialogViewModel(Getter<string> getTitle,
+        protected DialogViewModel(TModel model,
             Aggregator aggregator,
             SynchronizationContext context
-        ) : base(aggregator, context)
+        ) : base(model, aggregator, context)
         {
-            Title = Get(() => new BindableElement(getTitle, GetDispatcher(false)), nameof(Title));
+            _dispose = Locale.Subscribe(e => Refresh(nameof(Title)));
         }
 
         #endregion
@@ -69,7 +70,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement Title { get; }
+        public string Title => GetTitle();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -82,7 +83,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement OK => Get(() => new BindableElement(
             () => Properties.Resources.MenuOk,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -96,9 +97,51 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Cancel => Get(() => new BindableElement(
             () => Properties.Resources.MenuCancel,
-            GetDispatcher(false)
+            GetInvoker(false)
         ) { Command = new DelegateCommand(() => Send<CloseMessage>()) });
 
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected abstract string GetTitle();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            try { if (disposing) _dispose.Dispose(); }
+            finally { base.Dispose(disposing); }
+        }
+
+        #endregion
+
+        #region Fields
+        private readonly IDisposable _dispose;
         #endregion
     }
 }

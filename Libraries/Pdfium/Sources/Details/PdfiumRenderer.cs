@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Cube.Pdf.Pdfium
 {
@@ -41,21 +42,26 @@ namespace Cube.Pdf.Pdfium
         /// Executes the rendering with the specified arguments.
         /// </summary>
         ///
-        /// <param name="src">PDFium object.</param>
-        /// <param name="dest">Graphics to be rendered.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="point">Starting point.</param>
-        /// <param name="size">Drawing size.</param>
-        /// <param name="flags">Drawing flags.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public static void Render(this PdfiumReader src, Graphics dest, Page page,
-            PointF point, SizeF size, int flags) =>
-            src.Invoke(e => Render(e, dest, page, point, size, flags));
+        public static Image Render(IntPtr core, Page page, SizeF size,
+            RenderOption options) => Load(core, page.Number, hp =>
+        {
+            var width  = (int)size.Width;
+            var height = (int)size.Height;
+            var degree = GetRotation(page.Delta);
+            var flags  = options.GetFlags();
 
-        #endregion
+            var bpp  = 4;
+            var dest = options.GetBitmap(width, height);
+            var data = dest.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, dest.PixelFormat);
+            var hbm  = NativeMethods.FPDFBitmap_CreateEx(width, height, bpp, data.Scan0, width * bpp);
 
-        #region Implementations
+            NativeMethods.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, degree, flags);
+            NativeMethods.FPDFBitmap_Destroy(hbm);
+            dest.UnlockBits(data);
+
+            return dest;
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,35 +72,47 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void Render(IntPtr core, Graphics dest, Page page,
-            PointF point, SizeF size, int flags)
+        public static void Render(IntPtr core, Graphics dest,
+            Page page, PointF point, SizeF size,
+            RenderOption options) => Load(core, page.Number, hp =>
         {
-            if (core == IntPtr.Zero) return;
+            options.DrawBackground(e => dest.Clear(e));
 
-            var n = 5;
-            var hp = PdfiumApi.FPDF_LoadPage(core, page.Number - 1, n);
-            if (hp == IntPtr.Zero) throw new LoadException(LoadStatus.PageError);
+            var x      = (int)point.X;
+            var y      = (int)point.Y;
+            var width  = (int)size.Width;
+            var height = (int)size.Height;
+            var degree = GetRotation(page.Delta);
+            var flags  = options.GetFlags();
+
             var hdc = dest.GetHdc();
+            NativeMethods.FPDF_RenderPage(hdc, hp, x, y, width, height, degree, flags);
+            dest.ReleaseHdc(hdc);
 
-            try
-            {
-                PdfiumApi.FPDF_RenderPage(
-                    hdc,
-                    hp,
-                    (int)point.X,
-                    (int)point.Y,
-                    (int)size.Width,
-                    (int)size.Height,
-                    GetRotation(page.Delta),
-                    flags,
-                    n
-                );
-            }
-            finally
-            {
-                dest.ReleaseHdc(hdc);
-                PdfiumApi.FPDF_ClosePage(hp);
-            }
+            return true;
+        });
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Load
+        ///
+        /// <summary>
+        /// Loads the specified page and invokes the specified function.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static T Load<T>(IntPtr core, int pagenum, Func<IntPtr, T> func)
+        {
+            if (core == IntPtr.Zero) return default;
+            var hp = NativeMethods.FPDF_LoadPage(core, pagenum - 1);
+            if (hp == IntPtr.Zero) throw new PdfiumException(PdfiumStatus.PageError);
+
+            try { return func(hp); }
+            finally { NativeMethods.FPDF_ClosePage(hp); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -106,8 +124,8 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /// <remarks>
-        /// PDFium は 90 度単位でしか対応していないため、45 度単位で
-        /// 補正しています。
+        /// Normalizes the degree because the PDFium only supports in
+        /// 90-degree units.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

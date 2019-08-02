@@ -48,11 +48,11 @@ namespace Cube.Pdf.Editor
         /// <param name="file">File information.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataFacade(Metadata src, Information file)
+        public MetadataFacade(Metadata src, Entity file)
         {
             src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
                           Versions.First();
-            if (src.Options == Pdf.ViewerOptions.None) src.Options = Pdf.ViewerOptions.OneColumn;
+            if (src.Options == Pdf.ViewerOption.None) src.Options = Pdf.ViewerOption.OneColumn;
 
             Value  = src;
             File   = file;
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Information File { get; }
+        public Entity File { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -112,14 +112,14 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<ViewerOptions> ViewerOptions { get; } = new[]
+        public static IEnumerable<ViewerOption> ViewerOptions { get; } = new[]
         {
-            Pdf.ViewerOptions.SinglePage,
-            Pdf.ViewerOptions.OneColumn,
-            Pdf.ViewerOptions.TwoColumnLeft,
-            Pdf.ViewerOptions.TwoColumnRight,
-            Pdf.ViewerOptions.TwoPageLeft,
-            Pdf.ViewerOptions.TwoPageRight,
+            Pdf.ViewerOption.SinglePage,
+            Pdf.ViewerOption.OneColumn,
+            Pdf.ViewerOption.TwoColumnLeft,
+            Pdf.ViewerOption.TwoColumnRight,
+            Pdf.ViewerOption.TwoPageLeft,
+            Pdf.ViewerOption.TwoPageRight,
         };
 
         #endregion

@@ -19,8 +19,6 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
 namespace Cube.Pdf.Editor
 {
@@ -35,6 +33,24 @@ namespace Cube.Pdf.Editor
     /* --------------------------------------------------------------------- */
     public class Selection<T> : ObservableBase, IEnumerable<T>
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Selection
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Selection class with the
+        /// specified invoker.
+        /// </summary>
+        ///
+        /// <param name="invoker">Invoker object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Selection(Invoker invoker) : base(invoker) { }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -141,79 +157,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
-
-        #endregion
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// ImageSelection
-    ///
-    /// <summary>
-    /// Represents the selection of images.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class ImageSelection : Selection<ImageItem>
-    {
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// First
-        ///
-        /// <summary>
-        /// Gets the first index that is maximum value in the selected
-        /// images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int First => RawObject.Keys.OrderBy(i => i.Index).FirstOrDefault()?.Index ?? -1;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Last
-        ///
-        /// <summary>
-        /// Gets the last index that is maximum value in the selected
-        /// images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Last => RawObject.Keys.OrderByDescending(i => i.Index).FirstOrDefault()?.Index ?? -1;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Indices
-        ///
-        /// <summary>
-        /// Gets the indices of the selected images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<int> Indices => RawObject.Keys.Select(e => e.Index);
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnPropertyChanged
-        ///
-        /// <summary>
-        /// Occurs when a property is changed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(e);
-
-            if (e.PropertyName != nameof(Count)) return;
-            Refresh(nameof(Last));
-            Refresh(nameof(Indices));
-        }
 
         #endregion
     }

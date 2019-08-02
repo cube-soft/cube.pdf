@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Collections;
 using Cube.Mixin.Logging;
+using Cube.Xui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,6 +85,7 @@ namespace Cube.Pdf.Editor
         protected override void OnStartup(StartupEventArgs e)
         {
             Logger.Configure();
+            BindingLogger.Configure();
             this.LogInfo(Assembly.GetExecutingAssembly());
 
             _observer.Add(Logger.ObserveTaskException());

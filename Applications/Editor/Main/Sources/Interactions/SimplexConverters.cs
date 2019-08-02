@@ -62,7 +62,7 @@ namespace Cube.Pdf.Editor
             if (values.Length < 2) return app;
 
             var m = values[1].TryCast<bool>() ? "*" : "";
-            return values[0] is Information fi ? $"{fi.Name}{m} - {app}" : app;
+            return values[0] is Entity fi ? $"{fi.Name}{m} - {app}" : app;
         }
 
         /* ----------------------------------------------------------------- */
@@ -114,41 +114,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IconConverter() : base(e => (e as Information)?.GetIconImage(IconSize.Small)) { }
-    }
-
-    #endregion
-
-    #region LanguageConverter
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// LanguageConverter
-    ///
-    /// <summary>
-    /// Provides functionality to convert a Language value.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public class LanguageConverter : SimplexConverter
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// LanguageConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the LanguageConverter
-        /// class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public LanguageConverter() : base(e => new Dictionary<Language, string>
-            {
-                { Language.Auto,     Properties.Resources.MenuLanguageAuto     },
-                { Language.English,  Properties.Resources.MenuLanguageEnglish  },
-                { Language.Japanese, Properties.Resources.MenuLanguageJapanese },
-            }.TryGetValue(e.TryCast<Language>(), out var dest) ? dest : Properties.Resources.MenuLanguageAuto
-        ) { }
+        public IconConverter() : base(e => (e as Entity)?.GetIconSource(IconSize.Small)) { }
     }
 
     #endregion
@@ -244,6 +210,10 @@ namespace Cube.Pdf.Editor
         }.TryGetValue(e.TryCast<EncryptionMethod>(), out var dest) ? dest : "Unknown") { }
     }
 
+    #endregion
+
+    #region ViewerOptionsConverter
+
     /* --------------------------------------------------------------------- */
     ///
     /// ViewerOptionsConverter
@@ -267,15 +237,43 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ViewerOptionsConverter() : base(e =>
         {
-            var src = e.TryCast<ViewerOptions>();
-            if (src.HasFlag(ViewerOptions.SinglePage))     return Properties.Resources.MenuViewSinglePage;
-            if (src.HasFlag(ViewerOptions.OneColumn))      return Properties.Resources.MenuViewOneColumn;
-            if (src.HasFlag(ViewerOptions.TwoPageLeft))    return Properties.Resources.MenuViewTwoPageLeft;
-            if (src.HasFlag(ViewerOptions.TwoPageRight))   return Properties.Resources.MenuViewTwoPageRight;
-            if (src.HasFlag(ViewerOptions.TwoColumnLeft))  return Properties.Resources.MenuViewTwoColumnLeft;
-            if (src.HasFlag(ViewerOptions.TwoColumnRight)) return Properties.Resources.MenuViewTwoColumnRight;
+            var src = e.TryCast<ViewerOption>();
+            if (src.HasFlag(ViewerOption.SinglePage))     return Properties.Resources.MenuViewSinglePage;
+            if (src.HasFlag(ViewerOption.OneColumn))      return Properties.Resources.MenuViewOneColumn;
+            if (src.HasFlag(ViewerOption.TwoPageLeft))    return Properties.Resources.MenuViewTwoPageLeft;
+            if (src.HasFlag(ViewerOption.TwoPageRight))   return Properties.Resources.MenuViewTwoPageRight;
+            if (src.HasFlag(ViewerOption.TwoColumnLeft))  return Properties.Resources.MenuViewTwoColumnLeft;
+            if (src.HasFlag(ViewerOption.TwoColumnRight)) return Properties.Resources.MenuViewTwoColumnRight;
             return "Unknown";
         }) { }
+    }
+
+    #endregion
+
+    #region IsImageFormat
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// IsImageFormat
+    ///
+    /// <summary>
+    /// Provides functionality to determine the provided value is
+    /// SaveFormat.Png.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public class IsImageFormat : SimplexConverter
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsImageFormat
+        ///
+        /// <summary>
+        /// Initializes a new instance of the IsImageFormat class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IsImageFormat() : base(e => e is SaveFormat fmt && fmt == SaveFormat.Png) { }
     }
 
     #endregion

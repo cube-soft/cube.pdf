@@ -28,17 +28,9 @@ namespace Cube.Pdf.Pdfium
     /// Represents APIs of the PDFium library.
     /// </summary>
     ///
-    /// <remarks>
-    /// このクラスのメソッドを直接実行しないで下さい。また、新しいメソッドを
-    /// 定義した場合、同名のメソッドを PdfiumApi にも定義し、PdfiumApi 経由で
-    /// 実行するようにして下さい。
-    /// </remarks>
-    ///
     /* --------------------------------------------------------------------- */
-    internal class NativeMethods
+    internal static class NativeMethods
     {
-        #region Methods
-
         #region Common
 
         /* ----------------------------------------------------------------- */
@@ -342,7 +334,49 @@ namespace Cube.Pdf.Pdfium
         public static extern void FPDF_RenderPage(IntPtr dc, IntPtr page,
             int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_RenderPageBitmap
+        ///
+        /// <summary>
+        /// Render contents of a page to a device independent bitmap.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern void FPDF_RenderPageBitmap(IntPtr bitmap, IntPtr page,
+            int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDFBitmap_CreateEx
+        ///
+        /// <summary>
+        /// Create a device independent bitmap.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern IntPtr FPDFBitmap_CreateEx(int width, int height,
+            int format, IntPtr first, int stride);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDFBitmap_Destroy
+        ///
+        /// <summary>
+        /// Destroy a bitmap and release all related buffers.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdfview.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern void FPDFBitmap_Destroy(IntPtr bitmap);
 
         #endregion
 

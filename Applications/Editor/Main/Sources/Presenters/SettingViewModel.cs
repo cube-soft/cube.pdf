@@ -34,7 +34,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class SettingViewModel : DialogViewModel
+    public sealed class SettingViewModel : DialogViewModel<SettingFolder>
     {
         #region Constructors
 
@@ -52,12 +52,11 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingViewModel(SettingFolder src, SynchronizationContext context) :
-            base(() => Properties.Resources.TitleSetting, new Aggregator(), context)
+            base(src, new Aggregator(), context)
         {
-            _model = src;
             OK.Command = new DelegateCommand(() =>
             {
-                Send<UpdateSourcesMessage>();
+                Send<ApplyMessage>();
                 Send<CloseMessage>();
             });
         }
@@ -93,9 +92,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<Language> Language => Get(() => new BindableElement<Language>(
             () => Properties.Resources.MenuLanguage,
-            () => _model.Value.Language,
-            e  => _model.Value.Language = e,
-            GetDispatcher(false)
+            () => Facade.Value.Language,
+            e  => Facade.Value.Language = e,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -109,8 +108,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Version => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuVersion,
-            () => $"{_model.Title} {_model.Version.ToString(true)}",
-            GetDispatcher(false)
+            () => $"{Facade.Title} {Facade.Version.ToString(true)}",
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -124,8 +123,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<Uri> Link => Get(() => new BindableElement<Uri>(
             () => Assembly.GetExecutingAssembly().GetCopyright(),
-            () => _model.Value.Uri,
-            GetDispatcher(false)
+            () => Facade.Value.Uri,
+            GetInvoker(false)
         ) { Command = new DelegateCommand(() => Post(Link.Value)) });
 
         /* ----------------------------------------------------------------- */
@@ -140,9 +139,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> Update => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuUpdate,
-            () => _model.Value.CheckUpdate,
-            e  => _model.Value.CheckUpdate = e,
-            GetDispatcher(false)
+            () => Facade.Value.CheckUpdate,
+            e  => Facade.Value.CheckUpdate = e,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -156,7 +155,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Windows => Get(() => new BindableElement(
             () => $"{Environment.OSVersion}",
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -170,13 +169,26 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Framework => Get(() => new BindableElement(
             () => $"Microsoft .NET Framework {Environment.Version}",
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         #endregion
 
-        #region Fields
-        private readonly SettingFolder _model;
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override string GetTitle() => Properties.Resources.TitleSetting;
+
         #endregion
     }
 }

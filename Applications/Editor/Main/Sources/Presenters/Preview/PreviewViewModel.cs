@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PreviewViewModel : DialogViewModel
+    public sealed class PreviewViewModel : DialogViewModel<PreviewFacade>
     {
         #region Constructors
 
@@ -40,7 +40,7 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the PreviewViewModel
-        /// with the specified argumetns.
+        /// with the specified arguments.
         /// </summary>
         ///
         /// <param name="src">Image collection.</param>
@@ -48,13 +48,11 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewViewModel(ImageCollection src,
-            Information file,
-            SynchronizationContext context
-        ) : base(() => GetTitle(src, file), new Aggregator(), context)
-        {
-            _model = new PreviewFacade(src, file, GetDispatcher(false));
-        }
+        public PreviewViewModel(ImageCollection src, Entity file, SynchronizationContext context) : base(
+            new PreviewFacade(src, file, new ContextInvoker(context, false)),
+            new Aggregator(),
+            context
+        ) { }
 
         #endregion
 
@@ -62,14 +60,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Data
+        /// Value
         ///
         /// <summary>
-        /// Gets the bindable data.
+        /// Gets the bindable value.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable Data => _model.Bindable;
+        public PreviewBindable Value => Facade.Value;
 
         #endregion
 
@@ -80,22 +78,19 @@ namespace Cube.Pdf.Editor
         /// GetTitle
         ///
         /// <summary>
-        /// Gets the title of the preview window.
+        /// Gets the title of the dialog.
         /// </summary>
         ///
+        /// <returns>String value.</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        private static string GetTitle(ImageCollection src, Information file) =>
-            string.Format(
-                Properties.Resources.TitlePreview,
-                file.Name,
-                src.Selection.First + 1,
-                src.Count
-            );
+        protected override string GetTitle() => string.Format(
+            Properties.Resources.TitlePreview,
+            Facade.Value.File.Name,
+            Facade.Value.Source.Selection.First + 1,
+            Facade.Value.Source.Count
+        );
 
-        #endregion
-
-        #region Fields
-        private readonly PreviewFacade _model;
         #endregion
     }
 }

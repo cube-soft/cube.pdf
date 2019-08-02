@@ -15,6 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -47,17 +48,17 @@ namespace Cube.Pdf.Pdfium
         /// <returns>Metadata object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Metadata Create(PdfiumReader core) => new Metadata
+        public static Metadata Create(PdfiumReader core) => core.Invoke(e => new Metadata
         {
-            Version  = GetVersion(core),
-            Title    = GetText(core, nameof(Metadata.Title)),
-            Author   = GetText(core, nameof(Metadata.Author)),
-            Subject  = GetText(core, nameof(Metadata.Subject)),
-            Keywords = GetText(core, nameof(Metadata.Keywords)),
-            Creator  = GetText(core, nameof(Metadata.Creator)),
-            Producer = GetText(core, nameof(Metadata.Producer)),
-            Options  = GetPageMode(core),
-        };
+            Version  = GetVersion(e),
+            Title    = GetText(e, nameof(Metadata.Title)),
+            Author   = GetText(e, nameof(Metadata.Author)),
+            Subject  = GetText(e, nameof(Metadata.Subject)),
+            Keywords = GetText(e, nameof(Metadata.Keywords)),
+            Creator  = GetText(e, nameof(Metadata.Creator)),
+            Producer = GetText(e, nameof(Metadata.Producer)),
+            Options  = GetPageMode(e),
+        });
 
         #endregion
 
@@ -72,13 +73,13 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetText(PdfiumReader core, string name)
+        private static string GetText(IntPtr core, string name)
         {
-            var size = core.Invoke(e => PdfiumApi.FPDF_GetMetaText(e, name, null, 0));
+            var size = NativeMethods.FPDF_GetMetaText(core, name, null, 0);
             if (size <= 2) return string.Empty;
 
             var buffer = new byte[size];
-            core.Invoke(e => PdfiumApi.FPDF_GetMetaText(e, name, buffer, size));
+            NativeMethods.FPDF_GetMetaText(core, name, buffer, size);
             return Encoding.Unicode.GetString(buffer, 0, (int)(size - 2));
         }
 
@@ -91,11 +92,10 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static PdfVersion GetVersion(PdfiumReader core) => core.Invoke(
-            e => PdfiumApi.FPDF_GetFileVersion(e, out var version) ?
-            new PdfVersion(version / 10, version % 10) :
-            new PdfVersion(1, 7)
-        );
+        private static PdfVersion GetVersion(IntPtr core) =>
+            NativeMethods.FPDF_GetFileVersion(core, out var dest) ?
+            new PdfVersion(dest / 10, dest % 10) :
+            new PdfVersion(1, 7);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -106,17 +106,16 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static ViewerOptions GetPageMode(PdfiumReader core)
+        private static ViewerOption GetPageMode(IntPtr core)
         {
-            var m = core.Invoke(e => PdfiumApi.FPDFDoc_GetPageMode(e));
-            return new Dictionary<int, ViewerOptions>
-            {
-                { 1, ViewerOptions.Outline         },
-                { 2, ViewerOptions.Thumbnail       },
-                { 3, ViewerOptions.FullScreen      },
-                { 4, ViewerOptions.OptionalContent },
-                { 5, ViewerOptions.Attachment      },
-            }.TryGetValue(m, out var dest) ? dest : ViewerOptions.None;
+            var m = NativeMethods.FPDFDoc_GetPageMode(core);
+            return new Dictionary<int, ViewerOption> {
+                { 1, ViewerOption.Outline         },
+                { 2, ViewerOption.Thumbnail       },
+                { 3, ViewerOption.FullScreen      },
+                { 4, ViewerOption.OptionalContent },
+                { 5, ViewerOption.Attachment      },
+            }.TryGetValue(m, out var dest) ? dest : ViewerOption.None;
         }
 
         #endregion

@@ -66,7 +66,7 @@ namespace Cube.Pdf.Editor
             Drawing.Drop       += WhenDrop;
 
             DrawingCanvas = new Canvas { Visibility = Visibility.Collapsed };
-            DrawingCanvas.Children.Add(Drawing);
+            _ = DrawingCanvas.Children.Add(Drawing);
         }
 
         #endregion
@@ -153,7 +153,7 @@ namespace Cube.Pdf.Editor
             AssociatedObject.Drop += WhenDrop;
 
             _attached = AssociatedObject.GetParent<Panel>();
-            _attached?.Children.Add(DrawingCanvas);
+            _ = _attached?.Children.Add(DrawingCanvas);
         }
 
         /* ----------------------------------------------------------------- */
@@ -215,7 +215,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseMove(object s, MouseEventArgs e)
         {
-            if (e.LeftButton.IsPressed() && !Keys.ModifierKeys.IsPressed()) WhenDragStart(s, e);
+            if (e.LeftButton == MouseButtonState.Pressed &&
+                !Keys.ModifierKeys.IsPressed()
+            ) WhenDragStart(s, e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -229,7 +231,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void WhenMouseEnter(object s, MouseEventArgs e)
         {
-            if (!e.LeftButton.IsPressed()) DrawingCanvas.SetVisible(false);
+            if (e.LeftButton != MouseButtonState.Pressed) DrawingCanvas.SetVisible(false);
         }
 
         /* ----------------------------------------------------------------- */
@@ -270,8 +272,8 @@ namespace Cube.Pdf.Editor
             if (!e.Handled) return;
 
             var pt = e.GetPosition(AssociatedObject);
-            var unit = AssociatedObject.GetBounds();
-            Scroll(obj, pt, unit);
+            var unit = AssociatedObject.GetBounds(0);
+            Scroll(pt, unit);
             Draw(obj, pt, unit);
         }
 
@@ -293,7 +295,7 @@ namespace Cube.Pdf.Editor
             if (!e.Handled) return;
 
             var pt = e.GetPosition(AssociatedObject);
-            var unit = AssociatedObject.GetBounds();
+            var unit = AssociatedObject.GetBounds(0);
             obj.DropIndex = GetTargetIndex(obj, pt, unit);
             if (Command?.CanExecute(obj) ?? false) Command.Execute(obj);
         }
@@ -361,7 +363,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Scroll(DragDropObject src, Point pt, Rect unit)
+        private void Scroll(Point pt, Rect unit)
         {
             var sv = AssociatedObject.GetChild<ScrollViewer>();
             if (sv == null) return;

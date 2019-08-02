@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using Cube.Mixin.Pdf;
 using iTextSharp.text.pdf;
+using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
 {
@@ -30,12 +30,8 @@ namespace Cube.Pdf.Itext
     /// Provides functionality to read a PDF document.
     /// </summary>
     ///
-    /// <remarks>
-    /// iTextSharp を用いて PDF ファイルの解析を行います。
-    /// </remarks>
-    ///
     /* --------------------------------------------------------------------- */
-    public class DocumentReader : DocumentReaderBase
+    public class DocumentReader : DisposableBase, IDocumentReader
     {
         #region Constructors
 
@@ -67,23 +63,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password) :
-            this(src, password, true, new IO()) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentReader
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentReader class
-        /// with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="query">Password query.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string, string> query) :
-            this(src, query, false, true, new IO()) { }
+            this(src, password, new OpenOption()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -96,11 +76,11 @@ namespace Cube.Pdf.Itext
         ///
         /// <param name="src">Path of the PDF file.</param>
         /// <param name="password">Password string.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="options">Open options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, string password, IO io) :
-            this(src, password, true, io) { }
+        public DocumentReader(string src, string password, OpenOption options) :
+            this(src, MakeQuery(null, password), options) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -113,29 +93,10 @@ namespace Cube.Pdf.Itext
         ///
         /// <param name="src">Path of the PDF file.</param>
         /// <param name="query">Password query.</param>
-        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string, string> query, IO io) :
-            this(src, query, false, true, io) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentReader
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentReader class
-        /// with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password string.</param>
-        /// <param name="partial">Partial reading mode.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, string password, bool partial, IO io) :
-            this(src, MakeQuery(null, password), false, partial, io) { }
+        public DocumentReader(string src, IQuery<string> query) :
+            this(src, query, new OpenOption()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -148,17 +109,11 @@ namespace Cube.Pdf.Itext
         ///
         /// <param name="src">Path of the PDF file.</param>
         /// <param name="query">Password query.</param>
-        /// <param name="fullaccess">Requires full access.</param>
-        /// <param name="partial">Partial reading mode.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="options">Open options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src,
-            IQuery<string, string> query,
-            bool fullaccess,
-            bool partial,
-            IO io
-        ) : this(src, MakeQuery(query, string.Empty), fullaccess, partial, io) { }
+        public DocumentReader(string src, IQuery<string> query, OpenOption options) :
+            this(src, MakeQuery(query, string.Empty), options) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -170,30 +125,25 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="qv">Password query or string.</param>
-        /// <param name="fullaccess">Requires full access.</param>
-        /// <param name="partial">Partial reading mode.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="password">Password query or string.</param>
+        /// <param name="options">Open options.</param>
         ///
         /* ----------------------------------------------------------------- */
         private DocumentReader(string src,
-            QueryMessage<IQuery<string, string>, string> qv,
-            bool fullaccess,
-            bool partial,
-            IO io
-        ) : base(io)
-        {
-            _core = ReaderFactory.Create(src, qv, fullaccess, partial);
+            QueryMessage<IQuery<string>, string> password,
+            OpenOption options
+        ) {
+            Core = ReaderFactory.FromPdf(src, password, options);
 
-            var f = io.GetPdfFile(src, qv.Value);
-            f.Count      = _core.NumberOfPages;
-            f.FullAccess = _core.IsOpenedWithFullPermissions;
+            var f = options.IO.GetPdfFile(src, password.Value);
+            f.Count      = Core.NumberOfPages;
+            f.FullAccess = Core.IsOpenedWithFullPermissions;
 
             File        = f;
-            Metadata    = _core.GetMetadata();
-            Encryption  = _core.GetEncryption(f);
-            Pages       = new ReadOnlyPageList(_core, f);
-            Attachments = new AttachmentCollection(_core, f, IO);
+            Metadata    = Core.GetMetadata();
+            Encryption  = Core.GetEncryption(f);
+            Pages       = new PageCollection(Core, f);
+            Attachments = new AttachmentCollection(Core, f, options.IO);
         }
 
         #endregion
@@ -202,14 +152,69 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RawObject
+        /// File
         ///
         /// <summary>
-        /// Gets the raw object.
+        /// Gets the information of the target file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public object RawObject => _core;
+        public File File { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Gets the PDF metadata.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Metadata Metadata { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// Gets the encryption information of the PDF document.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encryption Encryption { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Pages
+        ///
+        /// <summary>
+        /// Gets the page collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Page> Pages { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Attachments
+        ///
+        /// <summary>
+        /// Gets the attachment collection.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<Attachment> Attachments { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Core
+        ///
+        /// <summary>
+        /// Gets the core object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal PdfReader Core { get; }
 
         #endregion
 
@@ -232,7 +237,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (disposing) _core?.Dispose();
+            if (disposing) Core?.Dispose();
         }
 
         #endregion
@@ -248,14 +253,10 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static QueryMessage<IQuery<string, string>, string> MakeQuery(
-            IQuery<string, string> query, string password) =>
+        private static QueryMessage<IQuery<string>, string> MakeQuery(
+            IQuery<string> query, string password) =>
             Query.NewMessage(query, password);
 
-        #endregion
-
-        #region Fields
-        private readonly PdfReader _core;
         #endregion
     }
 }

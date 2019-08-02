@@ -32,7 +32,7 @@ namespace Cube.Pdf.Editor
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public class DragDropObject
+    public sealed class DragDropObject
     {
         #region Constructors
 

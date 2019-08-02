@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Mixin.Tasks;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
@@ -33,7 +32,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : ViewModelBase<MainFacade>
+    public sealed class MainViewModel : Presentable<MainFacade>
     {
         #region Constructors
 
@@ -110,7 +109,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Merge() => Send(MessageFactory.CreateForMerge(), e => Facade.Merge(e)).Forget();
+        public void Merge() => Send(MessageFactory.CreateForMerge(), e => Facade.Merge(e));
 
         /* --------------------------------------------------------------------- */
         ///
@@ -121,7 +120,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Split() => Send(MessageFactory.CreateForSplit(), e => Facade.Split(e, new List<string>())).Forget();
+        public void Split() => Send(MessageFactory.CreateForSplit(), e => Facade.Split(e, new List<string>()));
 
         /* --------------------------------------------------------------------- */
         ///
@@ -132,7 +131,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Add() => Send(MessageFactory.CreateForAdd(), e => Facade.Add(e)).Forget();
+        public void Add() => Send(MessageFactory.CreateForAdd(), e => Facade.Add(e));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -172,7 +171,7 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IEnumerable<int> indices, int offset) => Track(() => Facade.Move(indices, offset)).Forget();
+        public void Move(IEnumerable<int> indices, int offset) => Track(() => Facade.Move(indices, offset));
 
         #endregion
     }

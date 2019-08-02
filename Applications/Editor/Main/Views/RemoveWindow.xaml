@@ -23,16 +23,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:xb="clr-namespace:Cube.Xui.Behaviors;assembly=Cube.Xui"
+    xmlns:my="clr-namespace:Cube.Pdf.Editor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="{Binding Title.Text}"
+    Title="{Binding Title}"
     Height="230"
     Width="420"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
-    FocusManager.FocusedElement="{Binding ElementName=RangeTextBox}">
+    FocusManager.FocusedElement="{Binding ElementName=FirstFocus}">
 
     <!-- **********************************************************************
       Resources
@@ -74,26 +75,26 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock
-                Text="{Binding PageCaption.Text}"
+                Text="{Binding Count.Text}"
                 Grid.Column="0"
                 Grid.Row="0" />
             <TextBlock
-                Text="{Binding PageCaption.Value}"
+                Text="{Binding Count.Value, Converter={my:CountToText}}"
                 Grid.Row="0"
                 Grid.Column="1" />
 
             <TextBlock
-                Text="{Binding RangeCaption.Text}"
+                Text="{Binding Range.Text}"
                 Grid.Row="1"
                 Grid.Column="0" />
-            <TextBlock
-                Text="{Binding RangeCaption.Value}"
-                Grid.Row="2"
-                Grid.Column="1" />
             <TextBox
-                x:Name="RangeTextBox"
-                Text="{Binding Range.Value, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Range.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                x:Name="FirstFocus"
                 Grid.Row="1"
+                Grid.Column="1" />
+            <TextBlock
+                Text="{Binding Example.Text}"
+                Grid.Row="2"
                 Grid.Column="1" />
         </Grid>
 

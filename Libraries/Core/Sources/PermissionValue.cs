@@ -99,10 +99,6 @@ namespace Cube.Pdf
     /// Specifies the permission flags for operations.
     /// </summary>
     ///
-    /// <remarks>
-    /// The flags are used only in the Permission object.
-    /// </remarks>
-    ///
     /* --------------------------------------------------------------------- */
     [Flags]
     internal enum PermissionFlags : uint

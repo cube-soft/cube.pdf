@@ -55,7 +55,7 @@ namespace Cube.Pdf.Clip
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(IO io, SynchronizationContext context) : base(new Dispatcher(context, false))
+        public MainFacade(IO io, SynchronizationContext context) : base(new ContextInvoker(context, false))
         {
             IO = io;
             _clips.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
@@ -151,7 +151,9 @@ namespace Cube.Pdf.Clip
                 if (_source.File.FullName.FuzzyEquals(src)) return;
                 else Close();
             }
-            _source = new DocumentReader(src, "", true, IO);
+
+            var options = new OpenOption { IO = IO, SaveMemory = true };
+            _source = new DocumentReader(src, "", options);
             Reset();
         });
 

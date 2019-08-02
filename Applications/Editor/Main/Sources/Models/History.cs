@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class History : ObservableBase
+    public sealed class History : ObservableBase
     {
         #region Constructors
 
@@ -43,7 +43,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public History(IDispatcher dispatcher) : base(dispatcher) { }
+        public History(Invoker invoker) : base(invoker) { }
 
         #endregion
 
@@ -174,8 +174,7 @@ namespace Cube.Pdf.Editor
         public void Invoke(Action action)
         {
             action();
-            Refresh(nameof(Undoable));
-            Refresh(nameof(Redoable));
+            Refresh(nameof(Undoable), nameof(Redoable));
         }
 
         #endregion

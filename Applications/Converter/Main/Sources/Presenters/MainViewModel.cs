@@ -16,12 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Assembly;
-using Cube.Mixin.String;
-using Cube.Mixin.Syntax;
+using Cube.Mixin.Logging;
+using Cube.Mixin.Tasks;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Cube.Pdf.Converter
 {
@@ -34,7 +35,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : ViewModelBase
+    public sealed class MainViewModel : Presentable<Facade>
     {
         #region Constructors
 
@@ -67,7 +68,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel(SettingFolder settings, SynchronizationContext context) :
-            base(new Aggregator(), context)
+            base(new Facade(settings), new Aggregator(), context)
         {
             Locale.Set(settings.Value.Language);
 
@@ -75,8 +76,7 @@ namespace Cube.Pdf.Converter
             Metadata   = new MetadataViewModel(settings.Value.Metadata, Aggregator, context);
             Encryption = new EncryptionViewModel(settings.Value.Encryption, Aggregator, context);
 
-            _model = new Facade(settings);
-            _model.Settings.PropertyChanged += Observe;
+            Facade.Settings.PropertyChanged += Observe;
         }
 
         #endregion
@@ -126,32 +126,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Title =>
-            _model.Settings.DocumentName.Source.HasValue() ?
-            $"{_model.Settings.DocumentName.Source} - {Product} {Version}" :
-            $"{Product} {Version}";
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Product
-        ///
-        /// <summary>
-        /// Gets the product name.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Product => _model.Settings.Assembly.GetProduct();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Version
-        ///
-        /// <summary>
-        /// Gets the version of the application.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Version => _model.Settings.Version.ToString(true);
+        public string Title => Facade.Settings.GetTitle();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -173,7 +148,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Busy => _model.Settings.Value.Busy;
+        public bool Busy => Facade.Settings.Value.Busy;
 
         #endregion
 
@@ -191,7 +166,17 @@ namespace Cube.Pdf.Converter
         public void Convert()
         {
             var ok = Encryption.Confirm() && General.Confirm();
-            if (ok) _ = TrackClose(() => _model.InvokeEx());
+            if (ok) TaskEx.Run(() =>
+            {
+                try { Facade.InvokeEx(); }
+                catch (OperationCanceledException) { /* ignore */ }
+                catch (Exception e)
+                {
+                    this.LogError(e);
+                    Send(MessageFactory.Create(e));
+                }
+                finally { Post<CloseMessage>(); }
+            }).Forget();
         }
 
         /* ----------------------------------------------------------------- */
@@ -203,8 +188,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() =>
-            Metadata.ConfirmWhenSave().Then(() => _model.Settings.Save());
+        public void Save() => Metadata.Save(Facade.Settings.Save);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -216,8 +200,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectSource() =>
-            Send(_model.Settings.CreateForSource(), e => _model.SetSource(e));
+        public void SelectSource() => Send(
+            Facade.Settings.CreateForSource(),
+            e => Facade.Settings.Value.Source = e.First()
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -229,8 +215,11 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectDestination() =>
-            Send(_model.Settings.CreateForDestination(), e => _model.SetDestination(e));
+        public void SelectDestination()
+        {
+            var src = Facade.Settings.CreateForDestination();
+            Send(src, e => Facade.SetDestination(src));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -242,33 +231,14 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectUserProgram() =>
-            Send(_model.Settings.CreateForUserProgram(), e => _model.SetUserProgram(e));
+        public void SelectUserProgram() => Send(
+            Facade.Settings.CreateForUserProgram(),
+            e => Facade.Settings.Value.UserProgram = e.First()
+        );
 
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing)
-        {
-            try { if (disposing) _model.Dispose(); }
-            finally { base.Dispose(disposing); }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -281,29 +251,25 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void Observe(object s, PropertyChangedEventArgs e)
         {
-            var value = _model.Settings.Value;
+            var src = Facade.Settings.Value;
 
             switch (e.PropertyName)
             {
-                case nameof(value.Format):
-                    _model.ChangeExtension();
+                case nameof(src.Format):
+                    Facade.ChangeExtension();
                     break;
-                case nameof(value.PostProcess):
-                    if (value.PostProcess == PostProcess.Others) SelectUserProgram();
+                case nameof(src.PostProcess):
+                    if (src.PostProcess == PostProcess.Others) SelectUserProgram();
                     break;
-                case nameof(value.Language):
-                    Locale.Set(value.Language);
+                case nameof(src.Language):
+                    Locale.Set(src.Language);
                     break;
-                case nameof(value.Busy):
+                case nameof(src.Busy):
                     OnPropertyChanged(e);
                     break;
             }
         }
 
-        #endregion
-
-        #region Fields
-        private readonly Facade _model;
         #endregion
     }
 }

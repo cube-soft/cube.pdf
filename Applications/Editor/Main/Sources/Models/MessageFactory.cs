@@ -18,8 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
-using System;
-using System.Reflection;
 
 namespace Cube.Pdf.Editor
 {
@@ -38,23 +36,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
-        ///
-        /// <summary>
-        /// Create a message to show a DialogBox with an error icon
-        /// and OK button.
-        /// </summary>
-        ///
-        /// <param name="src">Occurred exception.</param>
-        ///
-        /// <returns>DialogMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static DialogMessage Create(Exception src) =>
-            CreateError($"{src.Message} ({src.GetType().Name})");
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// CreateOverwriteWarn
         ///
         /// <summary>
@@ -67,32 +48,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static DialogMessage CreateOverwriteWarn() => new DialogMessage
         {
-            Value   = Properties.Resources.MessageOverwrite,
-            Title   = Assembly.GetExecutingAssembly().GetTitle(),
+            Text    = Properties.Resources.MessageOverwrite,
+            Title   = typeof(App).Assembly.GetTitle(),
             Buttons = DialogButtons.YesNoCancel,
             Icon    = DialogIcon.Warning,
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateError
-        ///
-        /// <summary>
-        /// Create a message to show a DialogBox with an error icon
-        /// and OK button.
-        /// </summary>
-        ///
-        /// <param name="src">Error message.</param>
-        ///
-        /// <returns>DialogMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static DialogMessage CreateError(string src) => new DialogMessage
-        {
-            Value   = src,
-            Title   = Assembly.GetExecutingAssembly().GetTitle(),
-            Icon    = DialogIcon.Error,
-            Buttons = DialogButtons.Ok,
         };
 
         #endregion
@@ -112,7 +71,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static OpenFileMessage CreateForOpen() => new OpenFileMessage
         {
-            Title           = Properties.Resources.TitleOpen,
+            Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = false,
             Filter          = new []
@@ -135,12 +94,35 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static OpenFileMessage CreateForInsert() => new OpenFileMessage
         {
-            Title           = Properties.Resources.TitleOpen,
+            Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = true,
             Filter          = new []
             {
                 new ExtensionFilter(Properties.Resources.FilterInsertable, true, ".pdf", ".png", ".jpg", ".jpeg", ".bmp"),
+                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
+            }.GetFilter(),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateForExtract
+        ///
+        /// <summary>
+        /// Creates a message to show a SaveFileDialog dialog.
+        /// </summary>
+        ///
+        /// <returns>SaveFileMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static SaveFileMessage CreateForExtract() => new SaveFileMessage
+        {
+            Text            = Properties.Resources.MenuSaveAs,
+            OverwritePrompt = true,
+            CheckPathExists = false,
+            Filter          = new[]
+            {
+                new ExtensionFilter(Properties.Resources.FilterExtract, true, ".pdf", ".png"),
                 new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
@@ -158,7 +140,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static SaveFileMessage CreateForSave() => new SaveFileMessage
         {
-            Title           = Properties.Resources.TitleSaveAs,
+            Text            = Properties.Resources.TitleSaveAs,
             OverwritePrompt = true,
             CheckPathExists = false,
             Filter          = new[]

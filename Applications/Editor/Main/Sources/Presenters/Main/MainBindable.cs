@@ -17,9 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
-using Cube.Xui;
+using Cube.Mixin.Collections;
 using System;
-using System.Diagnostics;
 
 namespace Cube.Pdf.Editor
 {
@@ -32,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MainBindable : ObservableBase
+    public sealed class MainBindable : ObservableBase
     {
         #region Constructors
 
@@ -47,27 +46,20 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="images">Image collection.</param>
         /// <param name="settings">User settings.</param>
-        /// <param name="query">Password query.</param>
-        /// <param name="dispatcher">Dispatcher object.</param>
+        /// <param name="invoker">Invoker object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable(ImageCollection images, SettingFolder settings,
-            IQuery<string> query, IDispatcher dispatcher)
+        public MainBindable(ImageCollection images, SettingFolder settings, Invoker invoker) : base(invoker)
         {
             _settings = settings;
-            Images    = images;
-            Query     = query;
-            History   = new History(dispatcher);
-            Source    = new BindableValue<Information>(dispatcher);
-            Message   = new BindableValue<string>(string.Empty, dispatcher);
-            Busy      = new BindableValue<bool>(() => _busy, dispatcher);
-            Modified  = new BindableValue<bool>(() => History.Undoable, dispatcher);
-            Count     = new BindableValue<int>(() => Images.Count, dispatcher);
-            ItemSize  = new BindableValue<int>(
-                () => Settings.ItemSize,
-                e  => Settings.ItemSize = e,
-                dispatcher
-            );
+
+            var index = images.Preferences.ItemSizeOptions.LastIndex(e => e <= ItemSize);
+            images.Preferences.ItemSizeIndex = Math.Max(index, 0);
+            images.Preferences.FrameOnly     = Settings.FrameOnly;
+            images.Preferences.TextHeight    = 25;
+
+            Images  = images;
+            History = new History(invoker);
         }
 
         #endregion
@@ -127,7 +119,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IQuery<string> Query { get; }
+        public IQuery<string> Query
+        {
+            get => _query;
+            set => SetProperty(ref _query, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -167,8 +163,6 @@ namespace Cube.Pdf.Editor
             set => SetProperty(ref _encryption, value);
         }
 
-        #region BindableValue
-
         /* ----------------------------------------------------------------- */
         ///
         /// Source
@@ -178,7 +172,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<Information> Source { get; }
+        public Entity Source
+        {
+            get => _source;
+            set => SetProperty(ref _source, value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -188,13 +186,15 @@ namespace Cube.Pdf.Editor
         /// Gets the value indicating whether models are busy.
         /// </summary>
         ///
-        /// <remarks>
-        /// この値は外部から変更する事はできません。Invoke メソッドの実行中
-        /// のみ Busy.Value の値が true に設定されます。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<bool> Busy { get; }
+        public bool Busy
+        {
+            get => _busy;
+            private set
+            {
+                if (SetProperty(ref _busy, value)) Refresh(nameof(Modified), nameof(Count));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -205,7 +205,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<bool> Modified { get; }
+        public bool Modified => History.Undoable;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -216,7 +216,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<int> Count { get; }
+        public int Count => Images.Count;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -227,80 +227,35 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<int> ItemSize { get; }
+        public int ItemSize
+        {
+            get => Settings.ItemSize;
+            set
+            {
+                if (Settings.ItemSize == value) return;
+                Settings.ItemSize = value;
+                Refresh(nameof(ItemSize));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// Message
         ///
         /// <summary>
-        /// Gets or sets the message.
+        /// Gets the message.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public BindableValue<string> Message { get; }
-
-        #endregion
+        public string Message
+        {
+            get => _message;
+            private set => SetProperty(ref _message, value);
+        }
 
         #endregion
 
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsOpen
-        ///
-        /// <summary>
-        /// Gets the value indicatint whether a PDF document is open.
-        /// </summary>
-        ///
-        /// <returns>true for open.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool IsOpen() => Source.Value != null;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// Sets properties of the specified IDocumentReader.
-        /// </summary>
-        ///
-        /// <param name="src">Document information.</param>
-        ///
-        /// <remarks>
-        /// PDFium は Metadata や Encryption の情報取得が不完全なため、
-        /// これらの情報は、必要になったタイミングで iTextSharp を用いて
-        /// 取得します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Open(IDocumentReader src)
-        {
-            Source.Value = src.File;
-            if (!src.Encryption.Enabled) Encryption = src.Encryption;
-            Images.Add(src.Pages);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Close
-        ///
-        /// <summary>
-        /// Clears properties of the current PDF document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Close()
-        {
-            Source.Value = null;
-            Metadata     = null;
-            Encryption   = null;
-
-            History.Clear();
-            Images.Clear();
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -315,19 +270,92 @@ namespace Cube.Pdf.Editor
         {
             try
             {
-                _busy = true;
-                Busy.Refresh();
+                Busy = true;
                 action();
             }
             catch (OperationCanceledException) { /* ignore user cancel */ }
-            catch (Exception err) { SetMessage(err.Message); throw; }
-            finally
-            {
-                _busy = false;
-                Busy.Refresh();
-                Modified.Refresh();
-                Count.Refresh();
-            }
+            catch (Exception e) { Set(e.Message); throw; }
+            finally { Busy = false; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        ///
+        /// <summary>
+        /// Clears the current properties.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Clear()
+        {
+            Source     = null;
+            Metadata   = null;
+            Encryption = null;
+
+            History.Clear();
+            Images.Clear();
+
+            // for cleared images.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// Sets the specified message.
+        /// </summary>
+        ///
+        /// <param name="format">Format for the message.</param>
+        /// <param name="args">Additional arguments.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Set(string format, params object[] args) => Message = string.Format(format, args);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// Sets the Metadata object.
+        /// </summary>
+        ///
+        /// <param name="src">Metadata object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public HistoryItem Set(Metadata src)
+        {
+            var m = Metadata;
+            return HistoryItem.Invoke(() => Metadata = src, () => Metadata = m);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// Sets the Encryption object.
+        /// </summary>
+        ///
+        /// <param name="value">Encryption object.</param>
+        ///
+        /// <returns>
+        /// History item to execute undo and redo actions.
+        /// </returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public HistoryItem Set(Encryption value)
+        {
+            var e = Encryption;
+            return HistoryItem.Invoke(() => Encryption = value, () => Encryption = e);
         }
 
         /* ----------------------------------------------------------------- */
@@ -342,26 +370,11 @@ namespace Cube.Pdf.Editor
         /// <param name="encryption">Encryption object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Set(Metadata metadata, Encryption encryption)
+        internal void Set(Metadata metadata, Encryption encryption)
         {
             if (_metadata   == null) _metadata   = metadata;
             if (_encryption == null) _encryption = encryption;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetMessage
-        ///
-        /// <summary>
-        /// Sets the specified message.
-        /// </summary>
-        ///
-        /// <param name="format">Format for the message.</param>
-        /// <param name="args">Additional arguments.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void SetMessage(string format, params object[] args) =>
-            Message.Value = string.Format(format, args);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -378,7 +391,12 @@ namespace Cube.Pdf.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing) return;
+            Clear();
+            Images.Dispose();
+        }
 
         #endregion
 
@@ -395,18 +413,20 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void LazyLoad()
         {
-            var src = Source.Value;
-            Debug.Assert(src != null);
-            using (var r = src.GetItexReader(Query, IO)) Set(r.Metadata, r.Encryption);
+            if (Source == null) return;
+            using (var r = Source.GetItext(Query, IO, true)) Set(r.Metadata, r.Encryption);
         }
 
         #endregion
 
         #region Fields
         private readonly SettingFolder _settings;
+        private IQuery<string> _query;
+        private Entity _source;
         private Metadata _metadata;
         private Encryption _encryption;
         private bool _busy = false;
+        private string _message = string.Empty;
         #endregion
     }
 }

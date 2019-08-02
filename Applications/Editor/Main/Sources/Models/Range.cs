@@ -26,30 +26,6 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RangeException
-    ///
-    /// <summary>
-    /// Represents that the specified string is invalid.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class RangeException : Exception
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RangeException
-        ///
-        /// <summary>
-        /// Initializes a new instance of the RangeException class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RangeException() : base(Properties.Resources.MessageRangeError) { }
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// Range
     ///
     /// <summary>
@@ -64,7 +40,7 @@ namespace Cube.Pdf.Editor
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public class Range : EnumerableBase<int>
+    public sealed class Range : EnumerableBase<int>
     {
         #region Constructors
 
@@ -163,5 +139,29 @@ namespace Cube.Pdf.Editor
         #region Fields
         private readonly IEnumerable<int> _inner;
         #endregion
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// RangeException
+    ///
+    /// <summary>
+    /// Represents that the specified string is invalid.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [Serializable]
+    public class RangeException : Exception
+    {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RangeException
+        ///
+        /// <summary>
+        /// Initializes a new instance of the RangeException class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RangeException() : base(Properties.Resources.MessageRangeError) { }
     }
 }

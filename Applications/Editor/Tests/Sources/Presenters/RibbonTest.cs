@@ -16,10 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using NUnit.Framework;
-using System.Reflection;
-using System.Threading;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
@@ -33,7 +30,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class RibbonTest
+    class RibbonTest : ViewModelFixture
     {
         #region Tests
 
@@ -47,10 +44,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_English()
+        public void GetText_English() => Make(vm =>
         {
-            var dest = Create();
-            Locale.Set(Language.English);
+            vm.Value.Settings.Language = Language.English;
+            var dest = vm.Ribbon;
 
             Assert.That(dest.File.Text,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("Edit"));
@@ -58,6 +55,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Open.Text,          Is.EqualTo("Open"));
             Assert.That(dest.Save.Text,          Is.EqualTo("Save"));
             Assert.That(dest.Close.Text,         Is.EqualTo("Close"));
+            Assert.That(dest.Exit.Text,          Is.EqualTo("Exit"));
             Assert.That(dest.Undo.Text,          Is.EqualTo("Undo"));
             Assert.That(dest.Redo.Text,          Is.EqualTo("Redo"));
             Assert.That(dest.Select.Text,        Is.EqualTo("Select"));
@@ -67,21 +65,22 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Insert.Text,        Is.EqualTo("Insert"));
             Assert.That(dest.InsertFront.Text,   Is.EqualTo("Insert at the beginning"));
             Assert.That(dest.InsertBack.Text,    Is.EqualTo("Insert at the end"));
-            Assert.That(dest.InsertOthers.Text,  Is.EqualTo("Insertion details"));
+            Assert.That(dest.InsertOthers.Text,  Is.EqualTo("Insert at other position"));
             Assert.That(dest.Extract.Text,       Is.EqualTo("Extract"));
+            Assert.That(dest.ExtractOthers.Text, Is.EqualTo("Extract with other settings"));
             Assert.That(dest.Remove.Text,        Is.EqualTo("Remove"));
-            Assert.That(dest.RemoveOthers.Text,  Is.EqualTo("Removal details"));
+            Assert.That(dest.RemoveOthers.Text,  Is.EqualTo("Remove other pages"));
             Assert.That(dest.MovePrevious.Text,  Is.EqualTo("Prev"));
             Assert.That(dest.MoveNext.Text,      Is.EqualTo("Next"));
             Assert.That(dest.RotateLeft.Text,    Is.EqualTo("Left"));
             Assert.That(dest.RotateRight.Text,   Is.EqualTo("Right"));
             Assert.That(dest.Metadata.Text,      Is.EqualTo("Metadata"));
             Assert.That(dest.Encryption.Text,    Is.EqualTo("Security"));
-            Assert.That(dest.Refresh.Text,       Is.EqualTo("Refresh"));
+            Assert.That(dest.Redraw.Text,        Is.EqualTo("Refresh"));
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("ZoomIn"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("Settings"));
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -93,10 +92,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetTooltip_English()
+        public void GetTooltip_English() => Make(vm =>
         {
-            var dest = Create();
-            Locale.Set(Language.English);
+            vm.Value.Settings.Language = Language.English;
+            var dest = vm.Ribbon;
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
@@ -104,6 +103,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
             Assert.That(dest.Save.Tooltip,          Is.EqualTo("Save"));
             Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
+            Assert.That(dest.Exit.Tooltip,          Is.EqualTo(dest.Exit.Text));
             Assert.That(dest.Undo.Tooltip,          Is.EqualTo(dest.Undo.Text));
             Assert.That(dest.Redo.Tooltip,          Is.EqualTo(dest.Redo.Text));
             Assert.That(dest.Select.Tooltip,        Is.EqualTo(dest.Select.Text));
@@ -115,6 +115,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.InsertBack.Tooltip,    Is.EqualTo(dest.InsertBack.Text));
             Assert.That(dest.InsertOthers.Tooltip,  Is.EqualTo(dest.InsertOthers.Text));
             Assert.That(dest.Extract.Tooltip,       Is.EqualTo("Extract the selected pages"));
+            Assert.That(dest.ExtractOthers.Tooltip, Is.EqualTo(dest.ExtractOthers.Text));
             Assert.That(dest.Remove.Tooltip,        Is.EqualTo("Remove the selected pages"));
             Assert.That(dest.RemoveOthers.Tooltip,  Is.EqualTo(dest.RemoveOthers.Text));
             Assert.That(dest.MovePrevious.Tooltip,  Is.EqualTo(dest.MovePrevious.Text));
@@ -123,11 +124,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
             Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("PDF document metadata"));
             Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
-            Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
+            Assert.That(dest.Redraw.Tooltip,        Is.EqualTo(dest.Redraw.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -139,10 +140,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_Japanese()
+        public void GetText_Japanese() => Make(vm =>
         {
-            var dest = Create();
-            Locale.Set(Language.Japanese);
+            vm.Value.Settings.Language = Language.Japanese;
+            var dest = vm.Ribbon;
 
             Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("編集"));
@@ -150,6 +151,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Open.Text,          Is.EqualTo("開く"));
             Assert.That(dest.Save.Text,          Is.EqualTo("保存"));
             Assert.That(dest.Close.Text,         Is.EqualTo("閉じる"));
+            Assert.That(dest.Exit.Text,          Is.EqualTo("終了"));
             Assert.That(dest.Undo.Text,          Is.EqualTo("元に戻す"));
             Assert.That(dest.Redo.Text,          Is.EqualTo("やり直し"));
             Assert.That(dest.Select.Text,        Is.EqualTo("選択"));
@@ -161,6 +163,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.InsertBack.Text,    Is.EqualTo("末尾に挿入"));
             Assert.That(dest.InsertOthers.Text,  Is.EqualTo("詳細を設定して挿入"));
             Assert.That(dest.Extract.Text,       Is.EqualTo("抽出"));
+            Assert.That(dest.ExtractOthers.Text, Is.EqualTo("詳細を設定して抽出"));
             Assert.That(dest.Remove.Text,        Is.EqualTo("削除"));
             Assert.That(dest.RemoveOthers.Text,  Is.EqualTo("範囲を指定して削除"));
             Assert.That(dest.MovePrevious.Text,  Is.EqualTo("前へ"));
@@ -169,11 +172,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.RotateRight.Text,   Is.EqualTo("右90度"));
             Assert.That(dest.Metadata.Text,      Is.EqualTo("プロパティ"));
             Assert.That(dest.Encryption.Text,    Is.EqualTo("セキュリティ"));
-            Assert.That(dest.Refresh.Text,       Is.EqualTo("更新"));
+            Assert.That(dest.Redraw.Text,        Is.EqualTo("更新"));
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("拡大"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("設定"));
-        }
+        });
 
          /* ----------------------------------------------------------------- */
         ///
@@ -185,10 +188,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetTooltip_Japanese()
+        public void GetTooltip_Japanese() => Make(vm =>
         {
-            var dest = Create();
-            Locale.Set(Language.Japanese);
+            vm.Value.Settings.Language = Language.Japanese;
+            var dest = vm.Ribbon;
 
             Assert.That(dest.File.Tooltip,          Is.EqualTo(dest.File.Text));
             Assert.That(dest.Edit.Tooltip,          Is.EqualTo(dest.Edit.Text));
@@ -196,6 +199,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
             Assert.That(dest.Save.Tooltip,          Is.EqualTo("上書き保存"));
             Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
+            Assert.That(dest.Exit.Tooltip,          Is.EqualTo(dest.Exit.Text));
             Assert.That(dest.Undo.Tooltip,          Is.EqualTo(dest.Undo.Text));
             Assert.That(dest.Redo.Tooltip,          Is.EqualTo(dest.Redo.Text));
             Assert.That(dest.Select.Tooltip,        Is.EqualTo(dest.Select.Text));
@@ -207,6 +211,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.InsertBack.Tooltip,    Is.EqualTo(dest.InsertBack.Text));
             Assert.That(dest.InsertOthers.Tooltip,  Is.EqualTo(dest.InsertOthers.Text));
             Assert.That(dest.Extract.Tooltip,       Is.EqualTo("選択ページを抽出"));
+            Assert.That(dest.ExtractOthers.Tooltip, Is.EqualTo(dest.ExtractOthers.Text));
             Assert.That(dest.Remove.Tooltip,        Is.EqualTo("選択ページを削除"));
             Assert.That(dest.RemoveOthers.Tooltip,  Is.EqualTo(dest.RemoveOthers.Text));
             Assert.That(dest.MovePrevious.Tooltip,  Is.EqualTo(dest.MovePrevious.Text));
@@ -215,11 +220,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
             Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("PDF 文書プロパティ"));
             Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
-            Assert.That(dest.Refresh.Tooltip,       Is.EqualTo(dest.Refresh.Text));
+            Assert.That(dest.Redraw.Tooltip,        Is.EqualTo(dest.Redraw.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
-        }
+        });
 
        /* ----------------------------------------------------------------- */
         ///
@@ -231,45 +236,25 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_Dynamically()
+        public void GetText_Dynamically() => Make(vm =>
         {
-            var dest = Create();
-
-            Locale.Set(Language.English);
+            var dest = vm.Ribbon;
+            vm.Value.Settings.Language = Language.English;
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "en");
 
-            Locale.Set(Language.Japanese);
+            vm.Value.Settings.Language = Language.Japanese;
             Assert.That(dest.Open.Text,    Is.EqualTo("開く"), "ja");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "ja");
 
-            Locale.Set(Language.French);
+            vm.Value.Settings.Language = Language.French;
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "fr");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "fr");
 
-            Locale.Set(Language.Auto);
+            vm.Value.Settings.Language = Language.Auto;
             Assert.That(dest.Open.Text,    Is.Not.Null.And.Not.Empty, "empty");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "empty");
-        }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new instance of the RibbonViewModel class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private RibbonViewModel Create()
-        {
-            new SettingFolder(Assembly.GetExecutingAssembly(), new IO()); // Locale.Configure
-            return new RibbonViewModel(null, new Aggregator(), new SynchronizationContext());
-        }
+        });
 
         #endregion
     }

@@ -57,7 +57,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public static OpenFileMessage CreateForAdd() => new OpenFileMessage
         {
-            Title           = Properties.Resources.TitleAdd,
+            Text            = Properties.Resources.TitleAdd,
             CheckPathExists = true,
             Multiselect     = true,
             Filter          = new[]
@@ -81,7 +81,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public static SaveFileMessage CreateForMerge() => new SaveFileMessage
         {
-            Title           = Properties.Resources.TitleMerge,
+            Text            = Properties.Resources.TitleMerge,
             OverwritePrompt = true,
             CheckPathExists = false,
             Filter          = new[]
@@ -104,7 +104,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public static OpenDirectoryMessage CreateForSplit() => new OpenDirectoryMessage
         {
-            Title     = Properties.Resources.TitleSplit,
+            Text      = Properties.Resources.TitleSplit,
             NewButton = true,
         };
 

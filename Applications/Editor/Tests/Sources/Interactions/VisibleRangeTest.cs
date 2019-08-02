@@ -39,25 +39,33 @@ namespace Cube.Pdf.Editor.Tests.Interactions
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Properties
+        /// Invoke
         ///
         /// <summary>
-        /// Confirms default values of properties.
+        /// Tests the create, attach, detach, and some other methods.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Properties() => Create(vm =>
+        public void Invoke()
         {
-            var view = new ScrollViewer { DataContext = vm };
+            var view = new ScrollViewer();
             var src  = new VisibleRange();
 
+            Assert.That(view.ActualWidth,  Is.EqualTo(0), nameof(view.ActualWidth));
+            Assert.That(view.ActualHeight, Is.EqualTo(0), nameof(view.ActualHeight));
             src.Attach(view);
-            Assert.That(src.First, Is.EqualTo(0));
-            Assert.That(src.Last,  Is.EqualTo(0));
-            Assert.That(src.Unit,  Is.EqualTo(0));
+
+            Assert.That(src.First, Is.EqualTo(0), nameof(src.First));
+            Assert.That(src.Last,  Is.EqualTo(0), nameof(src.Last));
+            Assert.That(src.Unit,  Is.EqualTo(0), nameof(src.Unit));
+            src.Unit = 100;
+            Assert.That(src.First, Is.EqualTo(0), nameof(src.First));
+            Assert.That(src.Last,  Is.EqualTo(3), nameof(src.Last));
+            Assert.That(src.Unit,  Is.EqualTo(100), nameof(src.Unit));
+
             src.Detach();
-        });
+        }
 
         #endregion
     }

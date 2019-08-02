@@ -29,10 +29,10 @@
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
     ShowInTaskbar="False"
-    Title="{Binding Title.Text}"
-    Width="{Binding Data.Width.Value, Mode=TwoWay}"
-    Height="{Binding Data.Height.Value, Mode=TwoWay}"
-    Cursor="{Binding Data.Busy.Value, Converter={my:BooleanToCursor}}">
+    Title="{Binding Title}"
+    Width="{Binding Value.Width, Mode=TwoWay}"
+    Height="{Binding Value.Height, Mode=TwoWay}"
+    Cursor="{Binding Value.Busy, Converter={my:BooleanToCursor}}">
 
     <!-- **********************************************************************
       Resources
@@ -58,7 +58,7 @@
             <Button.Template>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Image
-                        Source="{Binding Data.Image.Value}"
+                        Source="{Binding Value.Image}"
                         Margin="6"
                         Stretch="UniformToFill"
                         VerticalAlignment="Center" />

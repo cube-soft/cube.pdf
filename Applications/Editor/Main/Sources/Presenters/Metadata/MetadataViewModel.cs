@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class MetadataViewModel : DialogViewModel
+    public sealed class MetadataViewModel : DialogViewModel<MetadataFacade>
     {
         #region Constructors
 
@@ -43,7 +43,7 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the MetadataViewModel
-        /// with the specified argumetns.
+        /// with the specified arguments.
         /// </summary>
         ///
         /// <param name="callback">Callback method when applied.</param>
@@ -54,11 +54,12 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public MetadataViewModel(Action<Metadata> callback,
             Metadata src,
-            Information file,
+            Entity file,
             SynchronizationContext context
-        ) : base(() => Properties.Resources.TitleMetadata, new Aggregator(), context)
-        {
-            _model = new MetadataFacade(src, file);
+        ) : base(new MetadataFacade(src, file),
+            new Aggregator(),
+            context
+        ) {
             OK.Command = new DelegateCommand(() => { Send<CloseMessage>(); callback(src); });
         }
 
@@ -79,14 +80,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ViewerPreferences
+        /// Options
         ///
         /// <summary>
-        /// Gets the collection of viewer preferences.
+        /// Gets the collection of viewer options.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<ViewerOptions> ViewerOptions => MetadataFacade.ViewerOptions;
+        public IEnumerable<ViewerOption> Options => MetadataFacade.ViewerOptions;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,8 +100,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Filename => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuFilename,
-            () => _model.File.Name,
-            GetDispatcher(false)
+            () => Facade.File.Name,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -115,9 +116,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Document => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuTitle,
-            () => _model.Value.Title,
-            e  => _model.Value.Title = e,
-            GetDispatcher(false)
+            () => Facade.Value.Title,
+            e  => Facade.Value.Title = e,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -132,9 +133,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Author => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuAuthor,
-            () => _model.Value.Author,
-            e  => _model.Value.Author = e,
-            GetDispatcher(false)
+            () => Facade.Value.Author,
+            e  => Facade.Value.Author = e,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -149,9 +150,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Subject => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuSubject,
-            () => _model.Value.Subject,
-            e  => _model.Value.Subject = e,
-            GetDispatcher(false)
+            () => Facade.Value.Subject,
+            e  => Facade.Value.Subject = e,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -166,9 +167,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Keywords => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuKeywords,
-            () => _model.Value.Keywords,
-            e  => _model.Value.Keywords = e,
-            GetDispatcher(false)
+            () => Facade.Value.Keywords,
+            e  => Facade.Value.Keywords = e,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -183,9 +184,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Creator => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuCreator,
-            () => _model.Value.Creator,
-            e  => _model.Value.Creator = e,
-            GetDispatcher(false)
+            () => Facade.Value.Creator,
+            e  => Facade.Value.Creator = e,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -200,8 +201,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Producer => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuProducer,
-            () => _model.Value.Producer,
-            GetDispatcher(false)
+            () => Facade.Value.Producer,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -216,14 +217,14 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<PdfVersion> Version => Get(() => new BindableElement<PdfVersion>(
             () => Properties.Resources.MenuVersion,
-            () => _model.Value.Version,
-            e  => _model.Value.Version = e,
-            GetDispatcher(false)
+            () => Facade.Value.Version,
+            e  => Facade.Value.Version = e,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Options
+        /// Option
         ///
         /// <summary>
         /// Gets the menu that represents the viewer options of the
@@ -231,11 +232,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IElement<ViewerOptions> Options => Get(() => new BindableElement<ViewerOptions>(
+        public IElement<ViewerOption> Option => Get(() => new BindableElement<ViewerOption>(
             () => Properties.Resources.MenuLayout,
-            () => _model.Value.Options,
-            e  => _model.Value.Options = e,
-            GetDispatcher(false)
+            () => Facade.Value.Options,
+            e  => Facade.Value.Options = e,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -249,8 +250,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<long> Length => Get(() => new BindableElement<long>(
             () => Properties.Resources.MenuFilesize,
-            () => _model.File.Length,
-            GetDispatcher(false)
+            () => Facade.File.Length,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -265,8 +266,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<DateTime> CreationTime => Get(() => new BindableElement<DateTime>(
             () => Properties.Resources.MenuCreationTime,
-            () => _model.File.CreationTime,
-            GetDispatcher(false)
+            () => Facade.File.CreationTime,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -281,8 +282,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<DateTime> LastWriteTime => Get(() => new BindableElement<DateTime>(
             () => Properties.Resources.MenuLastWriteTime,
-            () => _model.File.LastWriteTime,
-            GetDispatcher(false)
+            () => Facade.File.LastWriteTime,
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -296,7 +297,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Summary => Get(() => new BindableElement(
             () => Properties.Resources.MenuSummary,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -310,13 +311,26 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Details => Get(() => new BindableElement(
             () => Properties.Resources.MenuDetails,
-            GetDispatcher(false)
+            GetInvoker(false)
         ));
 
         #endregion
 
-        #region Fields
-        private readonly MetadataFacade _model;
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of the dialog.
+        /// </summary>
+        ///
+        /// <returns>String value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override string GetTitle() => Properties.Resources.TitleMetadata;
+
         #endregion
     }
 }

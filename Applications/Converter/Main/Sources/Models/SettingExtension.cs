@@ -72,6 +72,24 @@ namespace Cube.Pdf.Converter
             value.Encryption.Permission.Accessibility = PermissionValue.Allow;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTitle
+        ///
+        /// <summary>
+        /// Gets the title of main window.
+        /// </summary>
+        ///
+        /// <param name="src">Setting to be normalized.</param>
+        ///
+        /// <returns>Title string.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static string GetTitle(this SettingFolder src) =>
+            src.DocumentName.Source.HasValue() ?
+            $"{src.DocumentName.Source} - {src.Assembly.GetTitle()} {src.Version.ToString(true)}" :
+            $"{src.Assembly.GetTitle()} {src.Version.ToString(true)}";
+
         #endregion
 
         #region Implementations

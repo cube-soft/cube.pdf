@@ -106,7 +106,7 @@
       InsertItemStyle
     *********************************************************************** -->
     <Style x:Key="InsertItemStyle" TargetType="{x:Type ListViewItem}">
-        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWay}" />
+        <Setter Property="IsSelected" Value="{Binding Selected, Mode=OneWay}" />
         <Setter Property="Foreground" Value="{StaticResource LightForegroundBrush}" />
         <Setter Property="Template" Value="{StaticResource InsertItemTemplate}" />
     </Style>

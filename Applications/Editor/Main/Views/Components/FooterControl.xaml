@@ -46,18 +46,18 @@
         <!-- ******************************************************************
           Message
         ******************************************************************* -->
-        <StatusBarItem Content="{Binding Data.Message.Value}" />
+        <StatusBarItem Content="{Binding Value.Message}" />
 
         <!-- ******************************************************************
           SelectionCount
         ******************************************************************* -->
         <Separator
-            Visibility="{Binding Data.Images.Selection.Count, Converter={my:SelectionToVisibility}}"
+            Visibility="{Binding Value.Images.Selection.Count, Converter={my:SelectionToVisibility}}"
             Style="{StaticResource FooterSeparatorStyle}"
             Grid.Column="1" />
         <StatusBarItem
-            Content="{Binding Data.Images.Selection.Count, Converter={my:SelectionToText}}"
-            Visibility="{Binding Data.Images.Selection.Count, Converter={my:SelectionToVisibility}}"
+            Content="{Binding Value.Images.Selection.Count, Converter={my:SelectionToText}}"
+            Visibility="{Binding Value.Images.Selection.Count, Converter={my:SelectionToVisibility}}"
             Style="{StaticResource FooterItemStyle}"
             Grid.Column="2" />
 
@@ -65,12 +65,12 @@
           Count
         ******************************************************************* -->
         <Separator
-            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibility}}"
+            Visibility="{Binding Value.Source, Converter={my:HasValueToVisibility}}"
             Style="{StaticResource FooterSeparatorStyle}"
             Grid.Column="3" />
         <StatusBarItem
-            Content="{Binding Data.Count.Value, Converter={my:CountToText}}"
-            Visibility="{Binding Data.Source.Value, Converter={my:HasValueToVisibility}}"
+            Content="{Binding Value.Count, Converter={my:CountToText}}"
+            Visibility="{Binding Value.Source, Converter={my:HasValueToVisibility}}"
             Style="{StaticResource FooterItemStyle}"
             Grid.Column="4" />
     </StatusBar>

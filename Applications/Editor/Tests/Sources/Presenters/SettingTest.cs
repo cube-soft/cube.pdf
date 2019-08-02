@@ -22,7 +22,6 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
@@ -31,7 +30,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// SettingTest
     ///
     /// <summary>
-    /// Tests for the SettingViewModel class.
+    /// Tests the settings related classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,11 +41,32 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Create
+        ///
+        /// <summary>
+        /// Confirms the values of settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Create() => Make(vm =>
+        {
+            Assert.That(vm.Value.Settings.Width,       Is.EqualTo(800));
+            Assert.That(vm.Value.Settings.Height,      Is.EqualTo(600));
+            Assert.That(vm.Value.Settings.CheckUpdate, Is.True);
+
+            vm.Value.Settings.Width       = 1024;
+            vm.Value.Settings.Height      = 768;
+            vm.Value.Settings.CheckUpdate = false;
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test for confirming properties and invoking the
-        /// Cancel command.
+        /// Confirms properties of the SettingViewModel class and invokes
+        /// the Cancel command.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -54,11 +74,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Cancel() => Open("Sample.pdf", "", vm =>
         {
             var cts = new CancellationTokenSource();
-            var dp  = vm.Subscribe<SettingViewModel>(e =>
+            _ = vm.Subscribe<SettingViewModel>(e =>
             {
-                Assert.That(e.Title.Text,        Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Title,             Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Editor.Tests 0.5.3β "));
+                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Editor.Tests 0.5.4β "));
                 Assert.That(e.Windows.Text,      Does.StartWith("Microsoft Windows"));
                 Assert.That(e.Framework.Text,    Does.StartWith("Microsoft .NET Framework"));
                 Assert.That(e.Link.Text,         Is.EqualTo("Copyright © 2010 CubeSoft, Inc."));
@@ -77,9 +97,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             });
 
             Assert.That(vm.Ribbon.Setting.Command.CanExecute(), Is.True);
-            TaskEx.Run(() => vm.Ribbon.Setting.Command.Execute());
+            vm.Ribbon.Setting.Command.Execute();
             Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Cancel)");
-            dp.Dispose();
         });
 
         #endregion

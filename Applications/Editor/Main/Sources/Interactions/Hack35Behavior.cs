@@ -85,28 +85,32 @@ namespace Cube.Pdf.Editor
             if (v == null || r == null) return;
 
             v.InputBindings.Clear();
-            v.InputBindings.Add(new KeyBinding(r.Refresh.Command,      Key.F5,       ModifierKeys.None));
-            v.InputBindings.Add(new KeyBinding(r.Insert.Command,       Key.Insert,   ModifierKeys.None));
-            v.InputBindings.Add(new KeyBinding(r.Remove.Command,       Key.Delete,   ModifierKeys.None));
-            v.InputBindings.Add(new KeyBinding(r.Extract.Command,      Key.E,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.Open.Command,         Key.O,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.Save.Command,         Key.S,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.SaveAs.Command,       Key.S,        ModifierKeys.Control | ModifierKeys.Shift));
-            v.InputBindings.Add(new KeyBinding(r.Close.Command,        Key.W,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.SelectAll.Command,    Key.A,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.SelectClear.Command,  Key.D,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.MoveNext.Command,     Key.F,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.MovePrevious.Command, Key.B,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.RotateLeft.Command,   Key.L,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.RotateRight.Command,  Key.R,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.Metadata.Command,     Key.I,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.Encryption.Command,   Key.K,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.Undo.Command,         Key.Z,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.Redo.Command,         Key.Y,        ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.ZoomIn.Command,       Key.OemPlus,  ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.ZoomIn.Command,       Key.Add,      ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.ZoomOut.Command,      Key.OemMinus, ModifierKeys.Control));
-            v.InputBindings.Add(new KeyBinding(r.ZoomOut.Command,      Key.Subtract, ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.Redraw.Command,        Key.F5,       ModifierKeys.None));
+            _ = v.InputBindings.Add(new KeyBinding(r.Insert.Command,        Key.Insert,   ModifierKeys.None));
+            _ = v.InputBindings.Add(new KeyBinding(r.Insert.Command,        Key.I,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.InsertOthers.Command,  Key.I,        ModifierKeys.Control | ModifierKeys.Shift));
+            _ = v.InputBindings.Add(new KeyBinding(r.Remove.Command,        Key.Delete,   ModifierKeys.None));
+            _ = v.InputBindings.Add(new KeyBinding(r.Remove.Command,        Key.D,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.RemoveOthers.Command,  Key.D,        ModifierKeys.Control | ModifierKeys.Shift));
+            _ = v.InputBindings.Add(new KeyBinding(r.Extract.Command,       Key.E,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.ExtractOthers.Command, Key.E,        ModifierKeys.Control | ModifierKeys.Shift));
+            _ = v.InputBindings.Add(new KeyBinding(r.Open.Command,          Key.O,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.Save.Command,          Key.S,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.SaveAs.Command,        Key.S,        ModifierKeys.Control | ModifierKeys.Shift));
+            _ = v.InputBindings.Add(new KeyBinding(r.Close.Command,         Key.W,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.SelectAll.Command,     Key.A,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.MoveNext.Command,      Key.F,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.MovePrevious.Command,  Key.B,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.RotateLeft.Command,    Key.L,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.RotateRight.Command,   Key.R,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.Metadata.Command,      Key.M,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.Encryption.Command,    Key.K,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.Undo.Command,          Key.Z,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.Redo.Command,          Key.Y,        ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.ZoomIn.Command,        Key.OemPlus,  ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.ZoomIn.Command,        Key.Add,      ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.ZoomOut.Command,       Key.OemMinus, ModifierKeys.Control));
+            _ = v.InputBindings.Add(new KeyBinding(r.ZoomOut.Command,       Key.Subtract, ModifierKeys.Control));
         }
 
         #endregion

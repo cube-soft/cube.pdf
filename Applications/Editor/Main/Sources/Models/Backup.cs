@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class Backup
+    public sealed class Backup
     {
         #region Constructors
 
@@ -108,7 +108,7 @@ namespace Cube.Pdf.Editor
         /// <param name="src">Source file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Invoke(Information src)
+        public void Invoke(Entity src)
         {
             if (!src.Exists) return;
 
