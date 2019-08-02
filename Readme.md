@@ -13,7 +13,7 @@ Cube.Pdf
 [![Azure Pipelines](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_apis/build/status/cube-soft.Cube.Pdf?branchName=master)](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_build)
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
 
-Cube.Pdf libraries wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party PDF libraries. The repository also has some PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. We will move [CubePdfViewer](https://github.com/cube-soft/CubePdfViewer) to the repository.
+Cube.Pdf libraries wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party PDF libraries. The repository also has some PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more.
 Libraries and applications are available for .NET Framework 3.5, 4.5, or later.
 Note that some projects are licensed under the GNU AGPLv3. See the License section for details.
 
@@ -21,8 +21,8 @@ Note that some projects are licensed under the GNU AGPLv3. See the License secti
 
 ### Cube.Pdf and related libraries
 
-You can install Cube.Pdf libraries from the Install-Package command or NuGet packages UI on Visual Studio.
-The Libraries provide functionality to treat third-party libraries as the same interface (except for the Cube.Pdf.Ghostscript).
+You can install Cube.Pdf libraries through the NuGet package commands or UI on Visual Studio.
+The Libraries provide the functionality to treat third-party libraries as the same interface (except for the Cube.Pdf.Ghostscript).
 Basic interfaces of the Cube.Pdf are as follows:
 
 * [IDocumentReader](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentReader.cs)
