@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="SettingViewModel" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>Cube.Pdf.Converter.SettingViewModel, CubePdf, Version=1.0.0.22, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>Cube.Pdf.Converter.SettingViewModel, CubePdf, Version=1.0.0.23, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>
