@@ -274,7 +274,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private IEnumerable<int> GetTarget(SaveOption e) =>
             e.Target == SaveTarget.All      ? Images.Count.Make(i => i) :
-            e.Target == SaveTarget.Selected ? Images.GetSelectedIndices() :
+            e.Target == SaveTarget.Selected ? Images.GetSelectedIndices().OrderBy(i => i) :
             new Range(e.Range, Images.Count).Select(i => i - 1);
 
         #endregion
