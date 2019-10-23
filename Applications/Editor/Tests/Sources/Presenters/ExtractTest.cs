@@ -17,6 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Commands;
+using Cube.Mixin.Pdf;
+using Cube.Pdf.Itext;
 using Cube.Tests;
 using NUnit.Framework;
 using System.Linq;
@@ -48,16 +50,22 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Extract() => Open("Sample.pdf", "", vm =>
+        public void Extract() => Open("SampleRotation.pdf", "", vm =>
         {
             Destination = Get(Args("Sample"));
             Assert.That(IO.Exists(Destination), Is.False, Destination);
 
+            vm.Value.Images.Skip(1).First().Selected = true;
             vm.Value.Images.First().Selected = true;
             Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
 
             vm.Test(vm.Ribbon.Extract);
-            Assert.That(IO.Exists(Destination), Is.True, Destination);
+
+            using (var r = new DocumentReader(Destination))
+            {
+                Assert.That(r.GetPage(1).GetViewSize().Width, Is.EqualTo(595.0f).Within(1.0f));
+                Assert.That(r.GetPage(2).GetViewSize().Width, Is.EqualTo(842.0f).Within(1.0f));
+            }
         });
 
         /* ----------------------------------------------------------------- */
