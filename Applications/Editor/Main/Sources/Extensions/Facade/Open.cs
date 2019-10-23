@@ -99,7 +99,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Load(this MainFacade src, string path)
         {
-            src.Value.Set(Properties.Resources.MessageLoading, src);
+            src.Value.Set(Properties.Resources.MessageLoading, path);
             var doc = src.Cache.GetOrAdd(path);
             src.Value.Source = doc.File;
             if (!doc.Encryption.Enabled) src.Value.Encryption = doc.Encryption;
