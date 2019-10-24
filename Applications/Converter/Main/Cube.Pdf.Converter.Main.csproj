@@ -28,7 +28,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Converter.csproj" />
-        <PackageReference Include="Cube.Forms" Version="1.17.0" />
+        <PackageReference Include="Cube.Forms" Version="1.18.0" />
         <Reference Include="System.Windows.Forms" />
     </ItemGroup>
     <ItemGroup>
