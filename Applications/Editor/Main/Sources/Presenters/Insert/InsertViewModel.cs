@@ -130,8 +130,12 @@ namespace Cube.Pdf.Editor
         /// Gets an Add button.
         /// </summary>
         ///
+        /// <remarks>
+        /// TODO: Rename this property.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public IElement Add => Get(() => new BindableElement(
+        public new IElement Add => Get(() => new BindableElement(
             () => Properties.Resources.MenuAdd,
             GetInvoker(false)
         ) { Command = new DelegateCommand(() => SendOpen()) });
