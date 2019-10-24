@@ -25,7 +25,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.FileSystem" Version="1.17.0" />
+        <PackageReference Include="Cube.FileSystem" Version="1.18.0" />
         <Reference Include="System.Security" />
     </ItemGroup>
 </Project>

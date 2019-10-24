@@ -70,7 +70,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void Sync(Action action) => Track(action, DialogMessage.Create, true);
+        protected void Sync(Action action) => Track(action, true);
 
         /* ----------------------------------------------------------------- */
         ///

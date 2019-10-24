@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Password => Get(() => new BindableElement<string>(
-            () => string.Format(Properties.Resources.MessagePassword, GetFileName(Facade.Query)),
+            () => string.Format(Properties.Resources.MessagePassword, GetFileName(Facade.Source)),
             () => Facade.Value,
             e  => Facade.Value = e,
             GetInvoker(false)

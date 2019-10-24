@@ -86,7 +86,7 @@ namespace Cube.Pdf.Itext
                 }
                 catch (BadPasswordException)
                 {
-                    var msg = password.Query.Request(src);
+                    var msg = password.Source.Request(src);
                     if (!msg.Cancel) password.Value = msg.Value;
                     else throw new OperationCanceledException();
                 }
