@@ -135,7 +135,7 @@ namespace Cube.Pdf.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public new IElement Add => Get(() => new BindableElement(
+        public IElement Add => Get(() => new BindableElement(
             () => Properties.Resources.MenuAdd,
             GetInvoker(false)
         ) { Command = new DelegateCommand(() => SendOpen()) });
