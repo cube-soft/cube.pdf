@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.0.0.23</Version>
+        <Version>1.1.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
