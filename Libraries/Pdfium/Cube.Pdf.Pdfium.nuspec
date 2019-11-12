@@ -9,9 +9,9 @@
         <description>PDFium based PDF library available for the .NET Framework 3.5, 4.5, or later.</description>
         <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
         <tags>Cube PDF PDFium</tags>
+        <icon>images\Icon.png</icon>
         <license type="expression">Apache-2.0</license>
         <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
-        <iconUrl>https://github.com/cube-soft/Cube.Pdf/blob/master/Icon.png?raw=true</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <dependency id="Cube.Pdf" version="2.18.0" />
@@ -19,6 +19,7 @@
         </dependencies>
     </metadata>
     <files>
+        <file src="..\..\Icon.png" target="images" />
         <file src="bin\Any CPU\Release\net45\Cube.Pdf.Pdfium.*" target="lib\net45" />
         <file src="bin\Any CPU\Release\net35\Cube.Pdf.Pdfium.*" target="lib\net35" />
     </files>
