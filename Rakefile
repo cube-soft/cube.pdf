@@ -44,7 +44,7 @@ TESTCASES   = {"Cube.Pdf.Tests"            => "Libraries/Tests",
 # unmanaged libraries
 # --------------------------------------------------------------------------- #
 COPIES = {
-    "Cube.Native.Ghostscript/9.27.1" => [
+    "Cube.Native.Ghostscript/9.50.0" => [
         "Libraries/Tests",
         "Applications/Converter/Tests",
         "Applications/Converter/Main"

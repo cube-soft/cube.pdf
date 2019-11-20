@@ -24,6 +24,6 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="Cube.Native.Ghostscript" Version="9.27.1" />
+        <PackageReference Include="Cube.Native.Ghostscript" Version="9.50.0" />
     </ItemGroup>
 </Project>
