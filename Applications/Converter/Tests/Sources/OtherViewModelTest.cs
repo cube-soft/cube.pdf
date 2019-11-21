@@ -58,7 +58,7 @@ namespace Cube.Pdf.Converter.Tests
         public void MainViewModel() => Invoke(vm =>
         {
             Assert.That(vm.Title, Does.StartWith(nameof(MainViewModel)));
-            Assert.That(vm.Title, Does.Contain("CubePDF 1.0.0"));
+            Assert.That(vm.Title, Does.Contain("CubePDF 1.0.1"));
             Assert.That(vm.Uri,   Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdf/")));
         });
 

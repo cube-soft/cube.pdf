@@ -61,7 +61,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Assembly.GetProduct(), Is.EqualTo("Cube.Pdf.Converter.Tests"));
             Assert.That(dest.DocumentName.Source,   Is.Empty);
             Assert.That(dest.DocumentName.Value,    Is.EqualTo("Cube.Pdf.Converter.Tests"));
-            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.0.0"));
+            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.0.1"));
             Assert.That(dest.Value,                 Is.Not.Null);
             Assert.That(dest.Digest,                Is.Null);
         }
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Converter.Tests
         /// Load
         ///
         /// <summary>
-        /// 設定情報をロードするテストを実行します。
+        /// Tests the Load method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -90,49 +90,51 @@ namespace Cube.Pdf.Converter.Tests
             src.Load();
 
             var dest = src.Value;
-            Assert.That(dest.Format,           Is.EqualTo(Format.Pdf));
-            Assert.That(dest.SaveOption,       Is.EqualTo(SaveOption.Overwrite));
-            Assert.That(dest.Grayscale,        Is.False);
-            Assert.That(dest.EmbedFonts,       Is.True);
-            Assert.That(dest.ImageFilter,      Is.True);
-            Assert.That(dest.Downsampling,     Is.EqualTo(Downsampling.None));
-            Assert.That(dest.Resolution,       Is.AtLeast(72));
-            Assert.That(dest.Orientation,      Is.EqualTo(Orientation.Auto));
-            Assert.That(dest.CheckUpdate,      Is.True);
-            Assert.That(dest.Linearization,    Is.False);
-            Assert.That(dest.Language,         Is.EqualTo(Language.Auto));
-            Assert.That(dest.PostProcess,      Is.EqualTo(PostProcess.None));
-            Assert.That(dest.UserProgram,      Is.Empty);
-            Assert.That(dest.DeleteSource,     Is.False);
-            Assert.That(dest.SourceVisible,    Is.False);
-            Assert.That(dest.Source,           Is.Empty);
-            Assert.That(dest.Destination,      Is.EqualTo(desktop));
-            Assert.That(dest.Temp,             Is.EqualTo(temp));
-            Assert.That(dest.Busy,             Is.False);
+            Assert.That(dest.Format,             Is.EqualTo(Format.Pdf));
+            Assert.That(dest.SaveOption,         Is.EqualTo(SaveOption.Overwrite));
+            Assert.That(dest.Grayscale,          Is.False);
+            Assert.That(dest.EmbedFonts,         Is.True);
+            Assert.That(dest.ImageFilter,        Is.True);
+            Assert.That(dest.Downsampling,       Is.EqualTo(Downsampling.None));
+            Assert.That(dest.Resolution,         Is.AtLeast(72));
+            Assert.That(dest.Orientation,        Is.EqualTo(Orientation.Auto));
+            Assert.That(dest.CheckUpdate,        Is.True);
+            Assert.That(dest.Linearization,      Is.False);
+            Assert.That(dest.Language,           Is.EqualTo(Language.Auto));
+            Assert.That(dest.PostProcess,        Is.EqualTo(PostProcess.None));
+            Assert.That(dest.UserProgram,        Is.Empty);
+            Assert.That(dest.ExplicitDirectory,  Is.False);
+            Assert.That(dest.PlatformCompatible, Is.True);
+            Assert.That(dest.DeleteSource,       Is.False);
+            Assert.That(dest.SourceVisible,      Is.False);
+            Assert.That(dest.Source,             Is.Empty);
+            Assert.That(dest.Destination,        Is.EqualTo(desktop));
+            Assert.That(dest.Temp,               Is.EqualTo(temp));
+            Assert.That(dest.Busy,               Is.False);
 
             var md = dest.Metadata;
-            Assert.That(md.Title,              Is.Empty);
-            Assert.That(md.Author,             Is.Empty);
-            Assert.That(md.Subject,            Is.Empty);
-            Assert.That(md.Keywords,           Is.Empty);
-            Assert.That(md.Creator,            Is.Empty);
-            Assert.That(md.Version.Major,      Is.EqualTo(1));
-            Assert.That(md.Version.Minor,      Is.EqualTo(7));
+            Assert.That(md.Title,                Is.Empty);
+            Assert.That(md.Author,               Is.Empty);
+            Assert.That(md.Subject,              Is.Empty);
+            Assert.That(md.Keywords,             Is.Empty);
+            Assert.That(md.Creator,              Is.Empty);
+            Assert.That(md.Version.Major,        Is.EqualTo(1));
+            Assert.That(md.Version.Minor,        Is.EqualTo(7));
 
             var ec = dest.Encryption;
-            Assert.That(ec.Enabled,            Is.False);
-            Assert.That(ec.Method,             Is.EqualTo(EncryptionMethod.Unknown));
-            Assert.That(ec.OpenWithPassword,   Is.False);
-            Assert.That(ec.OwnerPassword,      Is.Empty);
-            Assert.That(ec.UserPassword,       Is.Empty);
+            Assert.That(ec.Enabled,              Is.False);
+            Assert.That(ec.Method,               Is.EqualTo(EncryptionMethod.Unknown));
+            Assert.That(ec.OpenWithPassword,     Is.False);
+            Assert.That(ec.OwnerPassword,        Is.Empty);
+            Assert.That(ec.UserPassword,         Is.Empty);
 
             var pm = dest.Encryption.Permission;
-            Assert.That(pm.Accessibility,      Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));
-            Assert.That(pm.CopyContents,       Is.EqualTo(PermissionValue.Allow), nameof(pm.CopyContents));
-            Assert.That(pm.InputForm,          Is.EqualTo(PermissionValue.Allow), nameof(pm.InputForm));
-            Assert.That(pm.ModifyAnnotations,  Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyAnnotations));
-            Assert.That(pm.ModifyContents,     Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyContents));
-            Assert.That(pm.Print,              Is.EqualTo(PermissionValue.Allow), nameof(pm.Print));
+            Assert.That(pm.Accessibility,        Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));
+            Assert.That(pm.CopyContents,         Is.EqualTo(PermissionValue.Allow), nameof(pm.CopyContents));
+            Assert.That(pm.InputForm,            Is.EqualTo(PermissionValue.Allow), nameof(pm.InputForm));
+            Assert.That(pm.ModifyAnnotations,    Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyAnnotations));
+            Assert.That(pm.ModifyContents,       Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyContents));
+            Assert.That(pm.Print,                Is.EqualTo(PermissionValue.Allow), nameof(pm.Print));
         }
 
         /* ----------------------------------------------------------------- */
