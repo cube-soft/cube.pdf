@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
+using System;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -80,6 +81,9 @@ namespace Cube.Pdf.Converter
         /// <remarks>
         /// コマンドラインから入力ファイルに対する SHA-256 の値を指定された時のみ
         /// チェックし、それ以外の場合は何もせずに終了します。
+        /// また、SHA256CryptoServiceProvider が PlatformNotSupportedException
+        /// を送出した際、PlatformCompatible が有効な場合もこのチェックは無視
+        /// されます。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -88,8 +92,15 @@ namespace Cube.Pdf.Converter
             var src = Settings.Digest;
             if (!src.HasValue()) return;
 
-            var cmp = Compute(Settings.Value.Source);
-            if (!src.FuzzyEquals(cmp)) throw new CryptographicException();
+            try
+            {
+                var cmp = Compute(Settings.Value.Source);
+                if (!src.FuzzyEquals(cmp)) throw new CryptographicException();
+            }
+            catch (PlatformNotSupportedException)
+            {
+                if (!Settings.Value.PlatformCompatible) throw;
+            }
         }
 
         #endregion

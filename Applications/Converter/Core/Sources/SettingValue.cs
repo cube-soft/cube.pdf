@@ -264,6 +264,23 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// PlatformCompatible
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to ignore
+        /// PlatformNotSupportedException exceptions as possible.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool PlatformCompatible
+        {
+            get => _compatible;
+            set => SetProperty(ref _compatible, value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Language
         ///
         /// <summary>
@@ -457,6 +474,7 @@ namespace Cube.Pdf.Converter
             _sourceVisible  = false;
             _checkUpdate    = true;
             _explicit       = false;
+            _compatible     = true;
             _temp           = $@"{Environment.SpecialFolder.CommonApplicationData.GetName()}\CubeSoft\CubePDF";
             _source         = string.Empty;
             _destination    = Environment.SpecialFolder.Desktop.GetName();
@@ -496,6 +514,7 @@ namespace Cube.Pdf.Converter
         private bool _sourceVisible;
         private bool _checkUpdate;
         private bool _explicit;
+        private bool _compatible;
         private string _temp;
         private string _source;
         private string _destination;
