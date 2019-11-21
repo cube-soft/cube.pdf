@@ -52,8 +52,12 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2019/11/22 version 1.0.1
+    - Update Ghostscript 9.50.
+    - Improve the color problem when converting.
+    - Add the PlatformCompatible option.
 * 2019/06/21 version 1.0.0
-    - Update Ghostscript 9.27
+    - Update Ghostscript 9.27.
     - Improve operations related to the Ghostscript error number -100.
     - Fix errors when no printers are registered.
 * 2019/03/14 version 1.0.0RC19
