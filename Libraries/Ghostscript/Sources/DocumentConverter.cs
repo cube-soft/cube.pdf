@@ -169,7 +169,7 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         protected override IEnumerable<Code> OnCreateCodes() =>
             base.OnCreateCodes()
-            .Concat(CreateEmbedFontsCode())
+            .Concat(CreateEmbedFontsCodes())
             .Compact();
 
         /* ----------------------------------------------------------------- */
@@ -220,17 +220,26 @@ namespace Cube.Pdf.Ghostscript
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateEmbedFontsCode
+        /// CreateEmbedFontsCodes
         ///
         /// <summary>
         /// Creates the code representing related to the fonts.
         /// </summary>
         ///
+        /// <remarks>
+        /// TODO: 3000000 setvmthreshold は旧来の .setpdfwrite だったもの。
+        /// これは -c 以降で 1 度だけ記述すれば良いと予想されるので、要検討。
+        /// 併せて setdistillerparams の意味も要調査。
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        private Code CreateEmbedFontsCode() =>
+        private IEnumerable<Code> CreateEmbedFontsCodes() =>
             EmbedFonts ?
-            new Code(".setpdfwrite <</NeverEmbed [ ]>> setdistillerparams") :
-            null;
+            new[] {
+                new Code("3000000 setvmthreshold"),
+                new Code("<</NeverEmbed [ ]>> setdistillerparams"),
+            } :
+            Enumerable.Empty<Code>();
 
         /* ----------------------------------------------------------------- */
         ///
