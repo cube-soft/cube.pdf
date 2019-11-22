@@ -1,4 +1,4 @@
-CubePDF ユーザーズマニュアル
+CubePDF ユーザーマニュアル
 ====
 
 Copyright © 2010 CubeSoft, Inc.  
