@@ -727,7 +727,6 @@
             // VersionPanel
             //
             this.VersionPanel.Copyright = "Copyright © 2010 CubeSoft, Inc.";
-            this.VersionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Product", this.MainBindingSource, "Product", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.VersionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Uri", this.MainBindingSource, "Uri", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.VersionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Version", this.MainBindingSource, "Version", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.VersionPanel.Description = "";

@@ -130,6 +130,17 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Version
+        ///
+        /// <summary>
+        /// Gets the version of the application.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Version => Facade.Settings.Version.ToString(true);
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Uri
         ///
         /// <summary>
