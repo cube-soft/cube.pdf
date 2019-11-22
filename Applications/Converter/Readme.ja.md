@@ -56,6 +56,10 @@ CubePDF は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2019/11/25 version 1.0.1
+    - Ghostscript 9.50 のバージョンアップに対応
+    - 特定の条件下で変換時に色がおかしくなる問題を改善
+    - PlatformCompatible オプションを追加
 * 2019/06/21 version 1.0.0
     - Ghostscript 9.27 のバージョンアップに対応
     - Ghostscript エラー (-100) を改善
