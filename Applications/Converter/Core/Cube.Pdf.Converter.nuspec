@@ -14,8 +14,8 @@
         <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
-            <dependency id="Cube.Pdf.Ghostscript" version="2.18.0" />
-            <dependency id="Cube.Pdf.Itext" version="2.18.0" />
+            <dependency id="Cube.Pdf.Ghostscript" version="2.18.1" />
+            <dependency id="Cube.Pdf.Itext" version="2.18.1" />
         </dependencies>
     </metadata>
     <files>
