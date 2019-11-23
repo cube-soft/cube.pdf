@@ -11,11 +11,10 @@ https://www.cube-soft.jp/cubepdf/
 CubePDF は、お使いの様々なアプリケーションから、いつでも必要な時にすばやく
 PDF 形式などの文書を作成する事のできる、とても便利なソフトです。
 印刷と同じ操作でサッと作成する事ができるので、操作に戸惑うこともありません。
-詳細な利用方法については、同梱した「CubePDF ユーザーズマニュアル.pdf」または
-下記 URL を参照下さい。
+詳細な利用方法については下記 URL を参照下さい。
 
-* CubePDF ユーザーズマニュアル  
-  https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Document.ja.md
+* CubePDF ユーザーマニュアル  
+  https://clown.cube-soft.jp/entry/cubepdf
 
 CubePDF を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.5.2 以降を推奨）。
 .NET Framework は、以下の URL からダウンロードして下さい。
