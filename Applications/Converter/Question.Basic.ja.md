@@ -6,11 +6,13 @@ GNU Affero General Public License version 3 (AGPLv3)
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdf/
 
+[:contents]
+
 ## CubePDF の使い方が分かりません
 
 ![CubePDF の使用方法](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/01.ja.png?raw=true)
 
-CubePDF は「仮想プリンター」と呼ばれる類のソフトウェアです。使い方は、まず、PDF に変換したい内容を Google Chrome や Microsoft Word など適当なアプリケーションで開きます。次に、それらのアプリケーションの「印刷」ボタンを押し、プリンター一覧の中から CubePDF を選択して実行します。そうすると CubePDF のメイン画面が表示されますので、必要な設定を行った後に変換ボタンを押せば完了です。
+CubePDF は「仮想プリンター」と呼ばれる類のソフトウェアです。まず、PDF に変換したい内容を Google Chrome や Microsoft Word など適当なアプリケーションで開きます。次に、それらのアプリケーションの「印刷」メニューを選択し、プリンター一覧の中から CubePDF を選択して実行します。そうすると CubePDF のメイン画面が表示されるので、必要な設定を行った後に変換ボタンをクリックすれば完了です。
 
 ## デスクトップに CubePDF のアイコンがありません
 
@@ -38,7 +40,7 @@ PDF ファイルへの変換については、一見同じような内容に見�
 
 ![PDF ファイルがパスワードによって保護されている場合](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Question.04.ja.png?raw=true)
 
-PDF ファイルの結合に失敗した場合、考えられる可能性の一つとして結合先の PDF ファイルがパスワードによって保護されている事が挙げられます。PDF ファイルは、パスワード無しで開く事ができてもパスワードによって保護されている場合があります。例えば、Adobe Acrobat Reader で PDF ファイルを開いた時に「保護」と言う表示がある場合、その PDF ファイルはパスワードによって保護されています。この場合、CubePDF メイン画面「セキュリティ」タブで、結合先 PDF ファイルの「**管理用パスワード**」を入力する必要があります。
+PDF ファイルの結合に失敗した場合、考えられる可能性の一つとして結合先の PDF ファイルがパスワードによって保護されている事が挙げられます。PDF ファイルは、パスワード無しで開く事ができても、パスワードによって保護されている場合があります。例えば、Adobe Acrobat Reader で PDF ファイルを開いた時に「保護」と言う表示がある場合、その PDF ファイルはパスワードによって保護されています。この場合、CubePDF メイン画面「セキュリティ」タブで、結合先 PDF ファイルの「**管理用パスワード**」を入力する必要があります。
 
 ![PDF ファイルが他のアプリケーションで開かれている場合](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Question.05.ja.png?raw=true)
 
@@ -50,7 +52,7 @@ CubePDF は、変換時に他の PDF ファイルに結合したり、文書プ�
 
 ## 実行時にネットワーク通信が発生しますか？
 
-CubePDF は、実行時に CubePDF 自体が意図的にネットワーク通信を行う事はありません。CubePDF に関連するネットワーク通信は、PC 起動時に 1 日 1 回を限度としたアップデート確認のみです。アップデート確認では、CubePDF、Windows、.NET Framework のバージョン番号を送信します。このアップデート確認を無効にしたい場合、メイン画面「その他」タブの「起動時にアップデートを確認する」項目を無効にした上で、左下にある「設定を保存」ボタンをクリックして下さい。
+CubePDF は、実行時に CubePDF 自体が意図的にネットワーク通信を行う事はありません。CubePDF に関連するネットワーク通信は、PC 起動時に実行されるアップデート確認のみです。アップデート確認では、CubePDF、Windows、.NET Framework のバージョン番号を送信します。このアップデート確認を無効にしたい場合、メイン画面「その他」タブの「起動時にアップデートを確認する」項目を無効にした上で、左下にある「設定を保存」ボタンをクリックして下さい。
 
 ![アップデート確認の無効方法](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Question.02.ja.png?raw=true)
 
@@ -73,6 +75,10 @@ CubePDF は .NET Framework を用いて開発しています。そのため、Cu
 ## どうやってバージョンアップすれば良いですか？
 
 CubePDF のバージョンアップを行う場合は、最初にインストールした時と同様に [CubePDF のダウンロードページ](https://www.cube-soft.jp/cubepdf/) から最新バージョンのインストーラーをダウンロードし、再度実行して下さい。
+
+## インストールオプションを教えて下さい
+
+CubePDF のインストーラは [Inno Setup](http://www.jrsoftware.org/isinfo.php) と言う開発用ソフトウェアを用いて作成されています。Inno Setup が提供するインストールオプションの一覧については [Setup Command Line Parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline) を参照下さい。
 
 ## GUI を非表示にして変換を自動化できますか？
 
