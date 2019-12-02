@@ -6,7 +6,9 @@ GNU Affero General Public License version 3 (AGPLv3)
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdf/
 
-[:contents]
+## はじめに
+
+この記事は [CubePDF](https://www.cube-soft.jp/cubepdf/) の基本的な使用方法について、よくある質問 (FAQ) をまとめたものです。CubePDF の使用方法については、[CubePDF ユーザーマニュアル](https://docs.cube-soft.jp/entry/cubepdf) も参照下さい。
 
 ## CubePDF の使い方が分かりません
 
