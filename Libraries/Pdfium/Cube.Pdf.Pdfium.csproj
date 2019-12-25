@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.18.1</Version>
+        <Version>2.18.2</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>PDFium based PDF library available for the .NET Framework 3.5, 4.5, or later.</Description>
@@ -24,6 +24,6 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="Cube.Native.Pdfium.Lite" version="1.0.3904" />
+        <PackageReference Include="Cube.Native.Pdfium.Lite" version="1.0.3945" />
     </ItemGroup>
 </Project>

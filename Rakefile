@@ -49,7 +49,7 @@ COPIES = {
         "Applications/Converter/Tests",
         "Applications/Converter/Main"
     ],
-    "Cube.Native.Pdfium.Lite/1.0.3904" => [
+    "Cube.Native.Pdfium.Lite/1.0.3945" => [
         "Libraries/Tests",
         "Applications/Editor/Tests",
         "Applications/Editor/Main"
