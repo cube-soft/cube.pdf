@@ -82,6 +82,10 @@ CubePDF のバージョンアップを行う場合は、最初にインストー
 
 CubePDF のインストーラは [Inno Setup](http://www.jrsoftware.org/isinfo.php) と言う開発用ソフトウェアを用いて作成されています。Inno Setup が提供するインストールオプションの一覧については [Setup Command Line Parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline) を参照下さい。
 
+## CubePDF プリンターが一覧に表示されません
+
+CubePDF は ```C:\ProgramData\CubeSoft\CubePdf\Log``` フォルダにインストールおよび実行ログを出力しています。問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡下さい。また、CubePDF 使用中に何らかのエラーが発生した場合も同様にログの添付をお願いします。
+
 ## GUI を非表示にして変換を自動化できますか？
 
-いいえ。CubePDF のメイン画面を非表示にする設定は存在しません。有償で提供している [CubePDF Customize](https://www.cube-soft.jp/cubevp/) では、メイン画面の非表示を含めユーザがプログラミングする事によって、より柔軟なカスタム仮想プリンターを作成する事ができます。もし良ければ、こちらもご検討下さい。
+いいえ。CubePDF のメイン画面を非表示にする設定は存在しません。有償で提供している [CubePDF Customize](https://www.cube-soft.jp/cubevp/) では、メイン画面の非表示を含めユーザがプログラミングする事によって、より柔軟なカスタム仮想プリンターを作成する事ができます。もし良ければ、こちらもご検討下さい。尚、[チュートリアル](https://github.com/cube-soft/Cube.Vp.Docs/blob/master/Documents/Cube.Vp.Tutorial.ja.md) として、メイン画面の表示されない CubePDF を実行するための仮想プリンタを登録する方法を記載しています。
