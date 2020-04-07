@@ -118,6 +118,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2020/04/07 version 0.5.6β
+    - Update PDFium to Chromium 80 compatible.
 * 2019/10/24 version 0.5.5β
     - Fix page order of the extracted PDF file.
     - Update PDFium to Chromium 77 compatible.
