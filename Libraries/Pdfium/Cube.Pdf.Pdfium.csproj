@@ -24,6 +24,6 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="Cube.Native.Pdfium.Lite" version="1.0.3945" />
+        <PackageReference Include="Cube.Native.Pdfium.Lite" version="1.0.3987" />
     </ItemGroup>
 </Project>
