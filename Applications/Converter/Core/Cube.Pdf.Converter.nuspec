@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
         <id>Cube.Pdf.Converter</id>
         <title>Cube.Pdf.Converter</title>
         <authors>clown,cube-soft</authors>
@@ -14,8 +14,8 @@
         <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
-            <dependency id="Cube.Pdf.Ghostscript" version="2.18.1" />
-            <dependency id="Cube.Pdf.Itext" version="2.18.1" />
+            <dependency id="Cube.Pdf.Ghostscript" version="2.18.2" />
+            <dependency id="Cube.Pdf.Itext" version="2.18.2" />
         </dependencies>
     </metadata>
     <files>

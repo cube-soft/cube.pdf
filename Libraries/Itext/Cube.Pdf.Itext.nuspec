@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>2.18.1</version>
+        <version>2.18.2</version>
         <id>Cube.Pdf.Itext</id>
         <title>Cube.Pdf.Itext</title>
         <authors>clown,cube-soft</authors>
@@ -15,7 +15,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <dependency id="Cube.Images" version="1.18.0" />
-            <dependency id="Cube.Pdf" version="2.18.1" />
+            <dependency id="Cube.Pdf" version="2.18.2" />
             <dependency id="iTextSharp" version="5.5.13" />
         </dependencies>
     </metadata>
