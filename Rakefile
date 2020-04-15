@@ -60,7 +60,7 @@ COPIES = {
 # commands
 # --------------------------------------------------------------------------- #
 RESTORE = "dotnet restore"
-BUILD   = "dotnet build -c #{CONFIGS[0]}"
+BUILD   = "msbuild -v:m -p:Configuration=#{CONFIGS[0]}"
 TEST    = "../packages/NUnit.ConsoleRunner/3.10.0/tools/nunit3-console.exe"
 PACK    = %(nuget pack -Properties "Configuration=#{CONFIGS[0]};Platform=AnyCPU")
 
@@ -130,7 +130,7 @@ task :test do
     fw  = %x(git symbolic-ref --short HEAD).chomp
     fw  = 'net45' if (fw != 'net35')
     bin = ['bin', PLATFORMS[0], CONFIGS[0], fw].join('/')
-    TESTCASES.each { |p, d| cmd(%(#{TEST} "#{d}/#{bin}/#{p}.dll" --work="#{d}/#{bin}")) }
+    TESTCASES.each { |p, d| sh(%(#{TEST} "#{d}/#{bin}/#{p}.dll" --work="#{d}/#{bin}")) }
 end
 
 # --------------------------------------------------------------------------- #
