@@ -146,7 +146,7 @@ namespace Cube.Pdf.Converter
             for (var i = 0; i < src.Length; ++i)
             {
                 var path = GetDestination(i + 1, src.Length);
-                io.Move(src[i], path, true);
+                io.MoveOrCopy(src[i], path, true);
                 dest.Add(path);
                 this.LogDebug($"Save:{path}");
             }

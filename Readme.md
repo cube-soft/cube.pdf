@@ -10,7 +10,6 @@ Cube.Pdf
 [![NuGet](https://img.shields.io/nuget/v/Cube.Native.Pdfium.svg?label=pdfium.native)](https://www.nuget.org/packages/Cube.Native.Pdfium)
 [![NuGet](https://img.shields.io/nuget/v/Cube.Native.Pdfium.Lite.svg?label=pdfium.lite.native)](https://www.nuget.org/packages/Cube.Native.Pdfium.Lite)  
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
-[![Azure Pipelines](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_apis/build/status/cube-soft.Cube.Pdf?branchName=master)](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_build)
 [![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
 
 Cube.Pdf libraries wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party PDF libraries. The repository also has some PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more.
