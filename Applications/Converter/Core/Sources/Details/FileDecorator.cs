@@ -120,7 +120,7 @@ namespace Cube.Pdf.Converter
                 writer.Save(tmp);
             }
 
-            io.Move(tmp, src, true);
+            io.MoveOrCopy(tmp, src, true);
         }
 
         /* ----------------------------------------------------------------- */
@@ -144,7 +144,7 @@ namespace Cube.Pdf.Converter
                 var tmp = io.Combine(io.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
                 gs.Linearization = value.Linearization;
                 gs.Invoke(src, tmp);
-                io.Move(tmp, src, true);
+                io.MoveOrCopy(tmp, src, true);
             }
         }
 
