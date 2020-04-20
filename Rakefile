@@ -150,10 +150,10 @@ end
 # checkout
 # --------------------------------------------------------------------------- #
 def checkout(branch, &callback)
-    sh("git checkout #{branch}")
+    cmd("git checkout #{branch}")
     callback.call()
 ensure
-    sh("git checkout master")
+    cmd("git checkout master")
 end
 
 # --------------------------------------------------------------------------- #
