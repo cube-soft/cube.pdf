@@ -1,30 +1,33 @@
 version: 2.18.3.{build}
-image: Visual Studio 2019 Preview
+environment:
+    PROJECT_NAME:  'Cube.Pdf.Apps'
+    PROJECT_DIR:   'Cube.Pdf'
+    PROJECT_BIN:   'bin\%PLATFORM%\%CONFIGURATION%\net45'
+    TEST_TOOL:     '..\packages\OpenCover\4.7.922\tools\OpenCover.Console.exe'
+    TEST_ARGS:     'test --no-restore --no-build --logger:Appveyor'
+    TEST_FILTERS:  '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.App -[*]*Window -[*]*Control'
+    TEST_COVERAGE: 'CoverResults.xml'
+    TEST_RESULTS:  'TestResults'
+clone_folder: 'C:\Cube\%PROJECT_DIR%'
+image: Visual Studio 2019
 platform: Any CPU
 configuration: Release
-environment:
-    PROJECT_NAME:   'Cube.Pdf'
-    PROJECT_MAIN:   'Cube.Pdf.Apps'
-    PROJECT_BIN:    'bin\%PLATFORM%\%CONFIGURATION%\net45'
-    PROJECT_LIB:    '..\packages'
-    TEST_TOOL:      '$(PROJECT_LIB)\OpenCover\4.7.922\tools\OpenCover.Console.exe'
-    TEST_CORETOOL:  'nunit3-console.exe'
-    TEST_FILTERS:   '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.App -[*]*Window -[*]*Control'
-    TEST_RESULT:    'TestResult.xml'
-    TEST_COVERAGE:  'CoverResults.xml'
-    TEST_LOG:       'TestResults'
+skip_tags: true
 branches:
     only:
         - master
-skip_tags: true
 nuget:
     project_feed: true
     disable_publish_on_pr: true
-clone_folder: 'C:\Cube\%PROJECT_NAME%'
 before_build:
-    - nuget restore "%PROJECT_MAIN%.sln"
+    - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
+    - nuget sources add -name Cube.FileSystem -source https://ci.appveyor.com/nuget/cube.filesystem
+    - nuget sources add -name Cube.Xui -source https://ci.appveyor.com/nuget/cube.xui
+    - nuget sources add -name Cube.Images -source https://ci.appveyor.com/nuget/cube.images
+    - nuget sources add -name Cube.Forms -source https://ci.appveyor.com/nuget/cube.forms
+    - nuget restore "%PROJECT_NAME%.sln"
 build:
-    project: '%PROJECT_MAIN%.sln'
+    project: '%PROJECT_NAME%.sln'
     parallel: true
     publish_nuget: true
     verbosity: minimal
@@ -34,69 +37,9 @@ test_script:
     - >
       "%TEST_TOOL%"
       -log:Error
-      -register:user
-      -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Tests.dll"
-      -targetdir:"Libraries\Tests\%PROJECT_BIN%"
-      -returntargetcode
-      -hideskipped:All
-      -output:"%TEST_COVERAGE%"
-      -filter:"%TEST_FILTERS%"
-    - >
-      "%TEST_TOOL%"
-      -log:Error
-      -register:user
-      -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Editor.Tests.dll"
-      -targetdir:"Applications\Editor\Tests\%PROJECT_BIN%"
-      -returntargetcode
-      -hideskipped:All
-      -mergeoutput
-      -output:"%TEST_COVERAGE%"
-      -filter:"%TEST_FILTERS%"
-    - >
-      "%TEST_TOOL%"
-      -log:Error
-      -register:user
-      -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Converter.Tests.dll"
-      -targetdir:"Applications\Converter\Tests\%PROJECT_BIN%"
-      -returntargetcode
-      -hideskipped:All
-      -mergeoutput
-      -output:"%TEST_COVERAGE%"
-      -filter:"%TEST_FILTERS%"
-    - >
-      "%TEST_TOOL%"
-      -log:Error
-      -register:user
-      -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Pages.Tests.dll"
-      -targetdir:"Applications\Pages\Tests\%PROJECT_BIN%"
-      -returntargetcode
-      -hideskipped:All
-      -mergeoutput
-      -output:"%TEST_COVERAGE%"
-      -filter:"%TEST_FILTERS%"
-    - >
-      "%TEST_TOOL%"
-      -log:Error
-      -register:user
-      -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Clip.Tests.dll"
-      -targetdir:"Applications\Clip\Tests\%PROJECT_BIN%"
-      -returntargetcode
-      -hideskipped:All
-      -mergeoutput
-      -output:"%TEST_COVERAGE%"
-      -filter:"%TEST_FILTERS%"
-    - >
-      "%TEST_TOOL%"
-      -log:Error
-      -register:user
-      -target:"%TEST_CORETOOL%"
-      -targetargs:"%PROJECT_NAME%.Picker.Tests.dll"
-      -targetdir:"Applications\Picker\Tests\%PROJECT_BIN%"
+      -register:appveyor
+      -target:dotnet.exe
+      -targetargs:"%TEST_ARGS% %PROJECT_NAME%.sln"
       -returntargetcode
       -hideskipped:All
       -mergeoutput
@@ -109,14 +52,14 @@ after_test:
     - xcopy /q /Y /I "Applications\Converter\Main\%PROJECT_BIN%" CubePdf
     - xcopy /q /Y /I "Applications\Editor\Proxy\%PROJECT_BIN%" CubePdf.Utility
     - xcopy /q /Y /I "Applications\Editor\Main\%PROJECT_BIN%" CubePdf.Utility
-    - xcopy /q /Y /I "Libraries\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
-    - xcopy /q /Y /I "Applications\Converter\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
-    - xcopy /q /Y /I "Applications\Editor\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
-    - xcopy /q /Y /I "Applications\Pages\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
-    - xcopy /q /Y /I "Applications\Clip\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
-    - xcopy /q /Y /I "Applications\Picker\Tests\%PROJECT_BIN%\*.log" "%TEST_LOG%\"
-    - xcopy /q /Y /I "%TEST_COVERAGE%" "%TEST_LOG%\"
+    - xcopy /q /Y /I "Libraries\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Applications\Converter\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Applications\Editor\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Applications\Pages\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Applications\Clip\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Applications\Picker\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "%TEST_COVERAGE%" "%TEST_RESULTS%\"
 artifacts:
     - path: 'CubePdf'
     - path: 'CubePdf.Utility'
-    - path: '%TEST_LOG%'
+    - path: '%TEST_RESULTS%'
