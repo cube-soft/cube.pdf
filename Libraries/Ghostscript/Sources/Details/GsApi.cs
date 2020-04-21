@@ -121,7 +121,7 @@ namespace Cube.Pdf.Ghostscript
                 }
                 callback();
             }
-            finally { SetVariable(name, prev); }
+            finally { if (tmp.HasValue()) SetVariable(name, prev); }
         }
 
         /* ----------------------------------------------------------------- */
