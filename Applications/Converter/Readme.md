@@ -52,8 +52,9 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
-* 2020/04/20 version 1.0.3
+* 2020/04/27 version 1.0.3
     - Fix to copy when move failed.
+    - Fix the temporary path for Ghostscript.
 * 2020/04/07 version 1.0.2
     - Update Ghostscript 9.52.
 * 2019/11/25 version 1.0.1

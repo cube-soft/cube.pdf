@@ -203,6 +203,19 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Help
+        ///
+        /// <summary>
+        /// Shows the help page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Help() => this.LogWarn(() =>
+            System.Diagnostics.Process.Start("https://docs.cube-soft.jp/entry/cubepdf")
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// SelectSource
         ///
         /// <summary>

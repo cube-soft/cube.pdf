@@ -134,6 +134,8 @@ namespace Cube.Pdf.Converter
             ConvertButton.Click     += (s, e) => vm.Convert();
             SettingPanel.Apply      += (s, e) => vm.Save();
 
+            ShortcutKeys.Add(Keys.F1, vm.Help);
+
             Behaviors.Add(new CloseBehavior(src, this));
             Behaviors.Add(new DialogBehavior(src));
             Behaviors.Add(new OpenFileBehavior(src));

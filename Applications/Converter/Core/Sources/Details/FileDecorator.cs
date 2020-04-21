@@ -106,7 +106,7 @@ namespace Cube.Pdf.Converter
         {
             var io    = Settings.IO;
             var value = Settings.Value;
-            var tmp   = io.Combine(io.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
+            var tmp   = GetTemp(src);
 
             using (var writer = new DocumentWriter(io))
             {
@@ -134,17 +134,16 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeLinearization(string src)
         {
-            var io    = Settings.IO;
             var value = Settings.Value;
 
             if (!value.Linearization || value.Encryption.Enabled) return;
 
             if (GhostscriptFactory.Create(Settings) is PdfConverter gs)
             {
-                var tmp = io.Combine(io.Get(src).DirectoryName, Guid.NewGuid().ToString("D"));
+                var tmp = GetTemp(src);
                 gs.Linearization = value.Linearization;
                 gs.Invoke(src, tmp);
-                io.MoveOrCopy(tmp, src, true);
+                Settings.IO.MoveOrCopy(tmp, src, true);
             }
         }
 
@@ -186,6 +185,23 @@ namespace Cube.Pdf.Converter
             src.Minor >= 6 ? EncryptionMethod.Aes128 :
             src.Minor >= 4 ? EncryptionMethod.Standard128 :
                              EncryptionMethod.Standard40;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTemp
+        ///
+        /// <summary>
+        /// Gets a temporary path from the specified path.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetTemp(string src)
+        {
+            var io  = Settings.IO;
+            var dir = io.Combine(io.Get(src).DirectoryName, "decorator");
+            if (!io.Exists(dir)) io.CreateDirectory(dir);
+            return io.Combine(dir, Guid.NewGuid().ToString("D"));
+        }
 
         #endregion
     }
