@@ -108,20 +108,31 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private static void SetTemp(string tmp, IO io, Action callback)
         {
-            var name = "Temp";
-            var prev = Environment.GetEnvironmentVariable(name);
+            var e0 = Environment.GetEnvironmentVariable("Tmp");
+            var e1 = Environment.GetEnvironmentVariable("Temp");
 
             try
             {
                 if (tmp.HasValue())
                 {
                     if (!io.Exists(tmp)) io.CreateDirectory(tmp);
-                    SetVariable(name, tmp);
-                    Logger.Debug(typeof(GsApi), $"{name}:{prev.Quote()} -> {tmp.Quote()}");
+
+                    SetVariable("Tmp", tmp);
+                    Logger.Debug(typeof(GsApi), $"Tmp:{e0.Quote()} -> {tmp.Quote()}");
+
+                    SetVariable("Temp", tmp);
+                    Logger.Debug(typeof(GsApi), $"Temp:{e1.Quote()} -> {tmp.Quote()}");
                 }
                 callback();
             }
-            finally { if (tmp.HasValue()) SetVariable(name, prev); }
+            finally
+            {
+                if (tmp.HasValue())
+                {
+                    SetVariable("Tmp",  e0);
+                    SetVariable("Temp", e1);
+                }
+            }
         }
 
         /* ----------------------------------------------------------------- */

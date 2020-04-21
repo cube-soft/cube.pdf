@@ -66,7 +66,7 @@ namespace Cube.Pdf.Converter
                        CreateImageConverter(src);
 
             dest.Quiet       = false;
-            dest.Temp        = src.Value.Temp;
+            dest.Temp        = GetTempOrEmpty(src.Value);
             dest.Log         = src.IO.Combine(src.Value.Temp, src.Uid.ToString("D"), "console.log");
             dest.Resolution  = src.Value.Resolution;
             dest.Orientation = src.Value.Orientation;
@@ -158,6 +158,25 @@ namespace Cube.Pdf.Converter
             var key = KeyValuePair.Create(src.Value.Format, src.Value.Grayscale);
             Debug.Assert(FormatMap.ContainsKey(key));
             return new ImageConverter(FormatMap[key], src.IO) { AntiAlias = true };
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetTempOrEmpty
+        ///
+        /// <summary>
+        /// Gets a temporary directory if necessary.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetTempOrEmpty(SettingValue src)
+        {
+            var e0 = Environment.GetEnvironmentVariable("Tmp");
+            var e1 = Environment.GetEnvironmentVariable("Temp");
+
+            return e0.Length != System.Text.Encoding.UTF8.GetByteCount(e0) ||
+                   e1.Length != System.Text.Encoding.UTF8.GetByteCount(e1) ?
+                   src.Temp : string.Empty;
         }
 
         /* ----------------------------------------------------------------- */
