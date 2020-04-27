@@ -26,11 +26,11 @@ BRANCHES    = ["master", "net35"]
 FRAMEWORKS  = ["net45", "net35"]
 CONFIGS     = ["Release", "Debug"]
 PLATFORMS   = ["Any CPU", "x86", "x64"]
-PACKAGES    = ["Libraries/Core/Cube.Pdf.Core.nuspec",
-               "Libraries/Ghostscript/Cube.Pdf.Ghostscript.nuspec",
-               "Libraries/Itext/Cube.Pdf.Itext.nuspec",
-               "Libraries/Pdfium/Cube.Pdf.Pdfium.nuspec",
-               "Applications/Converter/Core/Cube.Pdf.Converter.nuspec"]
+PACKAGES    = ["Libraries/Core/Cube.Pdf.Core",
+               "Libraries/Ghostscript/Cube.Pdf.Ghostscript",
+               "Libraries/Itext/Cube.Pdf.Itext",
+               "Libraries/Pdfium/Cube.Pdf.Pdfium",
+               "Applications/Converter/Core/Cube.Pdf.Converter"]
 
 # --------------------------------------------------------------------------- #
 # unmanaged libraries
