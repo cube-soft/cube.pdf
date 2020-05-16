@@ -105,11 +105,12 @@ CubePDF Page は分割対象の PDF ファイルや画像ファイルを削除�
 
 ## CubePDF Page のアンインストール
 
-1. CubePDF Pages アンインストールするには、
-   Windows の **[設定]** の **[アプリ]** を選択し、
-   **[アプリと機能]** を表示します (Windows8 以降)。
-2. 表示された画面で CubePDF Page  を選択し、**[アンインストール]** を押してください。
-  ![分割したファイルの追加](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Pages/Assets/Main.05.ja.png?raw=true)  
+CubePDF Page をアンインストールするには、まず、コントロールパネルのプログラムのアンインストール
+または、設定のアプリと機能（Windows 8 以降）を選択します。そして、表示される画面で
+CubePDF Page のアイコンを選択してアンインストールの項目を実行して下さい。
+
+![アンインストール（コントロールパネル）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Pages/Assets/Uninstall.01.ja.png?raw=true)
+![アンインストール（設定）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Pages/Assets/Uninstall.02.ja.png?raw=true)
 
 ## CubePDF Page で問題が発生した場合
 
