@@ -60,6 +60,8 @@ namespace Cube.Pdf.Editor.Tests
             Assert.That(() => obj.DragDropCopyKeyState,      Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.DataFormat,                Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.DataFormat = null,         Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.DragDropHandler,           Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.DragDropHandler = null,    Throws.TypeOf<NotImplementedException>());
         }
 
         /* ----------------------------------------------------------------- */
@@ -75,6 +77,7 @@ namespace Cube.Pdf.Editor.Tests
         public void Drop()
         {
             var obj = new MockDropInfo();
+            Assert.That(() => obj.EventType,                     Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.DropPosition,                  Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.TargetCollection,              Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.TargetGroup,                   Throws.TypeOf<NotImplementedException>());
@@ -85,6 +88,8 @@ namespace Cube.Pdf.Editor.Tests
             Assert.That(() => obj.InsertPosition,                Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.KeyStates,                     Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.IsSameDragDropContextAsSource, Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.EffectText,                    Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.EffectText = null,             Throws.TypeOf<NotImplementedException>());
         }
 
         #endregion

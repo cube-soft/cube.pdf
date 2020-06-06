@@ -244,6 +244,7 @@ namespace Cube.Pdf.Editor.Tests
         #endregion
 
         #region NotImplemented
+        public EventType EventType => throw new NotImplementedException();
         public Point DropPosition => throw new NotImplementedException();
         public IEnumerable TargetCollection => throw new NotImplementedException();
         public CollectionViewGroup TargetGroup => throw new NotImplementedException();
@@ -255,7 +256,6 @@ namespace Cube.Pdf.Editor.Tests
         public DragDropKeyStates KeyStates => throw new NotImplementedException();
         public bool IsSameDragDropContextAsSource => throw new NotImplementedException();
         public string EffectText { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public EventType EventType => throw new NotImplementedException();
         #endregion
     }
 

@@ -20,7 +20,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Main\Cube.Pdf.Converter.Main.csproj" />
+        <ProjectReference Include="..\..\Applications\Converter\Main\Cube.Pdf.Converter.Main.csproj" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
         <PackageReference Include="NUnit" Version="3.12.0" />
         <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />

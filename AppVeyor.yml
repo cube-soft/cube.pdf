@@ -49,12 +49,12 @@ after_test:
     - xcopy /q /Y /I "Applications\Converter\Main\%PROJECT_BIN%" CubePdf
     - xcopy /q /Y /I "Applications\Editor\Proxy\%PROJECT_BIN%" CubePdf.Utility
     - xcopy /q /Y /I "Applications\Editor\Main\%PROJECT_BIN%" CubePdf.Utility
-    - xcopy /q /Y /I "Libraries\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Converter\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Editor\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Pages\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Clip\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Picker\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Core\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Converter\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Editor\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Pages\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Clip\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Picker\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
     - xcopy /q /Y /I "%TEST_COVERAGE%" "%TEST_RESULTS%\"
 artifacts:
     - path: 'CubePdf'
