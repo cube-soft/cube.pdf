@@ -112,8 +112,12 @@ namespace Cube.Pdf.Tests.Pdfium
                 yield return new TestCaseData(n++, "SampleImage.pdf",      1, 595, 842, new RenderOption { AntiAlias = false });
                 yield return new TestCaseData(n++, "SampleImage.pdf",      1, 595, 842, new RenderOption { Background = Color.Black });
                 yield return new TestCaseData(n++, "SampleAlpha.pdf",      1, 595, 841, new RenderOption());
-                yield return new TestCaseData(n++, "SampleAnnotation.pdf", 1, 595, 842, new RenderOption { Annotation = true });
-                yield return new TestCaseData(n++, "SampleAnnotation.pdf", 1, 595, 842, new RenderOption { Annotation = false });
+                yield return new TestCaseData(n++, "SampleAnnotation.pdf", 1, 595, 842, new RenderOption { Annotation = true,  Background = Color.White });
+                yield return new TestCaseData(n++, "SampleAnnotation.pdf", 1, 595, 842, new RenderOption { Annotation = false, Background = Color.White });
+                yield return new TestCaseData(n++, "SampleForm.pdf",       1, 613, 859, new RenderOption { Annotation = true,  Background = Color.White });
+                yield return new TestCaseData(n++, "SampleForm.pdf",       1, 613, 859, new RenderOption { Annotation = false, Background = Color.White });
+                yield return new TestCaseData(n++, "SampleFormSign.pdf",   1, 595, 842, new RenderOption { Annotation = true,  Background = Color.White });
+                yield return new TestCaseData(n++, "SampleFormSign.pdf",   1, 595, 842, new RenderOption { Annotation = false, Background = Color.White });
             }
         }
 

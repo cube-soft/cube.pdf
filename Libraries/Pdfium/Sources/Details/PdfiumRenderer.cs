@@ -46,19 +46,6 @@ namespace Cube.Pdf.Pdfium
         public static Image Render(IntPtr core, Page page, SizeF size,
             RenderOption options) => Load(core, page.Number, hp =>
         {
-            var formCallbacks = new FormFillInfo();
-            // Depending on whether XFA support is built into the PDFium library, the version
-            // needs to be 1 or 2. We don't really care, so we just try one or the other.
-            IntPtr form = IntPtr.Zero;
-            for (int i = 1; i <= 2; i++)
-            {
-                formCallbacks.version = i;
-
-                form = NativeMethods.FPDFDOC_InitFormFillEnvironment(core, formCallbacks);
-                if (form != IntPtr.Zero)
-                    break;
-            }
-
             var width  = (int)size.Width;
             var height = (int)size.Height;
             var degree = GetRotation(page.Delta);
@@ -70,7 +57,7 @@ namespace Cube.Pdf.Pdfium
             var hbm  = NativeMethods.FPDFBitmap_CreateEx(width, height, bpp, data.Scan0, width * bpp);
 
             NativeMethods.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, degree, flags);
-            NativeMethods.FPDF_FFLDraw(form, hbm, hp, 0, 0, width, height, degree, flags);
+            using (var ff = new FormFields(core)) ff.Render(hbm, hp, 0, 0, width, height, degree, flags);
             NativeMethods.FPDFBitmap_Destroy(hbm);
             dest.UnlockBits(data);
 
