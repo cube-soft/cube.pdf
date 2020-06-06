@@ -20,6 +20,7 @@ using Cube.Tests;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cube.Pdf.Picker.Tests
 {
@@ -55,7 +56,7 @@ namespace Cube.Pdf.Picker.Tests
                 src.ExtractAsync(new Progress<Message<int>>()).Wait();
                 src.Save(dest);
             }
-            return IO.GetFiles(dest).Length;
+            return IO.GetFiles(dest).Count();
         }
 
         #endregion

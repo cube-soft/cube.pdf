@@ -117,8 +117,10 @@ namespace Cube.Pdf.Editor.Tests
         public UIElement VisualSource => throw new NotImplementedException();
         public UIElement VisualSourceItem => throw new NotImplementedException();
         public FlowDirection VisualSourceFlowDirection => throw new NotImplementedException();
-        public IDataObject DataObject { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public DragDropKeyStates DragDropCopyKeyState => throw new NotImplementedException();
+        public DataFormat DataFormat { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Func<DependencyObject, object, DragDropEffects, DragDropEffects> DragDropHandler { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        object IDragInfo.DataObject { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         #endregion
     }
 
@@ -252,6 +254,8 @@ namespace Cube.Pdf.Editor.Tests
         public RelativeInsertPosition InsertPosition => throw new NotImplementedException();
         public DragDropKeyStates KeyStates => throw new NotImplementedException();
         public bool IsSameDragDropContextAsSource => throw new NotImplementedException();
+        public string EffectText { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public EventType EventType => throw new NotImplementedException();
         #endregion
     }
 

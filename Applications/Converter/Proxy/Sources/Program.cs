@@ -49,7 +49,6 @@ namespace Cube.Pdf.Converter.Proxy
         {
             try
             {
-                Logger.Configure();
                 Logger.Info(LogType, System.Reflection.Assembly.GetExecutingAssembly());
                 Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
 

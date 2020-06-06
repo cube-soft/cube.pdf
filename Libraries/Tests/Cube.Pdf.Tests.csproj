@@ -1,10 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.18.5</Version>
+        <Version>2.20.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
+        <StartupObject>Cube.Pdf.Tests.Program</StartupObject>
+        <OutputType>Exe</OutputType>
         <TargetFramework>net45</TargetFramework>
+        <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
         <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
@@ -12,6 +15,7 @@
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+        <Prefer32Bit>true</Prefer32Bit>
         <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
@@ -20,14 +24,14 @@
         <ProjectReference Include="..\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
         <ProjectReference Include="..\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
         <PackageReference Include="NUnit" Version="3.12.0" />
         <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
         <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
         <PackageReference Include="OpenCover" Version="4.7.922" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config" />
+        <None Include="App.*" />
         <None Include="Examples\**\*" CopyToOutputDirectory="Always" />
     </ItemGroup>
 </Project>

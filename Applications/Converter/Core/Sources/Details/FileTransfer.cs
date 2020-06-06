@@ -142,13 +142,16 @@ namespace Cube.Pdf.Converter
         {
             var io  = Settings.IO;
             var src = io.GetFiles(Temp);
+            var n   = src.Count();
+            var i   = 0;
 
-            for (var i = 0; i < src.Length; ++i)
+            foreach (var e in src)
             {
-                var path = GetDestination(i + 1, src.Length);
-                io.MoveOrCopy(src[i], path, true);
+                var path = GetDestination(i + 1, n);
+                io.MoveOrCopy(e, path, true);
                 dest.Add(path);
                 this.LogDebug($"Save:{path}");
+                ++i;
             }
         }
 

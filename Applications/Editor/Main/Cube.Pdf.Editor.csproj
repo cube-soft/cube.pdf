@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
-        <Version>0.5.8</Version>
+        <Version>0.6.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePdfUtility</Product>
@@ -9,10 +9,12 @@
         <AssemblyName>CubePdfUtility</AssemblyName>
         <AssemblyTitle>CubePDF Utility</AssemblyTitle>
         <OutputType>WinExe</OutputType>
-        <LangVersion>latest</LangVersion>
         <TargetFramework>net45</TargetFramework>
+        <UseWpf>true</UseWpf>
+        <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64</Platforms>
         <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
+        <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
@@ -21,27 +23,23 @@
         <ApplicationManifest>App.manifest</ApplicationManifest>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+        <Prefer32Bit>true</Prefer32Bit>
         <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Cube.Forms" Version="1.18.0" />
-        <PackageReference Include="Cube.Xui" Version="1.18.0" />
-        <PackageReference Include="ControlzEx" Version="3.0.2.4" />
-        <PackageReference Include="Fluent.Ribbon" Version="6.1.0.326" />
-        <PackageReference Include="gong-wpf-dragdrop" Version="1.1.0" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="System.Xaml" />
-        <Reference Include="PresentationCore" />
-        <Reference Include="PresentationFramework" />
-        <Reference Include="WindowsBase" />
+        <PackageReference Include="Cube.Forms" Version="2.0.1" />
+        <PackageReference Include="Cube.Xui" Version="2.0.1" />
+        <PackageReference Include="ControlzEx" Version="4.3.0" />
+        <PackageReference Include="Fluent.Ribbon" Version="7.1.0" />
+        <PackageReference Include="gong-wpf-dragdrop" Version="2.2.0" />
     </ItemGroup>
     <ItemGroup>
-        <ApplicationDefinition Include="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />
-        <Page Include="Views\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
-        <Page Include="Themes\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+        <ApplicationDefinition Update="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+        <Page Update="Views\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+        <Page Update="Themes\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
         <Compile Update="Views\**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />

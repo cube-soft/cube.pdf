@@ -61,7 +61,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
             }
 
-            return IO.GetFiles(dest).Length;
+            return IO.GetFiles(dest).Count();
         }
 
         #endregion

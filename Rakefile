@@ -21,7 +21,7 @@ require 'rake/clean'
 # --------------------------------------------------------------------------- #
 # configuration
 # --------------------------------------------------------------------------- #
-PROJECT     = "Cube.Pdf.Apps"
+PROJECT     = "Cube.Pdf"
 BRANCHES    = ["master", "net35"]
 FRAMEWORKS  = ["net45", "net35"]
 CONFIGS     = ["Release", "Debug"]

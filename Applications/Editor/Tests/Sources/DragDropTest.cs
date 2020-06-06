@@ -58,8 +58,8 @@ namespace Cube.Pdf.Editor.Tests
             Assert.That(() => obj.VisualSourceItem,          Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.VisualSourceFlowDirection, Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.DragDropCopyKeyState,      Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.DataObject,                Throws.TypeOf<NotImplementedException>());
-            Assert.That(() => obj.DataObject = null,         Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.DataFormat,                Throws.TypeOf<NotImplementedException>());
+            Assert.That(() => obj.DataFormat = null,         Throws.TypeOf<NotImplementedException>());
         }
 
         /* ----------------------------------------------------------------- */

@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.18.5</Version>
+        <Version>2.20.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>Ghostscript based PDF library available for the .NET Framework 3.5, 4.5, or later.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <PackageTags>Cube;PDF;Ghostscript</PackageTags>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+        <PackageIcon>images\Icon.png</PackageIcon>
         <PackageProjectUrl>https://github.com/cube-soft/$(AssemblyName)</PackageProjectUrl>
-        <PackageIconUrl>https://github.com/cube-soft/$(AssemblyName)/blob/master/Icon.png?raw=true</PackageIconUrl>
         <TargetFramework>net45</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Optimize>true</Optimize>
@@ -25,5 +25,8 @@
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
         <PackageReference Include="Cube.Native.Ghostscript" Version="9.52.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\Icon.png" Pack="true" PackagePath="images" />
     </ItemGroup>
 </Project>

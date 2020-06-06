@@ -183,7 +183,7 @@ namespace Cube.Pdf.Tests.Itext
                 w.Save(dest);
 
                 var n   = w.Results.Count;
-                var cmp = IO.GetFiles(dest).Length;
+                var cmp = IO.GetFiles(dest).Count();
                 Assert.That(cmp, Is.EqualTo(n + 1));
                 Assert.That(IO.Exists(IO.Combine(dest, $"{name}-01 (1){ext}")));
 

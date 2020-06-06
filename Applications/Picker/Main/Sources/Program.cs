@@ -48,7 +48,6 @@ namespace Cube.Pdf.Picker
         {
             try
             {
-                Logger.Configure();
                 Logger.ObserveTaskException();
                 Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
                 Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");

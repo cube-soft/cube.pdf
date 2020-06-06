@@ -134,7 +134,7 @@ namespace Cube.Pdf.Editor
         public void Cleanup()
         {
             var src = IO.GetDirectories(Directory);
-            var n   = src.Length - KeepDays;
+            var n   = src.Count() - KeepDays;
 
             if (n <= 0) return;
             foreach (var f in src.OrderBy(e => e).Take(n)) IO.TryDelete(f);
