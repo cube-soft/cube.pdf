@@ -46,7 +46,7 @@ namespace Cube.Pdf.Pdfium
         public static Image Render(IntPtr core, Page page, SizeF size,
             RenderOption options) => Load(core, page.Number, hp =>
         {
-            var formCallbacks = new NativeMethods.FPDF_FORMFILLINFO();
+            var formCallbacks = new FormFillInfo();
             // Depending on whether XFA support is built into the PDFium library, the version
             // needs to be 1 or 2. We don't really care, so we just try one or the other.
             IntPtr form = IntPtr.Zero;

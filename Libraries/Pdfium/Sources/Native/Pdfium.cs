@@ -316,6 +316,55 @@ namespace Cube.Pdf.Pdfium
 
         #endregion
 
+        #region FormFields
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_RenderPage
+        ///
+        /// <summary>
+        /// Initialize form fill environment.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_formfill.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern IntPtr FPDFDOC_InitFormFillEnvironment(IntPtr document, FormFillInfo formInfo);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDFDOC_ExitFormFillEnvironment
+        ///
+        /// <summary>
+        /// Take ownership of hHandle and exit form fill environment.
+        /// This function is a no-op when hHandle is null.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_formfill.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern void FPDFDOC_ExitFormFillEnvironment(IntPtr hHandle);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FPDF_FFLDraw
+        ///
+        /// <summary>
+        /// Render FormFields and popup window on a page to a device
+        /// independent bitmap.
+        /// </summary>
+        ///
+        /// <see hcref="https://pdfium.googlesource.com/pdfium/+/master/public/fpdf_formfill.h" />
+        ///
+        /* ----------------------------------------------------------------- */
+        [DllImport(LibName)]
+        public static extern void FPDF_FFLDraw(IntPtr form, IntPtr bitmap, IntPtr page,
+            int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
+
+        #endregion
+
         #region Render
 
         /* ----------------------------------------------------------------- */
@@ -347,13 +396,6 @@ namespace Cube.Pdf.Pdfium
         /* ----------------------------------------------------------------- */
         [DllImport(LibName)]
         public static extern void FPDF_RenderPageBitmap(IntPtr bitmap, IntPtr page,
-            int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
-
-        [DllImport(LibName)]
-        public static extern IntPtr FPDFDOC_InitFormFillEnvironment(IntPtr document, FPDF_FORMFILLINFO formInfo);
-
-        [DllImport(LibName)]
-        public static extern void FPDF_FFLDraw(IntPtr form, IntPtr bitmap, IntPtr page,
             int start_x, int start_y, int size_x, int size_y, int rotate, int flags);
 
         /* ----------------------------------------------------------------- */
@@ -390,75 +432,5 @@ namespace Cube.Pdf.Pdfium
         #region Fields
         private const string LibName = "pdfium.dll";
         #endregion
-
-        [StructLayout(LayoutKind.Sequential)]
-        public class FPDF_FORMFILLINFO
-        {
-            public int version;
-
-            private IntPtr Release;
-
-            private IntPtr FFI_Invalidate;
-
-            private IntPtr FFI_OutputSelectedRect;
-
-            private IntPtr FFI_SetCursor;
-
-            private IntPtr FFI_SetTimer;
-
-            private IntPtr FFI_KillTimer;
-
-            private IntPtr FFI_GetLocalTime;
-
-            private IntPtr FFI_OnChange;
-
-            private IntPtr FFI_GetPage;
-
-            private IntPtr FFI_GetCurrentPage;
-
-            private IntPtr FFI_GetRotation;
-
-            private IntPtr FFI_ExecuteNamedAction;
-
-            private IntPtr FFI_SetTextFieldFocus;
-
-            private IntPtr FFI_DoURIAction;
-
-            private IntPtr FFI_DoGoToAction;
-
-            private IntPtr m_pJsPlatform;
-
-            // XFA support i.e. version 2
-
-            private IntPtr FFI_DisplayCaret;
-
-            private IntPtr FFI_GetCurrentPageIndex;
-
-            private IntPtr FFI_SetCurrentPage;
-
-            private IntPtr FFI_GotoURL;
-
-            private IntPtr FFI_GetPageViewRect;
-
-            private IntPtr FFI_PageEvent;
-
-            private IntPtr FFI_PopupMenu;
-
-            private IntPtr FFI_OpenFile;
-
-            private IntPtr FFI_EmailTo;
-
-            private IntPtr FFI_UploadTo;
-
-            private IntPtr FFI_GetPlatform;
-
-            private IntPtr FFI_GetLanguage;
-
-            private IntPtr FFI_DownloadFromURL;
-
-            private IntPtr FFI_PostRequestURL;
-
-            private IntPtr FFI_PutRequestURL;
-        }
     }
 }
