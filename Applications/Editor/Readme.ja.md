@@ -106,10 +106,10 @@ CubePDF Utility は、以下のライブラリを利用しています。
     - https://pdfium.googlesource.com/pdfium/
     - https://github.com/cube-soft/Cube.Native.Pdfium
     - https://www.nuget.org/packages/Cube.Native.Pdfium.Lite/
-* log4net
-    - Apache License, Version 2.0
-    - http://logging.apache.org/log4net/
-    - https://www.nuget.org/packages/log4net/
+* NLog
+    - 3-clause BSD License
+    - https://nlog-project.org/
+    - https://www.nuget.org/packages/NLog/
 * Fluent.Ribbon
     - MIT License
     - https://fluentribbon.github.io/
@@ -125,6 +125,10 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2020/06/09 version 0.6.0β
+    - 入力フォームの内容を表示するように修正
+    - ログ出力用ライブラリを log4net から NLog に変更
+    - PDFium を Chromium 83 相当に更新
 * 2020/04/21 version 0.5.7β
     - PDFium を Chromium 81 相当に更新
 * 2020/04/07 version 0.5.6β
