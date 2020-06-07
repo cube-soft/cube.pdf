@@ -3,7 +3,7 @@
         <Version>2.20.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
-        <Description>Ghostscript based PDF library available for the .NET Framework 3.5, 4.5, or later.</Description>
+        <Description>Ghostscript based PDF library.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <PackageTags>Cube;PDF;Ghostscript</PackageTags>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
