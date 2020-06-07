@@ -4,7 +4,7 @@
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubeProxy</Product>
-        <Description>CLI application to launch a program as a user process.</Description>
+        <Description>Launch a program as a user process.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <AssemblyName>CubeProxy</AssemblyName>
         <OutputType>WinExe</OutputType>
