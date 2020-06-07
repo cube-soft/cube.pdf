@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
-        <Version>1.0.3</Version>
+        <Version>1.1.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF</Product>
@@ -10,10 +10,11 @@
         <AssemblyTitle>CubePDF</AssemblyTitle>
         <RootNamespace>Cube.Pdf.Converter</RootNamespace>
         <OutputType>WinExe</OutputType>
-        <LangVersion>latest</LangVersion>
         <TargetFramework>net35</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64</Platforms>
         <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
+        <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
@@ -28,8 +29,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Converter.csproj" />
-        <PackageReference Include="Cube.Forms" Version="1.18.0" />
-        <Reference Include="System.Windows.Forms" />
+        <PackageReference Include="Cube.Forms" Version="2.0.1" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
@@ -39,8 +39,6 @@
         <EmbeddedResource Update="Sources\Views\MainWindow.ja.resx" DependentUpon="MainWindow.cs" />
         <None Include="Properties\DataSources\*" />
         <None Include="Assets\**\*" />
-        <None Include="App.config" />
-        <None Include="App.ico" />
-        <None Include="App.manifest" />
+        <None Include="App.*" />
     </ItemGroup>
 </Project>

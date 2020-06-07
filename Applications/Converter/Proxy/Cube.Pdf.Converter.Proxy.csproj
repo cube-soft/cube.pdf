@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.18.4</Version>
+        <Version>2.20.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubeProxy</Product>
@@ -21,15 +21,14 @@
         <ApplicationManifest>App.manifest</ApplicationManifest>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+        <Prefer32Bit>true</Prefer32Bit>
         <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.Core" Version="1.18.0" />
+        <PackageReference Include="Cube.Core" Version="2.0.1" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config" />
-        <None Include="App.ico" />
-        <None Include="App.manifest" />
+        <None Include="App.*" />
     </ItemGroup>
 </Project>

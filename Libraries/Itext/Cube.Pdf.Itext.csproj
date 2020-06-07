@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.18.4</Version>
+        <Version>2.20.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>iTextSharp based PDF library available for the .NET Framework 3.5, 4.5, or later.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <PackageTags>Cube;PDF;iText;iTextSharp</PackageTags>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+        <PackageIcon>images\Icon.png</PackageIcon>
         <PackageProjectUrl>https://github.com/cube-soft/$(AssemblyName)</PackageProjectUrl>
-        <PackageIconUrl>https://github.com/cube-soft/$(AssemblyName)/blob/master/Icon.png?raw=true</PackageIconUrl>
         <TargetFramework>net35</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Optimize>true</Optimize>
@@ -24,7 +24,10 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="Cube.Images" version="1.18.0" />
+        <PackageReference Include="Cube.Images" version="2.0.1" />
         <PackageReference Include="iTextSharp" version="5.5.13" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\Icon.png" Pack="true" PackagePath="images" />
     </ItemGroup>
 </Project>

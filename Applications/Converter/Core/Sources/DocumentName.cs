@@ -111,7 +111,7 @@ namespace Cube.Pdf.Converter
         {
             if (!Source.HasValue()) return alternate;
 
-            var dest = io.Get(_filter.Result).Name;
+            var dest = io.Get(_filter.Value).Name;
             var key  = " - ";
             var pos  = dest.LastIndexOf(key);
             if (pos == -1) return dest;

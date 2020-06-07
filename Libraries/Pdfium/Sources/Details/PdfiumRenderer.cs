@@ -57,6 +57,7 @@ namespace Cube.Pdf.Pdfium
             var hbm  = NativeMethods.FPDFBitmap_CreateEx(width, height, bpp, data.Scan0, width * bpp);
 
             NativeMethods.FPDF_RenderPageBitmap(hbm, hp, 0, 0, width, height, degree, flags);
+            using (var ff = new FormFields(core)) ff.Render(hbm, hp, 0, 0, width, height, degree, flags);
             NativeMethods.FPDFBitmap_Destroy(hbm);
             dest.UnlockBits(data);
 

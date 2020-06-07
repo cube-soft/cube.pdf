@@ -99,10 +99,10 @@ Dependencies of the CubePDF Utility are as follows.
     - https://pdfium.googlesource.com/pdfium/
     - https://github.com/cube-soft/Cube.Native.Pdfium
     - https://www.nuget.org/packages/Cube.Native.Pdfium.Lite/
-* log4net
-    - Apache License, Version 2.0
-    - http://logging.apache.org/log4net/
-    - https://www.nuget.org/packages/log4net/
+* NLog
+    - 3-clause BSD License
+    - https://nlog-project.org/
+    - https://www.nuget.org/packages/NLog/
 * Fluent.Ribbon
     - MIT License
     - https://fluentribbon.github.io/
@@ -118,6 +118,10 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2020/06/09 version 0.6.0β
+    - Fix to draw form fields.
+    - Change log4net to NLog.
+    - Update PDFium to Chromium 83 compatible.
 * 2020/04/21 version 0.5.7β
     - Update PDFium to Chromium 81 compatible.
 * 2020/04/07 version 0.5.6β

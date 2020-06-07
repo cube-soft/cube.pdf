@@ -1,14 +1,13 @@
-version: 2.18.4.{build}
+version: 2.20.0.{build}
 environment:
-    PROJECT_NAME:  'Cube.Pdf.Apps'
-    PROJECT_DIR:   'Cube.Pdf'
+    PROJECT_NAME:  'Cube.Pdf'
     PROJECT_BIN:   'bin\%PLATFORM%\%CONFIGURATION%\net45'
     TEST_TOOL:     '..\packages\OpenCover\4.7.922\tools\OpenCover.Console.exe'
     TEST_ARGS:     'test --no-restore --no-build --logger:Appveyor'
     TEST_FILTERS:  '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.App -[*]*Window -[*]*Control'
     TEST_COVERAGE: 'CoverResults.xml'
     TEST_RESULTS:  'TestResults'
-clone_folder: 'C:\Cube\%PROJECT_DIR%'
+clone_folder: 'C:\Cube\%PROJECT_NAME%'
 image: Visual Studio 2019
 platform: Any CPU
 configuration: Release
@@ -31,8 +30,6 @@ build:
     parallel: true
     publish_nuget: true
     verbosity: minimal
-after_build:
-    - rake copy
 test_script:
     - >
       "%TEST_TOOL%"
@@ -52,12 +49,12 @@ after_test:
     - xcopy /q /Y /I "Applications\Converter\Main\%PROJECT_BIN%" CubePdf
     - xcopy /q /Y /I "Applications\Editor\Proxy\%PROJECT_BIN%" CubePdf.Utility
     - xcopy /q /Y /I "Applications\Editor\Main\%PROJECT_BIN%" CubePdf.Utility
-    - xcopy /q /Y /I "Libraries\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Converter\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Editor\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Pages\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Clip\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Applications\Picker\Tests\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Core\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Converter\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Editor\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Pages\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Clip\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
+    - xcopy /q /Y /I "Tests\Picker\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
     - xcopy /q /Y /I "%TEST_COVERAGE%" "%TEST_RESULTS%\"
 artifacts:
     - path: 'CubePdf'

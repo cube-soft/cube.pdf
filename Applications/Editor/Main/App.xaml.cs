@@ -84,8 +84,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnStartup(StartupEventArgs e)
         {
-            Logger.Configure();
-            BindingLogger.Configure();
+            BindingLogger.Setup();
             this.LogInfo(Assembly.GetExecutingAssembly());
 
             _observer.Add(Logger.ObserveTaskException());

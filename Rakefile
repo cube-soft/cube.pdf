@@ -21,7 +21,7 @@ require 'rake/clean'
 # --------------------------------------------------------------------------- #
 # configuration
 # --------------------------------------------------------------------------- #
-PROJECT     = "Cube.Pdf.Apps"
+PROJECT     = "Cube.Pdf"
 BRANCHES    = ["master", "net35"]
 FRAMEWORKS  = ["net45", "net35"]
 CONFIGS     = ["Release", "Debug"]
@@ -31,22 +31,6 @@ PACKAGES    = ["Libraries/Core/Cube.Pdf.Core",
                "Libraries/Itext/Cube.Pdf.Itext",
                "Libraries/Pdfium/Cube.Pdf.Pdfium",
                "Applications/Converter/Core/Cube.Pdf.Converter"]
-
-# --------------------------------------------------------------------------- #
-# unmanaged libraries
-# --------------------------------------------------------------------------- #
-COPIES = {
-    "Cube.Native.Ghostscript/9.52.0" => [
-        "Libraries/Tests",
-        "Applications/Converter/Tests",
-        "Applications/Converter/Main"
-    ],
-    "Cube.Native.Pdfium.Lite/1.0.4044" => [
-        "Libraries/Tests",
-        "Applications/Editor/Tests",
-        "Applications/Editor/Main"
-    ]
-}
 
 # --------------------------------------------------------------------------- #
 # clean
@@ -123,27 +107,6 @@ task :pack do
         ext  = spec ? "nuspec" : "csproj"
         cmd("#{pack} #{e}.#{ext}")
     end
-end
-
-# --------------------------------------------------------------------------- #
-# Copy
-# --------------------------------------------------------------------------- #
-desc "Copy umnamaged packages the bin directories."
-task :copy, [:platform, :framework] => :restore do |_, e|
-    v0 = (e.platform  != nil) ? [e.platform ] : PLATFORMS
-    v1 = (e.framework != nil) ? [e.framework] : FRAMEWORKS
-
-    v0.product(CONFIGS, v1) { |set|
-        pf = (set[0] == 'Any CPU') ? 'x86' : set[0]
-        COPIES.each { |key, value|
-            src = FileList.new("../packages/#{key}/runtimes/win-#{pf}/native/*.dll")
-            value.each { |root|
-                dest = "#{root}/bin/#{set[0]}/#{set[1]}/#{set[2]}"
-                RakeFileUtils::mkdir_p(dest)
-                RakeFileUtils::cp_r(src, dest)
-            }
-        }
-    }
 end
 
 # --------------------------------------------------------------------------- #

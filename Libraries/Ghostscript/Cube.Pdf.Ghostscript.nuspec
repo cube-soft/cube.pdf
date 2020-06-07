@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>2.18.4</version>
+        <version>2.20.0</version>
         <id>Cube.Pdf.Ghostscript</id>
         <title>Cube.Pdf.Ghostscript</title>
         <authors>clown,cube-soft</authors>
         <owners>clown,cube-soft</owners>
-        <description>Ghostscript based PDF library available for the .NET Framework 3.5, 4.5, or later.</description>
+        <description>Ghostscript based PDF library.</description>
         <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
         <tags>Cube PDF Ghostscript</tags>
         <icon>images\Icon.png</icon>
@@ -15,11 +15,11 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="net45">
-                <dependency id="Cube.Pdf" version="2.18.4" />
+                <dependency id="Cube.Pdf" version="2.20.0" />
                 <dependency id="Cube.Native.Ghostscript" version="9.52.0" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.Pdf" version="2.18.4" />
+                <dependency id="Cube.Pdf" version="2.20.0" />
                 <dependency id="Cube.Native.Ghostscript" version="9.52.0" />
             </group>
         </dependencies>

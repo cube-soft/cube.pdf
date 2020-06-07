@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
-        <Version>0.5.7</Version>
+        <Version>0.6.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePdfUtility</Product>
@@ -9,10 +9,12 @@
         <AssemblyName>CubePdfUtility</AssemblyName>
         <AssemblyTitle>CubePDF Utility</AssemblyTitle>
         <OutputType>WinExe</OutputType>
-        <LangVersion>latest</LangVersion>
         <TargetFramework>net35</TargetFramework>
+        <UseWpf>true</UseWpf>
+        <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64</Platforms>
         <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
+        <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
@@ -27,19 +29,15 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Cube.Forms" Version="1.18.0" />
-        <PackageReference Include="Cube.Xui" Version="1.18.0" />
+        <PackageReference Include="Cube.Forms" Version="2.0.1" />
+        <PackageReference Include="Cube.Xui" Version="2.0.1" />
         <PackageReference Include="gong-wpf-dragdrop" Version="1.1.0" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="PresentationCore" />
-        <Reference Include="PresentationFramework" />
-        <Reference Include="WindowsBase" />
         <Reference Include="..\..\..\..\resources\net35\RibbonControlsLibrary.dll" />
     </ItemGroup>
     <ItemGroup>
-        <ApplicationDefinition Include="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />
-        <Page Include="Views\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
-        <Page Include="Themes\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+        <ApplicationDefinition Update="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+        <Page Update="Views\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
+        <Page Update="Themes\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
         <Compile Update="Views\**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />

@@ -52,7 +52,6 @@ namespace Cube.Pdf.Converter
         {
             try
             {
-                Logger.Configure();
                 Logger.ObserveTaskException();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
                 Logger.Info(LogType, $"Ghostscript {GetGsVersion()}");
