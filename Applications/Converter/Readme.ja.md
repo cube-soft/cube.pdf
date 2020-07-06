@@ -33,17 +33,17 @@ CubePDF は、以下のフォルダに実行ログを出力しています。
 CubePDF は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
-* GPL Ghostscript
+* Ghostscript
     - GNU Affero General Public License
     - https://www.ghostscript.com/
 * iTextSharp
     - GNU Affero General Public License
     - https://itextpdf.com/
     - https://www.nuget.org/packages/iTextSharp/
-* log4net
-    - Apache License, Version 2.0
-    - http://logging.apache.org/log4net/
-    - https://www.nuget.org/packages/log4net/
+* NLog
+    - 3-clause BSD License
+    - https://nlog-project.org/
+    - https://www.nuget.org/packages/NLog/
 * AlphaFS
     - MIT License
     - http://alphafs.alphaleonis.com/
@@ -55,6 +55,9 @@ CubePDF は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2020/07/07 version 1.1.0
+    - CubePDF プリンターのインストール処理を改善
+    - ログ出力用ライブラリを log4net から NLog に変更
 * 2020/04/27 version 1.0.3
     - 一時領域からのファイルの移動方法を修正
     - Ghostscript の一時領域の設定方法を修正

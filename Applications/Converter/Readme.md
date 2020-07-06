@@ -30,17 +30,17 @@ When you have some troubles, please contact support@cube-soft.jp along with thes
 
 Dependencies of the CubePDF are as follows.
 
-* GPL Ghostscript
+* Ghostscript
     - GNU Affero General Public License
     - http://www.ghostscript.com/
 * iTextSharp
     - GNU Affero General Public License
     - http://sourceforge.net/projects/itextsharp/
     - https://www.nuget.org/packages/iTextSharp/
-* log4net
-    - Apache License, Version 2.0
-    - http://logging.apache.org/log4net/
-    - https://www.nuget.org/packages/log4net/
+* NLog
+    - 3-clause BSD License
+    - https://nlog-project.org/
+    - https://www.nuget.org/packages/NLog/
 * AlphaFS
     - MIT License
     - http://alphafs.alphaleonis.com/
@@ -52,6 +52,9 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2020/07/07 version 1.1.0
+    - Fix to install and uninstall the CubePDF printer.
+    - Change log4net to NLog.
 * 2020/04/27 version 1.0.3
     - Fix to copy when move failed.
     - Fix the temporary path for Ghostscript.
