@@ -120,7 +120,7 @@ CubePDF Utility は、以下のライブラリを利用しています。
     - https://www.nuget.org/packages/gong-wpf-dragdrop/
 * AsyncBridge (.NET Framework 3.5 のみ)
     - MIT License
-    - http://omermor.github.io/AsyncBridge/
+    - https://omermor.github.io/AsyncBridge/
     - https://www.nuget.org/packages/AsyncBridge.Net35/
 
 ## バージョン履歴
