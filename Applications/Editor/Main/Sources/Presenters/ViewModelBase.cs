@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -24,19 +23,20 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Input;
+using Cube.Xui;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// GenericViewModel(TModel)
+    /// ViewModelBase(TModel)
     ///
     /// <summary>
     /// Represents the base class of ViewModels.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class GenericViewModel<TModel> : Presentable<TModel>
+    public abstract class ViewModelBase<TModel> : Presentable<TModel>
     {
         #region Constructors
 
@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected GenericViewModel(TModel model, Aggregator aggregator, SynchronizationContext context) :
+        protected ViewModelBase(TModel model, Aggregator aggregator, SynchronizationContext context) :
             base(model, aggregator, context) { }
 
         #endregion

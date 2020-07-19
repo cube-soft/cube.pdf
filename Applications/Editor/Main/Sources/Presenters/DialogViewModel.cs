@@ -16,9 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
-using System;
 using System.Threading;
+using Cube.Xui;
 
 namespace Cube.Pdf.Editor
 {
@@ -31,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DialogViewModel<TModel> : GenericViewModel<TModel>
+    public abstract class DialogViewModel<TModel> : ViewModelBase<TModel>
     {
         #region Constructors
 
@@ -54,7 +53,7 @@ namespace Cube.Pdf.Editor
             SynchronizationContext context
         ) : base(model, aggregator, context)
         {
-            _dispose = Locale.Subscribe(e => Refresh(nameof(Title)));
+            Use(Locale.Subscribe(e => Refresh(nameof(Title))));
         }
 
         #endregion
@@ -117,31 +116,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected abstract string GetTitle();
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing)
-        {
-            try { if (disposing) _dispose.Dispose(); }
-            finally { base.Dispose(disposing); }
-        }
-
-        #endregion
-
-        #region Fields
-        private readonly IDisposable _dispose;
         #endregion
     }
 }
