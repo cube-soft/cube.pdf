@@ -63,17 +63,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Sync
-        ///
-        /// <summary>
-        /// Executes the specified action as a synchronous method.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void Sync(Action action) => Track(action, true);
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Dispose
         ///
         /// <summary>

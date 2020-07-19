@@ -16,17 +16,17 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Generics;
-using Cube.Mixin.Observing;
-using Cube.Mixin.Pdf;
-using Cube.Xui;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Input;
+using Cube.FileSystem;
+using Cube.Mixin.Generics;
+using Cube.Mixin.Observing;
+using Cube.Mixin.Pdf;
+using Cube.Xui;
 
 namespace Cube.Pdf.Editor
 {
@@ -95,7 +95,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected ICommand GetCloseCommand() => new DelegateCommand<CancelEventArgs>(
             e => {
-                if (!Facade.Value.Modified) Sync(() => Facade.Close(false));
+                if (!Facade.Value.Modified) Track(() => Facade.Close(false), true);
                 else SendClose(e);
             },
             e => Facade.Value.Source != null && (e != null || !Facade.Value.Busy)
@@ -219,7 +219,7 @@ namespace Cube.Pdf.Editor
             if (e.Cancel) return;
 
             void close() => Facade.Close(m.Value == DialogStatus.Yes);
-            if (src != null) Sync(close);
+            if (src != null) Track(close, true);
             else Track(close);
         }
 
