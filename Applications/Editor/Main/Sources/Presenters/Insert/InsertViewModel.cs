@@ -120,7 +120,7 @@ namespace Cube.Pdf.Editor
         public IElement Preview => Get(() => new BindableElement(
             () => Properties.Resources.MenuPreview,
             GetInvoker(false)
-        ) { Command = IsSelected(() => Track(() => Facade.Preview())) });
+        ) { Command = IsSelected(() => Track(Facade.Preview)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -138,7 +138,7 @@ namespace Cube.Pdf.Editor
         public IElement Add => Get(() => new BindableElement(
             () => Properties.Resources.MenuAdd,
             GetInvoker(false)
-        ) { Command = new DelegateCommand(() => SendOpen()) });
+        ) { Command = new DelegateCommand(SendOpen) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -152,7 +152,7 @@ namespace Cube.Pdf.Editor
         public IElement Remove => Get(() => new BindableElement(
             () => Properties.Resources.MenuRemove,
             GetInvoker(false)
-        ) { Command = IsSelected(() => Sync(() => Facade.Remove())) });
+        ) { Command = IsSelected(() => Track(Facade.Remove, true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -166,7 +166,7 @@ namespace Cube.Pdf.Editor
         public IElement Clear => Get(() => new BindableElement(
             () => Properties.Resources.MenuClear,
             GetInvoker(false)
-        ) { Command = new DelegateCommand(() => Sync(Facade.Clear)) });
+        ) { Command = new DelegateCommand(() => Track(Facade.Clear, true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -180,7 +180,7 @@ namespace Cube.Pdf.Editor
         public IElement Up => Get(() => new BindableElement(
             () => Properties.Resources.MenuUp,
             GetInvoker(false)
-        ) { Command = IsSelected(() => Sync(() => Facade.Move(-1))) });
+        ) { Command = IsSelected(() => Track(() => Facade.Move(-1), true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -194,7 +194,7 @@ namespace Cube.Pdf.Editor
         public IElement Down => Get(() => new BindableElement(
             () => Properties.Resources.MenuDown,
             GetInvoker(false)
-        ) { Command = IsSelected(() => Sync(() => Facade.Move(1))) });
+        ) { Command = IsSelected(() => Track(() => Facade.Move(1), true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -266,7 +266,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand DragAdd => Get(() =>
-            new DelegateCommand<string[]>(e => Sync(() => Facade.Add(e)))
+            new DelegateCommand<string[]>(e => Track(() => Facade.Add(e), true))
         );
 
         /* ----------------------------------------------------------------- */
@@ -279,7 +279,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand SelectClear => Get(() =>
-            new DelegateCommand(() => Sync(Facade.SelectClear))
+            new DelegateCommand(() => Track(Facade.SelectClear, true))
         );
 
         #endregion
