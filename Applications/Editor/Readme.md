@@ -118,6 +118,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2020/07/28 version 0.6.1β
+    - Update PDFium to Chromium 84 compatible.
 * 2020/06/09 version 0.6.0β
     - Fix to draw form fields.
     - Change log4net to NLog.
