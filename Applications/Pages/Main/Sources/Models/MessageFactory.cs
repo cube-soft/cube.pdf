@@ -22,17 +22,6 @@ namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// CollectionMessage
-    ///
-    /// <summary>
-    /// Represents the message that the collection is changed.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public sealed class CollectionMessage { }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// MessageFactory
     ///
     /// <summary>
