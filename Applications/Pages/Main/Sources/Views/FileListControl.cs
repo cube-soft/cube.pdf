@@ -60,7 +60,6 @@ namespace Cube.Pdf.Pages
             CellBorderStyle             = DataGridViewCellBorderStyle.None;
             ColumnHeadersBorderStyle    = DataGridViewHeaderBorderStyle.None;
             ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            ContextMenuStrip            = new FileContextMenu();
             Dock                        = DockStyle.Fill;
             GridColor                   = SystemColors.Control;
             ReadOnly                    = true;

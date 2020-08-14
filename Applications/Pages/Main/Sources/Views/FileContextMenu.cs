@@ -43,12 +43,12 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileContextMenu()
+        public FileContextMenu(Func<bool> predicate)
         {
-            PreviewMenu = new ToolStripMenuItem(Properties.Resources.MenuPreview);
-            UpMenu      = new ToolStripMenuItem(Properties.Resources.MenuUp);
-            DownMenu    = new ToolStripMenuItem(Properties.Resources.MenuDown);
-            RemoveMenu  = new ToolStripMenuItem(Properties.Resources.MenuRemove);
+            PreviewMenu = new FileContextMenuItem(Properties.Resources.MenuPreview, predicate);
+            UpMenu      = new FileContextMenuItem(Properties.Resources.MenuUp, predicate);
+            DownMenu    = new FileContextMenuItem(Properties.Resources.MenuDown, predicate);
+            RemoveMenu  = new FileContextMenuItem(Properties.Resources.MenuRemove, predicate);
 
             PreviewMenu.ShortcutKeys = Keys.Control | Keys.R;
             UpMenu.ShortcutKeys      = Keys.Control | Keys.Up;

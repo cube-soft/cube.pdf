@@ -177,7 +177,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Move
+        /// Preview
         ///
         /// <summary>
         /// Preview the PDF file of the specified indices.
@@ -188,7 +188,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Preview(IEnumerable<int> indices)
         {
-            if (indices.Count() > 0) Post(new PreviewMessage
+            if (indices.Count() > 0) Send(new PreviewMessage
             {
                 Value = Facade.Files[indices.First()].FullName,
             });

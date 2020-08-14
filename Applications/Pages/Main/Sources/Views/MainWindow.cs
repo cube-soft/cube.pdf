@@ -95,14 +95,14 @@ namespace Cube.Pdf.Pages
             base.OnBind(src);
             if (!(src is MainViewModel vm)) return;
 
+            var ctx = new FileContextMenu(() => SelectedIndices.Count() > 0);
+            ctx.PreviewMenu.Click += (s, e) => vm.Preview(SelectedIndices);
+            ctx.UpMenu.Click      += (s, e) => vm.Move(SelectedIndices, -1);
+            ctx.DownMenu.Click    += (s, e) => vm.Move(SelectedIndices, 1);
+            ctx.RemoveMenu.Click  += (s, e) => vm.Remove(SelectedIndices);
+
+            FileListView.ContextMenuStrip = ctx;
             FileListView.DataSource = vm.Files;
-            if (FileListView.ContextMenuStrip is FileContextMenu ctx)
-            {
-                ctx.PreviewMenu.Click += (s, e) => vm.Preview(SelectedIndices);
-                ctx.UpMenu.Click      += (s, e) => vm.Move(SelectedIndices, -1);
-                ctx.DownMenu.Click    += (s, e) => vm.Move(SelectedIndices, 1);
-                ctx.RemoveMenu.Click  += (s, e) => vm.Remove(SelectedIndices);
-            }
 
             MergeButton.Click  += (s, e) => vm.Merge();
             SplitButton.Click  += (s, e) => vm.Split();
