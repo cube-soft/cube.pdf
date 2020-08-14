@@ -16,13 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
-using Cube.Forms.Behaviors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using Cube.Forms;
+using Cube.Forms.Behaviors;
 
 namespace Cube.Pdf.Pages
 {
@@ -95,6 +96,13 @@ namespace Cube.Pdf.Pages
             if (!(src is MainViewModel vm)) return;
 
             FileListView.DataSource = vm.Files;
+            if (FileListView.ContextMenuStrip is FileContextMenu ctx)
+            {
+                ctx.PreviewMenu.Click += (s, e) => vm.Preview(SelectedIndices);
+                ctx.UpMenu.Click      += (s, e) => vm.Move(SelectedIndices, -1);
+                ctx.DownMenu.Click    += (s, e) => vm.Move(SelectedIndices, 1);
+                ctx.RemoveMenu.Click  += (s, e) => vm.Remove(SelectedIndices);
+            }
 
             MergeButton.Click  += (s, e) => vm.Merge();
             SplitButton.Click  += (s, e) => vm.Split();
@@ -110,6 +118,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new OpenDirectoryBehavior(src));
             Behaviors.Add(new SaveFileBehavior(src));
             Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Files.ResetBindings(false)));
+            Behaviors.Add(vm.Subscribe<PreviewMessage>(e => Process.Start(e.Value)));
         }
 
         #endregion

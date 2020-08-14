@@ -18,8 +18,10 @@
 /* ------------------------------------------------------------------------- */
 using Cube.FileSystem;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Cube.Mixin.Collections;
 
 namespace Cube.Pdf.Pages
 {
@@ -172,6 +174,25 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public void Move(IEnumerable<int> indices, int offset) => Track(() => Facade.Move(indices, offset));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Move
+        ///
+        /// <summary>
+        /// Preview the PDF file of the specified indices.
+        /// </summary>
+        ///
+        /// <param name="indices">Indices of files.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Preview(IEnumerable<int> indices)
+        {
+            if (indices.Count() > 0) Post(new PreviewMessage
+            {
+                Value = Facade.Files[indices.First()].FullName,
+            });
+        }
 
         #endregion
     }

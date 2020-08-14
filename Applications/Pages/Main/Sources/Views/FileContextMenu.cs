@@ -16,20 +16,21 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileMenuControl
+    /// FileContextMenu
     ///
     /// <summary>
     /// Represents the context menu to be displayed on the file list.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class FileMenuControl : ContextMenuStrip
+    public sealed class FileContextMenu : ContextMenuStrip
     {
         #region Constructors
 
@@ -42,7 +43,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileMenuControl()
+        public FileContextMenu()
         {
             PreviewMenu = new ToolStripMenuItem(Properties.Resources.MenuPreview);
             UpMenu      = new ToolStripMenuItem(Properties.Resources.MenuUp);

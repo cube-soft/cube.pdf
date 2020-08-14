@@ -37,6 +37,39 @@ namespace Cube.Pdf.Pages
     /* --------------------------------------------------------------------- */
     public class FileListControl : DataGridView
     {
+        #region Constructorss
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileListControl
+        ///
+        /// <summary>
+        /// Initializes a new instance of the FileListControl class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public FileListControl()
+        {
+            AllowUserToAddRows          = false;
+            AllowUserToDeleteRows       = false;
+            AllowUserToResizeRows       = false;
+            AutoGenerateColumns         = false;
+            AutoSizeColumnsMode         = DataGridViewAutoSizeColumnsMode.Fill;
+            BackgroundColor             = SystemColors.Window;
+            BorderStyle                 = BorderStyle.None;
+            CellBorderStyle             = DataGridViewCellBorderStyle.None;
+            ColumnHeadersBorderStyle    = DataGridViewHeaderBorderStyle.None;
+            ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            ContextMenuStrip            = new FileContextMenu();
+            Dock                        = DockStyle.Fill;
+            GridColor                   = SystemColors.Control;
+            ReadOnly                    = true;
+            RowHeadersVisible           = false;
+            SelectionMode               = DataGridViewSelectionMode.FullRowSelect;
+        }
+
+        #endregion
+
         #region Implementations
 
         /* ----------------------------------------------------------------- */
@@ -51,23 +84,6 @@ namespace Cube.Pdf.Pages
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-
-            AllowUserToAddRows          = false;
-            AllowUserToDeleteRows       = false;
-            AllowUserToResizeRows       = false;
-            AutoGenerateColumns         = false;
-            AutoSizeColumnsMode         = DataGridViewAutoSizeColumnsMode.Fill;
-            BackgroundColor             = SystemColors.Window;
-            BorderStyle                 = BorderStyle.None;
-            CellBorderStyle             = DataGridViewCellBorderStyle.None;
-            ColumnHeadersBorderStyle    = DataGridViewHeaderBorderStyle.None;
-            ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            Dock                        = DockStyle.Fill;
-            GridColor                   = SystemColors.Control;
-            ReadOnly                    = true;
-            RowHeadersVisible           = false;
-            SelectionMode               = DataGridViewSelectionMode.FullRowSelect;
-
             if (!DesignMode) InitializeColumns();
         }
 

@@ -74,7 +74,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<File> Files => _inner;
+        public IList<File> Files => _inner;
 
         /* ----------------------------------------------------------------- */
         ///
