@@ -148,7 +148,7 @@ namespace Cube.Pdf.Pages
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => Track(() => Facade.Remove(indices));
+        public void Remove(IEnumerable<int> indices) => Track(() => Facade.Remove(indices), true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -159,7 +159,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Track(Facade.Clear);
+        public void Clear() => Track(Facade.Clear, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -173,7 +173,7 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IEnumerable<int> indices, int offset) => Track(() => Facade.Move(indices, offset));
+        public void Move(IEnumerable<int> indices, int offset) => Track(() => Facade.Move(indices, offset), true);
 
         /* ----------------------------------------------------------------- */
         ///

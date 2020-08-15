@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using Cube.Tests;
 using NUnit.Framework;
+using System.Collections;
 using System.Linq;
 using System.Threading;
 
@@ -107,6 +108,33 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
                 Assert.That(vm.Test(vm.Clear), nameof(vm.Clear));
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Preview
+        ///
+        /// <summary>
+        /// Tests the Preview method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Preview()
+        {
+            var n     = 0;
+            var files = new[] { "Sample.pdf", "SampleRotation.pdf" };
+
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
+            using (vm.Subscribe<PreviewMessage>(e => ++n))
+            {
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                vm.Preview(Enumerable.Empty<int>());
+                Assert.That(n, Is.EqualTo(0));
+                vm.Preview(new[] { 0 });
+                Assert.That(n, Is.EqualTo(1));
             }
         }
 
