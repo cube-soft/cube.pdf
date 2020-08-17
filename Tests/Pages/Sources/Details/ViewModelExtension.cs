@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Tests;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Cube.Tests;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Pages.Tests
 {

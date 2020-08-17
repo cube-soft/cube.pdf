@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
+using Cube.Mixin.Collections;
 
 namespace Cube.Pdf.Pages
 {
