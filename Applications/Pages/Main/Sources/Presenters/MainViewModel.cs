@@ -16,12 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Cube.Mixin.Collections;
+using Cube.FileSystem;
 
 namespace Cube.Pdf.Pages
 {
@@ -173,7 +172,11 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IEnumerable<int> indices, int offset) => Track(() => Facade.Move(indices, offset), true);
+        public void Move(IEnumerable<int> indices, int offset) => Track(() =>
+        {
+            Facade.Move(indices, offset);
+            Send(MessageFactory.CreateForSelect(indices, offset, Facade.Files.Count));
+        }, true);
 
         /* ----------------------------------------------------------------- */
         ///

@@ -16,6 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Cube.FileSystem;
 
 namespace Cube.Pdf.Pages
@@ -95,6 +98,27 @@ namespace Cube.Pdf.Pages
         {
             Text      = Properties.Resources.TitleSplit,
             NewButton = true,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateForSelect
+        ///
+        /// <summary>
+        /// Creates a message to select items of the specified indices.
+        /// </summary>
+        ///
+        /// <param name="indices">Source selected indices.</param>
+        /// <param name="offset">Offset to move.</param>
+        /// <param name="count">Number of files.</param>
+        ///
+        /// <returns>SelectMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static SelectMessage CreateForSelect(IEnumerable<int> indices, int offset, int count) => new SelectMessage
+        {
+            Text  = string.Empty,
+            Value = indices.Select(e => Math.Max(Math.Min(e + offset, count - 1), 0)),
         };
 
         #endregion

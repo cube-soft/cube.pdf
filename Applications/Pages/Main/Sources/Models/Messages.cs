@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
+
 namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
@@ -28,6 +30,17 @@ namespace Cube.Pdf.Pages
     ///
     /* --------------------------------------------------------------------- */
     public sealed class CollectionMessage { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SelectMessage
+    ///
+    /// <summary>
+    /// Represents the message to select PDF files.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public sealed class SelectMessage : Message<IEnumerable<int>> { }
 
     /* --------------------------------------------------------------------- */
     ///

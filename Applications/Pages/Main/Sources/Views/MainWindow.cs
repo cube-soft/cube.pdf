@@ -118,6 +118,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new OpenDirectoryBehavior(src));
             Behaviors.Add(new SaveFileBehavior(src));
             Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Files.ResetBindings(false)));
+            Behaviors.Add(vm.Subscribe<SelectMessage>(e => Select(e.Value)));
             Behaviors.Add(vm.Subscribe<PreviewMessage>(e => Process.Start(e.Value)));
         }
 
@@ -144,6 +145,21 @@ namespace Cube.Pdf.Pages
             };
             dest.SetToolTip(TitleButton, Properties.Resources.MessageAbout);
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// Select items of the specified indices.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Select(IEnumerable<int> indices)
+        {
+            FileListView.ClearSelection();
+            foreach (var i in indices) FileListView.Rows[i].Selected = true;
         }
 
         #endregion
