@@ -67,6 +67,7 @@ namespace Cube.Pdf.Pages
         ) {
             Files = new BindingSource { DataSource = Facade.Files };
 
+            Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
             Facade.CollectionChanged += (s, e) => Send<CollectionMessage>();
             Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
         }

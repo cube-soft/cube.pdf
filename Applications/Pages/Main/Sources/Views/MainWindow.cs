@@ -86,7 +86,7 @@ namespace Cube.Pdf.Pages
         /// OnBind
         ///
         /// <summary>
-        /// Initializes for the About page.
+        /// Invokes the binding to the specified object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -117,6 +117,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new OpenFileBehavior(src));
             Behaviors.Add(new OpenDirectoryBehavior(src));
             Behaviors.Add(new SaveFileBehavior(src));
+            Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(src));
             Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Files.ResetBindings(false)));
             Behaviors.Add(vm.Subscribe<SelectMessage>(e => Select(e.Value)));
             Behaviors.Add(vm.Subscribe<PreviewMessage>(e => Process.Start(e.Value)));
