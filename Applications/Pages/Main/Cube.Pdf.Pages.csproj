@@ -29,13 +29,14 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
-        <PackageReference Include="Cube.Forms" Version="2.1.0" />
+        <PackageReference Include="Cube.Forms" Version="2.1.1" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
         <Compile Update="Sources\Views\*Window.cs" SubType="Form" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
         <EmbeddedResource Update="Sources\Views\*Window.resx" DependentUpon="%(Filename).cs" />
+        <None Include="Properties\DataSources\*" />
         <None Include="Assets\**\*" />
         <None Include="App.*" />
     </ItemGroup>

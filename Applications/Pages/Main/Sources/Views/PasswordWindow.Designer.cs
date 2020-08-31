@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PasswordWindow));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.PasswordLabel = new System.Windows.Forms.Label();
@@ -41,12 +42,14 @@
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
             this.PasswordKeyLabel = new System.Windows.Forms.Label();
             this.ShowPasswordCheckBox = new System.Windows.Forms.CheckBox();
+            this.PasswordBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.LayoutPanel.SuspendLayout();
             this.HeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
             this.ButtonsPanel.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PasswordBindingSource)).BeginInit();
             this.SuspendLayout();
             //
             // LayoutPanel
@@ -175,10 +178,11 @@
             //
             // PasswordTextBox
             //
+            this.PasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.PasswordBindingSource, "Password", true));
             this.PasswordTextBox.Location = new System.Drawing.Point(170, 4);
             this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(0, 4, 12, 0);
             this.PasswordTextBox.Name = "PasswordTextBox";
-            this.PasswordTextBox.Size = new System.Drawing.Size(300, 23);
+            this.PasswordTextBox.Size = new System.Drawing.Size(300, 19);
             this.PasswordTextBox.TabIndex = 6;
             this.PasswordTextBox.UseSystemPasswordChar = true;
             //
@@ -186,25 +190,29 @@
             //
             this.PasswordKeyLabel.AutoSize = true;
             this.ContentsPanel.SetFlowBreak(this.PasswordKeyLabel, true);
-            this.PasswordKeyLabel.Location = new System.Drawing.Point(64, 8);
+            this.PasswordKeyLabel.Location = new System.Drawing.Point(71, 8);
             this.PasswordKeyLabel.Margin = new System.Windows.Forms.Padding(3, 8, 8, 0);
             this.PasswordKeyLabel.Name = "PasswordKeyLabel";
-            this.PasswordKeyLabel.Size = new System.Drawing.Size(98, 15);
+            this.PasswordKeyLabel.Size = new System.Drawing.Size(91, 12);
             this.PasswordKeyLabel.TabIndex = 8;
             this.PasswordKeyLabel.Text = "パスワードを入力：";
             //
             // ShowPasswordCheckBox
             //
             this.ShowPasswordCheckBox.AutoSize = true;
-            this.ShowPasswordCheckBox.Location = new System.Drawing.Point(365, 33);
+            this.ShowPasswordCheckBox.Location = new System.Drawing.Point(366, 29);
             this.ShowPasswordCheckBox.Margin = new System.Windows.Forms.Padding(0, 6, 12, 0);
             this.ShowPasswordCheckBox.Name = "ShowPasswordCheckBox";
-            this.ShowPasswordCheckBox.Size = new System.Drawing.Size(105, 19);
+            this.ShowPasswordCheckBox.Size = new System.Drawing.Size(104, 16);
             this.ShowPasswordCheckBox.TabIndex = 7;
             this.ShowPasswordCheckBox.Text = "パスワードを表示";
             this.ShowPasswordCheckBox.UseVisualStyleBackColor = true;
             //
-            // PasswordForm
+            // PasswordBindingSource
+            //
+            this.PasswordBindingSource.DataSource = typeof(Cube.Pdf.Pages.PasswordViewModel);
+            //
+            // PasswordWindow
             //
             this.AcceptButton = this.ExecButton;
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
@@ -215,7 +223,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "PasswordForm";
+            this.Name = "PasswordWindow";
             this.ShowInTaskbar = false;
             this.Text = "パスワードを入力して下さい";
             this.LayoutPanel.ResumeLayout(false);
@@ -225,6 +233,7 @@
             this.ButtonsPanel.ResumeLayout(false);
             this.ContentsPanel.ResumeLayout(false);
             this.ContentsPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PasswordBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -242,5 +251,6 @@
         private System.Windows.Forms.TextBox PasswordTextBox;
         private System.Windows.Forms.Label PasswordKeyLabel;
         private System.Windows.Forms.CheckBox ShowPasswordCheckBox;
+        private System.Windows.Forms.BindingSource PasswordBindingSource;
     }
 }

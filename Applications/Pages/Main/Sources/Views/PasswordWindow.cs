@@ -71,6 +71,7 @@ namespace Cube.Pdf.Pages
             base.OnBind(src);
             if (!(src is PasswordViewModel vm)) return;
 
+            PasswordBindingSource.DataSource = vm;
             ExecButton.Click += (s, e) => vm.Apply();
         }
 
