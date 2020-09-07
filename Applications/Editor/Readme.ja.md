@@ -1,7 +1,7 @@
 ﻿CubePDF Utility
 ====
 
-Copyright © 2010 CubeSoft, Inc.  
+Copyright © 2013 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
@@ -125,6 +125,8 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2020/09/08 version 0.6.2β
+    - PDFium を Chromium 85 相当に更新
 * 2020/07/28 version 0.6.1β
     - PDFium を Chromium 84 相当に更新
 * 2020/06/09 version 0.6.0β
