@@ -1,7 +1,7 @@
 ﻿CubePDF Utility
 ====
 
-Copyright © 2010 CubeSoft, Inc.  
+Copyright © 2013 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
