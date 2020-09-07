@@ -40,6 +40,54 @@ namespace Cube.Pdf.Pages.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Password
+        ///
+        /// <summary>
+        /// Tests to open with password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Password()
+        {
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleAes128.pdf") }))
+            using (vm.Subscribe<PasswordViewModel>(e =>
+            {
+                Assert.That(e.Password, Is.Null);
+                Assert.That(e.Message,  Is.Not.Null.And.Not.Empty);
+                e.Password = "password";
+                e.Apply();
+            })) {
+                Assert.That(vm.Files, Is.Not.Null);
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                Assert.That(vm.Files.Count, Is.EqualTo(1));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Password_Cancel
+        ///
+        /// <summary>
+        /// Tests to cancel opening an encrypted PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Password_Cancel()
+        {
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleAes128.pdf") }))
+            {
+                Assert.That(vm.Files, Is.Not.Null);
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                Assert.That(vm.Files.Count, Is.EqualTo(0));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Move
         ///
         /// <summary>
