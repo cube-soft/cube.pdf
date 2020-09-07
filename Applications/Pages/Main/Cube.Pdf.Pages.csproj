@@ -29,7 +29,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
-        <PackageReference Include="Cube.Forms" Version="2.0.1" />
+        <PackageReference Include="Cube.Forms" Version="2.1.1" />
         <Reference Include="WindowsBase" />
     </ItemGroup>
     <ItemGroup>
@@ -37,6 +37,7 @@
         <Compile Update="Sources\Views\*Window.cs" SubType="Form" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
         <EmbeddedResource Update="Sources\Views\*Window.resx" DependentUpon="%(Filename).cs" />
+        <None Include="Properties\DataSources\*" />
         <None Include="Assets\**\*" />
         <None Include="App.*" />
     </ItemGroup>

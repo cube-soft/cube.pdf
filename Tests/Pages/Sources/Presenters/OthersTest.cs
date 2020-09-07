@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Tests;
-using NUnit.Framework;
 using System.Linq;
 using System.Threading;
+using Cube.Tests;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Pages.Tests.Presenters
 {
@@ -37,6 +37,54 @@ namespace Cube.Pdf.Pages.Tests.Presenters
     class OthersTest : FileFixture
     {
         #region Tests
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Password
+        ///
+        /// <summary>
+        /// Tests to open with password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Password()
+        {
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleAes128.pdf") }))
+            using (vm.Subscribe<PasswordViewModel>(e =>
+            {
+                Assert.That(e.Password, Is.Null);
+                Assert.That(e.Message,  Is.Not.Null.And.Not.Empty);
+                e.Password = "password";
+                e.Apply();
+            })) {
+                Assert.That(vm.Files, Is.Not.Null);
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                Assert.That(vm.Files.Count, Is.EqualTo(1));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Password_Cancel
+        ///
+        /// <summary>
+        /// Tests to cancel opening an encrypted PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Password_Cancel()
+        {
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleAes128.pdf") }))
+            {
+                Assert.That(vm.Files, Is.Not.Null);
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                Assert.That(vm.Files.Count, Is.EqualTo(0));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -107,6 +155,33 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
                 Assert.That(vm.Test(vm.Clear), nameof(vm.Clear));
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Preview
+        ///
+        /// <summary>
+        /// Tests the Preview method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Preview()
+        {
+            var n     = 0;
+            var files = new[] { "Sample.pdf", "SampleRotation.pdf" };
+
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
+            using (vm.Subscribe<PreviewMessage>(e => ++n))
+            {
+                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                vm.Preview(Enumerable.Empty<int>());
+                Assert.That(n, Is.EqualTo(0));
+                vm.Preview(new[] { 0 });
+                Assert.That(n, Is.EqualTo(1));
             }
         }
 

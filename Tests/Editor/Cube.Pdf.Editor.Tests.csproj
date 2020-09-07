@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
-        <Version>0.6.1</Version>
+        <Version>0.6.2</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
-        <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
+        <Copyright>Copyright © 2013 CubeSoft, Inc.</Copyright>
         <StartupObject>Cube.Pdf.Editor.Tests.Program</StartupObject>
         <OutputType>Exe</OutputType>
         <TargetFramework>net35</TargetFramework>
@@ -22,9 +22,9 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Editor\Main\Cube.Pdf.Editor.csproj" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
         <PackageReference Include="NUnit" Version="3.12.0" />
-        <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
         <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
         <PackageReference Include="OpenCover" Version="4.7.922" />
     </ItemGroup>

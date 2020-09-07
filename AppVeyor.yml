@@ -1,4 +1,4 @@
-version: 2.20.1.{build}
+version: 2.20.2.{build}
 environment:
     PROJECT_NAME:  'Cube.Pdf'
     PROJECT_BIN:   'bin\%PLATFORM%\%CONFIGURATION%\net45'

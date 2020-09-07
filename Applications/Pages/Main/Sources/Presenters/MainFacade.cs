@@ -16,16 +16,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Pdf;
-using Cube.Mixin.Syntax;
-using Cube.Pdf.Itext;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
+using Cube.FileSystem;
+using Cube.Mixin.Pdf;
+using Cube.Mixin.Syntax;
+using Cube.Pdf.Itext;
 
 namespace Cube.Pdf.Pages
 {
@@ -74,7 +74,18 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<File> Files => _inner;
+        public IList<File> Files => _inner;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Query
+        ///
+        /// <summary>
+        /// Gets or sets the object to query password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IQuery<string> Query { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,8 +125,8 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => _busy;
-            private set => SetProperty(ref _busy, value);
+            get => GetProperty<bool>();
+            private set => SetProperty(value);
         }
 
         #endregion
@@ -306,9 +317,9 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void AddDocument(string path)
         {
-            var query   = new Query<string>(e => throw new NotSupportedException());
             var options = new OpenOption { IO = IO, FullAccess = true };
-            using (var e = new DocumentReader(path, query, options)) _inner.Add(e.File);
+            using var e = new DocumentReader(path, Query, options);
+            _inner.Add(e.File);
         }
 
         /* ----------------------------------------------------------------- */
@@ -322,9 +333,9 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void AddDocument(PdfFile src, IDocumentWriter dest)
         {
-            var query   = new Query<string>(e => e.Cancel = true);
             var options = new OpenOption { IO = IO, FullAccess = true };
-            using (var e = new DocumentReader(src.FullName, query, options)) dest.Add(e.Pages);
+            using var e = new DocumentReader(src.FullName, src.Password, options);
+            dest.Add(e.Pages);
         }
 
         /* ----------------------------------------------------------------- */
@@ -391,7 +402,6 @@ namespace Cube.Pdf.Pages
         #region Fields
         private readonly object _lock = new object();
         private readonly ObservableCollection<File> _inner = new ObservableCollection<File>();
-        private bool _busy = false;
         #endregion
     }
 }

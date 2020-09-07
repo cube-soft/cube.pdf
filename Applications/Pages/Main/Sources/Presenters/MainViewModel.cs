@@ -16,10 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Cube.FileSystem;
 
 namespace Cube.Pdf.Pages
 {
@@ -66,6 +67,7 @@ namespace Cube.Pdf.Pages
         ) {
             Files = new BindingSource { DataSource = Facade.Files };
 
+            Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
             Facade.CollectionChanged += (s, e) => Send<CollectionMessage>();
             Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
         }
@@ -146,7 +148,7 @@ namespace Cube.Pdf.Pages
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => Track(() => Facade.Remove(indices));
+        public void Remove(IEnumerable<int> indices) => Track(() => Facade.Remove(indices), true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -157,7 +159,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Track(Facade.Clear);
+        public void Clear() => Track(Facade.Clear, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -171,7 +173,30 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IEnumerable<int> indices, int offset) => Track(() => Facade.Move(indices, offset));
+        public void Move(IEnumerable<int> indices, int offset) => Track(() =>
+        {
+            Facade.Move(indices, offset);
+            Send(MessageFactory.CreateForSelect(indices, offset, Facade.Files.Count));
+        }, true);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Preview
+        ///
+        /// <summary>
+        /// Preview the PDF file of the specified indices.
+        /// </summary>
+        ///
+        /// <param name="indices">Indices of files.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Preview(IEnumerable<int> indices)
+        {
+            if (indices.Count() > 0) Send(new PreviewMessage
+            {
+                Value = Facade.Files[indices.First()].FullName,
+            });
+        }
 
         #endregion
     }

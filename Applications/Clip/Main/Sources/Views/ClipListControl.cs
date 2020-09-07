@@ -103,9 +103,9 @@ namespace Cube.Pdf.Clip
         {
             Columns.Clear();
 
-            _ = Columns.Add(CreateColumn("Name",   Properties.Resources.ColumnName,   3.0f, true ));
-            _ = Columns.Add(CreateColumn("Status", Properties.Resources.ColumnStatus, 1.0f, true ));
-            _ = Columns.Add(CreateColumn("Length", Properties.Resources.ColumnLength, 1.2f, false));
+            _ = Columns.Add(CreateColumn("Name",   Properties.Resources.ColumnName,   3.0f, false));
+            _ = Columns.Add(CreateColumn("Status", Properties.Resources.ColumnStatus, 1.0f, false));
+            _ = Columns.Add(CreateColumn("Length", Properties.Resources.ColumnLength, 1.2f, true ));
         }
 
         /* ----------------------------------------------------------------- */
@@ -118,7 +118,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DataGridViewColumn CreateColumn(string name, string text, float weight, bool left)
+        private DataGridViewColumn CreateColumn(string name, string text, float weight, bool right)
         {
             var dest = new DataGridViewColumn
             {
@@ -131,9 +131,9 @@ namespace Cube.Pdf.Clip
             };
 
             dest.DefaultCellStyle.Alignment =
-                left ?
-                DataGridViewContentAlignment.MiddleLeft :
-                DataGridViewContentAlignment.MiddleRight;
+                right ?
+                DataGridViewContentAlignment.MiddleRight :
+                DataGridViewContentAlignment.MiddleLeft;
 
             return dest;
         }

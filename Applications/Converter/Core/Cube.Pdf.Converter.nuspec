@@ -15,12 +15,12 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="net45">
-                <dependency id="Cube.Pdf.Ghostscript" version="2.20.1" />
-                <dependency id="Cube.Pdf.Itext" version="2.20.1" />
+                <dependency id="Cube.Pdf.Ghostscript" version="2.20.2" />
+                <dependency id="Cube.Pdf.Itext" version="2.20.2" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.Pdf.Ghostscript" version="2.20.1" />
-                <dependency id="Cube.Pdf.Itext" version="2.20.1" />
+                <dependency id="Cube.Pdf.Ghostscript" version="2.20.2" />
+                <dependency id="Cube.Pdf.Itext" version="2.20.2" />
             </group>
         </dependencies>
     </metadata>

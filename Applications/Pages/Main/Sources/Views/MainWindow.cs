@@ -16,13 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
-using Cube.Forms.Behaviors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using Cube.Forms;
+using Cube.Forms.Behaviors;
 
 namespace Cube.Pdf.Pages
 {
@@ -85,7 +86,7 @@ namespace Cube.Pdf.Pages
         /// OnBind
         ///
         /// <summary>
-        /// Initializes for the About page.
+        /// Invokes the binding to the specified object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -94,6 +95,13 @@ namespace Cube.Pdf.Pages
             base.OnBind(src);
             if (!(src is MainViewModel vm)) return;
 
+            var ctx = new FileContextMenu(() => SelectedIndices.Count() > 0);
+            ctx.PreviewMenu.Click += (s, e) => vm.Preview(SelectedIndices);
+            ctx.UpMenu.Click      += (s, e) => vm.Move(SelectedIndices, -1);
+            ctx.DownMenu.Click    += (s, e) => vm.Move(SelectedIndices, 1);
+            ctx.RemoveMenu.Click  += (s, e) => vm.Remove(SelectedIndices);
+
+            FileListView.ContextMenuStrip = ctx;
             FileListView.DataSource = vm.Files;
 
             MergeButton.Click  += (s, e) => vm.Merge();
@@ -109,7 +117,10 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new OpenFileBehavior(src));
             Behaviors.Add(new OpenDirectoryBehavior(src));
             Behaviors.Add(new SaveFileBehavior(src));
+            Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(src));
             Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Files.ResetBindings(false)));
+            Behaviors.Add(vm.Subscribe<SelectMessage>(e => Select(e.Value)));
+            Behaviors.Add(vm.Subscribe<PreviewMessage>(e => Process.Start(e.Value)));
         }
 
         #endregion
@@ -135,6 +146,21 @@ namespace Cube.Pdf.Pages
             };
             dest.SetToolTip(TitleButton, Properties.Resources.MessageAbout);
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// Select items of the specified indices.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Select(IEnumerable<int> indices)
+        {
+            FileListView.ClearSelection();
+            foreach (var i in indices) FileListView.Rows[i].Selected = true;
         }
 
         #endregion

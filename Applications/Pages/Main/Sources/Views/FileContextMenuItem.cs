@@ -16,77 +16,63 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Cube.Tests;
-using NUnit.Framework;
+using System;
+using System.Windows.Forms;
 
-namespace Cube.Pdf.Pages.Tests.Presenters
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SplitTest
+    /// FileContextMenuItem
     ///
     /// <summary>
-    /// Tests the Split method of the MainViewModel class.
+    /// Represents the context menu item to be displayed on the file list.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class SplitTest : FileFixture
+    internal class FileContextMenuItem : ToolStripMenuItem
     {
-        #region Tests
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Split
+        /// FileContextMenuItem
         ///
         /// <summary>
-        /// Tests the Split method.
+        /// Initializes a new instance of the FileContextMenuItem class
+        /// with the specified arguments.
         /// </summary>
         ///
+        /// <param name="text">Displayed text.</param>
+        /// <param name="predicate">
+        /// Value indicating whether the item is selectable.
+        /// </param>
+        ///
         /* ----------------------------------------------------------------- */
-        [TestCaseSource(nameof(TestCases))]
-        public int Split(int id, string filename)
+        public FileContextMenuItem(string text, Func<bool> predicate) : base(text)
         {
-            var dest = Get($"{nameof(Split)}-{id}");
-
-            using (var vm = new MainViewModel(new SynchronizationContext()))
-            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource(filename) }))
-            using (vm.Subscribe<OpenDirectoryMessage>(e => e.Value = dest))
-            {
-                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
-                Assert.That(vm.Test(vm.Split), nameof(vm.Split));
-                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
-            }
-
-            return IO.GetFiles(dest).Count();
+            _predicate = predicate;
         }
 
         #endregion
 
-        #region TestCases
+        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// TestCases
+        /// CanSelect
         ///
         /// <summary>
-        /// Gets the test cases.
+        /// Gets a value indicating whether the item is selectable.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
-        {
-            get
-            {
-                var n = 0;
-                yield return new TestCaseData(n++, "SampleRotation.pdf").Returns(9);
-                yield return new TestCaseData(n++, "Sample.jpg").Returns(1);
-            }
-        }
+        public override bool CanSelect => _predicate();
 
+        #endregion
+
+        #region Fields
+        private readonly Func<bool> _predicate;
         #endregion
     }
 }

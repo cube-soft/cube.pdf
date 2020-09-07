@@ -78,10 +78,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             {
                 Assert.That(e.Title,             Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Editor.Tests 0.6.1β "));
+                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Editor.Tests 0.6.2β "));
                 Assert.That(e.Windows.Text,      Does.StartWith("Microsoft Windows"));
                 Assert.That(e.Framework.Text,    Does.StartWith("Microsoft .NET Framework"));
-                Assert.That(e.Link.Text,         Is.EqualTo("Copyright © 2010 CubeSoft, Inc."));
+                Assert.That(e.Link.Text,         Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
                 Assert.That(e.Link.Value,        Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdfutility/")));
                 Assert.That(e.Update.Text,       Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Update.Value,      Is.True);

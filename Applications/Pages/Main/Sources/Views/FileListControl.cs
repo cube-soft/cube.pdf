@@ -16,8 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.FileSystem;
+using Cube.Mixin.ByteFormat;
+using Cube.Mixin.IO;
+using Cube.Mixin.Logging;
 
 namespace Cube.Pdf.Pages
 {
@@ -32,21 +37,19 @@ namespace Cube.Pdf.Pages
     /* --------------------------------------------------------------------- */
     public class FileListControl : DataGridView
     {
-        #region Implementations
+        #region Constructorss
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnCreateControl
+        /// FileListControl
         ///
         /// <summary>
-        /// Occurs when creating the control.
+        /// Initializes a new instance of the FileListControl class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnCreateControl()
+        public FileListControl()
         {
-            base.OnCreateControl();
-
             AllowUserToAddRows          = false;
             AllowUserToDeleteRows       = false;
             AllowUserToResizeRows       = false;
@@ -62,8 +65,50 @@ namespace Cube.Pdf.Pages
             ReadOnly                    = true;
             RowHeadersVisible           = false;
             SelectionMode               = DataGridViewSelectionMode.FullRowSelect;
+        }
 
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCreateControl
+        ///
+        /// <summary>
+        /// Occurs when creating the control.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
             if (!DesignMode) InitializeColumns();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnCellFormatting
+        ///
+        /// <summary>
+        /// Occurs when the cell is formatting.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnCellFormatting(DataGridViewCellFormattingEventArgs e)
+        {
+            try
+            {
+                switch (e.ColumnIndex)
+                {
+                    case 1: e.Value = _io.GetTypeName((string)e.Value); break;
+                    case 4: e.Value = ((long)e.Value).ToRoughBytes(); break;
+                    default: return;
+                }
+                e.FormattingApplied = true;
+            }
+            catch (Exception err) { this.LogWarn(err); }
+            finally { base.OnCellFormatting(e); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -79,11 +124,11 @@ namespace Cube.Pdf.Pages
         {
             Columns.Clear();
 
-            _ = Columns.Add(CreateColumn("Name",          Properties.Resources.ColumnName,   5.0f));
-            //_ = Columns.Add(CreateColumn("Type",          Properties.Resources.ColumnType, 2.4f));
-            _ = Columns.Add(CreateColumn("Count",         Properties.Resources.ColumnPages,  2.0f));
-            _ = Columns.Add(CreateColumn("LastWriteTime", Properties.Resources.ColumnDate,   3.0f));
-            _ = Columns.Add(CreateColumn("Length",        Properties.Resources.ColumnLength, 2.4f));
+            _ = Columns.Add(CreateColumn("Name",          Properties.Resources.ColumnName,   3.00f, false));
+            _ = Columns.Add(CreateColumn("FullName",      Properties.Resources.ColumnType,   1.50f, false));
+            _ = Columns.Add(CreateColumn("Count",         Properties.Resources.ColumnPages,  1.00f,  true));
+            _ = Columns.Add(CreateColumn("LastWriteTime", Properties.Resources.ColumnDate,   2.00f,  true));
+            _ = Columns.Add(CreateColumn("Length",        Properties.Resources.ColumnLength, 1.25f,  true));
         }
 
         /* ----------------------------------------------------------------- */
@@ -96,16 +141,30 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DataGridViewColumn CreateColumn(string name, string text, float weight) => new DataGridViewColumn
+        private DataGridViewColumn CreateColumn(string name, string text, float weight, bool right)
         {
-            Name             = name,
-            DataPropertyName = name,
-            HeaderText       = text,
-            FillWeight       = weight,
-            SortMode         = DataGridViewColumnSortMode.NotSortable,
-            CellTemplate     = new DataGridViewTextBoxCell(),
-        };
+            var dest = new DataGridViewColumn
+            {
+                Name             = name,
+                DataPropertyName = name,
+                HeaderText       = text,
+                FillWeight       = weight,
+                SortMode         = DataGridViewColumnSortMode.NotSortable,
+                CellTemplate     = new DataGridViewTextBoxCell(),
+            };
 
+            dest.DefaultCellStyle.Alignment =
+                right ?
+                DataGridViewContentAlignment.MiddleRight :
+                DataGridViewContentAlignment.MiddleLeft;
+
+            return dest;
+        }
+
+        #endregion
+
+        #region Fields
+        private readonly IO _io = new IO();
         #endregion
     }
 }

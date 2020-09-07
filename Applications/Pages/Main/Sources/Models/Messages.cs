@@ -16,46 +16,40 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Linq;
-using System.Threading;
-using NUnit.Framework;
+using System.Collections.Generic;
 
-namespace Cube.Pdf.Pages.Tests
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainWindowTest
+    /// CollectionMessage
     ///
     /// <summary>
-    /// Tests the MainWindowTest class.
+    /// Represents the message that the collection is changed.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    [Apartment(ApartmentState.STA)]
-    class MainWindowTest
-    {
-        #region Tests
+    public sealed class CollectionMessage { }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Bind
-        ///
-        /// <summary>
-        /// Tests the Bind method.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Bind()
-        {
-            using (var view = new MainWindow())
-            {
-                view.Bind(new MainViewModel(new SynchronizationContext()));
-                Assert.That(view.SelectedIndices.Count(), Is.EqualTo(0));
-            }
-        }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SelectMessage
+    ///
+    /// <summary>
+    /// Represents the message to select PDF files.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public sealed class SelectMessage : Message<IEnumerable<int>> { }
 
-        #endregion
-    }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// CollectionMessage
+    ///
+    /// <summary>
+    /// Represents the message to preview the provided PDF file.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public sealed class PreviewMessage : Message<string> { }
 }

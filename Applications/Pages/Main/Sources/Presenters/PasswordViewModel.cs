@@ -16,53 +16,41 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Windows.Forms;
+using System.Threading;
+using Cube.FileSystem;
 
 namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileMenuControl
+    /// PasswordViewModel
     ///
     /// <summary>
-    /// Represents the context menu to be displayed on the file list.
+    /// Provides binding properties and commands for the PasswordWindow
+    /// class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class FileMenuControl : ContextMenuStrip
+    public sealed class PasswordViewModel : Presentable<QueryMessage<string, string>>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileMenuControl
+        /// PasswordViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the FileMenuControl class.
+        /// Initializes a new instance of the PasswordViewModel class.
         /// </summary>
         ///
+        /// <param name="src">Query for password.</param>
+        /// <param name="context">Synchronization context.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public FileMenuControl()
+        public PasswordViewModel(QueryMessage<string, string> src, SynchronizationContext context) :
+            base(src, new Aggregator(), context)
         {
-            PreviewMenu = new ToolStripMenuItem(Properties.Resources.MenuPreview);
-            UpMenu      = new ToolStripMenuItem(Properties.Resources.MenuUp);
-            DownMenu    = new ToolStripMenuItem(Properties.Resources.MenuDown);
-            RemoveMenu  = new ToolStripMenuItem(Properties.Resources.MenuRemove);
-
-            PreviewMenu.ShortcutKeys = Keys.Control | Keys.R;
-            UpMenu.ShortcutKeys      = Keys.Control | Keys.Up;
-            DownMenu.ShortcutKeys    = Keys.Control | Keys.Down;
-            RemoveMenu.ShortcutKeys  = Keys.Control | Keys.D;
-
-            Items.AddRange(new ToolStripItem[]
-            {
-                PreviewMenu,
-                new ToolStripSeparator(),
-                UpMenu,
-                DownMenu,
-                new ToolStripSeparator(),
-                RemoveMenu,
-            });
+            Facade.Cancel = true;
         }
 
         #endregion
@@ -71,47 +59,48 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PreviewMenu
+        /// Password
         ///
         /// <summary>
-        /// Gets the preview menu.
+        /// Gets or sets the password of the provided source.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem PreviewMenu { get; }
+        public string Password
+        {
+            get => GetProperty<string>();
+            set { if (SetProperty(value)) Facade.Value = value; }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpMenu
+        /// Message
         ///
         /// <summary>
-        /// Gets the up menu.
+        /// Gets the message to show.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem UpMenu { get; }
+        public string Message => string.Format(Properties.Resources.MessagePassword, new IO().Get(Facade.Source).Name);
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// DownMenu
+        /// Apply
         ///
         /// <summary>
-        /// Gets the down menu.
+        /// Apply the user password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem DownMenu { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RemoveMenu
-        ///
-        /// <summary>
-        /// Gets the remove menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ToolStripMenuItem RemoveMenu { get; }
+        public void Apply()
+        {
+            Facade.Cancel = false;
+            Send<CloseMessage>();
+        }
 
         #endregion
     }

@@ -57,6 +57,24 @@ namespace Cube.Pdf.Pages
 
         #region Implementations
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnBind
+        ///
+        /// <summary>
+        /// Invokes the binding to the specified object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnBind(IPresentable src)
+        {
+            base.OnBind(src);
+            if (!(src is PasswordViewModel vm)) return;
+
+            PasswordBindingSource.DataSource = vm;
+            ExecButton.Click += (s, e) => vm.Apply();
+        }
+
         /* --------------------------------------------------------------------- */
         ///
         /// OnLoad
