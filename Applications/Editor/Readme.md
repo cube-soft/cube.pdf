@@ -1,7 +1,7 @@
 CubePDF Utility
 ====
 
-Copyright © 2010 CubeSoft, Inc.  
+Copyright © 2013 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
@@ -118,6 +118,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2020/09/08 version 0.6.2β
+    - Update PDFium to Chromium 85 compatible.
 * 2020/07/28 version 0.6.1β
     - Update PDFium to Chromium 84 compatible.
 * 2020/06/09 version 0.6.0β
