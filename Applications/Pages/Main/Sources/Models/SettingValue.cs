@@ -16,42 +16,34 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Threading;
-using Cube.FileSystem;
+using System.Runtime.Serialization;
 
 namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PasswordViewModel
+    /// SettingValue
     ///
     /// <summary>
-    /// Provides binding properties and commands for the PasswordWindow
-    /// class.
+    /// Represents the user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PasswordViewModel : Presentable<QueryMessage<string, string>>
+    [DataContract]
+    public sealed class SettingValue : SerializableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PasswordViewModel
+        /// SettingValue
         ///
         /// <summary>
-        /// Initializes a new instance of the PasswordViewModel class.
+        /// Initializes a new instance of the SettingValue class.
         /// </summary>
         ///
-        /// <param name="src">Query for password.</param>
-        /// <param name="context">Synchronization context.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public PasswordViewModel(QueryMessage<string, string> src, SynchronizationContext context) :
-            base(src, new Aggregator(), context)
-        {
-            Facade.Cancel = true;
-        }
+        public SettingValue() { Reset(); }
 
         #endregion
 
@@ -59,47 +51,38 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Password
+        /// CheckUpdate
         ///
         /// <summary>
-        /// Gets or sets the password of the provided source.
+        /// Gets or sets a value indicating whether to check the update
+        /// of the application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Password
+        [DataMember]
+        public bool CheckUpdate
         {
-            get => GetProperty<string>();
-            set { if (SetProperty(value)) Facade.Value = value; }
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Message
-        ///
-        /// <summary>
-        /// Gets the message to show.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Message => string.Format(Properties.Resources.MessagePassword, new IO().Get(Facade.Source).Name);
 
         #endregion
 
-        #region Methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Apply
+        /// Reset
         ///
         /// <summary>
-        /// Apply the user password.
+        /// Resets values.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Apply()
+        [OnDeserializing]
+        private void Reset()
         {
-            Facade.Cancel = false;
-            Send<CloseMessage>();
+            CheckUpdate = true;
         }
 
         #endregion

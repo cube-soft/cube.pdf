@@ -198,6 +198,17 @@ namespace Cube.Pdf.Pages
             });
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// About
+        ///
+        /// <summary>
+        /// Shows the version dialog.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void About() => Send(new VersionViewModel(Facade.Settings, Context));
+
         #endregion
     }
 }

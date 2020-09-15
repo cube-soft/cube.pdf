@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
-using Cube.FileSystem;
 
 namespace Cube.Pdf.Pages
 {
@@ -31,27 +30,25 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PasswordViewModel : Presentable<QueryMessage<string, string>>
+    public sealed class VersionViewModel : Presentable<SettingFolder>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PasswordViewModel
+        /// VersionViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the PasswordViewModel class.
+        /// Initializes a new instance of the VersionViewModel class.
         /// </summary>
         ///
-        /// <param name="src">Query for password.</param>
+        /// <param name="src">User settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PasswordViewModel(QueryMessage<string, string> src, SynchronizationContext context) :
+        public VersionViewModel(SettingFolder src, SynchronizationContext context) :
             base(src, new Aggregator(), context)
-        {
-            Facade.Cancel = true;
-        }
+        {}
 
         #endregion
 
@@ -59,29 +56,30 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Password
+        /// Version
         ///
         /// <summary>
-        /// Gets or sets the password of the provided source.
+        /// Gets the version string.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Password
-        {
-            get => GetProperty<string>();
-            set { if (SetProperty(value)) Facade.Value = value; }
-        }
+        public string Version => $"Version {Facade.Version.ToString(true)}";
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Message
+        /// CheckUpdate
         ///
         /// <summary>
-        /// Gets the message to show.
+        /// Gets or sets a value indicating whether to check the update
+        /// of the application.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Message => string.Format(Properties.Resources.MessagePassword, new IO().Get(Facade.Source).Name);
+        public bool CheckUpdate
+        {
+            get => Facade.Value.CheckUpdate;
+            set => Facade.Value.CheckUpdate = value;
+        }
 
         #endregion
 
@@ -92,13 +90,13 @@ namespace Cube.Pdf.Pages
         /// Apply
         ///
         /// <summary>
-        /// Apply the user password.
+        /// Apply the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public void Apply()
         {
-            Facade.Cancel = false;
+            Facade.Save();
             Send<CloseMessage>();
         }
 
