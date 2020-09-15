@@ -50,8 +50,8 @@ namespace Cube.Pdf.Tests.Ghostscript
         [Test]
         public void Revision()
         {
-            Assert.That(Converter.Revision, Is.AtLeast(900));
-            Assert.That(Converter.Revision, Is.AtLeast(900));
+            Assert.That(Converter.Revision, Is.EqualTo(9531));
+            Assert.That(Converter.Revision, Is.EqualTo(9531));
         }
 
         /* ----------------------------------------------------------------- */
