@@ -187,6 +187,30 @@ namespace Cube.Pdf.Pages.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
+        /// About
+        ///
+        /// <summary>
+        /// Tests the About method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void About()
+        {
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<VersionViewModel>(e =>
+            {
+                var prev = e.CheckUpdate;
+                e.CheckUpdate = false;
+                Assert.That(e.CheckUpdate, Is.False);
+                Assert.That(e.Version, Does.StartWith("Version 2.1.0 ("));
+                e.CheckUpdate = prev;
+                e.Apply();
+            })) vm.About();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Create_Throws
         ///
         /// <summary>
