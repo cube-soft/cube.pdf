@@ -16,15 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
+using System.Linq;
+using System.Reflection;
 using Cube.Mixin.Assembly;
-using Cube.Mixin.Environment;
 using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
-using System;
-using System.Linq;
-using System.Reflection;
 
 namespace Cube.Pdf.Converter
 {
@@ -65,7 +62,6 @@ namespace Cube.Pdf.Converter
             value.Format            = GetFormat(value);
             value.Resolution        = GetResolution(value);
             value.Orientation       = GetOrientation(value);
-            value.Destination       = GetDestination(value, src.IO);
             value.Metadata.Creator  = GetCreator(value);
             value.Metadata.Producer = GetCreator(value);
             value.Encryption.Deny();
@@ -133,28 +129,6 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private static int GetResolution(SettingValue src) =>
             src.Resolution >= 72 ? src.Resolution : 600;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetDestination
-        ///
-        /// <summary>
-        /// Gets the normalized destination.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static string GetDestination(SettingValue src, IO io)
-        {
-            var desktop = Environment.SpecialFolder.Desktop.GetName();
-
-            try
-            {
-                if (!src.Destination.HasValue()) return desktop;
-                var dest = io.Get(src.Destination);
-                return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
-            }
-            catch { return desktop; }
-        }
 
         /* ----------------------------------------------------------------- */
         ///

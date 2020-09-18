@@ -16,14 +16,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections;
-using Cube.FileSystem;
-using Cube.Mixin.Assembly;
-using Cube.Mixin.String;
-using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Cube.Collections;
+using Cube.FileSystem;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.Environment;
+using Cube.Mixin.String;
+using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter
 {
@@ -171,7 +172,7 @@ namespace Cube.Pdf.Converter
             if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
             if (op.TryGetValue("Digest", out var digest)) Digest = digest;
 
-            var dest = IO.Get(IO.Combine(Value.Destination, DocumentName.Value));
+            var dest = IO.Get(IO.Combine(GetDirectoryName(Value.Destination), DocumentName.Value));
             var name = dest.BaseName;
             var ext  = Value.Format.GetExtension();
 
@@ -214,6 +215,28 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetDirectoryName
+        ///
+        /// <summary>
+        /// Gets the directory name of the specified path.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetDirectoryName(string src)
+        {
+            var desktop = Environment.SpecialFolder.Desktop.GetName();
+
+            try
+            {
+                if (!src.HasValue()) return desktop;
+                var dest = IO.Get(src);
+                return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
+            }
+            catch { return desktop; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetDocumentName
         ///
         /// <summary>
@@ -221,8 +244,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DocumentName GetDocumentName(string src) =>
-            new DocumentName(src, Assembly.GetProduct(), IO);
+        private DocumentName GetDocumentName(string src) => new DocumentName(src, Assembly.GetProduct(), IO);
 
         #endregion
     }

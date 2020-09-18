@@ -156,7 +156,6 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Format,      Is.EqualTo(Format.Pdf));
             Assert.That(dest.Resolution,  Is.EqualTo(600));
             Assert.That(dest.Orientation, Is.EqualTo(Orientation.Auto));
-            Assert.That(dest.Destination, Is.Not.Null.And.Not.Empty);
 
             var md = dest.Metadata;
             Assert.That(md.Title,         Is.Empty);
