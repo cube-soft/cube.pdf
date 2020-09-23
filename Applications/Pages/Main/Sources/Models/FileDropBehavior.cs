@@ -1,0 +1,153 @@
+﻿/* ------------------------------------------------------------------------- */
+//
+// Copyright (c) 2013 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
+//
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+/* ------------------------------------------------------------------------- */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using Cube.FileSystem;
+using Cube.Mixin.String;
+
+namespace Cube.Pdf.Pages
+{
+    /* --------------------------------------------------------------------- */
+    ///
+    /// FileDropBehavior
+    ///
+    /// <summary>
+    /// Represents the behavior when dragging and dropping files.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public sealed class FileDropBehavior : DisposableBase
+    {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FileDropBehavior
+        ///
+        /// <summary>
+        /// Initializes a new instance of the FileDropBehavior class with
+        /// the specified arguments..
+        /// </summary>
+        ///
+        /// <param name="vm">ViewModel object.</param>
+        /// <param name="view">View object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public FileDropBehavior(MainViewModel vm, MainWindow view)
+        {
+            void invoke(object s, DragEventArgs e) =>
+                vm.Add(GetFiles(e.Data.GetData(DataFormats.FileDrop, false) as string[], vm.IO));
+
+            view.AllowDrop = true;
+            view.DragOver += OnDragOver;
+            view.DragDrop += invoke;
+
+            _disposables.Add(Disposable.Create(() => view.DragOver -= OnDragOver));
+            _disposables.Add(Disposable.Create(() => view.DragDrop -= invoke));
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            foreach (var e in _disposables) e.Dispose();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDragOver
+        ///
+        /// <summary>
+        /// Occurs when dragging files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void OnDragOver(object s, DragEventArgs e) =>
+            e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ?
+                       DragDropEffects.Copy :
+                       DragDropEffects.None;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetFiles
+        ///
+        /// <summary>
+        /// Get files from the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<string> GetFiles(IEnumerable<string> src, IO io) => src.SelectMany(e =>
+            io.Get(e).IsDirectory ?
+            GetFilesCore(io.GetFiles(e), io) :
+            GetFilesCore(new[] { e }, io)
+        );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetFilesCore
+        ///
+        /// <summary>
+        /// Get files from the specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<string> GetFilesCore(IEnumerable<string> src, IO io) => src.Where(e => IsTarget(e, io));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsTarget
+        ///
+        /// <summary>
+        /// Determines whether the specified path is the target file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsTarget(string src, IO io)
+        {
+            var cmp = new[] { ".pdf", ".bmp", ".png", ".jpg", ".jpeg", ".tif", ".tiff" };
+            var cvt = io.Get(src);
+            return !cvt.IsDirectory && cmp.Any(e => cvt.Extension.FuzzyEquals(e));
+        }
+
+        #endregion
+
+        #region Fields
+        private readonly IList<IDisposable> _disposables = new List<IDisposable>();
+        #endregion
+    }
+}

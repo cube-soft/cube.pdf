@@ -92,6 +92,17 @@ namespace Cube.Pdf.Pages
         /// Busy
         ///
         /// <summary>
+        /// Gets the I/O handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IO IO => Facade.Settings.IO;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Busy
+        ///
+        /// <summary>
         /// Gets a value indicating whether the class is busy.
         /// </summary>
         ///
@@ -133,7 +144,20 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Add() => Send(MessageFactory.CreateForAdd(), e => Facade.Add(e));
+        public void Add() => Send(MessageFactory.CreateForAdd(), e => Add(e));
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Add
+        ///
+        /// <summary>
+        /// Invokes the Add command with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Files to add.</param>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Add(IEnumerable<string> src) => Track(() => Facade.Add(src), true);
 
         /* ----------------------------------------------------------------- */
         ///

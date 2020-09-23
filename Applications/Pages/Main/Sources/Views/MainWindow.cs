@@ -118,6 +118,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new OpenFileBehavior(vm));
             Behaviors.Add(new OpenDirectoryBehavior(vm));
             Behaviors.Add(new SaveFileBehavior(vm));
+            Behaviors.Add(new FileDropBehavior(vm, this));
             Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(vm));
             Behaviors.Add(new ShowDialogBehavior<VersionWindow, VersionViewModel>(vm));
             Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Files.ResetBindings(false)));
