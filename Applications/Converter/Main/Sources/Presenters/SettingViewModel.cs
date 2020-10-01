@@ -16,8 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Ghostscript;
 using System.Threading;
+using Cube.Mixin.IO;
+using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter
 {

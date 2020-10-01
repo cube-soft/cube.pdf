@@ -19,6 +19,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Cube.Mixin.IO;
 using Cube.Tests;
 using NUnit.Framework;
 

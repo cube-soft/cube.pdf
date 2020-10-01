@@ -23,6 +23,7 @@ using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.Environment;
+using Cube.Mixin.IO;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 

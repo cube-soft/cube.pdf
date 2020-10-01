@@ -24,7 +24,7 @@
         <ProjectReference Include="..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
         <ProjectReference Include="..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
         <PackageReference Include="NUnit" Version="3.12.0" />
         <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
         <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />

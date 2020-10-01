@@ -6,7 +6,7 @@
         <Copyright>Copyright © 2013 CubeSoft, Inc.</Copyright>
         <StartupObject>Cube.Pdf.Editor.Tests.Program</StartupObject>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net45</TargetFramework>
+        <TargetFramework>net452</TargetFramework>
         <UseWpf>true</UseWpf>
         <UseWindowsForms>true</UseWindowsForms>
         <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
@@ -22,7 +22,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Editor\Main\Cube.Pdf.Editor.csproj" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
         <PackageReference Include="NUnit" Version="3.12.0" />
         <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
         <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
