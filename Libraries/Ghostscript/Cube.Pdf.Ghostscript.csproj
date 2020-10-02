@@ -24,7 +24,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="Cube.Native.Ghostscript" Version="9.53.2" />
+        <PackageReference Include="Cube.Native.Ghostscript" Version="9.53.3" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\Icon.png" Pack="true" PackagePath="images" />
