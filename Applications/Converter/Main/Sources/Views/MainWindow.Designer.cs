@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.SettingPanel = new Cube.Forms.SettingControl();
+            this.SettingPanel = new Cube.Forms.Controls.SettingControl();
             this.SettingTabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -109,7 +109,7 @@
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.AboutLabel = new System.Windows.Forms.Label();
-            this.VersionPanel = new Cube.Forms.VersionControl();
+            this.VersionPanel = new Cube.Forms.Controls.VersionControl();
             this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -944,8 +944,8 @@
         private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
         private System.Windows.Forms.ProgressBar ConvertProgressBar;
         private System.Windows.Forms.Button ApplyButton;
-        private Cube.Forms.VersionControl VersionPanel;
-        private Cube.Forms.SettingControl SettingPanel;
+        private Cube.Forms.Controls.VersionControl VersionPanel;
+        private Cube.Forms.Controls.SettingControl SettingPanel;
         private System.Windows.Forms.BindingSource MainBindingSource;
         private System.Windows.Forms.BindingSource SettingBindingSource;
         private System.Windows.Forms.BindingSource MetadataBindingSource;

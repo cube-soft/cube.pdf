@@ -16,77 +16,73 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Cube.Mixin.IO;
-using Cube.Tests;
-using NUnit.Framework;
+using System.Runtime.Serialization;
 
-namespace Cube.Pdf.Pages.Tests.Presenters
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MergeTest
+    /// SettingValue
     ///
     /// <summary>
-    /// Tests the Merge method of the MainViewModel class.
+    /// Represents the user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class MergeTest : FileFixture
+    [DataContract]
+    public sealed class SettingValue : SerializableBase
     {
-        #region Tests
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Merge
+        /// SettingValue
         ///
         /// <summary>
-        /// Tests the Merge method.
+        /// Initializes a new instance of the SettingValue class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCaseSource(nameof(TestCases))]
-        public void Merge(int id, IEnumerable<string> files)
+        public SettingValue() { Reset(); }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CheckUpdate
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to check the update
+        /// of the application.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool CheckUpdate
         {
-            var dest = Get($"{nameof(Merge)}-{id}.pdf");
-
-            using (var vm = new MainViewModel(new SynchronizationContext()))
-            using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
-            using (vm.Subscribe<SaveFileMessage>(e => e.Value = dest))
-            {
-                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
-                Assert.That(vm.Test(vm.Merge), nameof(vm.Merge));
-                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
-            }
-
-            Assert.That(IO.Exists(dest));
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         #endregion
 
-        #region TestCases
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// TestCases
+        /// Reset
         ///
         /// <summary>
-        /// Gets the test cases.
+        /// Resets values.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        [OnDeserializing]
+        private void Reset()
         {
-            get
-            {
-                var n = 0;
-                yield return new TestCaseData(n++, new[] { "Sample.pdf", "SampleRotation.pdf" });
-                yield return new TestCaseData(n++, new[] { "Sample.pdf", "Sample.jpg" });
-                yield return new TestCaseData(n++, new[] { "Sample.pdf", "Sample.pdf", "Sample.pdf" });
-            }
+            CheckUpdate = true;
         }
 
         #endregion

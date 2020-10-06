@@ -1,7 +1,6 @@
-version: 2.20.2.{build}
+version: 3.0.0.{build}
 environment:
     PROJECT_NAME:  'Cube.Pdf'
-    PROJECT_BIN:   'bin\%PLATFORM%\%CONFIGURATION%\net45'
     TEST_TOOL:     '..\packages\OpenCover\4.7.922\tools\OpenCover.Console.exe'
     TEST_ARGS:     'test --no-restore --no-build --logger:Appveyor'
     TEST_FILTERS:  '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.App -[*]*Window -[*]*Control'
@@ -45,18 +44,6 @@ test_script:
 after_test:
     - pip install codecov
     - codecov -f "%TEST_COVERAGE%"
-    - xcopy /q /Y /I "Applications\Converter\Proxy\%PROJECT_BIN%" CubePdf
-    - xcopy /q /Y /I "Applications\Converter\Main\%PROJECT_BIN%" CubePdf
-    - xcopy /q /Y /I "Applications\Editor\Proxy\%PROJECT_BIN%" CubePdf.Utility
-    - xcopy /q /Y /I "Applications\Editor\Main\%PROJECT_BIN%" CubePdf.Utility
-    - xcopy /q /Y /I "Tests\Core\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Tests\Converter\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Tests\Editor\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Tests\Pages\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Tests\Clip\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "Tests\Picker\%PROJECT_BIN%\*.log" "%TEST_RESULTS%\"
-    - xcopy /q /Y /I "%TEST_COVERAGE%" "%TEST_RESULTS%\"
+    - cmd: for /f "delims=" %%x in ('dir /b /s *.log') do xcopy /q /Y /I "%%x" "%TEST_RESULTS%\"
 artifacts:
-    - path: 'CubePdf'
-    - path: 'CubePdf.Utility'
     - path: '%TEST_RESULTS%'

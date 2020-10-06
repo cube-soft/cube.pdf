@@ -15,9 +15,10 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Net35;
 using System.Security.Cryptography;
+using Cube.FileSystem;
+using Cube.Mixin.IO;
+using Cube.Net35;
 
 namespace Cube.Pdf
 {

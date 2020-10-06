@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>2.20.2</version>
+        <version>3.0.0</version>
         <id>Cube.Pdf.Pdfium</id>
         <title>Cube.Pdf.Pdfium</title>
         <authors>clown,cube-soft</authors>
@@ -15,11 +15,11 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="net45">
-                <dependency id="Cube.Pdf" version="2.20.2" />
+                <dependency id="Cube.Pdf" version="3.0.0" />
                 <dependency id="Cube.Native.Pdfium.Lite" version="1.0.4183.0" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.Pdf" version="2.20.2" />
+                <dependency id="Cube.Pdf" version="3.0.0" />
                 <dependency id="Cube.Native.Pdfium.Lite" version="1.0.4183.0" />
             </group>
         </dependencies>

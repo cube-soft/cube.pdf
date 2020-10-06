@@ -4,21 +4,10 @@
     {
         private System.ComponentModel.IContainer components = null;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
         /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
+        /// Clean up any resources being used.
         /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -35,16 +24,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.ExitButton = new Cube.Forms.Button();
-            this.SplitButton = new Cube.Forms.Button();
-            this.MergeButton = new Cube.Forms.Button();
+            this.ExitButton = new Cube.Forms.Controls.Button();
+            this.SplitButton = new Cube.Forms.Controls.Button();
+            this.MergeButton = new Cube.Forms.Controls.Button();
             this.ContentsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.FileButton = new Cube.Forms.Button();
-            this.UpButton = new Cube.Forms.Button();
-            this.DownButton = new Cube.Forms.Button();
-            this.RemoveButton = new Cube.Forms.Button();
-            this.ClearButton = new Cube.Forms.Button();
+            this.FileButton = new Cube.Forms.Controls.Button();
+            this.UpButton = new Cube.Forms.Controls.Button();
+            this.DownButton = new Cube.Forms.Controls.Button();
+            this.RemoveButton = new Cube.Forms.Controls.Button();
+            this.ClearButton = new Cube.Forms.Controls.Button();
             this.FileListView = new Cube.Pdf.Pages.FileListControl();
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
@@ -322,14 +311,14 @@
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox TitleButton;
         private System.Windows.Forms.PictureBox ImagePictureBox;
-        private Cube.Forms.Button FileButton;
-        private Cube.Forms.Button UpButton;
-        private Cube.Forms.Button DownButton;
-        private Cube.Forms.Button RemoveButton;
-        private Cube.Forms.Button ClearButton;
-        private Cube.Forms.Button MergeButton;
-        private Cube.Forms.Button SplitButton;
-        private Cube.Forms.Button ExitButton;
+        private Cube.Forms.Controls.Button FileButton;
+        private Cube.Forms.Controls.Button UpButton;
+        private Cube.Forms.Controls.Button DownButton;
+        private Cube.Forms.Controls.Button RemoveButton;
+        private Cube.Forms.Controls.Button ClearButton;
+        private Cube.Forms.Controls.Button MergeButton;
+        private Cube.Forms.Controls.Button SplitButton;
+        private Cube.Forms.Controls.Button ExitButton;
         private FileListControl FileListView;
     }
 }

@@ -16,77 +16,58 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Cube.Mixin.IO;
-using Cube.Tests;
-using NUnit.Framework;
+using Cube.Forms;
 
-namespace Cube.Pdf.Pages.Tests.Presenters
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MergeTest
+    /// VersionWindow
     ///
     /// <summary>
-    /// Tests the Merge method of the MainViewModel class.
+    /// Represents the version window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class MergeTest : FileFixture
+    public partial class VersionWindow : Window
     {
-        #region Tests
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Merge
+        /// VersionWindow
         ///
         /// <summary>
-        /// Tests the Merge method.
+        /// Initializes a new instance of the MainWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCaseSource(nameof(TestCases))]
-        public void Merge(int id, IEnumerable<string> files)
+        public VersionWindow()
         {
-            var dest = Get($"{nameof(Merge)}-{id}.pdf");
-
-            using (var vm = new MainViewModel(new SynchronizationContext()))
-            using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
-            using (vm.Subscribe<SaveFileMessage>(e => e.Value = dest))
-            {
-                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
-                Assert.That(vm.Test(vm.Merge), nameof(vm.Merge));
-                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
-            }
-
-            Assert.That(IO.Exists(dest));
+            InitializeComponent();
+            ExecButton.Click += (s, e) => Close();
         }
 
         #endregion
 
-        #region TestCases
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// TestCases
+        /// OnBind
         ///
         /// <summary>
-        /// Gets the test cases.
+        /// Invokes the binding to the specified object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        protected override void OnBind(IPresentable src)
         {
-            get
-            {
-                var n = 0;
-                yield return new TestCaseData(n++, new[] { "Sample.pdf", "SampleRotation.pdf" });
-                yield return new TestCaseData(n++, new[] { "Sample.pdf", "Sample.jpg" });
-                yield return new TestCaseData(n++, new[] { "Sample.pdf", "Sample.pdf", "Sample.pdf" });
-            }
+            base.OnBind(src);
+            if (!(src is VersionViewModel vm)) return;
+
+            VersionBindingSource.DataSource = vm;
+            ExecButton.Click += (s, e) => vm.Apply();
         }
 
         #endregion

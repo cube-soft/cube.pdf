@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 //
-// Copyright (c) 2010 CubeSoft, Inc.
+// Copyright (c) 2013 CubeSoft, Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published
@@ -29,7 +29,7 @@ namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainForm
+    /// MainWindow
     ///
     /// <summary>
     /// Represents the main window.
@@ -42,7 +42,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainForm
+        /// MainWindow
         ///
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -111,13 +111,16 @@ namespace Cube.Pdf.Pages
             DownButton.Click   += (s, e) => vm.Move(SelectedIndices, 1);
             RemoveButton.Click += (s, e) => vm.Remove(SelectedIndices);
             ClearButton.Click  += (s, e) => vm.Clear();
+            TitleButton.Click  += (s, e) => vm.About();
 
-            Behaviors.Add(new CloseBehavior(src, this));
-            Behaviors.Add(new DialogBehavior(src));
-            Behaviors.Add(new OpenFileBehavior(src));
-            Behaviors.Add(new OpenDirectoryBehavior(src));
-            Behaviors.Add(new SaveFileBehavior(src));
-            Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(src));
+            Behaviors.Add(new CloseBehavior(vm, this));
+            Behaviors.Add(new DialogBehavior(vm));
+            Behaviors.Add(new OpenFileBehavior(vm));
+            Behaviors.Add(new OpenDirectoryBehavior(vm));
+            Behaviors.Add(new SaveFileBehavior(vm));
+            Behaviors.Add(new FileDropBehavior(vm, this));
+            Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(vm));
+            Behaviors.Add(new ShowDialogBehavior<VersionWindow, VersionViewModel>(vm));
             Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Files.ResetBindings(false)));
             Behaviors.Add(vm.Subscribe<SelectMessage>(e => Select(e.Value)));
             Behaviors.Add(vm.Subscribe<PreviewMessage>(e => Process.Start(e.Value)));

@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 //
-// Copyright (c) 2010 CubeSoft, Inc.
+// Copyright (c) 2013 CubeSoft, Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published
@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Cube.FileSystem;
 using Cube.Mixin.Pdf;
@@ -57,6 +58,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public MainFacade(IO io, SynchronizationContext context) : base(new ContextInvoker(context, false))
         {
+            Settings = new SettingFolder(Assembly.GetExecutingAssembly(), io);
             IO = io;
             _inner.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
@@ -64,6 +66,17 @@ namespace Cube.Pdf.Pages
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Settings
+        ///
+        /// <summary>
+        /// Gets the user settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///

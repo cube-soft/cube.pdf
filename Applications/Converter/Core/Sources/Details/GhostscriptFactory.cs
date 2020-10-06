@@ -16,16 +16,17 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections;
-using Cube.Mixin.Logging;
-using Cube.Mixin.String;
-using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Cube.Collections;
+using Cube.Mixin.IO;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
+using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter
 {
@@ -91,10 +92,8 @@ namespace Cube.Pdf.Converter
             try
             {
                 if (!src.Log.HasValue() || !src.IO.Exists(src.Log)) return;
-                using (var ss = new StreamReader(src.IO.OpenRead(src.Log)))
-                {
-                    while (!ss.EndOfStream) src.LogDebug(ss.ReadLine());
-                }
+                using var ss = new StreamReader(src.IO.OpenRead(src.Log));
+                while (!ss.EndOfStream) src.LogDebug(ss.ReadLine());
             }
             catch (Exception err) { src.LogDebug(err.Message); }
         }

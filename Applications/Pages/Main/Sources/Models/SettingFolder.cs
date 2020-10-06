@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 //
-// Copyright (c) 2010 CubeSoft, Inc.
+// Copyright (c) 2013 CubeSoft, Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published
@@ -16,16 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.IO;
 using Cube.Mixin.String;
 
-namespace Cube.Pdf.Editor
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -54,7 +51,8 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingFolder(Assembly assembly, IO io) :
-            this(assembly, Cube.DataContract.Format.Registry, @"CubeSoft\CubePDF Utility2", io) { }
+            this(assembly, Cube.DataContract.Format.Registry, @"CubeSoft\CubePDF Page", io)
+        { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -74,61 +72,13 @@ namespace Cube.Pdf.Editor
         public SettingFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
             base(assembly, format, location, io)
         {
-            Title          = Assembly.GetTitle();
-            AutoSave       = false;
-            Version.Digit  = 3;
-            Version.Suffix = Properties.Resources.VersionSuffix;
+            AutoSave = false;
+            Version.Digit = 3;
         }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Title
-        ///
-        /// <summary>
-        /// Gets the title of the application.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Title { get; }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetSplashProcesses
-        ///
-        /// <summary>
-        /// Gets the collection of splash window processes.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<Process> GetSplashProcesses() =>
-            Process.GetProcessesByName("CubePdfUtilitySplash");
 
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnLoaded
-        ///
-        /// <summary>
-        /// Occurs when the Loaded event is fired.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnLoaded(ValueChangedEventArgs<SettingValue> e)
-        {
-            try { Locale.Set(e.NewValue.Language); }
-            finally { base.OnLoaded(e); }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -145,9 +95,9 @@ namespace Cube.Pdf.Editor
             {
                 if (Value == null) return;
 
-                var name = "cubepdf-utility-checker";
+                var name = "cubepdf-page-checker";
                 var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
-                var sk   = "CubePDF Utility2";
+                var sk   = "CubePDF Page";
                 var args = $"{Assembly.GetNameString().Quote()} /subkey {sk.Quote()}";
 
                 new Startup(name)
@@ -157,25 +107,6 @@ namespace Cube.Pdf.Editor
                 }.Save();
             }
             finally { base.OnSaved(e); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnPropertyChanged
-        ///
-        /// <summary>
-        /// Occurs when the PropertyChanged event is fired.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            try
-            {
-                if (e.PropertyName != nameof(Value.Language)) return;
-                Locale.Set(Value.Language);
-            }
-            finally { base.OnPropertyChanged(e); }
         }
 
         #endregion

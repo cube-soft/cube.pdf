@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 //
-// Copyright (c) 2010 CubeSoft, Inc.
+// Copyright (c) 2013 CubeSoft, Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published
@@ -183,6 +183,30 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 vm.Preview(new[] { 0 });
                 Assert.That(n, Is.EqualTo(1));
             }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// About
+        ///
+        /// <summary>
+        /// Tests the About method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void About()
+        {
+            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (vm.Subscribe<VersionViewModel>(e =>
+            {
+                var prev = e.CheckUpdate;
+                e.CheckUpdate = false;
+                Assert.That(e.CheckUpdate, Is.False);
+                Assert.That(e.Version, Does.StartWith("Version 2.1.0 ("));
+                e.CheckUpdate = prev;
+                e.Apply();
+            })) vm.About();
         }
 
         /* ----------------------------------------------------------------- */

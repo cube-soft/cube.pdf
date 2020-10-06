@@ -46,7 +46,7 @@ CubePDF は、以下のライブラリを利用しています。
     - https://www.nuget.org/packages/NLog/
 * AlphaFS
     - MIT License
-    - http://alphafs.alphaleonis.com/
+    - https://alphafs.alphaleonis.com/
     - https://www.nuget.org/packages/AlphaFS/
 * AsyncBridge (.NET Framework 3.5 のみ)
     - MIT license
@@ -55,6 +55,9 @@ CubePDF は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2020/10/07 version 1.2.0
+    - 仮想プリンターの再インストールが必要ない場合に省略するように修正
+    - Ghostscript 9.53.3 のバージョンアップに対応
 * 2020/07/07 version 1.1.0
     - CubePDF プリンターのインストール処理を改善
     - ログ出力用ライブラリを log4net から NLog に変更
