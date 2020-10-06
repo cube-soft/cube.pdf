@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.DropPanel = new Cube.Forms.Panel();
-            this.ExitButton = new Cube.Forms.Button();
+            this.DropPanel = new Cube.Forms.Controls.Panel();
+            this.ExitButton = new Cube.Forms.Controls.Button();
             this.DropPanel.SuspendLayout();
             this.SuspendLayout();
             //
@@ -86,8 +86,8 @@
 
         #endregion
 
-        private Cube.Forms.Panel DropPanel;
-        private Cube.Forms.Button ExitButton;
+        private Cube.Forms.Controls.Panel DropPanel;
+        private Cube.Forms.Controls.Button ExitButton;
     }
 }
 

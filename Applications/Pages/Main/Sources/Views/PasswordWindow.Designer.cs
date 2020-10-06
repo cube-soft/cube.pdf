@@ -36,8 +36,8 @@
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.TitleButton = new System.Windows.Forms.PictureBox();
             this.ButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.ExitButton = new Cube.Forms.Button();
-            this.ExecButton = new Cube.Forms.Button();
+            this.ExitButton = new Cube.Forms.Controls.Button();
+            this.ExecButton = new Cube.Forms.Controls.Button();
             this.ContentsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
             this.PasswordKeyLabel = new System.Windows.Forms.Label();
@@ -244,8 +244,8 @@
         private System.Windows.Forms.PictureBox ImagePictureBox;
         private System.Windows.Forms.PictureBox TitleButton;
         private System.Windows.Forms.FlowLayoutPanel ButtonsPanel;
-        private Forms.Button ExitButton;
-        private Forms.Button ExecButton;
+        private Cube.Forms.Controls.Button ExitButton;
+        private Cube.Forms.Controls.Button ExecButton;
         private System.Windows.Forms.Label PasswordLabel;
         private System.Windows.Forms.FlowLayoutPanel ContentsPanel;
         private System.Windows.Forms.TextBox PasswordTextBox;

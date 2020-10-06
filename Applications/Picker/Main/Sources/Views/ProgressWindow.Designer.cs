@@ -30,9 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgressWindow));
             this.ProgressBar = new System.Windows.Forms.ProgressBar();
-            this.ExitButton = new Cube.Forms.Button();
-            this.SaveButton = new Cube.Forms.Button();
-            this.PreviewButton = new Cube.Forms.Button();
+            this.ExitButton = new Cube.Forms.Controls.Button();
+            this.SaveButton = new Cube.Forms.Controls.Button();
+            this.PreviewButton = new Cube.Forms.Controls.Button();
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.LogoPictureBox = new System.Windows.Forms.PictureBox();
@@ -165,8 +165,8 @@
         private System.Windows.Forms.PictureBox ImagePictureBox;
         private System.Windows.Forms.PictureBox LogoPictureBox;
         private System.Windows.Forms.Label MessageLabel;
-        private Cube.Forms.Button ExitButton;
-        private Cube.Forms.Button SaveButton;
-        private Cube.Forms.Button PreviewButton;
+        private Cube.Forms.Controls.Button ExitButton;
+        private Cube.Forms.Controls.Button SaveButton;
+        private Cube.Forms.Controls.Button PreviewButton;
     }
 }

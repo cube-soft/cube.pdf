@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VersionWindow));
             this.RootLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.MainVersionControl = new Cube.Forms.VersionControl();
+            this.MainVersionControl = new Cube.Forms.Controls.VersionControl();
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.DummyPanel = new System.Windows.Forms.Panel();
             this.ButtonsPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -149,7 +149,7 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel RootLayoutPanel;
-        private Forms.VersionControl MainVersionControl;
+        private Cube.Forms.Controls.VersionControl MainVersionControl;
         private System.Windows.Forms.CheckBox UpdateCheckBox;
         private System.Windows.Forms.Panel DummyPanel;
         private System.Windows.Forms.TableLayoutPanel ButtonsPanel;
