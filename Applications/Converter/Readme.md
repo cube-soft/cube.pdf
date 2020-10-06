@@ -32,10 +32,10 @@ Dependencies of the CubePDF are as follows.
 
 * Ghostscript
     - GNU Affero General Public License
-    - http://www.ghostscript.com/
+    - https://www.ghostscript.com/
 * iTextSharp
     - GNU Affero General Public License
-    - http://sourceforge.net/projects/itextsharp/
+    - https://itextpdf.com/
     - https://www.nuget.org/packages/iTextSharp/
 * NLog
     - 3-clause BSD License
@@ -43,7 +43,7 @@ Dependencies of the CubePDF are as follows.
     - https://www.nuget.org/packages/NLog/
 * AlphaFS
     - MIT License
-    - http://alphafs.alphaleonis.com/
+    - https://alphafs.alphaleonis.com/
     - https://www.nuget.org/packages/AlphaFS/
 * AsyncBridge (.NET Framework 3.5 only)
     - MIT license
@@ -52,6 +52,9 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2020/10/07 version 1.2.0
+    - Fix to skip the reinstallation when the virtual printer is latest.
+    - Update Ghostscript 9.53.3.
 * 2020/07/07 version 1.1.0
     - Fix to install and uninstall the CubePDF printer.
     - Change log4net to NLog.
