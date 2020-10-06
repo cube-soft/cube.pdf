@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.21.0</Version>
+        <Version>3.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>iTextSharp based PDF library.</Description>
@@ -24,7 +24,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="Cube.Images" version="2.2.0" />
+        <PackageReference Include="Cube.Images" version="3.0.0" />
         <PackageReference Include="iTextSharp" version="5.5.13" />
     </ItemGroup>
     <ItemGroup>
