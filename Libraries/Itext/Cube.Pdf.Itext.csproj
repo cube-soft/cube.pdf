@@ -24,7 +24,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="Cube.Images" version="3.0.0" />
+        <PackageReference Include="Cube.Images" version="3.1.0" />
         <PackageReference Include="iTextSharp" version="5.5.13" />
     </ItemGroup>
     <ItemGroup>

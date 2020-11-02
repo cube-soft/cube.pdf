@@ -29,7 +29,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
-        <PackageReference Include="Cube.Forms" Version="3.0.0" />
+        <PackageReference Include="Cube.Forms" Version="3.1.0" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
