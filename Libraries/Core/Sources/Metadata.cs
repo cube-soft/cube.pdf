@@ -62,8 +62,8 @@ namespace Cube.Pdf
         [DataMember]
         public PdfVersion Version
         {
-            get => _version;
-            set => SetProperty(ref _version, value);
+            get => GetProperty<PdfVersion>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -78,8 +78,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Author
         {
-            get => _author;
-            set => SetProperty(ref _author, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -94,8 +94,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Title
         {
-            get => _title;
-            set => SetProperty(ref _title, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -110,8 +110,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Subject
         {
-            get => _subject;
-            set => SetProperty(ref _subject, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -126,8 +126,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Keywords
         {
-            get => _keywords;
-            set => SetProperty(ref _keywords, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -142,8 +142,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Creator
         {
-            get => _creator;
-            set => SetProperty(ref _creator, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -158,8 +158,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Producer
         {
-            get => _producer;
-            set => SetProperty(ref _producer, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -174,8 +174,8 @@ namespace Cube.Pdf
         [DataMember]
         public ViewerOption Options
         {
-            get => _options;
-            set => SetProperty(ref _options, value);
+            get => GetProperty<ViewerOption>();
+            set => SetProperty(value);
         }
 
         #endregion
@@ -205,27 +205,16 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         private void Reset()
         {
-            _version  = new PdfVersion(1, 7);
-            _author   = string.Empty;
-            _title    = string.Empty;
-            _subject  = string.Empty;
-            _keywords = string.Empty;
-            _creator  = string.Empty;
-            _producer = string.Empty;
-            _options  = ViewerOption.OneColumn;
+            Version  = new PdfVersion(1, 7);
+            Author   = string.Empty;
+            Title    = string.Empty;
+            Subject  = string.Empty;
+            Keywords = string.Empty;
+            Creator  = string.Empty;
+            Producer = string.Empty;
+            Options  = ViewerOption.OneColumn;
         }
 
-        #endregion
-
-        #region Fields
-        private PdfVersion _version;
-        private string _author;
-        private string _title;
-        private string _subject;
-        private string _keywords;
-        private string _creator;
-        private string _producer;
-        private ViewerOption _options;
         #endregion
     }
 }

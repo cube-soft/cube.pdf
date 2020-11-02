@@ -116,8 +116,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Index
         {
-            get => _index;
-            set => SetProperty(ref _index, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -132,8 +132,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int UserIndex
         {
-            get => _userIndex;
-            set { if (SetProperty(ref _userIndex, value)) Index = value; }
+            get => GetProperty<int>();
+            set { if (SetProperty(value)) Index = value; }
         }
 
         #endregion
@@ -157,11 +157,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
 
-        #endregion
-
-        #region Fields
-        private int _index = -1;
-        private int _userIndex = -1;
         #endregion
     }
 }

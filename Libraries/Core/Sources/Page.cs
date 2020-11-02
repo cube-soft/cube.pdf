@@ -142,8 +142,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public Angle Delta
         {
-            get => _delta;
-            set => SetProperty(ref _delta, value);
+            get => GetProperty(() => new Angle());
+            set => SetProperty(value);
         }
 
         #endregion
@@ -172,15 +172,8 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnReset()
-        {
-            Delta = new Angle();
-        }
+        protected virtual void OnReset() => Delta = new Angle();
 
-        #endregion
-
-        #region Fields
-        private Angle _delta = new Angle();
         #endregion
     }
 }

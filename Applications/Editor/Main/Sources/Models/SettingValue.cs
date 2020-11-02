@@ -64,8 +64,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public int Width
         {
-            get => _width;
-            set => SetProperty(ref _width, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -80,8 +80,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public int Height
         {
-            get => _height;
-            set => SetProperty(ref _height, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -96,8 +96,8 @@ namespace Cube.Pdf.Editor
         [DataMember(Name = "ViewSize")]
         public int ItemSize
         {
-            get => _itemSize;
-            set => SetProperty(ref _itemSize, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -113,8 +113,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public bool FrameOnly
         {
-            get => _frameOnly;
-            set => SetProperty(ref _frameOnly, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,8 +129,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public Language Language
         {
-            get => _language;
-            set => SetProperty(ref _language, value);
+            get => GetProperty<Language>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -145,8 +145,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public bool CheckUpdate
         {
-            get => _update;
-            set => SetProperty(ref _update, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         #endregion
@@ -156,7 +156,7 @@ namespace Cube.Pdf.Editor
         /// Uri
         ///
         /// <summary>
-        /// Web ページの URL を取得します。
+        /// Gets the URL of the product Web page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -189,22 +189,13 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Reset()
         {
-            _width    = 800;
-            _height   = 600;
-            _itemSize = 250;
-            _language = Language.Auto;
-            _update   = true;
+            Width       = 800;
+            Height      = 600;
+            ItemSize    = 250;
+            Language    = Language.Auto;
+            CheckUpdate = true;
         }
 
-        #endregion
-
-        #region Fields
-        private int _width;
-        private int _height;
-        private int _itemSize;
-        private bool _frameOnly;
-        private Language _language;
-        private bool _update;
         #endregion
     }
 }

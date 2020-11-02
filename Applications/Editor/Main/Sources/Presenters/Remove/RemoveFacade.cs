@@ -78,8 +78,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public string Range
         {
-            get => _range;
-            set => SetProperty(ref _range, value);
+            get => GetProperty(() => string.Empty);
+            set => SetProperty(value);
         }
 
         #endregion
@@ -114,10 +114,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
 
-        #endregion
-
-        #region Fields
-        private string _range = string.Empty;
         #endregion
     }
 }

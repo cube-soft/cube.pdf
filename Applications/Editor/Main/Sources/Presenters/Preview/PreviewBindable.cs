@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Windows.Media;
 using Cube.FileSystem;
 using Cube.Mixin.Pdf;
-using System.Windows.Media;
 
 namespace Cube.Pdf.Editor
 {
@@ -100,8 +100,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ImageSource Image
         {
-            get => _image;
-            set => SetProperty(ref _image, value);
+            get => GetProperty<ImageSource>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -115,8 +115,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Width
         {
-            get => _width;
-            set => SetProperty(ref _width, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -130,8 +130,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Height
         {
-            get => _height;
-            set => SetProperty(ref _height, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -145,8 +145,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => _busy;
-            set => SetProperty(ref _busy, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         #endregion
@@ -170,13 +170,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
 
-        #endregion
-
-        #region Fields
-        private ImageSource _image;
-        private int _width;
-        private int _height;
-        private bool _busy;
         #endregion
     }
 }
