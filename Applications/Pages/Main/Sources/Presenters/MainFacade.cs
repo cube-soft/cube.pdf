@@ -182,7 +182,7 @@ namespace Cube.Pdf.Pages
             {
                 using (var writer = Make<DocumentWriter>()) writer.Save(tmp);
                 IO.Move(tmp, dest, true);
-                Clear();
+                ClearItems();
             }
             finally { _ = IO.TryDelete(tmp); }
         });
@@ -206,7 +206,7 @@ namespace Cube.Pdf.Pages
                 writer.Save(directory);
                 foreach (var f in writer.Results) results.Add(f);
             }
-            Clear();
+            ClearItems();
         });
 
         /* ----------------------------------------------------------------- */
@@ -275,7 +275,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Invoke(() => _inner.Clear());
+        public void Clear() => Invoke(() => ClearItems());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -387,6 +387,17 @@ namespace Cube.Pdf.Pages
                 inserted = newindex;
             }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Clear
+        ///
+        /// <summary>
+        /// Clears the added files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ClearItems() => _inner.Clear();
 
         /* ----------------------------------------------------------------- */
         ///
