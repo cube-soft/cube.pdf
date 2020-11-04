@@ -95,6 +95,8 @@ namespace Cube.Pdf.Pages
             base.OnBind(src);
             if (!(src is MainViewModel vm)) return;
 
+            MainBindingSource.DataSource = vm;
+
             var ctx = new FileContextMenu(() => SelectedIndices.Count() > 0);
             ctx.PreviewMenu.Click += (s, e) => vm.Preview(SelectedIndices);
             ctx.UpMenu.Click      += (s, e) => vm.Move(SelectedIndices, -1);

@@ -68,8 +68,11 @@ namespace Cube.Pdf.Pages
             Files = new BindingSource { DataSource = Facade.Files };
 
             Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
-            Facade.CollectionChanged += (s, e) => Send<CollectionMessage>();
             Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
+            Facade.CollectionChanged += (s, e) => {
+                Refresh(nameof(Invokable));
+                Send<CollectionMessage>();
+            };
         }
 
         #endregion
@@ -89,7 +92,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Busy
+        /// IO
         ///
         /// <summary>
         /// Gets the I/O handler.
@@ -108,6 +111,18 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public bool Busy => Facade.Busy;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invokeable
+        ///
+        /// <summary>
+        /// Gets a value indicating whether the Merge or Split operation
+        /// is available.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Invokable => Facade.Files.Count > 0;
 
         #endregion
 

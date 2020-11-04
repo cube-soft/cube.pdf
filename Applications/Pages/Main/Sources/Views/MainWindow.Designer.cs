@@ -21,6 +21,7 @@
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -38,6 +39,7 @@
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.TitleButton = new System.Windows.Forms.PictureBox();
+            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.ContentsPanel.SuspendLayout();
@@ -46,6 +48,7 @@
             this.HeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).BeginInit();
             this.SuspendLayout();
             //
             // LayoutPanel
@@ -97,6 +100,7 @@
             // SplitButton
             //
             this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(49)))), ((int)(((byte)(146)))));
+            this.SplitButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.MainBindingSource, "Invokable", true));
             this.SplitButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.SplitButton.FlatAppearance.BorderSize = 0;
             this.SplitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -111,6 +115,7 @@
             // MergeButton
             //
             this.MergeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.MergeButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.MainBindingSource, "Invokable", true));
             this.MergeButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.MergeButton.FlatAppearance.BorderSize = 0;
             this.MergeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -280,6 +285,10 @@
             this.TitleButton.TabIndex = 0;
             this.TitleButton.TabStop = false;
             //
+            // MainBindingSource
+            //
+            this.MainBindingSource.DataSource = typeof(Cube.Pdf.Pages.MainViewModel);
+            //
             // MainWindow
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -298,6 +307,7 @@
             this.HeaderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -320,6 +330,7 @@
         private Cube.Forms.Controls.Button SplitButton;
         private Cube.Forms.Controls.Button ExitButton;
         private FileListControl FileListView;
+        private System.Windows.Forms.BindingSource MainBindingSource;
     }
 }
 

@@ -57,7 +57,9 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             using (vm.Subscribe<SaveFileMessage>(e => e.Value = dest))
             {
+                Assert.That(vm.Invokable, Is.False);
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
+                Assert.That(vm.Invokable, Is.True);
                 Assert.That(vm.Test(vm.Merge), nameof(vm.Merge));
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
             }
