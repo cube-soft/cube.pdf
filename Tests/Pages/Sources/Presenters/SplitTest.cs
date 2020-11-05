@@ -60,7 +60,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.Invokable, Is.True);
                 Assert.That(vm.Test(vm.Split), nameof(vm.Split));
-                // Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
+                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
             }
 
             return IO.GetFiles(dest).Count();
