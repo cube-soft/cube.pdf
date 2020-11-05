@@ -47,10 +47,7 @@ namespace Cube.Pdf.Pages
         {
             InitializeComponent();
             ShowPasswordCheckBox.CheckedChanged += (s, e) =>
-            {
-                var check = ShowPasswordCheckBox.Checked;
-                PasswordTextBox.UseSystemPasswordChar = !check;
-            };
+                PasswordTextBox.UseSystemPasswordChar = !ShowPasswordCheckBox.Checked;
         }
 
         #endregion

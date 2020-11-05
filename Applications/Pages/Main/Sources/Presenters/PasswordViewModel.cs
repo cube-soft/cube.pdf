@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Threading;
 using Cube.FileSystem;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Pages
 {
@@ -69,8 +70,24 @@ namespace Cube.Pdf.Pages
         public string Password
         {
             get => GetProperty<string>();
-            set { if (SetProperty(value)) Facade.Value = value; }
+            set
+            {
+                if (!SetProperty(value)) return;
+                Facade.Value = value;
+                Refresh(nameof(Invokable));
+            }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invokeable
+        ///
+        /// <summary>
+        /// Gets a value indicating whether the password is ready.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Invokable => Password.HasValue();
 
         /* ----------------------------------------------------------------- */
         ///

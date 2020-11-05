@@ -48,9 +48,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
             this.ButtonsPanel.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // LayoutPanel
-            // 
+            //
             this.LayoutPanel.BackColor = System.Drawing.SystemColors.Window;
             this.LayoutPanel.ColumnCount = 1;
             this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -64,55 +64,56 @@
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.RowCount = 6;
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.LayoutPanel.Size = new System.Drawing.Size(434, 211);
+            this.LayoutPanel.Size = new System.Drawing.Size(434, 221);
             this.LayoutPanel.TabIndex = 4;
-            // 
+            //
             // PasswordTextBox
-            // 
-            this.PasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.PasswordBindingSource, "Password", true));
+            //
+            this.PasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.PasswordBindingSource, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.PasswordTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PasswordTextBox.Location = new System.Drawing.Point(12, 88);
+            this.PasswordTextBox.Location = new System.Drawing.Point(12, 98);
             this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(12, 3, 12, 3);
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.Size = new System.Drawing.Size(410, 23);
             this.PasswordTextBox.TabIndex = 2;
             this.PasswordTextBox.UseSystemPasswordChar = true;
-            // 
+            //
             // PasswordBindingSource
-            // 
+            //
             this.PasswordBindingSource.DataSource = typeof(Cube.Pdf.Pages.PasswordViewModel);
-            // 
+            //
             // ShowPasswordCheckBox
-            // 
+            //
             this.ShowPasswordCheckBox.AutoSize = true;
             this.ShowPasswordCheckBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ShowPasswordCheckBox.Location = new System.Drawing.Point(317, 116);
+            this.ShowPasswordCheckBox.Location = new System.Drawing.Point(317, 126);
             this.ShowPasswordCheckBox.Margin = new System.Windows.Forms.Padding(12, 3, 12, 3);
             this.ShowPasswordCheckBox.Name = "ShowPasswordCheckBox";
             this.ShowPasswordCheckBox.Size = new System.Drawing.Size(105, 22);
             this.ShowPasswordCheckBox.TabIndex = 3;
             this.ShowPasswordCheckBox.Text = "パスワードを表示";
             this.ShowPasswordCheckBox.UseVisualStyleBackColor = true;
-            // 
+            //
             // PasswordLabel
-            // 
+            //
             this.PasswordLabel.AutoEllipsis = true;
+            this.PasswordLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.PasswordBindingSource, "Message", true));
             this.PasswordLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PasswordLabel.Location = new System.Drawing.Point(12, 38);
             this.PasswordLabel.Margin = new System.Windows.Forms.Padding(12, 3, 12, 3);
             this.PasswordLabel.Name = "PasswordLabel";
-            this.PasswordLabel.Size = new System.Drawing.Size(410, 44);
+            this.PasswordLabel.Size = new System.Drawing.Size(410, 54);
             this.PasswordLabel.TabIndex = 1001;
             this.PasswordLabel.Text = "パスワードで保護されています。編集するためには管理用パスワード入力してください。";
             this.PasswordLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
+            //
             // HeaderPanel
-            // 
+            //
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.HeaderPanel.Controls.Add(this.ImagePictureBox);
             this.HeaderPanel.Controls.Add(this.TitleButton);
@@ -122,9 +123,9 @@
             this.HeaderPanel.Name = "HeaderPanel";
             this.HeaderPanel.Size = new System.Drawing.Size(434, 35);
             this.HeaderPanel.TabIndex = 999;
-            // 
+            //
             // ImagePictureBox
-            // 
+            //
             this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Pages.Properties.Resources.HeaderImage;
             this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
@@ -133,9 +134,9 @@
             this.ImagePictureBox.Size = new System.Drawing.Size(217, 35);
             this.ImagePictureBox.TabIndex = 1;
             this.ImagePictureBox.TabStop = false;
-            // 
+            //
             // TitleButton
-            // 
+            //
             this.TitleButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TitleButton.Dock = System.Windows.Forms.DockStyle.Left;
             this.TitleButton.Image = global::Cube.Pdf.Pages.Properties.Resources.HeaderTitle;
@@ -146,23 +147,23 @@
             this.TitleButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.TitleButton.TabIndex = 0;
             this.TitleButton.TabStop = false;
-            // 
+            //
             // ButtonsPanel
-            // 
+            //
             this.ButtonsPanel.BackColor = System.Drawing.SystemColors.Control;
             this.ButtonsPanel.Controls.Add(this.ExitButton);
             this.ButtonsPanel.Controls.Add(this.ExecButton);
             this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.ButtonsPanel.Location = new System.Drawing.Point(0, 151);
+            this.ButtonsPanel.Location = new System.Drawing.Point(0, 161);
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(0, 10, 10, 0);
             this.ButtonsPanel.Size = new System.Drawing.Size(434, 60);
             this.ButtonsPanel.TabIndex = 6;
-            // 
+            //
             // ExitButton
-            // 
+            //
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
@@ -175,10 +176,11 @@
             this.ExitButton.TabIndex = 0;
             this.ExitButton.Text = "キャンセル";
             this.ExitButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // ExecButton
-            // 
+            //
             this.ExecButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.ExecButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.PasswordBindingSource, "Invokable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.ExecButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ExecButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.ExecButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -190,14 +192,14 @@
             this.ExecButton.TabIndex = 1;
             this.ExecButton.Text = "OK";
             this.ExecButton.UseVisualStyleBackColor = false;
-            // 
+            //
             // PasswordWindow
-            // 
+            //
             this.AcceptButton = this.ExecButton;
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.CancelButton = this.ExitButton;
-            this.ClientSize = new System.Drawing.Size(434, 211);
+            this.ClientSize = new System.Drawing.Size(434, 221);
             this.Controls.Add(this.LayoutPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -205,6 +207,7 @@
             this.MinimizeBox = false;
             this.Name = "PasswordWindow";
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "パスワードを入力して下さい";
             this.LayoutPanel.ResumeLayout(false);
             this.LayoutPanel.PerformLayout();
