@@ -24,6 +24,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
+using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Pages
 {
@@ -114,6 +115,12 @@ namespace Cube.Pdf.Pages
             RemoveButton.Click += (s, e) => vm.Remove(SelectedIndices);
             ClearButton.Click  += (s, e) => vm.Clear();
             TitleButton.Click  += (s, e) => vm.About();
+
+            ShortcutKeys.Clear();
+            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
+            ShortcutKeys.Add(Keys.Control | Keys.H, vm.About);
+            ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Invokable.Then(vm.Merge));
+            ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Invokable.Then(vm.Split));
 
             Behaviors.Add(new CloseBehavior(vm, this));
             Behaviors.Add(new DialogBehavior(vm));
