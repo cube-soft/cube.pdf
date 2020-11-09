@@ -27,6 +27,7 @@
             this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ExitButton = new Cube.Forms.Controls.Button();
             this.SplitButton = new Cube.Forms.Controls.Button();
+            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.MergeButton = new Cube.Forms.Controls.Button();
             this.ContentsPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -37,18 +38,15 @@
             this.ClearButton = new Cube.Forms.Controls.Button();
             this.FileListView = new Cube.Pdf.Pages.FileListControl();
             this.HeaderPanel = new System.Windows.Forms.Panel();
-            this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.TitleButton = new System.Windows.Forms.PictureBox();
-            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.LayoutPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).BeginInit();
             this.ContentsPanel.SuspendLayout();
             this.ButtonsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FileListView)).BeginInit();
             this.HeaderPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).BeginInit();
             this.SuspendLayout();
             //
             // LayoutPanel
@@ -62,7 +60,7 @@
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.RowCount = 3;
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.LayoutPanel.Size = new System.Drawing.Size(684, 311);
@@ -112,6 +110,10 @@
             this.SplitButton.Text = "分割(&S)";
             this.SplitButton.UseVisualStyleBackColor = false;
             //
+            // MainBindingSource
+            //
+            this.MainBindingSource.DataSource = typeof(Cube.Pdf.Pages.MainViewModel);
+            //
             // MergeButton
             //
             this.MergeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
@@ -135,12 +137,12 @@
             this.ContentsPanel.Controls.Add(this.ButtonsPanel, 1, 0);
             this.ContentsPanel.Controls.Add(this.FileListView, 0, 0);
             this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentsPanel.Location = new System.Drawing.Point(0, 35);
+            this.ContentsPanel.Location = new System.Drawing.Point(0, 36);
             this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ContentsPanel.Name = "ContentsPanel";
             this.ContentsPanel.RowCount = 1;
             this.ContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ContentsPanel.Size = new System.Drawing.Size(684, 216);
+            this.ContentsPanel.Size = new System.Drawing.Size(684, 215);
             this.ContentsPanel.TabIndex = 2;
             //
             // ButtonsPanel
@@ -157,7 +159,7 @@
             this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.ButtonsPanel.Name = "ButtonsPanel";
             this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(9, 9, 9, 0);
-            this.ButtonsPanel.Size = new System.Drawing.Size(124, 216);
+            this.ButtonsPanel.Size = new System.Drawing.Size(124, 215);
             this.ButtonsPanel.TabIndex = 2;
             //
             // FileButton
@@ -246,31 +248,19 @@
             this.FileListView.RowHeadersVisible = false;
             this.FileListView.RowTemplate.Height = 21;
             this.FileListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.FileListView.Size = new System.Drawing.Size(560, 216);
+            this.FileListView.Size = new System.Drawing.Size(560, 215);
             this.FileListView.TabIndex = 3;
             //
             // HeaderPanel
             //
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.HeaderPanel.Controls.Add(this.ImagePictureBox);
             this.HeaderPanel.Controls.Add(this.TitleButton);
             this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
             this.HeaderPanel.Margin = new System.Windows.Forms.Padding(0);
             this.HeaderPanel.Name = "HeaderPanel";
-            this.HeaderPanel.Size = new System.Drawing.Size(684, 35);
+            this.HeaderPanel.Size = new System.Drawing.Size(684, 36);
             this.HeaderPanel.TabIndex = 3;
-            //
-            // ImagePictureBox
-            //
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Pages.Properties.Resources.HeaderImage;
-            this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ImagePictureBox.Location = new System.Drawing.Point(418, 0);
-            this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(266, 35);
-            this.ImagePictureBox.TabIndex = 1;
-            this.ImagePictureBox.TabStop = false;
             //
             // TitleButton
             //
@@ -280,14 +270,10 @@
             this.TitleButton.Location = new System.Drawing.Point(0, 0);
             this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
             this.TitleButton.Name = "TitleButton";
-            this.TitleButton.Size = new System.Drawing.Size(160, 35);
+            this.TitleButton.Size = new System.Drawing.Size(160, 36);
             this.TitleButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.TitleButton.TabIndex = 0;
             this.TitleButton.TabStop = false;
-            //
-            // MainBindingSource
-            //
-            this.MainBindingSource.DataSource = typeof(Cube.Pdf.Pages.MainViewModel);
             //
             // MainWindow
             //
@@ -301,13 +287,12 @@
             this.Text = "CubePDF Page";
             this.LayoutPanel.ResumeLayout(false);
             this.FooterPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).EndInit();
             this.ContentsPanel.ResumeLayout(false);
             this.ButtonsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.FileListView)).EndInit();
             this.HeaderPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -320,7 +305,6 @@
         private System.Windows.Forms.FlowLayoutPanel ButtonsPanel;
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox TitleButton;
-        private System.Windows.Forms.PictureBox ImagePictureBox;
         private Cube.Forms.Controls.Button FileButton;
         private Cube.Forms.Controls.Button UpButton;
         private Cube.Forms.Controls.Button DownButton;

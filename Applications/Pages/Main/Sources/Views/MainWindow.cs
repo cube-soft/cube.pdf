@@ -118,6 +118,7 @@ namespace Cube.Pdf.Pages
 
             ShortcutKeys.Clear();
             ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
+            ShortcutKeys.Add(Keys.Control | Keys.O, vm.Add);
             ShortcutKeys.Add(Keys.Control | Keys.H, vm.About);
             ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Invokable.Then(vm.Merge));
             ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Invokable.Then(vm.Split));

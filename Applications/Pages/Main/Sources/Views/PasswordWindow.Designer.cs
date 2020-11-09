@@ -36,7 +36,6 @@
             this.ShowPasswordCheckBox = new System.Windows.Forms.CheckBox();
             this.PasswordLabel = new System.Windows.Forms.Label();
             this.HeaderPanel = new System.Windows.Forms.Panel();
-            this.ImagePictureBox = new System.Windows.Forms.PictureBox();
             this.TitleButton = new System.Windows.Forms.PictureBox();
             this.ButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ExitButton = new Cube.Forms.Controls.Button();
@@ -44,7 +43,6 @@
             this.LayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PasswordBindingSource)).BeginInit();
             this.HeaderPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
             this.ButtonsPanel.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +61,7 @@
             this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.LayoutPanel.Name = "LayoutPanel";
             this.LayoutPanel.RowCount = 6;
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
@@ -76,7 +74,7 @@
             //
             this.PasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.PasswordBindingSource, "Password", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.PasswordTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PasswordTextBox.Location = new System.Drawing.Point(12, 98);
+            this.PasswordTextBox.Location = new System.Drawing.Point(12, 99);
             this.PasswordTextBox.Margin = new System.Windows.Forms.Padding(12, 3, 12, 3);
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.Size = new System.Drawing.Size(410, 23);
@@ -91,7 +89,7 @@
             //
             this.ShowPasswordCheckBox.AutoSize = true;
             this.ShowPasswordCheckBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ShowPasswordCheckBox.Location = new System.Drawing.Point(317, 126);
+            this.ShowPasswordCheckBox.Location = new System.Drawing.Point(317, 127);
             this.ShowPasswordCheckBox.Margin = new System.Windows.Forms.Padding(12, 3, 12, 3);
             this.ShowPasswordCheckBox.Name = "ShowPasswordCheckBox";
             this.ShowPasswordCheckBox.Size = new System.Drawing.Size(105, 22);
@@ -104,7 +102,7 @@
             this.PasswordLabel.AutoEllipsis = true;
             this.PasswordLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.PasswordBindingSource, "Message", true));
             this.PasswordLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PasswordLabel.Location = new System.Drawing.Point(12, 38);
+            this.PasswordLabel.Location = new System.Drawing.Point(12, 39);
             this.PasswordLabel.Margin = new System.Windows.Forms.Padding(12, 3, 12, 3);
             this.PasswordLabel.Name = "PasswordLabel";
             this.PasswordLabel.Size = new System.Drawing.Size(410, 54);
@@ -115,25 +113,13 @@
             // HeaderPanel
             //
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.HeaderPanel.Controls.Add(this.ImagePictureBox);
             this.HeaderPanel.Controls.Add(this.TitleButton);
             this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
             this.HeaderPanel.Margin = new System.Windows.Forms.Padding(0);
             this.HeaderPanel.Name = "HeaderPanel";
-            this.HeaderPanel.Size = new System.Drawing.Size(434, 35);
+            this.HeaderPanel.Size = new System.Drawing.Size(434, 36);
             this.HeaderPanel.TabIndex = 999;
-            //
-            // ImagePictureBox
-            //
-            this.ImagePictureBox.BackgroundImage = global::Cube.Pdf.Pages.Properties.Resources.HeaderImage;
-            this.ImagePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ImagePictureBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.ImagePictureBox.Location = new System.Drawing.Point(217, 0);
-            this.ImagePictureBox.Name = "ImagePictureBox";
-            this.ImagePictureBox.Size = new System.Drawing.Size(217, 35);
-            this.ImagePictureBox.TabIndex = 1;
-            this.ImagePictureBox.TabStop = false;
             //
             // TitleButton
             //
@@ -143,7 +129,7 @@
             this.TitleButton.Location = new System.Drawing.Point(0, 0);
             this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
             this.TitleButton.Name = "TitleButton";
-            this.TitleButton.Size = new System.Drawing.Size(170, 35);
+            this.TitleButton.Size = new System.Drawing.Size(170, 36);
             this.TitleButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.TitleButton.TabIndex = 0;
             this.TitleButton.TabStop = false;
@@ -213,7 +199,6 @@
             this.LayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PasswordBindingSource)).EndInit();
             this.HeaderPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ImagePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).EndInit();
             this.ButtonsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -223,7 +208,6 @@
         #endregion
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.Panel HeaderPanel;
-        private System.Windows.Forms.PictureBox ImagePictureBox;
         private System.Windows.Forms.PictureBox TitleButton;
         private System.Windows.Forms.FlowLayoutPanel ButtonsPanel;
         private Cube.Forms.Controls.Button ExitButton;
