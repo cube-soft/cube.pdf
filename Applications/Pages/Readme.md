@@ -1,7 +1,7 @@
 CubePDF Page
 ====
 
-Copyright © 2010 CubeSoft, Inc.  
+Copyright © 2013 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfpage/
@@ -39,12 +39,12 @@ CubePDF Page で有効なキーボードのショートカットキーは、以�
 * Ctrl + A : 全て選択
 * Ctrl + D : 選択中のファイルをファイルリストから削除（Ctrl + Shift + D ですべて削除）
 * Ctrl + H : 「CubePDF Page について」を表示
-* Ctrl + J : 選択中のファイルを下に移動（Ctrl + 下矢印も同様）
-* Ctrl + K : 選択中のファイルを上に移動（Ctrl + 上矢印も同様）
 * Ctrl + M : 結合操作を実行
 * Ctrl + O : ファイルをファイルリストに追加
 * Ctrl + R : 選択中のファイルを関連付けられているアプリケーションで開く（プレビュー）
 * Ctrl + S : 分割操作を実行
+* Ctrl + 下矢印 : 選択中のファイルを下に移動
+* Ctrl + 上矢印 : 選択中のファイルを上に移動
 
 ## 利用ライブラリ
 
@@ -55,10 +55,10 @@ CubePDF Page は、以下のライブラリを利用しています。
     - GNU Affero General Public License
     - https://itextpdf.com/
     - https://www.nuget.org/packages/iTextSharp/
-* log4net
-    - Apache License, Version 2.0
-    - https://logging.apache.org/log4net/
-    - https://www.nuget.org/packages/log4net/
+* NLog
+    - 3-clause BSD License
+    - https://nlog-project.org/
+    - https://www.nuget.org/packages/NLog/
 * AsyncBridge (.NET Framework 3.5)
     - MIT License
     - https://omermor.github.io/AsyncBridge/
@@ -66,6 +66,10 @@ CubePDF Page は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2020/11/13 version 3.0.0
+    - 結合・分割処理の実装を CubePDF Utility に追随
+    - 処理完了後のメッセージを削除
+    - ログ出力用ライブラリを log4net から NLog に変更
 * 2016/04/05 version 2.0.1
     - しおり（ブックマーク）の位置がずれる不都合を修正
     - 上書き保存が失敗する不都合を修正
