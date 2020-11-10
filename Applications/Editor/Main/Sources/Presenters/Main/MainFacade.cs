@@ -16,13 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Pdf;
-using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Cube.FileSystem;
+using Cube.Mixin.Pdf;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Editor
 {
@@ -165,7 +165,8 @@ namespace Cube.Pdf.Editor
             Value.Set(Properties.Resources.MessageSaving, options.Destination);
             var itext = src ?? Value.Source.GetItext(Value.Query, Value.IO, false);
             Value.Set(itext.Metadata, itext.Encryption);
-            using (var dest = new SaveAction(itext, Value.Images, options)) dest.Invoke(prev, next);
+            using var dest = new SaveAction(itext, Value.Images, options);
+            dest.Invoke(prev, next);
         });
 
         /* ----------------------------------------------------------------- */

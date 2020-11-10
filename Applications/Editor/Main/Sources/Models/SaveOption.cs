@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cube.FileSystem;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Editor
 {

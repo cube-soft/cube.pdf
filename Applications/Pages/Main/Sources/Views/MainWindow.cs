@@ -24,6 +24,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
+using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Pages
 {
@@ -53,6 +54,7 @@ namespace Cube.Pdf.Pages
         {
             InitializeComponent();
             Behaviors.Add(SetupForAbout());
+            Behaviors.Add(new SelectionBehavior(FileListView));
             ExitButton.Click += (s, e) => Close();
         }
 
@@ -95,6 +97,8 @@ namespace Cube.Pdf.Pages
             base.OnBind(src);
             if (!(src is MainViewModel vm)) return;
 
+            MainBindingSource.DataSource = vm;
+
             var ctx = new FileContextMenu(() => SelectedIndices.Count() > 0);
             ctx.PreviewMenu.Click += (s, e) => vm.Preview(SelectedIndices);
             ctx.UpMenu.Click      += (s, e) => vm.Move(SelectedIndices, -1);
@@ -104,14 +108,24 @@ namespace Cube.Pdf.Pages
             FileListView.ContextMenuStrip = ctx;
             FileListView.DataSource = vm.Files;
 
-            MergeButton.Click  += (s, e) => vm.Merge();
-            SplitButton.Click  += (s, e) => vm.Split();
-            FileButton.Click   += (s, e) => vm.Add();
-            UpButton.Click     += (s, e) => vm.Move(SelectedIndices, -1);
-            DownButton.Click   += (s, e) => vm.Move(SelectedIndices, 1);
-            RemoveButton.Click += (s, e) => vm.Remove(SelectedIndices);
-            ClearButton.Click  += (s, e) => vm.Clear();
-            TitleButton.Click  += (s, e) => vm.About();
+            MergeButton.Click        += (s, e) => vm.Merge();
+            SplitButton.Click        += (s, e) => vm.Split();
+            FileButton.Click         += (s, e) => vm.Add();
+            UpButton.Click           += (s, e) => vm.Move(SelectedIndices, -1);
+            DownButton.Click         += (s, e) => vm.Move(SelectedIndices, 1);
+            RemoveButton.Click       += (s, e) => vm.Remove(SelectedIndices);
+            ClearButton.Click        += (s, e) => vm.Clear();
+            TitleButton.Click        += (s, e) => vm.About();
+            FileListView.DoubleClick += (s, e) => vm.Preview(SelectedIndices);
+
+            ShortcutKeys.Clear();
+            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
+            ShortcutKeys.Add(Keys.Control | Keys.O, vm.Add);
+            ShortcutKeys.Add(Keys.Control | Keys.H, vm.About);
+            ShortcutKeys.Add(Keys.Control | Keys.K, () => vm.Move(SelectedIndices, -1));
+            ShortcutKeys.Add(Keys.Control | Keys.J, () => vm.Move(SelectedIndices, 1));
+            ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Invokable.Then(vm.Merge));
+            ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Invokable.Then(vm.Split));
 
             Behaviors.Add(new CloseBehavior(vm, this));
             Behaviors.Add(new DialogBehavior(vm));

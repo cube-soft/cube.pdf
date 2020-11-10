@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Pdf;
-using Cube.Xui;
 using System;
 using System.ComponentModel;
 using System.Windows.Media;
+using Cube.Mixin.Pdf;
+using Cube.Xui;
 
 namespace Cube.Pdf.Editor
 {
@@ -86,8 +86,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Width
         {
-            get => _width;
-            private set => SetProperty(ref _width, value);
+            get => GetProperty<int>();
+            private set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -101,8 +101,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Height
         {
-            get => _height;
-            private set => SetProperty(ref _height, value);
+            get => GetProperty<int>();
+            private set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -116,8 +116,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Index
         {
-            get => _index;
-            set => SetProperty(ref _index, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -131,10 +131,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Selected
         {
-            get => _selected;
+            get => GetProperty<bool>();
             set
             {
-                if (!SetProperty(ref _selected, value)) return;
+                if (!SetProperty(value)) return;
                 if (value) _selection.Add(this);
                 else _selection.Remove(this);
             }
@@ -152,8 +152,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Page RawObject
         {
-            get => _rawObject;
-            set { if (SetProperty(ref _rawObject, value)) UpdateSize(); }
+            get => GetProperty<Page>();
+            set { if (SetProperty(value)) UpdateSize(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -300,11 +300,6 @@ namespace Cube.Pdf.Editor
         private Func<ImageItem, ImageSource> _getter;
         private ImagePreference _preferences;
         private ImageSelection _selection;
-        private int _index;
-        private int _width;
-        private int _height;
-        private bool _selected;
-        private Page _rawObject;
         #endregion
     }
 }

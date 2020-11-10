@@ -16,15 +16,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Reflection;
+using System.Threading;
+using System.Windows.Input;
 using Cube.FileSystem;
 using Cube.Mixin.Environment;
 using Cube.Mixin.Observing;
 using Cube.Mixin.String;
 using Cube.Xui;
-using System;
-using System.Reflection;
-using System.Threading;
-using System.Windows.Input;
 
 namespace Cube.Pdf.Editor
 {

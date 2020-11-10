@@ -110,8 +110,8 @@ namespace Cube.Pdf.Clip
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => _busy;
-            private set => SetProperty(ref _busy, value);
+            get => GetProperty<bool>();
+            private set => SetProperty(value);
         }
 
         #endregion
@@ -313,7 +313,6 @@ namespace Cube.Pdf.Clip
         private readonly object _lock = new object();
         private readonly ObservableCollection<ClipItem> _clips = new ObservableCollection<ClipItem>();
         private IDocumentReader _source = null;
-        private bool _busy = false;
         #endregion
     }
 }

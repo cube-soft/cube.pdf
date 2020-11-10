@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using Cube.FileSystem;
 using Cube.Mixin.Collections;
-using System;
 
 namespace Cube.Pdf.Editor
 {
@@ -121,8 +121,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IQuery<string> Query
         {
-            get => _query;
-            set => SetProperty(ref _query, value);
+            get => GetProperty<IQuery<string>>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -174,8 +174,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Entity Source
         {
-            get => _source;
-            set => SetProperty(ref _source, value);
+            get => GetProperty<Entity>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -189,10 +189,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => _busy;
+            get => GetProperty<bool>();
             private set
             {
-                if (SetProperty(ref _busy, value)) Refresh(nameof(Modified), nameof(Count));
+                if (SetProperty(value)) Refresh(nameof(Modified), nameof(Count));
             }
         }
 
@@ -249,8 +249,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public string Message
         {
-            get => _message;
-            private set => SetProperty(ref _message, value);
+            get => GetProperty(() => string.Empty);
+            private set => SetProperty(value);
         }
 
         #endregion
@@ -414,19 +414,16 @@ namespace Cube.Pdf.Editor
         private void LazyLoad()
         {
             if (Source == null) return;
-            using (var r = Source.GetItext(Query, IO, true)) Set(r.Metadata, r.Encryption);
+            using var reader = Source.GetItext(Query, IO, true);
+            Set(reader.Metadata, reader.Encryption);
         }
 
         #endregion
 
         #region Fields
         private readonly SettingFolder _settings;
-        private IQuery<string> _query;
-        private Entity _source;
         private Metadata _metadata;
         private Encryption _encryption;
-        private bool _busy = false;
-        private string _message = string.Empty;
         #endregion
     }
 }

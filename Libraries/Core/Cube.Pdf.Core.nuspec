@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>3.0.0</version>
+        <version>3.1.0</version>
         <id>Cube.Pdf</id>
         <title>Cube.Pdf</title>
         <authors>clown,cube-soft</authors>
@@ -15,10 +15,10 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="net45">
-                <dependency id="Cube.FileSystem" version="3.0.0" />
+                <dependency id="Cube.FileSystem" version="3.1.0" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.FileSystem" version="3.0.0" />
+                <dependency id="Cube.FileSystem" version="3.1.0" />
             </group>
         </dependencies>
     </metadata>

@@ -45,8 +45,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public bool Enabled
         {
-            get => _enabled;
-            set => SetProperty(ref _enabled, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -66,8 +66,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public bool OpenWithPassword
         {
-            get => _openWithPassword;
-            set => SetProperty(ref _openWithPassword, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -87,8 +87,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public string OwnerPassword
         {
-            get => _ownerPassword;
-            set => SetProperty(ref _ownerPassword, value);
+            get => GetProperty(() => string.Empty);
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -107,8 +107,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public string UserPassword
         {
-            get => _userPassword;
-            set => SetProperty(ref _userPassword, value);
+            get => GetProperty(() => string.Empty);
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -122,8 +122,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public EncryptionMethod Method
         {
-            get => _method;
-            set => SetProperty(ref _method, value);
+            get => GetProperty(() => EncryptionMethod.Unknown);
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -138,19 +138,10 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public Permission Permission
         {
-            get => _permission;
-            set => SetProperty(ref _permission, value);
+            get => GetProperty(() => new Permission());
+            set => SetProperty(value);
         }
 
-        #endregion
-
-        #region Fields
-        private bool _enabled = false;
-        private bool _openWithPassword = false;
-        private string _ownerPassword = string.Empty;
-        private string _userPassword = string.Empty;
-        private EncryptionMethod _method = EncryptionMethod.Unknown;
-        private Permission _permission = new Permission();
         #endregion
     }
 }

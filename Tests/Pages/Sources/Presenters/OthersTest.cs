@@ -54,9 +54,12 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleAes128.pdf") }))
             using (vm.Subscribe<PasswordViewModel>(e =>
             {
-                Assert.That(e.Password, Is.Null);
-                Assert.That(e.Message,  Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Password,  Is.Null);
+                Assert.That(e.Message,   Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Invokable, Is.False);
                 e.Password = "password";
+
+                Assert.That(e.Invokable, Is.True);
                 e.Apply();
             })) {
                 Assert.That(vm.Files, Is.Not.Null);
@@ -203,7 +206,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 var prev = e.CheckUpdate;
                 e.CheckUpdate = false;
                 Assert.That(e.CheckUpdate, Is.False);
-                Assert.That(e.Version, Does.StartWith("Version 2.1.0 ("));
+                Assert.That(e.Version, Does.StartWith("Version 3.0.0 ("));
                 e.CheckUpdate = prev;
                 e.Apply();
             })) vm.About();

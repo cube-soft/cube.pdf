@@ -30,7 +30,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class PasswordWindow : Cube.Forms.WindowBase
+    public partial class PasswordWindow : Cube.Forms.Window
     {
         #region Constructors
 
@@ -47,10 +47,7 @@ namespace Cube.Pdf.Pages
         {
             InitializeComponent();
             ShowPasswordCheckBox.CheckedChanged += (s, e) =>
-            {
-                var check = ShowPasswordCheckBox.Checked;
-                PasswordTextBox.UseSystemPasswordChar = !check;
-            };
+                PasswordTextBox.UseSystemPasswordChar = !ShowPasswordCheckBox.Checked;
         }
 
         #endregion
@@ -73,37 +70,6 @@ namespace Cube.Pdf.Pages
 
             PasswordBindingSource.DataSource = vm;
             ExecButton.Click += (s, e) => vm.Apply();
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// OnLoad
-        ///
-        /// <summary>
-        /// Occurs when the Loaded event is fired.
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        protected override void OnLoad(EventArgs e)
-        {
-            try
-            {
-                var v0 = Math.Max(PasswordTextBox.Height - PasswordKeyLabel.Height, 0) / 2;
-                var l0 = PasswordKeyLabel.Margin.Left;
-                var t0 = PasswordTextBox.Margin.Top + v0;
-                var r0 = PasswordKeyLabel.Margin.Right;
-                var b0 = PasswordKeyLabel.Margin.Bottom;
-
-                var v1 = ShowPasswordCheckBox.Width + PasswordTextBox.Margin.Right;
-                var l1 = ShowPasswordCheckBox.Margin.Left;
-                var t1 = ShowPasswordCheckBox.Margin.Top;
-                var r1 = PasswordTextBox.Width - v1;
-                var b1 = ShowPasswordCheckBox.Margin.Bottom;
-
-                PasswordKeyLabel.Margin     = new Padding(l0, t0, r0, b0);
-                ShowPasswordCheckBox.Margin = new Padding(l1, t1, r1, b1);
-            }
-            finally { base.OnLoad(e); }
         }
 
         /* --------------------------------------------------------------------- */

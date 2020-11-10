@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 //
-// Copyright (c) 2010 CubeSoft, Inc.
+// Copyright (c) 2013 CubeSoft, Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published
@@ -16,86 +16,46 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Forms;
 
-namespace Cube.Pdf.Editor
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// RemoveFacade
+    /// SelectionBehavior
     ///
     /// <summary>
-    /// Provides functionality to decide the removal pages.
+    /// Represents the behavior about selected items.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class RemoveFacade : ObservableBase
+    public sealed class SelectionBehavior : DisposableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RemoveFacade
+        /// SelectionBehavior
         ///
         /// <summary>
-        /// Initializes a new instance of the RemoveFacade class with the
-        /// specified arguments.
+        /// Initializes a new instance of the SelectionBehavior class with
+        /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="count">Number of pages.</param>
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="view">View object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RemoveFacade(int count, Invoker invoker) : base(invoker)
+        public SelectionBehavior(DataGridView view)
         {
-            Count = count;
+            view.MouseUp += OnMouseUp;
+            _disposables.Add(Disposable.Create(() => view.MouseUp -= OnMouseUp));
         }
 
         #endregion
 
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Count
-        ///
-        /// <summary>
-        /// Gets the number of pages.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Count { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Range
-        ///
-        /// <summary>
-        /// Gets or sets a value that represents the removal range.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Range
-        {
-            get => GetProperty(() => string.Empty);
-            set => SetProperty(value);
-        }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Get
-        ///
-        /// <summary>
-        /// Gets the collection of removal pages.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<int> Get() => new Range(Range, Count).Select(i => i - 1);
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -112,8 +72,33 @@ namespace Cube.Pdf.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
+        protected override void Dispose(bool disposing)
+        {
+            foreach (var e in _disposables) e.Dispose();
+        }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnMouseUp
+        ///
+        /// <summary>
+        /// Occurs when the MouseUp event is raised.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void OnMouseUp(object s, MouseEventArgs e)
+        {
+            if (s is DataGridView view && view.HitTest(e.X, e.Y) == DataGridView.HitTestInfo.Nowhere)
+            {
+                view.ClearSelection();
+                view.CurrentCell = null;
+            }
+        }
+
+        #endregion
+
+        #region Fields
+        private readonly IList<IDisposable> _disposables = new List<IDisposable>();
         #endregion
     }
 }

@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Windows.Media;
 using Cube.FileSystem;
 using Cube.Images.Icons;
 using Cube.Xui;
-using System;
-using System.Windows.Media;
 
 namespace Cube.Pdf.Editor
 {
@@ -132,10 +132,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Selected
         {
-            get => _selected;
+            get => GetProperty<bool>();
             set
             {
-                if (!SetProperty(ref _selected, value)) return;
+                if (!SetProperty(value)) return;
                 if (value) _selection.Add(this);
                 else _selection.Remove(this);
             }
@@ -173,7 +173,6 @@ namespace Cube.Pdf.Editor
 
         #region Fields
         private Selection<FileItem> _selection;
-        private bool _selected = false;
         #endregion
     }
 }

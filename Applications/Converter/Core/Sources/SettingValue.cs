@@ -66,8 +66,8 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "FileType")]
         public Format Format
         {
-            get => _format;
-            set => SetProperty(ref _format, value);
+            get => GetProperty<Format>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -82,8 +82,8 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "ExistedFile")]
         public SaveOption SaveOption
         {
-            get => _saveOption;
-            set => SetProperty(ref _saveOption, value);
+            get => GetProperty<SaveOption>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -98,8 +98,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Orientation Orientation
         {
-            get => _orientation;
-            set => SetProperty(ref _orientation, value);
+            get => GetProperty<Orientation>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -119,8 +119,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Downsampling Downsampling
         {
-            get => _downsampling;
-            set => SetProperty(ref _downsampling, value);
+            get => GetProperty<Downsampling>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -135,8 +135,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public int Resolution
         {
-            get => _resolution;
-            set => SetProperty(ref _resolution, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -151,8 +151,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool Grayscale
         {
-            get => _grayscale;
-            set => SetProperty(ref _grayscale, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -172,8 +172,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool EmbedFonts
         {
-            get => _embedFonts;
-            set => SetProperty(ref _embedFonts, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -189,8 +189,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool ImageFilter
         {
-            get => _imageFilter;
-            set => SetProperty(ref _imageFilter, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -206,8 +206,8 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "WebOptimize")]
         public bool Linearization
         {
-            get => _linearization;
-            set => SetProperty(ref _linearization, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -223,8 +223,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool SourceVisible
         {
-            get => _sourceVisible;
-            set => SetProperty(ref _sourceVisible, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -240,8 +240,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool CheckUpdate
         {
-            get => _checkUpdate;
-            set => SetProperty(ref _checkUpdate, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -258,8 +258,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool ExplicitDirectory
         {
-            get => _explicit;
-            set => SetProperty(ref _explicit, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -275,8 +275,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool PlatformCompatible
         {
-            get => _compatible;
-            set => SetProperty(ref _compatible, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -291,8 +291,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Language Language
         {
-            get => _language;
-            set => SetProperty(ref _language, value);
+            get => GetProperty<Language>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -307,8 +307,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public PostProcess PostProcess
         {
-            get => _postProcess;
-            set => SetProperty(ref _postProcess, value);
+            get => GetProperty<PostProcess>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -324,8 +324,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public string UserProgram
         {
-            get => _userProgram;
-            set => SetProperty(ref _userProgram, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -340,8 +340,8 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "LastAccess")]
         public string Destination
         {
-            get => _destination;
-            set => SetProperty(ref _destination, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -362,8 +362,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public string Temp
         {
-            get => _temp;
-            set => SetProperty(ref _temp, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -378,8 +378,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Metadata Metadata
         {
-            get => _metadata;
-            set => SetProperty(ref _metadata, value);
+            get => GetProperty<Metadata>();
+            set => SetProperty(value);
         }
 
         #endregion
@@ -395,8 +395,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Encryption Encryption
         {
-            get => _encryption;
-            set => SetProperty(ref _encryption, value);
+            get => GetProperty<Encryption>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -410,8 +410,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Source
         {
-            get => _source;
-            set => SetProperty(ref _source, value);
+            get => GetProperty<string>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -426,8 +426,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool DeleteSource
         {
-            get => _deleteSource;
-            set => SetProperty(ref _deleteSource, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -441,8 +441,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => _busy;
-            set => SetProperty(ref _busy, value);
+            get => GetProperty<bool>();
+            set => SetProperty(value);
         }
 
         #endregion
@@ -460,29 +460,29 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void Reset()
         {
-            _format         = Format.Pdf;
-            _saveOption     = SaveOption.Overwrite;
-            _orientation    = Orientation.Auto;
-            _downsampling   = Downsampling.None;
-            _postProcess    = PostProcess.None;
-            _language       = Language.Auto;
-            _resolution     = 600;
-            _grayscale      = false;
-            _embedFonts     = true;
-            _imageFilter    = true;
-            _linearization  = false;
-            _sourceVisible  = false;
-            _checkUpdate    = true;
-            _explicit       = false;
-            _compatible     = true;
-            _temp           = $@"{Environment.SpecialFolder.CommonApplicationData.GetName()}\CubeSoft\CubePDF";
-            _source         = string.Empty;
-            _destination    = Environment.SpecialFolder.Desktop.GetName();
-            _userProgram    = string.Empty;
-            _metadata       = new Metadata();
-            _encryption     = new Encryption();
-            _deleteSource   = false;
-            _busy           = false;
+            Format             = Format.Pdf;
+            SaveOption         = SaveOption.Overwrite;
+            Orientation        = Orientation.Auto;
+            Downsampling       = Downsampling.None;
+            PostProcess        = PostProcess.None;
+            Language           = Language.Auto;
+            Resolution         = 600;
+            Grayscale          = false;
+            EmbedFonts         = true;
+            ImageFilter        = true;
+            Linearization      = false;
+            SourceVisible      = false;
+            CheckUpdate        = true;
+            ExplicitDirectory  = false;
+            PlatformCompatible = true;
+            Temp               = $@"{Environment.SpecialFolder.CommonApplicationData.GetName()}\CubeSoft\CubePDF";
+            Source             = string.Empty;
+            Destination        = Environment.SpecialFolder.Desktop.GetName();
+            UserProgram        = string.Empty;
+            Metadata           = new Metadata();
+            Encryption         = new Encryption();
+            DeleteSource       = false;
+            Busy               = false;
         }
 
         /* ----------------------------------------------------------------- */
@@ -497,32 +497,6 @@ namespace Cube.Pdf.Converter
         [OnDeserializing]
         private void OnDeserializing(StreamingContext context) => Reset();
 
-        #endregion
-
-        #region Fields
-        private Format _format;
-        private SaveOption _saveOption;
-        private Orientation _orientation;
-        private Downsampling _downsampling;
-        private PostProcess _postProcess;
-        private Language _language;
-        private int _resolution;
-        private bool _grayscale;
-        private bool _embedFonts;
-        private bool _imageFilter;
-        private bool _linearization;
-        private bool _sourceVisible;
-        private bool _checkUpdate;
-        private bool _explicit;
-        private bool _compatible;
-        private string _temp;
-        private string _source;
-        private string _destination;
-        private string _userProgram;
-        private Metadata _metadata;
-        private Encryption _encryption;
-        private bool _deleteSource;
-        private bool _busy;
         #endregion
     }
 }

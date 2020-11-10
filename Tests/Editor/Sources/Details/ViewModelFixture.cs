@@ -16,12 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
-using Cube.Mixin.Commands;
-using Cube.Mixin.Logging;
-using Cube.Mixin.String;
-using Cube.Tests;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +23,12 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Media.Imaging;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Commands;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
+using Cube.Tests;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests
 {
@@ -113,12 +113,10 @@ namespace Cube.Pdf.Editor.Tests
         /* ----------------------------------------------------------------- */
         protected void Make(Action<MainViewModel> callback)
         {
-            using (var src = Create())
-            {
-                var behaviors = Subscribe(src);
-                callback(src);
-                foreach (var e in behaviors) e.Dispose();
-            }
+            using var src = Create();
+            var behaviors = Subscribe(src);
+            callback(src);
+            foreach (var e in behaviors) e.Dispose();
         }
 
         /* ----------------------------------------------------------------- */

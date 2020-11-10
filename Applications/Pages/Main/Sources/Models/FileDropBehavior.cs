@@ -53,8 +53,14 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public FileDropBehavior(MainViewModel vm, MainWindow view)
         {
-            void invoke(object s, DragEventArgs e) =>
-                vm.Add(GetFiles(e.Data.GetData(DataFormats.FileDrop, false) as string[], vm.IO));
+            void invoke(object s, DragEventArgs e)
+            {
+                if (e.Data.GetData(DataFormats.FileDrop, false) is string[] src)
+                {
+                    view.Activate();
+                    vm.Add(GetFiles(src, vm.IO));
+                }
+            }
 
             view.AllowDrop = true;
             view.DragOver += OnDragOver;

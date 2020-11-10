@@ -135,16 +135,6 @@ namespace Cube.Pdf.Pages.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
-        internal static System.Drawing.Bitmap HeaderImage {
-            get {
-                object obj = ResourceManager.GetObject("HeaderImage", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        /// </summary>
         internal static System.Drawing.Bitmap HeaderTitle {
             get {
                 object obj = ResourceManager.GetObject("HeaderTitle", resourceCulture);
@@ -208,41 +198,11 @@ namespace Cube.Pdf.Pages.Properties {
         }
         
         /// <summary>
-        ///   {0} 個のファイルを結合しました。
-        ///結合されたファイルをファイルリストに登録しますか？ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageMerge {
-            get {
-                return ResourceManager.GetString("MessageMerge", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   {0} はパスワードで保護されています。編集するためには管理用パスワードを入力して下さい。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessagePassword {
             get {
                 return ResourceManager.GetString("MessagePassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   {0} 個のファイルを分割しました。
-        ///分割されたすべてのファイルをファイルリストに登録しますか？ に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageSplit {
-            get {
-                return ResourceManager.GetString("MessageSplit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static System.Drawing.Icon NotAssociated {
-            get {
-                object obj = ResourceManager.GetObject("NotAssociated", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
             }
         }
         

@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using Cube.Tests;
 using NUnit.Framework;
@@ -52,10 +53,13 @@ namespace Cube.Pdf.Pages.Tests
         public static bool Test(this MainViewModel vm, Action action)
         {
             Assert.That(vm.Busy, Is.False, nameof(Test));
+
             var cs = new CancellationTokenSource();
-            void observe(object s, EventArgs e)
+            var n  = 0;
+            void observe(object s, PropertyChangedEventArgs e)
             {
-                if (vm.Busy) return;
+                if (e.PropertyName == nameof(vm.Busy)) ++n;
+                if (n < 2 || vm.Busy) return;
                 vm.PropertyChanged -= observe;
                 cs.Cancel();
             }

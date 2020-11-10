@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -68,8 +69,11 @@ namespace Cube.Pdf.Pages
             Files = new BindingSource { DataSource = Facade.Files };
 
             Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
-            Facade.CollectionChanged += (s, e) => Send<CollectionMessage>();
             Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
+            Facade.CollectionChanged += (s, e) => {
+                Refresh(nameof(Invokable));
+                Send<CollectionMessage>();
+            };
         }
 
         #endregion
@@ -89,7 +93,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Busy
+        /// IO
         ///
         /// <summary>
         /// Gets the I/O handler.
@@ -108,6 +112,18 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public bool Busy => Facade.Busy;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invokeable
+        ///
+        /// <summary>
+        /// Gets a value indicating whether the Merge or Split operation
+        /// is available.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Invokable => Facade.Files.Count > 0;
 
         #endregion
 
@@ -232,6 +248,23 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public void About() => Send(new VersionViewModel(Facade.Settings, Context));
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnMessage
+        ///
+        /// <summary>
+        /// Converts the specified exception to a new instance of the
+        /// DialogMessage class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override DialogMessage OnMessage(Exception src) =>
+            src is OperationCanceledException ? null : base.OnMessage(src);
 
         #endregion
     }
