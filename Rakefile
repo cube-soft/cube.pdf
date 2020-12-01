@@ -64,7 +64,9 @@ task :build, [:platform] do |_, e|
 
     Rake::Task[:restore].execute
     branch = %x(git rev-parse --abbrev-ref HEAD).chomp
-    build  = "dotnet build -c Release"
+    build  = branch.include?("net35") ?
+             "msbuild -v:m -p:Configuration=Release" :
+             "dotnet build -c Release"
     cmd(%(#{build} -p:Platform="#{e.platform}" #{PROJECT}.sln))
 end
 
