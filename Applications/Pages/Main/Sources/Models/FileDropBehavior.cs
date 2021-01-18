@@ -58,7 +58,7 @@ namespace Cube.Pdf.Pages
                 if (e.Data.GetData(DataFormats.FileDrop, false) is string[] src)
                 {
                     view.Activate();
-                    vm.Add(GetFiles(src, vm.IO));
+                    vm.Add(src);
                 }
             }
 
@@ -107,48 +107,6 @@ namespace Cube.Pdf.Pages
             e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ?
                        DragDropEffects.Copy :
                        DragDropEffects.None;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetFiles
-        ///
-        /// <summary>
-        /// Get files from the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<string> GetFiles(IEnumerable<string> src, IO io) => src.SelectMany(e =>
-            io.Get(e).IsDirectory ?
-            GetFilesCore(io.GetFiles(e), io) :
-            GetFilesCore(new[] { e }, io)
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetFilesCore
-        ///
-        /// <summary>
-        /// Get files from the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<string> GetFilesCore(IEnumerable<string> src, IO io) => src.Where(e => IsTarget(e, io));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsTarget
-        ///
-        /// <summary>
-        /// Determines whether the specified path is the target file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsTarget(string src, IO io)
-        {
-            var cmp = new[] { ".pdf", ".bmp", ".png", ".jpg", ".jpeg", ".tif", ".tiff" };
-            var cvt = io.Get(src);
-            return !cvt.IsDirectory && cmp.Any(e => cvt.Extension.FuzzyEquals(e));
-        }
 
         #endregion
 
