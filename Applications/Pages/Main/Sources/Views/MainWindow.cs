@@ -95,7 +95,7 @@ namespace Cube.Pdf.Pages
         protected override void OnBind(IPresentable src)
         {
             base.OnBind(src);
-            if (!(src is MainViewModel vm)) return;
+            if (src is not MainViewModel vm) return;
 
             MainBindingSource.DataSource = vm;
 
@@ -108,6 +108,7 @@ namespace Cube.Pdf.Pages
             FileListView.ContextMenuStrip = ctx;
             FileListView.DataSource = vm.Files;
 
+            Shown                    += (s, e) => vm.Setup();
             MergeButton.Click        += (s, e) => vm.Merge();
             SplitButton.Click        += (s, e) => vm.Split();
             FileButton.Click         += (s, e) => vm.Add();

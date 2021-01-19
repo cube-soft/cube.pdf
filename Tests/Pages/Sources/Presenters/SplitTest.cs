@@ -52,7 +52,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         {
             var dest = Get($"{nameof(Split)}-{id}");
 
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource(filename) }))
             using (vm.Subscribe<OpenDirectoryMessage>(e => e.Value = dest))
             {

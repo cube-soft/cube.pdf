@@ -53,7 +53,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         {
             var dest = Get($"{nameof(Merge)}-{id}.pdf");
 
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             using (vm.Subscribe<SaveFileMessage>(e => e.Value = dest))
             {

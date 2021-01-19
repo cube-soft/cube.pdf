@@ -22,6 +22,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Cube.FileSystem;
+using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Pages
 {
@@ -46,8 +47,10 @@ namespace Cube.Pdf.Pages
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         ///
+        /// <param name="args">Program arguments.</param>
+        ///
         /* --------------------------------------------------------------------- */
-        public MainViewModel() : this(SynchronizationContext.Current) { }
+        public MainViewModel(IEnumerable<string> args) : this(args, SynchronizationContext.Current) { }
 
         /* --------------------------------------------------------------------- */
         ///
@@ -58,14 +61,16 @@ namespace Cube.Pdf.Pages
         /// specified context.
         /// </summary>
         ///
+        /// <param name="args">Program arguments.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* --------------------------------------------------------------------- */
-        public MainViewModel(SynchronizationContext context) : base(
+        public MainViewModel(IEnumerable<string> args, SynchronizationContext context) : base(
             new MainFacade(new IO(), context),
             new Aggregator(),
             context
         ) {
+            Arguments = args;
             Files = new BindingSource { DataSource = Facade.Files };
 
             Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
@@ -79,6 +84,17 @@ namespace Cube.Pdf.Pages
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Arguments
+        ///
+        /// <summary>
+        /// Gets the program arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IEnumerable<string> Arguments { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -128,6 +144,17 @@ namespace Cube.Pdf.Pages
         #endregion
 
         #region Methods
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Setup
+        ///
+        /// <summary>
+        /// Invokes the Setup command.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Setup() => Arguments.Any().Then(() => Add(Arguments));
 
         /* --------------------------------------------------------------------- */
         ///
