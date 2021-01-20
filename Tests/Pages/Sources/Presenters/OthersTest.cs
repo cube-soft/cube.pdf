@@ -50,12 +50,12 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [Test]
         public void Setup()
         {
-            using (var vm = new MainViewModel(new[] { GetSource("Dir1") }, new SynchronizationContext()))
-            {
-                Assert.That(vm.Files, Is.Not.Null);
-                Assert.That(vm.Test(vm.Setup), nameof(vm.Setup));
-                Assert.That(vm.Files.Count, Is.EqualTo(2));
-            }
+            using var vm = new MainViewModel(new[] { GetSource("Dir1") }, new SynchronizationContext());
+
+            Assert.That(vm.IO, Is.Not.Null);
+            Assert.That(vm.Files, Is.Not.Null);
+            Assert.That(vm.Test(vm.Setup), nameof(vm.Setup));
+            Assert.That(vm.Files.Count, Is.EqualTo(2));
         }
 
         /* ----------------------------------------------------------------- */
@@ -77,6 +77,8 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 Assert.That(e.Password,  Is.Null);
                 Assert.That(e.Message,   Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Invokable, Is.False);
+
+                e.Password = "password";
                 e.Password = "password";
 
                 Assert.That(e.Invokable, Is.True);
