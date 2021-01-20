@@ -228,7 +228,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 var prev = e.CheckUpdate;
                 e.CheckUpdate = false;
                 Assert.That(e.CheckUpdate, Is.False);
-                Assert.That(e.Version, Does.StartWith("Version 3.0.0 ("));
+                Assert.That(e.Version, Does.StartWith("Version 3.1.0 ("));
                 e.CheckUpdate = prev;
                 e.Apply();
             })) vm.About();
