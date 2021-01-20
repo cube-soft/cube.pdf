@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
-        <Version>3.0.0</Version>
+        <Version>3.1.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF Page</Product>
         <Description>Merge or split PDF files.</Description>
-        <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
+        <Copyright>Copyright © 2013 CubeSoft, Inc.</Copyright>
         <AssemblyName>CubePdfPage</AssemblyName>
         <AssemblyTitle>CubePDF Page</AssemblyTitle>
         <OutputType>WinExe</OutputType>
