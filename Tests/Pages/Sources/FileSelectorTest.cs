@@ -18,52 +18,42 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Cube.Tests;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Pages.Tests.Presenters
+namespace Cube.Pdf.Pages.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SplitTest
+    /// FileSelectorTest
     ///
     /// <summary>
-    /// Tests the Split method of the MainViewModel class.
+    /// Tests the FileSelector class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SplitTest : FileFixture
+    class FileSelectorTest : FileFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Split
+        /// Get
         ///
         /// <summary>
-        /// Tests the Split method.
+        /// Tests the Get method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public int Split(int id, string filename)
+        public void Get(int _, IEnumerable<string> src, IEnumerable<string> expected)
         {
-            var dest = Get($"{nameof(Split)}-{id}");
+            var cmp  = expected.Select(e => GetSource(e)).ToArray();
+            var dest = new FileSelector(IO).Get(src.Select(e => GetSource(e))).ToArray();
 
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
-            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource(filename) }))
-            using (vm.Subscribe<OpenDirectoryMessage>(e => e.Value = dest))
-            {
-                Assert.That(vm.Invokable, Is.False);
-                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
-                Assert.That(vm.Invokable, Is.True);
-                Assert.That(vm.Test(vm.Split), nameof(vm.Split));
-                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
-            }
-
-            return IO.GetFiles(dest).Count();
+            Assert.That(dest.Length, Is.EqualTo(cmp.Length));
+            for (var i = 0; i < dest.Length; ++i) Assert.That(dest[i], Is.EqualTo(cmp[i]));
         }
 
         #endregion
@@ -84,8 +74,31 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             get
             {
                 var n = 0;
-                yield return new TestCaseData(n++, "SampleRotation.pdf").Returns(9);
-                yield return new TestCaseData(n++, "Sample.jpg").Returns(1);
+
+                yield return new TestCaseData(n++,
+                    new List<string> { "Sample.pdf", "Sample.jpg", "Sample.txt" },
+                    new List<string> { "Sample.jpg", "Sample.pdf" }
+                );
+
+                yield return new TestCaseData(n++,
+                    new List<string> { "Dir1" },
+                    new List<string> { @"Dir1\Dir1Sample.jpg", @"Dir1\Dir1Sample.pdf" }
+                );
+
+                yield return new TestCaseData(n++,
+                    new List<string> { "Sample.pdf", "Sample.jpg", "Sample.txt", "Dir1", "Dir2" },
+                    new List<string>
+                    {
+                        @"Dir1\Dir1Sample.jpg",
+                        @"Dir1\Dir1Sample.pdf",
+                        @"Dir2\Dir2Sample.jpg",
+                        @"Dir2\Dir2Sample.pdf",
+                        "Sample.jpg",
+                        "Sample.pdf",
+                    }
+                );
+
+                yield return new TestCaseData(n++, new List<string>(), new List<string>());
             }
         }
 

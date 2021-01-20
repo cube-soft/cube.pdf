@@ -40,6 +40,26 @@ namespace Cube.Pdf.Pages.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Setup
+        ///
+        /// <summary>
+        /// Tests the Setup method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Setup()
+        {
+            using var vm = new MainViewModel(new[] { GetSource("Dir1") }, new SynchronizationContext());
+
+            Assert.That(vm.IO, Is.Not.Null);
+            Assert.That(vm.Files, Is.Not.Null);
+            Assert.That(vm.Test(vm.Setup), nameof(vm.Setup));
+            Assert.That(vm.Files.Count, Is.EqualTo(2));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Password
         ///
         /// <summary>
@@ -50,13 +70,15 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [Test]
         public void Password()
         {
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleAes128.pdf") }))
             using (vm.Subscribe<PasswordViewModel>(e =>
             {
                 Assert.That(e.Password,  Is.Null);
                 Assert.That(e.Message,   Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Invokable, Is.False);
+
+                e.Password = "password";
                 e.Password = "password";
 
                 Assert.That(e.Invokable, Is.True);
@@ -80,7 +102,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [Test]
         public void Password_Cancel()
         {
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleAes128.pdf") }))
             {
                 Assert.That(vm.Files, Is.Not.Null);
@@ -102,7 +124,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [TestCase(-1)]
         public void Move(int offset)
         {
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleRotation.pdf") }))
             {
                 Assert.That(vm.Files, Is.Not.Null);
@@ -124,7 +146,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         public void Remove()
         {
             var files = new[] { "Sample.pdf", "SampleRotation.pdf", "Sample.jpg" };
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             {
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
@@ -149,7 +171,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         public void Clear()
         {
             var files = new[] { "Sample.pdf", "SampleRotation.pdf" };
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             {
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
@@ -176,7 +198,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             var n     = 0;
             var files = new[] { "Sample.pdf", "SampleRotation.pdf" };
 
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             using (vm.Subscribe<PreviewMessage>(e => ++n))
             {
@@ -200,7 +222,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [Test]
         public void About()
         {
-            using (var vm = new MainViewModel(new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
             using (vm.Subscribe<VersionViewModel>(e =>
             {
                 var prev = e.CheckUpdate;
@@ -224,7 +246,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [Test]
         public void Create_Throws()
         {
-            Assert.That(() => { using (new MainViewModel()) { } }, Throws.ArgumentNullException);
+            Assert.That(() => { using (new MainViewModel(Enumerable.Empty<string>())) { } }, Throws.ArgumentNullException);
         }
 
         #endregion

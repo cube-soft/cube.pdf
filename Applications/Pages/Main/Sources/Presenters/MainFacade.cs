@@ -222,7 +222,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Add(IEnumerable<string> src) => Invoke(() =>
         {
-            foreach (var f in src)
+            foreach (var f in new FileSelector(IO).Get(src))
             {
                 if (_inner.Any(e => e.FullName == f)) continue;
                 var ext = IO.Get(f).Extension.ToLower();

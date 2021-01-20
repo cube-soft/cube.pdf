@@ -49,11 +49,9 @@ namespace Cube.Pdf.Pages.Tests
         [Test]
         public void Bind()
         {
-            using (var view = new MainWindow())
-            {
-                view.Bind(new MainViewModel(new SynchronizationContext()));
-                Assert.That(view.SelectedIndices.Count(), Is.EqualTo(0));
-            }
+            using var view = new MainWindow();
+            view.Bind(new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()));
+            Assert.That(view.SelectedIndices.Count(), Is.EqualTo(0));
         }
 
         #endregion
