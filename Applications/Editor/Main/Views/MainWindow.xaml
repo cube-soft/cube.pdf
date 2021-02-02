@@ -105,6 +105,7 @@
         <xb:CloseBehavior />
         <xb:DisposeBehavior />
         <xb:ClosingToCommand     Command="{Binding Ribbon.Close.Command}" />
+        <my:SetupBehavior        Command="{Binding Setup}" />
         <my:MouseOpenBehavior    Command="{Binding Open}" />
         <my:ShowPasswordWindow   Modal="True" />
         <my:ShowPreviewWindow    Modal="True" />

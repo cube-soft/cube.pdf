@@ -78,7 +78,7 @@ namespace Cube.Pdf.Editor
             Value.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
             Recent.Open = GetOpenLinkCommand();
 
-            Track(() => Facade.Setup(App.Arguments));
+            Track(() => Facade.Kill());
         }
 
         #endregion
@@ -121,6 +121,19 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Commands
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Setup
+        ///
+        /// <summary>
+        /// Gets the Setup command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ICommand Setup => Get(() => new DelegateCommand(
+            () => Track(() => Facade.Setup(App.Arguments))
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
