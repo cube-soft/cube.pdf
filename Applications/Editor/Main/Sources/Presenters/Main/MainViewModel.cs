@@ -77,8 +77,6 @@ namespace Cube.Pdf.Editor
             Recent = new RecentViewModel(mon, Aggregator, context);
             Value.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
             Recent.Open = GetOpenLinkCommand();
-
-            Track(() => Facade.Kill());
         }
 
         #endregion

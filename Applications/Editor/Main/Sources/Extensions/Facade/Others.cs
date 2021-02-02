@@ -37,22 +37,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Kill
-        ///
-        /// <summary>
-        /// Kills splash screen processes.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Kill(this MainFacade src)
-        {
-            foreach (var ps in src.Folder.GetSplashProcesses()) ps.Kill();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Setup
         ///
         /// <summary>
@@ -65,6 +49,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Setup(this MainFacade src, IEnumerable<string> args)
         {
+            foreach (var ps in src.Folder.GetSplashProcesses()) ps.Kill();
             var path = args.FirstPdf();
             if (path.HasValue()) src.Open(path);
             src.Backup.Cleanup();
