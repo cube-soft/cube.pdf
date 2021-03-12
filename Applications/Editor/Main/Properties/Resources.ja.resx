@@ -490,6 +490,6 @@
     <value>バイト</value>
   </data>
   <data name="VersionSuffix" xml:space="preserve">
-    <value>β</value>
+    <value />
   </data>
 </root>

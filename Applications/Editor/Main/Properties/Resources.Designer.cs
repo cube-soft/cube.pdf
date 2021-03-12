@@ -10,8 +10,8 @@
 
 namespace Cube.Pdf.Editor.Properties {
     using System;
-
-
+    
+    
     /// <summary>
     ///   ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
     /// </summary>
@@ -23,15 +23,15 @@ namespace Cube.Pdf.Editor.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
+        
         /// <summary>
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
@@ -45,7 +45,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editor.Properties {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   All files に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -68,7 +68,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("FilterAll", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Supported files に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("FilterExtract", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Insertable files に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -86,7 +86,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("FilterInsertable", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   PDF files に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -95,7 +95,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("FilterPdf", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Add ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -104,7 +104,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuAdd", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Allow using contents for accessibility に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuAllowAccessibility", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Allow creating and editing annotations に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -122,7 +122,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuAllowAnnotation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Allow inserting and removing pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -131,7 +131,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuAllowAssemble", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Allow copying text and images に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -140,7 +140,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuAllowCopy", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Allow extracting pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -149,7 +149,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuAllowExtract", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Allow filling in form fields に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -158,7 +158,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuAllowForm", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Allow printing に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -167,7 +167,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuAllowPrint", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Author に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -176,7 +176,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuAuthor", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Cancel に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -185,7 +185,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuCancel", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Clear に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -194,7 +194,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuClear", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Close に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -203,7 +203,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuClose", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Confirm に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -212,7 +212,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuConfirmPassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Creation に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -221,7 +221,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuCreationTime", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Creator に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -230,7 +230,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuCreator", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Save path に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -239,7 +239,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuDestination", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Details に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -248,7 +248,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuDetails", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Down に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -257,7 +257,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuDown", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   dpi に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -266,7 +266,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuDpi", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Edit に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -275,7 +275,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuEdit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Security に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -284,7 +284,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuEncryption", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Encrypt the PDF with password に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -293,7 +293,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuEncryptionEnabled", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Method に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -302,7 +302,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuEncryptionMethod", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Exit に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -311,7 +311,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuExit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Extract に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -320,7 +320,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuExtract", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   All pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -329,7 +329,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuExtractAll", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Extract with other settings に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -338,7 +338,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuExtractOthers", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Specified range に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -347,7 +347,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuExtractRange", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Selected pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -356,7 +356,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuExtractSelected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   File に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -365,7 +365,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuFile", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Filename に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -374,7 +374,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuFilename", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Filesize に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -383,7 +383,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuFilesize", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Type に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -392,7 +392,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuFiletype", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Format に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -401,7 +401,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuFormat", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Frame only に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -410,7 +410,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuFrameOnly", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Insert に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -419,7 +419,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuInsert", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Insert at the end に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -428,7 +428,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuInsertBack", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Insert at the beginning に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -437,7 +437,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuInsertFront", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Insert at other position に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -446,7 +446,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuInsertOthers", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Insert position に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -455,7 +455,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuInsertPosition", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Keywords に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -464,7 +464,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuKeywords", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Language に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -473,7 +473,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuLanguage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Last updated に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -482,7 +482,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuLastWriteTime", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Layout に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -491,7 +491,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuLayout", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Metadata に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -500,7 +500,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuMetadata", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Next に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -509,7 +509,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuMoveNext", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Prev に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -518,7 +518,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuMovePrevious", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   OK に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -527,7 +527,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuOk", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Open に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -536,7 +536,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuOpen", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Open with password に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -545,7 +545,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuOpenWithPassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Operations に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -554,7 +554,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuOperations", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Options に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -563,7 +563,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuOptions", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Others に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -572,7 +572,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuOthers", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Password に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -581,7 +581,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuOwnerPassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Page count に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -590,7 +590,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuPageCount", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   PDF version に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -599,7 +599,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuPdfVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Beginning に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -608,7 +608,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuPositionFirst", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   End に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -617,7 +617,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuPositionLast", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Selected position に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -626,7 +626,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuPositionSelected", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Behind the number of に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -635,7 +635,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuPositionSpecified", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Preview に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -644,7 +644,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuPreview", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Producer に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -653,7 +653,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuProducer", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Recent files に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -662,7 +662,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuRecent", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Redo に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -671,7 +671,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuRedo", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Refresh に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -680,7 +680,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuRedraw", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Remove に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -689,7 +689,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuRemove", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Remove other pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -698,7 +698,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuRemoveOthers", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Left に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -707,7 +707,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuRotateLeft", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Right に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -716,7 +716,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuRotateRight", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Save に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -725,7 +725,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSave", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Save as に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -734,7 +734,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSaveAs", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Select に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -743,7 +743,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSelect", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Select all に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -752,7 +752,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSelectAll", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Cancel selection に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -761,7 +761,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSelectClear", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Flip selection に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -770,7 +770,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSelectFlip", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Settings に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -779,7 +779,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSetting", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Use owner password に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -788,7 +788,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSharePassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Save as a separate file per page に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -797,7 +797,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSplit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Subject に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -806,7 +806,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSubject", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Summary に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -815,7 +815,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuSummary", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Target pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -824,7 +824,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuTarget", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Title に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -833,7 +833,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuTitle", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Undo に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -842,7 +842,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuUndo", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Up に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -851,7 +851,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuUp", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Check update at launching に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -860,7 +860,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuUpdate", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Password に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -869,7 +869,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuUserPassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Version に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -878,7 +878,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuVersion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   One column に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -887,7 +887,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuViewOneColumn", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Single page に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -896,7 +896,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuViewSinglePage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Two column (left) に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -905,7 +905,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuViewTwoColumnLeft", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Two column (right) に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -914,7 +914,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuViewTwoColumnRight", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Two page (left) に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -923,7 +923,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuViewTwoPageLeft", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Two page (right) に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -932,7 +932,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuViewTwoPageRight", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   ZoomIn に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -941,7 +941,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuZoomIn", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   ZoomOut に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -950,7 +950,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MenuZoomOut", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Loading {0} ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -959,7 +959,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessageLoading", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   PDF is modified. Do you want to overwrite? に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -968,7 +968,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessageOverwrite", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   {0} pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -977,7 +977,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessagePage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Please enter the owner password for opening and editing {0}. に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -986,7 +986,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessagePassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Failed to parse the removal range. に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -995,7 +995,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessageRangeError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   e.g. 1,2,4-7,9 に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1004,7 +1004,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessageRangeExample", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Saved at {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1013,7 +1013,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessageSaved", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Saving to {0} ... に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1022,7 +1022,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessageSaving", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   {0} pages selected に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1031,7 +1031,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessageSelection", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   {0} pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1040,7 +1040,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("MessageTotalPage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Encryption に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1049,7 +1049,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitleEncryption", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Extraction details に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1058,7 +1058,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitleExtract", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Insertion details に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1067,7 +1067,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitleInsert", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   PDF Metadata に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1076,7 +1076,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitleMetadata", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Open file に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1085,7 +1085,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitleOpen", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Input password に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1094,7 +1094,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitlePassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   {0} ({1}/{2} page) に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1103,7 +1103,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitlePreview", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Removal details に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1112,7 +1112,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitleRemove", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Save as に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1121,7 +1121,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitleSaveAs", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   CubePDF Utility settings に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1130,7 +1130,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TitleSetting", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Extract the selected pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1139,7 +1139,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TooltipExtract", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Insert behind selected position に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1148,7 +1148,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TooltipInsert", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   PDF document metadata に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1157,7 +1157,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TooltipMetadata", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Remove the selected pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1166,7 +1166,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TooltipRemove", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Save に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1175,7 +1175,7 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("TooltipSave", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Bytes に類似しているローカライズされた文字列を検索します。
         /// </summary>
@@ -1184,9 +1184,9 @@ namespace Cube.Pdf.Editor.Properties {
                 return ResourceManager.GetString("UnitByte", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   β に類似しているローカライズされた文字列を検索します。
+        ///    に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string VersionSuffix {
             get {
