@@ -37,7 +37,7 @@ And when you want to use the PDFium library, you only modify the description of 
 // Set password directly or using Query<string>
 var password = new Cube.Query<string>(e =>
 {
-    e.Result = "password",
+    e.Value  = "password", // Source path is set in the e.Source property.
     e.Cancel = false,
 });
 

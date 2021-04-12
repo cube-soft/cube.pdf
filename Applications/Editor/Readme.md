@@ -118,6 +118,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2021/03/16 version 1.0.0
+    - Update PDFium to Chromium 89 compatible.
 * 2021/02/03 version 0.6.5β
     - Fix errors when launching the CubePDF utility with an encrypted PDF file.
     - Update PDFium to Chromium 88 compatible.

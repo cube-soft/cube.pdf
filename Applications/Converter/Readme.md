@@ -52,7 +52,9 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
-* 2020/01/13 version 1.2.1
+* 2021/04/13 version 1.2.2
+    - Update Ghostscript 9.54.0.
+* 2021/01/13 version 1.2.1
     - Fix to check the installed printers before skipping the installation.
     - Fix the file copy failure when installing.
     - Fix to use binaries built on x64 (only for x64 edition).
