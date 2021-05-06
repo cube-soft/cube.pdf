@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Cube.Tests;
 using NUnit.Framework;
 
@@ -52,7 +51,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         {
             var dest = Get($"{nameof(Split)}-{id}");
 
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource(filename) }))
             using (vm.Subscribe<OpenDirectoryMessage>(e => e.Value = dest))
             {
