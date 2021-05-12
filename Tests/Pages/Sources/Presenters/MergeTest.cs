@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Cube.Mixin.IO;
 using Cube.Tests;
 using NUnit.Framework;
@@ -53,7 +52,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         {
             var dest = Get($"{nameof(Merge)}-{id}.pdf");
 
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new SynchronizationContext()))
+            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             using (vm.Subscribe<SaveFileMessage>(e => e.Value = dest))
             {
