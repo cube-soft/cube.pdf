@@ -59,9 +59,9 @@ namespace Cube.Pdf.Editor
             Cache  = new RendererCache(Folder.IO, () => Value.Query);
             Backup = new Backup(Folder.IO);
             Value  = new MainBindable(
-                new ImageCollection(e => Cache?.GetOrAdd(e), new ContextInvoker(context, true)),
+                new ImageCollection(e => Cache?.GetOrAdd(e), new ContextDispatcher(context, true)),
                 Folder,
-                new ContextInvoker(context, false)
+                new ContextDispatcher(context, false)
             );
         }
 

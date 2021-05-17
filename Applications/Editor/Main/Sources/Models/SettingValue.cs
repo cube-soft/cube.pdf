@@ -64,8 +64,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public int Width
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -80,8 +80,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public int Height
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -96,8 +96,8 @@ namespace Cube.Pdf.Editor
         [DataMember(Name = "ViewSize")]
         public int ItemSize
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -113,8 +113,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public bool FrameOnly
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,8 +129,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public Language Language
         {
-            get => GetProperty<Language>();
-            set => SetProperty(value);
+            get => Get<Language>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -145,8 +145,8 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public bool CheckUpdate
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         #endregion

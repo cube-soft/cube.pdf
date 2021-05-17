@@ -74,7 +74,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public SettingFolder(Assembly assembly, DataContract.Format format, string path) :
-            this(assembly, format, path, new IO()) { }
+            this(assembly, format, path, new()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -92,17 +92,28 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public SettingFolder(Assembly assembly, DataContract.Format format, string path, IO io) :
-            base(assembly, format, path, io)
+            base(format, path, assembly.GetSoftwareVersion(), io)
         {
+            Assembly       = assembly;
             AutoSave       = false;
             DocumentName   = GetDocumentName(string.Empty);
-            Version.Digit  = 3;
             Version.Suffix = "";
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Assembly
+        ///
+        /// <summary>
+        /// Gets the Assembly object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Assembly Assembly { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -153,7 +164,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void Set(IEnumerable<string> args) =>
-            Set(new ArgumentCollection(args, Collections.Argument.Windows, true));
+            Set(new(args, Collections.Argument.Windows, true));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -201,15 +212,14 @@ namespace Cube.Pdf.Converter
                 if (Value == null) return;
 
                 var name = "cubepdf-checker";
-                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
-                var args = Assembly.GetProduct().Quote();
-                var dest = new Startup(name)
-                {
-                    Command = $"{exe.Quote()} {args}",
-                    Enabled = Value.CheckUpdate && IO.Exists(exe),
-                };
+                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe").Quote();
+                var args = "CubePDF".Quote();
 
-                dest.Save();
+                new Startup(name)
+                {
+                    Command = $"{exe} {args}",
+                    Enabled = Value.CheckUpdate && IO.Exists(exe),
+                }.Save();
             }
             finally { base.OnSaved(e); }
         }
@@ -245,7 +255,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DocumentName GetDocumentName(string src) => new DocumentName(src, Assembly.GetProduct(), IO);
+        private DocumentName GetDocumentName(string src) => new(src, "CubePDF", IO);
 
         #endregion
     }

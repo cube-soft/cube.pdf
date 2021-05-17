@@ -94,7 +94,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuLanguage,
             () => Facade.Value.Language,
             e  => Facade.Value.Language = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -108,8 +108,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Version => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuVersion,
-            () => $"{Facade.Title} {Facade.Version.ToString(true)}",
-            GetInvoker(false)
+            () => $"{Facade.Title} {Facade.Version.ToString(3, true)}",
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -124,7 +124,7 @@ namespace Cube.Pdf.Editor
         public IElement<Uri> Link => Get(() => new BindableElement<Uri>(
             () => Assembly.GetExecutingAssembly().GetCopyright(),
             () => Facade.Value.Uri,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = new DelegateCommand(() => Post(Link.Value)) });
 
         /* ----------------------------------------------------------------- */
@@ -141,7 +141,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuUpdate,
             () => Facade.Value.CheckUpdate,
             e  => Facade.Value.CheckUpdate = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -155,7 +155,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Windows => Get(() => new BindableElement(
             () => $"{Environment.OSVersion}",
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -169,7 +169,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Framework => Get(() => new BindableElement(
             () => $"Microsoft .NET Framework {Environment.Version}",
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         #endregion

@@ -56,7 +56,7 @@ namespace Cube.Pdf.Clip
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(IO io, SynchronizationContext context) : base(new ContextInvoker(context, false))
+        public MainFacade(IO io, SynchronizationContext context) : base(new ContextDispatcher(context, false))
         {
             IO = io;
             _clips.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
@@ -110,8 +110,8 @@ namespace Cube.Pdf.Clip
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => GetProperty<bool>();
-            private set => SetProperty(value);
+            get => Get<bool>();
+            private set => Set(value);
         }
 
         #endregion

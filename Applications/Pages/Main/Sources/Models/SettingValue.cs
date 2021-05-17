@@ -62,8 +62,8 @@ namespace Cube.Pdf.Pages
         [DataMember]
         public bool CheckUpdate
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         #endregion

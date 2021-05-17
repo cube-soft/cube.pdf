@@ -69,10 +69,10 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public string Password
         {
-            get => GetProperty<string>();
+            get => Get<string>();
             set
             {
-                if (!SetProperty(value)) return;
+                if (!Set(value)) return;
                 Facade.Value = value;
                 Refresh(nameof(Invokable));
             }

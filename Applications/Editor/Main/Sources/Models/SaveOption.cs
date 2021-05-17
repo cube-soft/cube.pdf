@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor
         /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SaveOption(IO io) : this(io, Invoker.Vanilla) { }
+        public SaveOption(IO io) : this(io, Dispatcher.Vanilla) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -61,10 +61,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="io">I/O handler.</param>
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SaveOption(IO io, Invoker invoker) : base(invoker)
+        public SaveOption(IO io, Dispatcher dispatcher) : base(dispatcher)
         {
             IO = io;
             Resolution = 144;
@@ -85,8 +85,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public string Destination
         {
-            get => GetProperty<string>();
-            set { if (SetProperty(value)) SetFormat(); }
+            get => Get<string>();
+            set { if (Set(value)) SetFormat(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -100,8 +100,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public SaveFormat Format
         {
-            get => GetProperty<SaveFormat>();
-            set { if (SetProperty(value)) SetDestination(); }
+            get => Get<SaveFormat>();
+            set { if (Set(value)) SetDestination(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -115,8 +115,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public SaveTarget Target
         {
-            get => GetProperty<SaveTarget>();
-            set => SetProperty(value);
+            get => Get<SaveTarget>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -130,8 +130,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public string Range
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -145,8 +145,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Resolution
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -161,8 +161,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Split
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -176,8 +176,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Metadata Metadata
         {
-            get => GetProperty<Metadata>();
-            set => SetProperty(value);
+            get => Get<Metadata>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -191,8 +191,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Encryption Encryption
         {
-            get => GetProperty<Encryption>();
-            set => SetProperty(value);
+            get => Get<Encryption>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -207,8 +207,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IEnumerable<Attachment> Attachments
         {
-            get => GetProperty<IEnumerable<Attachment>>();
-            set => SetProperty(value);
+            get => Get<IEnumerable<Attachment>>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */

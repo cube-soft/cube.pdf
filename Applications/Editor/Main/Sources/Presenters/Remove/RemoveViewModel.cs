@@ -55,7 +55,7 @@ namespace Cube.Pdf.Editor
         public RemoveViewModel(Action<IEnumerable<int>> callback,
             int n,
             SynchronizationContext context
-        ) : base(new RemoveFacade(n, new ContextInvoker(context, false)),
+        ) : base(new RemoveFacade(n, new ContextDispatcher(context, false)),
             new Aggregator(),
             context
         ) {
@@ -84,7 +84,7 @@ namespace Cube.Pdf.Editor
         public IElement<int> Count => Get(() => new BindableElement<int>(
             () => Properties.Resources.MenuPageCount,
             () => Facade.Count,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -100,7 +100,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuTarget,
             () => Facade.Range,
             e  => Facade.Range = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -114,7 +114,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Example => Get(() => new BindableElement(
             () => Properties.Resources.MessageRangeExample,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         #endregion

@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public PreviewViewModel(ImageCollection src, Entity file, SynchronizationContext context) : base(
-            new PreviewFacade(src, file, new ContextInvoker(context, false)),
+            new PreviewFacade(src, file, new ContextDispatcher(context, false)),
             new Aggregator(),
             context
         ) { }

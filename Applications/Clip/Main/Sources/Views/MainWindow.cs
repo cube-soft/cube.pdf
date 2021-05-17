@@ -102,7 +102,7 @@ namespace Cube.Pdf.Clip
             SaveButton.Click   += (s, e) => vm.Save();
             ResetButton.Click  += (s, e) => vm.Reset();
 
-            Behaviors.Add(new CloseBehavior(src, this));
+            Behaviors.Add(new CloseBehavior(this, src));
             Behaviors.Add(new DialogBehavior(src));
             Behaviors.Add(new OpenFileBehavior(src));
             Behaviors.Add(new OpenDirectoryBehavior(src));

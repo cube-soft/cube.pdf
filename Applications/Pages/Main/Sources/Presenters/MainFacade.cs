@@ -56,7 +56,7 @@ namespace Cube.Pdf.Pages
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(IO io, SynchronizationContext context) : base(new ContextInvoker(context, false))
+        public MainFacade(IO io, SynchronizationContext context) : base(new ContextDispatcher(context, false))
         {
             Settings = new SettingFolder(Assembly.GetExecutingAssembly(), io);
             IO = io;
@@ -138,8 +138,8 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => GetProperty<bool>();
-            private set => SetProperty(value);
+            get => Get<bool>();
+            private set => Set(value);
         }
 
         #endregion

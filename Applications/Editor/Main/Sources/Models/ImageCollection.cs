@@ -58,10 +58,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="getter">Function to get the renderer.</param>
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageCollection(Func<string, IDocumentRenderer> getter, Invoker invoker)
+        public ImageCollection(Func<string, IDocumentRenderer> getter, Dispatcher dispatcher)
         {
             _getter = getter;
 
@@ -73,9 +73,9 @@ namespace Cube.Pdf.Editor
             _cache.Created += (s, e) => e.Key.Refresh();
             _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
-            Invoker     = invoker;
-            Selection   = new ImageSelection(invoker);
-            Preferences = new ImagePreference(invoker);
+            Dispatcher  = dispatcher;
+            Selection   = new ImageSelection(dispatcher);
+            Preferences = new ImagePreference(dispatcher);
             Preferences.PropertyChanged += (s, e) => {
                 if (e.PropertyName == nameof(Preferences.VisibleLast)) Reschedule(null);
             };

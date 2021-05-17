@@ -47,7 +47,7 @@ namespace Cube.Mixin.Pdf
         /* ----------------------------------------------------------------- */
         public static Metadata Copy(this Metadata src) => new Metadata
         {
-            Invoker        = src.Invoker,
+            Dispatcher     = src.Dispatcher,
             Title          = src.Title,
             Author         = src.Author,
             Subject        = src.Subject,

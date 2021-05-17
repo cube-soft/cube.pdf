@@ -63,7 +63,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Version => $"Version {Facade.Version.ToString(true)}";
+        public string Version => $"Version {Facade.Version.ToString(3, true)}";
 
         /* ----------------------------------------------------------------- */
         ///

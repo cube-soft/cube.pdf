@@ -159,8 +159,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool UseOwnerPassword
         {
-            get => GetProperty<bool>();
-            set { if (SetProperty(value)) Refresh(nameof(EnableUserPassword), nameof(EnablePermission)); }
+            get => Get<bool>();
+            set { if (Set(value)) Refresh(nameof(EnableUserPassword), nameof(EnablePermission)); }
         }
 
         /* ----------------------------------------------------------------- */

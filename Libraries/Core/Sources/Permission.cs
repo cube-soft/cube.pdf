@@ -251,7 +251,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         private bool Set(ref PermissionFlags src, PermissionFlags value, string name)
         {
-            var dest = SetProperty(ref src, value, name);
+            var dest = Set(ref src, value, name);
             if (dest) Refresh(nameof(Value));
             return dest;
         }

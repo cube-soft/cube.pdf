@@ -72,11 +72,10 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
-            base(assembly, format, location, io)
+            base(format, location, assembly.GetSoftwareVersion(), io)
         {
-            Title          = Assembly.GetTitle();
+            Title          = assembly.GetTitle();
             AutoSave       = false;
-            Version.Digit  = 3;
             Version.Suffix = Properties.Resources.VersionSuffix;
         }
 
@@ -146,13 +145,13 @@ namespace Cube.Pdf.Editor
                 if (Value == null) return;
 
                 var name = "cubepdf-utility-checker";
-                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
+                var exe  = IO.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe").Quote();
                 var sk   = "CubePDF Utility2";
-                var args = $"{Assembly.GetNameString().Quote()} /subkey {sk.Quote()}";
+                var args = $"cubepdfutility /subkey {sk.Quote()}";
 
                 new Startup(name)
                 {
-                    Command = $"{exe.Quote()} {args}",
+                    Command = $"{exe} {args}",
                     Enabled = Value.CheckUpdate && IO.Exists(exe),
                 }.Save();
             }

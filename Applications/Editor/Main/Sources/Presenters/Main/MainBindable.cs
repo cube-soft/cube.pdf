@@ -46,10 +46,10 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="images">Image collection.</param>
         /// <param name="settings">User settings.</param>
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable(ImageCollection images, SettingFolder settings, Invoker invoker) : base(invoker)
+        public MainBindable(ImageCollection images, SettingFolder settings, Dispatcher dispatcher) : base(dispatcher)
         {
             _settings = settings;
 
@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editor
             images.Preferences.TextHeight    = 25;
 
             Images  = images;
-            History = new History(invoker);
+            History = new History(dispatcher);
         }
 
         #endregion
@@ -121,8 +121,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IQuery<string> Query
         {
-            get => GetProperty<IQuery<string>>();
-            set => SetProperty(value);
+            get => Get<IQuery<string>>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -141,7 +141,7 @@ namespace Cube.Pdf.Editor
                 if (_metadata == null) LazyLoad();
                 return _metadata;
             }
-            set => SetProperty(ref _metadata, value);
+            set => Set(ref _metadata, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -160,7 +160,7 @@ namespace Cube.Pdf.Editor
                 if (_encryption == null) LazyLoad();
                 return _encryption;
             }
-            set => SetProperty(ref _encryption, value);
+            set => Set(ref _encryption, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -174,8 +174,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Entity Source
         {
-            get => GetProperty<Entity>();
-            set => SetProperty(value);
+            get => Get<Entity>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -189,10 +189,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => GetProperty<bool>();
+            get => Get<bool>();
             private set
             {
-                if (SetProperty(value)) Refresh(nameof(Modified), nameof(Count));
+                if (Set(value)) Refresh(nameof(Modified), nameof(Count));
             }
         }
 
@@ -249,8 +249,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public string Message
         {
-            get => GetProperty(() => string.Empty);
-            private set => SetProperty(value);
+            get => Get(() => string.Empty);
+            private set => Set(value);
         }
 
         #endregion

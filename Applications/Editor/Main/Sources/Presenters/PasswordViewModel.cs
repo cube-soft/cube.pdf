@@ -76,7 +76,7 @@ namespace Cube.Pdf.Editor
             () => string.Format(Properties.Resources.MessagePassword, GetFileName(Facade.Source)),
             () => Facade.Value,
             e  => Facade.Value = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         #endregion

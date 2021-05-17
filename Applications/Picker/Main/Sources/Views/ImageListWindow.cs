@@ -30,7 +30,7 @@ namespace Cube.Pdf.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class ImageListWindow : WindowBase
+    public partial class ImageListWindow : Window
     {
         #region Constructors
 

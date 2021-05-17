@@ -66,8 +66,8 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "FileType")]
         public Format Format
         {
-            get => GetProperty<Format>();
-            set => SetProperty(value);
+            get => Get<Format>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -82,8 +82,8 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "ExistedFile")]
         public SaveOption SaveOption
         {
-            get => GetProperty<SaveOption>();
-            set => SetProperty(value);
+            get => Get<SaveOption>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -98,8 +98,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Orientation Orientation
         {
-            get => GetProperty<Orientation>();
-            set => SetProperty(value);
+            get => Get<Orientation>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -119,8 +119,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Downsampling Downsampling
         {
-            get => GetProperty<Downsampling>();
-            set => SetProperty(value);
+            get => Get<Downsampling>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -135,8 +135,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public int Resolution
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -151,8 +151,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool Grayscale
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -172,8 +172,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool EmbedFonts
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -189,8 +189,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool ImageFilter
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -206,8 +206,8 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "WebOptimize")]
         public bool Linearization
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -223,8 +223,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool SourceVisible
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -240,8 +240,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool CheckUpdate
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -258,8 +258,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool ExplicitDirectory
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -275,8 +275,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool PlatformCompatible
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -291,8 +291,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Language Language
         {
-            get => GetProperty<Language>();
-            set => SetProperty(value);
+            get => Get<Language>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -307,8 +307,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public PostProcess PostProcess
         {
-            get => GetProperty<PostProcess>();
-            set => SetProperty(value);
+            get => Get<PostProcess>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -324,8 +324,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public string UserProgram
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -340,8 +340,8 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "LastAccess")]
         public string Destination
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -362,8 +362,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public string Temp
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -378,8 +378,8 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Metadata Metadata
         {
-            get => GetProperty<Metadata>();
-            set => SetProperty(value);
+            get => Get<Metadata>();
+            set => Set(value);
         }
 
         #endregion
@@ -395,8 +395,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Encryption Encryption
         {
-            get => GetProperty<Encryption>();
-            set => SetProperty(value);
+            get => Get<Encryption>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -410,8 +410,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Source
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -426,8 +426,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool DeleteSource
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -441,8 +441,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         #endregion

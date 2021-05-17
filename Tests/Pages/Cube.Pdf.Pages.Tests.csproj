@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
-        <Version>3.1.1</Version>
+        <Version>3.2.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Copyright>Copyright © 2013 CubeSoft, Inc.</Copyright>
@@ -21,11 +21,10 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Pages\Main\Cube.Pdf.Pages.csproj" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
-        <PackageReference Include="NUnit" Version="3.13.1" />
-        <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-        <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
-        <PackageReference Include="OpenCover" Version="4.7.922" />
+        <PackageReference Include="Cube.Tests" Version="4.0.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.*" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.17.*" />
+        <PackageReference Include="Appveyor.TestLogger" Version="2.0.*" />
     </ItemGroup>
     <ItemGroup>
         <None Include="App.*" />

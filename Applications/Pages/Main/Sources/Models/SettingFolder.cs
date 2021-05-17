@@ -70,10 +70,9 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public SettingFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
-            base(assembly, format, location, io)
+            base(format, location, assembly.GetSoftwareVersion(), io)
         {
             AutoSave = false;
-            Version.Digit = 3;
         }
 
         #endregion
@@ -96,13 +95,13 @@ namespace Cube.Pdf.Pages
                 if (Value == null) return;
 
                 var name = "cubepdf-page-checker";
-                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
+                var exe  = IO.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe").Quote();
                 var sk   = "CubePDF Page";
-                var args = $"{Assembly.GetNameString().Quote()} /subkey {sk.Quote()}";
+                var args = $"cubepdfpage /subkey {sk.Quote()}";
 
                 new Startup(name)
                 {
-                    Command = $"{exe.Quote()} {args}",
+                    Command = $"{exe} {args}",
                     Enabled = Value.CheckUpdate && IO.Exists(exe),
                 }.Save();
             }

@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement File => Get(() => new RibbonElement(
             nameof(File),
             () => Properties.Resources.MenuFile,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -88,7 +88,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Edit => Get(() => new RibbonElement(
             nameof(Edit),
             () => Properties.Resources.MenuEdit,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -103,7 +103,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Others => Get(() => new RibbonElement(
             nameof(Others),
             () => Properties.Resources.MenuOthers,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         #endregion
@@ -121,7 +121,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public BindableElement Preview => Get(() => new BindableElement(
             () => Properties.Resources.MenuPreview,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsSelected(SendPreview) });
 
         /* ----------------------------------------------------------------- */
@@ -136,7 +136,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Open => Get(() => new RibbonElement(
             nameof(Open),
             () => Properties.Resources.MenuOpen,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = GetCommand(() => SendOpen(e => Facade.Open(e))) });
 
         /* ----------------------------------------------------------------- */
@@ -152,7 +152,7 @@ namespace Cube.Pdf.Editor
             nameof(Save),
             () => Properties.Resources.MenuSave,
             () => Properties.Resources.TooltipSave,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(() => Track(Facade.Overwrite)) });
 
         /* ----------------------------------------------------------------- */
@@ -167,7 +167,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement SaveAs => Get(() => new RibbonElement(
             nameof(SaveAs),
             () => Properties.Resources.MenuSaveAs,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(() => SendSave(Facade.Save)) });
 
         /* ----------------------------------------------------------------- */
@@ -182,7 +182,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Close => Get(() => new RibbonElement(
             nameof(Close),
             () => Properties.Resources.MenuClose,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = GetCloseCommand() });
 
         /* ----------------------------------------------------------------- */
@@ -197,7 +197,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Exit => Get(() => new RibbonElement(
             nameof(Exit),
             () => Properties.Resources.MenuExit,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = GetCommand(Send<CloseMessage>) });
 
         /* ----------------------------------------------------------------- */
@@ -212,7 +212,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Undo => Get(() => new RibbonElement(
             nameof(Undo),
             () => Properties.Resources.MenuUndo,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsUndoable(() => Track(Facade.Undo, true)) });
 
         /* ----------------------------------------------------------------- */
@@ -227,7 +227,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Redo => Get(() => new RibbonElement(
             nameof(Redo),
             () => Properties.Resources.MenuRedo,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsRedoable(() => Track(Facade.Redo, true)) });
 
         /* ----------------------------------------------------------------- */
@@ -242,7 +242,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Select => Get(() => new RibbonElement(
             nameof(Select),
             () => Properties.Resources.MenuSelect,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(() => Track(Facade.Select, true)) });
 
         /* ----------------------------------------------------------------- */
@@ -257,7 +257,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement SelectAll => Get(() => new RibbonElement(
             nameof(Select),
             () => Properties.Resources.MenuSelectAll,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(() => Track(() => Facade.Select(true), true)) });
 
         /* ----------------------------------------------------------------- */
@@ -272,7 +272,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement SelectFlip => Get(() => new RibbonElement(
             nameof(Select),
             () => Properties.Resources.MenuSelectFlip,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(() => Track(Facade.Flip, true)) });
 
         /* ----------------------------------------------------------------- */
@@ -287,7 +287,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement SelectClear => Get(() => new RibbonElement(
             nameof(Select),
             () => Properties.Resources.MenuSelectClear,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(() => Track(() => Facade.Select(false), true)) });
 
         /* ----------------------------------------------------------------- */
@@ -304,7 +304,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuInsert,
             () => Properties.Resources.TooltipInsert,
             () => !Facade.Value.Busy,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) {
             Command = IsSelected(() => SendInsert(Facade.Insert))
         }.Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source)));
@@ -321,7 +321,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement InsertFront => Get(() => new RibbonElement(
             nameof(Insert),
             () => Properties.Resources.MenuInsertFront,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(() => SendInsert(e => Facade.Insert(0, e))) });
 
         /* ----------------------------------------------------------------- */
@@ -336,7 +336,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement InsertBack => Get(() => new RibbonElement(
             nameof(Insert),
             () => Properties.Resources.MenuInsertBack,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(() => SendInsert(e => Facade.Insert(int.MaxValue, e))) });
 
         /* ----------------------------------------------------------------- */
@@ -351,7 +351,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement InsertOthers => Get(() => new RibbonElement(
             nameof(InsertOthers),
             () => Properties.Resources.MenuInsertOthers,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(SendInsert) });
 
         /* ----------------------------------------------------------------- */
@@ -368,7 +368,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuExtract,
             () => Properties.Resources.TooltipExtract,
             () => !Facade.Value.Busy,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) {
             Command = IsSelected(() => SendSave(Facade.Extract))
         }.Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source)));
@@ -385,7 +385,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement ExtractOthers => Get(() => new RibbonElement(
             nameof(ExtractOthers),
             () => Properties.Resources.MenuExtractOthers,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(SendExtract) });
 
         /* ----------------------------------------------------------------- */
@@ -402,7 +402,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuRemove,
             () => Properties.Resources.TooltipRemove,
             () => !Facade.Value.Busy,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) {
             Command = IsSelected(() => Track(Facade.Remove, true))
         }.Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source)));
@@ -419,7 +419,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement RemoveOthers => Get(() => new RibbonElement(
             nameof(RemoveOthers),
             () => Properties.Resources.MenuRemoveOthers,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(SendRemove) });
 
         /* ----------------------------------------------------------------- */
@@ -434,7 +434,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement MoveNext => Get(() => new RibbonElement(
             nameof(MoveNext),
             () => Properties.Resources.MenuMoveNext,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsSelected(() => Track(() => Facade.Move(1), true)) });
 
         /* ----------------------------------------------------------------- */
@@ -449,7 +449,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement MovePrevious => Get(() => new RibbonElement(
             nameof(MovePrevious),
             () => Properties.Resources.MenuMovePrevious,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsSelected(() => Track(() => Facade.Move(-1), true)) });
 
         /* ----------------------------------------------------------------- */
@@ -464,7 +464,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement RotateLeft => Get(() => new RibbonElement(
             nameof(RotateLeft),
             () => Properties.Resources.MenuRotateLeft,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsSelected(() => Track(() => Facade.Rotate(-90), true)) });
 
         /* ----------------------------------------------------------------- */
@@ -479,7 +479,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement RotateRight => Get(() => new RibbonElement(
             nameof(RotateRight),
             () => Properties.Resources.MenuRotateRight,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsSelected(() => Track(() => Facade.Rotate(90), true)) });
 
         /* ----------------------------------------------------------------- */
@@ -495,7 +495,7 @@ namespace Cube.Pdf.Editor
             nameof(Metadata),
             () => Properties.Resources.MenuMetadata,
             () => Properties.Resources.TooltipMetadata,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(SendMetadata) });
 
         /* ----------------------------------------------------------------- */
@@ -510,7 +510,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Encryption => Get(() => new RibbonElement(
             nameof(Encryption),
             () => Properties.Resources.MenuEncryption,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(SendEncryption) });
 
         /* ----------------------------------------------------------------- */
@@ -525,7 +525,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Redraw => Get(() => new RibbonElement(
             nameof(Redraw),
             () => Properties.Resources.MenuRedraw,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = IsOpen(() => Track(Facade.Redraw, true)) });
 
         /* ----------------------------------------------------------------- */
@@ -540,7 +540,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement ZoomIn => Get(() => new RibbonElement(
             nameof(ZoomIn),
             () => Properties.Resources.MenuZoomIn,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = GetCommand(() => Track(() => Facade.Zoom(1), true)) });
 
         /* ----------------------------------------------------------------- */
@@ -555,7 +555,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement ZoomOut => Get(() => new RibbonElement(
             nameof(ZoomOut),
             () => Properties.Resources.MenuZoomOut,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = GetCommand(() => Track(() => Facade.Zoom(-1), true)) });
 
         /* ----------------------------------------------------------------- */
@@ -570,7 +570,7 @@ namespace Cube.Pdf.Editor
         public RibbonElement Setting => Get(() => new RibbonElement(
             nameof(Setting),
             () => Properties.Resources.MenuSetting,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = GetCommand(SendSetting) });
 
         #endregion
@@ -590,7 +590,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuFrameOnly,
             () => Facade.Value.Settings.FrameOnly,
             e  => Facade.Value.Settings.FrameOnly = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         #endregion

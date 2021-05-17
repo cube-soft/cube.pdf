@@ -137,7 +137,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Version => Facade.Settings.Version.ToString(true);
+        public string Version => Facade.Settings.Version.ToString(3, true);
 
         /* ----------------------------------------------------------------- */
         ///

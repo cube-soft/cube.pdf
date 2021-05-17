@@ -41,13 +41,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the Selection class with the
-        /// specified invoker.
+        /// specified dispatcher.
         /// </summary>
         ///
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Selection(Invoker invoker) : base(invoker) { }
+        public Selection(Dispatcher dispatcher) : base(dispatcher) { }
 
         #endregion
 

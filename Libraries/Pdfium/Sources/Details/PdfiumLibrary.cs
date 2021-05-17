@@ -30,21 +30,6 @@ namespace Cube.Pdf.Pdfium
     /* --------------------------------------------------------------------- */
     internal abstract class PdfiumLibrary : DisposableBase
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfLibrary
-        ///
-        /// <summary>
-        /// Initializes a new instance of the PdfiumLibrary class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected PdfiumLibrary() { if (!_core.Invoked) _core.Invoke(); }
-
-        #endregion
-
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -116,10 +101,12 @@ namespace Cube.Pdf.Pdfium
         #endregion
 
         #region Fields
-        private static readonly DisposableOnceAction _core = new DisposableOnceAction(
-            () => NativeMethods.FPDF_InitLibrary(),
-            e  => NativeMethods.FPDF_DestroyLibrary()
-        );
+        private class UnmanagedResource
+        {
+            public UnmanagedResource() { NativeMethods.FPDF_InitLibrary(); }
+            ~UnmanagedResource() { NativeMethods.FPDF_DestroyLibrary(); }
+        }
+        private static readonly UnmanagedResource _core = new();
         #endregion
     }
 }

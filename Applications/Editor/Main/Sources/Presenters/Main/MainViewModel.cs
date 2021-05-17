@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editor
             context
         ) {
             var recent = Environment.SpecialFolder.Recent.GetName();
-            var mon    = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO, GetInvoker(false));
+            var mon    = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO, GetDispatcher(false));
 
             Ribbon = new RibbonViewModel(Facade, Aggregator, context);
             Recent = new RecentViewModel(mon, Aggregator, context);
@@ -129,7 +129,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand Setup => Get(() => new DelegateCommand(
+        public ICommand Setup => GetCommand(() => new DelegateCommand(
             () => Track(() => Facade.Setup(App.Arguments))
         ));
 
@@ -142,7 +142,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand Open => Get(() => new DelegateCommand<string[]>(
+        public ICommand Open => GetCommand(() => new DelegateCommand<string[]>(
             e => Track(() => Facade.Open(e.FirstPdf())),
             e => !Value.Busy && e.FirstPdf().HasValue()
         ).Associate(Value, nameof(Value.Busy)));
@@ -156,7 +156,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand InsertOrMove => Get(() => new DelegateCommand<DragDropObject>(
+        public ICommand InsertOrMove => GetCommand(() => new DelegateCommand<DragDropObject>(
             e => Track(() => Facade.InsertOrMove(e)),
             e => !Value.Busy && Value.Source != null &&
                  (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0)

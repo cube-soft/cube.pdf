@@ -80,7 +80,7 @@ namespace Cube.Pdf.Ghostscript
             {
                 SetTemp(tmp, io, () =>
                 {
-                    NativeMethods.NewInstance(out var core, IntPtr.Zero);
+                    _ = NativeMethods.NewInstance(out var core, IntPtr.Zero);
                     if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
 
                     try
@@ -91,7 +91,7 @@ namespace Cube.Pdf.Ghostscript
                     }
                     finally
                     {
-                        NativeMethods.Exit(core);
+                        _ = NativeMethods.Exit(core);
                         NativeMethods.DeleteInstance(core);
                     }
                 });
@@ -173,8 +173,8 @@ namespace Cube.Pdf.Ghostscript
         #endregion
 
         #region Fields
-        private static readonly object _lock = new object();
-        private static GsInformation _info = new GsInformation();
+        private static readonly object _lock = new();
+        private static GsInformation _info = new();
         #endregion
     }
 }

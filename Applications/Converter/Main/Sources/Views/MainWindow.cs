@@ -136,7 +136,7 @@ namespace Cube.Pdf.Converter
 
             ShortcutKeys.Add(Keys.F1, vm.Help);
 
-            Behaviors.Add(new CloseBehavior(src, this));
+            Behaviors.Add(new CloseBehavior(this, src));
             Behaviors.Add(new DialogBehavior(src));
             Behaviors.Add(new OpenFileBehavior(src));
             Behaviors.Add(new SaveFileBehavior(src));

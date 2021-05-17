@@ -62,8 +62,8 @@ namespace Cube.Pdf
         [DataMember]
         public PdfVersion Version
         {
-            get => GetProperty<PdfVersion>();
-            set => SetProperty(value);
+            get => Get<PdfVersion>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -78,8 +78,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Author
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -94,8 +94,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Title
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -110,8 +110,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Subject
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -126,8 +126,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Keywords
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -142,8 +142,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Creator
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -158,8 +158,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Producer
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get<string>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -174,8 +174,8 @@ namespace Cube.Pdf
         [DataMember]
         public ViewerOption Options
         {
-            get => GetProperty<ViewerOption>();
-            set => SetProperty(value);
+            get => Get<ViewerOption>();
+            set => Set(value);
         }
 
         #endregion

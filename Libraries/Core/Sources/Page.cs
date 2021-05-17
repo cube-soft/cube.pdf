@@ -142,8 +142,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public Angle Delta
         {
-            get => GetProperty(() => new Angle());
-            set => SetProperty(value);
+            get => Get(() => new Angle());
+            set => Set(value);
         }
 
         #endregion

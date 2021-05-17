@@ -132,10 +132,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Selected
         {
-            get => GetProperty<bool>();
+            get => Get<bool>();
             set
             {
-                if (!SetProperty(value)) return;
+                if (!Set(value)) return;
                 if (value) _selection.Add(this);
                 else _selection.Remove(this);
             }
