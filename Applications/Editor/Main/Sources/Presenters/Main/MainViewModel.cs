@@ -129,7 +129,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand Setup => GetCommand(() => new DelegateCommand(
+        public ICommand Setup => Get(() => new DelegateCommand(
             () => Track(() => Facade.Setup(App.Arguments))
         ));
 
@@ -142,7 +142,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand Open => GetCommand(() => new DelegateCommand<string[]>(
+        public ICommand Open => Get(() => new DelegateCommand<string[]>(
             e => Track(() => Facade.Open(e.FirstPdf())),
             e => !Value.Busy && e.FirstPdf().HasValue()
         ).Associate(Value, nameof(Value.Busy)));
@@ -156,7 +156,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand InsertOrMove => GetCommand(() => new DelegateCommand<DragDropObject>(
+        public ICommand InsertOrMove => Get(() => new DelegateCommand<DragDropObject>(
             e => Track(() => Facade.InsertOrMove(e)),
             e => !Value.Busy && Value.Source != null &&
                  (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0)
