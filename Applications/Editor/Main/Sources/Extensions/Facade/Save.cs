@@ -69,7 +69,7 @@ namespace Cube.Pdf.Editor
             e => { src.Backup.Invoke(e); src.Cache?.Clear(); },
             e => {
                 if (reopen) src.Reload(e.FullName);
-                src.Value.Set(Properties.Resources.MessageSaved, e.FullName);
+                src.Value.SetMessage(Properties.Resources.MessageSaved, e.FullName);
             }
         );
 
@@ -134,7 +134,7 @@ namespace Cube.Pdf.Editor
             null,
             options,
             e => src.Backup.Invoke(e),
-            e => src.Value.Set(Properties.Resources.MessageSaved, e.FullName)
+            e => src.Value.SetMessage(Properties.Resources.MessageSaved, e.FullName)
         );
 
         /* ----------------------------------------------------------------- */

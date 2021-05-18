@@ -274,7 +274,7 @@ namespace Cube.Pdf.Editor
                 action();
             }
             catch (OperationCanceledException) { /* ignore user cancel */ }
-            catch (Exception e) { Set(e.Message); throw; }
+            catch (Exception e) { SetMessage(e.Message); throw; }
             finally { Busy = false; }
         }
 
@@ -304,7 +304,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Set
+        /// SetMessage
         ///
         /// <summary>
         /// Sets the specified message.
@@ -314,7 +314,7 @@ namespace Cube.Pdf.Editor
         /// <param name="args">Additional arguments.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Set(string format, params object[] args) => Message = string.Format(format, args);
+        public void SetMessage(string format, params object[] args) => Message = string.Format(format, args);
 
         /* ----------------------------------------------------------------- */
         ///

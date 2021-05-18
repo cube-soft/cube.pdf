@@ -162,7 +162,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Save(IDocumentReader src, SaveOption options, Action<Entity> prev, Action<Entity> next) => Invoke(() =>
         {
-            Value.Set(Properties.Resources.MessageSaving, options.Destination);
+            Value.SetMessage(Properties.Resources.MessageSaving, options.Destination);
             var itext = src ?? Value.Source.GetItext(Value.Query, Value.IO, false);
             Value.Set(itext.Metadata, itext.Encryption);
             using var dest = new SaveAction(itext, Value.Images, options);
@@ -211,13 +211,13 @@ namespace Cube.Pdf.Editor
             Invoke(() => Value.Images.InsertAt(
                 Math.Min(Math.Max(index, 0), Value.Images.Count),
                 src.SelectMany(e => {
-                    Value.Set(Properties.Resources.MessageLoading, e);
+                    Value.SetMessage(Properties.Resources.MessageLoading, e);
                     return !this.CanInsert(e) ? Enumerable.Empty<Page>() :
                            e.IsPdf()          ? Cache.GetOrAdd(e).Pages  :
                            Value.IO.GetImagePages(e);
                 })
             ));
-            Value.Set(string.Empty);
+            Value.SetMessage(string.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -408,7 +408,7 @@ namespace Cube.Pdf.Editor
         private void Invoke(Action action) => Value.Invoke(() =>
         {
             if (Disposed) return;
-            Value.Set(string.Empty);
+            Value.SetMessage(string.Empty);
             action();
         });
 
