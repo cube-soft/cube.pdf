@@ -60,8 +60,8 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Assembly.GetCompany(), Is.EqualTo("CubeSoft"));
             Assert.That(dest.Assembly.GetProduct(), Is.EqualTo("Cube.Pdf.Converter.Tests"));
             Assert.That(dest.DocumentName.Source,   Is.Empty);
-            Assert.That(dest.DocumentName.Value,    Is.EqualTo("Cube.Pdf.Converter.Tests"));
-            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.2.2"));
+            Assert.That(dest.DocumentName.Value,    Is.EqualTo("CubePDF"));
+            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.3.0"));
             Assert.That(dest.Value,                 Is.Not.Null);
             Assert.That(dest.Digest,                Is.Null);
         }
@@ -234,7 +234,7 @@ namespace Cube.Pdf.Converter.Tests
             dest.Set(Enumerable.Empty<string>());
 
             Assert.That(dest.Digest,             Is.Null);
-            Assert.That(dest.DocumentName.Value, Is.EqualTo("Cube.Pdf.Converter.Tests"));
+            Assert.That(dest.DocumentName.Value, Is.EqualTo("CubePDF"));
             Assert.That(dest.Value.DeleteSource, Is.False);
             Assert.That(dest.Value.Source,       Is.Empty);
         }

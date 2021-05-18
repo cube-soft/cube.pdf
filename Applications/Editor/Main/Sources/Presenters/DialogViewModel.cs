@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DialogViewModel<TModel> : ViewModelBase<TModel>
+    public abstract class DialogViewModel<TModel> : Presentable<TModel>
     {
         #region Constructors
 

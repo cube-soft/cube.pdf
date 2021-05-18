@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class RecentViewModel : ViewModelBase<DirectoryMonitor>
+    public sealed class RecentViewModel : Presentable<DirectoryMonitor>
     {
         #region Constructors
 
