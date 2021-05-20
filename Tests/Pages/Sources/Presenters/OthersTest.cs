@@ -19,6 +19,8 @@
 using System.Linq;
 using Cube.Tests;
 using NUnit.Framework;
+using Cube.Mixin.Generics;
+using System.Collections.Generic;
 
 namespace Cube.Pdf.Pages.Tests.Presenters
 {
@@ -127,9 +129,9 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             {
-                Assert.That(vm.Files, Is.Not.Null);
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
-                Assert.That(vm.Test(() => vm.Move(new[] { 1, 2 }, offset)), nameof(vm.Move));
+                Assert.That(vm.Files.DataSource.TryCast<IList<File>>().Count, Is.EqualTo(4));
+                Assert.That(vm.Test(() => vm.Move(new[] { 3, 2, 1 }, offset)), nameof(vm.Move));
             }
         }
 

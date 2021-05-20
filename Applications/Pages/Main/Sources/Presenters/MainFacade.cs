@@ -243,11 +243,17 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IEnumerable<int> indices, int offset) => Invoke(() =>
+        public bool Move(IEnumerable<int> indices, int offset) => Invoke(() =>
         {
-            if (offset == 0) return;
-            var src = offset < 0 ? indices : indices.Reverse();
-            MoveItems(src, offset);
+            if (offset == 0 || !indices.Any()) return false;
+
+            var src = indices.OrderBy(i => i).ToArray();
+            var min = src[0] + offset;
+            var max = src[src.Length - 1] + offset;
+            if (min < 0 || max >= Files.Count) return false;
+
+            MoveItems(offset < 0 ? src : src.Reverse(), offset);
+            return true;
         });
 
         /* ----------------------------------------------------------------- */
@@ -378,7 +384,7 @@ namespace Cube.Pdf.Pages
         private void MoveItems(IEnumerable<int> indices, int offset)
         {
             var inserted = offset < 0 ? -1 : _inner.Count;
-            foreach (var index in indices)
+            foreach (var index in indices.ToArray())
             {
                 var newindex = offset < 0 ?
                     Math.Max(index + offset, inserted + 1) :
@@ -408,14 +414,29 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Invoke(Action action)
+        private void Invoke(Action action) => Invoke(() =>
+        {
+            action();
+            return true;
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the specified function.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private T Invoke<T>(Func<T> func)
         {
             lock (_lock)
             {
                 try
                 {
                     Busy = true;
-                    action();
+                    return func();
                 }
                 finally { Busy = false; }
             }

@@ -131,7 +131,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invokeable
+        /// Invokable
         ///
         /// <summary>
         /// Gets a value indicating whether the Merge or Split operation
@@ -242,8 +242,9 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Move(IEnumerable<int> indices, int offset) => Track(() =>
         {
-            Facade.Move(indices, offset);
-            Send(MessageFactory.CreateForSelect(indices, offset, Facade.Files.Count));
+            if (Facade.Move(indices, offset)) Send(MessageFactory.CreateForSelect(
+                indices, offset, Facade.Files.Count
+            ));
         }, true);
 
         /* ----------------------------------------------------------------- */
