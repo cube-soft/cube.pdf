@@ -5,12 +5,12 @@ Copyright © 2013 CubeSoft, Inc.
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
 
-## 概要
-
-![CubePDF Utility メイン画面](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Open.01.ja.png?raw=true)
+## 基本的な使い方
 
 CubPDF Utility は、既存の PDF ファイルに対してページ挿入や削除、文書プロパティ、
 各種セキュリティ機能などの設定を変更するためのソフトウェアです。
+
+![CubePDF Utility メイン画面](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Open.01.ja.png?raw=true)
 
 CubPDF Utility を使用するためにはまず、編集したい PDF ファイルを開きます。
 PDF ファイルを開く方法は、下記の 3 通りが用意されています。
@@ -39,7 +39,7 @@ CubePDF Utility は PDF ファイルを編集すると言う性質上、開く�
 また、パスワードを入力せずに開く事ができる PDF ファイルであっても、**管理用パスワード** のみが設定されている事もあります。
 該当 PDF ファイルを編集する場合、PDF ファイルの作成者に **管理用パスワード** を尋ねる等の対応をお願いします。
 
-## 編集操作
+## 編集操作の一覧
 
 ### 挿入
 
@@ -69,6 +69,19 @@ CubePDF Utility では、PDF ファイルに対して、下記のファイルを
 
 ![ドラッグ&amp;ドロップによる挿入](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Insert.03.ja.png?raw=true)
 
+### 削除
+
+![削除](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Remove.01.ja.png?raw=true)
+
+**削除** メニューでは、開いた PDF ファイルの一部のページを削除する事ができます。
+**選択ページを削除**（**削除** も同様）メニューを選択した場合、メイン画面上で現在選択状態となっているページを削除します。
+**詳細を設定して削除** メニューを選択した場合、下記の専用ダイアログが表示されます。
+
+![詳細を設定して削除](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Remove.02.ja.png?raw=true)
+
+**対象ページ** には削除するページ範囲を記載します。
+使用可能な文字は、数字、&quot;,&quot;（コンマ）、および &quot;-&quot;（ハイフン）となります（例. 1,2,4,7-9）。
+
 ### 抽出
 
 ![抽出](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Extract.01.ja.png?raw=true)
@@ -90,10 +103,10 @@ PNG を設定した場合、DPI を設定する事ができます。
 この値は、PDF ファイルの内容をビットマップ形式に変換する際のサイズ（幅、および高さ）の決定に用います。
 例えば、A4 サイズの PDF ファイルを変換する場合、DPI の設定値に応じたサイズは下記のようになります。
 
-*  72dpi ...  595 ×  847
-*  96dpi ...  794 x 1123
-* 144dpi ... 1191 x 1684
-* 300dpi ... 2480 x 3508
+*  72dpi ...  595 ×  842
+*  96dpi ...  793 x 1122
+* 144dpi ... 1190 x 1684
+* 300dpi ... 2479 x 3508
 
 **対象ページ** は、**選択ページ**、**全てのページ**、**範囲を指定** の中から選択して下さい。
 **範囲を指定** した場合、下部のテキストボックスに抽出するページ範囲を記載します。
@@ -106,19 +119,6 @@ PNG を設定した場合、DPI を設定する事ができます。
 Sample-01.pdf、Sample-02.pdf、のようになります。
 
 尚、ファイルタイプとして PNG を指定した場合も同様の動作となります。
-
-### 削除
-
-![削除](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Remove.01.ja.png?raw=true)
-
-**削除** メニューでは、開いた PDF ファイルの一部のページを削除する事ができます。
-**選択ページを削除**（**削除** も同様）メニューを選択した場合、メイン画面上で現在選択状態となっているページを削除します。
-**詳細を設定して削除** メニューを選択した場合、下記の専用ダイアログが表示されます。
-
-![詳細を設定して削除](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Remove.02.ja.png?raw=true)
-
-**対象ページ** には削除するページ範囲を記載します。
-使用可能な文字は、数字、&quot;,&quot;（コンマ）、および &quot;-&quot;（ハイフン）となります（例. 1,2,4,7-9）。
 
 ### ページ順序の変更
 
@@ -207,7 +207,7 @@ CubePDF Utility のバージョンアップ時にパソコンの右下に通知�
 対応言語は英語と日本語の 2 種類です。また、表示言語で自動を選択した場合、Windows の
 言語設定に応じてどちらかの言語が自動的に選択されます。
 
-## ショートカットキー一覧
+## ショートカットキーの一覧
 
 CubePDF Utility で有効なキーボードのショートカットキーは、以下の通りです。
 
