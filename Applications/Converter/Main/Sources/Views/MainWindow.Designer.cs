@@ -3,14 +3,14 @@
     partial class MainWindow
     {
         /// <summary>
-        /// 必要なデザイナー変数です。
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
-        /// 使用中のリソースをすべてクリーンアップします。
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">マネージ リソースを破棄する場合は true を指定し、その他の場合は false を指定します。</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,11 +20,11 @@
             base.Dispose(disposing);
         }
 
-        #region Windows フォーム デザイナーで生成されたコード
+        #region Windows Form Designer generated code
 
         /// <summary>
-        /// デザイナー サポートに必要なメソッドです。このメソッドの内容を
-        /// コード エディターで変更しないでください。
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
@@ -60,11 +60,11 @@
             this.DestinationTextBox = new System.Windows.Forms.TextBox();
             this.FormatPanel = new System.Windows.Forms.TableLayoutPanel();
             this.PdfVersionComboBox = new System.Windows.Forms.ComboBox();
+            this.MetadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.FormatComboBox = new System.Windows.Forms.ComboBox();
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ViewerPreferencesComboBox = new System.Windows.Forms.ComboBox();
-            this.MetadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ViewerPreferencesLabel = new System.Windows.Forms.Label();
             this.CreatorTextBox = new System.Windows.Forms.TextBox();
             this.CreatorLabel = new System.Windows.Forms.Label();
@@ -132,9 +132,9 @@
             this.SourcePanel.SuspendLayout();
             this.DestinationPanel.SuspendLayout();
             this.FormatPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).BeginInit();
             this.DocumentPage.SuspendLayout();
             this.DocumentPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).BeginInit();
             this.EncryptionTabPage.SuspendLayout();
             this.EncryptionOuterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EncryptionBindingSource)).BeginInit();
@@ -384,6 +384,10 @@
             this.PdfVersionComboBox.FormattingEnabled = true;
             this.PdfVersionComboBox.Name = "PdfVersionComboBox";
             //
+            // MetadataBindingSource
+            //
+            this.MetadataBindingSource.DataSource = typeof(Cube.Pdf.Converter.MetadataViewModel);
+            //
             // FormatComboBox
             //
             this.FormatComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingBindingSource, "Format", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -423,10 +427,6 @@
             this.ViewerPreferencesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ViewerPreferencesComboBox.FormattingEnabled = true;
             this.ViewerPreferencesComboBox.Name = "ViewerPreferencesComboBox";
-            //
-            // MetadataBindingSource
-            //
-            this.MetadataBindingSource.DataSource = typeof(Cube.Pdf.Converter.MetadataViewModel);
             //
             // ViewerPreferencesLabel
             //
@@ -834,10 +834,10 @@
             this.DestinationPanel.ResumeLayout(false);
             this.DestinationPanel.PerformLayout();
             this.FormatPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).EndInit();
             this.DocumentPage.ResumeLayout(false);
             this.DocumentPanel.ResumeLayout(false);
             this.DocumentPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).EndInit();
             this.EncryptionTabPage.ResumeLayout(false);
             this.EncryptionOuterPanel.ResumeLayout(false);
             this.EncryptionOuterPanel.PerformLayout();

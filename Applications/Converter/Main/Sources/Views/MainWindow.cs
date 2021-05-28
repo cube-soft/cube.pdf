@@ -51,14 +51,13 @@ namespace Cube.Pdf.Converter
         {
             InitializeComponent();
 
-            ExitButton.Click += (s, e) => Close();
-
+            Behaviors.Add(Locale.Subscribe(UpdateText));
+            Behaviors.Add(new ClickBehavior(ExitButton, Close));
             Behaviors.Add(new PathLintBehavior(SourceTextBox, PathToolTip));
             Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathToolTip));
             Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathToolTip));
             Behaviors.Add(new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
             Behaviors.Add(new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox));
-            Behaviors.Add(Locale.Subscribe(_ => UpdateString()));
 
             SettingPanel.ApplyButton = ApplyButton;
         }
@@ -80,14 +79,13 @@ namespace Cube.Pdf.Converter
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool Busy
         {
-            get => _busy;
+            get => ConvertProgressBar.Visible;
             set
             {
-                _busy = value;
-                ConvertButton.Enabled = !value;
-                SettingTabControl.Enabled = !value;
-                ApplyButton.Visible = !value;
-                ConvertProgressBar.Visible = value;
+                SettingTabControl.Enabled  = !value;
+                ApplyButton.Visible        = !value;
+                ConvertButton.Enabled      = !value;
+                ConvertProgressBar.Visible =  value;
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
             }
         }
@@ -106,13 +104,6 @@ namespace Cube.Pdf.Converter
         ///
         /// <param name="src">ViewModel object.</param>
         ///
-        /// <remarks>
-        /// MainForm.Text および各種コントロールの Visible プロパティに
-        /// 対して、デザイナから Binding を設定すると意図しない動作に
-        /// なる現象が確認されています。暫定的な回避策と Binding を手動
-        /// 設定する事とします。
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
         protected override void OnBind(IBindable src)
         {
@@ -123,27 +114,24 @@ namespace Cube.Pdf.Converter
             MetadataBindingSource.DataSource   = vm.Metadata;
             EncryptionBindingSource.DataSource = vm.Encryption;
 
-            // see remarks
-            _ = SourceLabel.DataBindings.Add("Visible", SettingBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
-            _ = SourcePanel.DataBindings.Add("Visible", SettingBindingSource, "SourceVisible", false, DataSourceUpdateMode.Never);
-            _ = DataBindings.Add("Text", MainBindingSource, "Title", false, DataSourceUpdateMode.Never);
             _ = DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            SourceButton.Click      += (s, e) => vm.SelectSource();
-            DestinationButton.Click += (s, e) => vm.SelectDestination();
-            UserProgramButton.Click += (s, e) => vm.SelectUserProgram();
-            ConvertButton.Click     += (s, e) => vm.Convert();
-            SettingPanel.Apply      += (s, e) => vm.Save();
+            Behaviors.Add(new ClickBehavior(ConvertButton, vm.Convert));
+            Behaviors.Add(new ClickBehavior(SourceButton, vm.SelectSource));
+            Behaviors.Add(new ClickBehavior(DestinationButton, vm.SelectDestination));
+            Behaviors.Add(new ClickBehavior(UserProgramButton, vm.SelectUserProgram));
+            Behaviors.Add(new EventBehavior(SettingPanel, nameof(SettingPanel.Apply), vm.Save));
+            Behaviors.Add(new CloseBehavior(this, vm));
+            Behaviors.Add(new DialogBehavior(vm));
+            Behaviors.Add(new OpenFileBehavior(vm));
+            Behaviors.Add(new SaveFileBehavior(vm));
 
             ShortcutKeys.Add(Keys.F1, vm.Help);
 
-            Behaviors.Add(new CloseBehavior(this, src));
-            Behaviors.Add(new DialogBehavior(src));
-            Behaviors.Add(new OpenFileBehavior(src));
-            Behaviors.Add(new SaveFileBehavior(src));
-
-            this.UpdateCulture(vm.General.Language);
-            UpdateString();
+            SourceLabel.Visible = vm.General.SourceVisible;
+            SourcePanel.Visible = vm.General.SourceVisible;
+            Text = vm.Title;
+            UpdateText(vm.General.Language);
         }
 
         #endregion
@@ -169,15 +157,17 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateString
+        /// UpdateText
         ///
         /// <summary>
-        /// Updates displayed string.
+        /// Updates displayed text.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void UpdateString()
+        private void UpdateText(Language e)
         {
+            this.UpdateCulture(e);
+
             PathToolTip.ToolTipTitle = Properties.Resources.MessageInvalidChars;
             MainToolTip.SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
             MainToolTip.SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));
@@ -190,10 +180,6 @@ namespace Cube.Pdf.Converter
             LanguageComboBox.Bind(ViewResources.Languages);
         }
 
-        #endregion
-
-        #region Fields
-        private bool _busy = false;
         #endregion
     }
 }
