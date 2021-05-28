@@ -209,7 +209,7 @@ namespace Cube.Pdf.Editor.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<IDisposable> Subscribe(IPresentable src) => new[]
+        private IEnumerable<IDisposable> Subscribe(IBindable src) => new[]
         {
             src.Subscribe<DialogMessage    >(e => Select(e)),
             src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { Source }),

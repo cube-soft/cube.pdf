@@ -16,11 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms.Behaviors;
-using Cube.Forms.Controls;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Cube.Forms.Behaviors;
+using Cube.Mixin.Forms;
+using Cube.Mixin.Forms.Controls;
 
 namespace Cube.Pdf.Converter
 {
@@ -57,7 +58,7 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathToolTip));
             Behaviors.Add(new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
             Behaviors.Add(new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox));
-            Behaviors.Add(Locale.Subscribe(e => UpdateString(e)));
+            Behaviors.Add(Locale.Subscribe(_ => UpdateString()));
 
             SettingPanel.ApplyButton = ApplyButton;
         }
@@ -113,9 +114,9 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnBind(IPresentable src)
+        protected override void OnBind(IBindable src)
         {
-            if (!(src is MainViewModel vm)) return;
+            if (src is not MainViewModel vm) return;
 
             MainBindingSource.DataSource       = vm;
             SettingBindingSource.DataSource    = vm.General;
@@ -141,7 +142,8 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new OpenFileBehavior(src));
             Behaviors.Add(new SaveFileBehavior(src));
 
-            UpdateString(vm.General.Language);
+            this.UpdateCulture(vm.General.Language);
+            UpdateString();
         }
 
         #endregion
@@ -174,10 +176,8 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void UpdateString(Language value)
+        private void UpdateString()
         {
-            this.UpdateCulture(value);
-
             PathToolTip.ToolTipTitle = Properties.Resources.MessageInvalidChars;
             MainToolTip.SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
             MainToolTip.SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));

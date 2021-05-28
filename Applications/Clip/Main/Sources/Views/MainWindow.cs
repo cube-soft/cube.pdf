@@ -88,10 +88,10 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnBind(IPresentable src)
+        protected override void OnBind(IBindable src)
         {
             base.OnBind(src);
-            if (!(src is MainViewModel vm)) return;
+            if (src is not MainViewModel vm) return;
 
             MainBindingSource.DataSource = vm;
             ClipListView.DataSource = vm.Clips;

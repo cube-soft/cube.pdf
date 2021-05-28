@@ -92,7 +92,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnBind(IPresentable src)
+        protected override void OnBind(IBindable src)
         {
             base.OnBind(src);
             if (src is not MainViewModel vm) return;
