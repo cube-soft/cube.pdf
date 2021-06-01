@@ -142,18 +142,16 @@ namespace Cube.Pdf.Editor
         {
             try
             {
-                if (Value == null) return;
-
-                var name = "cubepdf-utility-checker";
-                var exe  = IO.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe").Quote();
-                var sk   = "CubePDF Utility2";
-                var args = $"cubepdfutility /subkey {sk.Quote()}";
-
-                new Startup(name)
+                var src = new Startup("cubepdf-utility-checker")
                 {
-                    Command = $"{exe} {args}",
-                    Enabled = Value.CheckUpdate && IO.Exists(exe),
-                }.Save();
+                    Source  = IO.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe"),
+                    Enabled = Value?.CheckUpdate ?? false,
+                };
+
+                src.Arguments.Add("cubepdfutility");
+                src.Arguments.Add("/subkey");
+                src.Arguments.Add("CubePDF Utility2");
+                src.Save(true);
             }
             finally { base.OnSaved(e); }
         }

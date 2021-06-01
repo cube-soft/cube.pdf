@@ -54,16 +54,14 @@ namespace Cube.Pdf.Converter.Tests
         public void Create()
         {
             var dest = new SettingFolder(Assembly.GetExecutingAssembly());
-            Assert.That(dest.Format,                Is.EqualTo(Cube.DataContract.Format.Registry));
-            Assert.That(dest.Location,              Is.EqualTo(@"CubeSoft\CubePDF\v2"));
-            Assert.That(dest.AutoSave,              Is.False);
-            Assert.That(dest.Assembly.GetCompany(), Is.EqualTo("CubeSoft"));
-            Assert.That(dest.Assembly.GetProduct(), Is.EqualTo("Cube.Pdf.Converter.Tests"));
-            Assert.That(dest.DocumentName.Source,   Is.Empty);
-            Assert.That(dest.DocumentName.Value,    Is.EqualTo("CubePDF"));
-            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.3.0"));
-            Assert.That(dest.Value,                 Is.Not.Null);
-            Assert.That(dest.Digest,                Is.Null);
+            Assert.That(dest.Format,              Is.EqualTo(Cube.DataContract.Format.Registry));
+            Assert.That(dest.Location,            Is.EqualTo(@"CubeSoft\CubePDF\v2"));
+            Assert.That(dest.AutoSave,            Is.False);
+            Assert.That(dest.DocumentName.Source, Is.Empty);
+            Assert.That(dest.DocumentName.Value,  Is.EqualTo("CubePDF"));
+            Assert.That(dest.Version.ToString(),  Is.EqualTo("1.3.0"));
+            Assert.That(dest.Value,               Is.Not.Null);
+            Assert.That(dest.Digest,              Is.Null);
         }
 
         /* ----------------------------------------------------------------- */

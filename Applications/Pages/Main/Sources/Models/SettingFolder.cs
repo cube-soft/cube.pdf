@@ -92,18 +92,16 @@ namespace Cube.Pdf.Pages
         {
             try
             {
-                if (Value == null) return;
-
-                var name = "cubepdf-page-checker";
-                var exe  = IO.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe").Quote();
-                var sk   = "CubePDF Page";
-                var args = $"cubepdfpage /subkey {sk.Quote()}";
-
-                new Startup(name)
+                var src = new Startup("cubepdf-page-checker")
                 {
-                    Command = $"{exe} {args}",
-                    Enabled = Value.CheckUpdate && IO.Exists(exe),
-                }.Save();
+                    Source  = IO.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe"),
+                    Enabled = Value?.CheckUpdate ?? false,
+                };
+
+                src.Arguments.Add("cubepdfpage");
+                src.Arguments.Add("/subkey");
+                src.Arguments.Add("CubePDF Page");
+                src.Save(true);
             }
             finally { base.OnSaved(e); }
         }

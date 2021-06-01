@@ -50,6 +50,21 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /// <param name="src">Original document name.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentName(string src, IO io) : this(src, "CubePDF", io) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentName
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentName class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Original document name.</param>
         /// <param name="alternate">Default filename.</param>
         /// <param name="io">I/O handler.</param>
         ///

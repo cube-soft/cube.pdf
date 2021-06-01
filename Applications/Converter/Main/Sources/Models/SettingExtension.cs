@@ -83,8 +83,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static string GetTitle(this SettingFolder src) =>
             src.DocumentName.Source.HasValue() ?
-            $"{src.DocumentName.Source} - {src.Assembly.GetTitle()} {src.Version.ToString(3, true)}" :
-            $"{src.Assembly.GetTitle()} {src.Version.ToString(3, true)}";
+            $"{src.DocumentName.Source} - CubePDF {src.Version.ToString(3, true)}" :
+            $"CubePDF {src.Version.ToString(3, true)}";
 
         #endregion
 
