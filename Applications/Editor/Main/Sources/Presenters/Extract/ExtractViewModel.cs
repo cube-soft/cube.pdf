@@ -107,9 +107,9 @@ namespace Cube.Pdf.Editor
             e  => Facade.Value.Destination = e,
             GetDispatcher(false)
         ) {
-            Command = new DelegateCommand(() => Send(
-                MessageFactory.CreateForExtract(),
-                e => Facade.Value.Destination = e
+            Command = new DelegateCommand(() => Track(
+                e => Facade.Value.Destination = e,
+                MessageFactory.CreateForExtract()
             ))
         }).Associate(Facade.Value, nameof(SaveOption.Destination));
 

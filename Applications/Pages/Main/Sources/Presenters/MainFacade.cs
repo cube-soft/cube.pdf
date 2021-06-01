@@ -196,16 +196,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /// <param name="directory">Directory to save.</param>
-        /// <param name="results">Operation results.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Split(string directory, IList<string> results) => Invoke(() =>
+        public void Split(string directory) => Invoke(() =>
         {
-            using (var writer = Make<DocumentSplitter>())
-            {
-                writer.Save(directory);
-                foreach (var f in writer.Results) results.Add(f);
-            }
+            using (var writer = Make<DocumentSplitter>()) writer.Save(directory);
             ClearItems();
         });
 

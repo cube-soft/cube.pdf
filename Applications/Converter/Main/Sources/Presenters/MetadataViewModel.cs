@@ -183,11 +183,12 @@ namespace Cube.Pdf.Converter
         {
             var src = new[] { Title, Author, Subject, Keywords };
             if (src.All(e => !e.HasValue())) callback();
-            else Send(
-                MessageFactory.CreateWarn(Properties.Resources.MessageSave),
-                e => callback(),
-                e => e.Any(DialogStatus.Yes)
-            );
+            else
+            {
+                var m = MessageFactory.CreateWarn(Properties.Resources.MessageSave);
+                Send(m);
+                if (m.Value.Any(DialogStatus.Yes)) callback();
+            }
         }
 
         #endregion

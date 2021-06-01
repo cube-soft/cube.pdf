@@ -68,13 +68,13 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel(SettingFolder settings, SynchronizationContext context) :
-            base(new Facade(settings), new Aggregator(), context)
+            base(new(settings), new(), context)
         {
             Locale.Set(settings.Value.Language);
 
-            General    = new SettingViewModel(settings, Aggregator, context);
-            Metadata   = new MetadataViewModel(settings.Value.Metadata, Aggregator, context);
-            Encryption = new EncryptionViewModel(settings.Value.Encryption, Aggregator, context);
+            General    = new(settings, Aggregator, context);
+            Metadata   = new(settings.Value.Metadata, Aggregator, context);
+            Encryption = new(settings.Value.Encryption, Aggregator, context);
 
             Facade.Settings.PropertyChanged += Observe;
         }
@@ -199,7 +199,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Metadata.Save(Facade.Settings.Save);
+        public void Save() => Metadata.Save(General.Save);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -224,9 +224,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectSource() => Send(
+        public void SelectSource() => Track(
+            e => Facade.Settings.Value.Source = e.First(),
             Facade.Settings.CreateForSource(),
-            e => Facade.Settings.Value.Source = e.First()
+            true
         );
 
         /* ----------------------------------------------------------------- */
@@ -241,8 +242,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void SelectDestination()
         {
-            var src = Facade.Settings.CreateForDestination();
-            Send(src, e => Facade.SetDestination(src));
+            var m = Facade.Settings.CreateForDestination();
+            Send(m);
+            if (!m.Cancel) Facade.SetDestination(m);
         }
 
         /* ----------------------------------------------------------------- */
@@ -255,9 +257,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectUserProgram() => Send(
+        public void SelectUserProgram() => Track(
+            e => General.UserProgram = e.First(),
             Facade.Settings.CreateForUserProgram(),
-            e => Facade.Settings.Value.UserProgram = e.First()
+            true
         );
 
         #endregion

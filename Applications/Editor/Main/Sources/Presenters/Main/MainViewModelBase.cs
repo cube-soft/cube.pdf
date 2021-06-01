@@ -237,7 +237,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendOpen(Action<string> action) =>
-            Send(MessageFactory.CreateForOpen(), e => action(e.First()));
+            Track(e => action(e.First()), MessageFactory.CreateForOpen());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -253,7 +253,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendSave(Action<string> action) =>
-            Send(MessageFactory.CreateForSave(), e => action(e));
+            Track(action, MessageFactory.CreateForSave());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -269,7 +269,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendInsert(Action<IEnumerable<string>> action) =>
-            Send(MessageFactory.CreateForInsert(), e => action(e));
+            Track(action, MessageFactory.CreateForInsert());
 
         /* ----------------------------------------------------------------- */
         ///

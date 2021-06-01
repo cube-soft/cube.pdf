@@ -22,8 +22,6 @@ using System.Diagnostics;
 using System.Reflection;
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
-using Cube.Mixin.IO;
-using Cube.Mixin.String;
 
 namespace Cube.Pdf.Editor
 {
