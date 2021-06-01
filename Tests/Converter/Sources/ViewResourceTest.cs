@@ -48,7 +48,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Formats() => Create(vm =>
         {
-            var v = ViewResources.Formats;
+            var v = ViewResource.Formats;
             Assert.That(v.Count,    Is.EqualTo(7));
             Assert.That(v[0].Value, Is.EqualTo(Format.Pdf));
             Assert.That(v[1].Value, Is.EqualTo(Format.Ps));
@@ -59,7 +59,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(v[6].Value, Is.EqualTo(Format.Tiff));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.Formats;
+            var en = ViewResource.Formats;
             Assert.That(en[0].Key, Is.EqualTo("PDF"));
             Assert.That(en[1].Key, Is.EqualTo("PS"));
             Assert.That(en[2].Key, Is.EqualTo("EPS"));
@@ -69,7 +69,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(en[6].Key, Is.EqualTo("TIFF"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.Formats;
+            var ja = ViewResource.Formats;
             Assert.That(ja[0].Key, Is.EqualTo("PDF"));
             Assert.That(ja[1].Key, Is.EqualTo("PS"));
             Assert.That(ja[2].Key, Is.EqualTo("EPS"));
@@ -91,7 +91,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void FormatOptions() => Create(vm =>
         {
-            var v = ViewResources.PdfVersions;
+            var v = ViewResource.PdfVersions;
             Assert.That(v.Count,    Is.EqualTo(6));
             Assert.That(v[0].Value, Is.EqualTo(7));
             Assert.That(v[1].Value, Is.EqualTo(6));
@@ -101,7 +101,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(v[5].Value, Is.EqualTo(2));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.PdfVersions;
+            var en = ViewResource.PdfVersions;
             Assert.That(v[0].Key, Is.EqualTo("PDF 1.7"));
             Assert.That(v[1].Key, Is.EqualTo("PDF 1.6"));
             Assert.That(v[2].Key, Is.EqualTo("PDF 1.5"));
@@ -110,7 +110,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(v[5].Key, Is.EqualTo("PDF 1.2"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.PdfVersions;
+            var ja = ViewResource.PdfVersions;
             Assert.That(v[0].Key, Is.EqualTo("PDF 1.7"));
             Assert.That(v[1].Key, Is.EqualTo("PDF 1.6"));
             Assert.That(v[2].Key, Is.EqualTo("PDF 1.5"));
@@ -131,7 +131,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void SaveOptions() => Create(vm =>
         {
-            var v = ViewResources.SaveOptions;
+            var v = ViewResource.SaveOptions;
             Assert.That(v.Count,    Is.EqualTo(4));
             Assert.That(v[0].Value, Is.EqualTo(SaveOption.Overwrite));
             Assert.That(v[1].Value, Is.EqualTo(SaveOption.MergeHead));
@@ -139,14 +139,14 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(v[3].Value, Is.EqualTo(SaveOption.Rename));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.SaveOptions;
+            var en = ViewResource.SaveOptions;
             Assert.That(en[0].Key, Is.EqualTo("Overwrite"));
             Assert.That(en[1].Key, Is.EqualTo("Merge head"));
             Assert.That(en[2].Key, Is.EqualTo("Merge tail"));
             Assert.That(en[3].Key, Is.EqualTo("Rename"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.SaveOptions;
+            var ja = ViewResource.SaveOptions;
             Assert.That(ja[0].Key, Is.EqualTo("上書き"));
             Assert.That(ja[1].Key, Is.EqualTo("先頭に結合"));
             Assert.That(ja[2].Key, Is.EqualTo("末尾に結合"));
@@ -165,20 +165,20 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Orientations() => Create(vm =>
         {
-            var v = ViewResources.Orientations;
+            var v = ViewResource.Orientations;
             Assert.That(v.Count,    Is.EqualTo(3));
             Assert.That(v[0].Value, Is.EqualTo(Orientation.Portrait));
             Assert.That(v[1].Value, Is.EqualTo(Orientation.Landscape));
             Assert.That(v[2].Value, Is.EqualTo(Orientation.Auto));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.Orientations;
+            var en = ViewResource.Orientations;
             Assert.That(en[0].Key, Is.EqualTo("Portrait"));
             Assert.That(en[1].Key, Is.EqualTo("Landscape"));
             Assert.That(en[2].Key, Is.EqualTo("Auto"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.Orientations;
+            var ja = ViewResource.Orientations;
             Assert.That(ja[0].Key, Is.EqualTo("縦"));
             Assert.That(ja[1].Key, Is.EqualTo("横"));
             Assert.That(ja[2].Key, Is.EqualTo("自動"));
@@ -196,7 +196,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void PostProcesses() => Create(vm =>
         {
-            var v = ViewResources.PostProcesses;
+            var v = ViewResource.PostProcesses;
             Assert.That(v.Count,    Is.EqualTo(4));
             Assert.That(v[0].Value, Is.EqualTo(PostProcess.Open));
             Assert.That(v[1].Value, Is.EqualTo(PostProcess.OpenDirectory));
@@ -204,14 +204,14 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(v[3].Value, Is.EqualTo(PostProcess.Others));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.PostProcesses;
+            var en = ViewResource.PostProcesses;
             Assert.That(en[0].Key, Is.EqualTo("Open"));
             Assert.That(en[1].Key, Is.EqualTo("Open directory"));
             Assert.That(en[2].Key, Is.EqualTo("None"));
             Assert.That(en[3].Key, Is.EqualTo("Others"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.PostProcesses;
+            var ja = ViewResource.PostProcesses;
             Assert.That(ja[0].Key, Is.EqualTo("開く"));
             Assert.That(ja[1].Key, Is.EqualTo("フォルダを開く"));
             Assert.That(ja[2].Key, Is.EqualTo("何もしない"));
@@ -230,7 +230,7 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void ViewerPreferences() => Create(vm =>
         {
-            var v = ViewResources.ViewerOptions;
+            var v = ViewResource.ViewerOptions;
             Assert.That(v.Count, Is.EqualTo(6));
             Assert.That(v[0].Value, Is.EqualTo(Pdf.ViewerOption.SinglePage));
             Assert.That(v[1].Value, Is.EqualTo(Pdf.ViewerOption.OneColumn));
@@ -240,7 +240,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(v[5].Value, Is.EqualTo(Pdf.ViewerOption.TwoColumnRight));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.ViewerOptions;
+            var en = ViewResource.ViewerOptions;
             Assert.That(en[0].Key, Is.EqualTo("Single page"));
             Assert.That(en[1].Key, Is.EqualTo("One column"));
             Assert.That(en[2].Key, Is.EqualTo("Two page (left)"));
@@ -249,7 +249,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(en[5].Key, Is.EqualTo("Two column (right)"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.ViewerOptions;
+            var ja = ViewResource.ViewerOptions;
             Assert.That(ja[0].Key, Is.EqualTo("単一ページ"));
             Assert.That(ja[1].Key, Is.EqualTo("連続ページ"));
             Assert.That(ja[2].Key, Is.EqualTo("見開きページ（左綴じ）"));
@@ -270,20 +270,20 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Languages() => Create(vm =>
         {
-            var v = ViewResources.Languages;
+            var v = ViewResource.Languages;
             Assert.That(v.Count,    Is.EqualTo(3));
             Assert.That(v[0].Value, Is.EqualTo(Language.Auto));
             Assert.That(v[1].Value, Is.EqualTo(Language.English));
             Assert.That(v[2].Value, Is.EqualTo(Language.Japanese));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.Languages;
+            var en = ViewResource.Languages;
             Assert.That(en[0].Key, Is.EqualTo("Auto"));
             Assert.That(en[1].Key, Is.EqualTo("English"));
             Assert.That(en[2].Key, Is.EqualTo("Japanese"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.Languages;
+            var ja = ViewResource.Languages;
             Assert.That(ja[0].Key, Is.EqualTo("自動"));
             Assert.That(ja[1].Key, Is.EqualTo("英語"));
             Assert.That(ja[2].Key, Is.EqualTo("日本語"));
@@ -301,18 +301,18 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void SourceFilters() => Create(vm =>
         {
-            var v = ViewResources.SourceFilters;
+            var v = ViewResource.SourceFilters;
             Assert.That(v.Count, Is.EqualTo(4));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.SourceFilters;
+            var en = ViewResource.SourceFilters;
             Assert.That(en[0].ToString(), Does.StartWith("PS files"));
             Assert.That(en[1].ToString(), Does.StartWith("EPS files"));
             Assert.That(en[2].ToString(), Does.StartWith("PDF files"));
             Assert.That(en[3].ToString(), Does.StartWith("All files"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.SourceFilters;
+            var ja = ViewResource.SourceFilters;
             Assert.That(ja[0].ToString(), Does.StartWith("PS ファイル"));
             Assert.That(ja[1].ToString(), Does.StartWith("EPS ファイル"));
             Assert.That(ja[2].ToString(), Does.StartWith("PDF ファイル"));
@@ -331,11 +331,11 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void DestinationFilters() => Create(vm =>
         {
-            var v = ViewResources.DestinationFilters;
+            var v = ViewResource.DestinationFilters;
             Assert.That(v.Count, Is.EqualTo(7));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.DestinationFilters;
+            var en = ViewResource.DestinationFilters;
             Assert.That(en[0].ToString(), Does.StartWith("PDF files"));
             Assert.That(en[1].ToString(), Does.StartWith("PS files"));
             Assert.That(en[2].ToString(), Does.StartWith("EPS files"));
@@ -345,7 +345,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(en[6].ToString(), Does.StartWith("TIFF files"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.DestinationFilters;
+            var ja = ViewResource.DestinationFilters;
             Assert.That(ja[0].ToString(), Does.StartWith("PDF ファイル"));
             Assert.That(ja[1].ToString(), Does.StartWith("PS ファイル"));
             Assert.That(ja[2].ToString(), Does.StartWith("EPS ファイル"));
@@ -368,16 +368,16 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void UserProgramFilters() => Create(vm =>
         {
-            var v = ViewResources.UserProgramFilters;
+            var v = ViewResource.UserProgramFilters;
             Assert.That(v.Count, Is.EqualTo(2));
 
             vm.General.Language = Language.English;
-            var en = ViewResources.UserProgramFilters;
+            var en = ViewResource.UserProgramFilters;
             Assert.That(en[0].ToString(), Does.StartWith("Executable files"));
             Assert.That(en[1].ToString(), Does.StartWith("All files"));
 
             vm.General.Language = Language.Japanese;
-            var ja = ViewResources.UserProgramFilters;
+            var ja = ViewResource.UserProgramFilters;
             Assert.That(ja[0].ToString(), Does.StartWith("実行可能なファイル"));
             Assert.That(ja[1].ToString(), Does.StartWith("すべてのファイル"));
         });

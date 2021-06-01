@@ -172,12 +172,12 @@ namespace Cube.Pdf.Converter
             MainToolTip.SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
             MainToolTip.SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));
 
-            FormatComboBox.Bind(ViewResources.Formats);
-            PdfVersionComboBox.Bind(ViewResources.PdfVersions);
-            SaveOptionComboBox.Bind(ViewResources.SaveOptions);
-            ViewerPreferencesComboBox.Bind(ViewResources.ViewerOptions);
-            PostProcessComboBox.Bind(ViewResources.PostProcesses);
-            LanguageComboBox.Bind(ViewResources.Languages);
+            FormatComboBox.Bind(ViewResource.Formats);
+            PdfVersionComboBox.Bind(ViewResource.PdfVersions);
+            SaveOptionComboBox.Bind(ViewResource.SaveOptions);
+            ViewerPreferencesComboBox.Bind(ViewResource.ViewerOptions);
+            PostProcessComboBox.Bind(ViewResource.PostProcesses);
+            LanguageComboBox.Bind(ViewResource.Languages);
         }
 
         #endregion

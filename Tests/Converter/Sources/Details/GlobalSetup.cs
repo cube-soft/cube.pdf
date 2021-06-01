@@ -47,9 +47,9 @@ namespace Cube.Pdf.Converter.Tests
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            Logger.ObserveTaskException();
+            _ = Logger.ObserveTaskException();
             Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
-            ApplicationSetting.Configure();
+            ViewResource.Configure();
         }
 
         #endregion

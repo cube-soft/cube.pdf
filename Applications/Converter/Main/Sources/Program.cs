@@ -52,12 +52,12 @@ namespace Cube.Pdf.Converter
         {
             try
             {
-                Logger.ObserveTaskException();
+                _ = Logger.ObserveTaskException();
                 Logger.Info(LogType, Assembly.GetExecutingAssembly());
                 Logger.Info(LogType, $"Ghostscript {GetGsVersion()}");
                 Logger.Info(LogType, $"[ {string.Join(" ", raw)} ]");
 
-                ApplicationSetting.Configure();
+                ViewResource.Configure();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
@@ -104,7 +104,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private static void Execute(SettingFolder settings)
         {
-            using (var src = new Facade(settings)) src.Invoke();
+            using var src = new Facade(settings);
+            src.Invoke();
         }
 
         /* ----------------------------------------------------------------- */

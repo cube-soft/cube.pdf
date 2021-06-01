@@ -100,7 +100,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         private static Format GetFormat(SettingValue src) =>
-            ViewResources.Formats.Any(e => e.Value == src.Format) ?
+            ViewResource.Formats.Any(e => e.Value == src.Format) ?
             src.Format :
             Format.Pdf;
 
@@ -114,7 +114,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         private static Orientation GetOrientation(SettingValue src) =>
-            ViewResources.Orientations.Any(e => e.Value == src.Orientation) ?
+            ViewResource.Orientations.Any(e => e.Value == src.Orientation) ?
             src.Orientation :
             Orientation.Auto;
 

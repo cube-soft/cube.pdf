@@ -16,26 +16,37 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Cube.FileSystem;
+using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewResources
+    /// ViewResource
     ///
     /// <summary>
     /// Provides resources for display.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class ViewResources
+    public static class ViewResource
     {
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Uri
+        ///
+        /// <summary>
+        /// Gets the URL of the Web page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdf/");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -88,7 +99,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, SaveOption>> SaveOptions => new []
+        public static IList<KeyValuePair<string, SaveOption>> SaveOptions => new[]
         {
             Make(Properties.Resources.MenuOverwrite, SaveOption.Overwrite),
             Make(Properties.Resources.MenuMergeHead, SaveOption.MergeHead),
@@ -106,14 +117,14 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, ViewerOption>> ViewerOptions => new []
+        public static IList<KeyValuePair<string, ViewerOption>> ViewerOptions => new[]
         {
-            Make(Properties.Resources.MenuSinglePage,     Pdf.ViewerOption.SinglePage),
-            Make(Properties.Resources.MenuOneColumn,      Pdf.ViewerOption.OneColumn),
-            Make(Properties.Resources.MenuTwoPageLeft,    Pdf.ViewerOption.TwoPageLeft),
-            Make(Properties.Resources.MenuTwoPageRight,   Pdf.ViewerOption.TwoPageRight),
-            Make(Properties.Resources.MenuTwoColumnLeft,  Pdf.ViewerOption.TwoColumnLeft),
-            Make(Properties.Resources.MenuTwoColumnRight, Pdf.ViewerOption.TwoColumnRight),
+            Make(Properties.Resources.MenuSinglePage,     ViewerOption.SinglePage),
+            Make(Properties.Resources.MenuOneColumn,      ViewerOption.OneColumn),
+            Make(Properties.Resources.MenuTwoPageLeft,    ViewerOption.TwoPageLeft),
+            Make(Properties.Resources.MenuTwoPageRight,   ViewerOption.TwoPageRight),
+            Make(Properties.Resources.MenuTwoColumnLeft,  ViewerOption.TwoColumnLeft),
+            Make(Properties.Resources.MenuTwoColumnRight, ViewerOption.TwoColumnRight),
         };
 
         /* ----------------------------------------------------------------- */
@@ -226,6 +237,17 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Configure
+        ///
+        /// <summary>
+        /// Invokes the configuration of the ViewResource related operations.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Configure() => _core.Invoke();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// WordWrap
         ///
         /// <summary>
@@ -254,9 +276,14 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static KeyValuePair<K, V> Make<K, V>(K key, V value) =>
-            new KeyValuePair<K, V>(key, value);
+        private static KeyValuePair<K, V> Make<K, V>(K key, V value) => new(key, value);
 
+        #endregion
+
+        #region Fields
+        private static readonly OnceAction _core = new(() =>
+            Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo()
+        ));
         #endregion
     }
 }
