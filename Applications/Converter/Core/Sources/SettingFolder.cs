@@ -50,7 +50,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder() : this(typeof(SettingFolder).Assembly) { }
+        public SettingFolder() : this(Assembly.GetCallingAssembly()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -84,7 +84,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public SettingFolder(DataContract.Format format, string location) :
-            this(typeof(SettingFolder).Assembly, format, location) { }
+            this(Assembly.GetCallingAssembly(), format, location) { }
 
         /* ----------------------------------------------------------------- */
         ///

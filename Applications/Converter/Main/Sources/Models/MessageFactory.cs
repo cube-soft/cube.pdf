@@ -16,13 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.String;
-using Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using Cube.FileSystem;
+using Cube.Mixin.String;
+using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter
 {
@@ -88,7 +88,7 @@ namespace Cube.Pdf.Converter
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage CreateError(string src) => new DialogMessage
+        public static DialogMessage CreateError(string src) => new()
         {
             Text    = src,
             Title   = Properties.Resources.TitleError,
@@ -110,7 +110,7 @@ namespace Cube.Pdf.Converter
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage CreateWarn(string src) => new DialogMessage
+        public static DialogMessage CreateWarn(string src) => new()
         {
             Text    = src,
             Title   = Properties.Resources.TitleWarning,

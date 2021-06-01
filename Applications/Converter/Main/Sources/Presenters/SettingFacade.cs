@@ -31,7 +31,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingFacade : ObservableBase
+    public class SettingFacade : DisposableBase
     {
         #region Constructors
 

@@ -16,12 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections;
-using Cube.DataContract;
-using Cube.FileSystem;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
+using Cube.Collections;
+using Cube.DataContract;
 
 namespace Cube.Pdf.Converter
 {
@@ -48,34 +47,45 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] raw)
+        static void Main(string[] raw) => Logger.Error(LogType, () =>
         {
-            try
-            {
-                _ = Logger.ObserveTaskException();
-                Logger.Info(LogType, Assembly.GetExecutingAssembly());
-                Logger.Info(LogType, $"Ghostscript {GetGsVersion()}");
-                Logger.Info(LogType, $"[ {string.Join(" ", raw)} ]");
+            _ = Logger.ObserveTaskException();
+            Logger.Info(LogType, Assembly.GetExecutingAssembly());
+            Logger.Info(LogType, $"Ghostscript {GetGsVersion()}");
+            Logger.Info(LogType, $"[ {string.Join(" ", raw)} ]");
 
-                ViewResource.Configure();
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
+            ViewResource.Configure();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-                var args = new ArgumentCollection(raw, Argument.Windows, true);
-                var setting = CreateSetting(args, Assembly.GetExecutingAssembly());
-                setting.Load();
-                setting.Normalize();
-                setting.Set(args);
+            var args = new ArgumentCollection(raw, Argument.Windows, true);
+            using var src = Create(args);
+            src.Load();
+            src.Normalize();
+            src.Set(args);
 
-                if (args.Options.ContainsKey("SkipUI")) Execute(setting);
-                else Show(setting);
-            }
-            catch (Exception err) { Logger.Error(LogType, err); }
-        }
+            if (args.Options.ContainsKey("SkipUI")) Execute(src);
+            else Show(src);
+        });
 
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Create
+        ///
+        /// <summary>
+        /// Creates a new instance of the SettingFolder class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static SettingFolder Create(ArgumentCollection src) =>
+            src.Options.TryGetValue("Setting", out var subkey) ?
+            new(Format.Registry, subkey) :
+            new();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -85,11 +95,13 @@ namespace Cube.Pdf.Converter
         /// Shows the main window.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        private static void Show(SettingFolder settings)
+        private static void Show(SettingFolder src)
         {
             var view = new MainWindow();
-            view.Bind(new MainViewModel(settings));
+            view.Bind(new MainViewModel(src));
             Application.Run(view);
         }
 
@@ -101,27 +113,14 @@ namespace Cube.Pdf.Converter
         /// Executes the conversion directly.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        private static void Execute(SettingFolder settings)
+        private static void Execute(SettingFolder src)
         {
-            using var src = new Facade(settings);
-            src.Invoke();
+            using var facade = new Facade(src);
+            facade.Invoke();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateSetting
-        ///
-        /// <summary>
-        /// Creates a new instance of the SettingFolder class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static SettingFolder CreateSetting(ArgumentCollection src, Assembly asm) =>
-            src.Options.TryGetValue("Setting", out var subkey) ?
-            new SettingFolder(asm, Format.Registry, subkey, new IO()) :
-            new SettingFolder(asm);
 
         /* ----------------------------------------------------------------- */
         ///

@@ -41,7 +41,19 @@ namespace Cube.Pdf.Converter
         /// Facade
         ///
         /// <summary>
-        /// Initializes a new instance of the specified assembly.
+        /// Initializes a new instance Facade class.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Facade() : this(new SettingFolder()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Facade
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Facade class with the
+        /// specified assembly.
         /// </summary>
         ///
         /// <param name="assembly">Assembly object.</param>
@@ -54,7 +66,8 @@ namespace Cube.Pdf.Converter
         /// Facade
         ///
         /// <summary>
-        /// Initializes a new instance of the specified settings.
+        /// Initializes a new instance of the Facade class with the
+        /// specified settings.
         /// </summary>
         ///
         /// <param name="settings">User settings.</param>
@@ -198,7 +211,7 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Fields
-        private readonly object _lock = new object();
+        private readonly object _lock = new();
         #endregion
     }
 }

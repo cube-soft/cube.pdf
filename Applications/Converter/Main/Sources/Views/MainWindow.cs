@@ -51,7 +51,7 @@ namespace Cube.Pdf.Converter
         {
             InitializeComponent();
 
-            Behaviors.Add(Locale.Subscribe(UpdateText));
+            Behaviors.Add(Locale.Subscribe(SetText));
             Behaviors.Add(new ClickBehavior(ExitButton, Close));
             Behaviors.Add(new PathLintBehavior(SourceTextBox, PathToolTip));
             Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathToolTip));
@@ -92,50 +92,6 @@ namespace Cube.Pdf.Converter
 
         #endregion
 
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Bind
-        ///
-        /// <summary>
-        /// Binds the specified object.
-        /// </summary>
-        ///
-        /// <param name="src">ViewModel object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnBind(IBindable src)
-        {
-            if (src is not MainViewModel vm) return;
-
-            MainBindingSource.DataSource       = vm;
-            SettingBindingSource.DataSource    = vm.General;
-            MetadataBindingSource.DataSource   = vm.Metadata;
-            EncryptionBindingSource.DataSource = vm.Encryption;
-
-            _ = DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
-
-            Behaviors.Add(new ClickBehavior(ConvertButton, vm.Convert));
-            Behaviors.Add(new ClickBehavior(SourceButton, vm.SelectSource));
-            Behaviors.Add(new ClickBehavior(DestinationButton, vm.SelectDestination));
-            Behaviors.Add(new ClickBehavior(UserProgramButton, vm.SelectUserProgram));
-            Behaviors.Add(new EventBehavior(SettingPanel, nameof(SettingPanel.Apply), vm.Save));
-            Behaviors.Add(new CloseBehavior(this, vm));
-            Behaviors.Add(new DialogBehavior(vm));
-            Behaviors.Add(new OpenFileBehavior(vm));
-            Behaviors.Add(new SaveFileBehavior(vm));
-
-            ShortcutKeys.Add(Keys.F1, vm.Help);
-
-            SourceLabel.Visible = vm.General.SourceVisible;
-            SourcePanel.Visible = vm.General.SourceVisible;
-            Text = vm.Title;
-            UpdateText(vm.General.Language);
-        }
-
-        #endregion
-
         #region Implementations
 
         /* ----------------------------------------------------------------- */
@@ -157,14 +113,83 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UpdateText
+        /// OnBind
         ///
         /// <summary>
-        /// Updates displayed text.
+        /// Binds the specified object.
+        /// </summary>
+        ///
+        /// <param name="src">Bindable object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnBind(IBindable src)
+        {
+            if (src is not MainViewModel vm) return;
+
+            MainBindingSource.DataSource       = vm;
+            SettingBindingSource.DataSource    = vm.General;
+            MetadataBindingSource.DataSource   = vm.Metadata;
+            EncryptionBindingSource.DataSource = vm.Encryption;
+
+            Behaviors.Add(new ClickBehavior(ConvertButton, vm.Convert));
+            Behaviors.Add(new ClickBehavior(SourceButton, vm.SelectSource));
+            Behaviors.Add(new ClickBehavior(DestinationButton, vm.SelectDestination));
+            Behaviors.Add(new ClickBehavior(UserProgramButton, vm.SelectUserProgram));
+            Behaviors.Add(new EventBehavior(SettingPanel, nameof(SettingPanel.Apply), vm.Save));
+            Behaviors.Add(new CloseBehavior(this, vm));
+            Behaviors.Add(new DialogBehavior(vm));
+            Behaviors.Add(new OpenFileBehavior(vm));
+            Behaviors.Add(new SaveFileBehavior(vm));
+            Behaviors.Add(new UriBehavior(vm));
+
+            ShortcutKeys.Add(Keys.F1, vm.Help);
+
+            SetBindings();
+            SetValue(vm);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetBindings
+        ///
+        /// <summary>
+        /// Sets the additional bindings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void UpdateText(Language e)
+        private void SetBindings()
+        {
+            _ = DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetValue
+        ///
+        /// <summary>
+        /// Sets the values of the specified ViewModel object to th View
+        /// properties.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetValue(MainViewModel vm)
+        {
+            SourceLabel.Visible = vm.General.SourceVisible;
+            SourcePanel.Visible = vm.General.SourceVisible;
+            Text = vm.Title;
+            SetText(vm.General.Language);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetText
+        ///
+        /// <summary>
+        /// Sets the displayed text.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetText(Language e)
         {
             this.UpdateCulture(e);
 

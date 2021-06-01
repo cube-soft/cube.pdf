@@ -39,14 +39,25 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Uri
+        /// ProductUri
         ///
         /// <summary>
-        /// Gets the URL of the Web page.
+        /// Gets the URL of the product Web page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdf/");
+        public static Uri ProductUri { get; } = new Uri("https://www.cube-soft.jp/cubepdf/");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentUri
+        ///
+        /// <summary>
+        /// Gets the URL of the document Web page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Uri DocumentUri { get; } = new Uri("https://docs.cube-soft.jp/entry/cubepdf");
 
         /* ----------------------------------------------------------------- */
         ///

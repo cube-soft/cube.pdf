@@ -16,13 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Logging;
-using Cube.Mixin.Tasks;
 using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cube.Mixin.Logging;
+using Cube.Mixin.Tasks;
 
 namespace Cube.Pdf.Converter
 {
@@ -148,7 +148,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri => ViewResource.Uri;
+        public Uri Uri => ViewResource.ProductUri;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -210,9 +210,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Help() => this.LogWarn(() =>
-            System.Diagnostics.Process.Start("https://docs.cube-soft.jp/entry/cubepdf")
-        );
+        public void Help() => Send(ViewResource.DocumentUri);
 
         /* ----------------------------------------------------------------- */
         ///
