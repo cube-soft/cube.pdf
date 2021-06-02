@@ -45,7 +45,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Facade() : this(new SettingFolder()) { }
+        public Facade() : this(Assembly.GetCallingAssembly()) { }
 
         /* ----------------------------------------------------------------- */
         ///
