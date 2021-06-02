@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter
 {
@@ -45,15 +45,15 @@ namespace Cube.Pdf.Converter
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="model">PDF encryption information.</param>
+        /// <param name="src">PDF encryption information.</param>
         /// <param name="aggregator">Event aggregator.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionViewModel(Encryption model, Aggregator aggregator,
-            SynchronizationContext context) : base(model, aggregator, context)
+        public EncryptionViewModel(Encryption src, Aggregator aggregator,
+            SynchronizationContext context) : base(src, aggregator, context)
         {
-            Facade.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Assets.Add(new ObservableProxy(Facade, this));
         }
 
         #endregion
@@ -277,7 +277,7 @@ namespace Cube.Pdf.Converter
             if (!Enabled) return true;
 
             var owner = OwnerPassword.FuzzyEquals(OwnerConfirm);
-            var user = !OpenWithPassword ||
+            var user  = !OpenWithPassword ||
                         UseOwnerPassword ||
                         UserPassword.FuzzyEquals(UserConfirm);
             if (owner && user) return true;

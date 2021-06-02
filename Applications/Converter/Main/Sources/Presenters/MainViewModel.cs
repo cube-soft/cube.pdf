@@ -22,6 +22,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cube.Mixin.Logging;
+using Cube.Mixin.Observing;
 using Cube.Mixin.Tasks;
 
 namespace Cube.Pdf.Converter
@@ -48,11 +49,10 @@ namespace Cube.Pdf.Converter
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
+        /// <param name="src">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingFolder settings) :
-            this(settings, SynchronizationContext.Current) { }
+        public MainViewModel(SettingFolder src) : this(src, SynchronizationContext.Current) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -63,21 +63,34 @@ namespace Cube.Pdf.Converter
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
+        /// <param name="src">User settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingFolder settings, SynchronizationContext context) :
-            base(new(settings), new(), context)
+        public MainViewModel(SettingFolder src, SynchronizationContext context) :
+            base(new(src), new(), context)
         {
-            Locale.Set(settings.Value.Language);
+            Locale.Set(src.Value.Language);
 
-            General    = new(settings, Aggregator, context);
-            Metadata   = new(settings.Value.Metadata, Aggregator, context);
-            Encryption = new(settings.Value.Encryption, Aggregator, context);
+            General    = new(src, Aggregator, context);
+            Metadata   = new(src.Value.Metadata, Aggregator, context);
+            Encryption = new(src.Value.Encryption, Aggregator, context);
 
             Assets.Add(new ObservableProxy(Facade, this));
-            Facade.Settings.PropertyChanged += Observe;
+            Assets.Add(src.Subscribe(e => {
+                switch (e)
+                {
+                    case nameof(src.Value.Format):
+                        Facade.ChangeExtension();
+                        break;
+                    case nameof(src.Value.PostProcess):
+                        if (src.Value.PostProcess == PostProcess.Others) SelectUserProgram();
+                        break;
+                    case nameof(src.Value.Language):
+                        Locale.Set(src.Value.Language);
+                        break;
+                }
+            }));
         }
 
         #endregion
@@ -261,37 +274,6 @@ namespace Cube.Pdf.Converter
             Facade.Settings.CreateForUserProgram(),
             true
         );
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Observe
-        ///
-        /// <summary>
-        /// Occurs when any settings are changed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Observe(object s, PropertyChangedEventArgs e)
-        {
-            var src = Facade.Settings.Value;
-
-            switch (e.PropertyName)
-            {
-                case nameof(src.Format):
-                    Facade.ChangeExtension();
-                    break;
-                case nameof(src.PostProcess):
-                    if (src.PostProcess == PostProcess.Others) SelectUserProgram();
-                    break;
-                case nameof(src.Language):
-                    Locale.Set(src.Language);
-                    break;
-            }
-        }
 
         #endregion
     }
