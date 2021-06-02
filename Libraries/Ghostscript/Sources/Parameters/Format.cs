@@ -21,6 +21,8 @@ using System.Diagnostics;
 
 namespace Cube.Pdf.Ghostscript
 {
+    #region Format
+
     /* --------------------------------------------------------------------- */
     ///
     /// Format
@@ -30,8 +32,8 @@ namespace Cube.Pdf.Ghostscript
     /// </summary>
     ///
     /// <remarks>
-    /// Psd, Jpeg, Png, Bmp, Tiff は、各カテゴリにおける最も代表的な
-    /// フォーマットのエイリアスとなります。
+    /// Psd, Jpeg, Png, Bmp, and Tiff represent the most common format
+    /// aliases in each category.
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
@@ -106,6 +108,10 @@ namespace Cube.Pdf.Ghostscript
         /// <summary>TIFF (Monochrome)</summary>
         Tiff1bppMonochrome,
     }
+
+    #endregion
+
+    #region FormatExtension
 
     /* --------------------------------------------------------------------- */
     ///
@@ -234,4 +240,6 @@ namespace Cube.Pdf.Ghostscript
 
         #endregion
     }
+
+    #endregion
 }

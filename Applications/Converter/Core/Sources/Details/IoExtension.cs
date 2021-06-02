@@ -40,7 +40,7 @@ namespace Cube.Pdf.Converter
         /// <summary>
         /// Moves or copies the specified file.
         /// </summary>
-        /// 
+        ///
         /// <param name="io">I/O handler.</param>
         /// <param name="src">Source path.</param>
         /// <param name="dest">Path to copy.</param>

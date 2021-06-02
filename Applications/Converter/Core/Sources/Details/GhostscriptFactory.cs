@@ -135,12 +135,11 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static PdfConverter CreatePdfConverter(SettingFolder src) =>
-            new PdfConverter(src.IO)
-            {
-                Version     = src.Value.Metadata.Version,
-                Compression = src.Value.ImageFilter ? Encoding.Jpeg : Encoding.Flate,
-            };
+        private static PdfConverter CreatePdfConverter(SettingFolder src) => new(src.IO)
+        {
+            Version     = src.Value.Metadata.Version,
+            Compression = src.Value.ImageFilter ? Encoding.Jpeg : Encoding.Flate,
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -191,18 +190,17 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private static readonly IDictionary<KeyValuePair<Format, bool>, Format> FormatMap =
-            new Dictionary<KeyValuePair<Format, bool>, Format>
-            {
-                { KeyValuePair.Create(Format.Jpeg, false), Format.Jpeg24bppRgb      },
-                { KeyValuePair.Create(Format.Jpeg, true ), Format.Jpeg8bppGrayscale },
-                { KeyValuePair.Create(Format.Png,  false), Format.Png24bppRgb       },
-                { KeyValuePair.Create(Format.Png,  true ), Format.Png8bppGrayscale  },
-                { KeyValuePair.Create(Format.Bmp,  false), Format.Bmp24bppRgb       },
-                { KeyValuePair.Create(Format.Bmp,  true ), Format.Bmp8bppGrayscale  },
-                { KeyValuePair.Create(Format.Tiff, false), Format.Tiff24bppRgb      },
-                { KeyValuePair.Create(Format.Tiff, true ), Format.Tiff8bppGrayscale },
-            };
+        private static readonly Dictionary<KeyValuePair<Format, bool>, Format> FormatMap = new()
+        {
+            { KeyValuePair.Create(Format.Jpeg, false), Format.Jpeg24bppRgb      },
+            { KeyValuePair.Create(Format.Jpeg, true ), Format.Jpeg8bppGrayscale },
+            { KeyValuePair.Create(Format.Png,  false), Format.Png24bppRgb       },
+            { KeyValuePair.Create(Format.Png,  true ), Format.Png8bppGrayscale  },
+            { KeyValuePair.Create(Format.Bmp,  false), Format.Bmp24bppRgb       },
+            { KeyValuePair.Create(Format.Bmp,  true ), Format.Bmp8bppGrayscale  },
+            { KeyValuePair.Create(Format.Tiff, false), Format.Tiff24bppRgb      },
+            { KeyValuePair.Create(Format.Tiff, true ), Format.Tiff8bppGrayscale },
+        };
 
         #endregion
     }

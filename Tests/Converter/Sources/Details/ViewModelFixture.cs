@@ -354,7 +354,6 @@ namespace Cube.Pdf.Converter.Tests
             vm.Linearization     = src.Linearization;
             vm.PostProcess       = src.PostProcess;
             vm.UserProgram       = src.UserProgram;
-            vm.CheckUpdate       = src.CheckUpdate;
 
             // see remarks
             // vm.Source         = src.Source;

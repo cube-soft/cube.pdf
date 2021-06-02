@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter
 {
@@ -52,7 +52,7 @@ namespace Cube.Pdf.Converter
         public ProcessLauncher(SettingFolder src)
         {
             Settings  = src;
-            _handlers = new Dictionary<PostProcess, Action<IEnumerable<string>>>
+            _handlers = new()
             {
                 { PostProcess.Open,          Open           },
                 { PostProcess.OpenDirectory, OpenDirectory  },
@@ -160,7 +160,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ProcessStartInfo Create(string exec, string args) => new ProcessStartInfo
+        private ProcessStartInfo Create(string exec, string args) => new()
         {
             FileName        = exec,
             Arguments       = args,
@@ -173,7 +173,7 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Fields
-        private readonly IDictionary<PostProcess, Action<IEnumerable<string>>> _handlers;
+        private readonly Dictionary<PostProcess, Action<IEnumerable<string>>> _handlers;
         #endregion
     }
 }

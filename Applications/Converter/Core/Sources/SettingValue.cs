@@ -35,23 +35,6 @@ namespace Cube.Pdf.Converter
     [DataContract]
     public class SettingValue : SerializableBase
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingValue
-        ///
-        /// <summary>
-        /// Initializes a new instance of the SettingValue class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingValue() { Reset(); }
-
-        #endregion
-
-        #region Properties
-
         #region DataMember
 
         /* ----------------------------------------------------------------- */
@@ -66,7 +49,7 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "FileType")]
         public Format Format
         {
-            get => Get<Format>();
+            get => Get(() => Format.Pdf);
             set => Set(value);
         }
 
@@ -82,7 +65,7 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "ExistedFile")]
         public SaveOption SaveOption
         {
-            get => Get<SaveOption>();
+            get => Get(() => SaveOption.Overwrite);
             set => Set(value);
         }
 
@@ -98,7 +81,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Orientation Orientation
         {
-            get => Get<Orientation>();
+            get => Get(() => Orientation.Auto);
             set => Set(value);
         }
 
@@ -111,15 +94,15 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /// <remarks>
-        /// 大きな効果が見込めないため、None で固定しユーザからは選択
-        /// 不可能にしています。
+        /// Since it is not expected to have a significant effect, it is
+        /// fixed at None and cannot be selected by the user.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
         public Downsampling Downsampling
         {
-            get => Get<Downsampling>();
+            get => Get(() => Downsampling.None);
             set => Set(value);
         }
 
@@ -135,7 +118,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public int Resolution
         {
-            get => Get<int>();
+            get => Get(() => 600);
             set => Set(value);
         }
 
@@ -151,7 +134,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool Grayscale
         {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
 
@@ -164,15 +147,15 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /// <remarks>
-        /// フォントを埋め込まない場合に文字化けする不都合が確認されている
-        /// ため、GUI からは設定不可能にしています。
+        /// A problem with garbled characters exists when the font is not
+        /// embedded, so the property is hidden from the user.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
         public bool EmbedFonts
         {
-            get => Get<bool>();
+            get => Get(() => true);
             set => Set(value);
         }
 
@@ -189,7 +172,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool ImageFilter
         {
-            get => Get<bool>();
+            get => Get(() => true);
             set => Set(value);
         }
 
@@ -206,7 +189,7 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "WebOptimize")]
         public bool Linearization
         {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
 
@@ -223,24 +206,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool SourceVisible
         {
-            get => Get<bool>();
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether to check the update
-        /// of the application.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public bool CheckUpdate
-        {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
 
@@ -258,7 +224,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool ExplicitDirectory
         {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
 
@@ -275,7 +241,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public bool PlatformCompatible
         {
-            get => Get<bool>();
+            get => Get(() => true);
             set => Set(value);
         }
 
@@ -291,7 +257,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Language Language
         {
-            get => Get<Language>();
+            get => Get(() => Language.Auto);
             set => Set(value);
         }
 
@@ -307,7 +273,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public PostProcess PostProcess
         {
-            get => Get<PostProcess>();
+            get => Get(() => PostProcess.None);
             set => Set(value);
         }
 
@@ -324,7 +290,7 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public string UserProgram
         {
-            get => Get<string>();
+            get => Get(() => string.Empty);
             set => Set(value);
         }
 
@@ -340,7 +306,7 @@ namespace Cube.Pdf.Converter
         [DataMember(Name = "LastAccess")]
         public string Destination
         {
-            get => Get<string>();
+            get => Get(() => Environment.SpecialFolder.Desktop.GetName());
             set => Set(value);
         }
 
@@ -353,16 +319,16 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /// <remarks>
-        /// Ghostscript はパスにマルチバイト文字が含まれる場合、処理に
-        /// 失敗する場合があります。そのため、マルチバイト文字の含まれない
-        /// ディレクトリに移動して処理を実行します。
+        /// Ghostscript may fail to process paths that contain multibyte
+        /// characters. Therefore, move to a directory that does not contain
+        /// multibyte characters and run the process.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
         public string Temp
         {
-            get => Get<string>();
+            get => Get(() => $@"{Environment.SpecialFolder.CommonApplicationData.GetName()}\CubeSoft\CubePDF");
             set => Set(value);
         }
 
@@ -378,11 +344,13 @@ namespace Cube.Pdf.Converter
         [DataMember]
         public Metadata Metadata
         {
-            get => Get<Metadata>();
+            get => Get(() => new Metadata());
             set => Set(value);
         }
 
         #endregion
+
+        #region Non-DataMember
 
         /* ----------------------------------------------------------------- */
         ///
@@ -395,7 +363,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Encryption Encryption
         {
-            get => Get<Encryption>();
+            get => Get(() => new Encryption());
             set => Set(value);
         }
 
@@ -410,7 +378,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Source
         {
-            get => Get<string>();
+            get => Get(() => string.Empty);
             set => Set(value);
         }
 
@@ -426,76 +394,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool DeleteSource
         {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Busy
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether the application is busy.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool Busy
-        {
-            get => Get<bool>();
-            set => Set(value);
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        ///
-        /// <summary>
-        /// Resets values.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Reset()
-        {
-            Format             = Format.Pdf;
-            SaveOption         = SaveOption.Overwrite;
-            Orientation        = Orientation.Auto;
-            Downsampling       = Downsampling.None;
-            PostProcess        = PostProcess.None;
-            Language           = Language.Auto;
-            Resolution         = 600;
-            Grayscale          = false;
-            EmbedFonts         = true;
-            ImageFilter        = true;
-            Linearization      = false;
-            SourceVisible      = false;
-            CheckUpdate        = true;
-            ExplicitDirectory  = false;
-            PlatformCompatible = true;
-            Temp               = $@"{Environment.SpecialFolder.CommonApplicationData.GetName()}\CubeSoft\CubePDF";
-            Source             = string.Empty;
-            Destination        = Environment.SpecialFolder.Desktop.GetName();
-            UserProgram        = string.Empty;
-            Metadata           = new Metadata();
-            Encryption         = new Encryption();
-            DeleteSource       = false;
-            Busy               = false;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDeserializing
-        ///
-        /// <summary>
-        /// Occurs before deserializing.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext context) => Reset();
 
         #endregion
     }

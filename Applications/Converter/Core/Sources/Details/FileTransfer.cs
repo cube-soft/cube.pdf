@@ -16,13 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Cube.FileSystem;
 using Cube.Mixin.IO;
 using Cube.Mixin.Logging;
 using Cube.Pdf.Ghostscript;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Cube.Pdf.Converter
 {
@@ -95,8 +95,9 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /// <remarks>
-        /// ユーザプログラムでは Value で指定されたパスに保存した後、Invoke
-        /// メソッドを用いて本来保存すべきファイルへの移動を実行して下さい。
+        /// In the user program, save the file to the path specified by Value,
+        /// and then use the Invoke method to move the file to the location
+        /// where it should be saved.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

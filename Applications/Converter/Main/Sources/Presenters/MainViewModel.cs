@@ -76,6 +76,7 @@ namespace Cube.Pdf.Converter
             Metadata   = new(settings.Value.Metadata, Aggregator, context);
             Encryption = new(settings.Value.Encryption, Aggregator, context);
 
+            Assets.Add(new ObservableProxy(Facade, this));
             Facade.Settings.PropertyChanged += Observe;
         }
 
@@ -159,7 +160,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Busy => Facade.Settings.Value.Busy;
+        public bool Busy => Facade.Busy;
 
         #endregion
 
@@ -288,9 +289,6 @@ namespace Cube.Pdf.Converter
                     break;
                 case nameof(src.Language):
                     Locale.Set(src.Language);
-                    break;
-                case nameof(src.Busy):
-                    OnPropertyChanged(e);
                     break;
             }
         }

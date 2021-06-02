@@ -32,7 +32,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class Facade : DisposableBase
+    public sealed class Facade : ObservableBase
     {
         #region Constructors
 
@@ -106,6 +106,21 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public IEnumerable<string> Results { get; private set; } = Enumerable.Empty<string>();
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Busy
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether it is busy.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Busy
+        {
+            get => Get(() => false);
+            private set => Set(value);
+        }
+
         #endregion
 
         #region Methods
@@ -119,27 +134,19 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Invoke()
+        public void Invoke() => Lock(() =>
         {
-            lock (_lock)
+            var dest = new List<string>();
+            using (var fs = new FileTransfer(Settings, GetTemp()))
             {
-                try
-                {
-                    Settings.Value.Busy = true;
-                    var dest = new List<string>();
-                    using (var fs = new FileTransfer(Settings, GetTemp()))
-                    {
-                        Run(() => new DigestChecker(Settings).Invoke());
-                        RunGhostscript(fs.Value);
-                        Run(() => new FileDecorator(Settings).Invoke(fs.Value));
-                        Run(() => fs.Invoke(dest));
-                        Run(() => new ProcessLauncher(Settings).Invoke(dest));
-                    }
-                    Results = dest;
-                }
-                finally { Settings.Value.Busy = false; }
+                Run(() => new DigestChecker(Settings).Invoke());
+                RunGhostscript(fs.Value);
+                Run(() => new FileDecorator(Settings).Invoke(fs.Value));
+                Run(() => fs.Invoke(dest));
+                Run(() => new ProcessLauncher(Settings).Invoke(dest));
             }
-        }
+            Results = dest;
+        });
 
         #endregion
 
@@ -160,13 +167,33 @@ namespace Cube.Pdf.Converter
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing) => Lock(() =>
+        {
+            _ = Settings.IO.TryDelete(GetTemp());
+            if (!Settings.Value.DeleteSource) return;
+            _ = Settings.IO.TryDelete(Settings.Value.Source);
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Lock
+        ///
+        /// <summary>
+        /// Locks and invokes the specified action unless the object is not
+        /// Disposed.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Lock(Action action)
         {
             lock (_lock)
             {
-                _ = Settings.IO.TryDelete(GetTemp());
-                if (!Settings.Value.DeleteSource) return;
-                _ = Settings.IO.TryDelete(Settings.Value.Source);
+                try
+                {
+                    Busy = true;
+                    action();
+                }
+                finally { Busy = false; }
             }
         }
 

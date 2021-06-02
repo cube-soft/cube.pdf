@@ -96,7 +96,6 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Downsampling,       Is.EqualTo(Downsampling.None));
             Assert.That(dest.Resolution,         Is.AtLeast(72));
             Assert.That(dest.Orientation,        Is.EqualTo(Orientation.Auto));
-            Assert.That(dest.CheckUpdate,        Is.True);
             Assert.That(dest.Linearization,      Is.False);
             Assert.That(dest.Language,           Is.EqualTo(Language.Auto));
             Assert.That(dest.PostProcess,        Is.EqualTo(PostProcess.None));
@@ -108,7 +107,6 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Source,             Is.Empty);
             Assert.That(dest.Destination,        Is.EqualTo(desktop));
             Assert.That(dest.Temp,               Is.EqualTo(temp));
-            Assert.That(dest.Busy,               Is.False);
 
             var md = dest.Metadata;
             Assert.That(md.Title,                Is.Empty);

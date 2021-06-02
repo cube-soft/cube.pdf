@@ -61,7 +61,7 @@ namespace Cube.Pdf.Converter.Tests
             src.Settings.Value.PostProcess = PostProcess.None;
             src.Invoke();
 
-            Assert.That(src.Settings.Value.Busy, Is.False);
+            Assert.That(src.Busy, Is.False);
             Assert.That(src.Results.Count(), Is.EqualTo(1));
             Assert.That(src.Results.First(), Is.EqualTo(dest));
             Assert.That(IO.Exists(dest), Is.True);
@@ -89,7 +89,7 @@ namespace Cube.Pdf.Converter.Tests
             src.Settings.Value.Resolution = 72;
             src.Invoke();
 
-            Assert.That(src.Settings.Value.Busy, Is.False);
+            Assert.That(src.Busy, Is.False);
             Assert.That(src.Results.Count(), Is.EqualTo(5));
             Assert.That(src.Results.First(), Does.EndWith($"{nameof(Convert)}-01.png"));
             Assert.That(IO.Exists(dest), Is.False);
@@ -120,7 +120,7 @@ namespace Cube.Pdf.Converter.Tests
             src.Settings.Value.PostProcess = PostProcess.None;
             src.Invoke();
 
-            Assert.That(src.Settings.Value.Busy, Is.False);
+            Assert.That(src.Busy, Is.False);
             Assert.That(src.Results.Count(), Is.EqualTo(1));
             Assert.That(IO.Exists(dest), Is.True);
         }
