@@ -18,10 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using Cube.FileSystem;
-using Cube.Mixin.String;
 
 namespace Cube.Pdf.Pages
 {
@@ -51,7 +48,7 @@ namespace Cube.Pdf.Pages
         /// <param name="view">View object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileDropBehavior(MainViewModel vm, MainWindow view)
+        public FileDropBehavior(MainWindow view, MainViewModel vm)
         {
             void invoke(object s, DragEventArgs e)
             {
@@ -66,8 +63,8 @@ namespace Cube.Pdf.Pages
             view.DragOver += OnDragOver;
             view.DragDrop += invoke;
 
-            _disposables.Add(Disposable.Create(() => view.DragOver -= OnDragOver));
-            _disposables.Add(Disposable.Create(() => view.DragDrop -= invoke));
+            _subscriber.Add(Disposable.Create(() => view.DragOver -= OnDragOver));
+            _subscriber.Add(Disposable.Create(() => view.DragDrop -= invoke));
         }
 
         #endregion
@@ -91,7 +88,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            foreach (var e in _disposables) e.Dispose();
+            foreach (var e in _subscriber) e.Dispose();
         }
 
         /* ----------------------------------------------------------------- */
@@ -111,7 +108,7 @@ namespace Cube.Pdf.Pages
         #endregion
 
         #region Fields
-        private readonly IList<IDisposable> _disposables = new List<IDisposable>();
+        private readonly List<IDisposable> _subscriber = new();
         #endregion
     }
 }

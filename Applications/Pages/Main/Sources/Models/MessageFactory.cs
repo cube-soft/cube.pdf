@@ -47,7 +47,7 @@ namespace Cube.Pdf.Pages
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForAdd() => new OpenFileMessage
+        public static OpenFileMessage CreateForAdd() => new()
         {
             Text            = Properties.Resources.TitleAdd,
             CheckPathExists = true,
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Pages
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage CreateForMerge() => new SaveFileMessage
+        public static SaveFileMessage CreateForMerge() => new()
         {
             Text            = Properties.Resources.TitleMerge,
             OverwritePrompt = true,
@@ -94,7 +94,7 @@ namespace Cube.Pdf.Pages
         /// <returns>OpenDirectoryMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage CreateForSplit() => new OpenDirectoryMessage
+        public static OpenDirectoryMessage CreateForSplit() => new()
         {
             Text      = Properties.Resources.TitleSplit,
             NewButton = true,
@@ -115,7 +115,7 @@ namespace Cube.Pdf.Pages
         /// <returns>SelectMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SelectMessage CreateForSelect(IEnumerable<int> indices, int offset, int count) => new SelectMessage
+        public static SelectMessage CreateForSelect(IEnumerable<int> indices, int offset, int count) => new()
         {
             Text  = string.Empty,
             Value = indices.Select(e => Math.Max(Math.Min(e + offset, count - 1), 0)),

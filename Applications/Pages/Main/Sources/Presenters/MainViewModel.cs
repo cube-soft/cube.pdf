@@ -77,7 +77,7 @@ namespace Cube.Pdf.Pages
             Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
             Facade.CollectionChanged += (s, e) => {
                 Refresh(nameof(Invokable));
-                Send<CollectionMessage>();
+                Send<UpdateListMessage>();
             };
         }
 

@@ -34,6 +34,8 @@ namespace Cube.Pdf.Pages
     /* --------------------------------------------------------------------- */
     static class Program
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// Main
@@ -44,22 +46,24 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args)
+        static void Main(string[] args) => Logger.Error(LogType, () =>
         {
-            try
-            {
-                Logger.ObserveTaskException();
-                Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
-                Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");
+            _ = Logger.ObserveTaskException();
+            Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
+            Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-                var view = new MainWindow();
-                view.Bind(new MainViewModel(args));
-                Application.Run(view);
-            }
-            catch (Exception err) { Logger.Error(typeof(Program), err); }
-        }
+            var view = new MainWindow();
+            view.Bind(new MainViewModel(args));
+            Application.Run(view);
+        });
+
+        #endregion
+
+        #region Fields
+        private static readonly Type LogType = typeof(Program);
+        #endregion
     }
 }

@@ -53,9 +53,10 @@ namespace Cube.Pdf.Pages
         public MainWindow()
         {
             InitializeComponent();
+
             Behaviors.Add(SetupForAbout());
             Behaviors.Add(new SelectionBehavior(FileListView));
-            ExitButton.Click += (s, e) => Close();
+            Behaviors.Add(new ClickBehavior(ExitButton, Close));
         }
 
         #endregion
@@ -81,7 +82,7 @@ namespace Cube.Pdf.Pages
 
         #endregion
 
-        #region Methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -96,28 +97,7 @@ namespace Cube.Pdf.Pages
         {
             base.OnBind(src);
             if (src is not MainViewModel vm) return;
-
             MainBindingSource.DataSource = vm;
-
-            var ctx = new FileContextMenu(() => SelectedIndices.Count() > 0);
-            ctx.PreviewMenu.Click += (s, e) => vm.Preview(SelectedIndices);
-            ctx.UpMenu.Click      += (s, e) => vm.Move(SelectedIndices, -1);
-            ctx.DownMenu.Click    += (s, e) => vm.Move(SelectedIndices, 1);
-            ctx.RemoveMenu.Click  += (s, e) => vm.Remove(SelectedIndices);
-
-            FileListView.ContextMenuStrip = ctx;
-            FileListView.DataSource = vm.Files;
-
-            Shown                    += (s, e) => vm.Setup();
-            MergeButton.Click        += (s, e) => vm.Merge();
-            SplitButton.Click        += (s, e) => vm.Split();
-            FileButton.Click         += (s, e) => vm.Add();
-            UpButton.Click           += (s, e) => vm.Move(SelectedIndices, -1);
-            DownButton.Click         += (s, e) => vm.Move(SelectedIndices, 1);
-            RemoveButton.Click       += (s, e) => vm.Remove(SelectedIndices);
-            ClearButton.Click        += (s, e) => vm.Clear();
-            TitleButton.Click        += (s, e) => vm.About();
-            FileListView.DoubleClick += (s, e) => vm.Preview(SelectedIndices);
 
             ShortcutKeys.Clear();
             ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
@@ -128,22 +108,37 @@ namespace Cube.Pdf.Pages
             ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Invokable.Then(vm.Merge));
             ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Invokable.Then(vm.Split));
 
+            Behaviors.Add(new ShownBehavior(this, vm.Setup));
+            Behaviors.Add(new ClickBehavior(MergeButton, vm.Merge));
+            Behaviors.Add(new ClickBehavior(SplitButton, vm.Split));
+            Behaviors.Add(new ClickBehavior(FileButton, vm.Add));
+            Behaviors.Add(new ClickBehavior(UpButton, () => vm.Move(SelectedIndices, -1)));
+            Behaviors.Add(new ClickBehavior(DownButton, () => vm.Move(SelectedIndices, 1)));
+            Behaviors.Add(new ClickBehavior(RemoveButton, () => vm.Remove(SelectedIndices)));
+            Behaviors.Add(new ClickBehavior(ClearButton, vm.Clear));
+            Behaviors.Add(new ClickBehavior(TitleButton, vm.About));
+            Behaviors.Add(new EventBehavior(FileListView, "DoubleClick", () => vm.Preview(SelectedIndices)));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
             Behaviors.Add(new OpenFileBehavior(vm));
             Behaviors.Add(new OpenDirectoryBehavior(vm));
             Behaviors.Add(new SaveFileBehavior(vm));
-            Behaviors.Add(new FileDropBehavior(vm, this));
+            Behaviors.Add(new FileDropBehavior(this, vm));
             Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(vm));
             Behaviors.Add(new ShowDialogBehavior<VersionWindow, VersionViewModel>(vm));
-            Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Files.ResetBindings(false)));
+            Behaviors.Add(vm.Subscribe<UpdateListMessage>(e => vm.Files.ResetBindings(false)));
             Behaviors.Add(vm.Subscribe<SelectMessage>(e => Select(e.Value)));
             Behaviors.Add(vm.Subscribe<PreviewMessage>(e => Process.Start(e.Value)));
+
+            var ctx = new FileContextMenu(() => SelectedIndices.Count() > 0);
+            Behaviors.Add(new ClickBehavior(ctx.PreviewMenu, () => vm.Preview(SelectedIndices)));
+            Behaviors.Add(new ClickBehavior(ctx.UpMenu, () => vm.Move(SelectedIndices, -1)));
+            Behaviors.Add(new ClickBehavior(ctx.DownMenu, () => vm.Move(SelectedIndices, 1)));
+            Behaviors.Add(new ClickBehavior(ctx.RemoveMenu, () => vm.Remove(SelectedIndices)));
+
+            FileListView.ContextMenuStrip = ctx;
+            FileListView.DataSource = vm.Files;
         }
-
-        #endregion
-
-        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -158,9 +153,9 @@ namespace Cube.Pdf.Pages
         {
             var dest = new ToolTip
             {
-                InitialDelay = 200,
+                InitialDelay =  200,
                 AutoPopDelay = 5000,
-                ReshowDelay  = 1000
+                ReshowDelay  = 1000,
             };
             dest.SetToolTip(TitleButton, Properties.Resources.MessageAbout);
             return dest;
