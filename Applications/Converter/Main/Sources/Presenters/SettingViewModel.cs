@@ -404,7 +404,7 @@ namespace Cube.Pdf.Converter
             if (!Facade.IO.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
             else
             {
-                var src = MessageFactory.Create(Destination, SaveOption);
+                var src = Message.From(Destination, SaveOption);
                 Send(src);
                 return src.Value == DialogStatus.Yes;
             }

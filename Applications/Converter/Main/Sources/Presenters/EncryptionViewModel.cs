@@ -282,7 +282,7 @@ namespace Cube.Pdf.Converter
                         UserPassword.FuzzyEquals(UserConfirm);
             if (owner && user) return true;
 
-            Send(MessageFactory.CreateError(Properties.Resources.MessagePassword));
+            Send(Message.ForError(Properties.Resources.MessagePassword));
             return false;
         }
 

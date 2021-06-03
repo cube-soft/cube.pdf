@@ -67,7 +67,7 @@ namespace Cube.Pdf.Clip
         {
             Clips = new BindingSource { DataSource = Facade.Clips };
 
-            Facade.CollectionChanged += (s, e) => Send<CollectionMessage>();
+            Facade.CollectionChanged += (s, e) => Send<UpdateListMessage>();
             Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
         }
 
@@ -121,7 +121,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open() => Track(MessageFactory.CreateForOpen(), e => Facade.Open(e.First()));
+        public void Open() => Track(Message.ForOpen(), e => Facade.Open(e.First()));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -132,7 +132,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach() => Track(MessageFactory.CreateForAttach(), Facade.Attach);
+        public void Attach() => Track(Message.ForAttach(), Facade.Attach);
 
         /* ----------------------------------------------------------------- */
         ///

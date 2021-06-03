@@ -198,7 +198,7 @@ namespace Cube.Pdf.Converter
                 catch (Exception e)
                 {
                     this.LogError(e);
-                    Send(MessageFactory.Create(e));
+                    Send(Message.From(e));
                 }
                 finally { Post<CloseMessage>(); }
             }).Forget();
@@ -237,7 +237,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void SelectSource() => Track(
-            Facade.Settings.CreateForSource(),
+            Message.ForSource(Facade.Settings),
             e => Facade.Settings.Value.Source = e.First(),
             true
         );
@@ -254,7 +254,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void SelectDestination()
         {
-            var m = Facade.Settings.CreateForDestination();
+            var m = Message.ForDestination(Facade.Settings);
             Send(m);
             if (!m.Cancel) Facade.SetDestination(m);
         }
@@ -270,7 +270,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void SelectUserProgram() => Track(
-            Facade.Settings.CreateForUserProgram(),
+            Message.ForUserProgram(Facade.Settings),
             e => General.UserProgram = e.First(),
             true
         );

@@ -165,7 +165,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Merge() => Track(MessageFactory.CreateForMerge(), Facade.Merge);
+        public void Merge() => Track(Message.ForMerge(), Facade.Merge);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -176,7 +176,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Split() => Track(MessageFactory.CreateForSplit(), Facade.Split);
+        public void Split() => Track(Message.ForSplit(), Facade.Split);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -187,7 +187,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Add() => Track(MessageFactory.CreateForAdd(), Facade.Add, true);
+        public void Add() => Track(Message.ForAdd(), Facade.Add, true);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -242,7 +242,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Move(IEnumerable<int> indices, int offset) => Track(() =>
         {
-            if (Facade.Move(indices, offset)) Send(MessageFactory.CreateForSelect(
+            if (Facade.Move(indices, offset)) Send(Message.ForSelect(
                 indices, offset, Facade.Files.Count
             ));
         }, true);
@@ -260,10 +260,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Preview(IEnumerable<int> indices)
         {
-            if (indices.Count() > 0) Send(new PreviewMessage
-            {
-                Value = Facade.Files[indices.First()].FullName,
-            });
+            if (indices.Count() > 0) Send(Message.ForPreview(Facade.Files, indices));
         }
 
         /* ----------------------------------------------------------------- */

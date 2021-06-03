@@ -187,7 +187,7 @@ namespace Cube.Pdf.Converter
         {
             var src = new[] { Title, Author, Subject, Keywords };
             if (src.All(e => !e.HasValue())) callback();
-            else Track(MessageFactory.CreateWarn(
+            else Track(Message.ForWarning(
                 Properties.Resources.MessageSave),
                 e => { if (e.Any(DialogStatus.Yes)) callback(); },
                 true

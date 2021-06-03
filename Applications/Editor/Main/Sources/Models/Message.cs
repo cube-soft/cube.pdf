@@ -23,20 +23,20 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MessageFactory
+    /// Message
     ///
     /// <summary>
     /// Provides functionality to create message objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class MessageFactory
+    internal static class Message
     {
         #region DialogMessage
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateOverwriteWarn
+        /// ForOverwrite
         ///
         /// <summary>
         /// Creates a message to show a MessageBox of overwriting
@@ -46,7 +46,7 @@ namespace Cube.Pdf.Editor
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage CreateOverwriteWarn() => new DialogMessage
+        public static DialogMessage ForOverwrite() => new()
         {
             Text    = Properties.Resources.MessageOverwrite,
             Title   = typeof(App).Assembly.GetTitle(),
@@ -60,7 +60,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForOpen
+        /// ForOpen
         ///
         /// <summary>
         /// Creates a message to show an OpenFileDialog dialog.
@@ -69,7 +69,7 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForOpen() => new OpenFileMessage
+        public static OpenFileMessage ForOpen() => new()
         {
             Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
@@ -83,7 +83,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForInsert
+        /// ForInsert
         ///
         /// <summary>
         /// Creates a message to show an OpenFileDialog dialog.
@@ -92,7 +92,7 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForInsert() => new OpenFileMessage
+        public static OpenFileMessage ForInsert() => new()
         {
             Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
@@ -106,7 +106,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForExtract
+        /// ForExtract
         ///
         /// <summary>
         /// Creates a message to show a SaveFileDialog dialog.
@@ -115,7 +115,7 @@ namespace Cube.Pdf.Editor
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage CreateForExtract() => new SaveFileMessage
+        public static SaveFileMessage ForExtract() => new()
         {
             Text            = Properties.Resources.MenuSaveAs,
             OverwritePrompt = true,
@@ -129,7 +129,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForSave
+        /// ForSave
         ///
         /// <summary>
         /// Creates a message to show a SaveFileDialog dialog.
@@ -138,7 +138,7 @@ namespace Cube.Pdf.Editor
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage CreateForSave() => new SaveFileMessage
+        public static SaveFileMessage ForSave() => new()
         {
             Text            = Properties.Resources.TitleSaveAs,
             OverwritePrompt = true,

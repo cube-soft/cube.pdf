@@ -22,31 +22,31 @@ namespace Cube.Pdf.Clip
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// CollectionMessage
+    /// UpdateListMessage
     ///
     /// <summary>
     /// Represents the message that the collection is changed.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class CollectionMessage { }
+    public sealed class UpdateListMessage { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// MessageFactory
+    /// Message
     ///
     /// <summary>
     /// Provides functionality to create message objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class MessageFactory
+    internal static class Message
     {
         #region OpenOrSaveMessage
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForOpen
+        /// ForOpen
         ///
         /// <summary>
         /// Creates a message to show an OpenFileDialog dialog.
@@ -55,7 +55,7 @@ namespace Cube.Pdf.Clip
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForOpen() => new OpenFileMessage
+        public static OpenFileMessage ForOpen() => new()
         {
             Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
@@ -69,7 +69,7 @@ namespace Cube.Pdf.Clip
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForAttach
+        /// ForAttach
         ///
         /// <summary>
         /// Creates a message to show an OpenFileDialog dialog.
@@ -78,7 +78,7 @@ namespace Cube.Pdf.Clip
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForAttach() => new OpenFileMessage
+        public static OpenFileMessage ForAttach() => new()
         {
             Text            = Properties.Resources.TitleAttach,
             CheckPathExists = true,

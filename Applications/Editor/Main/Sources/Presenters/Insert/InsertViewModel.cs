@@ -340,7 +340,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SendOpen()
         {
-            var msg = MessageFactory.CreateForInsert();
+            var msg = Message.ForInsert();
             Send(msg);
             if (!msg.Cancel) Facade.Add(msg.Value);
         }

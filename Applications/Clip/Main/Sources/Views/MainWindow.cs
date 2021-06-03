@@ -107,7 +107,7 @@ namespace Cube.Pdf.Clip
             Behaviors.Add(new OpenFileBehavior(src));
             Behaviors.Add(new OpenDirectoryBehavior(src));
             Behaviors.Add(new SaveFileBehavior(src));
-            Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Clips.ResetBindings(false)));
+            Behaviors.Add(vm.Subscribe<UpdateListMessage>(e => vm.Clips.ResetBindings(false)));
         }
 
         #endregion

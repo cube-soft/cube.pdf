@@ -212,7 +212,7 @@ namespace Cube.Pdf.Editor
         protected void SendClose(CancelEventArgs src)
         {
             var e = src ?? new CancelEventArgs();
-            var m = MessageFactory.CreateOverwriteWarn();
+            var m = Message.ForOverwrite();
 
             Send(m);
             e.Cancel = m.Value == DialogStatus.Cancel;
@@ -237,7 +237,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendOpen(Action<string> action) =>
-            Track(MessageFactory.CreateForOpen(), e => action(e.First()));
+            Track(Message.ForOpen(), e => action(e.First()));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -253,7 +253,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendSave(Action<string> action) =>
-            Track(MessageFactory.CreateForSave(), action);
+            Track(Message.ForSave(), action);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -269,7 +269,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendInsert(Action<IEnumerable<string>> action) =>
-            Track(MessageFactory.CreateForInsert(), action);
+            Track(Message.ForInsert(), action);
 
         /* ----------------------------------------------------------------- */
         ///

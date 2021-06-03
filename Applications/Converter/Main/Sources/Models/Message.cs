@@ -28,20 +28,20 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MessageFactory
+    /// Message
     ///
     /// <summary>
     /// Provides functionality to create message objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class MessageFactory
+    internal static class Message
     {
         #region DialogMessage
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// From
         ///
         /// <summary>
         /// Create a message to show a DialogBox with an error icon
@@ -53,12 +53,11 @@ namespace Cube.Pdf.Converter
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage Create(Exception src) =>
-            CreateError(GetErrorMessage(src));
+        public static DialogMessage From(Exception src) => ForError(GetErrorMessage(src));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// From
         ///
         /// <summary>
         /// Create a message to show a DialogBox with a warning icon
@@ -71,12 +70,12 @@ namespace Cube.Pdf.Converter
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage Create(string src, SaveOption option) =>
-            CreateWarn(GetWarnMessage(src, option));
+        public static DialogMessage From(string src, SaveOption option) =>
+            ForWarning(GetWarningMessage(src, option));
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateError
+        /// ForError
         ///
         /// <summary>
         /// Create a message to show a DialogBox with an error icon
@@ -88,7 +87,7 @@ namespace Cube.Pdf.Converter
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage CreateError(string src) => new()
+        public static DialogMessage ForError(string src) => new()
         {
             Text    = src,
             Title   = Properties.Resources.TitleError,
@@ -98,7 +97,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateWarn
+        /// ForWarning
         ///
         /// <summary>
         /// Create a message to show a DialogBox with a warning icon
@@ -110,7 +109,7 @@ namespace Cube.Pdf.Converter
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage CreateWarn(string src) => new()
+        public static DialogMessage ForWarning(string src) => new()
         {
             Text    = src,
             Title   = Properties.Resources.TitleWarning,
@@ -124,7 +123,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForSource
+        /// ForSource
         ///
         /// <summary>
         /// Creates a message to show an OpenFileDialog dialog for
@@ -136,7 +135,7 @@ namespace Cube.Pdf.Converter
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForSource(this SettingFolder src)
+        public static OpenFileMessage ForSource(SettingFolder src)
         {
             var path = src.Value.Source;
             var dest = new OpenFileMessage
@@ -154,7 +153,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForDestination
+        /// ForDestination
         ///
         /// <summary>
         /// Creates a message to show an OpenFileDialog dialog for
@@ -166,7 +165,7 @@ namespace Cube.Pdf.Converter
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage CreateForDestination(this SettingFolder src)
+        public static SaveFileMessage ForDestination(SettingFolder src)
         {
             var path = src.Value.Destination;
             var dest = new SaveFileMessage
@@ -184,7 +183,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForUserProgram
+        /// ForUserProgram
         ///
         /// <summary>
         /// Creates a message to show an OpenFileDialog dialog for
@@ -196,7 +195,7 @@ namespace Cube.Pdf.Converter
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForUserProgram(this SettingFolder src)
+        public static OpenFileMessage ForUserProgram(SettingFolder src)
         {
             var path = src.Value.UserProgram;
             var dest = new OpenFileMessage
@@ -235,14 +234,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetWarnMessage
+        /// GetWarningMessage
         ///
         /// <summary>
         /// Gets an warning message from the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string GetWarnMessage(string src, SaveOption option)
+        private static string GetWarningMessage(string src, SaveOption option)
         {
             var s0 = string.Format(Properties.Resources.MessageExists, src);
             var ok = new Dictionary<SaveOption, string>
