@@ -237,8 +237,8 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void SelectSource() => Track(
-            e => Facade.Settings.Value.Source = e.First(),
             Facade.Settings.CreateForSource(),
+            e => Facade.Settings.Value.Source = e.First(),
             true
         );
 
@@ -270,8 +270,8 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public void SelectUserProgram() => Track(
-            e => General.UserProgram = e.First(),
             Facade.Settings.CreateForUserProgram(),
+            e => General.UserProgram = e.First(),
             true
         );
 

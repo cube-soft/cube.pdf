@@ -165,7 +165,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Merge() => Track(Facade.Merge, MessageFactory.CreateForMerge());
+        public void Merge() => Track(MessageFactory.CreateForMerge(), Facade.Merge);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -176,7 +176,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Split() => Track(Facade.Split, MessageFactory.CreateForSplit());
+        public void Split() => Track(MessageFactory.CreateForSplit(), Facade.Split);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -187,7 +187,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Add() => Track(Facade.Add, MessageFactory.CreateForAdd(), true);
+        public void Add() => Track(MessageFactory.CreateForAdd(), Facade.Add, true);
 
         /* --------------------------------------------------------------------- */
         ///

@@ -121,7 +121,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open() => Track(e => Facade.Open(e.First()), MessageFactory.CreateForOpen());
+        public void Open() => Track(MessageFactory.CreateForOpen(), e => Facade.Open(e.First()));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -132,7 +132,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach() => Track(Facade.Attach, MessageFactory.CreateForAttach());
+        public void Attach() => Track(MessageFactory.CreateForAttach(), Facade.Attach);
 
         /* ----------------------------------------------------------------- */
         ///
