@@ -17,13 +17,13 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cube.Mixin.Logging;
 using Cube.Mixin.Observing;
 using Cube.Mixin.Tasks;
+using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Converter
 {
@@ -188,21 +188,17 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Convert()
+        public void Convert() => Confirm().Then(() => Task.Run(() =>
         {
-            var ok = Encryption.Confirm() && General.Confirm();
-            if (ok) Task.Run(() =>
+            try { Facade.InvokeEx(); }
+            catch (OperationCanceledException) { /* ignore */ }
+            catch (Exception e)
             {
-                try { Facade.InvokeEx(); }
-                catch (OperationCanceledException) { /* ignore */ }
-                catch (Exception e)
-                {
-                    this.LogError(e);
-                    Send(Message.From(e));
-                }
-                finally { Post<CloseMessage>(); }
-            }).Forget();
-        }
+                this.LogError(e);
+                Send(Message.From(e));
+            }
+            finally { Post<CloseMessage>(); }
+        }).Forget());
 
         /* ----------------------------------------------------------------- */
         ///
@@ -274,6 +270,21 @@ namespace Cube.Pdf.Converter
             e => General.UserProgram = e.First(),
             true
         );
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Confirm
+        ///
+        /// <summary>
+        /// Invokes the confirmation.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool Confirm() => Encryption.Confirm() && General.Confirm();
 
         #endregion
     }

@@ -275,22 +275,5 @@ namespace Cube.Pdf.Pages
         public void About() => Send(new VersionViewModel(Facade.Settings, Context));
 
         #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnMessage
-        ///
-        /// <summary>
-        /// Converts the specified exception to a new instance of the
-        /// DialogMessage class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override DialogMessage OnMessage(Exception src) =>
-            src is OperationCanceledException ? null : base.OnMessage(src);
-
-        #endregion
     }
 }
