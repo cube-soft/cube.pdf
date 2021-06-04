@@ -113,10 +113,11 @@ namespace Cube.Pdf.Editor.Tests
         /* ----------------------------------------------------------------- */
         protected void Make(Action<MainViewModel> callback)
         {
-            using var src = Create();
-            var behaviors = Subscribe(src);
-            callback(src);
-            foreach (var e in behaviors) e.Dispose();
+            using (var src = Create())
+            using (Subscribe(src))
+            {
+                callback(src);
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -209,8 +210,7 @@ namespace Cube.Pdf.Editor.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<IDisposable> Subscribe(IBindable src) => new[]
-        {
+        private DisposableContainer Subscribe(IBindable src) => new(
             src.Subscribe<DialogMessage    >(e => Select(e)),
             src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { Source }),
             src.Subscribe<SaveFileMessage  >(e => e.Value = Destination),
@@ -223,8 +223,8 @@ namespace Cube.Pdf.Editor.Tests
                 var dest = Password.HasValue() ? e.OK : e.Cancel;
                 Assert.That(dest.Command.CanExecute(), Is.True, dest.Text);
                 dest.Command.Execute();
-            }),
-        };
+            })
+        );
 
         /* ----------------------------------------------------------------- */
         ///

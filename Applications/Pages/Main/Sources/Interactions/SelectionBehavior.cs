@@ -16,8 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.Pages
@@ -50,7 +48,7 @@ namespace Cube.Pdf.Pages
         public SelectionBehavior(DataGridView view)
         {
             view.MouseUp += OnMouseUp;
-            _disposables.Add(Disposable.Create(() => view.MouseUp -= OnMouseUp));
+            _disposable.Add(() => view.MouseUp -= OnMouseUp);
         }
 
         #endregion
@@ -74,7 +72,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            foreach (var e in _disposables) e.Dispose();
+            if (disposing) _disposable.Dispose();
         }
 
         /* ----------------------------------------------------------------- */
@@ -98,7 +96,7 @@ namespace Cube.Pdf.Pages
         #endregion
 
         #region Fields
-        private readonly IList<IDisposable> _disposables = new List<IDisposable>();
+        private readonly DisposableContainer _disposable = new();
         #endregion
     }
 }

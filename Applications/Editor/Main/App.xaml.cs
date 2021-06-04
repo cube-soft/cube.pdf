@@ -16,14 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
-using Cube.Mixin.Logging;
-using Cube.Xui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Logging;
+using Cube.Xui;
 
 namespace Cube.Pdf.Editor
 {
@@ -49,10 +49,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public App()
-        {
-            _dispose = new OnceAction<bool>(Dispose);
-        }
+        public App() { _dispose = new(Dispose); }
 
         #endregion
 
@@ -67,37 +64,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<string> Arguments { get; private set; } = new string[0];
+        public static IEnumerable<string> Arguments { get; private set; } = Enumerable.Empty<string>();
 
         #endregion
 
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnStartup
-        ///
-        /// <summary>
-        /// Occurs when the Startup event is fired.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            BindingLogger.Setup();
-            this.LogInfo(Assembly.GetExecutingAssembly());
-
-            _observer.Add(Logger.ObserveTaskException());
-            _observer.Add(this.ObserveUiException());
-
-            Arguments = e.Args ?? Enumerable.Empty<string>();
-            this.LogInfo($"Arguments:{Arguments.Join(" ")}");
-
-            ApplicationSetting.Configure();
-            base.OnStartup(e);
-        }
-
-        #region IDisposable
 
         /* ----------------------------------------------------------------- */
         ///
@@ -125,6 +96,34 @@ namespace Cube.Pdf.Editor
             GC.SuppressFinalize(this);
         }
 
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnStartup
+        ///
+        /// <summary>
+        /// Occurs when the Startup event is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            BindingLogger.Setup();
+            this.LogInfo(Assembly.GetExecutingAssembly());
+
+            _disposable.Add(Logger.ObserveTaskException());
+            _disposable.Add(this.ObserveUiException());
+
+            Arguments = e.Args ?? Enumerable.Empty<string>();
+            this.LogInfo($"[ {Arguments.Join(" ")} ]");
+
+            ApplicationSetting.Configure();
+            base.OnStartup(e);
+        }
+
         /* ----------------------------------------------------------------- */
         ///
         /// Dispose
@@ -142,19 +141,14 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                foreach (var obj in _observer) obj.Dispose();
-            }
+            if (disposing) _disposable.Dispose();
         }
-
-        #endregion
 
         #endregion
 
         #region Fields
         private readonly OnceAction<bool> _dispose;
-        private readonly IList<IDisposable> _observer = new List<IDisposable>();
+        private readonly DisposableContainer _disposable = new();
         #endregion
     }
 }

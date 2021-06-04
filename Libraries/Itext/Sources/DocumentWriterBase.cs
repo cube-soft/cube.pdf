@@ -423,10 +423,10 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Fields
-        private readonly List<Page> _pages = new List<Page>();
-        private readonly List<Attachment> _attachments = new List<Attachment>();
-        private readonly List<IDisposable> _resources = new List<IDisposable>();
-        private readonly Dictionary<string, PdfReader> _hints = new Dictionary<string, PdfReader>();
+        private readonly List<Page> _pages = new();
+        private readonly List<Attachment> _attachments = new();
+        private readonly List<IDisposable> _resources = new();
+        private readonly Dictionary<string, PdfReader> _hints = new();
         #endregion
     }
 }

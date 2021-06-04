@@ -16,8 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Cube.Pdf.Pages
@@ -41,11 +39,11 @@ namespace Cube.Pdf.Pages
         ///
         /// <summary>
         /// Initializes a new instance of the FileDropBehavior class with
-        /// the specified arguments..
+        /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="vm">ViewModel object.</param>
         /// <param name="view">View object.</param>
+        /// <param name="vm">ViewModel object.</param>
         ///
         /* ----------------------------------------------------------------- */
         public FileDropBehavior(MainWindow view, MainViewModel vm)
@@ -63,8 +61,8 @@ namespace Cube.Pdf.Pages
             view.DragOver += OnDragOver;
             view.DragDrop += invoke;
 
-            _subscriber.Add(Disposable.Create(() => view.DragOver -= OnDragOver));
-            _subscriber.Add(Disposable.Create(() => view.DragDrop -= invoke));
+            _disposable.Add(() => view.DragOver -= OnDragOver);
+            _disposable.Add(() => view.DragDrop -= invoke);
         }
 
         #endregion
@@ -88,7 +86,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            foreach (var e in _subscriber) e.Dispose();
+            if (disposing) _disposable.Dispose();
         }
 
         /* ----------------------------------------------------------------- */
@@ -108,7 +106,7 @@ namespace Cube.Pdf.Pages
         #endregion
 
         #region Fields
-        private readonly List<IDisposable> _subscriber = new();
+        private readonly DisposableContainer _disposable = new();
         #endregion
     }
 }
