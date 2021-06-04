@@ -187,18 +187,16 @@ namespace Cube.Pdf.Converter
         /// Executes the conversion.
         /// </summary>
         ///
+        /// <remarks>
+        /// The method will always post a CloseMessage message even if
+        /// the InvokeEx method fails.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public void Convert() => Confirm().Then(() => Task.Run(() =>
+        public void Convert()
         {
-            try { Facade.InvokeEx(); }
-            catch (OperationCanceledException) { /* ignore */ }
-            catch (Exception e)
-            {
-                this.LogError(e);
-                Send(Message.From(e));
-            }
-            finally { Post<CloseMessage>(); }
-        }).Forget());
+            if (Confirm()) Track(Facade.InvokeEx, Post<CloseMessage>);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -274,6 +272,30 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnMessage
+        ///
+        /// <summary>
+        /// Converts the specified exception to a new instance of the
+        /// DialogMessage class.
+        /// </summary>
+        ///
+        /// <param name="src">Source exception.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /// <remarks>
+        /// The Method is called from the Track methods.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override DialogMessage OnMessage(Exception src)
+        {
+            this.LogError(src);
+            return src is OperationCanceledException ? null : Message.From(src);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
