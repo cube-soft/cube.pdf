@@ -23,6 +23,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Media.Imaging;
+using Cube.FileSystem.DataContract;
 using Cube.Mixin.Collections;
 using Cube.Mixin.Commands;
 using Cube.Mixin.Logging;
@@ -104,7 +105,7 @@ namespace Cube.Pdf.Editor.Tests
         /// Make
         ///
         /// <summary>
-        /// Creates a new instance of the MainViewModel class, initalizes
+        /// Creates a new instance of the MainViewModel class, initializes
         /// some properties, and execute the specified action.
         /// </summary>
         ///
@@ -185,7 +186,7 @@ namespace Cube.Pdf.Editor.Tests
         {
             var src = new SettingFolder(
                 Assembly.GetExecutingAssembly(),
-                DataContract.Format.Registry,
+                Format.Registry,
                 @"CubeSoft\Cube.Pdf.Editor.Tests",
                 IO
             ) { AutoSave = false };

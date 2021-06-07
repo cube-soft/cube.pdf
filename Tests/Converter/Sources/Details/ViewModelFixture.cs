@@ -166,7 +166,7 @@ namespace Cube.Pdf.Converter.Tests
         protected SettingFolder Create(IEnumerable<string> args)
         {
             var asm  = typeof(MainWindow).Assembly;
-            var fmt  = Cube.DataContract.Format.Registry;
+            var fmt  = Cube.FileSystem.DataContract.Format.Registry;
             var path = $@"CubeSoft\CubePDF\{GetType().Name}";
             var dest = new SettingFolder(asm, fmt, path, IO);
 

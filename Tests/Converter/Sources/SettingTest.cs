@@ -54,7 +54,7 @@ namespace Cube.Pdf.Converter.Tests
         public void Create()
         {
             var dest = new SettingFolder(Assembly.GetExecutingAssembly());
-            Assert.That(dest.Format,              Is.EqualTo(Cube.DataContract.Format.Registry));
+            Assert.That(dest.Format,              Is.EqualTo(Cube.FileSystem.DataContract.Format.Registry));
             Assert.That(dest.Location,            Is.EqualTo(@"CubeSoft\CubePDF\v2"));
             Assert.That(dest.AutoSave,            Is.False);
             Assert.That(dest.DocumentName.Source, Is.Empty);
@@ -80,7 +80,7 @@ namespace Cube.Pdf.Converter.Tests
             var desktop = Environment.SpecialFolder.Desktop.GetName();
             var src     = new SettingFolder(
                 Assembly.GetExecutingAssembly(),
-                Cube.DataContract.Format.Registry,
+                Cube.FileSystem.DataContract.Format.Registry,
                 $@"CubeSoft\CubePDF\{nameof(SettingTest)}",
                 IO
             );

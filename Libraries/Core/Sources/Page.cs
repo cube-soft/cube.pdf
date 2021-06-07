@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using Cube.FileSystem;
 
 namespace Cube.Pdf
 {

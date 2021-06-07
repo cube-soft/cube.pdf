@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Runtime.CompilerServices;
+using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
@@ -94,7 +95,7 @@ namespace Cube.Pdf
         /// ModifyContents
         ///
         /// <summary>
-        /// Gets or sets a permission for modifing the contents of the PDF
+        /// Gets or sets a permission for modifying the contents of the PDF
         /// document.
         /// </summary>
         ///
@@ -240,12 +241,12 @@ namespace Cube.Pdf
         /// SetPermission
         ///
         /// <summary>
-        /// Sets the value of the specfied permission.
+        /// Sets the value of the specified permission.
         /// </summary>
         ///
         /// <remarks>
-        /// 各種プロパティの変更時に Value プロパティに対しても
-        /// PropertyChanged イベントが発生します。
+        /// The PropertyChanged event is also fired for the Value property
+        /// when various properties are changed.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -258,14 +259,15 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Set
+        /// SetPermission
         ///
         /// <summary>
-        /// Sets the value of the specfied permission.
+        /// Sets the value of the specified permission.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private bool SetPermission(PermissionFlags src, PermissionValue value, [CallerMemberName] string name = null)
+        private bool SetPermission(PermissionFlags src, PermissionValue value,
+            [CallerMemberName] string name = null)
         {
             var dest = value.IsAllowed() ? (_flags | src) : (_flags & ~src);
             return SetPermission(ref _flags, dest, name);

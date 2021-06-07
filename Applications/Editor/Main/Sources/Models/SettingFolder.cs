@@ -21,6 +21,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using Cube.FileSystem;
+using Cube.FileSystem.DataContract;
 using Cube.Mixin.Assembly;
 
 namespace Cube.Pdf.Editor
@@ -52,7 +53,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingFolder(Assembly assembly, IO io) :
-            this(assembly, Cube.DataContract.Format.Registry, @"CubeSoft\CubePDF Utility2", io) { }
+            this(assembly, Format.Registry, @"CubeSoft\CubePDF Utility2", io) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -69,7 +70,7 @@ namespace Cube.Pdf.Editor
         /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
+        public SettingFolder(Assembly assembly, Format format, string location, IO io) :
             base(format, location, assembly.GetSoftwareVersion(), io)
         {
             Title          = assembly.GetTitle();
@@ -136,7 +137,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnSaved(KeyValueEventArgs<Cube.DataContract.Format, string> e)
+        protected override void OnSaved(KeyValueEventArgs<Format, string> e)
         {
             try
             {

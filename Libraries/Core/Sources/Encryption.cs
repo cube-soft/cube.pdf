@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
@@ -59,8 +60,8 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <remarks>
-        /// OpenWithPassword が true の場合、PDF ファイルを開く際に
-        /// OwnerPassword または UserPassword を入力する必要があります。
+        /// If OpenWithPassword is true, you will need to enter the
+        /// OwnerPassword or UserPassword when opening the PDF file.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -79,9 +80,9 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <remarks>
-        /// 所有者パスワードとは PDF ファイルに設定されているマスター
-        /// パスワードを表し、このパスワードによって再暗号化や各種権限の
-        /// 変更等すべての操作が可能となります。
+        /// The owner password is the master password that is set for the
+        /// PDF file, and it enables all operations such as re-encryption
+        /// and changing various permissions.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -100,8 +101,8 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <remarks>
-        /// ユーザパスワードとは、PDF ファイルを開く際に必要となる
-        /// パスワードを表します。
+        /// The user password represents the password required to open the
+        /// PDF file.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

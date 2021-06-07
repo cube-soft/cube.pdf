@@ -53,7 +53,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             Assert.That(vm.Value.Settings.Width,       Is.EqualTo(800));
             Assert.That(vm.Value.Settings.Height,      Is.EqualTo(600));
-            Assert.That(vm.Value.Settings.CheckUpdate, Is.True);
 
             vm.Value.Settings.Width       = 1024;
             vm.Value.Settings.Height      = 768;
@@ -84,7 +83,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(e.Link.Text,         Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
                 Assert.That(e.Link.Value,        Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdfutility/")));
                 Assert.That(e.Update.Text,       Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Update.Value,      Is.True);
                 Assert.That(e.Language.Text,     Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Language.Value,    Is.EqualTo(Language.Auto));
                 Assert.That(e.Languages.Count(), Is.EqualTo(3));

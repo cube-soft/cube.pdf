@@ -20,7 +20,7 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 using Cube.Collections;
-using Cube.DataContract;
+using Cube.FileSystem.DataContract;
 
 namespace Cube.Pdf.Converter
 {

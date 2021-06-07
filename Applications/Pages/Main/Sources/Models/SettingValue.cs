@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Runtime.Serialization;
+using Cube.FileSystem;
 
 namespace Cube.Pdf.Pages
 {
@@ -30,61 +31,5 @@ namespace Cube.Pdf.Pages
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public sealed class SettingValue : SerializableBase
-    {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingValue
-        ///
-        /// <summary>
-        /// Initializes a new instance of the SettingValue class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingValue() { Reset(); }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether to check the update
-        /// of the application.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public bool CheckUpdate
-        {
-            get => Get<bool>();
-            set => Set(value);
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        ///
-        /// <summary>
-        /// Resets values.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [OnDeserializing]
-        private void Reset()
-        {
-            CheckUpdate = true;
-        }
-
-        #endregion
-    }
+    public sealed class SettingValue : SerializableBase { }
 }

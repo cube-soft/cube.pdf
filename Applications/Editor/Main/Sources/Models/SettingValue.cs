@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Runtime.Serialization;
+using Cube.FileSystem;
 
 namespace Cube.Pdf.Editor
 {
@@ -26,31 +27,14 @@ namespace Cube.Pdf.Editor
     /// SettingValue
     ///
     /// <summary>
-    /// ユーザ設定を保持するためのクラスです。
+    /// Represents the user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
     public sealed class SettingValue : SerializableBase
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingValue
-        ///
-        /// <summary>
-        /// オブジェクトを初期化します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingValue() { Reset(); }
-
-        #endregion
-
         #region Properties
-
-        #region DataMember
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,7 +48,7 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public int Width
         {
-            get => Get<int>();
+            get => Get(() => 800);
             set => Set(value);
         }
 
@@ -80,7 +64,7 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public int Height
         {
-            get => Get<int>();
+            get => Get(() => 600);
             set => Set(value);
         }
 
@@ -96,7 +80,7 @@ namespace Cube.Pdf.Editor
         [DataMember(Name = "ViewSize")]
         public int ItemSize
         {
-            get => Get<int>();
+            get => Get(() => 250);
             set => Set(value);
         }
 
@@ -113,7 +97,7 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public bool FrameOnly
         {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
 
@@ -129,7 +113,7 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public Language Language
         {
-            get => Get<Language>();
+            get => Get(() => Language.Auto);
             set => Set(value);
         }
 
@@ -145,11 +129,9 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public bool CheckUpdate
         {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
-
-        #endregion
 
         /* ----------------------------------------------------------------- */
         ///
@@ -161,40 +143,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdfutility/");
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDeserializing
-        ///
-        /// <summary>
-        /// デシリアライズ直前に実行されます。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext context) => Reset();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        ///
-        /// <summary>
-        /// 値をリセットします。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Reset()
-        {
-            Width       = 800;
-            Height      = 600;
-            ItemSize    = 250;
-            Language    = Language.Auto;
-            CheckUpdate = true;
-        }
 
         #endregion
     }
