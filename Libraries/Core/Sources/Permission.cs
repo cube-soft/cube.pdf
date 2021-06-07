@@ -144,7 +144,7 @@ namespace Cube.Pdf
         /// ModifyAnnotations
         ///
         /// <summary>
-        /// Gets or sets a permission for adding or modifing text
+        /// Gets or sets a permission for adding or modifying text
         /// annotations, fill in interactive form fields.
         /// </summary>
         ///

@@ -50,8 +50,10 @@ namespace Cube.Pdf.Converter
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataViewModel(Metadata src, Aggregator aggregator,
-            SynchronizationContext context) : base(src, aggregator, context)
+        public MetadataViewModel(Metadata src,
+            Aggregator aggregator,
+            SynchronizationContext context
+        ) : base(src, aggregator, context)
         {
             Assets.Add(new ObservableProxy(Facade, this));
         }
@@ -187,8 +189,8 @@ namespace Cube.Pdf.Converter
         {
             var src = new[] { Title, Author, Subject, Keywords };
             if (src.All(e => !e.HasValue())) callback();
-            else Track(Message.ForWarning(
-                Properties.Resources.MessageSave),
+            else Track(
+                Message.ForWarning(Properties.Resources.MessageSave),
                 e => { if (e.Any(DialogStatus.Yes)) callback(); },
                 true
             );

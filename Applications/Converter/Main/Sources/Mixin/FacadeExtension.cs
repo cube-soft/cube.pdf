@@ -20,7 +20,7 @@ using System.Diagnostics;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 
-namespace Cube.Pdf.Converter
+namespace Cube.Pdf.Converter.Mixin
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -31,7 +31,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class FacadeExtension
+    static class FacadeExtension
     {
         #region Methods
 

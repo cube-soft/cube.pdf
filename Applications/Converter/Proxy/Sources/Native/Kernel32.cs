@@ -25,7 +25,7 @@ namespace Cube.Pdf.Converter.Proxy.Kernel32
     /// Kernel32.NativeMethods
     ///
     /// <summary>
-    /// kernel32.dll に定義された関数を宣言するためのクラスです。
+    /// Provides functions defined in kernel32.dll.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

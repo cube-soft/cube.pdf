@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Cube.Collections;
 using Cube.FileSystem.DataContract;
+using Cube.Pdf.Converter.Mixin;
 
 namespace Cube.Pdf.Converter
 {

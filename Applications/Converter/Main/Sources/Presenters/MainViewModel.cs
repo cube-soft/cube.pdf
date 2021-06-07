@@ -19,11 +19,9 @@
 using System;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Cube.Mixin.Logging;
 using Cube.Mixin.Observing;
-using Cube.Mixin.Tasks;
-using Cube.Mixin.Syntax;
+using Cube.Pdf.Converter.Mixin;
 
 namespace Cube.Pdf.Converter
 {

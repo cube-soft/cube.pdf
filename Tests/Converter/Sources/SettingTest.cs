@@ -16,14 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Assembly;
-using Cube.Mixin.Environment;
-using Cube.Pdf.Ghostscript;
-using Cube.Tests;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Reflection;
+using Cube.Mixin.Environment;
+using Cube.Pdf.Converter.Mixin;
+using Cube.Pdf.Ghostscript;
+using Cube.Tests;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Converter.Tests
 {

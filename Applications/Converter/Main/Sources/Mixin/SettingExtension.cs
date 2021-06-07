@@ -23,7 +23,7 @@ using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 
-namespace Cube.Pdf.Converter
+namespace Cube.Pdf.Converter.Mixin
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -49,9 +49,10 @@ namespace Cube.Pdf.Converter
         /// <param name="src">Setting to be normalized.</param>
         ///
         /// <remarks>
-        /// 1.0.0RC12 より Resolution を ComboBox のインデックスに対応
-        /// する値から直接の値に変更しました。これに伴い、インデックスを
-        /// 指していると予想される値を初期値にリセットしています。
+        /// Starting with 1.0.0RC12, Resolution was changed from a value
+        /// corresponding to the index of the ComboBox to a direct value.
+        /// With this change, the value expected to point to the index is
+        /// reset to its initial value.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

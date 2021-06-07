@@ -25,7 +25,7 @@ namespace Cube.Pdf.Converter.Proxy
     /// Program
     ///
     /// <summary>
-    /// メインプログラムを表すクラスです。
+    /// Represents the main program.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -38,47 +38,40 @@ namespace Cube.Pdf.Converter.Proxy
         /// Main
         ///
         /// <summary>
-        /// アプリケーションのメイン エントリ ポイントです。
+        /// Executes the main program of the application.
         /// </summary>
-        ///
-        /// <param name="args">プログラム引数</param>
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args)
+        static void Main(string[] args) => Logger.Error(LogType, () =>
         {
-            try
-            {
-                Logger.Info(LogType, System.Reflection.Assembly.GetExecutingAssembly());
-                Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
+            Logger.Info(LogType, System.Reflection.Assembly.GetExecutingAssembly());
+            Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
 
-                var proc = StartAs(args);
-                proc.EnableRaisingEvents = true;
-                proc.Exited += (s, e) =>
+            var proc = StartAs(args);
+            proc.EnableRaisingEvents = true;
+            proc.Exited += (s, e) =>
+            {
+                if (s is System.Diagnostics.Process p)
                 {
-                    if (s is System.Diagnostics.Process p)
-                    {
-                        Logger.Info(LogType, $"ExitCode:{(uint)p.ExitCode}");
-                    }
-                };
-                proc.WaitForExit();
-            }
-            catch (Exception err) { Logger.Error(LogType, err); }
-        }
+                    Logger.Info(LogType, $"ExitCode:{(uint)p.ExitCode}");
+                }
+            };
+            proc.WaitForExit();
+        });
 
         /* ----------------------------------------------------------------- */
         ///
         /// StartAs
         ///
         /// <summary>
-        /// Process オブジェクトを生成し、開始します。
+        /// Creates a new instance of the Process class with the specified
+        /// arguments and executes it.
         /// </summary>
         ///
-        /// <param name="args">プログラム引数</param>
+        /// <param name="args">Program arguments.</param>
         ///
-        /// <remarks>
-        /// 開始された Process オブジェクト
-        /// </remarks>
+        /// <returns>Process object that was started.</returns>
         ///
         /* ----------------------------------------------------------------- */
         static System.Diagnostics.Process StartAs(string[] args)
@@ -88,7 +81,7 @@ namespace Cube.Pdf.Converter.Proxy
 
             try
             {
-                src.Options.TryGetValue("UserName", out var user);
+                _ = src.Options.TryGetValue("UserName", out var user);
                 return Process.StartAs(user, exec, args);
             }
             catch (Exception err)
