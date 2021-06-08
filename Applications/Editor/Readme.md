@@ -118,58 +118,60 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
-* 2021/04/27 version 1.0.1
+* 2021-06-09 version 1.0.2
+    - Update PDFium to Chromium 91 compatible.
+* 2021-04-27 version 1.0.1
     - Update PDFium to Chromium 90 compatible.
     - Update iTextSharp to 5.5.13.2.
-* 2021/03/16 version 1.0.0
+* 2021-03-16 version 1.0.0
     - Update PDFium to Chromium 89 compatible.
-* 2021/02/03 version 0.6.5β
+* 2021-02-03 version 0.6.5β
     - Fix errors when launching the CubePDF utility with an encrypted PDF file.
     - Update PDFium to Chromium 88 compatible.
-* 2020/12/01 version 0.6.4β
+* 2020-12-01 version 0.6.4β
     - Update PDFium to Chromium 87 compatible.
-* 2020/10/16 version 0.6.3β
+* 2020-10-16 version 0.6.3β
     - Update PDFium to Chromium 86 compatible.
-* 2020/09/08 version 0.6.2β
+* 2020-09-08 version 0.6.2β
     - Update PDFium to Chromium 85 compatible.
-* 2020/07/28 version 0.6.1β
+* 2020-07-28 version 0.6.1β
     - Update PDFium to Chromium 84 compatible.
-* 2020/06/09 version 0.6.0β
+* 2020-06-09 version 0.6.0β
     - Fix to draw form fields.
     - Change log4net to NLog.
     - Update PDFium to Chromium 83 compatible.
-* 2020/04/21 version 0.5.7β
+* 2020-04-21 version 0.5.7β
     - Update PDFium to Chromium 81 compatible.
-* 2020/04/07 version 0.5.6β
+* 2020-04-07 version 0.5.6β
     - Update PDFium to Chromium 80 compatible.
-* 2019/10/24 version 0.5.5β
+* 2019-10-24 version 0.5.5β
     - Fix page order of the extracted PDF file.
     - Update PDFium to Chromium 77 compatible.
-* 2019/08/02 version 0.5.4β
+* 2019-08-02 version 0.5.4β
     - Add menu of "Extract with other settings".
     - Fix the problem that thumbnail images are ugly.
     - Fix to draw annotations in thumbnail images.
     - Improve memory consumption.
     - Update PDFium to Chromium 76 compatible.
-* 2019/04/15 version 0.5.3β
+* 2019-04-15 version 0.5.3β
     - Fix errors when showing icons that are associated with PDF files.
     - Fix a problem when selecting with Ctrl-click.
-* 2018/12/10 version 0.5.2β
+* 2018-12-10 version 0.5.2β
     - Fix a problem that encrypted PDF file cannot be opened in 32bit edition.
     - Fix the layout of the preview window.
     - Fix to display thumbnail images correctly in high DPI settings.
     - Fix to display the number of selected items in the status bar.
     - Fix to use associated file icon.
     - Add a keyboard shortcut of Ctrl+Q that exits the application.
-* 2018/10/25 version 0.5.1β
+* 2018-10-25 version 0.5.1β
     - Add menu of "Insert at other position".
     - Fix to insert PDF pages from another process by Drag&Drop operation.
     - Fix to insert image files (PNG, JPEG, BMP) as PDF pages.
     - Fix to confirm the owner password when opening All encrypted files.
     - Fix not to clear the selection when clicking the scrollbar.
-* 2018/09/26 version 0.5.0β
+* 2018-09-26 version 0.5.0β
     - Fix many features.
     - Fix to use PDFium as a rendering engine.
     - Add settings for selecting the display language (Auto, English, and Japanese).
-* 2013/05/20 version 0.1.0β
+* 2013-05-20 version 0.1.0β
     - First release version.
