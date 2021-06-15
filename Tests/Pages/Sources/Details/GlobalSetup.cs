@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Reflection;
+using Cube.Mixin.Logging;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Pages.Tests
@@ -47,8 +48,8 @@ namespace Cube.Pdf.Pages.Tests
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            Logger.ObserveTaskException();
-            Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
+            _ = Logger.ObserveTaskException();
+            typeof(GlobalSetup).LogInfo(Assembly.GetExecutingAssembly());
         }
 
         #endregion

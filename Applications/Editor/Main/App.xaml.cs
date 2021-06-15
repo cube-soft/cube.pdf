@@ -112,13 +112,13 @@ namespace Cube.Pdf.Editor
         protected override void OnStartup(StartupEventArgs e)
         {
             BindingLogger.Setup();
-            this.LogInfo(Assembly.GetExecutingAssembly());
+            GetType().LogInfo(Assembly.GetExecutingAssembly());
 
             _disposable.Add(Logger.ObserveTaskException());
             _disposable.Add(this.ObserveUiException());
 
             Arguments = e.Args ?? Enumerable.Empty<string>();
-            this.LogInfo($"[ {Arguments.Join(" ")} ]");
+            GetType().LogInfo($"[ {Arguments.Join(" ")} ]");
 
             ApplicationSetting.Configure();
             base.OnStartup(e);

@@ -93,9 +93,9 @@ namespace Cube.Pdf.Converter
             {
                 if (!src.Log.HasValue() || !src.IO.Exists(src.Log)) return;
                 using var ss = new StreamReader(src.IO.OpenRead(src.Log));
-                while (!ss.EndOfStream) src.LogDebug(ss.ReadLine());
+                while (!ss.EndOfStream) src.GetType().LogDebug(ss.ReadLine());
             }
-            catch (Exception err) { src.LogDebug(err.Message); }
+            catch (Exception err) { src.GetType().LogDebug(err.Message); }
         }
 
         #endregion

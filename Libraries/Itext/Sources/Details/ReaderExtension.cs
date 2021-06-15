@@ -110,7 +110,7 @@ namespace Cube.Pdf.Itext
 
             var password = src.GetUserPassword(file);
             var value    = (uint)src.Permissions;
-            src.LogDebug($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
+            src.GetType().LogDebug($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
 
             return new Encryption
             {
@@ -159,8 +159,8 @@ namespace Cube.Pdf.Itext
         /// <returns>User password.</returns>
         ///
         /// <remarks>
-        /// 暗号化方式が AES256 の場合、ユーザパスワードの解析に
-        /// 失敗するので除外しています。AES256 の場合の解析方法を要検討。
+        /// If the encryption method is AES256, the analysis of the user
+        /// password will fail, so it is excluded.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -211,8 +211,8 @@ namespace Cube.Pdf.Itext
         /// <param name="dest">Container for the result.</param>
         ///
         /// <remarks>
-        /// PdfReader オブジェクトから取得されたしおり情報に対して、
-        /// ページ番号を delta だけずらした後に処理を実行します。
+        /// Invokes processing on the bookmark information retrieved from
+        /// the PdfReader object after shifting the page number by delta.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -240,16 +240,15 @@ namespace Cube.Pdf.Itext
         /// <summary>
         /// Updates the rotation information of the specified PdfReader
         /// object according to the specified Page object.
-        /// 更新します。
         /// </summary>
         ///
         /// <param name="src">PdfReader object.</param>
         /// <param name="page">Page object.</param>
         ///
         /// <remarks>
-        /// PDF ページを回転させる場合、いったん PdfReader オブジェクトの
-        /// 内容を更新した後に PdfCopy オブジェクト等でコピーする方法が
-        /// もっとも容易に実現できるため、この方法を採用しています。
+        /// When rotating a PDF page, it is easiest to update the content of
+        /// the PdfReader object and then copy it with a PdfCopy object, etc.,
+        /// so this method is used.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

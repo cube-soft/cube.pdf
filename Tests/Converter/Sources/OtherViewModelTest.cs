@@ -77,7 +77,7 @@ namespace Cube.Pdf.Converter.Tests
         public void SettingViewModel() => Invoke(vm =>
         {
             var dest = vm.General;
-            this.LogDebug($"CheckUpdate:{dest.CheckUpdate}");
+            GetType().LogDebug($"CheckUpdate:{dest.CheckUpdate}");
             Assert.That(dest.Resolution,         Is.EqualTo(600));
             Assert.That(dest.Language,           Is.EqualTo(Language.Auto));
             Assert.That(dest.IsAutoOrientation,  Is.True,  nameof(dest.IsAutoOrientation));

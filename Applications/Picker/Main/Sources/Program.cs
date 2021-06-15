@@ -16,10 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Collections;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Logging;
 
 namespace Cube.Pdf.Picker
 {
@@ -34,6 +35,8 @@ namespace Cube.Pdf.Picker
     /* --------------------------------------------------------------------- */
     static class Program
     {
+        #region Methods
+
         /* ----------------------------------------------------------------- */
         ///
         /// Main
@@ -44,21 +47,23 @@ namespace Cube.Pdf.Picker
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args)
+        static void Main(string[] args) => Source.LogError(() =>
         {
-            try
-            {
-                Logger.ObserveTaskException();
-                Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
-                Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");
+            _ = Logger.ObserveTaskException();
+            Source.LogInfo(Assembly.GetExecutingAssembly());
+            Source.LogInfo($"[ {args.Join(" ")} ]");
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
 
-                var view = new MainWindow();
-                Application.Run(view);
-            }
-            catch (Exception err) { Logger.Error(typeof(Program), err); }
-        }
+            var view = new MainWindow();
+            Application.Run(view);
+        });
+
+        #endregion
+
+        #region Fields
+        private static readonly Type Source = typeof(Program);
+        #endregion
     }
 }

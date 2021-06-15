@@ -291,7 +291,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         protected override DialogMessage OnMessage(Exception src)
         {
-            this.LogError(src);
+            GetType().LogError(src);
             return src is OperationCanceledException ? null : Message.From(src);
         }
 

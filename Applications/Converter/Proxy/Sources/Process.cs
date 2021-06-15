@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter.Proxy
@@ -249,10 +250,7 @@ namespace Cube.Pdf.Converter.Proxy
 
                     if (info.State == WTS_CONNECTSTATE_CLASS.WTSActive) sessions.Add(info);
 
-                    Logger.Debug(typeof(Process),
-                        string.Format("SessionID:{0}\tState:{1}\tName:{2}",
-                        info.SessionID, info.State, info.pWinStationName
-                    ));
+                    typeof(Process).LogDebug($"SessionID:{info.SessionID}", $"State:{info.State}", $"Name:{info.pWinStationName}");
                 }
 
                 if (sessions.Count <= 0) throw new ArgumentException("Session not found");

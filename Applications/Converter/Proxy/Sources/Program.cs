@@ -15,8 +15,10 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections;
 using System;
+using Cube.Collections;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Logging;
 
 namespace Cube.Pdf.Converter.Proxy
 {
@@ -43,10 +45,10 @@ namespace Cube.Pdf.Converter.Proxy
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args) => Logger.Error(LogType, () =>
+        static void Main(string[] args) => Source.LogError(() =>
         {
-            Logger.Info(LogType, System.Reflection.Assembly.GetExecutingAssembly());
-            Logger.Info(LogType, $"[ {string.Join(" ", args)} ]");
+            Source.LogInfo(System.Reflection.Assembly.GetExecutingAssembly());
+            Source.LogInfo($"[ {args.Join(" ")} ]");
 
             var proc = StartAs(args);
             proc.EnableRaisingEvents = true;
@@ -54,7 +56,7 @@ namespace Cube.Pdf.Converter.Proxy
             {
                 if (s is System.Diagnostics.Process p)
                 {
-                    Logger.Info(LogType, $"ExitCode:{(uint)p.ExitCode}");
+                    Source.LogInfo($"ExitCode:{(uint)p.ExitCode}");
                 }
             };
             proc.WaitForExit();
@@ -87,8 +89,8 @@ namespace Cube.Pdf.Converter.Proxy
             catch (Exception err)
             {
                 if (!src.Options.TryGetValue("ThreadID", out var id)) throw;
-                Logger.Warn(LogType, err);
-                Logger.Info(LogType, $"Use ThreadID ({id})");
+                Source.LogWarn(err);
+                Source.LogInfo($"Use ThreadID ({id})");
                 return Process.StartAs(uint.Parse(id), exec, args);
             }
         }
@@ -96,7 +98,7 @@ namespace Cube.Pdf.Converter.Proxy
         #endregion
 
         #region Fields
-        private static readonly Type LogType = typeof(Program);
+        private static readonly Type Source = typeof(Program);
         #endregion
     }
 }

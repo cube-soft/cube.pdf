@@ -246,7 +246,7 @@ namespace Cube.Pdf.Editor.Tests
                 { DialogButtons.YesNoCancel, DialogStatus.Yes },
             }.TryGetValue(src.Buttons, out var dest);
 
-            this.LogDebug($"{src.Text.Quote()} ({found})");
+            GetType().LogDebug($"{src.Text.Quote()} ({found})");
             Assert.That(found, Is.True, $"{src.Buttons}");
             src.Value = dest;
         }

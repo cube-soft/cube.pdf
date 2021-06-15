@@ -21,6 +21,8 @@ using System.Reflection;
 using System.Windows.Forms;
 using Cube.Collections;
 using Cube.FileSystem.DataContract;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Logging;
 using Cube.Pdf.Converter.Mixin;
 
 namespace Cube.Pdf.Converter
@@ -48,12 +50,12 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] raw) => Logger.Error(LogType, () =>
+        static void Main(string[] raw) => Source.LogError(() =>
         {
             _ = Logger.ObserveTaskException();
-            Logger.Info(LogType, Assembly.GetExecutingAssembly());
-            Logger.Info(LogType, $"Ghostscript {GetGsVersion()}");
-            Logger.Info(LogType, $"[ {string.Join(" ", raw)} ]");
+            Source.LogInfo(Assembly.GetExecutingAssembly());
+            Source.LogInfo($"Ghostscript {GetGsVersion()}");
+            Source.LogInfo($"[ {raw.Join(" ")} ]");
 
             ViewResource.Configure();
             Application.EnableVisualStyles();
@@ -135,14 +137,14 @@ namespace Cube.Pdf.Converter
         private static int GetGsVersion()
         {
             try { return Ghostscript.Converter.Revision; }
-            catch (Exception err) { Logger.Warn(LogType, err); }
+            catch (Exception err) { Source.LogWarn(err); }
             return -1;
         }
 
         #endregion
 
         #region Fields
-        private static readonly Type LogType = typeof(Program);
+        private static readonly Type Source = typeof(Program);
         #endregion
     }
 }

@@ -16,8 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using NUnit.Framework;
 using System.Reflection;
+using Cube.Mixin.Logging;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests
 {
@@ -26,7 +27,7 @@ namespace Cube.Pdf.Editor.Tests
     /// GlobalSetup
     ///
     /// <summary>
-    /// NUnit で最初に実行する処理を記述するテストです。
+    /// Represents the global setup operations.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,15 +41,15 @@ namespace Cube.Pdf.Editor.Tests
         /// OneTimeSetup
         ///
         /// <summary>
-        /// 一度だけ実行される初期化処理です。
+        /// Invokes the setup method only once.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            Logger.ObserveTaskException();
-            Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
+            _ = Logger.ObserveTaskException();
+            typeof(GlobalSetup).LogInfo(Assembly.GetExecutingAssembly());
             ApplicationSetting.Configure();
         }
 

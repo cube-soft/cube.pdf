@@ -206,8 +206,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <remarks>
-        /// このプロパティに値を設定した場合、変換処理の際に一時的に
-        /// TEMP 環境変数が変更されます。
+        /// If you set a value for this property, the TEMP environment
+        /// variable will be temporarily changed during the conversion.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -233,7 +233,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <remarks>
-        /// 初期値として C:\Windows\Fonts に相当するパスが設定されます。
+        /// The path corresponding to C:\Windows\Fonts will be set as the
+        /// default value.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -299,7 +300,7 @@ namespace Cube.Pdf.Ghostscript
                 .Concat(new Argument('f'))
                 .Select(e => e.ToString())
                 .Concat(sources)
-                .Where(e => { this.LogDebug(e); return true; }) // for debug
+                .Where(e => { GetType().LogDebug(e); return true; }) // for debug
                 .ToArray()
             , Temp, IO), dest);
 
@@ -359,8 +360,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <remarks>
-        /// Ghostscript API は最初の引数を無視するため、引数の先頭に
-        /// ダミーオブジェクトを配置します。
+        /// The Ghostscript API ignores the first argument, so it places
+        /// a dummy object at the beginning of the argument.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

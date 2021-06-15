@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editor
             _cache = new CacheCollection<ImageItem, ImageSource>(e =>
                 getter(e.RawObject.File.FullName).Create(e).ToBitmapImage(true));
             _cache.Created += (s, e) => e.Key.Refresh();
-            _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
+            _cache.Failed  += (s, e) => GetType().LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
             Dispatcher  = dispatcher;
             Selection   = new ImageSelection(dispatcher);

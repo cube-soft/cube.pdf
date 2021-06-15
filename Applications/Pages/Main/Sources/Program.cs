@@ -20,6 +20,7 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 using Cube.Mixin.Collections;
+using Cube.Mixin.Logging;
 
 namespace Cube.Pdf.Pages
 {
@@ -46,11 +47,11 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args) => Logger.Error(LogType, () =>
+        static void Main(string[] args) => Source.LogError(() =>
         {
             _ = Logger.ObserveTaskException();
-            Logger.Info(typeof(Program), Assembly.GetExecutingAssembly());
-            Logger.Info(typeof(Program), $"[ {args.Join(" ")} ]");
+            Source.LogInfo(Assembly.GetExecutingAssembly());
+            Source.LogInfo($"[ {args.Join(" ")} ]");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -63,7 +64,7 @@ namespace Cube.Pdf.Pages
         #endregion
 
         #region Fields
-        private static readonly Type LogType = typeof(Program);
+        private static readonly Type Source = typeof(Program);
         #endregion
     }
 }

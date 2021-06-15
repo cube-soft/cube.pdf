@@ -22,6 +22,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Cube.FileSystem;
 using Cube.Mixin.IO;
+using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 
 namespace Cube.Pdf.Ghostscript
@@ -119,10 +120,10 @@ namespace Cube.Pdf.Ghostscript
                     if (!io.Exists(tmp)) io.CreateDirectory(tmp);
 
                     SetVariable("Tmp", tmp);
-                    Logger.Debug(typeof(GsApi), $"Tmp:{e0.Quote()} -> {tmp.Quote()}");
+                    typeof(GsApi).LogDebug($"Tmp:{e0.Quote()} -> {tmp.Quote()}");
 
                     SetVariable("Temp", tmp);
-                    Logger.Debug(typeof(GsApi), $"Temp:{e1.Quote()} -> {tmp.Quote()}");
+                    typeof(GsApi).LogDebug($"Temp:{e1.Quote()} -> {tmp.Quote()}");
                 }
                 callback();
             }
@@ -145,7 +146,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <remarks>
-        /// 設定された環境変数は実行プロセス中でのみ有効です。
+        /// The set environment variables are only valid during the
+        /// execution process.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

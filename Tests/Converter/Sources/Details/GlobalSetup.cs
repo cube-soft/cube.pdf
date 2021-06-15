@@ -16,8 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using NUnit.Framework;
 using System.Reflection;
+using Cube.Mixin.Logging;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Converter.Tests
 {
@@ -48,7 +49,7 @@ namespace Cube.Pdf.Converter.Tests
         public void OneTimeSetup()
         {
             _ = Logger.ObserveTaskException();
-            Logger.Info(typeof(GlobalSetup), Assembly.GetExecutingAssembly());
+            typeof(GlobalSetup).LogInfo(Assembly.GetExecutingAssembly());
             ViewResource.Configure();
         }
 
