@@ -111,8 +111,8 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         protected override void OnSaved(KeyValueEventArgs<Format, string> e)
         {
-            base.OnSaved(e);
-            Startup.Save(true);
+            try { Startup.Save(true); }
+            finally { base.OnSaved(e); }
         }
 
         #endregion

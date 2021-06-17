@@ -73,14 +73,31 @@ namespace Cube.Pdf.Editor
         public SettingFolder(Assembly assembly, Format format, string location, IO io) :
             base(format, location, assembly.GetSoftwareVersion(), io)
         {
-            Title          = assembly.GetTitle();
-            AutoSave       = false;
-            Version.Suffix = Properties.Resources.VersionSuffix;
+            var exe = IO.Combine(assembly.GetDirectoryName(), "CubeChecker.exe");
+
+            Title    = assembly.GetTitle();
+            AutoSave = false;
+            Startup  = new("cubepdf-utility-checker") { Source = exe };
+
+            Startup.Arguments.Add("cubepdfutility");
+            Startup.Arguments.Add("/subkey");
+            Startup.Arguments.Add("CubePDF Utility2");
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Startup
+        ///
+        /// <summary>
+        /// Get the startup registration object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Startup Startup { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -128,6 +145,8 @@ namespace Cube.Pdf.Editor
             finally { base.OnLoaded(e); }
         }
 
+
+
         /* ----------------------------------------------------------------- */
         ///
         /// OnSaved
@@ -139,19 +158,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnSaved(KeyValueEventArgs<Format, string> e)
         {
-            try
-            {
-                var src = new Startup("cubepdf-utility-checker")
-                {
-                    Source  = IO.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe"),
-                    Enabled = Value?.CheckUpdate ?? false,
-                };
-
-                src.Arguments.Add("cubepdfutility");
-                src.Arguments.Add("/subkey");
-                src.Arguments.Add("CubePDF Utility2");
-                src.Save(true);
-            }
+            try { Startup.Save(true); }
             finally { base.OnSaved(e); }
         }
 

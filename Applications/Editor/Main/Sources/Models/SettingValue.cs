@@ -119,22 +119,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CheckUpdate
-        ///
-        /// <summary>
-        /// Gets or sets the value indicating whether checking update.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public bool CheckUpdate
-        {
-            get => Get(() => false);
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Uri
         ///
         /// <summary>

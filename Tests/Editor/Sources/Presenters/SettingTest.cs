@@ -51,12 +51,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Create() => Make(vm =>
         {
-            Assert.That(vm.Value.Settings.Width,       Is.EqualTo(800));
-            Assert.That(vm.Value.Settings.Height,      Is.EqualTo(600));
+            Assert.That(vm.Value.Settings.Width,  Is.EqualTo(800));
+            Assert.That(vm.Value.Settings.Height, Is.EqualTo(600));
 
-            vm.Value.Settings.Width       = 1024;
-            vm.Value.Settings.Height      = 768;
-            vm.Value.Settings.CheckUpdate = false;
+            vm.Value.Settings.Width  = 1024;
+            vm.Value.Settings.Height = 768;
         });
 
         /* ----------------------------------------------------------------- */

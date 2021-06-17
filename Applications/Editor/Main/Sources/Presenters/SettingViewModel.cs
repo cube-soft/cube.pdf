@@ -139,8 +139,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> Update => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuUpdate,
-            () => Facade.Value.CheckUpdate,
-            e  => Facade.Value.CheckUpdate = e,
+            () => Facade.Startup.Enabled,
+            e  => Facade.Startup.Enabled = e,
             GetDispatcher(false)
         ));
 
