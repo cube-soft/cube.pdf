@@ -25,7 +25,7 @@ using System.Windows.Input;
 using Cube.FileSystem;
 using Cube.Mixin.Generics;
 using Cube.Mixin.Observing;
-using Cube.Mixin.Pdf;
+using Cube.Pdf.Mixin;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

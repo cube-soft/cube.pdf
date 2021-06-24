@@ -20,9 +20,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Cube.Mixin.IO;
-using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using Cube.Pdf.Itext;
+using Cube.Pdf.Mixin;
 using Cube.Tests;
 using NUnit.Framework;
 

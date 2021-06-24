@@ -24,9 +24,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Cube.FileSystem;
-using Cube.Mixin.Pdf;
 using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
+using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Pages
 {

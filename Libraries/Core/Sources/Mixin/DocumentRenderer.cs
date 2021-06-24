@@ -15,10 +15,9 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf;
 using System.Drawing;
 
-namespace Cube.Mixin.Pdf
+namespace Cube.Pdf.Mixin
 {
     /* --------------------------------------------------------------------- */
     ///

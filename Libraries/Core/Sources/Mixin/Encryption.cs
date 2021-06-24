@@ -15,9 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf;
-
-namespace Cube.Mixin.Pdf
+namespace Cube.Pdf.Mixin
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -45,7 +43,7 @@ namespace Cube.Mixin.Pdf
         /// <returns>Copied object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Encryption Copy(this Encryption src) => new Encryption
+        public static Encryption Copy(this Encryption src) => new()
         {
             Dispatcher       = src.Dispatcher,
             Enabled          = src.Enabled,

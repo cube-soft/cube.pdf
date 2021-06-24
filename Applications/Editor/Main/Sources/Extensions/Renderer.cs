@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Images;
-using Cube.Mixin.Pdf;
 using System;
 using System.Drawing;
+using Cube.Images;
+using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Editor
 {

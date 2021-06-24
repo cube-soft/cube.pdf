@@ -19,7 +19,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Media;
-using Cube.Mixin.Pdf;
+using Cube.Pdf.Mixin;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

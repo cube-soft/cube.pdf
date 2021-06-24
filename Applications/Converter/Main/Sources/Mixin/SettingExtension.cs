@@ -19,9 +19,9 @@
 using System.Linq;
 using System.Reflection;
 using Cube.Mixin.Assembly;
-using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
+using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Converter.Mixin
 {

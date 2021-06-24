@@ -21,8 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cube.FileSystem;
-using Cube.Mixin.Pdf;
 using Cube.Mixin.String;
+using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Editor
 {

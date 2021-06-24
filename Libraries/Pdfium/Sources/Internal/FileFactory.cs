@@ -15,9 +15,9 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Pdf;
 using System;
 using System.Runtime.InteropServices;
+using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Pdfium
 {

@@ -20,8 +20,8 @@ using System.Linq;
 using System.Threading;
 using Cube.Mixin.Commands;
 using Cube.Mixin.IO;
-using Cube.Mixin.Pdf;
 using Cube.Pdf.Itext;
+using Cube.Pdf.Mixin;
 using Cube.Tests;
 using NUnit.Framework;
 

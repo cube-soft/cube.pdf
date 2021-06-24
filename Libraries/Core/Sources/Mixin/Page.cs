@@ -15,13 +15,13 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Cube.FileSystem;
 
-namespace Cube.Mixin.Pdf
+namespace Cube.Pdf.Mixin
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -52,13 +52,11 @@ namespace Cube.Mixin.Pdf
         /// <returns>Page collection.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Page> GetImagePages(this FileSystem.IO io, string src)
+        public static IEnumerable<Page> GetImagePages(this IO io, string src)
         {
-            using (var ss = io.OpenRead(src))
-            using (var image = Image.FromStream(ss))
-            {
-                return io.GetImagePages(src, image);
-            }
+            using var ss    = io.OpenRead(src);
+            using var image = Image.FromStream(ss);
+            return io.GetImagePages(src, image);
         }
 
         /* ----------------------------------------------------------------- */
@@ -76,7 +74,7 @@ namespace Cube.Mixin.Pdf
         /// <returns>Page collection.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Page> GetImagePages(this FileSystem.IO io, string src, Image image)
+        public static IEnumerable<Page> GetImagePages(this IO io, string src, Image image)
         {
             var dest = new List<Page>();
             var dim  = new FrameDimension(image.FrameDimensionsList[0]);
@@ -104,13 +102,11 @@ namespace Cube.Mixin.Pdf
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetImagePage(this FileSystem.IO io, string src, int index)
+        public static Page GetImagePage(this IO io, string src, int index)
         {
-            using (var ss = io.OpenRead(src))
-            using (var image = Image.FromStream(ss))
-            {
-                return io.GetImagePage(src, image, index);
-            }
+            using var ss    = io.OpenRead(src);
+            using var image = Image.FromStream(ss);
+            return io.GetImagePage(src, image, index);
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,8 +125,8 @@ namespace Cube.Mixin.Pdf
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetImagePage(this FileSystem.IO io, string src, Image image, int index) =>
-            io.GetImagePage(src, image, index, new FrameDimension(image.FrameDimensionsList[0]));
+        public static Page GetImagePage(this IO io, string src, Image image, int index) =>
+            io.GetImagePage(src, image, index, new(image.FrameDimensionsList[0]));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,14 +137,14 @@ namespace Cube.Mixin.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Page GetImagePage(this FileSystem.IO io, string src, Image image, int index, FrameDimension dim)
+        private static Page GetImagePage(this IO io, string src, Image image, int index, FrameDimension dim)
         {
             _ = image.SelectActiveFrame(dim, index);
 
             var x = image.HorizontalResolution;
             var y = image.VerticalResolution;
 
-            return new Page(
+            return new(
                 io.GetImageFile(src, image), // File
                 index + 1,                   // Number
                 image.Size,                  // Size
@@ -197,7 +193,7 @@ namespace Cube.Mixin.Pdf
             var cos    = Math.Abs(Math.Cos(angle.Radian));
             var width  = src.Size.Width * cos + src.Size.Height * sin;
             var height = src.Size.Width * sin + src.Size.Height * cos;
-            return new SizeF((float)(width * scale), (float)(height * scale));
+            return new((float)(width * scale), (float)(height * scale));
         }
 
         #endregion

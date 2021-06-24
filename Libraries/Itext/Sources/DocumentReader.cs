@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Pdf;
-using iTextSharp.text.pdf;
 using System.Collections.Generic;
+using Cube.Pdf.Mixin;
+using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
 {

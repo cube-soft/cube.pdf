@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Windows.Media;
 using Cube.FileSystem;
-using Cube.Mixin.Pdf;
+using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Editor
 {

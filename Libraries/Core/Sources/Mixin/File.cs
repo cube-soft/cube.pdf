@@ -15,11 +15,11 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Cube.FileSystem;
 
-namespace Cube.Mixin.Pdf
+namespace Cube.Pdf.Mixin
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -49,8 +49,7 @@ namespace Cube.Mixin.Pdf
         /// <returns>PdfFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfFile GetPdfFile(this FileSystem.IO io, string src, string password) =>
-            new PdfFile(src, password, io);
+        public static PdfFile GetPdfFile(this IO io, string src, string password) => new(src, password, io);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,13 +65,11 @@ namespace Cube.Mixin.Pdf
         /// <returns>ImageFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageFile GetImageFile(this FileSystem.IO io, string src)
+        public static ImageFile GetImageFile(this IO io, string src)
         {
-            using (var ss = io.OpenRead(src))
-            using (var image = Image.FromStream(ss))
-            {
-                return io.GetImageFile(src, image);
-            }
+            using var ss    = io.OpenRead(src);
+            using var image = Image.FromStream(ss);
+            return io.GetImageFile(src, image);
         }
 
         /* ----------------------------------------------------------------- */
@@ -90,14 +87,14 @@ namespace Cube.Mixin.Pdf
         /// <returns>ImageFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageFile GetImageFile(this FileSystem.IO io, string src, Image image)
+        public static ImageFile GetImageFile(this IO io, string src, Image image)
         {
             var guid = image.FrameDimensionsList[0];
             var dim  = new FrameDimension(guid);
             var x    = image.HorizontalResolution;
             var y    = image.VerticalResolution;
 
-            return new ImageFile(src, io)
+            return new(src, io)
             {
                 Count      = image.GetFrameCount(dim),
                 Resolution = new PointF(x, y),

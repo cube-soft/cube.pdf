@@ -15,9 +15,7 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf;
-
-namespace Cube.Mixin.Pdf
+namespace Cube.Pdf.Mixin
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -45,7 +43,7 @@ namespace Cube.Mixin.Pdf
         /// <returns>Copied object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Metadata Copy(this Metadata src) => new Metadata
+        public static Metadata Copy(this Metadata src) => new()
         {
             Dispatcher     = src.Dispatcher,
             Title          = src.Title,

@@ -15,11 +15,11 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Pdf;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using Cube.Pdf.Mixin;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Tests
 {
