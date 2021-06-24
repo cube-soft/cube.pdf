@@ -189,7 +189,7 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Get
+        /// GetPermission
         ///
         /// <summary>
         /// Gets the permission for the specified operation.
@@ -201,7 +201,7 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Get
+        /// GetPermission
         ///
         /// <summary>
         /// Gets the permission for the specified operations.

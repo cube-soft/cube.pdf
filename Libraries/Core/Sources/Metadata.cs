@@ -160,7 +160,7 @@ namespace Cube.Pdf
         [DataMember]
         public ViewerOption Options
         {
-            get => Get<ViewerOption>(() => ViewerOption.OneColumn);
+            get => Get(() => ViewerOption.OneColumn);
             set => Set(value);
         }
 

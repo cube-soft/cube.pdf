@@ -156,7 +156,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public byte[] Data => _data ?? (_data = GetData());
+        public byte[] Data => _data ??= GetData();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -167,7 +167,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public byte[] Checksum => _checksum ?? (_checksum = GetChecksum());
+        public byte[] Checksum => _checksum ??= GetChecksum();
 
         #endregion
 
@@ -197,12 +197,11 @@ namespace Cube.Pdf
         {
             if (!IO.Exists(Source)) return null;
 
-            using (var src  = IO.OpenRead(Source))
-            using (var dest = new System.IO.MemoryStream())
-            {
-                src.CopyTo(dest);
-                return dest.ToArray();
-            }
+            using var src  = IO.OpenRead(Source);
+            using var dest = new System.IO.MemoryStream();
+
+            src.CopyTo(dest);
+            return dest.ToArray();
         }
 
         /* ----------------------------------------------------------------- */
@@ -217,10 +216,8 @@ namespace Cube.Pdf
         protected virtual byte[] GetChecksum()
         {
             if (!IO.Exists(Source)) return null;
-            using (var ss = IO.OpenRead(Source))
-            {
-                return new SHA256CryptoServiceProvider().ComputeHash(ss);
-            }
+            using var ss = IO.OpenRead(Source);
+            return new SHA256CryptoServiceProvider().ComputeHash(ss);
         }
 
         #endregion

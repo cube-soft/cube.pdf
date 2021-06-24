@@ -100,7 +100,7 @@ namespace Cube.Pdf
         /// <param name="y">Angle object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static Angle operator +(Angle x, Angle y) => new Angle(x.Degree + y.Degree);
+        public static Angle operator +(Angle x, Angle y) => new(x.Degree + y.Degree);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,7 +114,7 @@ namespace Cube.Pdf
         /// <param name="y">Angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static Angle operator +(Angle x, int y) => new Angle(x.Degree + y);
+        public static Angle operator +(Angle x, int y) => new(x.Degree + y);
 
         #endregion
 

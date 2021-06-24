@@ -28,7 +28,7 @@ namespace Cube.Pdf
     /// </summary>
     ///
     /// <remarks>
-    /// PageOnly = 0x0040 は None で代替する。
+    /// PageOnly = 0x0040 shall be replaced by None.
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
@@ -80,15 +80,15 @@ namespace Cube.Pdf
         /// Create
         ///
         /// <summary>
-        /// Creates a ViewerPreferences object from the specified value.
+        /// Creates a new ViewerOption value from the specified value.
         /// </summary>
         ///
         /// <param name="src">Value for options.</param>
         ///
-        /// <returns>ViewerPreferences objects.</returns>
+        /// <returns>ViewerOption objects.</returns>
         ///
         /// <remarks>
-        /// Ignores flags that do not define in the ViewerOptions.
+        /// Ignores flags that do not define in the ViewerOption.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

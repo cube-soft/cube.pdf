@@ -125,8 +125,6 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public SizeF Size { get; }
 
-        #region Editable
-
         /* ----------------------------------------------------------------- */
         ///
         /// Delta
@@ -146,8 +144,6 @@ namespace Cube.Pdf
             get => Get(() => new Angle());
             set => Set(value);
         }
-
-        #endregion
 
         #endregion
 
@@ -173,7 +169,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnReset() => Delta = new Angle();
+        protected virtual void OnReset() => Delta = new();
 
         #endregion
     }

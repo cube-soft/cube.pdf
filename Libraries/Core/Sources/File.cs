@@ -15,9 +15,9 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using System;
 using System.Drawing;
+using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
@@ -116,7 +116,7 @@ namespace Cube.Pdf
         internal PdfFile(string src, string password, IO io) : base(src, io)
         {
             Password   = password;
-            Resolution = new PointF(Point, Point);
+            Resolution = new(Point, Point);
         }
 
         #endregion
@@ -155,8 +155,8 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <remarks>
-        /// PDF ファイルにパスワードによって暗号化されており、かつユーザ
-        /// パスワードを用いてファイルを開いた場合 false に設定されます。
+        /// This property will be set to false if the PDF file is encrypted
+        /// with a password and the file is opened with the user password.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
