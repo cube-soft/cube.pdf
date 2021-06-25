@@ -132,6 +132,7 @@ namespace Cube.Pdf.Itext
             var obj  = ReaderFactory.FromPdf(src, password, options);
             var file = obj.GetFile(src, password.Value, options.IO);
 
+            Options     = options;
             Core        = obj;
             File        = file;
             Metadata    = obj.GetMetadata();
@@ -209,6 +210,17 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public IDisposable Core { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Options
+        ///
+        /// <summary>
+        /// Get the options when the provided PDF file is opened.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected OpenOption Options { get; }
 
         #endregion
 

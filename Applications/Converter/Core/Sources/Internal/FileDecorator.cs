@@ -109,7 +109,7 @@ namespace Cube.Pdf.Converter
             var value = Settings.Value;
             var tmp   = GetTemp(src);
 
-            using (var writer = new DocumentWriter(io))
+            using (var writer = new DocumentWriter(new() { IO = io }))
             {
                 value.Encryption.Method = GetEncryptionMethod(value.Metadata.Version);
                 writer.Set(value.Metadata);

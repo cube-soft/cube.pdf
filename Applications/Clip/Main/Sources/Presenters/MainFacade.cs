@@ -192,9 +192,8 @@ namespace Cube.Pdf.Clip
             var tmp   = System.IO.Path.GetTempFileName();
             var items = _clips.Select(e => e.RawObject).Where(e => IO.Exists(e.Source));
 
-            using (var writer = new DocumentWriter())
+            using (var writer = new DocumentWriter(new() { IO = IO, UseSmartCopy = true }))
             {
-                writer.UseSmartCopy = true;
                 writer.Set(_source.Metadata);
                 writer.Set(_source.Encryption);
                 writer.Add(_source.Pages);

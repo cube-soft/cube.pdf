@@ -62,10 +62,9 @@ namespace Cube.Pdf.Tests.Itext
             var src  = GetSource(filename);
             var dest = Path(Args(filename));
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { IO = IO, UseSmartCopy = true }))
             using (var r = new DocumentReader(src, password))
             {
-                w.UseSmartCopy = true;
                 w.Set(r.Metadata);
                 w.Set(r.Encryption);
                 w.Add(Rotate(r.Pages, degree));
@@ -92,9 +91,8 @@ namespace Cube.Pdf.Tests.Itext
 
             var op = new OpenOption { SaveMemory = false };
             var r  = new DocumentReader(dest, password, op);
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { IO = IO, UseSmartCopy = true }))
             {
-                w.UseSmartCopy = false;
                 w.Set(r.Metadata);
                 w.Set(r.Encryption);
                 w.Add(Rotate(r.Pages, degree), r);
@@ -121,7 +119,7 @@ namespace Cube.Pdf.Tests.Itext
             var r1   = new DocumentReader(GetSource(f1), "", op);
             var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { IO = IO, UseSmartCopy = true }))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree), r0);
                 w.Add(Rotate(r1.Pages, degree), r1);
@@ -146,7 +144,7 @@ namespace Cube.Pdf.Tests.Itext
             var r0   = new DocumentReader(GetSource(doc), "", op);
             var dest = Path(Args(r0.File.BaseName, IO.Get(image).BaseName));
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { IO = IO, UseSmartCopy = true }))
             using (var r = new DocumentReader(GetSource(doc), "", op))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
@@ -177,7 +175,7 @@ namespace Cube.Pdf.Tests.Itext
 
             IO.Copy(src, IO.Combine(dest, $"{name}-01{ext}"), true);
 
-            using (var w = new DocumentSplitter(IO))
+            using (var w = new DocumentSplitter(new() { IO = IO }))
             {
                 var op = new OpenOption { SaveMemory = false };
                 w.Add(new DocumentReader(src, password, op));
@@ -261,26 +259,24 @@ namespace Cube.Pdf.Tests.Itext
                 Options  = ViewerOption.TwoColumnLeft,
             };
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { IO = IO }))
             {
                 w.Set(cmp);
                 w.Add(new DocumentReader(src, "", op));
                 w.Save(dest);
             }
 
-            using (var r = new DocumentReader(dest, "", op))
-            {
-                var m = r.Metadata;
-                Assert.That(m.Title,         Is.EqualTo(cmp.Title), nameof(m.Title));
-                Assert.That(m.Author,        Is.EqualTo(cmp.Author), nameof(m.Author));
-                Assert.That(m.Subject,       Is.EqualTo(cmp.Subject), nameof(m.Subject));
-                Assert.That(m.Keywords,      Is.EqualTo(cmp.Keywords), nameof(m.Keywords));
-                Assert.That(m.Creator,       Is.EqualTo(cmp.Creator), nameof(m.Creator));
-                Assert.That(m.Producer,      Does.StartWith("iTextSharp"));
-                Assert.That(m.Version.Major, Is.EqualTo(cmp.Version.Major));
-                Assert.That(m.Version.Minor, Is.EqualTo(cmp.Version.Minor));
-                Assert.That(m.Options,       Is.EqualTo(cmp.Options));
-            }
+            using var r = new DocumentReader(dest, "", op);
+            var m = r.Metadata;
+            Assert.That(m.Title,         Is.EqualTo(cmp.Title), nameof(m.Title));
+            Assert.That(m.Author,        Is.EqualTo(cmp.Author), nameof(m.Author));
+            Assert.That(m.Subject,       Is.EqualTo(cmp.Subject), nameof(m.Subject));
+            Assert.That(m.Keywords,      Is.EqualTo(cmp.Keywords), nameof(m.Keywords));
+            Assert.That(m.Creator,       Is.EqualTo(cmp.Creator), nameof(m.Creator));
+            Assert.That(m.Producer,      Does.StartWith("iTextSharp"));
+            Assert.That(m.Version.Major, Is.EqualTo(cmp.Version.Major));
+            Assert.That(m.Version.Minor, Is.EqualTo(cmp.Version.Minor));
+            Assert.That(m.Options,       Is.EqualTo(cmp.Options));
         }
 
         /* ----------------------------------------------------------------- */
@@ -308,7 +304,7 @@ namespace Cube.Pdf.Tests.Itext
                 Permission       = new Permission(permission),
             };
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { IO = IO }))
             {
                 w.Set(cmp);
                 w.Add(new DocumentReader(src, "", op));
@@ -354,11 +350,10 @@ namespace Cube.Pdf.Tests.Itext
             var op     = new OpenOption { SaveMemory = false };
             var degree = 90;
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { IO = IO, UseSmartCopy = true }))
             {
                 var r = new DocumentReader(src, "", op);
 
-                w.UseSmartCopy = true;
                 w.Set(r.Metadata);
                 w.Set(r.Encryption);
                 w.Add(Rotate(r.Pages, degree), r);

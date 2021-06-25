@@ -54,7 +54,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentWriter() : this(new IO()) { }
+        public DocumentWriter() : this(new()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -62,13 +62,13 @@ namespace Cube.Pdf.Itext
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentWriter class with
-        /// the specified arguments..
+        /// the specified options.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
+        /// <param name="options">Saving options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentWriter(IO io) : base(io) { }
+        public DocumentWriter(SaveOption options) : base(options) { }
 
         #endregion
 
@@ -101,8 +101,8 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected override void OnSave(string path)
         {
-            var dir = IO.Get(path).DirectoryName;
-            var tmp = IO.Combine(dir, Guid.NewGuid().ToString("D"));
+            var dir = Options.IO.Get(path).DirectoryName;
+            var tmp = Options.IO.Combine(dir, Guid.NewGuid().ToString("D"));
 
             try
             {
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Itext
             catch (Exception err) { throw err.Convert(); }
             finally
             {
-                _ = IO.TryDelete(tmp);
+                _ = Options.IO.TryDelete(tmp);
                 Reset();
             }
         }
@@ -154,7 +154,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void Merge(string dest)
         {
-            var kv = WriterFactory.Create(dest, Metadata, UseSmartCopy, IO);
+            var kv = WriterFactory.Create(dest, Metadata, Options.UseSmartCopy, Options.IO);
 
             kv.Key.Open();
             Bookmarks.Clear();
@@ -182,7 +182,7 @@ namespace Cube.Pdf.Itext
         private void Finalize(string src, string dest)
         {
             using var reader = ReaderFactory.FromPdf(src);
-            using var writer = WriterFactory.Create(dest, reader, IO);
+            using var writer = WriterFactory.Create(dest, reader, Options.IO);
 
             writer.Writer.Outlines = Bookmarks;
             writer.Set(Metadata, reader.Info);

@@ -45,7 +45,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentSplitter() : this(new IO()) { }
+        public DocumentSplitter() : this(new()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -53,13 +53,13 @@ namespace Cube.Pdf.Itext
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentSplitter class with
-        /// the specified arguments.
+        /// the specified options.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
+        /// <param name="options">Saving options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentSplitter(IO io) : base(io) { }
+        public DocumentSplitter(SaveOption options) : base(options) { }
 
         #endregion
 
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Itext
         {
             try
             {
-                if (!IO.Exists(folder)) IO.CreateDirectory(folder);
+                if (!Options.IO.Exists(folder)) Options.IO.CreateDirectory(folder);
                 Results.Clear();
                 foreach (var page in Pages) SaveCore(page, folder);
             }
@@ -156,7 +156,7 @@ namespace Cube.Pdf.Itext
         private void SaveOne(IDisposable src, int pagenum, string dest)
         {
             var reader = ReaderFactory.From(src);
-            var kv = WriterFactory.Create(dest, Metadata, UseSmartCopy, IO);
+            var kv = WriterFactory.Create(dest, Metadata, Options.UseSmartCopy, Options.IO);
 
             kv.Value.Set(Encryption);
             kv.Key.Open();
@@ -178,9 +178,9 @@ namespace Cube.Pdf.Itext
         {
             var digit = string.Format("D{0}", Math.Max(src.Count.ToString("D").Length, 2));
             var name  = string.Format("{0}-{1}", src.BaseName, pagenum.ToString(digit));
-            var dest  = IO.Combine(dir, $"{name}.pdf");
+            var dest  = Options.IO.Combine(dir, $"{name}.pdf");
 
-            return IO.GetUniqueName(dest);
+            return Options.IO.GetUniqueName(dest);
         }
 
         #endregion

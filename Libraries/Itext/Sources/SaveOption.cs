@@ -21,15 +21,15 @@ namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// OpenOption
+    /// SaveOption
     ///
     /// <summary>
-    /// Represents the options to open a PDF file with a DocumentReader
+    /// Represents the options to save a PDF file with a DocumentWriter
     /// object.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class OpenOption
+    public class SaveOption
     {
         /* ----------------------------------------------------------------- */
         ///
@@ -44,26 +44,26 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FullAccess
+        /// UseSmartCopy
         ///
         /// <summary>
-        /// Gets or sets a value indicating whether to open with fully
-        /// accessible.
+        /// Gets or sets the value indicating whether to use the smart
+        /// copy algorithm.
         /// </summary>
         ///
-        /* ----------------------------------------------------------------- */
-        public bool FullAccess { get; set; } = false;
-
-        /* ----------------------------------------------------------------- */
+        /// <remarks>
+        /// DocumentWriter usually uses iTextSharp PdfCopy class for
+        /// merging, but this class treats multiple PDF files as separate
+        /// even if they use the same font, so font information may be
+        /// duplicated, increasing the file size.
         ///
-        /// ReduceMemory
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether to access the provided
-        /// PDF file in memory saving mode.
-        /// </summary>
+        /// The PdfSmartCopy class is a solution to this problem.
+        /// However, be careful when using it to merge PDFs with complex
+        /// annotations, as it has been observed that the information is
+        /// shared and the annotation structure is broken.
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public bool SaveMemory { get; set; } = true;
+        public bool UseSmartCopy { get; set; } = true;
     }
 }

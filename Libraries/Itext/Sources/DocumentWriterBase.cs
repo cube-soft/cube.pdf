@@ -42,52 +42,17 @@ namespace Cube.Pdf.Itext
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentWriterBase class
-        /// with the specified arguments.
+        /// with the specified options.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
+        /// <param name="options">Saving options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected DocumentWriterBase(IO io) { IO = io; }
+        protected DocumentWriterBase(SaveOption options) { Options = options; }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UseSmartCopy
-        ///
-        /// <summary>
-        /// Gets or sets the value indicating whether the smart copy
-        /// algorithm is enabled.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// DocumentWriter usually uses iTextSharp's PdfCopy class for
-        /// merging, but this class treats multiple PDF files as separate
-        /// even if they use the same font, so font information may be
-        /// duplicated, increasing the file size.
-        ///
-        /// The PdfSmartCopy class is a solution to this problem.
-        /// However, be careful when using it to merge PDFs with complex
-        /// annotations, as it has been observed that the information is
-        /// shared and the annotation structure is broken.
-        /// </remarks>
-        ///
-    /* ----------------------------------------------------------------- */
-        public bool UseSmartCopy { get; set; } = true;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -131,7 +96,18 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Encryption Encryption { get; private set; } = new();
+        protected Encryption Encryption { get; private set; } = new();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Options
+        ///
+        /// <summary>
+        /// Gets the options when saving the PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected SaveOption Options { get; }
 
         #endregion
 
@@ -373,7 +349,7 @@ namespace Cube.Pdf.Itext
             var key = src.FullName;
             if (_hints.TryGetValue(key, out var hit)) return hit;
 
-            var options = new OpenOption { IO = IO, SaveMemory = false };
+            var options = new OpenOption { IO = Options.IO, SaveMemory = false };
             var reader  = new DocumentReader(key, src.Password, options);
             _resources.Add(reader);
             _hints.Add(key, reader.Core);
@@ -395,7 +371,7 @@ namespace Cube.Pdf.Itext
             var key = src.FullName;
             if (_hints.TryGetValue(key, out var hit)) return hit;
 
-            var dest = ReaderFactory.FromImage(key, IO);
+            var dest = ReaderFactory.FromImage(key, Options.IO);
             _resources.Add(dest);
             _hints.Add(key, dest);
 
