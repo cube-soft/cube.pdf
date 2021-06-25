@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Collections.Generic;
 using Cube.FileSystem;
 using Cube.Mixin.Generics;
 using iTextSharp.text.pdf;
-using System;
-using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
 {
@@ -32,12 +32,6 @@ namespace Cube.Pdf.Itext
     /// Provides an implementation of the IDocumentWriter interface by
     /// using the iTextSharp.
     /// </summary>
-    ///
-    /// <remarks>
-    /// このクラスのオブジェクトを直接生成する事はできません。
-    /// このクラスを継承して OnSave メソッドをオーバーライドし、必要な
-    /// 処理を実装して下さい。
-    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     public abstract class DocumentWriterBase : DisposableBase, IDocumentWriter
@@ -72,19 +66,18 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <remarks>
-        /// DocumentWriter は通常 iTextSharp の PdfCopy クラスを用いて
-        /// 結合を行っていますが、このクラスは複数の PDF ファイルが同じ
-        /// フォントを使用していたとしても別々のものとして扱うため、
-        /// フォント情報が重複してファイルサイズが増大する場合があります。
+        /// DocumentWriter usually uses iTextSharp's PdfCopy class for
+        /// merging, but this class treats multiple PDF files as separate
+        /// even if they use the same font, so font information may be
+        /// duplicated, increasing the file size.
         ///
-        /// この問題を解決したものとして PdfSmartCopy クラスが存在すします。
-        /// ただし、複雑な注釈が保存されている PDF を結合する際に使用した
-        /// 場合、（別々として扱わなければならないはずの）情報が共有されて
-        /// しまい、注釈の構造が壊れてしまう問題が確認されているので、
-        /// 注意が必要です。
+        /// The PdfSmartCopy class is a solution to this problem.
+        /// However, be careful when using it to merge PDFs with complex
+        /// annotations, as it has been observed that the information is
+        /// shared and the annotation structure is broken.
         /// </remarks>
         ///
-        /* ----------------------------------------------------------------- */
+    /* ----------------------------------------------------------------- */
         public bool UseSmartCopy { get; set; } = true;
 
         /* ----------------------------------------------------------------- */
@@ -129,7 +122,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected Metadata Metadata { get; private set; } = new Metadata();
+        protected Metadata Metadata { get; private set; } = new();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -140,13 +133,11 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Encryption Encryption { get; private set; } = new Encryption();
+        public Encryption Encryption { get; private set; } = new();
 
         #endregion
 
         #region Methods
-
-        #region IDocumentWriter
 
         /* ----------------------------------------------------------------- */
         ///
@@ -183,9 +174,8 @@ namespace Cube.Pdf.Itext
         /// <param name="pages">Collection of pages.</param>
         ///
         /// <remarks>
-        /// DocumentReader.Pages オブジェクトを指定する場合
-        /// Add(IEnumerable{Page}, IDocumentReader) メソッドを利用
-        /// 下さい。
+        /// Use the Add(IEnumerable{Page}, IDocumentReader) method to specify
+        /// the DocumentReader.Pages object.
         /// </remarks>
         ///
         /// <see cref="Add(IEnumerable{Page}, IDocumentReader)"/>
@@ -208,8 +198,8 @@ namespace Cube.Pdf.Itext
         /// </param>
         ///
         /// <remarks>
-        /// IDocumentReader オブジェクトの所有権がこのクラスに移譲に
-        /// され、自動的に Dispose が実行されます。
+        /// The ownership of the IDocumentReader object will be transferred
+        /// to this class, and Dispose will be executed automatically.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -258,8 +248,6 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public void Set(Encryption src) => Encryption = src;
 
-        #endregion
-
         /* ----------------------------------------------------------------- */
         ///
         /// OnSave
@@ -267,10 +255,6 @@ namespace Cube.Pdf.Itext
         /// <summary>
         /// Executes the save operation.
         /// </summary>
-        ///
-        /// <remarks>
-        /// DocumentWriterBase を継承したクラスで実装する必要があります。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         protected abstract void OnSave(string path);
@@ -304,9 +288,9 @@ namespace Cube.Pdf.Itext
         /// <param name="src">Document reader.</param>
         ///
         /// <remarks>
-        /// 指定された DocumentReader オブジェクトは DocumentWriter
-        /// オブジェクトに所有権が移り、Dispose 等の処理も自動的に
-        /// 実行されます。
+        /// The specified DocumentReader object will transfer ownership to
+        /// the DocumentWriter object, and processes such as Dispose will be
+        /// executed automatically.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

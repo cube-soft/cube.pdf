@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Collections.Generic;
 using Cube.FileSystem;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
-using System;
-using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
 {
@@ -33,12 +33,13 @@ namespace Cube.Pdf.Itext
     /// </summary>
     ///
     /// <remarks>
-    /// DocumentWriter はページ回転情報 (Page.Rotation.Delta) を
-    /// DocumentReader の内部オブジェクトを変更する事によって実現します。
-    /// しかし、OpenOption.ReduceMemory が有効な状態で DocumentReader を
-    /// 生成している場合、この変更が無効化されるためページ回転の変更結果を反映する
-    /// 事ができません。ページを回転させた場合は、該当オプションを無効に設定して
-    /// 下さい。
+    /// DocumentWriter realizes the page rotation information
+    /// (Page.Rotation.Delta) by modifying the internal object of
+    /// DocumentReader. However, if DocumentReader is generated with
+    /// OpenOption.ReduceMemory enabled, this change will be disabled and
+    /// the result of the page rotation change cannot be reflected.
+    /// If you have rotated the page, please set the corresponding option
+    /// to disabled.
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
@@ -178,14 +179,13 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void Finalize(string src, string dest)
         {
-            using (var reader = ReaderFactory.FromPdf(src))
-            using (var writer = WriterFactory.Create(dest, reader, IO))
-            {
-                writer.Writer.Outlines = Bookmarks;
-                writer.Set(Metadata, reader.Info);
-                writer.Writer.Set(Encryption);
-                if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
-            }
+            using var reader = ReaderFactory.FromPdf(src);
+            using var writer = WriterFactory.Create(dest, reader, IO);
+
+            writer.Writer.Outlines = Bookmarks;
+            writer.Set(Metadata, reader.Info);
+            writer.Writer.Set(Encryption);
+            if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
         }
 
         /* ----------------------------------------------------------------- */
@@ -197,8 +197,8 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <remarks>
-        /// PdfCopy.PageNumber (dest) は、AddPage を実行した段階で値が
-        /// 自動的に増加するので注意。
+        /// Note that the value of PdfCopy.PageNumber is automatically
+        /// incremented as soon as AddPage is executed.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

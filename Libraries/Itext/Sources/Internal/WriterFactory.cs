@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
 using Cube.Collections;
 using Cube.FileSystem;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
 {

@@ -78,7 +78,7 @@ namespace Cube.Pdf.Itext
         /// <returns>Metadata object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Metadata GetMetadata(this PdfReader src) => new Metadata
+        public static Metadata GetMetadata(this PdfReader src) => new()
         {
             Version  = new PdfVersion(1, src.PdfVersion - '0'),
             Author   = src.Info.TryGetValue("Author",   out var s0) ? s0 : string.Empty,
