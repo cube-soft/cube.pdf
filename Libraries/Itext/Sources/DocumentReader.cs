@@ -214,7 +214,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        internal PdfReader Core { get; }
+        protected internal PdfReader Core { get; }
 
         #endregion
 

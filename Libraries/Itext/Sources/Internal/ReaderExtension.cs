@@ -16,14 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Logging;
-using Cube.Mixin.String;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
+using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
 {
@@ -176,23 +175,6 @@ namespace Cube.Pdf.Itext
             }
             return file.Password;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetContentParser
-        ///
-        /// <summary>
-        /// Gets the PdfReaderContentParser object from the specified
-        /// reader.
-        /// </summary>
-        ///
-        /// <param name="src">PdfReader object.</param>
-        ///
-        /// <returns>PdfReaderContentParser object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static PdfReaderContentParser GetContentParser(this PdfReader src) =>
-            new PdfReaderContentParser(src);
 
         /* ----------------------------------------------------------------- */
         ///

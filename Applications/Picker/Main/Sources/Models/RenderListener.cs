@@ -23,18 +23,18 @@ using Cube.Collections;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 
-namespace Cube.Pdf.Itext
+namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// EmbeddedImageCollection
+    /// RenderListener
     ///
     /// <summary>
-    /// Represents a collection of embedded images in a PDF document.
+    /// provides functionality to extract embedded images in a PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class EmbeddedImageCollection : EnumerableBase<Image>, IRenderListener
+    internal class RenderListener : EnumerableBase<Image>, IRenderListener
     {
         #region Methods
 

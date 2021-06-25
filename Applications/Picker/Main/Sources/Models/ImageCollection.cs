@@ -250,11 +250,9 @@ namespace Cube.Pdf.Picker
         {
             var query   = new Query<string>(e => throw new NotSupportedException());
             var options = new OpenOption { IO = IO, FullAccess = true };
-            using (var reader = new DocumentReader(Source, query, options))
-            {
-                ExtractImages(reader, progress);
-                return KeyValuePair.Create(reader.Pages.Count(), _core.Count);
-            }
+            using var reader = new ImageExtractor(Source, query, options);
+            ExtractImages(reader, progress);
+            return KeyValuePair.Create(reader.Pages.Count(), _core.Count);
         }
 
         /* ----------------------------------------------------------------- */
@@ -266,7 +264,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ExtractImages(DocumentReader src, IProgress<Message<int>> progress)
+        private void ExtractImages(ImageExtractor src, IProgress<Message<int>> progress)
         {
             var count = src.Pages.Count();
             var name = IO.Get(Source).BaseName;

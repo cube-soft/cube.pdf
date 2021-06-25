@@ -18,20 +18,43 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Drawing;
+using Cube.Pdf.Itext;
+using iTextSharp.text.pdf.parser;
 
-namespace Cube.Pdf.Itext
+namespace Cube.Pdf.Picker
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentReaderExtension
+    /// ImageExtractor
     ///
     /// <summary>
-    /// Provides extended methods of the DocumentReader class.
+    /// Provides extended methods to extract embedded images.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class DocumentReaderExtension
+    public class ImageExtractor : DocumentReader
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageExtractor
+        ///
+        /// <summary>
+        /// Creates a new instance of the ImageExtractor class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the PDF file.</param>
+        /// <param name="query">Password query.</param>
+        /// <param name="options">Open options.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageExtractor(string src, IQuery<string> query, OpenOption options) :
+            base(src, query, options) { }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -42,14 +65,13 @@ namespace Cube.Pdf.Itext
         /// Gets the collection of embedded images in the specified page.
         /// </summary>
         ///
-        /// <param name="src">Document reader.</param>
         /// <param name="pagenum">Page number.</param>
         ///
         /// <returns>Collection of embedded images.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<Image> GetEmbeddedImages(this DocumentReader src, int pagenum) =>
-            src.Core.GetContentParser().ProcessContent(pagenum, new EmbeddedImageCollection());
+        public IEnumerable<Image> GetEmbeddedImages(int pagenum) =>
+            new PdfReaderContentParser(Core).ProcessContent(pagenum, new RenderListener());
 
         #endregion
     }
