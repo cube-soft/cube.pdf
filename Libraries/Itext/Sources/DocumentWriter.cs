@@ -19,8 +19,6 @@
 using System;
 using System.Collections.Generic;
 using Cube.FileSystem;
-using iTextSharp.text.exceptions;
-using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
 {
@@ -112,7 +110,7 @@ namespace Cube.Pdf.Itext
                 Release();
                 Finalize(tmp, path);
             }
-            catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
+            catch (Exception err) { throw err.Convert(); }
             finally
             {
                 _ = IO.TryDelete(tmp);
@@ -161,7 +159,11 @@ namespace Cube.Pdf.Itext
             kv.Key.Open();
             Bookmarks.Clear();
 
-            foreach (var page in Pages) AddPage(page, kv.Value);
+            foreach (var page in Pages)
+            {
+                var reader = ReaderFactory.From(GetRawReader(page));
+                kv.Value.Set(reader, page, Bookmarks);
+            }
 
             kv.Value.Set(Attachments);
             kv.Key.Close();
@@ -186,32 +188,6 @@ namespace Cube.Pdf.Itext
             writer.Set(Metadata, reader.Info);
             writer.Writer.Set(Encryption);
             if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddPage
-        ///
-        /// <summary>
-        /// Adds the specified page to the specified writer.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Note that the value of PdfCopy.PageNumber is automatically
-        /// incremented as soon as AddPage is executed.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddPage(Page src, PdfCopy dest)
-        {
-            var reader = GetRawReader(src);
-            reader.Rotate(src);
-            if (src.File is PdfFile)
-            {
-                var n = dest.PageNumber; // see remarks
-                reader.GetBookmarks(n, n - src.Number, Bookmarks);
-            }
-            dest.AddPage(dest.GetImportedPage(reader, src.Number));
         }
 
         #endregion

@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using Cube.FileSystem;
 using Cube.Mixin.IO;
-using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
 {
@@ -137,7 +136,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void SaveCore(Page src, string directory)
         {
-            var reader = GetRawReader(src);
+            var reader = ReaderFactory.From(GetRawReader(src));
             reader.Rotate(src);
 
             var dest = Unique(directory, src.File, src.Number);
@@ -154,8 +153,9 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SaveOne(PdfReader reader, int pagenum, string dest)
+        private void SaveOne(IDisposable src, int pagenum, string dest)
         {
+            var reader = ReaderFactory.From(src);
             var kv = WriterFactory.Create(dest, Metadata, UseSmartCopy, IO);
 
             kv.Value.Set(Encryption);

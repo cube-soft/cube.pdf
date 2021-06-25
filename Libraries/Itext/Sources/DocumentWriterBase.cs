@@ -19,8 +19,6 @@
 using System;
 using System.Collections.Generic;
 using Cube.FileSystem;
-using Cube.Mixin.Generics;
-using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
 {
@@ -302,7 +300,7 @@ namespace Cube.Pdf.Itext
             if (src is DocumentReader itext)
             {
                 var k = itext.File.FullName;
-                var v = itext.Core.TryCast<PdfReader>();
+                var v = itext.Core;
 
                 if (v != null && !_hints.ContainsKey(k)) _hints.Add(k, v);
             }
@@ -333,7 +331,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PdfReader GetRawReader(Page src) =>
+        protected IDisposable GetRawReader(Page src) =>
             src.File is PdfFile   pdf ? GetRawReader(pdf) :
             src.File is ImageFile img ? GetRawReader(img) : null;
 
@@ -370,7 +368,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfReader GetRawReader(PdfFile src)
+        private IDisposable GetRawReader(PdfFile src)
         {
             var key = src.FullName;
             if (_hints.TryGetValue(key, out var hit)) return hit;
@@ -392,7 +390,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfReader GetRawReader(ImageFile src)
+        private IDisposable GetRawReader(ImageFile src)
         {
             var key = src.FullName;
             if (_hints.TryGetValue(key, out var hit)) return hit;
@@ -410,7 +408,7 @@ namespace Cube.Pdf.Itext
         private readonly List<Page> _pages = new();
         private readonly List<Attachment> _attachments = new();
         private readonly List<IDisposable> _resources = new();
-        private readonly Dictionary<string, PdfReader> _hints = new();
+        private readonly Dictionary<string, IDisposable> _hints = new();
         #endregion
     }
 }

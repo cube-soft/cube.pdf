@@ -16,12 +16,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
+using Cube.FileSystem;
 using Cube.Mixin.Logging;
 using Cube.Mixin.String;
+using Cube.Pdf.Mixin;
+using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
@@ -40,6 +44,30 @@ namespace Cube.Pdf.Itext
         #region Methods
 
         #region Get
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetFile
+        ///
+        /// <summary>
+        /// Gets the PdfFile object from the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">PdfReader object.</param>
+        /// <param name="file">Path of the source PDF file.</param>
+        /// <param name="password">Password of the source PDF file.</param>
+        /// <param name="io">I/O handler.</param>
+        ///
+        /// <returns>Page object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PdfFile GetFile(this PdfReader src, string file, string password, IO io)
+        {
+            var dest = io.GetPdfFile(file, password);
+            dest.Count      = src.NumberOfPages;
+            dest.FullAccess = src.IsOpenedWithFullPermissions;
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -241,6 +269,23 @@ namespace Cube.Pdf.Itext
             var dic = src.GetPageN(page.Number);
             if (rot != cmp) dic.Put(PdfName.ROTATE, new PdfNumber(rot));
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Converts the specified exception object to the corresponding
+        /// object.
+        /// </summary>
+        ///
+        /// <param name="src">Exception object.</param>
+        ///
+        /// <returns>Converted exception object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Exception Convert(this Exception src) =>
+            src is BadPasswordException obj ? new EncryptionException(obj.Message, obj) : src;
 
         #endregion
 

@@ -16,9 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.Mixin.String;
+using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
@@ -85,6 +87,39 @@ namespace Cube.Pdf.Itext
                         owner;
 
             src.SetEncryption(m, user, owner, p);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// Adds the specified page to the specified writer.
+        /// </summary>
+        ///
+        /// <param name="src">PdfCopy object.</param>
+        /// <param name="reader">PdfReader object.</param>
+        /// <param name="page">Page object.</param>
+        /// <param name="bookmarks">
+        /// Buffer to store the bookmark information if found.
+        /// </param>
+        ///
+        /// <remarks>
+        /// Note that the value of PdfCopy.PageNumber is automatically
+        /// incremented as soon as AddPage is executed.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Set(this PdfCopy src, PdfReader reader, Page page,
+            IList<Dictionary<string, object>> bookmarks
+        ) {
+            reader.Rotate(page);
+            if (page.File is PdfFile)
+            {
+                var n = src.PageNumber; // see remarks
+                reader.GetBookmarks(n, n - page.Number, bookmarks);
+            }
+            src.AddPage(src.GetImportedPage(reader, page.Number));
         }
 
         /* ----------------------------------------------------------------- */

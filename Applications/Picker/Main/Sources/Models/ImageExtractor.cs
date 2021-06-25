@@ -19,6 +19,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using Cube.Pdf.Itext;
+using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 
 namespace Cube.Pdf.Picker
@@ -71,7 +72,7 @@ namespace Cube.Pdf.Picker
         ///
         /* ----------------------------------------------------------------- */
         public IEnumerable<Image> GetEmbeddedImages(int pagenum) =>
-            new PdfReaderContentParser(Core).ProcessContent(pagenum, new RenderListener());
+            new PdfReaderContentParser(Core as PdfReader).ProcessContent(pagenum, new RenderListener());
 
         #endregion
     }

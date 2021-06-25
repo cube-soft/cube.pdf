@@ -42,6 +42,21 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
+        /// From
+        ///
+        /// <summary>
+        /// Converts the specified object to the PdfReader object.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        ///
+        /// <returns>PdfReader object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PdfReader From(object src) => src as PdfReader;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// FromPdf
         ///
         /// <summary>
@@ -53,7 +68,7 @@ namespace Cube.Pdf.Itext
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader FromPdf(string src) => new PdfReader(src);
+        public static PdfReader FromPdf(string src) => new(src);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -110,34 +125,33 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static PdfReader FromImage(string src, IO io)
         {
-            using (var ms = new System.IO.MemoryStream())
-            using (var ss = io.OpenRead(src))
-            using (var image = Image.FromStream(ss))
+            using var ms = new System.IO.MemoryStream();
+            using var ss = io.OpenRead(src);
+            using var image = Image.FromStream(ss);
+
+            var doc = new iTextSharp.text.Document();
+            var writer = PdfWriter.GetInstance(doc, ms);
+            doc.Open();
+
+            var guid = image.FrameDimensionsList[0];
+            var dim  = new FrameDimension(guid);
+            for (var i = 0; i < image.GetFrameCount(dim); ++i)
             {
-                var doc = new iTextSharp.text.Document();
-                var writer = PdfWriter.GetInstance(doc, ms);
-                doc.Open();
+                _ = image.SelectActiveFrame(dim, i);
 
-                var guid = image.FrameDimensionsList[0];
-                var dim  = new FrameDimension(guid);
-                for (var i = 0; i < image.GetFrameCount(dim); ++i)
-                {
-                    _ = image.SelectActiveFrame(dim, i);
+                var scale = PdfFile.Point / image.HorizontalResolution;
+                var w = image.Width  * scale;
+                var h = image.Height * scale;
 
-                    var scale = PdfFile.Point / image.HorizontalResolution;
-                    var w = image.Width  * scale;
-                    var h = image.Height * scale;
-
-                    _ = doc.SetPageSize(new iTextSharp.text.Rectangle(w, h));
-                    _ = doc.NewPage();
-                    _ = doc.Add(image.GetItextImage());
-                }
-
-                doc.Close();
-                writer.Close();
-
-                return new PdfReader(ms.ToArray());
+                _ = doc.SetPageSize(new iTextSharp.text.Rectangle(w, h));
+                _ = doc.NewPage();
+                _ = doc.Add(image.GetItextImage());
             }
+
+            doc.Close();
+            writer.Close();
+
+            return new(ms.ToArray());
         }
 
         #endregion
