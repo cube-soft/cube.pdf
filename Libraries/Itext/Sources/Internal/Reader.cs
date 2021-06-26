@@ -17,10 +17,12 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
 using Cube.FileSystem;
+using Cube.Mixin.Drawing;
 using Cube.Mixin.String;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
@@ -29,14 +31,14 @@ namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ReaderFactory
+    /// Reader
     ///
     /// <summary>
-    /// Provices functionality to create a PdfReader instance.
+    /// Provides factory and other static methods about PdfReader.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class ReaderFactory
+    internal static class Reader
     {
         #region Methods
 
@@ -54,6 +56,26 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public static PdfReader From(object src) => src as PdfReader;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FromPdf
+        ///
+        /// <summary>
+        /// Creates a new instance of the PdfReader class with the specified
+        /// arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Source File object.</param>
+        /// <param name="options">Open options.</param>
+        ///
+        /// <returns>PdfReader object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PdfReader From(File src, OpenOption options) =>
+            src is PdfFile   f0 ? FromPdf(f0.FullName, new(null, f0.Password), options) :
+            src is ImageFile f1 ? FromImage(f1.FullName, options.IO) :
+            default;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -85,10 +107,8 @@ namespace Cube.Pdf.Itext
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader FromPdf(string src,
-            QueryMessage<IQuery<string>, string> password,
-            OpenOption options
-        ) {
+        public static PdfReader FromPdf(string src, Password password, OpenOption options)
+        {
             while (true)
             {
                 try
@@ -97,7 +117,7 @@ namespace Cube.Pdf.Itext
                     var dest  = new PdfReader(src, bytes, options.SaveMemory);
                     if (dest.IsOpenedWithFullPermissions || !options.FullAccess) return dest;
                     dest.Dispose();
-                    throw new BadPasswordException("FullAccess");
+                    throw new BadPasswordException("Owner password is required.");
                 }
                 catch (BadPasswordException)
                 {
@@ -145,7 +165,7 @@ namespace Cube.Pdf.Itext
 
                 _ = doc.SetPageSize(new iTextSharp.text.Rectangle(w, h));
                 _ = doc.NewPage();
-                _ = doc.Add(image.GetItextImage());
+                _ = doc.Add(Convert(image));
             }
 
             doc.Close();
@@ -182,6 +202,38 @@ namespace Cube.Pdf.Itext
                 throw new ArgumentException("Password is empty.");
             }
             catch (Exception e) { throw new EncryptionException("Input password may be incorrect.", e); }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Convert
+        ///
+        /// <summary>
+        /// Converts from System.Drawing.Image to iTextSharp.text.Image.
+        /// </summary>
+        ///
+        /// <param name="src">Source image.</param>
+        ///
+        /// <returns>Converted image.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static iTextSharp.text.Image Convert(Image src)
+        {
+            var scale = PdfFile.Point / src.HorizontalResolution;
+            var format = src.GetImageFormat();
+            if (!new List<ImageFormat> {
+                ImageFormat.Bmp,
+                ImageFormat.Gif,
+                ImageFormat.Jpeg,
+                ImageFormat.Png,
+                ImageFormat.Tiff,
+            }.Contains(format)) format = ImageFormat.Png;
+
+            var dest = iTextSharp.text.Image.GetInstance(src, format);
+            dest.SetAbsolutePosition(0, 0);
+            dest.ScalePercent(scale * 100);
+
+            return dest;
         }
 
         #endregion

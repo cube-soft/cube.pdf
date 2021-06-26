@@ -147,8 +147,8 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void Parse()
         {
-            if (!(PdfReader.GetPdfObject(_core.Catalog.Get(PdfName.NAMES)) is PdfDictionary c)) return;
-            if (!(PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) is PdfDictionary e)) return;
+            if (PdfReader.GetPdfObject(_core.Catalog.Get(PdfName.NAMES)) is not PdfDictionary c) return;
+            if (PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) is not PdfDictionary e) return;
 
             var items = e.GetAsArray(PdfName.NAMES);
             if (items == null) return;
@@ -162,7 +162,7 @@ namespace Cube.Pdf.Itext
 
                 foreach (var key in dic.Keys)
                 {
-                    if (!(PdfReader.GetPdfObject(dic.GetAsIndirectObject(key)) is PRStream stream)) continue;
+                    if (PdfReader.GetPdfObject(dic.GetAsIndirectObject(key)) is not PRStream stream) continue;
                     _inner.Add(new EmbeddedAttachment(name.ToUnicodeString(), File.FullName, IO, stream));
                     break;
                 }
@@ -173,7 +173,7 @@ namespace Cube.Pdf.Itext
 
         #region Fields
         private readonly PdfReader _core;
-        private readonly IList<Attachment> _inner = new List<Attachment>();
+        private readonly List<Attachment> _inner = new();
         #endregion
     }
 }

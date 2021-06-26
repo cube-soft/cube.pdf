@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -64,7 +63,7 @@ namespace Cube.Pdf.Itext
         public static PdfFile GetFile(this PdfReader src, string file, string password, IO io)
         {
             var dest = io.GetPdfFile(file, password);
-            dest.Count      = src.NumberOfPages;
+            dest.Count = src.NumberOfPages;
             dest.FullAccess = src.IsOpenedWithFullPermissions;
             return dest;
         }
@@ -84,10 +83,10 @@ namespace Cube.Pdf.Itext
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetPage(this PdfReader src, PdfFile file, int pagenum) => new Page(
+        public static Page GetPage(this PdfReader src, PdfFile file, int pagenum) => new(
             file,                                    // File
             pagenum,                                 // Number
-            src.GetPageSize(pagenum).ToSize(),       // Size
+            GetPageSize(src, pagenum),               // Size
             new Angle(src.GetPageRotation(pagenum)), // Rotation
             file.Resolution                          // Resolution
         );
@@ -133,20 +132,20 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static Encryption GetEncryption(this PdfReader src, PdfFile file)
         {
-            if (file.FullAccess && !file.Password.HasValue()) return new Encryption();
+            if (file.FullAccess && !file.Password.HasValue()) return new();
 
-            var password = src.GetUserPassword(file);
-            var value    = (uint)src.Permissions;
+            var user  = src.GetUserPassword(file);
+            var value = (uint)src.Permissions;
             src.GetType().LogDebug($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
 
-            return new Encryption
+            return new()
             {
                 Enabled          = true,
                 Method           = src.GetEncryptionMethod(),
                 Permission       = new Permission(value),
                 OwnerPassword    = file.FullAccess ? file.Password : string.Empty,
-                UserPassword     = password,
-                OpenWithPassword = password.HasValue(),
+                UserPassword     = user,
+                OpenWithPassword = user.HasValue(),
             };
         }
 
@@ -163,14 +162,14 @@ namespace Cube.Pdf.Itext
         /// <returns>Encryption method.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static EncryptionMethod GetEncryptionMethod(this PdfReader src) =>
-            new Dictionary<int, EncryptionMethod>
+        public static EncryptionMethod GetEncryptionMethod(this PdfReader src) => src.GetCryptoMode() switch
         {
-            { PdfWriter.STANDARD_ENCRYPTION_40,  EncryptionMethod.Standard40 },
-            { PdfWriter.STANDARD_ENCRYPTION_128, EncryptionMethod.Standard128 },
-            { PdfWriter.ENCRYPTION_AES_128,      EncryptionMethod.Aes128 },
-            { PdfWriter.ENCRYPTION_AES_256,      EncryptionMethod.Aes256 },
-        }.TryGetValue(src.GetCryptoMode(), out var dest) ? dest : EncryptionMethod.Unknown;
+            PdfWriter.STANDARD_ENCRYPTION_40  => EncryptionMethod.Standard40,
+            PdfWriter.STANDARD_ENCRYPTION_128 => EncryptionMethod.Standard128,
+            PdfWriter.ENCRYPTION_AES_128      => EncryptionMethod.Aes128,
+            PdfWriter.ENCRYPTION_AES_256      => EncryptionMethod.Aes256,
+            _                                 => EncryptionMethod.Unknown,
+        };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -226,8 +225,7 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void GetBookmarks(this PdfReader src, int pagenum, int delta,
-            IList<Dictionary<string, object>> dest)
+        public static void GetBookmarks(this PdfReader src, int pagenum, int delta, Bookmark dest)
         {
             var cmp = $"^{pagenum} (XYZ|Fit|FitH|FitBH)";
             var bookmarks = SimpleBookmark.GetBookmark(src);
@@ -293,15 +291,18 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ToSize
+        /// GetPageSize
         ///
         /// <summary>
-        /// Converts from iTextSharp.text.Rectable to SizeF.
+        /// Gets the page size of the specified page number.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static SizeF ToSize(this iTextSharp.text.Rectangle src) =>
-            new SizeF(src.Width, src.Height);
+        private static SizeF GetPageSize(PdfReader src, int pagenum)
+        {
+            var obj = src.GetPageSize(pagenum);
+            return new(obj.Width, obj.Height);
+        }
 
         #endregion
     }

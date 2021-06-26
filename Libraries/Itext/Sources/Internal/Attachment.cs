@@ -51,10 +51,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public EmbeddedAttachment(string name, string src, IO io, PRStream core) :
-            base(name, src, io)
-        {
-            _core = core;
-        }
+            base(name, src, io) { _core = core; }
 
         #endregion
 

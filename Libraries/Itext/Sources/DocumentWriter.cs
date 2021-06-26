@@ -17,8 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections.Generic;
-using Cube.FileSystem;
 
 namespace Cube.Pdf.Itext
 {
@@ -72,22 +70,6 @@ namespace Cube.Pdf.Itext
 
         #endregion
 
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Bookmarks
-        ///
-        /// <summary>
-        /// Gets the collection of bookmarks.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected IList<Dictionary<string, object>> Bookmarks { get; } =
-            new List<Dictionary<string, object>>();
-
-        #endregion
-
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -106,9 +88,10 @@ namespace Cube.Pdf.Itext
 
             try
             {
-                Merge(tmp);
+                var bk = new Bookmark();
+                Merge(tmp, bk);
                 Release();
-                Finalize(tmp, path);
+                Writer.Stamp(path, Options, tmp, Metadata, Encryption, bk);
             }
             catch (Exception err) { throw err.Convert(); }
             finally
@@ -116,21 +99,6 @@ namespace Cube.Pdf.Itext
                 _ = Options.IO.TryDelete(tmp);
                 Reset();
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnReset
-        ///
-        /// <summary>
-        /// Executes the reset operation.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnReset()
-        {
-            base.OnReset();
-            Bookmarks.Clear();
         }
 
         #endregion
@@ -146,48 +114,27 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <remarks>
-        /// 注釈等を含めて完全にページ内容をコピーするため、いったん
-        /// PdfCopy クラスを用いて全ページを結合します。セキュリティ設定や
-        /// 文書プロパティ等の情報は生成された PDF に対して付加します。
+        /// To completely copy the page contents, including annotations,
+        /// use the PdfCopy class to merge all pages together.
+        /// PDF metadata and encryption settings will be added to the
+        /// generated PDF.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void Merge(string dest)
+        private void Merge(string dest, Bookmark bookmark)
         {
-            var kv = WriterFactory.Create(dest, Metadata, Options.UseSmartCopy, Options.IO);
+            var e = Writer.Create(dest, Options, Metadata);
 
-            kv.Key.Open();
-            Bookmarks.Clear();
+            e.Document.Open();
 
             foreach (var page in Pages)
             {
-                var reader = ReaderFactory.From(GetRawReader(page));
-                kv.Value.Set(reader, page, Bookmarks);
+                var reader = Reader.From(GetRawReader(page));
+                e.Writer.Set(reader, page, bookmark);
             }
 
-            kv.Value.Set(Attachments);
-            kv.Key.Close();
-            kv.Value.Close();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Finalize
-        ///
-        /// <summary>
-        /// Adds some additional metadata to the merged document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Finalize(string src, string dest)
-        {
-            using var reader = ReaderFactory.FromPdf(src);
-            using var writer = WriterFactory.Create(dest, reader, Options.IO);
-
-            writer.Writer.Outlines = Bookmarks;
-            writer.Set(Metadata, reader.Info);
-            writer.Writer.Set(Encryption);
-            if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
+            e.Writer.Set(Attachments);
+            e.Close();
         }
 
         #endregion

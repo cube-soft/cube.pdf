@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using Cube.FileSystem;
 
 namespace Cube.Pdf.Itext
 {
@@ -270,15 +269,14 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected void Bind(IDocumentReader src)
         {
-            if (_resources.Contains(src)) return;
-            _resources.Add(src);
+            if (_disposable.Contains(src)) return;
+            _disposable.Add(src);
 
             if (src is DocumentReader itext)
             {
                 var k = itext.File.FullName;
                 var v = itext.Core;
-
-                if (v != null && !_hints.ContainsKey(k)) _hints.Add(k, v);
+                if (v is not null && !_hints.ContainsKey(k)) _hints.Add(k, v);
             }
         }
 
@@ -294,8 +292,7 @@ namespace Cube.Pdf.Itext
         protected void Release()
         {
             _hints.Clear();
-            foreach (var obj in _resources) obj.Dispose();
-            _resources.Clear();
+            _disposable.Dispose();
         }
 
         /* ----------------------------------------------------------------- */
@@ -307,9 +304,18 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IDisposable GetRawReader(Page src) =>
-            src.File is PdfFile   pdf ? GetRawReader(pdf) :
-            src.File is ImageFile img ? GetRawReader(img) : null;
+        protected IDisposable GetRawReader(Page src)
+        {
+            if (_hints.TryGetValue(src.File.FullName, out var hit)) return hit;
+
+            var dest = Reader.From(src.File, new() { IO = Options.IO, SaveMemory = false });
+            if (dest is not null)
+            {
+                _disposable.Add(dest);
+                _hints.Add(src.File.FullName, dest);
+            }
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -333,57 +339,10 @@ namespace Cube.Pdf.Itext
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetRawReader
-        ///
-        /// <summary>
-        /// Gets the PdfReader corresponding to the specified PDF file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IDisposable GetRawReader(PdfFile src)
-        {
-            var key = src.FullName;
-            if (_hints.TryGetValue(key, out var hit)) return hit;
-
-            var options = new OpenOption { IO = Options.IO, SaveMemory = false };
-            var reader  = new DocumentReader(key, src.Password, options);
-            _resources.Add(reader);
-            _hints.Add(key, reader.Core);
-
-            return reader.Core;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetRawReader
-        ///
-        /// <summary>
-        /// Gets the PdfReader corresponding to the specified information.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IDisposable GetRawReader(ImageFile src)
-        {
-            var key = src.FullName;
-            if (_hints.TryGetValue(key, out var hit)) return hit;
-
-            var dest = ReaderFactory.FromImage(key, Options.IO);
-            _resources.Add(dest);
-            _hints.Add(key, dest);
-
-            return dest;
-        }
-
-        #endregion
-
         #region Fields
         private readonly List<Page> _pages = new();
         private readonly List<Attachment> _attachments = new();
-        private readonly List<IDisposable> _resources = new();
+        private readonly DisposableContainer _disposable = new();
         private readonly Dictionary<string, IDisposable> _hints = new();
         #endregion
     }

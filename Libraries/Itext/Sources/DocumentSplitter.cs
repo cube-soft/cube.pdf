@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using Cube.FileSystem;
 using Cube.Mixin.IO;
 
 namespace Cube.Pdf.Itext
@@ -104,18 +103,25 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <remarks>
-        /// Reset() を実行すると Results まで消去されてしまうため、
-        /// base.OnReset() を代わりに実行しています。
+        /// Reset() will erase the Results, so we use OnReset() instead.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnSave(string folder)
+        protected override void OnSave(string directory)
         {
             try
             {
-                if (!Options.IO.Exists(folder)) Options.IO.CreateDirectory(folder);
+                if (!Options.IO.Exists(directory)) Options.IO.CreateDirectory(directory);
                 Results.Clear();
-                foreach (var page in Pages) SaveCore(page, folder);
+                foreach (var page in Pages)
+                {
+                    var src = Reader.From(GetRawReader(page));
+                    src.Rotate(page);
+
+                    var dest = Unique(directory, page.File, page.Number);
+                    Writer.Extract(dest, Options, src, page.Number, Metadata, Encryption);
+                    Results.Add(dest);
+                }
             }
             finally { base.OnReset(); } // see remarks
         }
@@ -123,47 +129,6 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveCore
-        ///
-        /// <summary>
-        /// Splits pages and saves them to the specified directory in
-        /// page by page.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SaveCore(Page src, string directory)
-        {
-            var reader = ReaderFactory.From(GetRawReader(src));
-            reader.Rotate(src);
-
-            var dest = Unique(directory, src.File, src.Number);
-            SaveOne(reader, src.Number, dest);
-            Results.Add(dest);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveOne
-        ///
-        /// <summary>
-        /// Saves the specified page.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SaveOne(IDisposable src, int pagenum, string dest)
-        {
-            var reader = ReaderFactory.From(src);
-            var kv = WriterFactory.Create(dest, Metadata, Options.UseSmartCopy, Options.IO);
-
-            kv.Value.Set(Encryption);
-            kv.Key.Open();
-            kv.Value.AddPage(kv.Value.GetImportedPage(reader, pagenum));
-            kv.Key.Close();
-            kv.Value.Close();
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -179,7 +144,6 @@ namespace Cube.Pdf.Itext
             var digit = string.Format("D{0}", Math.Max(src.Count.ToString("D").Length, 2));
             var name  = string.Format("{0}-{1}", src.BaseName, pagenum.ToString(digit));
             var dest  = Options.IO.Combine(dir, $"{name}.pdf");
-
             return Options.IO.GetUniqueName(dest);
         }
 

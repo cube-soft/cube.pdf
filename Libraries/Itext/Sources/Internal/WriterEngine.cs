@@ -16,73 +16,87 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using Cube.Mixin.Drawing;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageExtension
+    /// WriterEngine
     ///
     /// <summary>
-    /// Provides extended methods of the image classes.
+    /// Represents the components to save the PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class ImageExtension
+    internal class WriterEngine
     {
-        #region Methods
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetItextImage
+        /// WriterEngine
         ///
         /// <summary>
-        /// Converts from System.Drawing.Image to iTextSharp.text.Image.
+        /// Initializes a new instance of the WriterEngine class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="image">Source image.</param>
-        ///
-        /// <returns>Converted image.</returns>
+        /// <param name="doc">Document object.</param>
+        /// <param name="writer">PdfWriter object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static iTextSharp.text.Image GetItextImage(this Image image)
+        public WriterEngine(Document doc, PdfCopy writer)
         {
-            var scale  = PdfFile.Point / image.HorizontalResolution;
-            var format = image.GetImageFormat();
-            if (!SupportFormats.Contains(format)) format = ImageFormat.Png;
-
-            var dest = iTextSharp.text.Image.GetInstance(image, format);
-            dest.SetAbsolutePosition(0, 0);
-            dest.ScalePercent(scale * 100);
-
-            return dest;
+            Document = doc;
+            Writer   = writer;
         }
 
         #endregion
 
-        #region Implementations
+        #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SupportFormats
+        /// Document
         ///
         /// <summary>
-        /// Gets the collection of supported image formats.
+        /// Gets the Document object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static HashSet<ImageFormat> SupportFormats { get; } = new HashSet<ImageFormat>
+        public Document Document { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Writer
+        ///
+        /// <summary>
+        /// Gets the PdfCopy object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public PdfCopy Writer { get; }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Close
+        ///
+        /// <summary>
+        /// Gets the components.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Close()
         {
-            ImageFormat.Bmp,
-            ImageFormat.Gif,
-            ImageFormat.Jpeg,
-            ImageFormat.Png,
-            ImageFormat.Tiff,
-        };
+            Document.Close();
+            Writer.Close();
+        }
 
         #endregion
     }

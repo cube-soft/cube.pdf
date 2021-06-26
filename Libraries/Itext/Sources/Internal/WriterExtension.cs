@@ -16,11 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.Mixin.String;
-using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
@@ -47,7 +45,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">PdfStamper object.</param>
-        /// <param name="data">PDf metadata.</param>
+        /// <param name="data">PDF metadata.</param>
         /// <param name="info">Original PDF metadata.</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -100,7 +98,7 @@ namespace Cube.Pdf.Itext
         /// <param name="src">PdfCopy object.</param>
         /// <param name="reader">PdfReader object.</param>
         /// <param name="page">Page object.</param>
-        /// <param name="bookmarks">
+        /// <param name="bookmark">
         /// Buffer to store the bookmark information if found.
         /// </param>
         ///
@@ -110,14 +108,13 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Set(this PdfCopy src, PdfReader reader, Page page,
-            IList<Dictionary<string, object>> bookmarks
-        ) {
+        public static void Set(this PdfCopy src, PdfReader reader, Page page, Bookmark bookmark)
+        {
             reader.Rotate(page);
             if (page.File is PdfFile)
             {
                 var n = src.PageNumber; // see remarks
-                reader.GetBookmarks(n, n - page.Number, bookmarks);
+                reader.GetBookmarks(n, n - page.Number, bookmark);
             }
             src.AddPage(src.GetImportedPage(reader, page.Number));
         }
@@ -191,19 +188,15 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private static int GetMethod(EncryptionMethod src)
+        private static int GetMethod(EncryptionMethod src) => src switch
         {
-            var dic = new Dictionary<EncryptionMethod, int>
-            {
-                { EncryptionMethod.Standard40,  PdfWriter.STANDARD_ENCRYPTION_40  },
-                { EncryptionMethod.Standard128, PdfWriter.STANDARD_ENCRYPTION_128 },
-                { EncryptionMethod.Aes128,      PdfWriter.ENCRYPTION_AES_128      },
-                { EncryptionMethod.Aes256,      PdfWriter.ENCRYPTION_AES_256      },
-                { EncryptionMethod.Aes256r6,    PdfWriter.ENCRYPTION_AES_256      },
-            };
-
-            return dic.TryGetValue(src, out var dest) ? dest : PdfWriter.STANDARD_ENCRYPTION_40;
-        }
+            EncryptionMethod.Standard40  => PdfWriter.STANDARD_ENCRYPTION_40,
+            EncryptionMethod.Standard128 => PdfWriter.STANDARD_ENCRYPTION_128,
+            EncryptionMethod.Aes128      => PdfWriter.ENCRYPTION_AES_128,
+            EncryptionMethod.Aes256      => PdfWriter.ENCRYPTION_AES_256,
+            EncryptionMethod.Aes256r6    => PdfWriter.ENCRYPTION_AES_256, // see remarks
+            _                            => PdfWriter.STANDARD_ENCRYPTION_40,
+        };
 
         #endregion
     }
