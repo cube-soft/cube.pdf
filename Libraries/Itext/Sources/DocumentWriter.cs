@@ -84,7 +84,7 @@ namespace Cube.Pdf.Itext
         protected override void OnSave(string path)
         {
             var dir = Options.IO.Get(path).DirectoryName;
-            var tmp = Options.IO.Combine(dir, Guid.NewGuid().ToString("D"));
+            var tmp = Options.IO.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
             {

@@ -201,7 +201,7 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         protected IEnumerable<string> Combine(IEnumerable<string> args, string src)
         {
-            var tmp = Get(Guid.NewGuid().ToString("D"));
+            var tmp = Get(Guid.NewGuid().ToString("N"));
             IO.Copy(GetSource(src), tmp, true);
 
             using (var stream = IO.OpenRead(tmp))

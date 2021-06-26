@@ -163,7 +163,7 @@ namespace Cube.Pdf.Editor
             Action<Entity> next
         ) {
             var fi  = Options.IO.Get(dest);
-            var tmp = Options.IO.Combine(fi.DirectoryName, Guid.NewGuid().ToString("D"));
+            var tmp = Options.IO.Combine(fi.DirectoryName, Guid.NewGuid().ToString("N"));
 
             try
             {

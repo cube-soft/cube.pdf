@@ -201,7 +201,7 @@ namespace Cube.Pdf.Converter
             var io  = Settings.IO;
             var dir = io.Combine(io.Get(src).DirectoryName, "decorator");
             if (!io.Exists(dir)) io.CreateDirectory(dir);
-            return io.Combine(dir, Guid.NewGuid().ToString("D"));
+            return io.Combine(dir, Guid.NewGuid().ToString("N"));
         }
 
         #endregion
