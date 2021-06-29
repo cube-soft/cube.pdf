@@ -17,6 +17,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Linq;
+using Cube.FileSystem;
+using Cube.Mixin.Logging;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Itext
 {
@@ -83,20 +87,22 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected override void OnSave(string path)
         {
-            var dir = Options.IO.Get(path).DirectoryName;
-            var tmp = Options.IO.Combine(dir, Guid.NewGuid().ToString("N"));
+            var dir = Options.Temp.HasValue() ?
+                      Options.Temp :
+                      Io.Get(path).DirectoryName;
+            var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
             {
                 var bk = new Bookmark();
                 Merge(tmp, bk);
                 Release();
-                Writer.Stamp(path, Options, tmp, Metadata, Encryption, bk);
+                Writer.Stamp(path, tmp, Metadata, Encryption, bk);
             }
             catch (Exception err) { throw err.Convert(); }
             finally
             {
-                _ = Options.IO.TryDelete(tmp);
+                GetType().LogWarn(() => Io.Delete(tmp));
                 Reset();
             }
         }

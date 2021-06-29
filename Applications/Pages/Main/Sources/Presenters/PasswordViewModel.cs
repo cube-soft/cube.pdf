@@ -98,7 +98,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Message => string.Format(Properties.Resources.MessagePassword, new IO().Get(Facade.Source).Name);
+        public string Message => string.Format(Properties.Resources.MessagePassword, Io.Get(Facade.Source).Name);
 
         #endregion
 

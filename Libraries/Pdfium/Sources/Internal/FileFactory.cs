@@ -17,7 +17,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Runtime.InteropServices;
-using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Pdfium
 {
@@ -50,13 +49,12 @@ namespace Cube.Pdf.Pdfium
         /// <returns>PdfFile object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfFile Create(PdfiumReader core, string password, bool fullaccess)
+        public static PdfFile Create(PdfiumReader core, string password, bool fullaccess) =>
+            new(core.Source, password)
         {
-            var dest = core.IO.GetPdfFile(core.Source, password);
-            dest.Count = core.Invoke(NativeMethods.FPDF_GetPageCount);
-            dest.FullAccess = fullaccess;
-            return dest;
-        }
+            Count      = core.Invoke(NativeMethods.FPDF_GetPageCount),
+            FullAccess = fullaccess
+        };
     }
 
     /* --------------------------------------------------------------------- */

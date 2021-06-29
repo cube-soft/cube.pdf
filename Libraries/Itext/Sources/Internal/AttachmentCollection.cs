@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using Cube.Collections;
-using Cube.FileSystem;
 using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
@@ -47,13 +46,11 @@ namespace Cube.Pdf.Itext
         ///
         /// <param name="core">PdfReader object.</param>
         /// <param name="file">Information of the PDF file.</param>
-        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public AttachmentCollection(PdfReader core, PdfFile file, IO io)
+        public AttachmentCollection(PdfReader core, PdfFile file)
         {
             File  = file;
-            IO    = io;
             _core = core;
 
             Parse();
@@ -73,17 +70,6 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         protected PdfFile File { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected IO IO { get; }
 
         #endregion
 
@@ -163,7 +149,7 @@ namespace Cube.Pdf.Itext
                 foreach (var key in dic.Keys)
                 {
                     if (PdfReader.GetPdfObject(dic.GetAsIndirectObject(key)) is not PRStream stream) continue;
-                    _inner.Add(new EmbeddedAttachment(name.ToUnicodeString(), File.FullName, IO, stream));
+                    _inner.Add(new EmbeddedAttachment(name.ToUnicodeString(), File.FullName, stream));
                     break;
                 }
             }

@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter
@@ -401,7 +401,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Confirm()
         {
-            if (!Facade.IO.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
+            if (!Io.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
             else
             {
                 var m = Message.From(Destination, SaveOption);

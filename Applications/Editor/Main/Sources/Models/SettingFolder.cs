@@ -49,11 +49,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="assembly">Assembly information.</param>
-        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, IO io) :
-            this(assembly, Format.Registry, @"CubeSoft\CubePDF Utility2", io) { }
+        public SettingFolder(Assembly assembly) :
+            this(assembly, Format.Registry, @"CubeSoft\CubePDF Utility2") { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -67,13 +66,12 @@ namespace Cube.Pdf.Editor
         /// <param name="assembly">Assembly information.</param>
         /// <param name="format">Serialized format.</param>
         /// <param name="location">Location for the settings.</param>
-        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, Format format, string location, IO io) :
-            base(format, location, assembly.GetSoftwareVersion(), io)
+        public SettingFolder(Assembly assembly, Format format, string location) :
+            base(format, location, assembly.GetSoftwareVersion())
         {
-            var exe = IO.Combine(assembly.GetDirectoryName(), "CubeChecker.exe");
+            var exe = Io.Combine(assembly.GetDirectoryName(), "CubeChecker.exe");
 
             Title    = assembly.GetTitle();
             AutoSave = false;
@@ -132,34 +130,32 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnLoaded
+        /// OnLoad
         ///
         /// <summary>
-        /// Occurs when the Loaded event is fired.
+        /// Loads the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnLoaded(ValueChangedEventArgs<SettingValue> e)
+        protected override void OnLoad()
         {
-            try { Locale.Set(e.NewValue.Language); }
-            finally { base.OnLoaded(e); }
+            base.OnLoad();
+            Locale.Set(Value.Language);
         }
 
-
-
         /* ----------------------------------------------------------------- */
         ///
-        /// OnSaved
+        /// OnSave
         ///
         /// <summary>
-        /// Occurs when the Saved event is fired.
+        /// Saves the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnSaved(KeyValueEventArgs<Format, string> e)
+        protected override void OnSave()
         {
-            try { Startup.Save(true); }
-            finally { base.OnSaved(e); }
+            base.OnSave();
+            Startup.Save(true);
         }
 
         /* ----------------------------------------------------------------- */

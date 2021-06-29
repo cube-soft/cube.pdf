@@ -17,7 +17,6 @@
 /* ------------------------------------------------------------------------- */
 using System.Security.Cryptography;
 using Cube.FileSystem;
-using Cube.Mixin.IO;
 
 namespace Cube.Pdf
 {
@@ -40,13 +39,13 @@ namespace Cube.Pdf
         ///
         /// <summary>
         /// Initializes a new instance of the Attachment class with the
-        /// specified file path.
+        /// specified parameters.
         /// </summary>
         ///
         /// <param name="path">Path of the attached file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Attachment(string path) : this(path, new IO()) { }
+        public Attachment(string path) : this(Io.Get(path).Name, path) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -61,58 +60,15 @@ namespace Cube.Pdf
         /// <param name="path">Path of the attached file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Attachment(string name, string path) : this(name, path, new IO()) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attachment
-        ///
-        /// <summary>
-        /// Initializes a new instance of the Attachment class with the
-        /// specified parameters.
-        /// </summary>
-        ///
-        /// <param name="path">Path of the attached file.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Attachment(string path, IO io) : this(io.Get(path).Name, path, io) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attachment
-        ///
-        /// <summary>
-        /// Initializes a new instance of the Attachment class with the
-        /// specified parameters.
-        /// </summary>
-        ///
-        /// <param name="name">Display name.</param>
-        /// <param name="path">Path of the attached file.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Attachment(string name, string path, IO io)
+        public Attachment(string name, string path)
         {
             Name   = name;
             Source = path;
-            IO     = io;
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -182,7 +138,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual long GetLength() => IO.Get(Source)?.Length ?? 0;
+        protected virtual long GetLength() => Io.Get(Source)?.Length ?? 0;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -195,9 +151,9 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         protected virtual byte[] GetData()
         {
-            if (!IO.Exists(Source)) return null;
+            if (!Io.Exists(Source)) return null;
 
-            using var src  = IO.OpenRead(Source);
+            using var src  = Io.Open(Source);
             using var dest = new System.IO.MemoryStream();
 
             src.CopyTo(dest);
@@ -213,12 +169,10 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual byte[] GetChecksum()
-        {
-            if (!IO.Exists(Source)) return null;
-            using var ss = IO.OpenRead(Source);
-            return new SHA256CryptoServiceProvider().ComputeHash(ss);
-        }
+        protected virtual byte[] GetChecksum() =>
+            Io.Exists(Source) ?
+            IoEx.Load(Source, e => new SHA256CryptoServiceProvider().ComputeHash(e)) :
+            default;
 
         #endregion
 

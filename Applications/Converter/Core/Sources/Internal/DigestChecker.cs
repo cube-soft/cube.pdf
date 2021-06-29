@@ -19,6 +19,7 @@
 using System;
 using System.Linq;
 using System.Security.Cryptography;
+using Cube.FileSystem;
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
 
@@ -116,15 +117,9 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string Compute(string src)
-        {
-            using (var stream = Settings.IO.OpenRead(src))
-            {
-                return new SHA256CryptoServiceProvider()
-                    .ComputeHash(stream)
-                    .Join("", b => $"{b:x2}");
-            }
-        }
+        private string Compute(string src) => IoEx.Load(src, e =>
+            new SHA256CryptoServiceProvider().ComputeHash(e).Join("", b => $"{b:x2}"));
+
 
         #endregion
     }

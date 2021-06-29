@@ -17,11 +17,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Linq;
-using System.Reflection;
 using System.Security.Cryptography;
 using Cube.Collections;
+using Cube.FileSystem;
 using Cube.Mixin.Assembly;
-using Cube.Mixin.IO;
 using Cube.Tests;
 using NUnit.Framework;
 
@@ -64,7 +63,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(src.Busy, Is.False);
             Assert.That(src.Results.Count(), Is.EqualTo(1));
             Assert.That(src.Results.First(), Is.EqualTo(dest));
-            Assert.That(IO.Exists(dest), Is.True);
+            Assert.That(Io.Exists(dest), Is.True);
         }
 
         /* ----------------------------------------------------------------- */
@@ -92,7 +91,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(src.Busy, Is.False);
             Assert.That(src.Results.Count(), Is.EqualTo(5));
             Assert.That(src.Results.First(), Does.EndWith($"{nameof(Convert)}-01.png"));
-            Assert.That(IO.Exists(dest), Is.False);
+            Assert.That(Io.Exists(dest), Is.False);
         }
 
         /* ----------------------------------------------------------------- */
@@ -111,7 +110,7 @@ namespace Cube.Pdf.Converter.Tests
         public void Convert_SaveOption(SaveOption so)
         {
             var dest = Get($"{nameof(Convert)}_{so}.pdf");
-            IO.Copy(GetSource("Sample.pdf"), dest, true);
+            Io.Copy(GetSource("Sample.pdf"), dest, true);
 
             using var src = new Facade();
             src.Settings.Value.Source = GetSource("Sample.ps");
@@ -122,7 +121,7 @@ namespace Cube.Pdf.Converter.Tests
 
             Assert.That(src.Busy, Is.False);
             Assert.That(src.Results.Count(), Is.EqualTo(1));
-            Assert.That(IO.Exists(dest), Is.True);
+            Assert.That(Io.Exists(dest), Is.True);
         }
 
         /* ----------------------------------------------------------------- */

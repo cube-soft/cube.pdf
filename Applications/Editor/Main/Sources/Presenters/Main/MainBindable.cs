@@ -90,17 +90,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO => _settings.IO;
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// History
         ///
         /// <summary>
@@ -414,7 +403,7 @@ namespace Cube.Pdf.Editor
         private void LazyLoad()
         {
             if (Source == null) return;
-            using var reader = Source.GetItext(Query, IO, true);
+            using var reader = Source.GetItext(Query, true);
             Set(reader.Metadata, reader.Encryption);
         }
 

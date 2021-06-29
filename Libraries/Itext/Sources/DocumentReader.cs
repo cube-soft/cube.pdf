@@ -129,7 +129,7 @@ namespace Cube.Pdf.Itext
         private DocumentReader(string src, Password password, OpenOption options)
         {
             var obj  = Reader.FromPdf(src, password, options);
-            var file = obj.GetFile(src, password.Value, options.IO);
+            var file = obj.GetFile(src, password.Value);
 
             Options     = options;
             Core        = obj;
@@ -137,7 +137,7 @@ namespace Cube.Pdf.Itext
             Metadata    = obj.GetMetadata();
             Encryption  = obj.GetEncryption(file);
             Pages       = new PageCollection(obj, file);
-            Attachments = new AttachmentCollection(obj, file, options.IO);
+            Attachments = new AttachmentCollection(obj, file);
         }
 
         #endregion

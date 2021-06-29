@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Linq;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 using Cube.Tests;
 using NUnit.Framework;
 
@@ -63,7 +63,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
             }
 
-            Assert.That(IO.Exists(dest));
+            Assert.That(Io.Exists(dest), Is.True);
         }
 
         #endregion

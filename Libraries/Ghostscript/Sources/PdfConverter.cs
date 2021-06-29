@@ -16,10 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cube.Mixin.Collections;
 
 namespace Cube.Pdf.Ghostscript
 {
@@ -45,20 +44,7 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PdfConverter() : this(new IO()) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the PdfConverter class.
-        /// </summary>
-        ///
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PdfConverter(IO io) : this(Format.Pdf, io, SupportedFormats) { }
+        public PdfConverter() : this(Format.Pdf, SupportedFormats) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -70,12 +56,11 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <param name="format">Target format.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="supported">Collection of supported formats.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected PdfConverter(Format format, IO io, IEnumerable<Format> supported) :
-            base(format, io, supported) { }
+        protected PdfConverter(Format format, IEnumerable<Format> supported) :
+            base(format, supported) { }
 
         #endregion
 
@@ -197,7 +182,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private Argument CreateVersion() =>
-            new Argument('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}");
+            new('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -210,7 +195,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private Argument CreateFastWebView() =>
-            Linearization ? new Argument('d', "FastWebView") : null;
+            Linearization ? new('d', "FastWebView") : default;
 
         #endregion
     }

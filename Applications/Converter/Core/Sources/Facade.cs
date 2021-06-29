@@ -20,6 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Cube.FileSystem;
+using Cube.Mixin.Logging;
 
 namespace Cube.Pdf.Converter
 {
@@ -169,9 +171,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) => Lock(() =>
         {
-            _ = Settings.IO.TryDelete(GetTemp());
+            GetType().LogWarn(() => Io.Delete(GetTemp()));
             if (!Settings.Value.DeleteSource) return;
-            _ = Settings.IO.TryDelete(Settings.Value.Source);
+            GetType().LogWarn(() => Io.Delete(Settings.Value.Source));
         });
 
         /* ----------------------------------------------------------------- */
@@ -233,7 +235,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetTemp() => Settings.IO.Combine(Settings.Value.Temp, Settings.Uid.ToString("D"));
+        private string GetTemp() => Io.Combine(Settings.Value.Temp, Settings.Uid.ToString("N"));
 
         #endregion
 

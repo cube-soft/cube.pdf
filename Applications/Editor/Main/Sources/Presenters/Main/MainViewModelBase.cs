@@ -285,7 +285,6 @@ namespace Cube.Pdf.Editor
             (i, v) => Track(() => Facade.Insert(i + 1, v.Select(e => e.FullName))),
             Facade.Value.Images.Selection.First,
             Facade.Value.Count,
-            Facade.Value.IO,
             Context
         ));
 
@@ -319,7 +318,6 @@ namespace Cube.Pdf.Editor
             e => Facade.Extract(e),
             Facade.Value.Images.Selection,
             Facade.Value.Count,
-            Facade.Value.IO,
             Context
         ));
 

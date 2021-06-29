@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 
@@ -67,17 +67,19 @@ namespace Cube.Pdf.Converter.Tests
                 var vms = vm.General;
                 Assert.That(vms.Destination, Does.EndWith(vms.Format.GetExtension()));
 
-                Assert.That(IO.Exists(vms.Source),      Is.True,  vms.Source);
-                Assert.That(IO.Exists(vms.Destination), Is.False, vms.Destination);
+                Assert.That(Io.Exists(vms.Source),      Is.True,  vms.Source);
+                Assert.That(Io.Exists(vms.Destination), Is.False, vms.Destination);
 
                 // Test for SaveOption
-                if (precopy) IO.Copy(GetSource("Sample.pdf"), vms.Destination);
+                if (precopy) Io.Copy(GetSource("Sample.pdf"), vms.Destination, true);
 
-                vm.Subscribe<DialogMessage>(SetMessage);
-                Assert.That(Test(vm), Is.True, $"Timeout (No.{id})");
+                using (vm.Subscribe<DialogMessage>(SetMessage))
+                {
+                    Assert.That(Test(vm), Is.True, $"Timeout (No.{id})");
+                }
             }
 
-            Assert.That(IO.Exists(dest.Value.Source),      Is.False, dest.Value.Source);
+            Assert.That(Io.Exists(dest.Value.Source),      Is.False, dest.Value.Source);
             Assert.That(IsCreated(dest.Value.Destination), Is.True,  dest.DocumentName.Source);
         }
 
@@ -390,13 +392,13 @@ namespace Cube.Pdf.Converter.Tests
         {
             var delta = 1000;
 
-            if (IO.Exists(dest)) return IO.Get(dest).Length > delta;
+            if (Io.Exists(dest)) return Io.Get(dest).Length > delta;
 
-            var info = IO.Get(dest);
+            var info = Io.Get(dest);
             var name = $"{info.BaseName}-01{info.Extension}";
-            var cvt = IO.Combine(info.DirectoryName, name);
+            var cvt = Io.Combine(info.DirectoryName, name);
 
-            return IO.Get(cvt).Length > delta;
+            return Io.Get(cvt).Length > delta;
         }
 
         #endregion

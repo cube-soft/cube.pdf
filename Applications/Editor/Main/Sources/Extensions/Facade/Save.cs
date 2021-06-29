@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using Cube.FileSystem;
 using Cube.Mixin.Syntax;
-using System;
 
 namespace Cube.Pdf.Editor
 {
@@ -90,10 +90,10 @@ namespace Cube.Pdf.Editor
         public static void Save(this MainFacade src, string dest, Action<Entity> prev, Action<Entity> next)
         {
             var obj   = src.Value;
-            var itext = obj.Source.GetItext(obj.Query, obj.IO, false);
+            var itext = obj.Source.GetItext(obj.Query, false);
             obj.Set(itext.Metadata, itext.Encryption);
 
-            src.Save(itext, new SaveOption(obj.IO)
+            src.Save(itext, new SaveOption
             {
                 Target      = SaveTarget.All,
                 Split       = false,
@@ -151,7 +151,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static void Extract(this MainFacade src, string dest) =>
-            src.Extract(new SaveOption(src.Value.IO)
+            src.Extract(new SaveOption
         {
             Target      = SaveTarget.Selected,
             Split       = false,

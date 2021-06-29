@@ -16,9 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
+using Cube.FileSystem;
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
-using System.Collections.Generic;
 
 namespace Cube.Pdf.Editor
 {
@@ -124,7 +125,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static bool CanInsert(this MainFacade src, string path)
         {
-            var ext = src.Value.IO.Get(path).Extension.ToLowerInvariant();
+            var ext = Io.Get(path).Extension.ToLowerInvariant();
             var cmp = new List<string> { ".pdf", ".png", ".jpg", ".jpeg", ".bmp" };
             return cmp.Contains(ext);
         }

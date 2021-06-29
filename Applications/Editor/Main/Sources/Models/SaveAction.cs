@@ -16,13 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Iteration;
-using Cube.Mixin.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Linq;
+using Cube.FileSystem;
+using Cube.Mixin.Iteration;
+using Cube.Mixin.Logging;
+using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Editor
 {
@@ -162,8 +163,8 @@ namespace Cube.Pdf.Editor
             Action<Entity> prev,
             Action<Entity> next
         ) {
-            var fi  = Options.IO.Get(dest);
-            var tmp = Options.IO.Combine(fi.DirectoryName, Guid.NewGuid().ToString("N"));
+            var fi  = Io.Get(dest);
+            var tmp = Io.Combine(fi.DirectoryName, Guid.NewGuid().ToString("N"));
 
             try
             {
@@ -178,10 +179,10 @@ namespace Cube.Pdf.Editor
                 }
 
                 prev(fi);
-                Options.IO.Copy(tmp, fi.FullName, true);
+                Io.Copy(tmp, fi.FullName, true);
                 next(fi);
             }
-            finally { _ = Options.IO.TryDelete(tmp); }
+            finally { GetType().LogWarn(() => Io.Delete(tmp)); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -212,7 +213,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SplitAsDocument(Action<Entity> prev, Action<Entity> next)
         {
-            var fi = Options.IO.Get(Options.Destination);
+            var fi = Io.Get(Options.Destination);
             GetTarget(Options).Each(i => SaveAsDocument(
                 Convert(fi, i, Images.Count),
                 null,
@@ -233,17 +234,15 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SplitAsImage(Action<Entity> prev, Action<Entity> next)
         {
-            var fi = Options.IO.Get(Options.Destination);
+            var fi = Io.Get(Options.Destination);
             foreach (var i in GetTarget(Options))
             {
                 var ratio = Options.Resolution / Images[i].RawObject.Resolution.X;
-                using (var image = Images.GetImage(i, ratio))
-                {
-                    var dest = Options.IO.Get(Convert(fi, i, Images.Count));
-                    prev(dest);
-                    image.Save(dest.FullName, ImageFormat.Png);
-                    next(dest);
-                }
+                using var image = Images.GetImage(i, ratio);
+                var dest = Io.Get(Convert(fi, i, Images.Count));
+                prev(dest);
+                image.Save(dest.FullName, ImageFormat.Png);
+                next(dest);
             }
         }
 
@@ -260,7 +259,7 @@ namespace Cube.Pdf.Editor
         {
             var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
             var name  = string.Format("{0}-{1}{2}", src.BaseName, (index + 1).ToString(digit), src.Extension);
-            return Options.IO.Combine(src.DirectoryName, name);
+            return Io.Combine(src.DirectoryName, name);
         }
 
         /* ----------------------------------------------------------------- */

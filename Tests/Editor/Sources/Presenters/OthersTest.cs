@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Linq;
 using Cube.FileSystem;
 using Cube.Mixin.Commands;
 using Cube.Tests;
 using NUnit.Framework;
-using System.Linq;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
@@ -74,9 +74,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("Sample.pdf", 2, false)]
         public void Close(string filename, int n, bool modify) => Make(vm =>
         {
-            var fi = IO.Get(GetSource(filename));
+            var fi = Io.Get(GetSource(filename));
             Source = Get(Args(fi.BaseName, modify));
-            IO.Copy(fi.FullName, Source, true);
+            Io.Copy(fi.FullName, Source, true);
             vm.Test(vm.Ribbon.Open);
             Assert.That(vm.Value.Count, Is.EqualTo(n));
 

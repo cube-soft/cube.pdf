@@ -15,10 +15,10 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Cube.FileSystem;
 
 namespace Cube.Pdf.Pdfium
 {
@@ -55,7 +55,7 @@ namespace Cube.Pdf.Pdfium
             QueryMessage<IQuery<string>, string> password,
             OpenOption options
         ) {
-            var dest = new PdfiumReader(src, options.IO);
+            var dest = new PdfiumReader(src);
             try
             {
                 Load(src, dest, password, options);
@@ -74,15 +74,13 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /// <param name="src">Path of the source PDF file.</param>
-        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        private PdfiumReader(string src, IO io)
+        private PdfiumReader(string src)
         {
             Source = src;
-            IO     = io;
 
-            _stream  = IO.OpenRead(src);
+            _stream  = Io.Open(src);
             _handler = new GetBlockHandler(Read);
         }
 
@@ -100,17 +98,6 @@ namespace Cube.Pdf.Pdfium
         ///
         /* ----------------------------------------------------------------- */
         public string Source { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///

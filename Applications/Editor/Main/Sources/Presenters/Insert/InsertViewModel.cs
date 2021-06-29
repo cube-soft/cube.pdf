@@ -16,13 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Observing;
-using Cube.Xui;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Input;
+using Cube.Mixin.Observing;
+using Cube.Xui;
 
 namespace Cube.Pdf.Editor
 {
@@ -51,16 +50,14 @@ namespace Cube.Pdf.Editor
         /// <param name="callback">Callback function.</param>
         /// <param name="index">Selected index.</param>
         /// <param name="count">Number of pages.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         public InsertViewModel(Action<int, IEnumerable<FileItem>> callback,
             int index,
             int count,
-            IO io,
             SynchronizationContext context
-        ) : base(new InsertFacade(index, count, io, new ContextDispatcher(context, false)),
+        ) : base(new InsertFacade(index, count, new ContextDispatcher(context, false)),
             new Aggregator(),
             context
         ) {

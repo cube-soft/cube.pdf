@@ -96,34 +96,16 @@ namespace Cube.Pdf.Converter
         /// <param name="format">Serialization format.</param>
         /// <param name="location">Location to save settings.</param>
         ///
-        /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, Format format, string location) :
-            this(assembly, format, location, new()) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingFolder
-        ///
-        /// <summary>
-        /// Initializes a new instance of the SettingFolder class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="assembly">Assembly object.</param>
-        /// <param name="format">Serialization format.</param>
-        /// <param name="location">Location to save settings.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
         /// <remarks>
         /// The overloaded constructor will be removed in the future.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, Format format, string location, IO io) :
-            base(format, location, assembly.GetSoftwareVersion(), io)
+        public SettingFolder(Assembly assembly, Format format, string location) :
+            base(format, location, assembly.GetSoftwareVersion())
         {
             AutoSave     = false;
-            DocumentName = new(string.Empty, io);
+            DocumentName = new(string.Empty);
         }
 
         #endregion
@@ -194,15 +176,15 @@ namespace Cube.Pdf.Converter
         public void Set(ArgumentCollection src)
         {
             var op = src.Options;
-            if (op.TryGetValue("DocumentName", out var doc)) DocumentName = new(doc, IO);
+            if (op.TryGetValue("DocumentName", out var doc)) DocumentName = new(doc);
             if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
             if (op.TryGetValue("Digest", out var digest)) Digest = digest;
 
-            var dest = IO.Get(IO.Combine(GetDirectoryName(Value.Destination), DocumentName.Value));
+            var dest = Io.Get(Io.Combine(GetDirectoryName(Value.Destination), DocumentName.Value));
             var name = dest.BaseName;
             var ext  = Ghostscript.FormatExtension.GetExtension(Value.Format);
 
-            Value.Destination  = IO.Combine(dest.DirectoryName, $"{name}{ext}");
+            Value.Destination  = Io.Combine(dest.DirectoryName, $"{name}{ext}");
             Value.DeleteSource = op.ContainsKey("DeleteOnClose");
         }
 
@@ -226,7 +208,7 @@ namespace Cube.Pdf.Converter
             try
             {
                 if (!src.HasValue()) return desktop;
-                var dest = IO.Get(src);
+                var dest = Io.Get(src);
                 return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
             }
             catch { return desktop; }

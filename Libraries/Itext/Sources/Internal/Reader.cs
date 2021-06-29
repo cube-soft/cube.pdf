@@ -74,7 +74,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static PdfReader From(File src, OpenOption options) =>
             src is PdfFile   f0 ? FromPdf(f0.FullName, new(null, f0.Password), options) :
-            src is ImageFile f1 ? FromImage(f1.FullName, options.IO) :
+            src is ImageFile f1 ? FromImage(f1.FullName) :
             default;
 
         /* ----------------------------------------------------------------- */
@@ -138,15 +138,14 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">Path of the image.</param>
-        /// <param name="io">I/O handler.</param>
         ///
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader FromImage(string src, IO io)
+        public static PdfReader FromImage(string src)
         {
             using var ms = new System.IO.MemoryStream();
-            using var ss = io.OpenRead(src);
+            using var ss = Io.Open(src);
             using var image = Image.FromStream(ss);
 
             var doc = new iTextSharp.text.Document();

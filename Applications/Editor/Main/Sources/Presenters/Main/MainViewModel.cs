@@ -51,7 +51,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel() : this (
-            new SettingFolder(Assembly.GetExecutingAssembly(), new IO()) { AutoSave = true },
+            new(Assembly.GetExecutingAssembly()) { AutoSave = true },
             SynchronizationContext.Current
         ) { }
 
@@ -65,16 +65,14 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingFolder src, SynchronizationContext context) : base(
-            new MainFacade(src, context),
-            new Aggregator(),
-            context
-        ) {
+        public MainViewModel(SettingFolder src, SynchronizationContext context) :
+            base(new(src, context), new(), context)
+        {
             var recent = Environment.SpecialFolder.Recent.GetName();
-            var mon    = new DirectoryMonitor(recent, "*.pdf.lnk", src.IO, GetDispatcher(false));
+            var mon    = new DirectoryMonitor(recent, "*.pdf.lnk", GetDispatcher(false));
 
-            Ribbon = new RibbonViewModel(Facade, Aggregator, context);
-            Recent = new RecentViewModel(mon, Aggregator, context);
+            Ribbon = new(Facade, Aggregator, context);
+            Recent = new(mon, Aggregator, context);
             Value.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
             Recent.Open = GetOpenLinkCommand();
         }

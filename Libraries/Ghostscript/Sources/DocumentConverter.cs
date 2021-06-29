@@ -16,10 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cube.Mixin.Collections;
 
 namespace Cube.Pdf.Ghostscript
 {
@@ -44,13 +43,13 @@ namespace Cube.Pdf.Ghostscript
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentConverter class with
-        /// the specified format.
+        /// the specified parameters.
         /// </summary>
         ///
         /// <param name="format">Target format.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentConverter(Format format) : this(format, new IO()) { }
+        public DocumentConverter(Format format) : this(format, SupportedFormats) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -62,27 +61,11 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <param name="format">Target format.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentConverter(Format format, IO io) : this(format, io, SupportedFormats) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentConverter class with
-        /// the specified parameters.
-        /// </summary>
-        ///
-        /// <param name="format">Target format.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="supported">Collection of supported formats.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected DocumentConverter(Format format, IO io, IEnumerable<Format> supported) :
-            base(format, io, supported) { }
+        protected DocumentConverter(Format format, IEnumerable<Format> supported) :
+            base(format, supported) { }
 
         #endregion
 

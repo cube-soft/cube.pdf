@@ -16,12 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Collections;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Cube.Mixin.Collections;
 
 namespace Cube.Pdf.Editor
 {
@@ -50,13 +49,11 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="index">Selected index.</param>
         /// <param name="count">Number of pages.</param>
-        /// <param name="io">I/O handler</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertFacade(int index, int count, IO io, Dispatcher dispatcher)
+        public InsertFacade(int index, int count, Dispatcher dispatcher)
         {
-            _io   = io;
             Value = new InsertBindable(index, count, dispatcher);
         }
 
@@ -103,10 +100,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Add(IEnumerable<string> src)
         {
-            foreach (var item in src)
-            {
-                Value.Files.Add(new FileItem(item, Value.Selection, _io));
-            }
+            foreach (var e in src) Value.Files.Add(new(e, Value.Selection));
         }
 
         /* ----------------------------------------------------------------- */
@@ -120,7 +114,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Clear()
         {
-            foreach (var item in Value.Files) item.Dispose();
+            foreach (var e in Value.Files) e.Dispose();
             Value.Files.Clear();
         }
 
@@ -135,10 +129,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Remove()
         {
-            foreach (var item in Value.Selection.ToList())
+            foreach (var e in Value.Selection.ToList())
             {
-                Value.Files.Remove(item);
-                item.Dispose();
+                Value.Files.Remove(e);
+                e.Dispose();
             }
         }
 
@@ -265,10 +259,6 @@ namespace Cube.Pdf.Editor
             return delta > 0 ? dest.OrderByDescending() : dest.OrderBy();
         }
 
-        #endregion
-
-        #region Fields
-        private readonly IO _io;
         #endregion
     }
 }

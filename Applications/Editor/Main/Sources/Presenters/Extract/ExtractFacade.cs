@@ -45,15 +45,14 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="selection">Page selection.</param>
         /// <param name="count">Number of pages.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ExtractFacade(ImageSelection selection, int count, IO io, Dispatcher dispatcher)
+        public ExtractFacade(ImageSelection selection, int count, Dispatcher dispatcher)
         {
             Count     = count;
             Selection = selection;
-            Value     = Create(selection, io, dispatcher);
+            Value     = Create(selection, dispatcher);
         }
 
         #endregion
@@ -106,10 +105,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private SaveOption Create(ImageSelection src, IO io, Dispatcher dispatcher)
+        private SaveOption Create(ImageSelection src, Dispatcher dispatcher)
         {
             var target = src.Count > 0 ? SaveTarget.Selected : SaveTarget.All;
-            return new SaveOption(io, dispatcher) { Target = target };
+            return new SaveOption(dispatcher) { Target = target };
         }
 
         #endregion

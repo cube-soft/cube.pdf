@@ -33,18 +33,7 @@ namespace Cube.Pdf.Itext
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets or sets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; set; } = new();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UseSmartCopy
+        /// SmartCopy
         ///
         /// <summary>
         /// Gets or sets the value indicating whether to use the smart
@@ -64,6 +53,18 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public bool UseSmartCopy { get; set; } = true;
+        public bool SmartCopy { get; set; } = true;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Temp
+        ///
+        /// <summary>
+        /// Gets or sets the path of the working directory. If the property
+        /// is empty, the same directory as the source PDF file will be used.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Temp { get; set; }
     }
 }

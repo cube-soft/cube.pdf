@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Mixin.IO;
 using Cube.Mixin.Logging;
 using Cube.Pdf.Ghostscript;
 
@@ -56,8 +55,8 @@ namespace Cube.Pdf.Converter
         {
             Settings = src;
             Temp     = GetTempDirectory(temp);
-            Target   = Settings.IO.Get(src.Value.Destination);
-            Value    = Settings.IO.Combine(Temp, GetName());
+            Target   = Io.Get(src.Value.Destination);
+            Value    = Io.Combine(Temp, GetName());
         }
 
         #endregion
@@ -141,19 +140,41 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Invoke(IList<string> dest)
         {
-            var io  = Settings.IO;
-            var src = io.GetFiles(Temp);
+            var src = Io.GetFiles(Temp);
             var n   = src.Count();
             var i   = 0;
 
             foreach (var e in src)
             {
                 var path = GetDestination(i + 1, n);
-                io.MoveOrCopy(e, path, true);
+                MoveOrCopy(e, path, true);
                 dest.Add(path);
                 GetType().LogDebug($"Save:{path}");
                 ++i;
             }
+        }
+
+        #endregion
+
+        #region Static methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MoveOrCopy
+        ///
+        /// <summary>
+        /// Moves or copies the specified file.
+        /// </summary>
+        ///
+        /// <param name="src">Source path.</param>
+        /// <param name="dest">Path to move or copy.</param>
+        /// <param name="overwrite">Overwrite or not.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void MoveOrCopy(string src, string dest, bool overwrite)
+        {
+            try { Io.Move(src, dest, overwrite); }
+            catch { Io.Copy(src, dest, overwrite); }
         }
 
         #endregion
@@ -176,7 +197,7 @@ namespace Cube.Pdf.Converter
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) => Settings.IO.TryDelete(Temp);
+        protected override void Dispose(bool disposing) => GetType().LogWarn(() => Io.Delete(Temp));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -189,8 +210,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetTempDirectory(string src) =>
             Enumerable.Range(1, int.MaxValue)
-                      .Select(e => Settings.IO.Combine(src, e.ToString()))
-                      .First(e => !Settings.IO.Get(e).Exists);
+                      .Select(e => Io.Combine(src, e.ToString()))
+                      .First(e => !Io.Exists(e));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -217,9 +238,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetDestination(int index, int count)
         {
-            var io   = Settings.IO;
             var dest = GetDestinationCore(index, count);
-            return (AutoRename && io.Exists(dest)) ? io.GetUniqueName(dest) : dest;
+            return (AutoRename && Io.Exists(dest)) ? IoEx.GetUniqueName(dest) : dest;
         }
 
         /* ----------------------------------------------------------------- */
@@ -240,7 +260,7 @@ namespace Cube.Pdf.Converter
             var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
             var dest  = string.Format("{0}-{1}{2}", name, index.ToString(digit), ext);
 
-            return Settings.IO.Combine(Target.DirectoryName, dest);
+            return Io.Combine(Target.DirectoryName, dest);
         }
 
         #endregion

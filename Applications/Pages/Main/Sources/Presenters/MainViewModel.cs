@@ -66,7 +66,7 @@ namespace Cube.Pdf.Pages
         ///
         /* --------------------------------------------------------------------- */
         public MainViewModel(IEnumerable<string> args, SynchronizationContext context) : base(
-            new MainFacade(new IO(), context),
+            new MainFacade(context),
             new Aggregator(),
             context
         ) {
@@ -106,17 +106,6 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public BindingSource Files { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO => Facade.Settings.IO;
 
         /* ----------------------------------------------------------------- */
         ///

@@ -24,7 +24,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Cube.Collections;
 using Cube.FileSystem;
-using Cube.Mixin.IO;
 using Cube.Mixin.Iteration;
 using Cube.Pdf.Itext;
 
@@ -54,14 +53,9 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /// <param name="src">Path to extract images.</param>
-        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageCollection(string src, IO io)
-        {
-            Source = src;
-            IO     = io;
-        }
+        public ImageCollection(string src) { Source = src; }
 
         #endregion
 
@@ -77,17 +71,6 @@ namespace Cube.Pdf.Picker
         ///
         /* ----------------------------------------------------------------- */
         public string Source { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         #endregion
 
@@ -147,8 +130,8 @@ namespace Cube.Pdf.Picker
         /* ----------------------------------------------------------------- */
         public void Save(string directory, IEnumerable<int> indices)
         {
-            IO.CreateDirectory(directory);
-            var basename = IO.Get(Source).BaseName;
+            Io.CreateDirectory(directory);
+            var basename = Io.Get(Source).BaseName;
             foreach (var index in indices)
             {
                 if (index < 0 || index >= _core.Count) continue;
@@ -212,7 +195,7 @@ namespace Cube.Pdf.Picker
         {
             try
             {
-                var name = IO.Get(Source).BaseName;
+                var name = Io.Get(Source).BaseName;
                 progress.Report(Create(
                     -1,
                     string.Format(Properties.Resources.MessageBegin, name)
@@ -249,7 +232,7 @@ namespace Cube.Pdf.Picker
         private KeyValuePair<int, int> ExtractImages(IProgress<Message<int>> progress)
         {
             var query   = new Query<string>(e => throw new NotSupportedException());
-            var options = new OpenOption { IO = IO, FullAccess = true };
+            var options = new OpenOption { FullAccess = true };
             using var reader = new ImageExtractor(Source, query, options);
             ExtractImages(reader, progress);
             return KeyValuePair.Create(reader.Pages.Count(), _core.Count);
@@ -267,7 +250,7 @@ namespace Cube.Pdf.Picker
         private void ExtractImages(ImageExtractor src, IProgress<Message<int>> progress)
         {
             var count = src.Pages.Count();
-            var name = IO.Get(Source).BaseName;
+            var name = Io.Get(Source).BaseName;
 
             for (var i = 0; i < count; ++i)
             {
@@ -325,11 +308,11 @@ namespace Cube.Pdf.Picker
                 var filename = (i == 1) ?
                                string.Format("{0}-{1}.png", basename, index.ToString(digit)) :
                                string.Format("{0}-{1} ({2}).png", basename, index.ToString(digit), i);
-                var dest = IO.Combine(directory, filename);
-                if (!IO.Exists(dest)) return dest;
+                var dest = Io.Combine(directory, filename);
+                if (!Io.Exists(dest)) return dest;
             }
 
-            return IO.Combine(directory, System.IO.Path.GetRandomFileName());
+            return Io.Combine(directory, System.IO.Path.GetRandomFileName());
         }
 
         /* ----------------------------------------------------------------- */
@@ -342,7 +325,7 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Message<int> Create(int percentage, string message) => new Message<int>
+        private Message<int> Create(int percentage, string message) => new()
         {
             Value = percentage,
             Text  = message,
@@ -351,8 +334,8 @@ namespace Cube.Pdf.Picker
         #endregion
 
         #region Fields
-        private readonly object _lock = new object();
-        private readonly IList<Image> _core = new List<Image>();
+        private readonly object _lock = new();
+        private readonly List<Image> _core = new();
         private CancellationTokenSource _cts;
         #endregion
     }

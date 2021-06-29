@@ -18,8 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using System.Linq;
 using System.Threading;
+using Cube.FileSystem;
 using Cube.Mixin.Commands;
-using Cube.Mixin.IO;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
 using Cube.Tests;
@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Extract() => Open("SampleRotation.pdf", "", vm =>
         {
             Destination = Get(Args("Sample"));
-            Assert.That(IO.Exists(Destination), Is.False, Destination);
+            Assert.That(Io.Exists(Destination), Is.False, Destination);
 
             vm.Value.Images.Skip(1).First().Selected = true;
             vm.Value.Images.First().Selected = true;
@@ -62,11 +62,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             vm.Test(vm.Ribbon.Extract);
 
-            using (var r = new DocumentReader(Destination))
-            {
-                Assert.That(r.GetPage(1).GetViewSize().Width, Is.EqualTo(595.0f).Within(1.0f));
-                Assert.That(r.GetPage(2).GetViewSize().Width, Is.EqualTo(842.0f).Within(1.0f));
-            }
+            using var r = new DocumentReader(Destination);
+            Assert.That(r.GetPage(1).GetViewSize().Width, Is.EqualTo(595.0f).Within(1.0f));
+            Assert.That(r.GetPage(2).GetViewSize().Width, Is.EqualTo(842.0f).Within(1.0f));
         });
 
         /* ----------------------------------------------------------------- */

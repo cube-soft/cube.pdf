@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Cube.FileSystem;
 using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter
@@ -121,7 +122,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void OpenDirectory(IEnumerable<string> src) => Start(Create(
             "explorer.exe",
-            Settings.IO.Get(src.First()).DirectoryName.Quote()
+            Io.Get(src.First()).DirectoryName.Quote()
         ));
 
         /* ----------------------------------------------------------------- */

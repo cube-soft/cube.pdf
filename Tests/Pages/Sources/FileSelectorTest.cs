@@ -50,7 +50,7 @@ namespace Cube.Pdf.Pages.Tests
         public void Get(int _, IEnumerable<string> src, IEnumerable<string> expected)
         {
             var cmp  = expected.Select(e => GetSource(e)).ToArray();
-            var dest = new FileSelector(IO).Get(src.Select(e => GetSource(e))).ToArray();
+            var dest = new FileSelector().Get(src.Select(e => GetSource(e))).ToArray();
 
             Assert.That(dest.Length, Is.EqualTo(cmp.Length));
             for (var i = 0; i < dest.Length; ++i) Assert.That(dest[i], Is.EqualTo(cmp[i]));

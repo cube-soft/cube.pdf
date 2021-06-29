@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 
 namespace Cube.Pdf.Itext
 {
@@ -111,7 +111,7 @@ namespace Cube.Pdf.Itext
         {
             try
             {
-                if (!Options.IO.Exists(directory)) Options.IO.CreateDirectory(directory);
+                Io.CreateDirectory(directory);
                 Results.Clear();
                 foreach (var page in Pages)
                 {
@@ -143,8 +143,8 @@ namespace Cube.Pdf.Itext
         {
             var digit = string.Format("D{0}", Math.Max(src.Count.ToString("D").Length, 2));
             var name  = string.Format("{0}-{1}", src.BaseName, pagenum.ToString(digit));
-            var dest  = Options.IO.Combine(dir, $"{name}.pdf");
-            return Options.IO.GetUniqueName(dest);
+            var dest  = Io.Combine(dir, $"{name}.pdf");
+            return IoEx.GetUniqueName(dest);
         }
 
         #endregion

@@ -49,7 +49,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public SettingFacade(SettingFolder src)
         {
-            var exe = src.IO.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe");
+            var exe = Io.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe");
 
             Source  = src;
             Startup = new("cubepdf-checker") { Source = exe };
@@ -70,17 +70,6 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         protected SettingFolder Source { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO => Source.IO;
 
         /* ----------------------------------------------------------------- */
         ///

@@ -21,8 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using Cube.FileSystem;
 using Cube.Mixin.Commands;
-using Cube.Mixin.IO;
 using Cube.Pdf.Pdfium;
 using Cube.Tests;
 using GongSolutions.Wpf.DragDrop;
@@ -74,7 +74,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             Destination = Get(Args(filename.Replace('.', '_')));
             vm.Ribbon.SaveAs.Command.Execute();
-            Assert.That(Wait.For(() => IO.Exists(Destination)), "Timeout (Save)");
+            Assert.That(Wait.For(() => Io.Exists(Destination)), "Timeout (Save)");
         });
 
         /* ----------------------------------------------------------------- */

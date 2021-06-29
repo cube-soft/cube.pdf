@@ -16,10 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Cube.FileSystem;
+using Cube.Mixin.Logging;
 
 namespace Cube.Pdf.Editor
 {
@@ -50,10 +51,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void OpenProcess(this Type src, string args) =>
             Process.Start(new ProcessStartInfo
-            {
-                FileName  = src.Assembly.Location,
-                Arguments = args
-            });
+        {
+            FileName  = src.Assembly.Location,
+            Arguments = args
+        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -74,7 +75,7 @@ namespace Cube.Pdf.Editor
             {
                 var cancel = err is OperationCanceledException ||
                              err is TwiceException;
-                if (!cancel) _ = src.Value.IO.TryDelete(link?.FullName);
+                if (!cancel) typeof(OpenExtension).LogWarn(() => Io.Delete(link?.FullName));
                 throw;
             }
         }

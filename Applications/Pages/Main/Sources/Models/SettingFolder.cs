@@ -46,11 +46,10 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /// <param name="assembly">Assembly information.</param>
-        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, IO io) :
-            this(assembly, Format.Registry, @"CubeSoft\CubePDF Page", io) { }
+        public SettingFolder(Assembly assembly) :
+            this(assembly, Format.Registry, @"CubeSoft\CubePDF Page") { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,16 +63,15 @@ namespace Cube.Pdf.Pages
         /// <param name="assembly">Assembly information.</param>
         /// <param name="format">Serialized format.</param>
         /// <param name="location">Location for the settings.</param>
-        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, Format format, string location, IO io) :
-            base(format, location, assembly.GetSoftwareVersion(), io)
+        public SettingFolder(Assembly assembly, Format format, string location) :
+            base(format, location, assembly.GetSoftwareVersion())
         {
             AutoSave = false;
             Startup  = new("cubepdf-page-checker")
             {
-                Source = IO.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe"),
+                Source = Io.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe"),
             };
 
             Startup.Arguments.Add("cubepdfpage");
@@ -102,17 +100,17 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnSaved
+        /// OnSave
         ///
         /// <summary>
-        /// Occurs when the Saved event is fired.
+        /// Saves the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnSaved(KeyValueEventArgs<Format, string> e)
+        protected override void OnSave()
         {
-            try { Startup.Save(true); }
-            finally { base.OnSaved(e); }
+            base.OnSave();
+            Startup.Save(true);
         }
 
         #endregion

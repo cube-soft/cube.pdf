@@ -17,7 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using Cube.Pdf.Mixin;
+using Cube.FileSystem;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Tests
@@ -48,18 +48,17 @@ namespace Cube.Pdf.Tests
         [TestCaseSource(nameof(TestCases))]
         public void Get(string klass, string filename, string password, bool fullaccess)
         {
-            using (var src = Create(klass, GetSource(filename), password))
-            {
-                var dest = (PdfFile)src.File;
-                Assert.That(dest.Name,         Is.EqualTo(filename));
-                Assert.That(dest.FullName,     Is.EqualTo(GetSource(filename)));
-                Assert.That(dest.Password,     Is.EqualTo(password));
-                Assert.That(dest.FullAccess,   Is.EqualTo(fullaccess));
-                Assert.That(dest.Length,       Is.AtLeast(1));
-                Assert.That(dest.Resolution.X, Is.EqualTo(72.0f));
-                Assert.That(dest.Resolution.Y, Is.EqualTo(72.0f));
-                Assert.That(dest.Count,        Is.AtLeast(1));
-            }
+            using var src = Create(klass, GetSource(filename), password);
+            var dest = (PdfFile)src.File;
+
+            Assert.That(dest.Name,         Is.EqualTo(filename));
+            Assert.That(dest.FullName,     Is.EqualTo(GetSource(filename)));
+            Assert.That(dest.Password,     Is.EqualTo(password));
+            Assert.That(dest.FullAccess,   Is.EqualTo(fullaccess));
+            Assert.That(dest.Length,       Is.AtLeast(1));
+            Assert.That(dest.Resolution.X, Is.EqualTo(72.0f));
+            Assert.That(dest.Resolution.Y, Is.EqualTo(72.0f));
+            Assert.That(dest.Count,        Is.AtLeast(1));
         }
 
         /* ----------------------------------------------------------------- */
@@ -75,7 +74,7 @@ namespace Cube.Pdf.Tests
         public void Get_Image()
         {
             var src  = GetSource("SampleImage02.png");
-            var dest = IO.GetImageFile(src);
+            var dest = new ImageFile(src);
 
             Assert.That(dest.FullName,     Is.EqualTo(src));
             Assert.That(dest.Length,       Is.EqualTo(3765));

@@ -51,7 +51,6 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         {
             using var vm = new MainViewModel(new[] { GetSource("Dir1") }, new());
 
-            Assert.That(vm.IO, Is.Not.Null);
             Assert.That(vm.Files, Is.Not.Null);
             Assert.That(vm.Test(vm.Setup), nameof(vm.Setup));
             Assert.That(vm.Files.Count, Is.EqualTo(2));

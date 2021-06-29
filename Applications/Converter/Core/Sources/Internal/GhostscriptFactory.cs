@@ -23,7 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Cube.Collections;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
@@ -61,17 +61,17 @@ namespace Cube.Pdf.Converter
         public static Ghostscript.Converter Create(SettingFolder src)
         {
             var asm  = Assembly.GetExecutingAssembly();
-            var dir  = src.IO.Get(asm.Location).DirectoryName;
+            var dir  = Io.Get(asm.Location).DirectoryName;
             var dest = DocumentConverter.SupportedFormats.Contains(src.Value.Format) ?
                        CreateDocumentConverter(src) :
                        CreateImageConverter(src);
 
             dest.Quiet       = false;
             dest.Temp        = GetTempOrEmpty(src.Value);
-            dest.Log         = src.IO.Combine(src.Value.Temp, src.Uid.ToString("D"), "console.log");
+            dest.Log         = Io.Combine(src.Value.Temp, src.Uid.ToString("N"), "console.log");
             dest.Resolution  = src.Value.Resolution;
             dest.Orientation = src.Value.Orientation;
-            dest.Resources.Add(src.IO.Combine(dir, "lib"));
+            dest.Resources.Add(Io.Combine(dir, "lib"));
 
             return dest;
         }
@@ -91,8 +91,8 @@ namespace Cube.Pdf.Converter
         {
             try
             {
-                if (!src.Log.HasValue() || !src.IO.Exists(src.Log)) return;
-                using var ss = new StreamReader(src.IO.OpenRead(src.Log));
+                if (!src.Log.HasValue() || !Io.Exists(src.Log)) return;
+                using var ss = new StreamReader(Io.Open(src.Log));
                 while (!ss.EndOfStream) src.GetType().LogDebug(ss.ReadLine());
             }
             catch (Exception err) { src.GetType().LogDebug(err.Message); }
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Converter
         {
             var dest = PdfConverter.SupportedFormats.Contains(src.Value.Format) ?
                        CreatePdfConverter(src) :
-                       new DocumentConverter(src.Value.Format, src.IO);
+                       new DocumentConverter(src.Value.Format);
 
             dest.ColorMode    = src.Value.Grayscale ? ColorMode.Grayscale : ColorMode.SameAsSource;
             dest.Downsampling = src.Value.Downsampling;
@@ -135,7 +135,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static PdfConverter CreatePdfConverter(SettingFolder src) => new(src.IO)
+        private static PdfConverter CreatePdfConverter(SettingFolder src) => new()
         {
             Version     = src.Value.Metadata.Version,
             Compression = src.Value.ImageFilter ? Encoding.Jpeg : Encoding.Flate,
@@ -155,7 +155,7 @@ namespace Cube.Pdf.Converter
         {
             var key = KeyValuePair.Create(src.Value.Format, src.Value.Grayscale);
             Debug.Assert(FormatMap.ContainsKey(key));
-            return new ImageConverter(FormatMap[key], src.IO) { AntiAlias = true };
+            return new ImageConverter(FormatMap[key]) { AntiAlias = true };
         }
 
         /* ----------------------------------------------------------------- */

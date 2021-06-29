@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -61,7 +60,7 @@ namespace Cube.Pdf.Clip
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel(SynchronizationContext context) : base(
-            new MainFacade(new IO(), context),
+            new MainFacade(context),
             new Aggregator(),
             context)
         {

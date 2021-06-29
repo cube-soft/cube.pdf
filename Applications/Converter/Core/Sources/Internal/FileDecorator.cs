@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
@@ -105,23 +105,22 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeItext(string src)
         {
-            var io    = Settings.IO;
             var value = Settings.Value;
             var tmp   = GetTemp(src);
 
-            using (var writer = new DocumentWriter(new() { IO = io }))
+            using (var writer = new DocumentWriter(new()))
             {
                 value.Encryption.Method = GetEncryptionMethod(value.Metadata.Version);
                 writer.Set(value.Metadata);
                 writer.Set(value.Encryption);
                 Add(writer, value.Destination, SaveOption.MergeTail);
-                var options = new OpenOption { IO = io, SaveMemory = false };
+                var options = new OpenOption { SaveMemory = false };
                 writer.Add(new DocumentReader(src, string.Empty, options));
                 Add(writer, value.Destination, SaveOption.MergeHead);
                 writer.Save(tmp);
             }
 
-            io.MoveOrCopy(tmp, src, true);
+            FileTransfer.MoveOrCopy(tmp, src, true);
         }
 
         /* ----------------------------------------------------------------- */
@@ -144,7 +143,7 @@ namespace Cube.Pdf.Converter
                 var tmp = GetTemp(src);
                 gs.Linearization = value.Linearization;
                 gs.Invoke(src, tmp);
-                Settings.IO.MoveOrCopy(tmp, src, true);
+                FileTransfer.MoveOrCopy(tmp, src, true);
             }
         }
 
@@ -159,12 +158,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void Add(DocumentWriter src, string path, SaveOption so)
         {
-            var io    = Settings.IO;
             var value = Settings.Value;
 
-            if (value.SaveOption != so || !io.Exists(path)) return;
+            if (value.SaveOption != so || !Io.Exists(path)) return;
 
-            var options  = new OpenOption { IO = io, SaveMemory = true };
+            var options  = new OpenOption { SaveMemory = true };
             var password = value.Encryption.Enabled ?
                            value.Encryption.OwnerPassword :
                            string.Empty;
@@ -198,10 +196,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private string GetTemp(string src)
         {
-            var io  = Settings.IO;
-            var dir = io.Combine(io.Get(src).DirectoryName, "decorator");
-            if (!io.Exists(dir)) io.CreateDirectory(dir);
-            return io.Combine(dir, Guid.NewGuid().ToString("N"));
+            var dir = Io.Combine(Io.Get(src).DirectoryName, "decorator");
+            Io.CreateDirectory(dir);
+            return Io.Combine(dir, Guid.NewGuid().ToString("N"));
         }
 
         #endregion

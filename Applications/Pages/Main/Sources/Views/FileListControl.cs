@@ -21,7 +21,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using Cube.FileSystem;
 using Cube.Mixin.ByteFormat;
-using Cube.Mixin.IO;
 using Cube.Mixin.Logging;
 
 namespace Cube.Pdf.Pages
@@ -101,7 +100,7 @@ namespace Cube.Pdf.Pages
             {
                 switch (e.ColumnIndex)
                 {
-                    case 1: e.Value = _io.GetTypeName((string)e.Value); break;
+                    case 1: e.Value = IoEx.GetTypeName((string)e.Value); break;
                     case 4: e.Value = ((long)e.Value).ToRoughBytes(); break;
                     default: return;
                 }
@@ -161,10 +160,6 @@ namespace Cube.Pdf.Pages
             return dest;
         }
 
-        #endregion
-
-        #region Fields
-        private readonly IO _io = new IO();
         #endregion
     }
 }

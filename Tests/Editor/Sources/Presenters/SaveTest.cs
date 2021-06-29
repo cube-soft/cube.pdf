@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Mixin.IO;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
@@ -52,12 +51,12 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("SampleRc40Open.pdf", "password")]
         public void SaveAs(string filename, string password) => Open(filename, password, vm =>
         {
-            Destination = Get(Args(IO.Get(Source).BaseName));
+            Destination = Get(Args(Io.Get(Source).BaseName));
             Password    = string.Empty;
 
-            Assert.That(IO.Exists(Destination), Is.False);
+            Assert.That(Io.Exists(Destination), Is.False);
             vm.Test(vm.Ribbon.SaveAs);
-            Assert.That(IO.Exists(Destination), Is.True);
+            Assert.That(Io.Exists(Destination), Is.True);
         });
 
         /* ----------------------------------------------------------------- */
@@ -72,10 +71,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("Sample.pdf", "")]
         public void Overwrite(string filename, string password) => Make(vm =>
         {
-            Source   = Get(Args(IO.Get(GetSource(filename)).BaseName));
+            Source   = Get(Args(Io.Get(GetSource(filename)).BaseName));
             Password = password;
 
-            IO.Copy(GetSource(filename), Source, true);
+            Io.Copy(GetSource(filename), Source, true);
             vm.Test(vm.Ribbon.Open);
             vm.Value.Images.First().Selected = true;
             vm.Test(vm.Ribbon.RotateLeft);

@@ -22,6 +22,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Threading;
+using Cube.FileSystem;
 using Cube.Mixin.Collections;
 using Cube.Mixin.String;
 using Cube.Pdf.Converter.Mixin;
@@ -149,7 +150,7 @@ namespace Cube.Pdf.Converter.Tests
             IEnumerable<string> args,
             string filename,
             bool precopy
-        ) => new TestCaseData(id, src, args, filename, precopy);
+        ) => new(id, src, args, filename, precopy);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -169,7 +170,7 @@ namespace Cube.Pdf.Converter.Tests
             var asm  = typeof(MainWindow).Assembly;
             var fmt  = Cube.FileSystem.DataContract.Format.Registry;
             var path = $@"CubeSoft\CubePDF\{GetType().Name}";
-            var dest = new SettingFolder(asm, fmt, path, IO);
+            var dest = new SettingFolder(asm, fmt, path);
 
             dest.Load();
             dest.Normalize();
@@ -202,15 +203,11 @@ namespace Cube.Pdf.Converter.Tests
         protected IEnumerable<string> Combine(IEnumerable<string> args, string src)
         {
             var tmp = Get(Guid.NewGuid().ToString("N"));
-            IO.Copy(GetSource(src), tmp, true);
+            Io.Copy(GetSource(src), tmp, true);
 
-            using (var stream = IO.OpenRead(tmp))
-            {
-                var hash = new SHA256CryptoServiceProvider()
-                           .ComputeHash(stream)
-                           .Join("",  b => $"{b:X2}");
-                return args.Concat("/InputFile", tmp, "/Digest", hash).ToList();
-            }
+            var service = new SHA256CryptoServiceProvider();
+            var hash = IoEx.Load(tmp, e => service.ComputeHash(e).Join("", b => $"{b:X2}"));
+            return args.Concat("/InputFile", tmp, "/Digest", hash).ToList();
         }
 
         /* ----------------------------------------------------------------- */

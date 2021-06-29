@@ -16,16 +16,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.String;
-using Cube.Tests;
-using Cube.Xui.Converters;
-using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Cube.FileSystem;
+using Cube.Mixin.String;
+using Cube.Tests;
+using Cube.Xui.Converters;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Interactions
 {
@@ -62,7 +62,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         [TestCase("",                  true,  ExpectedResult = "CubePDF Utility")]
         public string TitleConverter(string src, bool modified)
         {
-            var fi   = src.HasValue() ? IO.Get(src) : null;
+            var fi   = src.HasValue() ? Io.Get(src) : null;
             var args = new object[] { fi, modified };
             var type = typeof(string);
             var ci   = CultureInfo.CurrentCulture;
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         [TestCase("",           ExpectedResult = false)]
         public bool IconConverter(string src) => Convert<ImageSource>(
             new IconConverter(),
-            src.HasValue() ? IO.Get(GetSource(src)) : null
+            src.HasValue() ? Io.Get(GetSource(src)) : null
         ) != null;
 
         #endregion

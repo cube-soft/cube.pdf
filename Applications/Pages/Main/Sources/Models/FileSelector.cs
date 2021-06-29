@@ -34,39 +34,6 @@ namespace Cube.Pdf.Pages
     /* --------------------------------------------------------------------- */
     public class FileSelector
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FileSelector
-        ///
-        /// <summary>
-        /// Initializes a new instance of the FileSelector class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public FileSelector(IO io) { IO = io; }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
-
-        #endregion
-
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -81,7 +48,7 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public IEnumerable<string> Get(IEnumerable<string> src) =>
-            src.GroupBy(e => IO.Get(e).IsDirectory)
+            src.GroupBy(e => Io.Get(e).IsDirectory)
                .OrderByDescending(e => e.Key)
                .SelectMany(e => GetCore(e));
 
@@ -100,7 +67,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private IEnumerable<string> GetCore(IGrouping<bool, string> src) =>
             src.Key ?
-            src.OrderBy(e => e).SelectMany(e => Filter(IO.GetFiles(e))) :
+            src.OrderBy(e => e).SelectMany(e => Filter(Io.GetFiles(e))) :
             Filter(src);
 
         /* ----------------------------------------------------------------- */
@@ -127,7 +94,7 @@ namespace Cube.Pdf.Pages
         private bool IsTarget(string src)
         {
             var cmp = new[] { ".pdf", ".bmp", ".png", ".jpg", ".jpeg", ".tif", ".tiff" };
-            var cvt = IO.Get(src);
+            var cvt = Io.Get(src);
             return !cvt.IsDirectory && cmp.Any(e => cvt.Extension.FuzzyEquals(e));
         }
 

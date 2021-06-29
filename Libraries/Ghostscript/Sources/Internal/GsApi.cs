@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Cube.FileSystem;
-using Cube.Mixin.IO;
 using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 
@@ -75,11 +74,11 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Invoke(IEnumerable<string> args, string tmp, IO io)
+        public static void Invoke(IEnumerable<string> args, string tmp)
         {
             lock (_lock)
             {
-                SetTemp(tmp, io, () =>
+                SetTemp(tmp, () =>
                 {
                     _ = NativeMethods.NewInstance(out var core, IntPtr.Zero);
                     if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
@@ -108,7 +107,7 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static void SetTemp(string tmp, IO io, Action callback)
+        private static void SetTemp(string tmp, Action callback)
         {
             var e0 = Environment.GetEnvironmentVariable("Tmp");
             var e1 = Environment.GetEnvironmentVariable("Temp");
@@ -117,7 +116,7 @@ namespace Cube.Pdf.Ghostscript
             {
                 if (tmp.HasValue())
                 {
-                    if (!io.Exists(tmp)) io.CreateDirectory(tmp);
+                    Io.CreateDirectory(tmp);
 
                     SetVariable("Tmp", tmp);
                     typeof(GsApi).LogDebug($"Tmp:{e0.Quote()} -> {tmp.Quote()}");

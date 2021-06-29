@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using NUnit.Framework;
@@ -51,13 +52,13 @@ namespace Cube.Pdf.Tests.Ghostscript
         [TestCaseSource(nameof(TestCases))]
         public void Convert(Format fmt)
         {
-            var name = $"{nameof(Convert)}_{fmt.ToString()}";
+            var name = $"{nameof(Convert)}_{fmt}";
             var dest = Get($"{name}{fmt.GetExtension()}");
             var src  = GetSource("Sample.eps");
             var conv = new Converter(fmt) { Resolution = 72 };
 
             conv.Invoke(src, dest);
-            Assert.That(IO.Get(dest).Length, Is.AtLeast(1));
+            Assert.That(Io.Get(dest).Length, Is.AtLeast(1));
         }
 
         /* ----------------------------------------------------------------- */
@@ -78,7 +79,7 @@ namespace Cube.Pdf.Tests.Ghostscript
             var conv = new Converter(fmt);
 
             conv.Invoke(src, dest);
-            Assert.That(IO.Get(dest).Length, Is.AtLeast(1));
+            Assert.That(Io.Get(dest).Length, Is.AtLeast(1));
         }
 
         #endregion

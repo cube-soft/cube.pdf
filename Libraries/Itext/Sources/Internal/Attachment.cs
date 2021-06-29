@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Security.Cryptography;
-using Cube.FileSystem;
 using iTextSharp.text.pdf;
 
 namespace Cube.Pdf.Itext
@@ -44,14 +43,13 @@ namespace Cube.Pdf.Itext
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
         /// <param name="name">Name of attached file.</param>
         /// <param name="src">Path of the PDF document.</param>
         /// <param name="core">Core object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EmbeddedAttachment(string name, string src, IO io, PRStream core) :
-            base(name, src, io) { _core = core; }
+        public EmbeddedAttachment(string name, string src, PRStream core) :
+            base(name, src) { _core = core; }
 
         #endregion
 

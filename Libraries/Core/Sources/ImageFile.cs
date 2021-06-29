@@ -17,64 +17,87 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// File
+    /// ImageFile
     ///
     /// <summary>
-    /// Represents information of PDF and image files.
+    /// Represents information of an image file.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public abstract class File : Entity
+    public class ImageFile : File
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// File
+        /// ImageFile
         ///
         /// <summary>
-        /// Initializes a new instance of the File class with the specified
-        /// arguments.
+        /// Initializes a new instance of the ImageFile class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="src">Path of the source file.</param>
-        /// <param name="controller">Entity controller.</param>
+        /// <param name="src">Path of the image file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected File(string src, EntityController controller) : base(src, controller) { }
+        public ImageFile(string src) : base(src, IoEx.GetEntityController())
+        {
+            using var ss = Io.Open(src);
+            using var image = Image.FromStream(ss);
+            Setup(image);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageFile
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ImageFile class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Path of the image file.</param>
+        /// <param name="image">Image object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ImageFile(string src, Image image) : base(src, IoEx.GetEntityController())
+        {
+            Setup(image);
+        }
 
         #endregion
 
-        #region Properties
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Count
+        /// Setup
         ///
         /// <summary>
-        /// Gets the number of pages.
+        /// Initializes properties of an ImageFile object.
         /// </summary>
         ///
+        /// <param name="src">Image object.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public int Count { get; set; }
+        private void Setup(Image src)
+        {
+            var guid = src.FrameDimensionsList[0];
+            var dim  = new FrameDimension(guid);
+            var x    = src.HorizontalResolution;
+            var y    = src.VerticalResolution;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Resolution
-        ///
-        /// <summary>
-        /// Gets the resolution of the PDF or image object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PointF Resolution { get; set; }
+            Count      = src.GetFrameCount(dim);
+            Resolution = new(x, y);
+        }
 
         #endregion
     }

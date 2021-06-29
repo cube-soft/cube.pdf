@@ -16,12 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.String;
-using Cube.Pdf.Pdfium;
 using System;
 using System.Collections.Concurrent;
 using System.Drawing;
+using Cube.Mixin.String;
+using Cube.Pdf.Pdfium;
 
 namespace Cube.Pdf.Editor
 {
@@ -47,13 +46,11 @@ namespace Cube.Pdf.Editor
         /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
         /// <param name="query">Function to get the password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RendererCache(IO io, Func<IQuery<string>> query)
+        public RendererCache(Func<IQuery<string>> query)
         {
-            _io    = io;
             _query = query;
         }
 
@@ -150,7 +147,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private DocumentRenderer Create(string src, string password)
         {
-            var opt  = new OpenOption { IO = _io, FullAccess = true };
+            var opt  = new OpenOption { FullAccess = true };
             var dest = password.HasValue() ?
                        new DocumentRenderer(src, password, opt) :
                        new DocumentRenderer(src, _query(), opt);
@@ -163,10 +160,8 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private readonly IO _io;
         private readonly Func<IQuery<string>> _query;
-        private readonly ConcurrentDictionary<string, DocumentRenderer> _inner =
-            new ConcurrentDictionary<string, DocumentRenderer>();
+        private readonly ConcurrentDictionary<string, DocumentRenderer> _inner = new();
         #endregion
     }
 }

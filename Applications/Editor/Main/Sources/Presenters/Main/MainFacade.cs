@@ -22,7 +22,6 @@ using System.Linq;
 using System.Threading;
 using Cube.FileSystem;
 using Cube.Mixin.String;
-using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Editor
 {
@@ -56,10 +55,9 @@ namespace Cube.Pdf.Editor
         public MainFacade(SettingFolder folder, SynchronizationContext context)
         {
             Folder = Setup(folder);
-            Cache  = new RendererCache(Folder.IO, () => Value.Query);
-            Backup = new Backup(Folder.IO);
-            Value  = new MainBindable(
-                new ImageCollection(e => Cache?.GetOrAdd(e), new ContextDispatcher(context, true)),
+            Cache  = new(() => Value.Query);
+            Value  = new(
+                new(e => Cache?.GetOrAdd(e), new ContextDispatcher(context, true)),
                 Folder,
                 new ContextDispatcher(context, false)
             );
@@ -100,7 +98,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Backup Backup { get; }
+        public Backup Backup { get; } = new();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -163,7 +161,7 @@ namespace Cube.Pdf.Editor
         public void Save(IDocumentReader src, SaveOption options, Action<Entity> prev, Action<Entity> next) => Invoke(() =>
         {
             Value.SetMessage(Properties.Resources.MessageSaving, options.Destination);
-            var itext = src ?? Value.Source.GetItext(Value.Query, Value.IO, false);
+            var itext = src ?? Value.Source.GetItext(Value.Query, false);
             Value.Set(itext.Metadata, itext.Encryption);
             using var dest = new SaveAction(itext, Value.Images, options);
             dest.Invoke(prev, next);
@@ -214,7 +212,7 @@ namespace Cube.Pdf.Editor
                     Value.SetMessage(Properties.Resources.MessageLoading, e);
                     return !this.CanInsert(e) ? Enumerable.Empty<Page>() :
                            e.IsPdf()          ? Cache.GetOrAdd(e).Pages  :
-                           Value.IO.GetImagePages(e);
+                           new ImagePageCollection(e);
                 })
             ));
             Value.SetMessage(string.Empty);

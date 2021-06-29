@@ -187,8 +187,7 @@ namespace Cube.Pdf.Editor.Tests
             var src = new SettingFolder(
                 Assembly.GetExecutingAssembly(),
                 Format.Registry,
-                @"CubeSoft\Cube.Pdf.Editor.Tests",
-                IO
+                @"CubeSoft\Cube.Pdf.Editor.Tests"
             ) { AutoSave = false };
 
             var dest  = new MainViewModel(src, new SynchronizationContext());

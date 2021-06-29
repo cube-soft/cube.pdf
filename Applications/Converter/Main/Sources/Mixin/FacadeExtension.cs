@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Diagnostics;
+using Cube.FileSystem;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 
@@ -64,11 +65,10 @@ namespace Cube.Pdf.Converter.Mixin
         /* ----------------------------------------------------------------- */
         public static void ChangeExtension(this Facade src)
         {
-            var io   = src.Settings.IO;
-            var prev = io.Get(src.Settings.Value.Destination);
+            var prev = Io.Get(src.Settings.Value.Destination);
             var ext  = src.Settings.Value.Format.GetExtension();
             if (prev.Extension.FuzzyEquals(ext)) return;
-            src.Settings.Value.Destination = io.Combine(prev.DirectoryName, $"{prev.BaseName}{ext}");
+            src.Settings.Value.Destination = Io.Combine(prev.DirectoryName, $"{prev.BaseName}{ext}");
         }
 
         /* ----------------------------------------------------------------- */

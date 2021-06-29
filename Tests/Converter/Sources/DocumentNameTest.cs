@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Converter.Tests
@@ -60,7 +59,7 @@ namespace Cube.Pdf.Converter.Tests
         [TestCase("http://www.example.com/index.html", ExpectedResult = "index.html")]
         [TestCase("",                                  ExpectedResult = "Default")]
         [TestCase(null,                                ExpectedResult = "Default")]
-        public string Name(string src) => new DocumentName(src, "Default", new IO()).Value;
+        public string Name(string src) => new DocumentName(src, "Default").Value;
 
         #endregion
     }

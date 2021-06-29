@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using Cube.FileSystem;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -53,9 +54,9 @@ namespace Cube.Pdf.Itext
         public static WriterEngine Create(string path, SaveOption options, Metadata metadata)
         {
             var doc  = new Document();
-            var dest = options.UseSmartCopy ?
-                       new PdfSmartCopy(doc, options.IO.Create(path)) :
-                       new PdfCopy(doc, options.IO.Create(path));
+            var dest = options.SmartCopy ?
+                       new PdfSmartCopy(doc, Io.Create(path)) :
+                       new PdfCopy(doc, Io.Create(path));
 
             dest.PdfVersion = metadata.Version.Minor.ToString()[0];
             dest.ViewerPreferences = (int)metadata.Options;
@@ -73,18 +74,17 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="path">Path to save the PDF file.</param>
-        /// <param name="options">Save options.</param>
         /// <param name="src">Source PDF file.</param>
         /// <param name="metadata">PDF metadata.</param>
         /// <param name="encryption">PDF encryption settings.</param>
         /// <param name="bookmark">Bookmark information.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Stamp(string path, SaveOption options,
-            string src, Metadata metadata, Encryption encryption, Bookmark bookmark)
+        public static void Stamp(string path, string src,
+            Metadata metadata, Encryption encryption, Bookmark bookmark)
         {
             using var r = Reader.FromPdf(src);
-            using var e = new PdfStamper(r, options.IO.Create(path));
+            using var e = new PdfStamper(r, Io.Create(path));
 
             e.Writer.Outlines = bookmark;
             e.Set(metadata, r.Info);

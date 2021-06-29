@@ -24,9 +24,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Cube.FileSystem;
+using Cube.Mixin.Logging;
 using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
-using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Pages
 {
@@ -52,14 +52,12 @@ namespace Cube.Pdf.Pages
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(IO io, SynchronizationContext context) : base(new ContextDispatcher(context, false))
+        public MainFacade(SynchronizationContext context) : base(new ContextDispatcher(context, false))
         {
-            Settings = new SettingFolder(Assembly.GetExecutingAssembly(), io);
-            IO = io;
+            Settings = new(Assembly.GetExecutingAssembly());
             _inner.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
 
@@ -118,17 +116,6 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Busy
         ///
         /// <summary>
@@ -175,16 +162,16 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Merge(string dest) => Invoke(() =>
         {
-            var dir = IO.Get(dest).DirectoryName;
-            var tmp = IO.Combine(dir, Guid.NewGuid().ToString("N"));
+            var dir = Io.Get(dest).DirectoryName;
+            var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
             {
                 using (var writer = Make<DocumentWriter>()) writer.Save(tmp);
-                IO.Move(tmp, dest, true);
+                Io.Move(tmp, dest, true);
                 ClearItems();
             }
-            finally { _ = IO.TryDelete(tmp); }
+            finally { GetType().LogWarn(() => Io.Delete(tmp)); }
         });
 
         /* ----------------------------------------------------------------- */
@@ -217,12 +204,12 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Add(IEnumerable<string> src) => Invoke(() =>
         {
-            foreach (var f in new FileSelector(IO).Get(src))
+            foreach (var f in new FileSelector().Get(src))
             {
                 if (_inner.Any(e => e.FullName == f)) continue;
-                var ext = IO.Get(f).Extension.ToLower();
+                var ext = Io.Get(f).Extension.ToLower();
                 if (ext == ".pdf") AddDocument(f);
-                else _inner.Add(IO.GetImageFile(f));
+                else _inner.Add(new ImageFile(f));
             }
         });
 
@@ -331,7 +318,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void AddDocument(string path)
         {
-            var options = new OpenOption { IO = IO, FullAccess = true };
+            var options = new OpenOption { FullAccess = true };
             using var e = new DocumentReader(path, Query, options);
             _inner.Add(e.File);
         }
@@ -347,7 +334,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void AddDocument(PdfFile src, IDocumentWriter dest)
         {
-            var options = new OpenOption { IO = IO, FullAccess = true };
+            var options = new OpenOption { FullAccess = true };
             using var e = new DocumentReader(src.FullName, src.Password, options);
             dest.Add(e.Pages);
         }
@@ -361,11 +348,8 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void AddImage(ImageFile src, IDocumentWriter dest)
-        {
-            var pages = IO.GetImagePages(src.FullName);
-            if (pages != null) dest.Add(pages);
-        }
+        private void AddImage(ImageFile src, IDocumentWriter dest) =>
+            dest.Add(new ImagePageCollection(src.FullName));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -440,8 +424,8 @@ namespace Cube.Pdf.Pages
         #endregion
 
         #region Fields
-        private readonly object _lock = new object();
-        private readonly ObservableCollection<File> _inner = new ObservableCollection<File>();
+        private readonly object _lock = new();
+        private readonly ObservableCollection<File> _inner = new();
         #endregion
     }
 }

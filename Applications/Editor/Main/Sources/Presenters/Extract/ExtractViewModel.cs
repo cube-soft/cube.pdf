@@ -16,15 +16,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using Cube.FileSystem;
 using Cube.Mixin.Observing;
 using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
 using Cube.Xui;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
@@ -53,16 +53,14 @@ namespace Cube.Pdf.Editor
         /// <param name="callback">Callback method when applied.</param>
         /// <param name="selection">Page selection.</param>
         /// <param name="count">Number of pages.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ExtractViewModel(Action<SaveOption> callback,
             ImageSelection selection,
             int count,
-            IO io,
             SynchronizationContext context
-        ) : base(new ExtractFacade(selection, count, io, new ContextDispatcher(context, false)),
+        ) : base(new ExtractFacade(selection, count, new ContextDispatcher(context, false)),
             new Aggregator(),
             context
         ) {
@@ -72,7 +70,7 @@ namespace Cube.Pdf.Editor
                     Send<CloseMessage>();
                 }),
                 () => Facade.Value.Destination.HasValue() &&
-                      !io.Get(Facade.Value.Destination).IsDirectory
+                      !Io.Get(Facade.Value.Destination).IsDirectory
             ).Associate(Facade.Value, nameof(SaveOption.Destination));
         }
 

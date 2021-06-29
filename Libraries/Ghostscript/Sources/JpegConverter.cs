@@ -16,11 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cube.Mixin.Collections;
 
 namespace Cube.Pdf.Ghostscript
 {
@@ -49,7 +48,7 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="format">Target format.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public JpegConverter(Format format) : this(format, new IO()) { }
+        public JpegConverter(Format format) : this(format, SupportedFormats) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -61,27 +60,11 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <param name="format">Target format.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public JpegConverter(Format format, IO io) : this(format, io, SupportedFormats) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// JpegConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the JpegConverter class with the
-        /// specified format.
-        /// </summary>
-        ///
-        /// <param name="format">Target format.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="supported">Collection of supported formats.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected JpegConverter(Format format, IO io, IEnumerable<Format> supported) :
-            base(format, io, supported) { }
+        protected JpegConverter(Format format, IEnumerable<Format> supported) :
+            base(format, supported) { }
 
         #endregion
 

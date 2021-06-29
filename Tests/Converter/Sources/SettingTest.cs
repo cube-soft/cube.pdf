@@ -19,6 +19,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Cube.FileSystem;
 using Cube.Mixin.Environment;
 using Cube.Pdf.Converter.Mixin;
 using Cube.Pdf.Ghostscript;
@@ -76,13 +77,12 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Load()
         {
-            var temp    = IO.Combine(Environment.SpecialFolder.CommonApplicationData.GetName(), @"CubeSoft\CubePDF");
+            var temp    = Io.Combine(Environment.SpecialFolder.CommonApplicationData.GetName(), @"CubeSoft\CubePDF");
             var desktop = Environment.SpecialFolder.Desktop.GetName();
             var src     = new SettingFolder(
                 Assembly.GetExecutingAssembly(),
                 Cube.FileSystem.DataContract.Format.Registry,
-                $@"CubeSoft\CubePDF\{nameof(SettingTest)}",
-                IO
+                $@"CubeSoft\CubePDF\{nameof(SettingTest)}"
             );
 
             src.Load();

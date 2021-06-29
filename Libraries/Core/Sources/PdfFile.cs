@@ -15,91 +15,86 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System.Drawing;
-using System.Drawing.Imaging;
+using System;
 using Cube.FileSystem;
 
-namespace Cube.Pdf.Mixin
+namespace Cube.Pdf
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileExtension
+    /// PdfFile
     ///
     /// <summary>
-    /// Provides extended methods about File and its inherited classes.
+    /// Represents information of a PDF file.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class FileExtension
+    [Serializable]
+    public class PdfFile : File
     {
-        #region Methods
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetPdfFile
+        /// PdfFile
         ///
         /// <summary>
-        /// Gets the File object that represents the specified PDF document.
+        /// Initializes a new instance of the PdfFile class with the
+        /// specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
         /// <param name="src">Path of the PDF file.</param>
         /// <param name="password">Password to open the PDF file.</param>
         ///
-        /// <returns>PdfFile object.</returns>
-        ///
         /* ----------------------------------------------------------------- */
-        public static PdfFile GetPdfFile(this IO io, string src, string password) => new(src, password, io);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImageFile
-        ///
-        /// <summary>
-        /// Gets the File object that represents the specified image.
-        /// </summary>
-        ///
-        /// <param name="io">I/O handler.</param>
-        /// <param name="src">Path of the image file.</param>
-        ///
-        /// <returns>ImageFile object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static ImageFile GetImageFile(this IO io, string src)
+        public PdfFile(string src, string password) : base(src, IoEx.GetEntityController())
         {
-            using var ss    = io.OpenRead(src);
-            using var image = Image.FromStream(ss);
-            return io.GetImageFile(src, image);
+            Password   = password;
+            Resolution = new(Point, Point);
         }
 
+        #endregion
+
+        #region Properties
+
         /* ----------------------------------------------------------------- */
         ///
-        /// GetImageFile
+        /// Point
         ///
         /// <summary>
-        /// Gets the File object that represents the specified image.
+        /// Gets the DPI value of the "Point" unit.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
-        /// <param name="src">Path of the image file.</param>
-        /// <param name="image">Image object.</param>
+        /* ----------------------------------------------------------------- */
+        public static float Point => 72.0F;
+
+        /* ----------------------------------------------------------------- */
         ///
-        /// <returns>ImageFile object.</returns>
+        /// Password
+        ///
+        /// <summary>
+        /// Gets or sets the owner or user password.
+        /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageFile GetImageFile(this IO io, string src, Image image)
-        {
-            var guid = image.FrameDimensionsList[0];
-            var dim  = new FrameDimension(guid);
-            var x    = image.HorizontalResolution;
-            var y    = image.VerticalResolution;
+        public string Password { get; set; } = string.Empty;
 
-            return new(src, io)
-            {
-                Count      = image.GetFrameCount(dim),
-                Resolution = new PointF(x, y),
-            };
-        }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// FullAccess
+        ///
+        /// <summary>
+        /// Gets or sets the value indicating whether you can access
+        /// all contents of the PDF document.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// This property will be set to false if the PDF file is encrypted
+        /// with a password and the file is opened with the user password.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool FullAccess { get; set; } = true;
 
         #endregion
     }

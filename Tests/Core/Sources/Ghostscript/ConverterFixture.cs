@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using NUnit.Framework;
@@ -75,12 +76,12 @@ namespace Cube.Pdf.Tests.Ghostscript
             var asm = Assembly.GetExecutingAssembly();
             var sp  = GetSource(src);
             var dp  = Get($"{dest}{cv.Format.GetExtension()}");
-            var dir = IO.Get(asm.Location).DirectoryName;
+            var dir = Io.Get(asm.Location).DirectoryName;
 
             cv.Quiet = false;
             cv.Log   = Get($"{log}.log");
             cv.Temp  = Get("Tmp");
-            cv.Resources.Add(IO.Combine(dir, "lib"));
+            cv.Resources.Add(Io.Combine(dir, "lib"));
             cv.Invoke(sp, dp);
 
             return dp;
@@ -104,7 +105,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /* ----------------------------------------------------------------- */
         protected static TestCaseData TestCase<T>(int id, Converter cv, string src, T obj)
         {
-            var cvt = $"{obj.GetType().Name}_{obj.ToString()}";
+            var cvt = $"{obj.GetType().Name}_{obj}";
             return TestCase(id, cv, src, cvt);
         }
 
@@ -125,7 +126,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         protected static TestCaseData TestCase(int id, Converter cv, string src, string dest) =>
-            new TestCaseData(id, cv, src, dest);
+            new(id, cv, src, dest);
 
         #endregion
     }

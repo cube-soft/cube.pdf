@@ -308,7 +308,7 @@ namespace Cube.Pdf.Itext
         {
             if (_hints.TryGetValue(src.File.FullName, out var hit)) return hit;
 
-            var dest = Reader.From(src.File, new() { IO = Options.IO, SaveMemory = false });
+            var dest = Reader.From(src.File, new() { SaveMemory = false });
             if (dest is not null)
             {
                 _disposable.Add(dest);

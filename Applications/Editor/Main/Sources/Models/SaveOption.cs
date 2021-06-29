@@ -42,14 +42,11 @@ namespace Cube.Pdf.Editor
         /// SaveOption
         ///
         /// <summary>
-        /// Initializes a new instance of the SaveOption class with the
-        /// specified arguments.
+        /// Initializes a new instance of the SaveOption class.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public SaveOption(IO io) : this(io, Dispatcher.Vanilla) { }
+        public SaveOption() : this(Dispatcher.Vanilla) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -60,13 +57,11 @@ namespace Cube.Pdf.Editor
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SaveOption(IO io, Dispatcher dispatcher) : base(dispatcher)
+        public SaveOption(Dispatcher dispatcher) : base(dispatcher)
         {
-            IO = io;
             Resolution = 144;
         }
 
@@ -207,20 +202,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IEnumerable<Attachment> Attachments
         {
-            get => Get<IEnumerable<Attachment>>();
+            get => Get(Enumerable.Empty<Attachment>);
             set => Set(value);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         #endregion
 
@@ -281,7 +265,7 @@ namespace Cube.Pdf.Editor
             if (fi == null || fi.Extension.FuzzyEquals($".{Format}")) return;
 
             var name = $"{fi.BaseName}.{Format.ToString().ToLowerInvariant()}";
-            Destination = IO.Combine(fi.DirectoryName, name);
+            Destination = Io.Combine(fi.DirectoryName, name);
         }
 
         /* ----------------------------------------------------------------- */
@@ -293,7 +277,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Entity GetEntity(string src) => src.HasValue() ? IO.Get(src) : null;
+        private Entity GetEntity(string src) => src.HasValue() ? Io.Get(src) : default;
 
         #endregion
     }

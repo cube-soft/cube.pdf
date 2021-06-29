@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -48,7 +47,7 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="format">Target format.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageConverter(Format format) : this(format, new IO()) { }
+        public ImageConverter(Format format) : this(format, SupportedFormats) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -60,27 +59,11 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <param name="format">Target format.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageConverter(Format format, IO io) : this(format, io, SupportedFormats) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ImageConverter class with the
-        /// specified format.
-        /// </summary>
-        ///
-        /// <param name="format">Target format.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="supported">Collection of supported formats.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected ImageConverter(Format format, IO io, IEnumerable<Format> supported) :
-            base(format, io, supported) { }
+        protected ImageConverter(Format format, IEnumerable<Format> supported) :
+            base(format, supported) { }
 
         #endregion
 
