@@ -16,13 +16,13 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using GongSolutions.Wpf.DragDrop;
 using System;
 using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using GongSolutions.Wpf.DragDrop;
 
 namespace Cube.Pdf.Editor.Tests
 {

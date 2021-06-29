@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
-using System;
 
 namespace Cube.Pdf.Converter.Tests
 {

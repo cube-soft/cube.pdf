@@ -20,7 +20,6 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Input;
-using Cube.FileSystem;
 using Cube.Mixin.Environment;
 using Cube.Mixin.Observing;
 using Cube.Mixin.String;

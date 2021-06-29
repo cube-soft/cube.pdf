@@ -16,8 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */

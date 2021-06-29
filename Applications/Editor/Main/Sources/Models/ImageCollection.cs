@@ -16,12 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections;
-using Cube.Mixin.Collections;
-using Cube.Mixin.Drawing;
-using Cube.Mixin.Logging;
-using Cube.Mixin.Syntax;
-using Cube.Mixin.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,6 +25,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Cube.Collections;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Drawing;
+using Cube.Mixin.Logging;
+using Cube.Mixin.Syntax;
+using Cube.Mixin.Tasks;
 
 namespace Cube.Pdf.Editor
 {

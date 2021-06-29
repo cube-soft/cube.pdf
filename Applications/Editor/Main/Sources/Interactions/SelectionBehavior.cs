@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Windows;
+using System.Windows.Controls;
 using Cube.Xui;
 using Cube.Xui.Behaviors;
 using Fluent;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace Cube.Pdf.Editor
 {

@@ -16,11 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Reflection;
 using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using NUnit.Framework;
-using System.Reflection;
 
 namespace Cube.Pdf.Tests.Ghostscript
 {

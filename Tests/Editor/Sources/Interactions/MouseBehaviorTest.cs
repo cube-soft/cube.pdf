@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using NUnit.Framework;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Interactions
 {

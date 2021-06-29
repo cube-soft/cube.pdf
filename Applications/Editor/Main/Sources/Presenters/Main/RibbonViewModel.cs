@@ -16,10 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Threading;
 using Cube.Mixin.Observing;
 using Cube.Xui;
-using System;
-using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
