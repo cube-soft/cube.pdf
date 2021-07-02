@@ -137,6 +137,11 @@ namespace Cube.Pdf.Tests.Ghostscript
                 yield return TestCase(n++, new DocumentConverter(Format.Eps), "Sample.ps", Format.Eps);
 
                 /* --------------------------------------------------------- */
+                // Metadata
+                /* --------------------------------------------------------- */
+                yield return TestCase(n++, new PdfConverter(), "SampleMetadata.ps", "Metadata");
+
+                /* --------------------------------------------------------- */
                 // Version
                 /* --------------------------------------------------------- */
                 yield return TestCase(n++, new PdfConverter
