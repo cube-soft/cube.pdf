@@ -21,8 +21,8 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Linq;
 using Cube.FileSystem;
+using Cube.Logging;
 using Cube.Mixin.Iteration;
-using Cube.Mixin.Logging;
 using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Editor
@@ -215,7 +215,7 @@ namespace Cube.Pdf.Editor
         {
             var fi = Io.Get(Options.Destination);
             GetTarget(Options).Each(i => SaveAsDocument(
-                Convert(fi, i, Images.Count),
+                GetPath(fi, i, Images.Count),
                 null,
                 new[] { Images[i].RawObject },
                 prev,
@@ -239,7 +239,7 @@ namespace Cube.Pdf.Editor
             {
                 var ratio = Options.Resolution / Images[i].RawObject.Resolution.X;
                 using var image = Images.GetImage(i, ratio);
-                var dest = Io.Get(Convert(fi, i, Images.Count));
+                var dest = Io.Get(GetPath(fi, i, Images.Count));
                 prev(dest);
                 image.Save(dest.FullName, ImageFormat.Png);
                 next(dest);
@@ -248,14 +248,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// GetPath
         ///
         /// <summary>
         /// Gets the output path with the specified arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string Convert(Entity src, int index, int count)
+        private string GetPath(Entity src, int index, int count)
         {
             var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
             var name  = string.Format("{0}-{1}{2}", src.BaseName, (index + 1).ToString(digit), src.Extension);

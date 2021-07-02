@@ -20,7 +20,7 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Cube.Mixin.Logging;
+using Cube.Logging;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;

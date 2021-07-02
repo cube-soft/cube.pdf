@@ -19,7 +19,7 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Cube.Mixin.Logging;
+using Cube.Logging;
 using Cube.Mixin.Observing;
 using Cube.Pdf.Converter.Mixin;
 

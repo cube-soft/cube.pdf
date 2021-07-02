@@ -21,8 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using Cube.Logging;
 using Cube.Mixin.Collections;
-using Cube.Mixin.Logging;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

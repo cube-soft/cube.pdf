@@ -20,7 +20,7 @@ using System;
 using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
-using Cube.Mixin.Logging;
+using Cube.Logging;
 using Cube.Mixin.String;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;

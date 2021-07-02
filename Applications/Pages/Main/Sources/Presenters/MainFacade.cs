@@ -24,7 +24,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using Cube.FileSystem;
-using Cube.Mixin.Logging;
+using Cube.Logging;
 using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
 

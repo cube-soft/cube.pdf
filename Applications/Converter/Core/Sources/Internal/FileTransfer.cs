@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Mixin.Logging;
+using Cube.Logging;
 using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter

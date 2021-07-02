@@ -26,9 +26,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Cube.Collections;
+using Cube.Logging;
 using Cube.Mixin.Collections;
 using Cube.Mixin.Drawing;
-using Cube.Mixin.Logging;
 using Cube.Mixin.Syntax;
 using Cube.Mixin.Tasks;
 

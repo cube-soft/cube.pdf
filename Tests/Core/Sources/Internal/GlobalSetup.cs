@@ -16,7 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Reflection;
-using Cube.Mixin.Logging;
+using Cube.Logging;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Tests
