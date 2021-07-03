@@ -71,6 +71,23 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Temp
+        ///
+        /// <summary>
+        /// Gets or sets the path of the working directory. If this value is
+        /// empty, the program will use the same directory as the path
+        /// specified in Destination as its working directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Temp
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Destination
         ///
         /// <summary>
@@ -80,7 +97,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public string Destination
         {
-            get => Get<string>();
+            get => Get(() => string.Empty);
             set { if (Set(value)) SetFormat(); }
         }
 
@@ -95,7 +112,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public SaveFormat Format
         {
-            get => Get<SaveFormat>();
+            get => Get(() => SaveFormat.Pdf);
             set { if (Set(value)) SetDestination(); }
         }
 
@@ -110,7 +127,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public SaveTarget Target
         {
-            get => Get<SaveTarget>();
+            get => Get(() => SaveTarget.All);
             set => Set(value);
         }
 
@@ -125,7 +142,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public string Range
         {
-            get => Get<string>();
+            get => Get(() => string.Empty);
             set => Set(value);
         }
 
@@ -140,7 +157,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Resolution
         {
-            get => Get<int>();
+            get => Get(() => 72);
             set => Set(value);
         }
 
@@ -156,7 +173,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Split
         {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
 
@@ -205,6 +222,27 @@ namespace Cube.Pdf.Editor
             get => Get(Enumerable.Empty<Attachment>);
             set => Set(value);
         }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ToItext
+        ///
+        /// <summary>
+        /// Converts to the Itext.SaveOption object.
+        /// </summary>
+        ///
+        /// <returns>Itext.SaveOption object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Itext.SaveOption ToItext() => new()
+        {
+            Temp      = Temp,
+            SmartCopy = true,
+        };
 
         #endregion
 

@@ -95,6 +95,7 @@ namespace Cube.Pdf.Editor
 
             src.Save(itext, new SaveOption
             {
+                Temp        = src.Folder.Value.Temp,
                 Target      = SaveTarget.All,
                 Split       = false,
                 Destination = dest,
@@ -153,6 +154,7 @@ namespace Cube.Pdf.Editor
         public static void Extract(this MainFacade src, string dest) =>
             src.Extract(new SaveOption
         {
+            Temp        = src.Folder.Value.Temp,
             Target      = SaveTarget.Selected,
             Split       = false,
             Destination = dest,

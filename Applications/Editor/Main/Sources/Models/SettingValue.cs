@@ -103,6 +103,23 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Temp
+        ///
+        /// <summary>
+        /// Gets or sets the path of the working directory. If this value is
+        /// empty, the program will use the same directory as the destination
+        /// path as its working directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Temp
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Language
         ///
         /// <summary>

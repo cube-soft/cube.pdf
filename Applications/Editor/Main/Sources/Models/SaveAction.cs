@@ -23,6 +23,7 @@ using System.Linq;
 using Cube.FileSystem;
 using Cube.Logging;
 using Cube.Mixin.Iteration;
+using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Editor
@@ -164,11 +165,12 @@ namespace Cube.Pdf.Editor
             Action<Entity> next
         ) {
             var fi  = Io.Get(dest);
-            var tmp = Io.Combine(fi.DirectoryName, Guid.NewGuid().ToString("N"));
+            var dir = Options.Temp.HasValue() ? Options.Temp : fi.DirectoryName;
+            var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
             {
-                using (var writer = new Itext.DocumentWriter())
+                using (var writer = new Itext.DocumentWriter(Options.ToItext()))
                 {
                     if (Options.Attachments != null) writer.Add(Options.Attachments);
                     if (Options.Metadata    != null) writer.Set(Options.Metadata);

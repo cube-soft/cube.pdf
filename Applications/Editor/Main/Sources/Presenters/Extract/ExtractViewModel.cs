@@ -60,10 +60,8 @@ namespace Cube.Pdf.Editor
             ImageSelection selection,
             int count,
             SynchronizationContext context
-        ) : base(new ExtractFacade(selection, count, new ContextDispatcher(context, false)),
-            new Aggregator(),
-            context
-        ) {
+        ) : base(new(selection, count, new ContextDispatcher(context, false)), new(), context)
+        {
             OK.Command = new DelegateCommand(
                 () => Track(() => {
                     callback(Facade.Value);
