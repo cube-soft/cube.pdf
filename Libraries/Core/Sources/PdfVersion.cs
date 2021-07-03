@@ -15,10 +15,10 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
 using System;
 using System.Runtime.Serialization;
 using System.Text;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf
 {
@@ -61,8 +61,7 @@ namespace Cube.Pdf
         /// <param name="minor">Minor version.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PdfVersion(int major, int minor) :
-            this(major, minor, 0) { }
+        public PdfVersion(int major, int minor) : this(major, minor, 0) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -172,10 +171,10 @@ namespace Cube.Pdf
         public override string ToString()
         {
             var sb = new StringBuilder("PDF");
-            if (Subset.HasValue()) sb.Append($"/{Subset}");
-            sb.Append(" ");
-            sb.Append($"{Major}.{Minor}");
-            if (ExtensionLevel > 0) sb.Append($" {nameof(ExtensionLevel)} {ExtensionLevel}");
+            if (Subset.HasValue()) _ = sb.Append($"/{Subset}");
+            _ = sb.Append(" ");
+            _ = sb.Append($"{Major}.{Minor}");
+            if (ExtensionLevel > 0) _ = sb.Append($" {nameof(ExtensionLevel)} {ExtensionLevel}");
             return sb.ToString();
         }
 

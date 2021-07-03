@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace Cube.Pdf.Tests.Ghostscript
 {

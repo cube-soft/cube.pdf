@@ -86,7 +86,7 @@ namespace Cube.Pdf.Editor
         static void Start(string[] args)
         {
             var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Process.Start(new ProcessStartInfo
+            _ = Process.Start(new ProcessStartInfo
             {
                 FileName  = Path.Combine(dir, $"{Target}.exe"),
                 Arguments = string.Join(" ", args.Select(s => $"\"{s}\"").ToArray()),

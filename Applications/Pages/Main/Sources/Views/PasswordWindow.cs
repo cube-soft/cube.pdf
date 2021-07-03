@@ -63,10 +63,10 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnBind(IPresentable src)
+        protected override void OnBind(IBindable src)
         {
             base.OnBind(src);
-            if (!(src is PasswordViewModel vm)) return;
+            if (src is not PasswordViewModel vm) return;
 
             PasswordBindingSource.DataSource = vm;
             ExecButton.Click += (s, e) => vm.Apply();

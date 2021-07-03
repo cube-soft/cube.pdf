@@ -25,20 +25,20 @@ namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MessageFactory
+    /// Message
     ///
     /// <summary>
     /// Provides functionality to create message objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class MessageFactory
+    internal static class Message
     {
         #region OpenOrSaveMessage
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForAdd
+        /// ForAdd
         ///
         /// <summary>
         /// Creates a message to show an OpenFileDialog dialog.
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Pages
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage CreateForAdd() => new OpenFileMessage
+        public static OpenFileMessage ForAdd() => new()
         {
             Text            = Properties.Resources.TitleAdd,
             CheckPathExists = true,
@@ -62,7 +62,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForMerge
+        /// ForMerge
         ///
         /// <summary>
         /// Creates a message to show a SaveFileDialog dialog.
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Pages
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage CreateForMerge() => new SaveFileMessage
+        public static SaveFileMessage ForMerge() => new()
         {
             Text            = Properties.Resources.TitleMerge,
             OverwritePrompt = true,
@@ -85,7 +85,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForSplit
+        /// ForSplit
         ///
         /// <summary>
         /// Creates a message to show a BrowserFolder dialog.
@@ -94,7 +94,7 @@ namespace Cube.Pdf.Pages
         /// <returns>OpenDirectoryMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage CreateForSplit() => new OpenDirectoryMessage
+        public static OpenDirectoryMessage ForSplit() => new()
         {
             Text      = Properties.Resources.TitleSplit,
             NewButton = true,
@@ -102,7 +102,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateForSelect
+        /// ForSelect
         ///
         /// <summary>
         /// Creates a message to select items of the specified indices.
@@ -115,10 +115,29 @@ namespace Cube.Pdf.Pages
         /// <returns>SelectMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SelectMessage CreateForSelect(IEnumerable<int> indices, int offset, int count) => new SelectMessage
+        public static SelectMessage ForSelect(IEnumerable<int> indices, int offset, int count) => new()
         {
             Text  = string.Empty,
             Value = indices.Select(e => Math.Max(Math.Min(e + offset, count - 1), 0)),
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ForPreview
+        ///
+        /// <summary>
+        /// Creates a message to preview the specified files.
+        /// </summary>
+        ///
+        /// <param name="src">File list.</param>
+        /// <param name="indices">Source selected indices.</param>
+        ///
+        /// <returns>PreviewMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static PreviewMessage ForPreview(IList<File> src, IEnumerable<int> indices) => new()
+        {
+            Value = src[indices.First()].FullName,
         };
 
         #endregion

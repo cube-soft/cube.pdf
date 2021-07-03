@@ -18,9 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using System.Reflection;
 using Cube.FileSystem;
+using Cube.FileSystem.DataContract;
 using Cube.Mixin.Assembly;
-using Cube.Mixin.IO;
-using Cube.Mixin.String;
 
 namespace Cube.Pdf.Pages
 {
@@ -47,12 +46,10 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /// <param name="assembly">Assembly information.</param>
-        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, IO io) :
-            this(assembly, Cube.DataContract.Format.Registry, @"CubeSoft\CubePDF Page", io)
-        { }
+        public SettingFolder(Assembly assembly) :
+            this(assembly, Format.Registry, @"CubeSoft\CubePDF Page") { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,15 +63,36 @@ namespace Cube.Pdf.Pages
         /// <param name="assembly">Assembly information.</param>
         /// <param name="format">Serialized format.</param>
         /// <param name="location">Location for the settings.</param>
-        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
-            base(assembly, format, location, io)
+        public SettingFolder(Assembly assembly, Format format, string location) :
+            base(format, location, assembly.GetSoftwareVersion())
         {
             AutoSave = false;
-            Version.Digit = 3;
+            Startup  = new("cubepdf-page-checker")
+            {
+                Source = Io.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe"),
+            };
+
+            Startup.Arguments.Add("cubepdfpage");
+            Startup.Arguments.Add("/subkey");
+            Startup.Arguments.Add("CubePDF Page");
         }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Startup
+        ///
+        /// <summary>
+        /// Get the startup registration object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Startup Startup { get; }
 
         #endregion
 
@@ -82,31 +100,17 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnSaved
+        /// OnSave
         ///
         /// <summary>
-        /// Occurs when the Saved event is fired.
+        /// Saves the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnSaved(KeyValueEventArgs<Cube.DataContract.Format, string> e)
+        protected override void OnSave()
         {
-            try
-            {
-                if (Value == null) return;
-
-                var name = "cubepdf-page-checker";
-                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
-                var sk   = "CubePDF Page";
-                var args = $"{Assembly.GetNameString().Quote()} /subkey {sk.Quote()}";
-
-                new Startup(name)
-                {
-                    Command = $"{exe.Quote()} {args}",
-                    Enabled = Value.CheckUpdate && IO.Exists(exe),
-                }.Save();
-            }
-            finally { base.OnSaved(e); }
+            base.OnSave();
+            Startup.Save(true);
         }
 
         #endregion

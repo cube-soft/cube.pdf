@@ -206,6 +206,7 @@
         }
 
         #endregion
+
         private System.Windows.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox TitleButton;

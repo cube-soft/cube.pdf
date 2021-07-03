@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.Forms;
 
 namespace Cube.Pdf.Picker
 {
@@ -32,7 +32,7 @@ namespace Cube.Pdf.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class PreviewWindow : WindowBase
+    public partial class PreviewWindow : Window
     {
         #region Constructors
 

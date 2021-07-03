@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>3.1.5</Version>
+        <Version>4.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
@@ -24,11 +24,10 @@
         <ProjectReference Include="..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
         <ProjectReference Include="..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
-        <PackageReference Include="NUnit" Version="3.13.1" />
-        <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-        <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
-        <PackageReference Include="OpenCover" Version="4.7.922" />
+        <PackageReference Include="Cube.Tests" Version="4.0.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.*" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.17.*" />
+        <PackageReference Include="Appveyor.TestLogger" Version="2.0.*" />
     </ItemGroup>
     <ItemGroup>
         <None Include="Examples\**\*" CopyToOutputDirectory="Always" />

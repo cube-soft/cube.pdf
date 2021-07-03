@@ -15,8 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-
 namespace Cube.Pdf.Itext
 {
     /* --------------------------------------------------------------------- */
@@ -24,24 +22,13 @@ namespace Cube.Pdf.Itext
     /// OpenOption
     ///
     /// <summary>
-    /// Represents the options to open a PDF file with the DocumentReader
-    /// class.
+    /// Represents the options to open a PDF file with a DocumentReader
+    /// object.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     public class OpenOption
     {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets or sets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; set; } = new IO();
-
         /* ----------------------------------------------------------------- */
         ///
         /// FullAccess

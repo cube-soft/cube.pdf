@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Input;
+using Cube.Xui;
 
 namespace Cube.Pdf.Editor
 {
@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class RecentViewModel : ViewModelBase<DirectoryMonitor>
+    public sealed class RecentViewModel : Presentable<DirectoryMonitor>
     {
         #region Constructors
 
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Menu => Get(() => new BindableElement(
             () => Properties.Resources.MenuRecent,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = new DelegateCommand(() => Track(() => Process.Start(Items.Directory))) });
 
         #endregion

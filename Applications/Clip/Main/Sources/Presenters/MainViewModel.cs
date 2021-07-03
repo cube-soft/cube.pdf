@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -61,13 +60,13 @@ namespace Cube.Pdf.Clip
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel(SynchronizationContext context) : base(
-            new MainFacade(new IO(), context),
+            new MainFacade(context),
             new Aggregator(),
             context)
         {
             Clips = new BindingSource { DataSource = Facade.Clips };
 
-            Facade.CollectionChanged += (s, e) => Send<CollectionMessage>();
+            Facade.CollectionChanged += (s, e) => Send<UpdateListMessage>();
             Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
         }
 
@@ -121,7 +120,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open() => Send(MessageFactory.CreateForOpen(), e => Facade.Open(e.First()));
+        public void Open() => Track(Message.ForOpen(), e => Facade.Open(e.First()));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -132,7 +131,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach() => Send(MessageFactory.CreateForAttach(), e => Facade.Attach(e));
+        public void Attach() => Track(Message.ForAttach(), Facade.Attach);
 
         /* ----------------------------------------------------------------- */
         ///

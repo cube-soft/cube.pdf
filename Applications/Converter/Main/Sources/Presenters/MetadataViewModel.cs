@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
 using System;
 using System.Linq;
 using System.Threading;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter
 {
@@ -45,15 +45,17 @@ namespace Cube.Pdf.Converter
         /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="model">PDF metadata.</param>
+        /// <param name="src">PDF metadata.</param>
         /// <param name="aggregator">Event aggregator.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataViewModel(Metadata model, Aggregator aggregator,
-            SynchronizationContext context) : base(model, aggregator, context)
+        public MetadataViewModel(Metadata src,
+            Aggregator aggregator,
+            SynchronizationContext context
+        ) : base(src, aggregator, context)
         {
-            Facade.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Assets.Add(new ObservableProxy(Facade, this));
         }
 
         #endregion
@@ -178,15 +180,19 @@ namespace Cube.Pdf.Converter
         /// confirms if the current settings are acceptable.
         /// </summary>
         ///
+        /// <param name="callback">
+        /// Callback action to be invoked when the operation is successful.
+        /// </param>
+        ///
         /* ----------------------------------------------------------------- */
         public void Save(Action callback)
         {
             var src = new[] { Title, Author, Subject, Keywords };
             if (src.All(e => !e.HasValue())) callback();
-            else Send(
-                MessageFactory.CreateWarn(Properties.Resources.MessageSave),
-                e => callback(),
-                e => e.Any(DialogStatus.Yes)
+            else Track(
+                Message.ForWarning(Properties.Resources.MessageSave),
+                e => { if (e.Any(DialogStatus.Yes)) callback(); },
+                true
             );
         }
 

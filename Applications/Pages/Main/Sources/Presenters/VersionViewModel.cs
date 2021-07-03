@@ -22,7 +22,7 @@ namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PasswordViewModel
+    /// VersionViewModel
     ///
     /// <summary>
     /// Provides binding properties and commands for the PasswordWindow
@@ -63,7 +63,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Version => $"Version {Facade.Version.ToString(true)}";
+        public string Version => $"Version {Facade.Version.ToString(3, true)}";
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,8 +77,8 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public bool CheckUpdate
         {
-            get => Facade.Value.CheckUpdate;
-            set => Facade.Value.CheckUpdate = value;
+            get => Facade.Startup.Enabled;
+            set => Facade.Startup.Enabled = value;
         }
 
         #endregion

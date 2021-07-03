@@ -16,11 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using iTextSharp.text.exceptions;
-using iTextSharp.text.pdf;
 using System;
-using System.Collections.Generic;
+using Cube.FileSystem;
+using Cube.Logging;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Itext
 {
@@ -33,12 +32,13 @@ namespace Cube.Pdf.Itext
     /// </summary>
     ///
     /// <remarks>
-    /// DocumentWriter はページ回転情報 (Page.Rotation.Delta) を
-    /// DocumentReader の内部オブジェクトを変更する事によって実現します。
-    /// しかし、OpenOption.ReduceMemory が有効な状態で DocumentReader を
-    /// 生成している場合、この変更が無効化されるためページ回転の変更結果を反映する
-    /// 事ができません。ページを回転させた場合は、該当オプションを無効に設定して
-    /// 下さい。
+    /// DocumentWriter realizes the page rotation information
+    /// (Page.Rotation.Delta) by modifying the internal object of
+    /// DocumentReader. However, if DocumentReader is generated with
+    /// OpenOption.ReduceMemory enabled, this change will be disabled and
+    /// the result of the page rotation change cannot be reflected.
+    /// If you have rotated the page, please set the corresponding option
+    /// to disabled.
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
@@ -55,7 +55,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentWriter() : this(new IO()) { }
+        public DocumentWriter() : this(new()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -63,29 +63,13 @@ namespace Cube.Pdf.Itext
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentWriter class with
-        /// the specified arguments..
+        /// the specified options.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
+        /// <param name="options">Saving options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentWriter(IO io) : base(io) { }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Bookmarks
-        ///
-        /// <summary>
-        /// Gets the collection of bookmarks.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected IList<Dictionary<string, object>> Bookmarks { get; } =
-            new List<Dictionary<string, object>>();
+        public DocumentWriter(SaveOption options) : base(options) { }
 
         #endregion
 
@@ -102,36 +86,24 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected override void OnSave(string path)
         {
-            var dir = IO.Get(path).DirectoryName;
-            var tmp = IO.Combine(dir, Guid.NewGuid().ToString("D"));
+            var dir = Options.Temp.HasValue() ?
+                      Options.Temp :
+                      Io.Get(path).DirectoryName;
+            var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
             {
-                Merge(tmp);
+                var bk = new Bookmark();
+                Merge(tmp, bk);
                 Release();
-                Finalize(tmp, path);
+                Writer.Stamp(path, tmp, Metadata, Encryption, bk);
             }
-            catch (BadPasswordException err) { throw new EncryptionException(err.Message, err); }
+            catch (Exception err) { throw err.Convert(); }
             finally
             {
-                _ = IO.TryDelete(tmp);
+                GetType().LogWarn(() => Io.Delete(tmp));
                 Reset();
             }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnReset
-        ///
-        /// <summary>
-        /// Executes the reset operation.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnReset()
-        {
-            base.OnReset();
-            Bookmarks.Clear();
         }
 
         #endregion
@@ -147,71 +119,27 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <remarks>
-        /// 注釈等を含めて完全にページ内容をコピーするため、いったん
-        /// PdfCopy クラスを用いて全ページを結合します。セキュリティ設定や
-        /// 文書プロパティ等の情報は生成された PDF に対して付加します。
+        /// To completely copy the page contents, including annotations,
+        /// use the PdfCopy class to merge all pages together.
+        /// PDF metadata and encryption settings will be added to the
+        /// generated PDF.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private void Merge(string dest)
+        private void Merge(string dest, Bookmark bookmark)
         {
-            var kv = WriterFactory.Create(dest, Metadata, UseSmartCopy, IO);
+            var e = Writer.Create(dest, Options, Metadata);
 
-            kv.Key.Open();
-            Bookmarks.Clear();
+            e.Document.Open();
 
-            foreach (var page in Pages) AddPage(page, kv.Value);
-
-            kv.Value.Set(Attachments);
-            kv.Key.Close();
-            kv.Value.Close();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Finalize
-        ///
-        /// <summary>
-        /// Adds some additional metadata to the merged document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Finalize(string src, string dest)
-        {
-            using (var reader = ReaderFactory.FromPdf(src))
-            using (var writer = WriterFactory.Create(dest, reader, IO))
+            foreach (var page in Pages)
             {
-                writer.Writer.Outlines = Bookmarks;
-                writer.Set(Metadata, reader.Info);
-                writer.Writer.Set(Encryption);
-                if (Metadata.Version.Minor >= 5) writer.SetFullCompression();
+                var reader = Reader.From(GetRawReader(page));
+                e.Writer.Set(reader, page, bookmark);
             }
-        }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddPage
-        ///
-        /// <summary>
-        /// Adds the specified page to the specified writer.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// PdfCopy.PageNumber (dest) は、AddPage を実行した段階で値が
-        /// 自動的に増加するので注意。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddPage(Page src, PdfCopy dest)
-        {
-            var reader = GetRawReader(src);
-            reader.Rotate(src);
-            if (src.File is PdfFile)
-            {
-                var n = dest.PageNumber; // see remarks
-                reader.GetBookmarks(n, n - src.Number, Bookmarks);
-            }
-            dest.AddPage(dest.GetImportedPage(reader, src.Number));
+            e.Writer.Set(Attachments);
+            e.Close();
         }
 
         #endregion

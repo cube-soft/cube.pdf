@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter
@@ -32,7 +32,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class SettingViewModel : Presentable<SettingFolder>
+    public sealed class SettingViewModel : Presentable<SettingFacade>
     {
         #region Constructors
 
@@ -45,15 +45,17 @@ namespace Cube.Pdf.Converter
         /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
+        /// <param name="src">User settings.</param>
         /// <param name="aggregator">Message aggregator.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingViewModel(SettingFolder settings, Aggregator aggregator,
-            SynchronizationContext context) : base(settings, aggregator, context)
+        public SettingViewModel(SettingFolder src,
+            Aggregator aggregator,
+            SynchronizationContext context
+        ) : base(new(src), aggregator, context)
         {
-            Facade.Value.PropertyChanged += (s, e) => OnPropertyChanged(e);
+            Assets.Add(new ObservableProxy(Facade.Settings, this));
         }
 
         #endregion
@@ -71,10 +73,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Format Format
         {
-            get => Facade.Value.Format;
+            get => Facade.Settings.Format;
             set
             {
-                Facade.Value.Format = value;
+                Facade.Settings.Format = value;
                 Refresh(nameof(IsPdf));
             }
         }
@@ -90,8 +92,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public SaveOption SaveOption
         {
-            get => Facade.Value.SaveOption;
-            set => Facade.Value.SaveOption = value;
+            get => Facade.Settings.SaveOption;
+            set => Facade.Settings.SaveOption = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -105,10 +107,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public PostProcess PostProcess
         {
-            get => Facade.Value.PostProcess;
+            get => Facade.Settings.PostProcess;
             set
             {
-                Facade.Value.PostProcess = value;
+                Facade.Settings.PostProcess = value;
                 Refresh(nameof(EnableUserProgram));
             }
         }
@@ -124,8 +126,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Source
         {
-            get => Facade.Value.Source;
-            set => Facade.Value.Source = value;
+            get => Facade.Settings.Source;
+            set => Facade.Settings.Source = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -139,8 +141,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string Destination
         {
-            get => Facade.Value.Destination;
-            set => Facade.Value.Destination = value;
+            get => Facade.Settings.Destination;
+            set => Facade.Settings.Destination = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -154,8 +156,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public string UserProgram
         {
-            get => Facade.Value.UserProgram;
-            set => Facade.Value.UserProgram = value;
+            get => Facade.Settings.UserProgram;
+            set => Facade.Settings.UserProgram = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -169,8 +171,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public int Resolution
         {
-            get => Facade.Value.Resolution;
-            set => Facade.Value.Resolution = value;
+            get => Facade.Settings.Resolution;
+            set => Facade.Settings.Resolution = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -185,12 +187,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool IsAutoOrientation
         {
-            get => Facade.Value.Orientation == Orientation.Auto;
+            get => Facade.Settings.Orientation == Orientation.Auto;
             set
             {
                 if (value)
                 {
-                    Facade.Value.Orientation = Orientation.Auto;
+                    Facade.Settings.Orientation = Orientation.Auto;
                     Refresh(nameof(IsAutoOrientation));
                 }
             }
@@ -208,12 +210,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool IsPortrait
         {
-            get => Facade.Value.Orientation == Orientation.Portrait;
+            get => Facade.Settings.Orientation == Orientation.Portrait;
             set
             {
                 if (value)
                 {
-                    Facade.Value.Orientation = Orientation.Portrait;
+                    Facade.Settings.Orientation = Orientation.Portrait;
                     Refresh(nameof(IsPortrait));
                 }
             }
@@ -231,12 +233,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool IsLandscape
         {
-            get => Facade.Value.Orientation == Orientation.Landscape;
+            get => Facade.Settings.Orientation == Orientation.Landscape;
             set
             {
                 if (value)
                 {
-                    Facade.Value.Orientation = Orientation.Landscape;
+                    Facade.Settings.Orientation = Orientation.Landscape;
                     Refresh(nameof(IsLandscape));
                 }
             }
@@ -254,8 +256,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Grayscale
         {
-            get => Facade.Value.Grayscale;
-            set => Facade.Value.Grayscale = value;
+            get => Facade.Settings.Grayscale;
+            set => Facade.Settings.Grayscale = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -270,8 +272,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool ImageFilter
         {
-            get => Facade.Value.ImageFilter;
-            set => Facade.Value.ImageFilter = value;
+            get => Facade.Settings.ImageFilter;
+            set => Facade.Settings.ImageFilter = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -286,8 +288,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Linearization
         {
-            get => Facade.Value.Linearization;
-            set => Facade.Value.Linearization = value;
+            get => Facade.Settings.Linearization;
+            set => Facade.Settings.Linearization = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -302,8 +304,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool CheckUpdate
         {
-            get => Facade.Value.CheckUpdate;
-            set => Facade.Value.CheckUpdate = value;
+            get => Facade.Startup.Enabled;
+            set
+            {
+                Facade.Startup.Enabled = value;
+                Refresh(nameof(CheckUpdate));
+            }
         }
 
         /* ----------------------------------------------------------------- */
@@ -317,8 +323,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Language Language
         {
-            get => Facade.Value.Language;
-            set => Facade.Value.Language = value;
+            get => Facade.Settings.Language;
+            set => Facade.Settings.Language = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -331,7 +337,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool SourceVisible => Facade.Value.SourceVisible;
+        public bool SourceVisible => Facade.Settings.SourceVisible;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -343,7 +349,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool SourceEditable => !Facade.Value.DeleteSource;
+        public bool SourceEditable => !Facade.Settings.DeleteSource;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -375,6 +381,17 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Save
+        ///
+        /// <summary>
+        /// Saves the settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Save() => Facade.Save();
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Confirm
         ///
         /// <summary>
@@ -384,12 +401,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Confirm()
         {
-            if (!Facade.IO.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
+            if (!Io.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
             else
             {
-                var src = MessageFactory.Create(Destination, SaveOption);
-                Send(src);
-                return src.Value == DialogStatus.Yes;
+                var m = Message.From(Destination, SaveOption);
+                Send(m);
+                return m.Value == DialogStatus.Yes;
             }
         }
 

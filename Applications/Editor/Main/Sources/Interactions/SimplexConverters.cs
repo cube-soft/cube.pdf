@@ -16,13 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Net35;
-using Cube.FileSystem;
-using Cube.Images.Icons;
-using Cube.Mixin.Assembly;
-using Cube.Mixin.ByteFormat;
-using Cube.Mixin.Generics;
-using Cube.Xui.Converters;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -31,6 +24,13 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
+using Cube.Backports;
+using Cube.FileSystem;
+using Cube.Images.Icons;
+using Cube.Mixin.Assembly;
+using Cube.Mixin.ByteFormat;
+using Cube.Mixin.Generics;
+using Cube.Xui.Converters;
 
 namespace Cube.Pdf.Editor
 {

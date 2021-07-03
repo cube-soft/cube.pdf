@@ -16,11 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Tests;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cube.FileSystem;
+using Cube.Tests;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Picker.Tests
 {
@@ -51,12 +52,12 @@ namespace Cube.Pdf.Picker.Tests
         public int Extract(int id, string filename)
         {
             var dest = Get($"{nameof(Extract)}-{id}");
-            using (var src = new ImageCollection(GetSource(filename), IO))
+            using (var src = new ImageCollection(GetSource(filename)))
             {
                 src.ExtractAsync(new Progress<Message<int>>()).Wait();
                 src.Save(dest);
             }
-            return IO.GetFiles(dest).Count();
+            return Io.GetFiles(dest).Count();
         }
 
         #endregion

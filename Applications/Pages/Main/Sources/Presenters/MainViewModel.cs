@@ -16,12 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Cube.FileSystem;
 using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Pages
@@ -66,7 +64,7 @@ namespace Cube.Pdf.Pages
         ///
         /* --------------------------------------------------------------------- */
         public MainViewModel(IEnumerable<string> args, SynchronizationContext context) : base(
-            new MainFacade(new IO(), context),
+            new MainFacade(context),
             new Aggregator(),
             context
         ) {
@@ -77,7 +75,7 @@ namespace Cube.Pdf.Pages
             Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
             Facade.CollectionChanged += (s, e) => {
                 Refresh(nameof(Invokable));
-                Send<CollectionMessage>();
+                Send<UpdateListMessage>();
             };
         }
 
@@ -106,17 +104,6 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public BindingSource Files { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO => Facade.Settings.IO;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -165,7 +152,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Merge() => Send(MessageFactory.CreateForMerge(), e => Facade.Merge(e));
+        public void Merge() => Track(Message.ForMerge(), Facade.Merge);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -176,7 +163,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Split() => Send(MessageFactory.CreateForSplit(), e => Facade.Split(e, new List<string>()));
+        public void Split() => Track(Message.ForSplit(), Facade.Split);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -187,7 +174,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Add() => Send(MessageFactory.CreateForAdd(), e => Add(e));
+        public void Add() => Track(Message.ForAdd(), Facade.Add, true);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -242,7 +229,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Move(IEnumerable<int> indices, int offset) => Track(() =>
         {
-            if (Facade.Move(indices, offset)) Send(MessageFactory.CreateForSelect(
+            if (Facade.Move(indices, offset)) Send(Message.ForSelect(
                 indices, offset, Facade.Files.Count
             ));
         }, true);
@@ -260,10 +247,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Preview(IEnumerable<int> indices)
         {
-            if (indices.Count() > 0) Send(new PreviewMessage
-            {
-                Value = Facade.Files[indices.First()].FullName,
-            });
+            if (indices.Count() > 0) Send(Message.ForPreview(Facade.Files, indices));
         }
 
         /* ----------------------------------------------------------------- */
@@ -276,23 +260,6 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public void About() => Send(new VersionViewModel(Facade.Settings, Context));
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnMessage
-        ///
-        /// <summary>
-        /// Converts the specified exception to a new instance of the
-        /// DialogMessage class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override DialogMessage OnMessage(Exception src) =>
-            src is OperationCanceledException ? null : base.OnMessage(src);
 
         #endregion
     }

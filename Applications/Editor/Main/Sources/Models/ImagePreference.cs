@@ -42,13 +42,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <summary>
         /// Initializes a new instance of the ImagePreference class with
-        /// the specified invoker.
+        /// the specified dispatcher.
         /// </summary>
         ///
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImagePreference(Invoker invoker) : base(invoker) { }
+        public ImagePreference(Dispatcher dispatcher) : base(dispatcher) { }
 
         #endregion
 
@@ -79,11 +79,11 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int ItemSizeIndex
         {
-            get => GetProperty<int>();
+            get => Get<int>();
             set
             {
                 var index = Math.Min(Math.Max(value, 0), ItemSizeOptions.Count - 1);
-                if (SetProperty(index)) Refresh(nameof(ItemSize));
+                if (Set(index)) Refresh(nameof(ItemSize));
             }
         }
 
@@ -115,8 +115,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool FrameOnly
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -130,8 +130,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int TextHeight
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -145,8 +145,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int VisibleFirst
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -160,8 +160,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int VisibleLast
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */

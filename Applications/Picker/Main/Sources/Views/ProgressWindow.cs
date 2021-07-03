@@ -29,7 +29,7 @@ namespace Cube.Pdf.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class ProgressWindow : WindowBase
+    public partial class ProgressWindow : Window
     {
         #region Constructors
 

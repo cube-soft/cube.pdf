@@ -47,14 +47,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="src">Path of the source file.</param>
         /// <param name="selection">Shared object for selection.</param>
-        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public FileItem(string src, Selection<FileItem> selection, IO io)
+        public FileItem(string src, Selection<FileItem> selection)
         {
             _selection = selection;
 
-            var fi = io.Get(src);
+            var fi = Io.Get(src);
             Name          = fi.Name;
             FullName      = fi.FullName;
             Length        = fi.Length;
@@ -132,10 +131,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Selected
         {
-            get => GetProperty<bool>();
+            get => Get<bool>();
             set
             {
-                if (!SetProperty(value)) return;
+                if (!Set(value)) return;
                 if (value) _selection.Add(this);
                 else _selection.Remove(this);
             }

@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Xui;
 using System.Threading;
+using Cube.Xui;
 
 namespace Cube.Pdf.Editor
 {
@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PositionViewModel : ViewModelBase<InsertBindable>
+    public sealed class PositionViewModel : Presentable<InsertBindable>
     {
         #region Constructors
 
@@ -68,7 +68,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Select => Get(() => new BindableElement(
             () => Properties.Resources.MenuInsertPosition,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = new DelegateCommand<int>(e => Facade.Index = e) });
 
         /* ----------------------------------------------------------------- */
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement First => Get(() => new BindableElement(
             () => Properties.Resources.MenuPositionFirst,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -96,7 +96,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Last => Get(() => new BindableElement(
             () => Properties.Resources.MenuPositionLast,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -112,7 +112,7 @@ namespace Cube.Pdf.Editor
         public IElement<int> SelectedIndex => Get(() => new BindableElement<int>(
             () => Properties.Resources.MenuPositionSelected,
             () => Facade.SelectedIndex,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -129,7 +129,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuPositionSpecified,
             () => Facade.UserIndex + 1,
             e  => Facade.UserIndex = e - 1,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -145,7 +145,7 @@ namespace Cube.Pdf.Editor
         public IElement<int> Count => Get(() => new BindableElement<int>(
             () => string.Format($"/ {Properties.Resources.MessagePage}", Facade.Count),
             () => Facade.Count,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         #endregion

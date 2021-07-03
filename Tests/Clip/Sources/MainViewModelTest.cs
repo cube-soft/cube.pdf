@@ -19,7 +19,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 using Cube.Tests;
 using NUnit.Framework;
 
@@ -52,7 +52,7 @@ namespace Cube.Pdf.Clip.Tests
         public void Attach(int id, string filename, IEnumerable<string> clips)
         {
             var dest = Get($"{nameof(Attach)}-{id}.pdf");
-            IO.Copy(GetSource(filename), dest);
+            Io.Copy(GetSource(filename), dest, true);
 
             var f0 = new[] { dest };
             var f1 = clips.Select(f => GetSource(f));
@@ -67,7 +67,7 @@ namespace Cube.Pdf.Clip.Tests
                 Assert.That(vm.Test(vm.Save), nameof(vm.Save));
             }
 
-            Assert.That(IO.Exists(dest), Is.True);
+            Assert.That(Io.Exists(dest), Is.True);
         }
 
         /* ----------------------------------------------------------------- */
@@ -83,7 +83,7 @@ namespace Cube.Pdf.Clip.Tests
         public void Detach()
         {
             var dest = Get($"{nameof(Reset)}.pdf");
-            IO.Copy(GetSource("SampleAttachmentCjk.pdf"), dest);
+            Io.Copy(GetSource("SampleAttachmentCjk.pdf"), dest, true);
 
             using (var vm = new MainViewModel(new SynchronizationContext()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { dest }))
@@ -95,7 +95,7 @@ namespace Cube.Pdf.Clip.Tests
                 Assert.That(vm.Test(vm.Save), nameof(vm.Save));
             }
 
-            Assert.That(IO.Exists(dest), Is.True);
+            Assert.That(Io.Exists(dest), Is.True);
         }
 
         /* ----------------------------------------------------------------- */
@@ -111,7 +111,7 @@ namespace Cube.Pdf.Clip.Tests
         public void Reset()
         {
             var dest = Get($"{nameof(Detach)}.pdf");
-            IO.Copy(GetSource("SampleAttachmentCjk.pdf"), dest);
+            Io.Copy(GetSource("SampleAttachmentCjk.pdf"), dest, true);
 
             var f0 = new[] { dest };
             var f1 = new[] { GetSource("Sample.jpg") };

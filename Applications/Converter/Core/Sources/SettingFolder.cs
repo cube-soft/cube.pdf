@@ -21,11 +21,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using Cube.Collections;
 using Cube.FileSystem;
+using Cube.FileSystem.DataContract;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.Environment;
-using Cube.Mixin.IO;
 using Cube.Mixin.String;
-using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter
 {
@@ -50,14 +49,39 @@ namespace Cube.Pdf.Converter
         /// Initializes a new instance of the SettingFolder class.
         /// </summary>
         ///
+        /* ----------------------------------------------------------------- */
+        public SettingFolder() : this(Assembly.GetCallingAssembly()) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingFolder
+        ///
+        /// <summary>
+        /// Initializes a new instance of the SettingFolder class with the
+        /// specified assembly.
+        /// </summary>
+        ///
         /// <param name="assembly">Assembly object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly) : this(
-            assembly,
-            DataContract.Format.Registry,
-            @"CubeSoft\CubePDF\v2"
-        ) { }
+        public SettingFolder(Assembly assembly) :
+            this(assembly, Format.Registry, @"CubeSoft\CubePDF\v2") { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingFolder
+        ///
+        /// <summary>
+        /// Initializes a new instance of the SettingFolder class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="format">Serialization format.</param>
+        /// <param name="location">Location to save settings.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingFolder(Format format, string location) :
+            this(Assembly.GetCallingAssembly(), format, location) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -70,34 +94,18 @@ namespace Cube.Pdf.Converter
         ///
         /// <param name="assembly">Assembly object.</param>
         /// <param name="format">Serialization format.</param>
-        /// <param name="path">Path to save settings.</param>
+        /// <param name="location">Location to save settings.</param>
+        ///
+        /// <remarks>
+        /// The overloaded constructor will be removed in the future.
+        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, DataContract.Format format, string path) :
-            this(assembly, format, path, new IO()) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingFolder
-        ///
-        /// <summary>
-        /// Initializes a new instance of the SettingFolder class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="assembly">Assembly object.</param>
-        /// <param name="format">Serialization format.</param>
-        /// <param name="path">Path to save settings.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, DataContract.Format format, string path, IO io) :
-            base(assembly, format, path, io)
+        public SettingFolder(Assembly assembly, Format format, string location) :
+            base(format, location, assembly.GetSoftwareVersion())
         {
-            AutoSave       = false;
-            DocumentName   = GetDocumentName(string.Empty);
-            Version.Digit  = 3;
-            Version.Suffix = "";
+            AutoSave     = false;
+            DocumentName = new(string.Empty);
         }
 
         #endregion
@@ -152,8 +160,7 @@ namespace Cube.Pdf.Converter
         /// <param name="args">Program arguments.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Set(IEnumerable<string> args) =>
-            Set(new ArgumentCollection(args, Collections.Argument.Windows, true));
+        public void Set(IEnumerable<string> args) => Set(new(args, Argument.Windows, true));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -169,50 +176,21 @@ namespace Cube.Pdf.Converter
         public void Set(ArgumentCollection src)
         {
             var op = src.Options;
-            if (op.TryGetValue("DocumentName", out var doc)) DocumentName = GetDocumentName(doc);
+            if (op.TryGetValue("DocumentName", out var doc)) DocumentName = new(doc);
             if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
             if (op.TryGetValue("Digest", out var digest)) Digest = digest;
 
-            var dest = IO.Get(IO.Combine(GetDirectoryName(Value.Destination), DocumentName.Value));
+            var dest = Io.Get(Io.Combine(GetDirectoryName(Value.Destination), DocumentName.Value));
             var name = dest.BaseName;
-            var ext  = Value.Format.GetExtension();
+            var ext  = Ghostscript.FormatExtension.GetExtension(Value.Format);
 
-            Value.Destination  = IO.Combine(dest.DirectoryName, $"{name}{ext}");
+            Value.Destination  = Io.Combine(dest.DirectoryName, $"{name}{ext}");
             Value.DeleteSource = op.ContainsKey("DeleteOnClose");
         }
 
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnSaved
-        ///
-        /// <summary>
-        /// Occurs when the settings are saved.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnSaved(KeyValueEventArgs<Cube.DataContract.Format, string> e)
-        {
-            try
-            {
-                if (Value == null) return;
-
-                var name = "cubepdf-checker";
-                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
-                var args = Assembly.GetProduct().Quote();
-                var dest = new Startup(name)
-                {
-                    Command = $"{exe.Quote()} {args}",
-                    Enabled = Value.CheckUpdate && IO.Exists(exe),
-                };
-
-                dest.Save();
-            }
-            finally { base.OnSaved(e); }
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -230,22 +208,11 @@ namespace Cube.Pdf.Converter
             try
             {
                 if (!src.HasValue()) return desktop;
-                var dest = IO.Get(src);
+                var dest = Io.Get(src);
                 return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
             }
             catch { return desktop; }
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetDocumentName
-        ///
-        /// <summary>
-        /// Gets an instance of the DocumentName class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private DocumentName GetDocumentName(string src) => new DocumentName(src, Assembly.GetProduct(), IO);
 
         #endregion
     }

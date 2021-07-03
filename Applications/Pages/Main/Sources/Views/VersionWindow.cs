@@ -61,10 +61,10 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnBind(IPresentable src)
+        protected override void OnBind(IBindable src)
         {
             base.OnBind(src);
-            if (!(src is VersionViewModel vm)) return;
+            if (src is not VersionViewModel vm) return;
 
             VersionBindingSource.DataSource = vm;
             ExecButton.Click += (s, e) => vm.Apply();

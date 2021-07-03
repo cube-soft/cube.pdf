@@ -19,7 +19,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Media;
-using Cube.Mixin.Pdf;
+using Cube.Pdf.Mixin;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor
@@ -86,8 +86,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Width
         {
-            get => GetProperty<int>();
-            private set => SetProperty(value);
+            get => Get<int>();
+            private set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -101,8 +101,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Height
         {
-            get => GetProperty<int>();
-            private set => SetProperty(value);
+            get => Get<int>();
+            private set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -116,8 +116,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Index
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -131,10 +131,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Selected
         {
-            get => GetProperty<bool>();
+            get => Get<bool>();
             set
             {
-                if (!SetProperty(value)) return;
+                if (!Set(value)) return;
                 if (value) _selection.Add(this);
                 else _selection.Remove(this);
             }
@@ -152,8 +152,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Page RawObject
         {
-            get => GetProperty<Page>();
-            set { if (SetProperty(value)) UpdateSize(); }
+            get => Get<Page>();
+            set { if (Set(value)) UpdateSize(); }
         }
 
         /* ----------------------------------------------------------------- */

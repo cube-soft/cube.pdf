@@ -16,10 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Threading;
 using Cube.Mixin.Observing;
 using Cube.Mixin.String;
 using Cube.Xui;
-using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
@@ -76,7 +76,7 @@ namespace Cube.Pdf.Editor
             () => string.Format(Properties.Resources.MessagePassword, GetFileName(Facade.Source)),
             () => Facade.Value,
             e  => Facade.Value = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         #endregion

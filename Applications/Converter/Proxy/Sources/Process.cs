@@ -15,12 +15,13 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Cube.Logging;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter.Proxy
 {
@@ -29,7 +30,7 @@ namespace Cube.Pdf.Converter.Proxy
     /// Process
     ///
     /// <summary>
-    /// プロセスを扱うクラスです。
+    /// Provides functionality to create and execute a process.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,36 +43,36 @@ namespace Cube.Pdf.Converter.Proxy
         /// StartAsActiveUser
         ///
         /// <summary>
-        /// アクティブユーザ権限でプログラムを実行します。
+        /// Executes the program with active user privileges.
         /// </summary>
         ///
-        /// <param name="program">実行プログラムのパス</param>
-        /// <param name="arguments">プログラムの引数</param>
+        /// <param name="program">Path of the program.</param>
+        /// <param name="arguments">Program arguments.</param>
         ///
-        /// <returns>実行に成功した Process オブジェクト</returns>
+        /// <returns>Process object that was started.</returns>
         ///
         /// <remarks>
-        /// アクティブユーザが複数存在する場合、操作は失敗します。
+        /// If there are multiple active users, the method will fail.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAsActiveUser(string program, string[] arguments) =>
-            StartAsActiveUser(CreateCmdLine(program, arguments));
+            StartAsActiveUser(CreateCmdline(program, arguments));
 
         /* ----------------------------------------------------------------- */
         ///
         /// StartAsActiveUser
         ///
         /// <summary>
-        /// アクティブユーザ権限でプログラムを実行します。
+        /// Executes the program with active user privileges.
         /// </summary>
         ///
-        /// <param name="cmdline">実行するコマンドライン</param>
+        /// <param name="cmdline">Command line.</param>
         ///
-        /// <returns>実行に成功した Process オブジェクト</returns>
+        /// <returns>Process object that was started.</returns>
         ///
         /// <remarks>
-        /// アクティブユーザが複数存在する場合、操作は失敗します。
+        /// If there are multiple active users, the method will fail.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -83,76 +84,76 @@ namespace Cube.Pdf.Converter.Proxy
         /// StartAs
         ///
         /// <summary>
-        /// 指定されたユーザでプログラムを実行します。
+        /// Executes the program with the specified user.
         /// </summary>
         ///
-        /// <param name="username">ユーザ名</param>
-        /// <param name="program">実行プログラムのパス</param>
-        /// <param name="arguments">プログラムの引数</param>
+        /// <param name="user">User name.</param>
+        /// <param name="program">Path of the program.</param>
+        /// <param name="arguments">Program arguments.</param>
         ///
-        /// <returns>実行に成功した Process オブジェクト</returns>
+        /// <returns>Process object that was started.</returns>
         ///
         /// <remarks>
-        /// 指定されたユーザがアクティブである必要があります。
+        /// The specified user must be active.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAs(
-            string username, string program, string[] arguments) =>
-            StartAs(username, CreateCmdLine(program, arguments));
+            string user, string program, string[] arguments) =>
+            StartAs(user, CreateCmdline(program, arguments));
 
         /* ----------------------------------------------------------------- */
         ///
         /// StartAs
         ///
         /// <summary>
-        /// 指定されたユーザでプログラムを実行します。
+        /// Executes the program with the specified user.
         /// </summary>
         ///
-        /// <param name="username">ユーザ名</param>
-        /// <param name="cmdline">実行するコマンドライン</param>
+        /// <param name="user">User name.</param>
+        /// <param name="cmdline">Command line.</param>
         ///
-        /// <returns>実行に成功した Process オブジェクト</returns>
+        /// <returns>Process object that was started.</returns>
         ///
         /// <remarks>
-        /// 指定されたユーザがアクティブである必要があります。
+        /// The specified user must be active.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static System.Diagnostics.Process StartAs(string username, string cmdline) =>
-            StartAs(GetActiveSessionToken(username), cmdline);
+        public static System.Diagnostics.Process StartAs(string user, string cmdline) =>
+            StartAs(GetActiveSessionToken(user), cmdline);
 
         /* ----------------------------------------------------------------- */
         ///
         /// StartAs
         ///
         /// <summary>
-        /// 指定されたトークンの権限でプログラムを実行します。
+        /// Executes the program with the specified token privileges.
         /// </summary>
         ///
-        /// <param name="token">実行ユーザのトークン</param>
-        /// <param name="program">実行プログラムのパス</param>
-        /// <param name="arguments">プログラムの引数</param>
+        /// <param name="token">Token of the executing user.</param>
+        /// <param name="program">Path of the program.</param>
+        /// <param name="arguments">Program arguments.</param>
         ///
-        /// <returns>実行に成功した Process オブジェクト</returns>
+        /// <returns>Process object that was started.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAs(IntPtr token,
             string program, string[] arguments) =>
-            StartAs(token, CreateCmdLine(program, arguments));
+            StartAs(token, CreateCmdline(program, arguments));
 
         /* ----------------------------------------------------------------- */
         ///
         /// StartAs
         ///
         /// <summary>
-        /// 指定されたトークンの権限でプログラムを実行します。
+        /// Executes the program with the specified token privileges.
         /// </summary>
         ///
-        /// <param name="token">実行ユーザのトークン</param>
-        /// <param name="cmdline">実行するコマンドライン</param>
+        /// <param name="token">Token of the executing user.</param>
+        /// <param name="cmdline">Command line.</param>
         ///
-        /// <returns>実行に成功した Process オブジェクト</returns>
+        /// <returns>Process object that was started.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAs(IntPtr token, string cmdline)
@@ -170,7 +171,7 @@ namespace Cube.Pdf.Converter.Proxy
             }
             finally
             {
-                if (env != IntPtr.Zero) UserEnv.NativeMethods.DestroyEnvironmentBlock(env);
+                if (env != IntPtr.Zero) _ = UserEnv.NativeMethods.DestroyEnvironmentBlock(env);
                 CloseHandle(token);
             }
         }
@@ -180,31 +181,31 @@ namespace Cube.Pdf.Converter.Proxy
         /// StartAs
         ///
         /// <summary>
-        /// 指定されたスレッド ID の権限でプログラムを実行します。
+        /// Executes the program with the privileges of the specified thread ID.
         /// </summary>
         ///
-        /// <param name="tid">スレッド ID</param>
-        /// <param name="program">実行プログラムのパス</param>
-        /// <param name="arguments">プログラムの引数</param>
+        /// <param name="tid">Thread ID.</param>
+        /// <param name="program">Path of the program.</param>
+        /// <param name="arguments">Program arguments.</param>
         ///
-        /// <returns>実行に成功した Process オブジェクト</returns>
+        /// <returns>Process object that was started.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAs(uint tid, string program, string[] arguments) =>
-            StartAs(tid, CreateCmdLine(program, arguments));
+            StartAs(tid, CreateCmdline(program, arguments));
 
         /* ----------------------------------------------------------------- */
         ///
         /// StartAs
         ///
         /// <summary>
-        /// 指定されたスレッド ID の権限でプログラムを実行します。
+        /// Executes the program with the privileges of the specified thread ID.
         /// </summary>
         ///
-        /// <param name="tid">スレッド ID</param>
-        /// <param name="cmdline">実行するコマンドライン</param>
+        /// <param name="tid">Thread ID.</param>
+        /// <param name="cmdline">Command line.</param>
         ///
-        /// <returns>実行に成功した Process オブジェクト</returns>
+        /// <returns>Process object that was started.</returns>
         ///
         /* ----------------------------------------------------------------- */
         public static System.Diagnostics.Process StartAs(uint tid, string cmdline) =>
@@ -219,13 +220,11 @@ namespace Cube.Pdf.Converter.Proxy
         /// GetActiveSessionId
         ///
         /// <summary>
-        /// 現在ログオン中のユーザに対応するセッション ID を取得します。
+        /// Gets the session ID corresponding to the active user.
         /// </summary>
         ///
-        /// <param name="username">ユーザ名</param>
-        ///
         /* ----------------------------------------------------------------- */
-        private static uint GetActiveSessionId(string username)
+        private static uint GetActiveSessionId(string user)
         {
             var ptr = IntPtr.Zero;
             var count = 0u;
@@ -251,15 +250,12 @@ namespace Cube.Pdf.Converter.Proxy
 
                     if (info.State == WTS_CONNECTSTATE_CLASS.WTSActive) sessions.Add(info);
 
-                    Logger.Debug(typeof(Process),
-                        string.Format("SessionID:{0}\tState:{1}\tName:{2}",
-                        info.SessionID, info.State, info.pWinStationName
-                    ));
+                    typeof(Process).LogDebug($"SessionID:{info.SessionID}", $"State:{info.State}", $"Name:{info.pWinStationName}");
                 }
 
                 if (sessions.Count <= 0) throw new ArgumentException("Session not found");
                 else if (sessions.Count == 1) return sessions[0].SessionID;
-                else return sessions.Select(x => x.SessionID).First(x => GetUserName(x) == username);
+                else return sessions.Select(x => x.SessionID).First(x => GetUserName(x) == user);
             }
             finally { if (ptr != IntPtr.Zero) WtsApi32.NativeMethods.WTSFreeMemory(ptr); }
         }
@@ -269,15 +265,13 @@ namespace Cube.Pdf.Converter.Proxy
         /// GetActiveSessionToken
         ///
         /// <summary>
-        /// アクティブなセッションに対応するトークンを取得します。
+        /// Gets the token corresponding to the active session.
         /// </summary>
         ///
-        /// <param name="username">ユーザ名</param>
-        ///
         /* ----------------------------------------------------------------- */
-        private static IntPtr GetActiveSessionToken(string username)
+        private static IntPtr GetActiveSessionToken(string user)
         {
-            var id = GetActiveSessionId(username);
+            var id = GetActiveSessionId(user);
             var si = SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation;
 
             if (WtsApi32.NativeMethods.WTSQueryUserToken(id, out var token))
@@ -293,10 +287,8 @@ namespace Cube.Pdf.Converter.Proxy
         /// GetThreadToken
         ///
         /// <summary>
-        /// スレッド ID に対応するトークンを取得します。
+        /// Get the token corresponding to the thread ID.
         /// </summary>
-        ///
-        /// <param name="tid">スレッド ID</param>
         ///
         /* ----------------------------------------------------------------- */
         private static IntPtr GetThreadToken(uint tid)
@@ -328,7 +320,7 @@ namespace Cube.Pdf.Converter.Proxy
         /// GetPrimaryToken
         ///
         /// <summary>
-        /// プライマリトークンを取得します。
+        /// Gets the primary token.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -349,7 +341,7 @@ namespace Cube.Pdf.Converter.Proxy
                 ref dest
             );
 
-            AdvApi32.NativeMethods.RevertToSelf();
+            _ = AdvApi32.NativeMethods.RevertToSelf();
 
             if (!result) throw new Win32Exception();
             return dest;
@@ -360,7 +352,7 @@ namespace Cube.Pdf.Converter.Proxy
         /// GetUserName
         ///
         /// <summary>
-        /// ユーザ名を取得します。
+        /// Gets the user name.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -387,7 +379,7 @@ namespace Cube.Pdf.Converter.Proxy
         /// GetEnvironmentBlock
         ///
         /// <summary>
-        /// 環境ブロックを取得します。
+        /// Gets the environment block.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -403,14 +395,14 @@ namespace Cube.Pdf.Converter.Proxy
         /// CloseHandle
         ///
         /// <summary>
-        /// ハンドルを閉じます。
+        /// Closes the specified handle.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private static void CloseHandle(IntPtr handle)
         {
             if (handle == IntPtr.Zero) return;
-            Kernel32.NativeMethods.CloseHandle(handle);
+            _ = Kernel32.NativeMethods.CloseHandle(handle);
         }
 
         /* ----------------------------------------------------------------- */
@@ -418,7 +410,7 @@ namespace Cube.Pdf.Converter.Proxy
         /// CreateProcessAsUser
         ///
         /// <summary>
-        /// Win32 API の CreateProcessAsUser を実行します。
+        /// Invokes the Win32 API CreateProcessAsUser.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -469,11 +461,11 @@ namespace Cube.Pdf.Converter.Proxy
         /// CreateCmdLine
         ///
         /// <summary>
-        /// コマンドライン用の文字列を生成します。
+        /// Creates a string for the command line.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static string CreateCmdLine(string program, string[] arguments) =>
+        private static string CreateCmdline(string program, string[] arguments) =>
             arguments == null ?
             program.Quote() :
             arguments.Aggregate(program.Quote(), (x, y) => $"{x} {y.Quote()}");

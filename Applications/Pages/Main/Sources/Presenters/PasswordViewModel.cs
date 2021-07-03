@@ -69,10 +69,10 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public string Password
         {
-            get => GetProperty<string>();
+            get => Get<string>();
             set
             {
-                if (!SetProperty(value)) return;
+                if (!Set(value)) return;
                 Facade.Value = value;
                 Refresh(nameof(Invokable));
             }
@@ -98,7 +98,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Message => string.Format(Properties.Resources.MessagePassword, new IO().Get(Facade.Source).Name);
+        public string Message => string.Format(Properties.Resources.MessagePassword, Io.Get(Facade.Source).Name);
 
         #endregion
 

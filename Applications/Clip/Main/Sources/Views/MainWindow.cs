@@ -16,12 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms.Behaviors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using Cube.Forms.Behaviors;
 
 namespace Cube.Pdf.Clip
 {
@@ -88,10 +88,10 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnBind(IPresentable src)
+        protected override void OnBind(IBindable src)
         {
             base.OnBind(src);
-            if (!(src is MainViewModel vm)) return;
+            if (src is not MainViewModel vm) return;
 
             MainBindingSource.DataSource = vm;
             ClipListView.DataSource = vm.Clips;
@@ -102,12 +102,12 @@ namespace Cube.Pdf.Clip
             SaveButton.Click   += (s, e) => vm.Save();
             ResetButton.Click  += (s, e) => vm.Reset();
 
-            Behaviors.Add(new CloseBehavior(src, this));
+            Behaviors.Add(new CloseBehavior(this, src));
             Behaviors.Add(new DialogBehavior(src));
             Behaviors.Add(new OpenFileBehavior(src));
             Behaviors.Add(new OpenDirectoryBehavior(src));
             Behaviors.Add(new SaveFileBehavior(src));
-            Behaviors.Add(vm.Subscribe<CollectionMessage>(e => vm.Clips.ResetBindings(false)));
+            Behaviors.Add(vm.Subscribe<UpdateListMessage>(e => vm.Clips.ResetBindings(false)));
         }
 
         #endregion

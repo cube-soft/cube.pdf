@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>3.1.5</Version>
+        <Version>4.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>Ghostscript based PDF library.</Description>
@@ -8,7 +8,7 @@
         <PackageTags>Cube;PDF;Ghostscript</PackageTags>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
         <PackageIcon>images\Icon.png</PackageIcon>
-        <PackageProjectUrl>https://github.com/cube-soft/$(AssemblyName)</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/cube-soft/Cube.Pdf</PackageProjectUrl>
         <TargetFramework>net35</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Optimize>true</Optimize>

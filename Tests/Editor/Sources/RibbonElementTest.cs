@@ -16,8 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using NUnit.Framework;
 using System.Threading;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests
 {
@@ -49,9 +49,9 @@ namespace Cube.Pdf.Editor.Tests
         {
             var name = nameof(Properties);
             var text = "GetText";
-            var invoker = new ContextInvoker(new SynchronizationContext(), false);
+            var dispatcher = new ContextDispatcher(new SynchronizationContext(), false);
 
-            using (var dest = new RibbonElement(name, () => text, invoker))
+            using (var dest = new RibbonElement(name, () => text, dispatcher))
             {
                 Assert.That(dest.Name,      Is.EqualTo(name));
                 Assert.That(dest.Text,      Is.EqualTo(text));

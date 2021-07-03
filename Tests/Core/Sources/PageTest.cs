@@ -15,11 +15,11 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Pdf;
-using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.InteropServices;
+using Cube.Pdf.Mixin;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Tests
 {
@@ -50,19 +50,18 @@ namespace Cube.Pdf.Tests
         [TestCaseSource(nameof(TestCases))]
         public void GetPage(string klass, string filename, int n, float w, float h, int degree)
         {
-            using (var src = Create(klass, GetSource(filename), ""))
-            {
-                var dest = src.GetPage(n);
-                Assert.That(dest.Resolution.X,    Is.EqualTo(72.0f));
-                Assert.That(dest.Resolution.Y,    Is.EqualTo(72.0f));
-                Assert.That(dest.Size.Width,      Is.EqualTo(w));
-                Assert.That(dest.Size.Height,     Is.EqualTo(h));
-                Assert.That(dest.Rotation.Degree, Is.EqualTo(degree));
+            using var src = Create(klass, GetSource(filename), "");
+            var dest = src.GetPage(n);
 
-                dest.Delta = new Angle(90);
-                dest.Reset();
-                Assert.That(dest.Delta.Degree, Is.EqualTo(0));
-            }
+            Assert.That(dest.Resolution.X,    Is.EqualTo(72.0f));
+            Assert.That(dest.Resolution.Y,    Is.EqualTo(72.0f));
+            Assert.That(dest.Size.Width,      Is.EqualTo(w));
+            Assert.That(dest.Size.Height,     Is.EqualTo(h));
+            Assert.That(dest.Rotation.Degree, Is.EqualTo(degree));
+
+            dest.Delta = new Angle(90);
+            dest.Reset();
+            Assert.That(dest.Delta.Degree, Is.EqualTo(0));
         }
 
         /* ----------------------------------------------------------------- */
@@ -78,7 +77,7 @@ namespace Cube.Pdf.Tests
         public void GetImagePage()
         {
             var src  = GetSource("SampleImage02.png");
-            var dest = IO.GetImagePage(src, 0);
+            var dest = new ImagePageCollection(src)[0];
 
             Assert.That(dest.Resolution.X,    Is.EqualTo(96.0f));
             Assert.That(dest.Resolution.Y,    Is.EqualTo(96.0f));
@@ -89,7 +88,7 @@ namespace Cube.Pdf.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetImagePage_ExternalException
+        /// GetImagePage_Throws
         ///
         /// <summary>
         /// Tests to confirm the result when the specified index is wrong.
@@ -97,10 +96,13 @@ namespace Cube.Pdf.Tests
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetImagePage_ExternalException()
+        public void GetImagePage_Throws()
         {
             var src = GetSource("SampleImage02.png");
-            Assert.That(() => IO.GetImagePage(src, 10), Throws.TypeOf<ExternalException>());
+            Assert.That(
+                () => new ImagePageCollection(src)[10],
+                Throws.TypeOf<ArgumentOutOfRangeException>()
+            );
         }
 
         /* ----------------------------------------------------------------- */

@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Runtime.Serialization;
+using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
@@ -33,21 +34,6 @@ namespace Cube.Pdf
     [DataContract]
     public class Metadata : SerializableBase
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Metadata
-        ///
-        /// <summary>
-        /// Initializes a new instance of the Metadata class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Metadata() { Reset(); }
-
-        #endregion
-
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -62,8 +48,8 @@ namespace Cube.Pdf
         [DataMember]
         public PdfVersion Version
         {
-            get => GetProperty<PdfVersion>();
-            set => SetProperty(value);
+            get => Get(() => new PdfVersion(1, 7));
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -78,8 +64,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Author
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get(() => string.Empty);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -94,8 +80,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Title
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get(() => string.Empty);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -110,8 +96,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Subject
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get(() => string.Empty);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -126,8 +112,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Keywords
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get(() => string.Empty);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -142,8 +128,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Creator
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get(() => string.Empty);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -158,8 +144,8 @@ namespace Cube.Pdf
         [DataMember]
         public string Producer
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get(() => string.Empty);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -174,45 +160,8 @@ namespace Cube.Pdf
         [DataMember]
         public ViewerOption Options
         {
-            get => GetProperty<ViewerOption>();
-            set => SetProperty(value);
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDeserializing
-        ///
-        /// <summary>
-        /// Occurs before deserializing.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext context) => Reset();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        ///
-        /// <summary>
-        /// Resets values.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Reset()
-        {
-            Version  = new PdfVersion(1, 7);
-            Author   = string.Empty;
-            Title    = string.Empty;
-            Subject  = string.Empty;
-            Keywords = string.Empty;
-            Creator  = string.Empty;
-            Producer = string.Empty;
-            Options  = ViewerOption.OneColumn;
+            get => Get(() => ViewerOption.OneColumn);
+            set => Set(value);
         }
 
         #endregion

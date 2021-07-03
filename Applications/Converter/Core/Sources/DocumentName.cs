@@ -26,14 +26,10 @@ namespace Cube.Pdf.Converter
     /// DocumentName
     ///
     /// <summary>
-    /// Provides functionality to use the provided document name as a
-    /// filename.
+    /// Provides functionality to convert the provided document name so that
+    /// it can be used as a filename. This class removes characters that
+    /// cannot be used as the filename.
     /// </summary>
-    ///
-    /// <remarks>
-    /// ドキュメント名をファイル名の初期値として利用する時に利用不可能な
-    /// 文字の除去等の処理を担います。
-    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     public sealed class DocumentName
@@ -50,13 +46,26 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /// <param name="src">Original document name.</param>
-        /// <param name="alternate">Default filename.</param>
-        /// <param name="io">I/O handler.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentName(string src, string alternate, IO io)
+        public DocumentName(string src) : this(src, "CubePDF") { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentName
+        ///
+        /// <summary>
+        /// Initializes a new instance of the DocumentName class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Original document name.</param>
+        /// <param name="alternate">Default filename.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public DocumentName(string src, string alternate)
         {
-            _filter = new PathFilter(src)
+            _filter = new(src)
             {
                 AllowCurrentDirectory = false,
                 AllowDriveLetter      = false,
@@ -65,7 +74,7 @@ namespace Cube.Pdf.Converter
                 AllowUnc              = false,
             };
 
-            Value = GetValue(alternate, io);
+            Value = GetValue(_filter, alternate);
         }
 
         #endregion
@@ -96,7 +105,7 @@ namespace Cube.Pdf.Converter
 
         #endregion
 
-        #region Methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -107,11 +116,11 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetValue(string alternate, IO io)
+        private string GetValue(PathFilter src, string alternate)
         {
             if (!Source.HasValue()) return alternate;
 
-            var dest = io.Get(_filter.Value).Name;
+            var dest = Io.Get(src.Value).Name;
             var key  = " - ";
             var pos  = dest.LastIndexOf(key);
             if (pos == -1) return dest;

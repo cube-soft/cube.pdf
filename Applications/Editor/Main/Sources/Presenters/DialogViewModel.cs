@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DialogViewModel<TModel> : ViewModelBase<TModel>
+    public abstract class DialogViewModel<TModel> : Presentable<TModel>
     {
         #region Constructors
 
@@ -53,7 +53,7 @@ namespace Cube.Pdf.Editor
             SynchronizationContext context
         ) : base(model, aggregator, context)
         {
-            Use(Locale.Subscribe(e => Refresh(nameof(Title))));
+            Assets.Add(Locale.Subscribe(e => Refresh(nameof(Title))));
         }
 
         #endregion
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement OK => Get(() => new BindableElement(
             () => Properties.Resources.MenuOk,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -96,7 +96,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Cancel => Get(() => new BindableElement(
             () => Properties.Resources.MenuCancel,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) { Command = new DelegateCommand(() => Send<CloseMessage>()) });
 
         #endregion

@@ -16,14 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections;
-using Cube.FileSystem;
-using Cube.Mixin.Tasks;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cube.Collections;
+using Cube.FileSystem;
+using Cube.Mixin.Tasks;
 
 namespace Cube.Pdf.Editor
 {
@@ -52,16 +52,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="directory">Target directory.</param>
         /// <param name="filter">Filter string.</param>
-        /// <param name="io">I/O handler</param>
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DirectoryMonitor(string directory, string filter, IO io, Invoker invoker) :
-            base(invoker)
+        public DirectoryMonitor(string directory, string filter, Dispatcher dispatcher) : base(dispatcher)
         {
             Directory  = directory;
             Filter     = filter;
-            IO         = io;
 
             _core = new System.IO.FileSystemWatcher
             {
@@ -107,17 +104,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public string Filter { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         #endregion
 
@@ -170,10 +156,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Refresh() => TaskEx.Run(() =>
         {
-            var dest = IO.GetFiles(Directory, Filter)
-                         .Select(e => IO.Get(e))
+            var dest = Io.GetFiles(Directory, Filter)
+                         .Select(e => Io.Get(e))
                          .OrderByDescending(e => e.LastWriteTime);
-            Interlocked.Exchange(ref _items, dest);
+            _ = Interlocked.Exchange(ref _items, dest);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }).Forget();
 

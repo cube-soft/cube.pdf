@@ -25,7 +25,7 @@ namespace Cube.Pdf.Converter.Proxy.AdvApi32
     /// AdvApi32.NativeMethods
     ///
     /// <summary>
-    /// advapi32.dll に定義された関数を宣言するためのクラスです。
+    /// Provides functions defined in advapi32.dll.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

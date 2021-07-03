@@ -25,7 +25,7 @@ namespace Cube.Pdf.Converter.Proxy.WtsApi32
     /// WtsApi32.NativeMethods
     ///
     /// <summary>
-    /// wtsapi32.dll に定義された関数を宣言するためのクラスです。
+    /// Provides functions defined in wtsapi32.dll.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

@@ -19,7 +19,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         [TestCaseSource(nameof(TestCases))]
         public void Invoke(int id, Converter cv, string srcname, string destname)
         {
-            Assert.That(IO.Exists(Run(cv, srcname, destname)), Is.True, $"No.{id}");
+            Assert.That(Io.Exists(Run(cv, srcname, destname)), Is.True, $"No.{id}");
         }
 
         /* ----------------------------------------------------------------- */
@@ -110,7 +110,7 @@ namespace Cube.Pdf.Tests.Ghostscript
                     "Sample.eps",
                     "日本語のファイル",
                     "Invoke_Cjk_Failed");
-                if (!IO.Exists(dest)) throw new FileNotFoundException("ErrorTest");
+                if (!Io.Exists(dest)) throw new FileNotFoundException("ErrorTest");
             }, Throws.TypeOf<FileNotFoundException>().Or.TypeOf<GsApiException>());
         }
 

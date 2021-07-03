@@ -16,12 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Collections;
-using Cube.Mixin.Collections;
-using Cube.Mixin.Drawing;
-using Cube.Mixin.Logging;
-using Cube.Mixin.Syntax;
-using Cube.Mixin.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,6 +25,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Cube.Collections;
+using Cube.Logging;
+using Cube.Mixin.Collections;
+using Cube.Mixin.Drawing;
+using Cube.Mixin.Syntax;
+using Cube.Mixin.Tasks;
 
 namespace Cube.Pdf.Editor
 {
@@ -58,10 +58,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="getter">Function to get the renderer.</param>
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageCollection(Func<string, IDocumentRenderer> getter, Invoker invoker)
+        public ImageCollection(Func<string, IDocumentRenderer> getter, Dispatcher dispatcher)
         {
             _getter = getter;
 
@@ -71,11 +71,11 @@ namespace Cube.Pdf.Editor
             _cache = new CacheCollection<ImageItem, ImageSource>(e =>
                 getter(e.RawObject.File.FullName).Create(e).ToBitmapImage(true));
             _cache.Created += (s, e) => e.Key.Refresh();
-            _cache.Failed  += (s, e) => this.LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
+            _cache.Failed  += (s, e) => GetType().LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
-            Invoker     = invoker;
-            Selection   = new ImageSelection(invoker);
-            Preferences = new ImagePreference(invoker);
+            Dispatcher  = dispatcher;
+            Selection   = new ImageSelection(dispatcher);
+            Preferences = new ImagePreference(dispatcher);
             Preferences.PropertyChanged += (s, e) => {
                 if (e.PropertyName == nameof(Preferences.VisibleLast)) Reschedule(null);
             };

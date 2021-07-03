@@ -16,14 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Commands;
-using Cube.Tests;
-using Cube.Xui;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Cube.Mixin.Commands;
+using Cube.Tests;
+using Cube.Xui;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {

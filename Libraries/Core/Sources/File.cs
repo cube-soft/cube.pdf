@@ -15,14 +15,12 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
 using System;
 using System.Drawing;
+using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
-    #region File
-
     /* --------------------------------------------------------------------- */
     ///
     /// File
@@ -47,10 +45,10 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <param name="src">Path of the source file.</param>
-        /// <param name="io">I/O handler.</param>
+        /// <param name="controller">Entity controller.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected File(string src, IO io) : base(src, io.GetController()) { }
+        protected File(string src, EntityController controller) : base(src, controller) { }
 
         #endregion
 
@@ -80,126 +78,4 @@ namespace Cube.Pdf
 
         #endregion
     }
-
-    #endregion
-
-    #region PdfFile
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// PdfFile
-    ///
-    /// <summary>
-    /// Represents information of a PDF file.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class PdfFile : File
-    {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfFile
-        ///
-        /// <summary>
-        /// Initializes a new instance of the PdfFile class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password to open the PDF file.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        internal PdfFile(string src, string password, IO io) : base(src, io)
-        {
-            Password   = password;
-            Resolution = new PointF(Point, Point);
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Point
-        ///
-        /// <summary>
-        /// Gets the DPI value of the "Point" unit.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static float Point => 72.0F;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Password
-        ///
-        /// <summary>
-        /// Gets or sets the owner or user password.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Password { get; set; } = string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FullAccess
-        ///
-        /// <summary>
-        /// Gets or sets the value indicating whether you can access
-        /// all contents of the PDF document.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// PDF ファイルにパスワードによって暗号化されており、かつユーザ
-        /// パスワードを用いてファイルを開いた場合 false に設定されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool FullAccess { get; set; } = true;
-
-        #endregion
-    }
-
-    #endregion
-
-    #region ImageFile
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// ImageFile
-    ///
-    /// <summary>
-    /// Represents information of an image file.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class ImageFile : File
-    {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageFile
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ImageFile class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the image file.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected internal ImageFile(string src, IO io) : base(src, io) { }
-
-        #endregion
-    }
-
-    #endregion
 }

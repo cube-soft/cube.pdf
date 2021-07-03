@@ -2,23 +2,15 @@
 {
     partial class MainWindow
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
         /// <summary>
-        /// Releases the unmanaged resources used by the object and
-        /// optionally releases the managed resources.
+        /// Clean up any resources being used.
         /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))

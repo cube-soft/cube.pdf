@@ -23,7 +23,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using Cube.FileSystem;
-using Cube.Mixin.IO;
+using Cube.Logging;
 using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
@@ -52,13 +52,11 @@ namespace Cube.Pdf.Clip
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(IO io, SynchronizationContext context) : base(new ContextInvoker(context, false))
+        public MainFacade(SynchronizationContext context) : base(new ContextDispatcher(context, false))
         {
-            IO = io;
             _clips.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
 
@@ -90,17 +88,6 @@ namespace Cube.Pdf.Clip
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Busy
         ///
         /// <summary>
@@ -110,8 +97,8 @@ namespace Cube.Pdf.Clip
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => GetProperty<bool>();
-            private set => SetProperty(value);
+            get => Get<bool>();
+            private set => Set(value);
         }
 
         #endregion
@@ -153,7 +140,7 @@ namespace Cube.Pdf.Clip
                 else Close();
             }
 
-            var options = new OpenOption { IO = IO, SaveMemory = true };
+            var options = new OpenOption { SaveMemory = true };
             _source = new DocumentReader(src, "", options);
             Reset();
         });
@@ -190,23 +177,22 @@ namespace Cube.Pdf.Clip
         {
             var dest  = _source.File.FullName;
             var tmp   = System.IO.Path.GetTempFileName();
-            var items = _clips.Select(e => e.RawObject).Where(e => IO.Exists(e.Source));
+            var items = _clips.Select(e => e.RawObject).Where(e => Io.Exists(e.Source));
 
-            using (var writer = new DocumentWriter())
+            using (var writer = new DocumentWriter(new() { SmartCopy = true }))
             {
-                writer.UseSmartCopy = true;
                 writer.Set(_source.Metadata);
                 writer.Set(_source.Encryption);
                 writer.Add(_source.Pages);
                 writer.Add(items);
 
-                _ = IO.TryDelete(tmp);
+                GetType().LogWarn(() => Io.Delete(tmp));
                 writer.Save(tmp);
             }
 
             Close();
-            IO.Copy(tmp, dest, true);
-            _ = IO.TryDelete(tmp);
+            Io.Copy(tmp, dest, true);
+            GetType().LogWarn(() => Io.Delete(tmp));
         });
 
         /* ----------------------------------------------------------------- */
@@ -225,7 +211,7 @@ namespace Cube.Pdf.Clip
             foreach (var f in src)
             {
                 if (_clips.Any(e => e.RawObject.Source == f)) continue;
-                _clips.Insert(0, new ClipItem(new Attachment(f, IO))
+                _clips.Insert(0, new ClipItem(new Attachment(f))
                 {
                     Status = Properties.Resources.StatusNew
                 });
@@ -310,8 +296,8 @@ namespace Cube.Pdf.Clip
         #endregion
 
         #region Fields
-        private readonly object _lock = new object();
-        private readonly ObservableCollection<ClipItem> _clips = new ObservableCollection<ClipItem>();
+        private readonly object _lock = new();
+        private readonly ObservableCollection<ClipItem> _clips = new();
         private IDocumentReader _source = null;
         #endregion
     }

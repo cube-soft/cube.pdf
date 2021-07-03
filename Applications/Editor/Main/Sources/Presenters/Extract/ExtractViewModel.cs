@@ -16,15 +16,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using Cube.FileSystem;
 using Cube.Mixin.Observing;
 using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
 using Cube.Xui;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
@@ -53,26 +53,22 @@ namespace Cube.Pdf.Editor
         /// <param name="callback">Callback method when applied.</param>
         /// <param name="selection">Page selection.</param>
         /// <param name="count">Number of pages.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         public ExtractViewModel(Action<SaveOption> callback,
             ImageSelection selection,
             int count,
-            IO io,
             SynchronizationContext context
-        ) : base(new ExtractFacade(selection, count, io, new ContextInvoker(context, false)),
-            new Aggregator(),
-            context
-        ) {
+        ) : base(new(selection, count, new ContextDispatcher(context, false)), new(), context)
+        {
             OK.Command = new DelegateCommand(
                 () => Track(() => {
                     callback(Facade.Value);
                     Send<CloseMessage>();
                 }),
                 () => Facade.Value.Destination.HasValue() &&
-                      !io.Get(Facade.Value.Destination).IsDirectory
+                      !Io.Get(Facade.Value.Destination).IsDirectory
             ).Associate(Facade.Value, nameof(SaveOption.Destination));
         }
 
@@ -105,10 +101,10 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuDestination,
             () => Facade.Value.Destination,
             e  => Facade.Value.Destination = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) {
-            Command = new DelegateCommand(() => Send(
-                MessageFactory.CreateForExtract(),
+            Command = new DelegateCommand(() => Track(
+                Message.ForExtract(),
                 e => Facade.Value.Destination = e
             ))
         }).Associate(Facade.Value, nameof(SaveOption.Destination));
@@ -126,7 +122,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuFormat,
             () => Facade.Value.Format,
             e  => Facade.Value.Format = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         )).Associate(Facade.Value, nameof(SaveOption.Format));
 
         /* ----------------------------------------------------------------- */
@@ -141,7 +137,7 @@ namespace Cube.Pdf.Editor
         public IElement<int> Count => Get(() => new BindableElement<int>(
             () => Properties.Resources.MenuPageCount,
             () => Facade.Count,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -159,7 +155,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Target => Get(() => new BindableElement(
             () => Properties.Resources.MenuTarget,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -176,7 +172,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuExtractSelected,
             () => Facade.Value.Target == SaveTarget.Selected,
             e  => e.Then(() => Facade.Value.Target = SaveTarget.Selected),
-            GetInvoker(false)
+            GetDispatcher(false)
         ) {
             Command = new DelegateCommand(
                 () => { },
@@ -198,7 +194,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuExtractAll,
             () => Facade.Value.Target == SaveTarget.All,
             e  => e.Then(() => Facade.Value.Target = SaveTarget.All),
-            GetInvoker(false)
+            GetDispatcher(false)
         )).Associate(Facade.Value, nameof(SaveOption.Target));
 
         /* ----------------------------------------------------------------- */
@@ -215,7 +211,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuExtractRange,
             () => Facade.Value.Target == SaveTarget.Range,
             e  => e.Then(() => Facade.Value.Target = SaveTarget.Range),
-            GetInvoker(false)
+            GetDispatcher(false)
         )).Associate(Facade.Value, nameof(SaveOption.Target));
 
         /* ----------------------------------------------------------------- */
@@ -231,7 +227,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MessageRangeExample,
             () => Facade.Value.Range,
             e  => Facade.Value.Range = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -247,7 +243,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuDpi,
             () => Facade.Value.Resolution,
             e  => Facade.Value.Resolution = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -264,7 +260,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuSplit,
             () => Facade.Value.Split,
             e  => Facade.Value.Split = e,
-            GetInvoker(false)
+            GetDispatcher(false)
         ) {
             Command = new DelegateCommand(
                 () => { },
@@ -283,7 +279,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Option => Get(() => new BindableElement(
             () => Properties.Resources.MenuOptions,
-            GetInvoker(false)
+            GetDispatcher(false)
         ));
 
         #endregion

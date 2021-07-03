@@ -19,10 +19,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Cube.Mixin.IO;
-using Cube.Mixin.Pdf;
+using Cube.FileSystem;
 using Cube.Mixin.String;
 using Cube.Pdf.Itext;
+using Cube.Pdf.Mixin;
 using Cube.Tests;
 using NUnit.Framework;
 
@@ -62,10 +62,9 @@ namespace Cube.Pdf.Tests.Itext
             var src  = GetSource(filename);
             var dest = Path(Args(filename));
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { SmartCopy = true }))
             using (var r = new DocumentReader(src, password))
             {
-                w.UseSmartCopy = true;
                 w.Set(r.Metadata);
                 w.Set(r.Encryption);
                 w.Add(Rotate(r.Pages, degree));
@@ -88,13 +87,12 @@ namespace Cube.Pdf.Tests.Itext
         public int Overwrite(string filename, string password, int degree)
         {
             var dest = Path(Args(filename));
-            IO.Copy(GetSource(filename), dest, true);
+            Io.Copy(GetSource(filename), dest, true);
 
             var op = new OpenOption { SaveMemory = false };
             var r  = new DocumentReader(dest, password, op);
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { SmartCopy = true }))
             {
-                w.UseSmartCopy = false;
                 w.Set(r.Metadata);
                 w.Set(r.Encryption);
                 w.Add(Rotate(r.Pages, degree), r);
@@ -121,7 +119,7 @@ namespace Cube.Pdf.Tests.Itext
             var r1   = new DocumentReader(GetSource(f1), "", op);
             var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { SmartCopy = true }))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree), r0);
                 w.Add(Rotate(r1.Pages, degree), r1);
@@ -144,13 +142,13 @@ namespace Cube.Pdf.Tests.Itext
         {
             var op   = new OpenOption { SaveMemory = false };
             var r0   = new DocumentReader(GetSource(doc), "", op);
-            var dest = Path(Args(r0.File.BaseName, IO.Get(image).BaseName));
+            var dest = Path(Args(r0.File.BaseName, Io.Get(image).BaseName));
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { SmartCopy = true }))
             using (var r = new DocumentReader(GetSource(doc), "", op))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
-                w.Add(Rotate(IO.GetImagePages(GetSource(image)), degree));
+                w.Add(Rotate(new ImagePageCollection(GetSource(image)), degree));
                 w.Save(dest);
             }
             return Count(dest, "", degree);
@@ -170,29 +168,27 @@ namespace Cube.Pdf.Tests.Itext
         public int Split(string filename, string password)
         {
             var src  = GetSource(filename);
-            var info = IO.Get(src);
+            var info = Io.Get(src);
             var name = info.BaseName;
             var ext  = info.Extension;
             var dest = Path(Args(name));
 
-            IO.Copy(src, IO.Combine(dest, $"{name}-01{ext}"), true);
+            Io.Copy(src, Io.Combine(dest, $"{name}-01{ext}"), true);
 
-            using (var w = new DocumentSplitter(IO))
-            {
-                var op = new OpenOption { SaveMemory = false };
-                w.Add(new DocumentReader(src, password, op));
-                w.Save(dest);
+            using var w = new DocumentSplitter(new());
+            var op = new OpenOption { SaveMemory = false };
+            w.Add(new DocumentReader(src, password, op));
+            w.Save(dest);
 
-                var n   = w.Results.Count;
-                var cmp = IO.GetFiles(dest).Count();
-                Assert.That(cmp, Is.EqualTo(n + 1));
-                Assert.That(IO.Exists(IO.Combine(dest, $"{name}-01 (1){ext}")));
+            var n = w.Results.Count;
+            var cmp = Io.GetFiles(dest).Count();
+            Assert.That(cmp, Is.EqualTo(n + 1));
+            Assert.That(Io.Exists(Io.Combine(dest, $"{name}-01(1){ext}")));
 
-                w.Reset();
-                Assert.That(w.Results.Count, Is.EqualTo(0));
+            w.Reset();
+            Assert.That(w.Results.Count, Is.EqualTo(0));
 
-                return n;
-            }
+            return n;
         }
 
         /* ----------------------------------------------------------------- */
@@ -212,25 +208,23 @@ namespace Cube.Pdf.Tests.Itext
             var op   = new OpenOption { SaveMemory = false };
             var src  = GetSource(doc);
             var r0   = new DocumentReader(src, "", op);
-            var r1   = IO.Get(GetSource(file));
+            var r1   = Io.Get(GetSource(file));
             var dest = Path(Args(r0.File.BaseName, r1.BaseName));
 
             using (var w = new DocumentWriter())
             {
                 w.Add(r0);
                 w.Add(r0.Attachments);
-                w.Attach(new Attachment(r1.FullName, IO));
-                w.Attach(new Attachment(r1.FullName, IO)); // Skip duplicated object.
+                w.Attach(new Attachment(r1.FullName));
+                w.Attach(new Attachment(r1.FullName)); // Skip duplicated object.
                 w.Save(dest);
             }
 
-            using (var r = new DocumentReader(dest, "", op))
-            {
-                var items = r.Attachments;
-                Assert.That(items.Any(x => x.Name.FuzzyEquals(file)), Is.True);
-                foreach (var obj in items) Assert.That(obj.Length, Is.AtLeast(1));
-                return items.Count();
-            }
+            using var r = new DocumentReader(dest, "", op);
+            var items = r.Attachments;
+            Assert.That(items.Any(x => x.Name.FuzzyEquals(file)), Is.True);
+            foreach (var obj in items) Assert.That(obj.Length, Is.AtLeast(1));
+            return items.Count();
         }
 
         /* ----------------------------------------------------------------- */
@@ -261,26 +255,24 @@ namespace Cube.Pdf.Tests.Itext
                 Options  = ViewerOption.TwoColumnLeft,
             };
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new()))
             {
                 w.Set(cmp);
                 w.Add(new DocumentReader(src, "", op));
                 w.Save(dest);
             }
 
-            using (var r = new DocumentReader(dest, "", op))
-            {
-                var m = r.Metadata;
-                Assert.That(m.Title,         Is.EqualTo(cmp.Title), nameof(m.Title));
-                Assert.That(m.Author,        Is.EqualTo(cmp.Author), nameof(m.Author));
-                Assert.That(m.Subject,       Is.EqualTo(cmp.Subject), nameof(m.Subject));
-                Assert.That(m.Keywords,      Is.EqualTo(cmp.Keywords), nameof(m.Keywords));
-                Assert.That(m.Creator,       Is.EqualTo(cmp.Creator), nameof(m.Creator));
-                Assert.That(m.Producer,      Does.StartWith("iTextSharp"));
-                Assert.That(m.Version.Major, Is.EqualTo(cmp.Version.Major));
-                Assert.That(m.Version.Minor, Is.EqualTo(cmp.Version.Minor));
-                Assert.That(m.Options,       Is.EqualTo(cmp.Options));
-            }
+            using var r = new DocumentReader(dest, "", op);
+            var m = r.Metadata;
+            Assert.That(m.Title,         Is.EqualTo(cmp.Title), nameof(m.Title));
+            Assert.That(m.Author,        Is.EqualTo(cmp.Author), nameof(m.Author));
+            Assert.That(m.Subject,       Is.EqualTo(cmp.Subject), nameof(m.Subject));
+            Assert.That(m.Keywords,      Is.EqualTo(cmp.Keywords), nameof(m.Keywords));
+            Assert.That(m.Creator,       Is.EqualTo(cmp.Creator), nameof(m.Creator));
+            Assert.That(m.Producer,      Does.StartWith("iTextSharp"));
+            Assert.That(m.Version.Major, Is.EqualTo(cmp.Version.Major));
+            Assert.That(m.Version.Minor, Is.EqualTo(cmp.Version.Minor));
+            Assert.That(m.Options,       Is.EqualTo(cmp.Options));
         }
 
         /* ----------------------------------------------------------------- */
@@ -308,7 +300,7 @@ namespace Cube.Pdf.Tests.Itext
                 Permission       = new Permission(permission),
             };
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new()))
             {
                 w.Set(cmp);
                 w.Add(new DocumentReader(src, "", op));
@@ -354,11 +346,10 @@ namespace Cube.Pdf.Tests.Itext
             var op     = new OpenOption { SaveMemory = false };
             var degree = 90;
 
-            using (var w = new DocumentWriter(IO))
+            using (var w = new DocumentWriter(new() { SmartCopy = true }))
             {
                 var r = new DocumentReader(src, "", op);
 
-                w.UseSmartCopy = true;
                 w.Set(r.Metadata);
                 w.Set(r.Encryption);
                 w.Add(Rotate(r.Pages, degree), r);
@@ -440,16 +431,14 @@ namespace Cube.Pdf.Tests.Itext
         /* ----------------------------------------------------------------- */
         private int Count(string src, string password, int degree)
         {
-            using (var reader = new DocumentReader(src, password))
-            {
-                Assert.That(reader.File.Count, Is.EqualTo(reader.Pages.Count()));
-                Assert.That(
-                    reader.Pages.Select(e => e.Rotation.Degree),
-                    Is.EquivalentTo(Enumerable.Repeat(degree, reader.File.Count)),
-                    nameof(Page.Rotation)
-                );
-                return reader.File.Count;
-            }
+            using var reader = new DocumentReader(src, password);
+            Assert.That(reader.File.Count, Is.EqualTo(reader.Pages.Count()));
+            Assert.That(
+                reader.Pages.Select(e => e.Rotation.Degree),
+                Is.EquivalentTo(Enumerable.Repeat(degree, reader.File.Count)),
+                nameof(Page.Rotation)
+            );
+            return reader.File.Count;
         }
 
         #endregion

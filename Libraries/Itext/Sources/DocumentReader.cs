@@ -16,8 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Pdf;
-using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 
 namespace Cube.Pdf.Itext
@@ -62,8 +61,7 @@ namespace Cube.Pdf.Itext
         /// <param name="password">Password string.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, string password) :
-            this(src, password, new OpenOption()) { }
+        public DocumentReader(string src, string password) : this(src, password, new()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -80,7 +78,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, string password, OpenOption options) :
-            this(src, MakeQuery(null, password), options) { }
+            this(src, new Password(null, password), options) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -95,8 +93,7 @@ namespace Cube.Pdf.Itext
         /// <param name="query">Password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentReader(string src, IQuery<string> query) :
-            this(src, query, new OpenOption()) { }
+        public DocumentReader(string src, IQuery<string> query) : this(src, query, new()) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -113,7 +110,7 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public DocumentReader(string src, IQuery<string> query, OpenOption options) :
-            this(src, MakeQuery(query, string.Empty), options) { }
+            this(src, new Password(query, string.Empty), options) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -129,21 +126,18 @@ namespace Cube.Pdf.Itext
         /// <param name="options">Open options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        private DocumentReader(string src,
-            QueryMessage<IQuery<string>, string> password,
-            OpenOption options
-        ) {
-            Core = ReaderFactory.FromPdf(src, password, options);
+        private DocumentReader(string src, Password password, OpenOption options)
+        {
+            var obj  = Reader.FromPdf(src, password, options);
+            var file = obj.GetFile(src, password.Value);
 
-            var f = options.IO.GetPdfFile(src, password.Value);
-            f.Count      = Core.NumberOfPages;
-            f.FullAccess = Core.IsOpenedWithFullPermissions;
-
-            File        = f;
-            Metadata    = Core.GetMetadata();
-            Encryption  = Core.GetEncryption(f);
-            Pages       = new PageCollection(Core, f);
-            Attachments = new AttachmentCollection(Core, f, options.IO);
+            Options     = options;
+            Core        = obj;
+            File        = file;
+            Metadata    = obj.GetMetadata();
+            Encryption  = obj.GetEncryption(file);
+            Pages       = new PageCollection(obj, file);
+            Attachments = new AttachmentCollection(obj, file);
         }
 
         #endregion
@@ -207,6 +201,17 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Options
+        ///
+        /// <summary>
+        /// Get the options when the provided PDF file is opened.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected OpenOption Options { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Core
         ///
         /// <summary>
@@ -214,11 +219,11 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        internal PdfReader Core { get; }
+        protected internal IDisposable Core { get; }
 
         #endregion
 
-        #region Methods
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -239,23 +244,6 @@ namespace Cube.Pdf.Itext
         {
             if (disposing) Core?.Dispose();
         }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// QueryMessage
-        ///
-        /// <summary>
-        /// Creates a password query and string.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static QueryMessage<IQuery<string>, string> MakeQuery(
-            IQuery<string> query, string password) =>
-            Query.NewMessage(query, password);
 
         #endregion
     }

@@ -16,9 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using NUnit.Framework;
 using System.Linq;
 using System.Threading;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Clip.Tests
 {

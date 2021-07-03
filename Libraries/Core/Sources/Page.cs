@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
@@ -124,8 +125,6 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public SizeF Size { get; }
 
-        #region Editable
-
         /* ----------------------------------------------------------------- */
         ///
         /// Delta
@@ -142,11 +141,9 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public Angle Delta
         {
-            get => GetProperty(() => new Angle());
-            set => SetProperty(value);
+            get => Get(() => new Angle());
+            set => Set(value);
         }
-
-        #endregion
 
         #endregion
 
@@ -172,7 +169,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected virtual void OnReset() => Delta = new Angle();
+        protected virtual void OnReset() => Delta = new();
 
         #endregion
     }

@@ -42,14 +42,11 @@ namespace Cube.Pdf.Editor
         /// SaveOption
         ///
         /// <summary>
-        /// Initializes a new instance of the SaveOption class with the
-        /// specified arguments.
+        /// Initializes a new instance of the SaveOption class.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public SaveOption(IO io) : this(io, Invoker.Vanilla) { }
+        public SaveOption() : this(Dispatcher.Vanilla) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -60,19 +57,34 @@ namespace Cube.Pdf.Editor
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SaveOption(IO io, Invoker invoker) : base(invoker)
+        public SaveOption(Dispatcher dispatcher) : base(dispatcher)
         {
-            IO = io;
             Resolution = 144;
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Temp
+        ///
+        /// <summary>
+        /// Gets or sets the path of the working directory. If this value is
+        /// empty, the program will use the same directory as the path
+        /// specified in Destination as its working directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Temp
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -85,8 +97,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public string Destination
         {
-            get => GetProperty<string>();
-            set { if (SetProperty(value)) SetFormat(); }
+            get => Get(() => string.Empty);
+            set { if (Set(value)) SetFormat(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -100,8 +112,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public SaveFormat Format
         {
-            get => GetProperty<SaveFormat>();
-            set { if (SetProperty(value)) SetDestination(); }
+            get => Get(() => SaveFormat.Pdf);
+            set { if (Set(value)) SetDestination(); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -115,8 +127,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public SaveTarget Target
         {
-            get => GetProperty<SaveTarget>();
-            set => SetProperty(value);
+            get => Get(() => SaveTarget.All);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -130,8 +142,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public string Range
         {
-            get => GetProperty<string>();
-            set => SetProperty(value);
+            get => Get(() => string.Empty);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -145,8 +157,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Resolution
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get(() => 72);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -161,8 +173,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Split
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get(() => false);
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -176,8 +188,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Metadata Metadata
         {
-            get => GetProperty<Metadata>();
-            set => SetProperty(value);
+            get => Get<Metadata>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -191,8 +203,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Encryption Encryption
         {
-            get => GetProperty<Encryption>();
-            set => SetProperty(value);
+            get => Get<Encryption>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -207,20 +219,30 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IEnumerable<Attachment> Attachments
         {
-            get => GetProperty<IEnumerable<Attachment>>();
-            set => SetProperty(value);
+            get => Get(Enumerable.Empty<Attachment>);
+            set => Set(value);
         }
+
+        #endregion
+
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// IO
+        /// ToItext
         ///
         /// <summary>
-        /// Gets the I/O handler.
+        /// Converts to the Itext.SaveOption object.
         /// </summary>
         ///
+        /// <returns>Itext.SaveOption object.</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public IO IO { get; }
+        public Itext.SaveOption ToItext() => new()
+        {
+            Temp      = Temp,
+            SmartCopy = true,
+        };
 
         #endregion
 
@@ -281,7 +303,7 @@ namespace Cube.Pdf.Editor
             if (fi == null || fi.Extension.FuzzyEquals($".{Format}")) return;
 
             var name = $"{fi.BaseName}.{Format.ToString().ToLowerInvariant()}";
-            Destination = IO.Combine(fi.DirectoryName, name);
+            Destination = Io.Combine(fi.DirectoryName, name);
         }
 
         /* ----------------------------------------------------------------- */
@@ -293,7 +315,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Entity GetEntity(string src) => src.HasValue() ? IO.Get(src) : null;
+        private Entity GetEntity(string src) => src.HasValue() ? Io.Get(src) : default;
 
         #endregion
     }

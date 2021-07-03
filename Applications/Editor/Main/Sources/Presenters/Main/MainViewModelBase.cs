@@ -25,7 +25,7 @@ using System.Windows.Input;
 using Cube.FileSystem;
 using Cube.Mixin.Generics;
 using Cube.Mixin.Observing;
-using Cube.Mixin.Pdf;
+using Cube.Pdf.Mixin;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor
@@ -39,7 +39,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class MainViewModelBase : ViewModelBase<MainFacade>
+    public abstract class MainViewModelBase : Presentable<MainFacade>
     {
         #region Constructors
 
@@ -212,7 +212,7 @@ namespace Cube.Pdf.Editor
         protected void SendClose(CancelEventArgs src)
         {
             var e = src ?? new CancelEventArgs();
-            var m = MessageFactory.CreateOverwriteWarn();
+            var m = Message.ForOverwrite();
 
             Send(m);
             e.Cancel = m.Value == DialogStatus.Cancel;
@@ -237,7 +237,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendOpen(Action<string> action) =>
-            Send(MessageFactory.CreateForOpen(), e => action(e.First()));
+            Track(Message.ForOpen(), e => action(e.First()));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -253,7 +253,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendSave(Action<string> action) =>
-            Send(MessageFactory.CreateForSave(), e => action(e));
+            Track(Message.ForSave(), action);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -269,7 +269,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendInsert(Action<IEnumerable<string>> action) =>
-            Send(MessageFactory.CreateForInsert(), e => action(e));
+            Track(Message.ForInsert(), action);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -285,7 +285,6 @@ namespace Cube.Pdf.Editor
             (i, v) => Track(() => Facade.Insert(i + 1, v.Select(e => e.FullName))),
             Facade.Value.Images.Selection.First,
             Facade.Value.Count,
-            Facade.Value.IO,
             Context
         ));
 
@@ -319,7 +318,6 @@ namespace Cube.Pdf.Editor
             e => Facade.Extract(e),
             Facade.Value.Images.Selection,
             Facade.Value.Count,
-            Facade.Value.IO,
             Context
         ));
 

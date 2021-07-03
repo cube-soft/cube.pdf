@@ -16,14 +16,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.String;
-using Cube.Pdf.Ghostscript;
-using Cube.Tests;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Cube.Logging;
+using Cube.Mixin.String;
+using Cube.Pdf.Ghostscript;
+using Cube.Tests;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Converter.Tests
 {
@@ -75,36 +76,36 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void SettingViewModel() => Invoke(vm =>
         {
-            var vms = vm.General;
-            Assert.That(vms.Resolution,         Is.EqualTo(600));
-            Assert.That(vms.Language,           Is.EqualTo(Language.Auto));
-            Assert.That(vms.IsAutoOrientation,  Is.True,  nameof(vms.IsAutoOrientation));
-            Assert.That(vms.IsPortrait,         Is.False, nameof(vms.IsPortrait));
-            Assert.That(vms.IsLandscape,        Is.False, nameof(vms.IsLandscape));
-            Assert.That(vms.Grayscale,          Is.False, nameof(vms.Grayscale));
-            Assert.That(vms.ImageFilter,        Is.True,  nameof(vms.ImageFilter));
-            Assert.That(vms.Linearization,      Is.False, nameof(vms.Linearization));
-            Assert.That(vms.CheckUpdate,        Is.True,  nameof(vms.CheckUpdate));
-            Assert.That(vms.IsPdf,              Is.True,  nameof(vms.IsPdf));
-            Assert.That(vms.EnableUserProgram,  Is.False, nameof(vms.EnableUserProgram));
-            Assert.That(vms.SourceEditable,     Is.False, nameof(vms.SourceEditable));
-            Assert.That(vms.SourceVisible,      Is.False, nameof(vms.SourceVisible));
+            var dest = vm.General;
+            GetType().LogDebug($"CheckUpdate:{dest.CheckUpdate}");
+            Assert.That(dest.Resolution,         Is.EqualTo(600));
+            Assert.That(dest.Language,           Is.EqualTo(Language.Auto));
+            Assert.That(dest.IsAutoOrientation,  Is.True,  nameof(dest.IsAutoOrientation));
+            Assert.That(dest.IsPortrait,         Is.False, nameof(dest.IsPortrait));
+            Assert.That(dest.IsLandscape,        Is.False, nameof(dest.IsLandscape));
+            Assert.That(dest.Grayscale,          Is.False, nameof(dest.Grayscale));
+            Assert.That(dest.ImageFilter,        Is.True,  nameof(dest.ImageFilter));
+            Assert.That(dest.Linearization,      Is.False, nameof(dest.Linearization));
+            Assert.That(dest.IsPdf,              Is.True,  nameof(dest.IsPdf));
+            Assert.That(dest.EnableUserProgram,  Is.False, nameof(dest.EnableUserProgram));
+            Assert.That(dest.SourceEditable,     Is.False, nameof(dest.SourceEditable));
+            Assert.That(dest.SourceVisible,      Is.False, nameof(dest.SourceVisible));
 
-            vms.Format = Format.Png;
-            Assert.That(vms.IsPdf, Is.False, nameof(vms.IsPdf));
+            dest.Format = Format.Png;
+            Assert.That(dest.IsPdf, Is.False, nameof(dest.IsPdf));
 
-            vms.PostProcess = PostProcess.Others;
-            Assert.That(vms.EnableUserProgram,  Is.True,  nameof(vms.EnableUserProgram));
+            dest.PostProcess = PostProcess.Others;
+            Assert.That(dest.EnableUserProgram,  Is.True,  nameof(dest.EnableUserProgram));
 
-            vms.IsPortrait = true;
-            Assert.That(vms.IsAutoOrientation,  Is.False, nameof(vms.IsAutoOrientation));
-            Assert.That(vms.IsPortrait,         Is.True,  nameof(vms.IsPortrait));
-            Assert.That(vms.IsLandscape,        Is.False, nameof(vms.IsLandscape));
+            dest.IsPortrait = true;
+            Assert.That(dest.IsAutoOrientation,  Is.False, nameof(dest.IsAutoOrientation));
+            Assert.That(dest.IsPortrait,         Is.True,  nameof(dest.IsPortrait));
+            Assert.That(dest.IsLandscape,        Is.False, nameof(dest.IsLandscape));
 
-            vms.IsLandscape = true;
-            Assert.That(vms.IsAutoOrientation,  Is.False, nameof(vms.IsAutoOrientation));
-            Assert.That(vms.IsPortrait,         Is.False, nameof(vms.IsPortrait));
-            Assert.That(vms.IsLandscape,        Is.True,  nameof(vms.IsLandscape));
+            dest.IsLandscape = true;
+            Assert.That(dest.IsAutoOrientation,  Is.False, nameof(dest.IsAutoOrientation));
+            Assert.That(dest.IsPortrait,         Is.False, nameof(dest.IsPortrait));
+            Assert.That(dest.IsLandscape,        Is.True,  nameof(dest.IsLandscape));
         });
 
         /* ----------------------------------------------------------------- */
@@ -119,13 +120,13 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void MetadataViewModel() => Invoke(vm =>
         {
-            var vmm = vm.Metadata;
-            Assert.That(vmm.Title,    Is.Empty, nameof(vmm.Title));
-            Assert.That(vmm.Author,   Is.Empty, nameof(vmm.Author));
-            Assert.That(vmm.Subject,  Is.Empty, nameof(vmm.Subject));
-            Assert.That(vmm.Keywords, Is.Empty, nameof(vmm.Keywords));
-            Assert.That(vmm.Creator,  Is.EqualTo("CubePDF"));
-            Assert.That(vmm.Options,  Is.EqualTo(ViewerOption.OneColumn));
+            var dest = vm.Metadata;
+            Assert.That(dest.Title,    Is.Empty, nameof(dest.Title));
+            Assert.That(dest.Author,   Is.Empty, nameof(dest.Author));
+            Assert.That(dest.Subject,  Is.Empty, nameof(dest.Subject));
+            Assert.That(dest.Keywords, Is.Empty, nameof(dest.Keywords));
+            Assert.That(dest.Creator,  Is.EqualTo("CubePDF"));
+            Assert.That(dest.Options,  Is.EqualTo(ViewerOption.OneColumn));
         });
 
         /* ----------------------------------------------------------------- */
@@ -140,37 +141,37 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void EncryptionViewModel() => Invoke(vm =>
         {
-            var vme = vm.Encryption;
-            Assert.That(vme.Enabled,            Is.False, nameof(vme.Enabled));
-            Assert.That(vme.OwnerPassword,      Is.Empty, nameof(vme.OwnerPassword));
-            Assert.That(vme.OwnerConfirm,       Is.Empty, nameof(vme.OwnerConfirm));
-            Assert.That(vme.OpenWithPassword,   Is.False, nameof(vme.OpenWithPassword));
-            Assert.That(vme.UseOwnerPassword,   Is.False, nameof(vme.UseOwnerPassword));
-            Assert.That(vme.EnableUserPassword, Is.False, nameof(vme.EnableUserPassword));
-            Assert.That(vme.UserPassword,       Is.Empty, nameof(vme.UserPassword));
-            Assert.That(vme.UserConfirm,        Is.Empty, nameof(vme.UserConfirm));
-            Assert.That(vme.AllowCopy,          Is.False, nameof(vme.AllowCopy));
-            Assert.That(vme.AllowInputForm,     Is.False, nameof(vme.AllowInputForm));
-            Assert.That(vme.AllowModify,        Is.False, nameof(vme.AllowModify));
-            Assert.That(vme.AllowPrint,         Is.False, nameof(vme.AllowPrint));
-            Assert.That(vme.EnablePermission,   Is.True,  nameof(vme.EnablePermission));
+            var dest = vm.Encryption;
+            Assert.That(dest.Enabled,            Is.False, nameof(dest.Enabled));
+            Assert.That(dest.OwnerPassword,      Is.Empty, nameof(dest.OwnerPassword));
+            Assert.That(dest.OwnerConfirm,       Is.Empty, nameof(dest.OwnerConfirm));
+            Assert.That(dest.OpenWithPassword,   Is.False, nameof(dest.OpenWithPassword));
+            Assert.That(dest.UseOwnerPassword,   Is.False, nameof(dest.UseOwnerPassword));
+            Assert.That(dest.EnableUserPassword, Is.False, nameof(dest.EnableUserPassword));
+            Assert.That(dest.UserPassword,       Is.Empty, nameof(dest.UserPassword));
+            Assert.That(dest.UserConfirm,        Is.Empty, nameof(dest.UserConfirm));
+            Assert.That(dest.AllowCopy,          Is.False, nameof(dest.AllowCopy));
+            Assert.That(dest.AllowInputForm,     Is.False, nameof(dest.AllowInputForm));
+            Assert.That(dest.AllowModify,        Is.False, nameof(dest.AllowModify));
+            Assert.That(dest.AllowPrint,         Is.False, nameof(dest.AllowPrint));
+            Assert.That(dest.EnablePermission,   Is.True,  nameof(dest.EnablePermission));
 
-            vme.Enabled = true;
-            vme.OwnerPassword    = "Password";
-            vme.OwnerConfirm     = "Password";
-            vme.OpenWithPassword = true;
+            dest.Enabled          = true;
+            dest.OwnerPassword    = "Password";
+            dest.OwnerConfirm     = "Password";
+            dest.OpenWithPassword = true;
 
-            Assert.That(vme.Enabled,            Is.True,  nameof(vme.Enabled));
-            Assert.That(vme.OpenWithPassword,   Is.True,  nameof(vme.OpenWithPassword));
-            Assert.That(vme.UseOwnerPassword,   Is.False, nameof(vme.UseOwnerPassword));
-            Assert.That(vme.EnableUserPassword, Is.True,  nameof(vme.EnableUserPassword));
-            Assert.That(vme.EnablePermission,   Is.True,  nameof(vme.EnablePermission));
+            Assert.That(dest.Enabled,            Is.True,  nameof(dest.Enabled));
+            Assert.That(dest.OpenWithPassword,   Is.True,  nameof(dest.OpenWithPassword));
+            Assert.That(dest.UseOwnerPassword,   Is.False, nameof(dest.UseOwnerPassword));
+            Assert.That(dest.EnableUserPassword, Is.True,  nameof(dest.EnableUserPassword));
+            Assert.That(dest.EnablePermission,   Is.True,  nameof(dest.EnablePermission));
 
-            vme.UseOwnerPassword = true;
+            dest.UseOwnerPassword = true;
 
-            Assert.That(vme.UseOwnerPassword,   Is.True,  nameof(vme.UseOwnerPassword));
-            Assert.That(vme.EnableUserPassword, Is.False, nameof(vme.EnableUserPassword));
-            Assert.That(vme.EnablePermission,   Is.False, nameof(vme.EnablePermission));
+            Assert.That(dest.UseOwnerPassword,   Is.True,  nameof(dest.UseOwnerPassword));
+            Assert.That(dest.EnableUserPassword, Is.False, nameof(dest.EnableUserPassword));
+            Assert.That(dest.EnablePermission,   Is.False, nameof(dest.EnablePermission));
         });
 
         /* ----------------------------------------------------------------- */

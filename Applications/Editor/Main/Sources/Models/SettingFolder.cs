@@ -21,9 +21,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using Cube.FileSystem;
+using Cube.FileSystem.DataContract;
 using Cube.Mixin.Assembly;
-using Cube.Mixin.IO;
-using Cube.Mixin.String;
 
 namespace Cube.Pdf.Editor
 {
@@ -50,11 +49,10 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <param name="assembly">Assembly information.</param>
-        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, IO io) :
-            this(assembly, Cube.DataContract.Format.Registry, @"CubeSoft\CubePDF Utility2", io) { }
+        public SettingFolder(Assembly assembly) :
+            this(assembly, Format.Registry, @"CubeSoft\CubePDF Utility2") { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -68,21 +66,36 @@ namespace Cube.Pdf.Editor
         /// <param name="assembly">Assembly information.</param>
         /// <param name="format">Serialized format.</param>
         /// <param name="location">Location for the settings.</param>
-        /// <param name="io">I/O handler</param>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly, Cube.DataContract.Format format, string location, IO io) :
-            base(assembly, format, location, io)
+        public SettingFolder(Assembly assembly, Format format, string location) :
+            base(format, location, assembly.GetSoftwareVersion())
         {
-            Title          = Assembly.GetTitle();
-            AutoSave       = false;
-            Version.Digit  = 3;
-            Version.Suffix = Properties.Resources.VersionSuffix;
+            var exe = Io.Combine(assembly.GetDirectoryName(), "CubeChecker.exe");
+
+            Title    = assembly.GetTitle();
+            AutoSave = false;
+            Startup  = new("cubepdf-utility-checker") { Source = exe };
+
+            Startup.Arguments.Add("cubepdfutility");
+            Startup.Arguments.Add("/subkey");
+            Startup.Arguments.Add("CubePDF Utility2");
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Startup
+        ///
+        /// <summary>
+        /// Get the startup registration object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Startup Startup { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -117,46 +130,32 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnLoaded
+        /// OnLoad
         ///
         /// <summary>
-        /// Occurs when the Loaded event is fired.
+        /// Loads the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnLoaded(ValueChangedEventArgs<SettingValue> e)
+        protected override void OnLoad()
         {
-            try { Locale.Set(e.NewValue.Language); }
-            finally { base.OnLoaded(e); }
+            base.OnLoad();
+            Locale.Set(Value.Language);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OnSaved
+        /// OnSave
         ///
         /// <summary>
-        /// Occurs when the Saved event is fired.
+        /// Saves the user settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void OnSaved(KeyValueEventArgs<Cube.DataContract.Format, string> e)
+        protected override void OnSave()
         {
-            try
-            {
-                if (Value == null) return;
-
-                var name = "cubepdf-utility-checker";
-                var exe  = IO.Combine(Assembly.GetDirectoryName(), "CubeChecker.exe");
-                var sk   = "CubePDF Utility2";
-                var args = $"{Assembly.GetNameString().Quote()} /subkey {sk.Quote()}";
-
-                new Startup(name)
-                {
-                    Command = $"{exe.Quote()} {args}",
-                    Enabled = Value.CheckUpdate && IO.Exists(exe),
-                }.Save();
-            }
-            finally { base.OnSaved(e); }
+            base.OnSave();
+            Startup.Save(true);
         }
 
         /* ----------------------------------------------------------------- */

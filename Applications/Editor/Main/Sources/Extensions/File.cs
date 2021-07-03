@@ -16,14 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Images.Icons;
-using Cube.Mixin.Drawing;
-using Cube.Mixin.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
+using Cube.FileSystem;
+using Cube.Images.Icons;
+using Cube.Mixin.Drawing;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Editor
 {
@@ -83,7 +83,6 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="src">Source file.</param>
         /// <param name="query">Password query.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="partial">
         /// Value indicating whether to apply the partial mode.
         /// Note that you must set to false if you use the created
@@ -93,12 +92,11 @@ namespace Cube.Pdf.Editor
         /// <returns>DocumentReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IDocumentReader GetItext(this Entity src, IQuery<string> query, IO io, bool partial)
+        public static IDocumentReader GetItext(this Entity src, IQuery<string> query, bool partial)
         {
             var pass    = (src as PdfFile)?.Password;
             var options = new Itext.OpenOption
             {
-                IO         = io,
                 FullAccess = !pass.HasValue(),
                 SaveMemory = partial,
             };

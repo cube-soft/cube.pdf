@@ -25,7 +25,7 @@ namespace Cube.Pdf.Converter.Proxy.UserEnv
     /// UserEnv.NativeMethods
     ///
     /// <summary>
-    /// userenv.dll に定義された関数を宣言するためのクラスです。
+    /// Provides functions defined in userenv.dll.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

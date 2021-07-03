@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Windows.Media;
 using Cube.FileSystem;
-using Cube.Mixin.Pdf;
+using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Editor
 {
@@ -46,10 +46,10 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="src">Source images.</param>
         /// <param name="file">Information of the PDF file.</param>
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable(ImageCollection src, Entity file, Invoker invoker) : base(invoker)
+        public PreviewBindable(ImageCollection src, Entity file, Dispatcher dispatcher) : base(dispatcher)
         {
             var size  = src[src.Selection.First].RawObject.GetViewSize();
             var magic = 14.0; // Scrollbar width
@@ -100,8 +100,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ImageSource Image
         {
-            get => GetProperty<ImageSource>();
-            set => SetProperty(value);
+            get => Get<ImageSource>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -115,8 +115,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Width
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -130,8 +130,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Height
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -145,8 +145,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => GetProperty<bool>();
-            set => SetProperty(value);
+            get => Get<bool>();
+            set => Set(value);
         }
 
         #endregion

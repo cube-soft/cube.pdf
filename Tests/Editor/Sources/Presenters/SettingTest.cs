@@ -16,12 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Commands;
-using Cube.Tests;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Threading;
+using Cube.Mixin.Commands;
+using Cube.Tests;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
@@ -51,13 +51,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Create() => Make(vm =>
         {
-            Assert.That(vm.Value.Settings.Width,       Is.EqualTo(800));
-            Assert.That(vm.Value.Settings.Height,      Is.EqualTo(600));
-            Assert.That(vm.Value.Settings.CheckUpdate, Is.True);
+            Assert.That(vm.Value.Settings.Width,  Is.EqualTo(800));
+            Assert.That(vm.Value.Settings.Height, Is.EqualTo(600));
 
-            vm.Value.Settings.Width       = 1024;
-            vm.Value.Settings.Height      = 768;
-            vm.Value.Settings.CheckUpdate = false;
+            vm.Value.Settings.Width  = 1024;
+            vm.Value.Settings.Height = 768;
         });
 
         /* ----------------------------------------------------------------- */
@@ -78,13 +76,12 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             {
                 Assert.That(e.Title,             Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Editor.Tests 1.0.2 "));
+                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Editor.Tests 1.1.0 "));
                 Assert.That(e.Windows.Text,      Does.StartWith("Microsoft Windows"));
                 Assert.That(e.Framework.Text,    Does.StartWith("Microsoft .NET Framework"));
                 Assert.That(e.Link.Text,         Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
                 Assert.That(e.Link.Value,        Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdfutility/")));
                 Assert.That(e.Update.Text,       Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Update.Value,      Is.True);
                 Assert.That(e.Language.Text,     Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Language.Value,    Is.EqualTo(Language.Auto));
                 Assert.That(e.Languages.Count(), Is.EqualTo(3));

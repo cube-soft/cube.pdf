@@ -19,7 +19,7 @@
 using System;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Mixin.IO;
+using Cube.Logging;
 
 namespace Cube.Pdf.Editor
 {
@@ -45,32 +45,18 @@ namespace Cube.Pdf.Editor
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="io">I/O handler</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public Backup(IO io)
+        public Backup()
         {
             var app = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-            IO        = io;
-            Directory = io.Combine(app, "CubeSoft", "CubePdfUtility2", "Backup");
+            Directory = Io.Combine(app, "CubeSoft", "CubePdfUtility2", "Backup");
             KeepDays  = 5;
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,9 +100,9 @@ namespace Cube.Pdf.Editor
             if (!src.Exists) return;
 
             var date = DateTime.Today.ToString("yyyyMMdd");
-            var dest = IO.Combine(Directory, date, src.Name);
+            var dest = Io.Combine(Directory, date, src.Name);
 
-            if (!IO.Exists(dest)) IO.Copy(src.FullName, dest, false);
+            if (!Io.Exists(dest)) Io.Copy(src.FullName, dest, false);
         }
 
         /* ----------------------------------------------------------------- */
@@ -134,11 +120,11 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Cleanup()
         {
-            var src = IO.GetDirectories(Directory);
+            var src = Io.GetDirectories(Directory);
             var n   = src.Count() - KeepDays;
 
             if (n <= 0) return;
-            foreach (var f in src.OrderBy(e => e).Take(n)) IO.TryDelete(f);
+            foreach (var f in src.OrderBy(e => e).Take(n)) GetType().LogWarn(() => Io.Delete(f));
         }
 
         #endregion

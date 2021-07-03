@@ -16,13 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Logging;
-using Cube.Mixin.Tasks;
 using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
+using Cube.Logging;
+using Cube.Mixin.Observing;
+using Cube.Pdf.Converter.Mixin;
 
 namespace Cube.Pdf.Converter
 {
@@ -48,11 +47,10 @@ namespace Cube.Pdf.Converter
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
+        /// <param name="src">User settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingFolder settings) :
-            this(settings, SynchronizationContext.Current) { }
+        public MainViewModel(SettingFolder src) : this(src, SynchronizationContext.Current) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -63,20 +61,34 @@ namespace Cube.Pdf.Converter
         /// specified arguments.
         /// </summary>
         ///
-        /// <param name="settings">User settings.</param>
+        /// <param name="src">User settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SettingFolder settings, SynchronizationContext context) :
-            base(new Facade(settings), new Aggregator(), context)
+        public MainViewModel(SettingFolder src, SynchronizationContext context) :
+            base(new(src), new(), context)
         {
-            Locale.Set(settings.Value.Language);
+            Locale.Set(src.Value.Language);
 
-            General    = new SettingViewModel(settings, Aggregator, context);
-            Metadata   = new MetadataViewModel(settings.Value.Metadata, Aggregator, context);
-            Encryption = new EncryptionViewModel(settings.Value.Encryption, Aggregator, context);
+            General    = new(src, Aggregator, context);
+            Metadata   = new(src.Value.Metadata, Aggregator, context);
+            Encryption = new(src.Value.Encryption, Aggregator, context);
 
-            Facade.Settings.PropertyChanged += Observe;
+            Assets.Add(new ObservableProxy(Facade, this));
+            Assets.Add(src.Subscribe(e => {
+                switch (e)
+                {
+                    case nameof(src.Value.Format):
+                        Facade.ChangeExtension();
+                        break;
+                    case nameof(src.Value.PostProcess):
+                        if (src.Value.PostProcess == PostProcess.Others) SelectUserProgram();
+                        break;
+                    case nameof(src.Value.Language):
+                        Locale.Set(src.Value.Language);
+                        break;
+                }
+            }));
         }
 
         #endregion
@@ -137,7 +149,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Version => Facade.Settings.Version.ToString(true);
+        public string Version => Facade.Settings.Version.ToString(3, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -148,7 +160,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri => ApplicationSetting.Uri;
+        public Uri Uri => ViewResource.ProductUri;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -159,7 +171,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Busy => Facade.Settings.Value.Busy;
+        public bool Busy => Facade.Busy;
 
         #endregion
 
@@ -173,21 +185,15 @@ namespace Cube.Pdf.Converter
         /// Executes the conversion.
         /// </summary>
         ///
+        /// <remarks>
+        /// The method will always post a CloseMessage message even if
+        /// the InvokeEx method fails.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            var ok = Encryption.Confirm() && General.Confirm();
-            if (ok) TaskEx.Run(() =>
-            {
-                try { Facade.InvokeEx(); }
-                catch (OperationCanceledException) { /* ignore */ }
-                catch (Exception e)
-                {
-                    this.LogError(e);
-                    Send(MessageFactory.Create(e));
-                }
-                finally { Post<CloseMessage>(); }
-            }).Forget();
+            if (Confirm()) Track(Facade.InvokeEx, Post<CloseMessage>);
         }
 
         /* ----------------------------------------------------------------- */
@@ -199,7 +205,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Metadata.Save(Facade.Settings.Save);
+        public void Save() => Metadata.Save(General.Save);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -210,9 +216,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Help() => this.LogWarn(() =>
-            System.Diagnostics.Process.Start("https://docs.cube-soft.jp/entry/cubepdf")
-        );
+        public void Help() => Send(ViewResource.DocumentUri);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -224,9 +228,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectSource() => Send(
-            Facade.Settings.CreateForSource(),
-            e => Facade.Settings.Value.Source = e.First()
+        public void SelectSource() => Track(
+            Message.ForSource(Facade.Settings),
+            e => Facade.Settings.Value.Source = e.First(),
+            true
         );
 
         /* ----------------------------------------------------------------- */
@@ -241,8 +246,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void SelectDestination()
         {
-            var src = Facade.Settings.CreateForDestination();
-            Send(src, e => Facade.SetDestination(src));
+            var m = Message.ForDestination(Facade.Settings);
+            Send(m);
+            if (!m.Cancel) Facade.SetDestination(m);
         }
 
         /* ----------------------------------------------------------------- */
@@ -255,9 +261,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectUserProgram() => Send(
-            Facade.Settings.CreateForUserProgram(),
-            e => Facade.Settings.Value.UserProgram = e.First()
+        public void SelectUserProgram() => Track(
+            Message.ForUserProgram(Facade.Settings),
+            e => General.UserProgram = e.First(),
+            true
         );
 
         #endregion
@@ -266,33 +273,38 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Observe
+        /// OnMessage
         ///
         /// <summary>
-        /// Occurs when any settings are changed.
+        /// Converts the specified exception to a new instance of the
+        /// DialogMessage class.
+        /// </summary>
+        ///
+        /// <param name="src">Source exception.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /// <remarks>
+        /// The Method is called from the Track methods.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override DialogMessage OnMessage(Exception src)
+        {
+            GetType().LogError(src);
+            return src is OperationCanceledException ? null : Message.From(src);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Confirm
+        ///
+        /// <summary>
+        /// Invokes the confirmation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Observe(object s, PropertyChangedEventArgs e)
-        {
-            var src = Facade.Settings.Value;
-
-            switch (e.PropertyName)
-            {
-                case nameof(src.Format):
-                    Facade.ChangeExtension();
-                    break;
-                case nameof(src.PostProcess):
-                    if (src.PostProcess == PostProcess.Others) SelectUserProgram();
-                    break;
-                case nameof(src.Language):
-                    Locale.Set(src.Language);
-                    break;
-                case nameof(src.Busy):
-                    OnPropertyChanged(e);
-                    break;
-            }
-        }
+        private bool Confirm() => Encryption.Confirm() && General.Confirm();
 
         #endregion
     }

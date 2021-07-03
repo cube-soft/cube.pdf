@@ -39,11 +39,12 @@ namespace Cube.Pdf.Editor
         /// History
         ///
         /// <summary>
-        /// Initializes a new instance of the History class.
+        /// Initializes a new instance of the History class wit the
+        /// specified dispatcher.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public History(Invoker invoker) : base(invoker) { }
+        public History(Dispatcher dispatcher) : base(dispatcher) { }
 
         #endregion
 

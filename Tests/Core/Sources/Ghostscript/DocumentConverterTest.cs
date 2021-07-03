@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         public void Invoke(int id, Converter cv, string srcname, string destname)
         {
             var dest = Run(cv, srcname, destname);
-            Assert.That(IO.Exists(dest), Is.True, $"No.{id}");
+            Assert.That(Io.Exists(dest), Is.True, $"No.{id}");
         }
 
         /* ----------------------------------------------------------------- */
@@ -135,6 +135,11 @@ namespace Cube.Pdf.Tests.Ghostscript
                 /* --------------------------------------------------------- */
                 yield return TestCase(n++, new DocumentConverter(Format.Ps ), "Sample.ps", Format.Ps);
                 yield return TestCase(n++, new DocumentConverter(Format.Eps), "Sample.ps", Format.Eps);
+
+                /* --------------------------------------------------------- */
+                // Metadata
+                /* --------------------------------------------------------- */
+                yield return TestCase(n++, new PdfConverter(), "SampleMetadata.ps", "Metadata");
 
                 /* --------------------------------------------------------- */
                 // Version

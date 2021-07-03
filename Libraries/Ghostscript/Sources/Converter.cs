@@ -20,9 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.FileSystem;
+using Cube.Logging;
 using Cube.Mixin.Collections;
-using Cube.Mixin.IO;
-using Cube.Mixin.Logging;
 using Cube.Mixin.String;
 
 namespace Cube.Pdf.Ghostscript
@@ -52,7 +51,7 @@ namespace Cube.Pdf.Ghostscript
         /// <param name="format">Target format.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Converter(Format format) : this(format, new IO()) { }
+        public Converter(Format format) : this(format, SupportedFormats) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,30 +63,13 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <param name="format">Target format.</param>
-        /// <param name="io">I/O handler.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Converter(Format format, IO io) : this(format, io, SupportedFormats) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Converter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the Converter class with the
-        /// specified format.
-        /// </summary>
-        ///
-        /// <param name="format">Target format.</param>
-        /// <param name="io">I/O handler.</param>
         /// <param name="supported">Collection of supported formats.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected Converter(Format format, IO io, IEnumerable<Format> supported)
+        protected Converter(Format format, IEnumerable<Format> supported)
         {
             if (!supported.Contains(format)) throw new NotSupportedException(format.ToString());
 
-            IO = io;
             Format = format;
             Fonts.Add(@"C:\Windows\Fonts");
         }
@@ -129,17 +111,6 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         public Format Format { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -206,8 +177,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <remarks>
-        /// このプロパティに値を設定した場合、変換処理の際に一時的に
-        /// TEMP 環境変数が変更されます。
+        /// If you set a value for this property, the TEMP environment
+        /// variable will be temporarily changed during the conversion.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -233,7 +204,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <remarks>
-        /// 初期値として C:\Windows\Fonts に相当するパスが設定されます。
+        /// The path corresponding to C:\Windows\Fonts will be set as the
+        /// default value.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -299,9 +271,9 @@ namespace Cube.Pdf.Ghostscript
                 .Concat(new Argument('f'))
                 .Select(e => e.ToString())
                 .Concat(sources)
-                .Where(e => { this.LogDebug(e); return true; }) // for debug
+                .Where(e => { GetType().LogDebug(e); return true; }) // for debug
                 .ToArray()
-            , Temp, IO), dest);
+            , Temp), dest);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -359,8 +331,8 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /// <remarks>
-        /// Ghostscript API は最初の引数を無視するため、引数の先頭に
-        /// ダミーオブジェクトを配置します。
+        /// The Ghostscript API ignores the first argument, so it places
+        /// a dummy object at the beginning of the argument.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -395,9 +367,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private Argument CreateResources() =>
-            Resources.Count > 0 ?
-            new Argument('I', string.Empty, string.Join(";", Resources.ToArray())) :
-            null;
+            Resources.Count > 0 ? new('I', string.Empty, string.Join(";", Resources.ToArray())) : null;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -410,9 +380,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         private Argument CreateFonts() =>
-            Fonts.Count > 0 ?
-            new Argument('s', "FONTPATH", string.Join(";", Fonts.ToArray())) :
-            null;
+            Fonts.Count > 0 ? new('s', "FONTPATH", string.Join(";", Fonts.ToArray())) : default;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -424,8 +392,7 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Argument CreateLog() =>
-            Log.HasValue() ? new Argument('s', "stdout", Log) : null;
+        private Argument CreateLog() => Log.HasValue() ? new('s', "stdout", Log) : default;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -437,8 +404,7 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Argument CreateQuiet() =>
-            Quiet ? new Argument('d', "QUIET") : null;
+        private Argument CreateQuiet() => Quiet ? new('d', "QUIET") : default;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -450,7 +416,7 @@ namespace Cube.Pdf.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Argument CreateResolution() => new Argument('r', Resolution);
+        private Argument CreateResolution() => new('r', Resolution);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -463,8 +429,7 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private void Invoke(Action action, string dest)
         {
-            var info = IO.Get(dest);
-            if (!IO.Exists(info.DirectoryName)) IO.CreateDirectory(info.DirectoryName);
+            Io.CreateDirectory(Io.Get(dest).DirectoryName);
             action();
         }
 

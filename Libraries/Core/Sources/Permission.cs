@@ -15,9 +15,10 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Net35;
 using System;
 using System.Runtime.CompilerServices;
+using Cube.Backports;
+using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
@@ -95,7 +96,7 @@ namespace Cube.Pdf
         /// ModifyContents
         ///
         /// <summary>
-        /// Gets or sets a permission for modifing the contents of the PDF
+        /// Gets or sets a permission for modifying the contents of the PDF
         /// document.
         /// </summary>
         ///
@@ -118,8 +119,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionValue CopyContents
         {
-            get => Get(PermissionFlags.CopyOrExtractContents);
-            set => Set(PermissionFlags.CopyOrExtractContents, value);
+            get => GetPermission(PermissionFlags.CopyOrExtractContents);
+            set => SetPermission(PermissionFlags.CopyOrExtractContents, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -135,8 +136,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionValue Accessibility
         {
-            get => Get(PermissionFlags.ExtractContentsForAccessibility);
-            set => Set(PermissionFlags.ExtractContentsForAccessibility, value);
+            get => GetPermission(PermissionFlags.ExtractContentsForAccessibility);
+            set => SetPermission(PermissionFlags.ExtractContentsForAccessibility, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -144,15 +145,15 @@ namespace Cube.Pdf
         /// ModifyAnnotations
         ///
         /// <summary>
-        /// Gets or sets a permission for adding or modifing text
+        /// Gets or sets a permission for adding or modifying text
         /// annotations, fill in interactive form fields.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public PermissionValue ModifyAnnotations
         {
-            get => Get(PermissionFlags.ModifyAnnotations);
-            set => Set(PermissionFlags.ModifyAnnotations, value);
+            get => GetPermission(PermissionFlags.ModifyAnnotations);
+            set => SetPermission(PermissionFlags.ModifyAnnotations, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -167,8 +168,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public PermissionValue InputForm
         {
-            get => Get(PermissionFlags.InputForm);
-            set => Set(PermissionFlags.InputForm, value);
+            get => GetPermission(PermissionFlags.InputForm);
+            set => SetPermission(PermissionFlags.InputForm, value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -189,26 +190,26 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Get
+        /// GetPermission
         ///
         /// <summary>
         /// Gets the permission for the specified operation.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PermissionValue Get(PermissionFlags src) =>
+        private PermissionValue GetPermission(PermissionFlags src) =>
             _flags.HasFlag(src) ? PermissionValue.Allow : PermissionValue.Deny;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Get
+        /// GetPermission
         ///
         /// <summary>
         /// Gets the permission for the specified operations.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private PermissionValue Get(PermissionFlags primary, PermissionFlags secondary) =>
+        private PermissionValue GetPermission(PermissionFlags primary, PermissionFlags secondary) =>
             _flags.HasFlag(primary)   ? PermissionValue.Allow    :
             _flags.HasFlag(secondary) ? PermissionValue.Restrict : PermissionValue.Deny;
 
@@ -222,7 +223,7 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         private PermissionValue GetPrintPermission() =>
-            Get(PermissionFlags.PrintHighQuality, PermissionFlags.Print);
+            GetPermission(PermissionFlags.PrintHighQuality, PermissionFlags.Print);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -234,42 +235,43 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         private PermissionValue GetModifyContentsPermission() =>
-            Get(PermissionFlags.ModifyContents, PermissionFlags.Assemble);
+            GetPermission(PermissionFlags.ModifyContents, PermissionFlags.Assemble);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Set
+        /// SetPermission
         ///
         /// <summary>
-        /// Sets the value of the specfied permission.
+        /// Sets the value of the specified permission.
         /// </summary>
         ///
         /// <remarks>
-        /// 各種プロパティの変更時に Value プロパティに対しても
-        /// PropertyChanged イベントが発生します。
+        /// The PropertyChanged event is also fired for the Value property
+        /// when various properties are changed.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        private bool Set(ref PermissionFlags src, PermissionFlags value, string name)
+        private bool SetPermission(ref PermissionFlags src, PermissionFlags value, string name)
         {
-            var dest = SetProperty(ref src, value, name);
+            var dest = Set(ref src, value, name);
             if (dest) Refresh(nameof(Value));
             return dest;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Set
+        /// SetPermission
         ///
         /// <summary>
-        /// Sets the value of the specfied permission.
+        /// Sets the value of the specified permission.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private bool Set(PermissionFlags src, PermissionValue value, [CallerMemberName] string name = null)
+        private bool SetPermission(PermissionFlags src, PermissionValue value,
+            [CallerMemberName] string name = null)
         {
             var dest = value.IsAllowed() ? (_flags | src) : (_flags & ~src);
-            return Set(ref _flags, dest, name);
+            return SetPermission(ref _flags, dest, name);
         }
 
         /* ----------------------------------------------------------------- */
@@ -286,7 +288,7 @@ namespace Cube.Pdf
             var both = PermissionFlags.Print | PermissionFlags.PrintHighQuality;
             var dest = value.IsAllowed() ? (_flags | both) : (_flags & ~both);
             if (value == PermissionValue.Restrict) dest |= PermissionFlags.Print;
-            return Set(ref _flags, dest, nameof(Print));
+            return SetPermission(ref _flags, dest, nameof(Print));
         }
 
         /* ----------------------------------------------------------------- */
@@ -303,7 +305,7 @@ namespace Cube.Pdf
             var both = PermissionFlags.ModifyContents | PermissionFlags.Assemble;
             var dest = value.IsAllowed() ? (_flags | both) : (_flags & ~both);
             if (value == PermissionValue.Restrict) dest |= PermissionFlags.Assemble;
-            return Set(ref _flags, dest, nameof(ModifyContents));
+            return SetPermission(ref _flags, dest, nameof(ModifyContents));
         }
 
         #endregion

@@ -16,11 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Linq;
 using Cube.Pdf.Itext;
 using Cube.Tests;
 using NUnit.Framework;
-using System.Drawing.Imaging;
-using System.Linq;
 
 namespace Cube.Pdf.Tests.Itext
 {
@@ -37,8 +36,6 @@ namespace Cube.Pdf.Tests.Itext
     class ItextReaderTest : FileFixture
     {
         #region Tests
-
-        #region Open
 
         /* ----------------------------------------------------------------- */
         ///
@@ -86,36 +83,6 @@ namespace Cube.Pdf.Tests.Itext
                 Assert.That(dest.Data,            Is.Not.Null);
                 Assert.That(dest.Checksum.Length, Is.EqualTo(32));
                 return dest.Length;
-            }
-        }
-
-        #endregion
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEmbeddedImages
-        ///
-        /// <summary>
-        /// Executes the test for getting embedded images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("SampleAlpha.pdf", 1, ExpectedResult = 2)]
-        [TestCase("SampleImage.pdf", 1, ExpectedResult = 2)]
-        [TestCase("SampleImage.pdf", 2, ExpectedResult = 0)]
-        public int GetEmbeddedImages(string filename, int n)
-        {
-            using (var reader = Create(filename))
-            {
-                var name = IO.Get(filename).BaseName;
-                var dest = reader.GetEmbeddedImages(n).ToList();
-
-                for (var i = 0; i < dest.Count; ++i)
-                {
-                    var path = Get($"{name}-{n}-{i}.png");
-                    dest[i].Save(path, ImageFormat.Png);
-                }
-                return dest.Count;
             }
         }
 

@@ -16,9 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.FileSystem;
-using Cube.Mixin.Generics;
-using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 
@@ -33,12 +30,6 @@ namespace Cube.Pdf.Itext
     /// using the iTextSharp.
     /// </summary>
     ///
-    /// <remarks>
-    /// このクラスのオブジェクトを直接生成する事はできません。
-    /// このクラスを継承して OnSave メソッドをオーバーライドし、必要な
-    /// 処理を実装して下さい。
-    /// </remarks>
-    ///
     /* --------------------------------------------------------------------- */
     public abstract class DocumentWriterBase : DisposableBase, IDocumentWriter
     {
@@ -50,53 +41,17 @@ namespace Cube.Pdf.Itext
         ///
         /// <summary>
         /// Initializes a new instance of the DocumentWriterBase class
-        /// with the specified arguments.
+        /// with the specified options.
         /// </summary>
         ///
-        /// <param name="io">I/O handler.</param>
+        /// <param name="options">Saving options.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected DocumentWriterBase(IO io) { IO = io; }
+        protected DocumentWriterBase(SaveOption options) { Options = options; }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UseSmartCopy
-        ///
-        /// <summary>
-        /// Gets or sets the value indicating whether the smart copy
-        /// algorithm is enabled.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// DocumentWriter は通常 iTextSharp の PdfCopy クラスを用いて
-        /// 結合を行っていますが、このクラスは複数の PDF ファイルが同じ
-        /// フォントを使用していたとしても別々のものとして扱うため、
-        /// フォント情報が重複してファイルサイズが増大する場合があります。
-        ///
-        /// この問題を解決したものとして PdfSmartCopy クラスが存在すします。
-        /// ただし、複雑な注釈が保存されている PDF を結合する際に使用した
-        /// 場合、（別々として扱わなければならないはずの）情報が共有されて
-        /// しまい、注釈の構造が壊れてしまう問題が確認されているので、
-        /// 注意が必要です。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool UseSmartCopy { get; set; } = true;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IO
-        ///
-        /// <summary>
-        /// Gets the I/O handler.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IO IO { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -129,7 +84,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected Metadata Metadata { get; private set; } = new Metadata();
+        protected Metadata Metadata { get; private set; } = new();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -140,13 +95,22 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Encryption Encryption { get; private set; } = new Encryption();
+        protected Encryption Encryption { get; private set; } = new();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Options
+        ///
+        /// <summary>
+        /// Gets the options when saving the PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected SaveOption Options { get; }
 
         #endregion
 
         #region Methods
-
-        #region IDocumentWriter
 
         /* ----------------------------------------------------------------- */
         ///
@@ -183,9 +147,8 @@ namespace Cube.Pdf.Itext
         /// <param name="pages">Collection of pages.</param>
         ///
         /// <remarks>
-        /// DocumentReader.Pages オブジェクトを指定する場合
-        /// Add(IEnumerable{Page}, IDocumentReader) メソッドを利用
-        /// 下さい。
+        /// Use the Add(IEnumerable{Page}, IDocumentReader) method to specify
+        /// the DocumentReader.Pages object.
         /// </remarks>
         ///
         /// <see cref="Add(IEnumerable{Page}, IDocumentReader)"/>
@@ -208,8 +171,8 @@ namespace Cube.Pdf.Itext
         /// </param>
         ///
         /// <remarks>
-        /// IDocumentReader オブジェクトの所有権がこのクラスに移譲に
-        /// され、自動的に Dispose が実行されます。
+        /// The ownership of the IDocumentReader object will be transferred
+        /// to this class, and Dispose will be executed automatically.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -258,8 +221,6 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public void Set(Encryption src) => Encryption = src;
 
-        #endregion
-
         /* ----------------------------------------------------------------- */
         ///
         /// OnSave
@@ -267,10 +228,6 @@ namespace Cube.Pdf.Itext
         /// <summary>
         /// Executes the save operation.
         /// </summary>
-        ///
-        /// <remarks>
-        /// DocumentWriterBase を継承したクラスで実装する必要があります。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         protected abstract void OnSave(string path);
@@ -304,23 +261,22 @@ namespace Cube.Pdf.Itext
         /// <param name="src">Document reader.</param>
         ///
         /// <remarks>
-        /// 指定された DocumentReader オブジェクトは DocumentWriter
-        /// オブジェクトに所有権が移り、Dispose 等の処理も自動的に
-        /// 実行されます。
+        /// The specified DocumentReader object will transfer ownership to
+        /// the DocumentWriter object, and processes such as Dispose will be
+        /// executed automatically.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         protected void Bind(IDocumentReader src)
         {
-            if (_resources.Contains(src)) return;
-            _resources.Add(src);
+            if (_disposable.Contains(src)) return;
+            _disposable.Add(src);
 
             if (src is DocumentReader itext)
             {
                 var k = itext.File.FullName;
-                var v = itext.Core.TryCast<PdfReader>();
-
-                if (v != null && !_hints.ContainsKey(k)) _hints.Add(k, v);
+                var v = itext.Core;
+                if (v is not null && !_hints.ContainsKey(k)) _hints.Add(k, v);
             }
         }
 
@@ -336,8 +292,7 @@ namespace Cube.Pdf.Itext
         protected void Release()
         {
             _hints.Clear();
-            foreach (var obj in _resources) obj.Dispose();
-            _resources.Clear();
+            _disposable.Dispose();
         }
 
         /* ----------------------------------------------------------------- */
@@ -349,9 +304,18 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected PdfReader GetRawReader(Page src) =>
-            src.File is PdfFile   pdf ? GetRawReader(pdf) :
-            src.File is ImageFile img ? GetRawReader(img) : null;
+        protected IDisposable GetRawReader(Page src)
+        {
+            if (_hints.TryGetValue(src.File.FullName, out var hit)) return hit;
+
+            var dest = Reader.From(src.File, new() { SaveMemory = false });
+            if (dest is not null)
+            {
+                _disposable.Add(dest);
+                _hints.Add(src.File.FullName, dest);
+            }
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -375,58 +339,11 @@ namespace Cube.Pdf.Itext
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetRawReader
-        ///
-        /// <summary>
-        /// Gets the PdfReader corresponding to the specified PDF file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private PdfReader GetRawReader(PdfFile src)
-        {
-            var key = src.FullName;
-            if (_hints.TryGetValue(key, out var hit)) return hit;
-
-            var options = new OpenOption { IO = IO, SaveMemory = false };
-            var reader  = new DocumentReader(key, src.Password, options);
-            _resources.Add(reader);
-            _hints.Add(key, reader.Core);
-
-            return reader.Core;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetRawReader
-        ///
-        /// <summary>
-        /// Gets the PdfReader corresponding to the specified information.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private PdfReader GetRawReader(ImageFile src)
-        {
-            var key = src.FullName;
-            if (_hints.TryGetValue(key, out var hit)) return hit;
-
-            var dest = ReaderFactory.FromImage(key, IO);
-            _resources.Add(dest);
-            _hints.Add(key, dest);
-
-            return dest;
-        }
-
-        #endregion
-
         #region Fields
-        private readonly List<Page> _pages = new List<Page>();
-        private readonly List<Attachment> _attachments = new List<Attachment>();
-        private readonly List<IDisposable> _resources = new List<IDisposable>();
-        private readonly Dictionary<string, PdfReader> _hints = new Dictionary<string, PdfReader>();
+        private readonly List<Page> _pages = new();
+        private readonly List<Attachment> _attachments = new();
+        private readonly DisposableContainer _disposable = new();
+        private readonly Dictionary<string, IDisposable> _hints = new();
         #endregion
     }
 }

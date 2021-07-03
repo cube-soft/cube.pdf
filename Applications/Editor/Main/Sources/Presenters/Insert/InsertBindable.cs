@@ -44,13 +44,13 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="index">Selected index.</param>
         /// <param name="count">Number of pages.</param>
-        /// <param name="invoker">Invoker object.</param>
+        /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable(int index, int count, Invoker invoker) : base(invoker)
+        public InsertBindable(int index, int count, Dispatcher dispatcher) : base(dispatcher)
         {
-            Files         = new FileCollection(invoker);
-            Selection     = new Selection<FileItem>(invoker);
+            Files         = new FileCollection(dispatcher);
+            Selection     = new Selection<FileItem>(dispatcher);
             Count         = count;
             SelectedIndex = index;
             Index         = Math.Max(index, 0);
@@ -116,8 +116,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int Index
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
+            get => Get<int>();
+            set => Set(value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -132,8 +132,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public int UserIndex
         {
-            get => GetProperty<int>();
-            set { if (SetProperty(value)) Index = value; }
+            get => Get<int>();
+            set { if (Set(value)) Index = value; }
         }
 
         #endregion

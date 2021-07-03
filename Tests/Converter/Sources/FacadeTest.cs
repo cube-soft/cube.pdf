@@ -17,10 +17,10 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Linq;
-using System.Reflection;
 using System.Security.Cryptography;
 using Cube.Collections;
-using Cube.Mixin.IO;
+using Cube.FileSystem;
+using Cube.Mixin.Assembly;
 using Cube.Tests;
 using NUnit.Framework;
 
@@ -52,20 +52,18 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Convert()
         {
-            using (var e = new Facade(Assembly.GetExecutingAssembly()))
-            {
-                var dest = Get($"{nameof(Convert)}.pdf");
+            var dest = Get($"{nameof(Convert)}.pdf");
 
-                e.Settings.Value.Source = GetSource("Sample.ps");
-                e.Settings.Value.Destination = dest;
-                e.Settings.Value.PostProcess = PostProcess.None;
-                e.Invoke();
+            using var src = new Facade();
+            src.Settings.Value.Source = GetSource("Sample.ps");
+            src.Settings.Value.Destination = dest;
+            src.Settings.Value.PostProcess = PostProcess.None;
+            src.Invoke();
 
-                Assert.That(e.Settings.Value.Busy, Is.False);
-                Assert.That(e.Results.Count(),     Is.EqualTo(1));
-                Assert.That(e.Results.First(),     Is.EqualTo(dest));
-                Assert.That(IO.Exists(dest),       Is.True);
-            }
+            Assert.That(src.Busy, Is.False);
+            Assert.That(src.Results.Count(), Is.EqualTo(1));
+            Assert.That(src.Results.First(), Is.EqualTo(dest));
+            Assert.That(Io.Exists(dest), Is.True);
         }
 
         /* ----------------------------------------------------------------- */
@@ -80,22 +78,20 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Convert_Png()
         {
-            using (var e = new Facade(Assembly.GetExecutingAssembly()))
-            {
-                var dest = Get($"{nameof(Convert)}.png");
+            var dest = Get($"{nameof(Convert)}.png");
 
-                e.Settings.Value.Source = GetSource("SampleCjk.ps");
-                e.Settings.Value.Destination = dest;
-                e.Settings.Value.PostProcess = PostProcess.None;
-                e.Settings.Value.Format      = Ghostscript.Format.Png;
-                e.Settings.Value.Resolution  = 72;
-                e.Invoke();
+            using var src = new Facade();
+            src.Settings.Value.Source = GetSource("SampleCjk.ps");
+            src.Settings.Value.Destination = dest;
+            src.Settings.Value.PostProcess = PostProcess.None;
+            src.Settings.Value.Format = Ghostscript.Format.Png;
+            src.Settings.Value.Resolution = 72;
+            src.Invoke();
 
-                Assert.That(e.Settings.Value.Busy, Is.False);
-                Assert.That(e.Results.Count(),     Is.EqualTo(5));
-                Assert.That(e.Results.First(),     Does.EndWith($"{nameof(Convert)}-01.png"));
-                Assert.That(IO.Exists(dest),       Is.False);
-            }
+            Assert.That(src.Busy, Is.False);
+            Assert.That(src.Results.Count(), Is.EqualTo(5));
+            Assert.That(src.Results.First(), Does.EndWith($"{nameof(Convert)}-01.png"));
+            Assert.That(Io.Exists(dest), Is.False);
         }
 
         /* ----------------------------------------------------------------- */
@@ -114,20 +110,18 @@ namespace Cube.Pdf.Converter.Tests
         public void Convert_SaveOption(SaveOption so)
         {
             var dest = Get($"{nameof(Convert)}_{so}.pdf");
-            IO.Copy(GetSource("Sample.pdf"), dest, true);
+            Io.Copy(GetSource("Sample.pdf"), dest, true);
 
-            using (var e = new Facade(Assembly.GetExecutingAssembly()))
-            {
-                e.Settings.Value.Source = GetSource("Sample.ps");
-                e.Settings.Value.Destination = dest;
-                e.Settings.Value.SaveOption  = so;
-                e.Settings.Value.PostProcess = PostProcess.None;
-                e.Invoke();
+            using var src = new Facade();
+            src.Settings.Value.Source = GetSource("Sample.ps");
+            src.Settings.Value.Destination = dest;
+            src.Settings.Value.SaveOption = so;
+            src.Settings.Value.PostProcess = PostProcess.None;
+            src.Invoke();
 
-                Assert.That(e.Settings.Value.Busy, Is.False);
-                Assert.That(e.Results.Count(),     Is.EqualTo(1));
-                Assert.That(IO.Exists(dest),       Is.True);
-            }
+            Assert.That(src.Busy, Is.False);
+            Assert.That(src.Results.Count(), Is.EqualTo(1));
+            Assert.That(Io.Exists(dest), Is.True);
         }
 
         /* ----------------------------------------------------------------- */
@@ -144,17 +138,33 @@ namespace Cube.Pdf.Converter.Tests
         {
             var dest = Get($"{nameof(Convert_CryptographicException)}.pdf");
             var args = new ArgumentCollection(new[] { "-Digest", "dummy" }, Argument.Windows, true);
-            var settings = new SettingFolder(Assembly.GetExecutingAssembly());
+            var settings = new SettingFolder();
 
             settings.Value.Source = GetSource("Sample.ps");
             settings.Value.Destination = dest;
             settings.Value.PostProcess = PostProcess.None;
             settings.Set(args);
 
-            using (var e = new Facade(settings))
-            {
-                Assert.That(() => e.Invoke(), Throws.TypeOf<CryptographicException>());
-            }
+            using var src = new Facade(settings);
+            Assert.That(() => src.Invoke(), Throws.TypeOf<CryptographicException>());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version
+        ///
+        /// <summary>
+        /// Tests the version to be set to the Facade object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Version()
+        {
+            using var src = new Facade();
+            var dest = src.Settings.Version.ToString();
+            var cmp  = GetType().Assembly.GetSoftwareVersion().ToString();
+            Assert.That(dest, Is.EqualTo(cmp));
         }
 
         #endregion

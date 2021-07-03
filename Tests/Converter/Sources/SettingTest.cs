@@ -16,14 +16,15 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Mixin.Assembly;
-using Cube.Mixin.Environment;
-using Cube.Pdf.Ghostscript;
-using Cube.Tests;
-using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Reflection;
+using Cube.FileSystem;
+using Cube.Mixin.Environment;
+using Cube.Pdf.Converter.Mixin;
+using Cube.Pdf.Ghostscript;
+using Cube.Tests;
+using NUnit.Framework;
 
 namespace Cube.Pdf.Converter.Tests
 {
@@ -54,16 +55,14 @@ namespace Cube.Pdf.Converter.Tests
         public void Create()
         {
             var dest = new SettingFolder(Assembly.GetExecutingAssembly());
-            Assert.That(dest.Format,                Is.EqualTo(Cube.DataContract.Format.Registry));
-            Assert.That(dest.Location,              Is.EqualTo(@"CubeSoft\CubePDF\v2"));
-            Assert.That(dest.AutoSave,              Is.False);
-            Assert.That(dest.Assembly.GetCompany(), Is.EqualTo("CubeSoft"));
-            Assert.That(dest.Assembly.GetProduct(), Is.EqualTo("Cube.Pdf.Converter.Tests"));
-            Assert.That(dest.DocumentName.Source,   Is.Empty);
-            Assert.That(dest.DocumentName.Value,    Is.EqualTo("Cube.Pdf.Converter.Tests"));
-            Assert.That(dest.Version.ToString(),    Is.EqualTo("1.2.2"));
-            Assert.That(dest.Value,                 Is.Not.Null);
-            Assert.That(dest.Digest,                Is.Null);
+            Assert.That(dest.Format,              Is.EqualTo(Cube.FileSystem.DataContract.Format.Registry));
+            Assert.That(dest.Location,            Is.EqualTo(@"CubeSoft\CubePDF\v2"));
+            Assert.That(dest.AutoSave,            Is.False);
+            Assert.That(dest.DocumentName.Source, Is.Empty);
+            Assert.That(dest.DocumentName.Value,  Is.EqualTo("CubePDF"));
+            Assert.That(dest.Version.ToString(),  Is.EqualTo("1.3.0"));
+            Assert.That(dest.Value,               Is.Not.Null);
+            Assert.That(dest.Digest,              Is.Null);
         }
 
         /* ----------------------------------------------------------------- */
@@ -78,13 +77,12 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Load()
         {
-            var temp    = IO.Combine(Environment.SpecialFolder.CommonApplicationData.GetName(), @"CubeSoft\CubePDF");
+            var temp    = Io.Combine(Environment.SpecialFolder.CommonApplicationData.GetName(), @"CubeSoft\CubePDF");
             var desktop = Environment.SpecialFolder.Desktop.GetName();
             var src     = new SettingFolder(
                 Assembly.GetExecutingAssembly(),
-                Cube.DataContract.Format.Registry,
-                $@"CubeSoft\CubePDF\{nameof(SettingTest)}",
-                IO
+                Cube.FileSystem.DataContract.Format.Registry,
+                $@"CubeSoft\CubePDF\{nameof(SettingTest)}"
             );
 
             src.Load();
@@ -98,7 +96,6 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Downsampling,       Is.EqualTo(Downsampling.None));
             Assert.That(dest.Resolution,         Is.AtLeast(72));
             Assert.That(dest.Orientation,        Is.EqualTo(Orientation.Auto));
-            Assert.That(dest.CheckUpdate,        Is.True);
             Assert.That(dest.Linearization,      Is.False);
             Assert.That(dest.Language,           Is.EqualTo(Language.Auto));
             Assert.That(dest.PostProcess,        Is.EqualTo(PostProcess.None));
@@ -110,7 +107,6 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Source,             Is.Empty);
             Assert.That(dest.Destination,        Is.EqualTo(desktop));
             Assert.That(dest.Temp,               Is.EqualTo(temp));
-            Assert.That(dest.Busy,               Is.False);
 
             var md = dest.Metadata;
             Assert.That(md.Title,                Is.Empty);
@@ -234,7 +230,7 @@ namespace Cube.Pdf.Converter.Tests
             dest.Set(Enumerable.Empty<string>());
 
             Assert.That(dest.Digest,             Is.Null);
-            Assert.That(dest.DocumentName.Value, Is.EqualTo("Cube.Pdf.Converter.Tests"));
+            Assert.That(dest.DocumentName.Value, Is.EqualTo("CubePDF"));
             Assert.That(dest.Value.DeleteSource, Is.False);
             Assert.That(dest.Value.Source,       Is.Empty);
         }
