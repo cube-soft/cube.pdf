@@ -18,9 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Cube.Logging;
 using Cube.Mixin.String;
 using iText.Kernel.Crypto;
@@ -40,8 +38,6 @@ namespace Cube.Pdf.Itext
     internal static class ReaderExtension
     {
         #region Methods
-
-        #region Get
 
         /* ----------------------------------------------------------------- */
         ///
@@ -134,125 +130,19 @@ namespace Cube.Pdf.Itext
         {
             if (file.FullAccess && !file.Password.HasValue()) return new();
 
-            var user  = src.GetUserPassword(file);
+            var user  = GetUserPassword(src, file);
             var value = (uint)src.GetReader().GetPermissions();
             src.GetType().LogDebug($"Permission:0x{value:X}", $"Mode:{src.GetReader().GetCryptoMode()}");
 
             return new()
             {
                 Enabled          = true,
-                Method           = src.GetEncryptionMethod(),
+                Method           = GetEncryptionMethod(src),
                 Permission       = new Permission(value),
                 OwnerPassword    = file.FullAccess ? file.Password : string.Empty,
                 UserPassword     = user,
                 OpenWithPassword = user.HasValue(),
             };
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetEncryptionMethod
-        ///
-        /// <summary>
-        /// Gets the encryption method from the specified reader.
-        /// </summary>
-        ///
-        /// <param name="src">PdfDocument object.</param>
-        ///
-        /// <returns>Encryption method.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static EncryptionMethod GetEncryptionMethod(this PdfDocument src) =>
-            src.GetReader().GetCryptoMode() switch
-        {
-            EncryptionConstants.STANDARD_ENCRYPTION_40  => EncryptionMethod.Standard40,
-            EncryptionConstants.STANDARD_ENCRYPTION_128 => EncryptionMethod.Standard128,
-            EncryptionConstants.ENCRYPTION_AES_128      => EncryptionMethod.Aes128,
-            EncryptionConstants.ENCRYPTION_AES_256      => EncryptionMethod.Aes256,
-            _                                           => EncryptionMethod.Unknown,
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetUserPassword
-        ///
-        /// <summary>
-        /// Gets the user password from the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">PdfDocument object.</param>
-        /// <param name="file">PDF file information.</param>
-        ///
-        /// <returns>User password.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static string GetUserPassword(this PdfDocument src, PdfFile file)
-        {
-            if (file.FullAccess)
-            {
-                var bytes = src.GetReader().ComputeUserPassword();
-                if (bytes?.Length > 0) return Encoding.UTF8.GetString(bytes);
-            }
-            return file.Password;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetBookmarks
-        ///
-        /// <summary>
-        /// Gets the collection of bookmarks embedded in the specified
-        /// PDF document.
-        /// </summary>
-        ///
-        /// <param name="src">PdfDocument object.</param>
-        /// <param name="pagenum">Page number.</param>
-        /// <param name="delta">
-        /// Difference in page numbers between PDF documents.
-        /// </param>
-        /// <param name="dest">Container for the result.</param>
-        ///
-        /// <remarks>
-        /// Invokes processing on the bookmark information retrieved from
-        /// the PdfReader object after shifting the page number by delta.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void GetBookmarks(this PdfDocument src, int pagenum, int delta, Bookmark dest)
-        {
-            //var cmp = $"^{pagenum} (XYZ|Fit|FitH|FitBH)";
-            //var bookmarks = SimpleBookmark.GetBookmark(src);
-            //if (bookmarks == null) return;
-
-            //SimpleBookmark.ShiftPageNumbers(bookmarks, delta, null);
-            //foreach (var b in bookmarks)
-            //{
-            //    var found = b.TryGetValue("Page", out object obj);
-            //    if (found && Regex.IsMatch(obj.ToString(), cmp)) dest.Add(b);
-            //}
-        }
-
-        #endregion
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetVersion
-        ///
-        /// <summary>
-        /// Gets the PDF version of the specified document.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// The method throws an exception if the specified PdfVersion
-        /// object is not in major.minor notation.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static PdfVersion GetVersion(PdfDocument src)
-        {
-            var s = src.GetPdfVersion().ToPdfName().GetValue();
-            if (s.Length == 3 && s[1] == '.') return new(s[0] - '0', s[2] - '0');
-            throw new ArgumentException($"{s}:Unexpected PDF version");
         }
 
         /* ----------------------------------------------------------------- */
@@ -278,6 +168,27 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetVersion
+        ///
+        /// <summary>
+        /// Gets the PDF version of the specified document.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// The method throws an exception if the specified PdfVersion
+        /// object is not in major.minor notation.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static PdfVersion GetVersion(PdfDocument src)
+        {
+            var s = src.GetPdfVersion().ToPdfName().GetValue();
+            if (s.Length == 3 && s[1] == '.') return new(s[0] - '0', s[2] - '0');
+            throw new ArgumentException($"{s}:Unexpected PDF version");
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetPageSize
         ///
         /// <summary>
@@ -289,6 +200,53 @@ namespace Cube.Pdf.Itext
         {
             var obj = src.GetPage(pagenum).GetPageSize();
             return new(obj.GetWidth(), obj.GetHeight());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEncryptionMethod
+        ///
+        /// <summary>
+        /// Gets the encryption method from the specified reader.
+        /// </summary>
+        ///
+        /// <param name="src">PdfDocument object.</param>
+        ///
+        /// <returns>Encryption method.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static EncryptionMethod GetEncryptionMethod(PdfDocument src) =>
+            src.GetReader().GetCryptoMode() switch
+        {
+            EncryptionConstants.STANDARD_ENCRYPTION_40  => EncryptionMethod.Standard40,
+            EncryptionConstants.STANDARD_ENCRYPTION_128 => EncryptionMethod.Standard128,
+            EncryptionConstants.ENCRYPTION_AES_128      => EncryptionMethod.Aes128,
+            EncryptionConstants.ENCRYPTION_AES_256      => EncryptionMethod.Aes256,
+            _                                           => EncryptionMethod.Unknown,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetUserPassword
+        ///
+        /// <summary>
+        /// Gets the user password from the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">PdfDocument object.</param>
+        /// <param name="file">PDF file information.</param>
+        ///
+        /// <returns>User password.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static string GetUserPassword(PdfDocument src, PdfFile file)
+        {
+            if (file.FullAccess)
+            {
+                var bytes = src.GetReader().ComputeUserPassword();
+                if (bytes?.Length > 0) return Encoding.UTF8.GetString(bytes);
+            }
+            return file.Password;
         }
 
         #endregion
