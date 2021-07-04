@@ -133,19 +133,17 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void Parse()
         {
-            var root = _core.GetCatalog().GetPdfObject();
-            var names = root.GetAsDictionary(PdfName.Names);
-            var files = root.GetAsDictionary(PdfName.EmbeddedFiles);
-            if (names == null || files == null) return;
+            var src = _core.GetCatalog().GetPdfObject()
+                ?.GetAsDictionary(PdfName.Names)
+                ?.GetAsDictionary(PdfName.EmbeddedFiles)
+                ?.GetAsArray(PdfName.Names);
+            if (src == null) return;
 
-            var items = files.GetAsArray(PdfName.Names);
-            if (items == null) return;
-
-            for (var i = 1; i < items.Size(); i += 2) // see remarks
+            for (var i = 1; i < src.Size(); i += 2) // see remarks
             {
-                var cur  = items.GetAsDictionary(i);
-                var name = cur.GetAsString(PdfName.UF) ?? cur.GetAsString(PdfName.F);
-                var dic  = cur.GetAsDictionary(PdfName.EF);
+                var obj  = src.GetAsDictionary(i);
+                var name = obj.GetAsString(PdfName.UF) ?? obj.GetAsString(PdfName.F);
+                var dic  = obj.GetAsDictionary(PdfName.EF);
                 if (name == null || dic == null) continue;
 
                 foreach (var key in dic.KeySet())

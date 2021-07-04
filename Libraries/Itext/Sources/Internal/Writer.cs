@@ -17,10 +17,12 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Cube.FileSystem;
 using Cube.Mixin.String;
 using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Filespec;
 using iText.Kernel.Utils;
 
 namespace Cube.Pdf.Itext
@@ -92,6 +94,27 @@ namespace Cube.Pdf.Itext
             if (degree != cmp) _ = pp.SetRotation(degree);
 
             _ = _merger.Merge(obj, new[] { page.Number });
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        ///
+        /// <summary>
+        /// Adds the specified collection as the embedded files.
+        /// </summary>
+        ///
+        /// <param name="src">Embedded files.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Add(IEnumerable<Attachment> src)
+        {
+            foreach (var e in src) _document.AddFileAttachment(e.Name,
+                PdfFileSpec.CreateEmbeddedFileSpec(_document,
+                    e.Data, string.Empty, e.Name,
+                    null, null, null
+                )
+            );
         }
 
         #endregion

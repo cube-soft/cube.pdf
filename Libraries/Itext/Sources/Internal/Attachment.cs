@@ -64,7 +64,12 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override long GetLength() => _core?.GetLength() ?? 0;
+        protected override long GetLength()
+        {
+            if (_core == null) return 0;
+            var n = _core.GetAsInt(new PdfName("DL"));
+            return n ?? Data.Length;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -75,7 +80,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override byte[] GetData() => _core?.GetBytes();
+        protected override byte[] GetData() => _core?.GetBytes() ?? new byte[0];
 
         /* ----------------------------------------------------------------- */
         ///

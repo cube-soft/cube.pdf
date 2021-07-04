@@ -17,9 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using Cube.FileSystem;
-using Cube.Logging;
-using Cube.Mixin.String;
 
 namespace Cube.Pdf.Itext
 {
@@ -94,6 +91,7 @@ namespace Cube.Pdf.Itext
                     var src = Reader.From(GetRawReader(page));
                     dest.Add(src, page);
                 }
+                dest.Add(Attachments);
                 Release(); // Dispose all readers before save.
             }
             catch (Exception err) { throw err.Convert(); }
