@@ -62,7 +62,7 @@ namespace Cube.Pdf.Tests.Itext
             var src  = GetSource(filename);
             var dest = Path(Args(filename));
 
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
+            using (var w = new DocumentWriter(new() { Smart = true }))
             using (var r = new DocumentReader(src, password))
             {
                 w.Set(r.Metadata);
@@ -91,7 +91,7 @@ namespace Cube.Pdf.Tests.Itext
 
             var op = new OpenOption { SaveMemory = false };
             var r  = new DocumentReader(dest, password, op);
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
+            using (var w = new DocumentWriter(new() { Smart = true }))
             {
                 w.Set(r.Metadata);
                 w.Set(r.Encryption);
@@ -119,7 +119,7 @@ namespace Cube.Pdf.Tests.Itext
             var r1   = new DocumentReader(GetSource(f1), "", op);
             var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
 
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
+            using (var w = new DocumentWriter(new() { Smart = true }))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree), r0);
                 w.Add(Rotate(r1.Pages, degree), r1);
@@ -144,7 +144,7 @@ namespace Cube.Pdf.Tests.Itext
             var r0   = new DocumentReader(GetSource(doc), "", op);
             var dest = Path(Args(r0.File.BaseName, Io.Get(image).BaseName));
 
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
+            using (var w = new DocumentWriter(new() { Smart = true }))
             using (var r = new DocumentReader(GetSource(doc), "", op))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
@@ -269,7 +269,7 @@ namespace Cube.Pdf.Tests.Itext
             Assert.That(m.Subject,       Is.EqualTo(cmp.Subject), nameof(m.Subject));
             Assert.That(m.Keywords,      Is.EqualTo(cmp.Keywords), nameof(m.Keywords));
             Assert.That(m.Creator,       Is.EqualTo(cmp.Creator), nameof(m.Creator));
-            Assert.That(m.Producer,      Does.StartWith("iTextSharp"));
+            Assert.That(m.Producer,      Does.StartWith("iText"));
             Assert.That(m.Version.Major, Is.EqualTo(cmp.Version.Major));
             Assert.That(m.Version.Minor, Is.EqualTo(cmp.Version.Minor));
             Assert.That(m.Options,       Is.EqualTo(cmp.Options));
@@ -346,7 +346,7 @@ namespace Cube.Pdf.Tests.Itext
             var op     = new OpenOption { SaveMemory = false };
             var degree = 90;
 
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
+            using (var w = new DocumentWriter(new() { Smart = true }))
             {
                 var r = new DocumentReader(src, "", op);
 

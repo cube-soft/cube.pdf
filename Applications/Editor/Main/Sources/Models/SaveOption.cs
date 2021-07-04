@@ -241,7 +241,7 @@ namespace Cube.Pdf.Editor
         public Itext.SaveOption ToItext() => new()
         {
             Temp      = Temp,
-            SmartCopy = true,
+            Smart = true,
         };
 
         #endregion

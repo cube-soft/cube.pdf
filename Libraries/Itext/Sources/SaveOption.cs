@@ -38,20 +38,8 @@ namespace Cube.Pdf.Itext
         /// copy algorithm.
         /// </summary>
         ///
-        /// <remarks>
-        /// DocumentWriter usually uses iTextSharp PdfCopy class for
-        /// merging, but this class treats multiple PDF files as separate
-        /// even if they use the same font, so font information may be
-        /// duplicated, increasing the file size.
-        ///
-        /// The PdfSmartCopy class is a solution to this problem.
-        /// However, be careful when using it to merge PDFs with complex
-        /// annotations, as it has been observed that the information is
-        /// shared and the annotation structure is broken.
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public bool SmartCopy { get; set; } = true;
+        public bool Smart { get; set; } = true;
 
         /* ----------------------------------------------------------------- */
         ///

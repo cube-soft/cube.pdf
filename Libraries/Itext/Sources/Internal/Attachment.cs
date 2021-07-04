@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Security.Cryptography;
-using iTextSharp.text.pdf;
+using iText.Kernel.Pdf;
 
 namespace Cube.Pdf.Itext
 {
@@ -48,7 +48,7 @@ namespace Cube.Pdf.Itext
         /// <param name="core">Core object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EmbeddedAttachment(string name, string src, PRStream core) :
+        public EmbeddedAttachment(string name, string src, PdfStream core) :
             base(name, src) { _core = core; }
 
         #endregion
@@ -64,8 +64,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override long GetLength() =>
-            _core?.GetAsDict(PdfName.PARAMS)?.GetAsNumber(PdfName.SIZE)?.LongValue ?? 0;
+        protected override long GetLength() => _core?.GetLength() ?? 0;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -76,7 +75,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected override byte[] GetData() => PdfReader.GetStreamBytes(_core);
+        protected override byte[] GetData() => _core?.GetBytes();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -93,7 +92,7 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Fields
-        private readonly PRStream _core;
+        private readonly PdfStream _core;
         #endregion
     }
 }

@@ -86,60 +86,18 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         protected override void OnSave(string path)
         {
-            var dir = Options.Temp.HasValue() ?
-                      Options.Temp :
-                      Io.Get(path).DirectoryName;
-            var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
-
             try
             {
-                var bk = new Bookmark();
-                Merge(tmp, bk);
-                Release();
-                Writer.Stamp(path, tmp, Metadata, Encryption, bk);
+                using var dest = new Writer(path, Options, Metadata, Encryption);
+                foreach (var page in Pages)
+                {
+                    var src = Reader.From(GetRawReader(page));
+                    dest.Add(src, page);
+                }
+                Release(); // Dispose all readers before save.
             }
             catch (Exception err) { throw err.Convert(); }
-            finally
-            {
-                GetType().LogWarn(() => Io.Delete(tmp));
-                Reset();
-            }
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Merge
-        ///
-        /// <summary>
-        /// Merges pages and save the document to the specified path.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// To completely copy the page contents, including annotations,
-        /// use the PdfCopy class to merge all pages together.
-        /// PDF metadata and encryption settings will be added to the
-        /// generated PDF.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Merge(string dest, Bookmark bookmark)
-        {
-            var e = Writer.Create(dest, Options, Metadata);
-
-            e.Document.Open();
-
-            foreach (var page in Pages)
-            {
-                var reader = Reader.From(GetRawReader(page));
-                e.Writer.Set(reader, page, bookmark);
-            }
-
-            e.Writer.Set(Attachments);
-            e.Close();
+            finally { Reset(); }
         }
 
         #endregion

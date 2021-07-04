@@ -17,15 +17,17 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
 using Cube.FileSystem;
-using Cube.Mixin.Drawing;
 using Cube.Mixin.String;
-using iTextSharp.text.exceptions;
-using iTextSharp.text.pdf;
+using iText.IO.Image;
+using iText.IO.Source;
+using iText.Kernel.Crypto;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas;
 
 namespace Cube.Pdf.Itext
 {
@@ -55,7 +57,7 @@ namespace Cube.Pdf.Itext
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader From(object src) => src as PdfReader;
+        public static PdfDocument From(object src) => src as PdfDocument;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -72,7 +74,7 @@ namespace Cube.Pdf.Itext
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader From(File src, OpenOption options) =>
+        public static PdfDocument From(File src, OpenOption options) =>
             src is PdfFile   f0 ? FromPdf(f0.FullName, new(null, f0.Password), options) :
             src is ImageFile f1 ? FromImage(f1.FullName) :
             default;
@@ -90,7 +92,7 @@ namespace Cube.Pdf.Itext
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader FromPdf(string src) => new(src);
+        public static PdfDocument FromPdf(string src) => new(new PdfReader(src));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -107,17 +109,21 @@ namespace Cube.Pdf.Itext
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader FromPdf(string src, Password password, OpenOption options)
+        public static PdfDocument FromPdf(string src, Password password, OpenOption options)
         {
             while (true)
             {
                 try
                 {
-                    var bytes = password.Value.HasValue() ? Encoding.UTF8.GetBytes(password.Value) : null;
-                    var dest  = new PdfReader(src, bytes, options.SaveMemory);
-                    if (dest.IsOpenedWithFullPermissions || !options.FullAccess) return dest;
-                    dest.Dispose();
-                    throw new BadPasswordException("Owner password is required.");
+                    using var ss = Io.Open(src);
+                    var dest = new PdfReader(ss, GetOptions(password.Value))
+                        .SetMemorySavingMode(options.SaveMemory);
+                    if (options.FullAccess && !dest.IsOpenedWithFullPermission())
+                    {
+                        dest.Close();
+                        throw new BadPasswordException("PdfReader is not opened with owner password");
+                    }
+                    return new(dest);
                 }
                 catch (BadPasswordException)
                 {
@@ -142,35 +148,36 @@ namespace Cube.Pdf.Itext
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfReader FromImage(string src)
+        public static PdfDocument FromImage(string src)
         {
             using var ms = new System.IO.MemoryStream();
             using var ss = Io.Open(src);
             using var image = Image.FromStream(ss);
 
-            var doc = new iTextSharp.text.Document();
-            var writer = PdfWriter.GetInstance(doc, ms);
-            doc.Open();
-
+            var doc  = new PdfDocument(new PdfWriter(ms));
             var guid = image.FrameDimensionsList[0];
             var dim  = new FrameDimension(guid);
+
             for (var i = 0; i < image.GetFrameCount(dim); ++i)
             {
                 _ = image.SelectActiveFrame(dim, i);
 
                 var scale = PdfFile.Point / image.HorizontalResolution;
-                var w = image.Width  * scale;
+                var w = image.Width * scale;
                 var h = image.Height * scale;
+                var page = doc.AddNewPage(new PageSize(w, h));
 
-                _ = doc.SetPageSize(new iTextSharp.text.Rectangle(w, h));
-                _ = doc.NewPage();
-                _ = doc.Add(Convert(image));
+                _ = new PdfCanvas(page).AddImageFittedIntoRectangle(
+                    ImageDataFactory.Create(image, null),
+                    new(w, h),
+                    false
+                );
             }
 
             doc.Close();
-            writer.Close();
 
-            return new(ms.ToArray());
+            var bytes = new RandomAccessSourceFactory().CreateSource(ms.ToArray());
+            return new(new PdfReader(bytes, new()));
         }
 
         #endregion
@@ -205,33 +212,18 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Convert
+        /// GetOptions
         ///
         /// <summary>
-        /// Converts from System.Drawing.Image to iTextSharp.text.Image.
+        /// Creates a new instance of the ReaderProperties class with the
+        /// specified password.
         /// </summary>
         ///
-        /// <param name="src">Source image.</param>
-        ///
-        /// <returns>Converted image.</returns>
-        ///
         /* ----------------------------------------------------------------- */
-        private static iTextSharp.text.Image Convert(Image src)
+        private static ReaderProperties GetOptions(string password)
         {
-            var scale = PdfFile.Point / src.HorizontalResolution;
-            var format = src.GetImageFormat();
-            if (!new List<ImageFormat> {
-                ImageFormat.Bmp,
-                ImageFormat.Gif,
-                ImageFormat.Jpeg,
-                ImageFormat.Png,
-                ImageFormat.Tiff,
-            }.Contains(format)) format = ImageFormat.Png;
-
-            var dest = iTextSharp.text.Image.GetInstance(src, format);
-            dest.SetAbsolutePosition(0, 0);
-            dest.ScalePercent(scale * 100);
-
+            var dest = new ReaderProperties();
+            if (password.HasValue()) _ = dest.SetPassword(Encoding.UTF8.GetBytes(password));
             return dest;
         }
 

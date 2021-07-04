@@ -18,10 +18,10 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using Cube.Collections;
-using iTextSharp.text.pdf;
-using iTextSharp.text.pdf.parser;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf.Canvas.Parser.Data;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
 
 namespace Cube.Pdf.Picker
 {
@@ -34,7 +34,7 @@ namespace Cube.Pdf.Picker
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal class RenderListener : EnumerableBase<Image>, IRenderListener
+    internal class RenderListener : EnumerableBase<Image>, IEventListener
     {
         #region Methods
 
@@ -62,59 +62,27 @@ namespace Cube.Pdf.Picker
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void RenderImage(ImageRenderInfo info)
+        public void EventOccurred(IEventData data, EventType type)
         {
-            var obj = info.GetImage();
-            if (!(obj.Get(PdfName.FILTER) is PdfName)) return;
+            if (type != EventType.RENDER_IMAGE || data is not ImageRenderInfo ri) return;
+            var src = ri.GetImage();
+            if (src is null) return;
 
-            var raw = obj.GetDrawingImage();
-            if (raw == null) return;
-
-            var sm = obj.GetDictionary().GetDirectObject(PdfName.SMASK);
-            if (sm == null)
-            {
-                _inner.Add(raw);
-                return;
-            }
-
-            var tmp  = new PdfImageObject(sm as PRStream);
-            var mask = tmp.GetDrawingImage();
-            var dest = Restore(raw as Bitmap, mask as Bitmap);
-            _inner.Add(dest ?? raw);
+            var bytes = src.GetImageBytes();
+            var ms = new System.IO.MemoryStream(bytes);
+            _inner.Add(Image.FromStream(ms));
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// RenderText
+        /// GetSupportedEvents
         ///
         /// <summary>
-        /// Occurs when the specified text is rendered.
+        /// Gets the collection of EventType objects.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void RenderText(TextRenderInfo info) { /* Ignore */ }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// BeginTextBlock
-        ///
-        /// <summary>
-        /// Occurs when the text block begins to render.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void BeginTextBlock() { /* Ignore */ }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// EndTextBlock
-        ///
-        /// <summary>
-        /// Occurs when the text block ends to render.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void EndTextBlock() { /* Ignore */ }
+        public ICollection<EventType> GetSupportedEvents() => new[] { EventType.RENDER_IMAGE };
 
         /* ----------------------------------------------------------------- */
         ///
@@ -135,42 +103,8 @@ namespace Cube.Pdf.Picker
 
         #endregion
 
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Restore
-        ///
-        /// <summary>
-        /// Resotres the bitmap data structure from the specified
-        /// arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Bitmap Restore(Bitmap src, Bitmap mask)
-        {
-            if (src == null || mask == null) return null;
-
-            var dest = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
-            for (int x = 0; x < src.Width; x++)
-            for (int y = 0; y < src.Height; y++)
-            {
-                var color = src.GetPixel(x, y).ToArgb();
-                if (x < mask.Width && y < mask.Height)
-                {
-                    var tmp   = mask.GetPixel(x, y);
-                    var alpha = Color.FromArgb((tmp.R + tmp.G + tmp.B) / 3, 0, 0, 0);
-                    color &= ~alpha.ToArgb();
-                }
-                dest.SetPixel(x, y, Color.FromArgb(color));
-            }
-            return dest;
-        }
-
-        #endregion
-
         #region Fields
-        private readonly IList<Image> _inner = new List<Image>();
+        private readonly List<Image> _inner = new();
         #endregion
     }
 }

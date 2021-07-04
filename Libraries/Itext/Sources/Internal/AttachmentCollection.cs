@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using Cube.Collections;
-using iTextSharp.text.pdf;
+using iText.Kernel.Pdf;
 
 namespace Cube.Pdf.Itext
 {
@@ -44,11 +44,11 @@ namespace Cube.Pdf.Itext
         /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="core">PdfReader object.</param>
+        /// <param name="core">iText object.</param>
         /// <param name="file">Information of the PDF file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public AttachmentCollection(PdfReader core, PdfFile file)
+        public AttachmentCollection(PdfDocument core, PdfFile file)
         {
             File  = file;
             _core = core;
@@ -133,22 +133,25 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private void Parse()
         {
-            if (PdfReader.GetPdfObject(_core.Catalog.Get(PdfName.NAMES)) is not PdfDictionary c) return;
-            if (PdfReader.GetPdfObject(c.Get(PdfName.EMBEDDEDFILES)) is not PdfDictionary e) return;
+            var root = _core.GetCatalog().GetPdfObject();
+            var names = root.GetAsDictionary(PdfName.Names);
+            var files = root.GetAsDictionary(PdfName.EmbeddedFiles);
+            if (names == null || files == null) return;
 
-            var items = e.GetAsArray(PdfName.NAMES);
+            var items = files.GetAsArray(PdfName.Names);
             if (items == null) return;
 
-            for (var i = 1; i < items.Size; i += 2) // see remarks
+            for (var i = 1; i < items.Size(); i += 2) // see remarks
             {
-                var cur  = items.GetAsDict(i);
+                var cur  = items.GetAsDictionary(i);
                 var name = cur.GetAsString(PdfName.UF) ?? cur.GetAsString(PdfName.F);
-                var dic  = cur.GetAsDict(PdfName.EF);
+                var dic  = cur.GetAsDictionary(PdfName.EF);
                 if (name == null || dic == null) continue;
 
-                foreach (var key in dic.Keys)
+                foreach (var key in dic.KeySet())
                 {
-                    if (PdfReader.GetPdfObject(dic.GetAsIndirectObject(key)) is not PRStream stream) continue;
+                    var stream = dic.GetAsStream(key);
+                    if (stream is null) continue;
                     _inner.Add(new EmbeddedAttachment(name.ToUnicodeString(), File.FullName, stream));
                     break;
                 }
@@ -158,7 +161,7 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Fields
-        private readonly PdfReader _core;
+        private readonly PdfDocument _core;
         private readonly List<Attachment> _inner = new();
         #endregion
     }

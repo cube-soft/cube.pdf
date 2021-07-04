@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using Cube.Collections;
-using iTextSharp.text.pdf;
+using iText.Kernel.Pdf;
 
 namespace Cube.Pdf.Itext
 {
@@ -49,11 +49,11 @@ namespace Cube.Pdf.Itext
         /// the specified arguments.
         /// </summary>
         ///
-        /// <param name="core">PdfReader object.</param>
+        /// <param name="core">iText object.</param>
         /// <param name="file">PDF file information.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PageCollection(PdfReader core, PdfFile file)
+        public PageCollection(PdfDocument core, PdfFile file)
         {
             File  = file;
             _core = core;
@@ -83,7 +83,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count => _core?.NumberOfPages ?? 0;
+        public int Count => _core?.GetNumberOfPages() ?? 0;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -138,7 +138,7 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Fields
-        private readonly PdfReader _core;
+        private readonly PdfDocument _core;
         #endregion
     }
 }

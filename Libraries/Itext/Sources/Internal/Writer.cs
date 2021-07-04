@@ -17,9 +17,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Text;
 using Cube.FileSystem;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+using Cube.Mixin.String;
+using iText.Kernel.Pdf;
+using iText.Kernel.Utils;
 
 namespace Cube.Pdf.Itext
 {
@@ -28,99 +30,186 @@ namespace Cube.Pdf.Itext
     /// Writer
     ///
     /// <summary>
-    /// Provides factory and other static methods about PdfWriter.
+    /// Represents the components to save the PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class Writer
+    internal class Writer : DisposableBase
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Writer
+        ///
+        /// <summary>
+        /// Initializes a new instance of the Writer class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /// <param name="path">Path to save.</param>
+        /// <param name="options">Save options.</param>
+        /// <param name="metadata">PDF metadata.</param>
+        /// <param name="encryption">PDF encryption settings.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Writer(string path, SaveOption options, Metadata metadata, Encryption encryption)
+        {
+            var op = new WriterProperties();
+            _ = op.SetPdfVersion(GetVersion(metadata));
+            _ = op.SetFullCompressionMode(metadata.Version.Minor >= 5);
+            if (options.Smart) _ = op.UseSmartMode();
+            SetEncryption(encryption, op);
+
+            _document = new(new PdfWriter(Io.Create(path), op));
+            SetMetadata(metadata, _document);
+
+            _merger = new PdfMerger(_document, true, true).SetCloseSourceDocuments(false);
+        }
+
+        #endregion
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Add
         ///
         /// <summary>
-        /// Creates new PDF writer objects.
+        /// Adds the specified page to the writer.
         /// </summary>
         ///
-        /// <param name="path">Path of the PDF document.</param>
-        /// <param name="options">Save options.</param>
-        /// <param name="metadata">PDF metadata.</param>
-        ///
-        /// <returns>Document and PdfCopy objects.</returns>
+        /// <param name="src">iText reader.</param>
+        /// <param name="page">Page information.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static WriterEngine Create(string path, SaveOption options, Metadata metadata)
+        public void Add(IDisposable src, Page page)
         {
-            var doc  = new Document();
-            var dest = options.SmartCopy ?
-                       new PdfSmartCopy(doc, Io.Create(path)) :
-                       new PdfCopy(doc, Io.Create(path));
+            var obj    = Reader.From(src);
+            var pp     = obj.GetPage(page.Number);
+            var cmp    = pp.GetRotation();
+            var degree = (page.Rotation + page.Delta).Degree;
+            if (degree != cmp) _ = pp.SetRotation(degree);
 
-            dest.PdfVersion = metadata.Version.Minor.ToString()[0];
-            dest.ViewerPreferences = (int)metadata.Options;
+            _ = _merger.Merge(obj, new[] { page.Number });
+        }
 
-            return new(doc, dest);
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the DocumentReader
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing) => _merger?.Close();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetMetadata
+        ///
+        /// <summary>
+        /// Sets the specified PDF metadata.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void SetMetadata(Metadata src, PdfDocument dest)
+        {
+            _ = dest.GetDocumentInfo()
+                    .SetAuthor(src.Author)
+                    .SetTitle(src.Title)
+                    .SetSubject(src.Subject)
+                    .SetKeywords(src.Keywords)
+                    .SetCreator(src.Creator);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Stamp
+        /// SetEncryption
         ///
         /// <summary>
-        /// Adds the specified information to the source PDF file and save
-        /// to the specified path.
+        /// Sets the specified encryption information.
         /// </summary>
         ///
-        /// <param name="path">Path to save the PDF file.</param>
-        /// <param name="src">Source PDF file.</param>
-        /// <param name="metadata">PDF metadata.</param>
-        /// <param name="encryption">PDF encryption settings.</param>
-        /// <param name="bookmark">Bookmark information.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public static void Stamp(string path, string src,
-            Metadata metadata, Encryption encryption, Bookmark bookmark)
+        private void SetEncryption(Encryption src, WriterProperties dest)
         {
-            using var r = Reader.FromPdf(src);
-            using var e = new PdfStamper(r, Io.Create(path));
+            if (src == null || !src.Enabled || !src.OwnerPassword.HasValue()) return;
 
-            e.Writer.Outlines = bookmark;
-            e.Set(metadata, r.Info);
-            e.Writer.Set(encryption);
-            if (metadata.Version.Minor >= 5) e.SetFullCompression();
+            var owner = src.OwnerPassword;
+            var user  = !src.OpenWithPassword ? string.Empty :
+                        src.UserPassword.HasValue() ? src.UserPassword :
+                        owner;
+
+            _ = dest.SetStandardEncryption(
+                Encoding.UTF8.GetBytes(user),
+                Encoding.UTF8.GetBytes(owner),
+                (int)src.Permission.Value,
+                GetEncryptionMethod(src.Method)
+            );
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Extract
+        /// GetVersion
         ///
         /// <summary>
-        /// Extracts the specified page from the specified source reader
-        /// and saves to the specified path.
+        /// Gets the PDF version.
         /// </summary>
         ///
-        /// <param name="path">Path to save the PDF file.</param>
-        /// <param name="options">Save options.</param>
-        /// <param name="src">PdfReader object.</param>
-        /// <param name="pagenum">Page number to save.</param>
-        /// <param name="metadata">PDF metadata.</param>
-        /// <param name="encryption">PDF encryption settings.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public static void Extract(string path, SaveOption options,
-            IDisposable src, int pagenum, Metadata metadata, Encryption encryption)
+        private iText.Kernel.Pdf.PdfVersion GetVersion(Metadata src)
         {
-            var r = Reader.From(src);
-            var e = Create(path, options, metadata);
-
-            e.Writer.Set(encryption);
-            e.Document.Open();
-            e.Writer.AddPage(e.Writer.GetImportedPage(r, pagenum));
-            e.Close();
+            if (src.Version.Major > 1) return iText.Kernel.Pdf.PdfVersion.PDF_2_0;
+            if (src.Version.Major < 1) return iText.Kernel.Pdf.PdfVersion.PDF_1_7;
+            return src.Version.Minor switch
+            {
+                0 => iText.Kernel.Pdf.PdfVersion.PDF_1_0,
+                1 => iText.Kernel.Pdf.PdfVersion.PDF_1_1,
+                2 => iText.Kernel.Pdf.PdfVersion.PDF_1_2,
+                3 => iText.Kernel.Pdf.PdfVersion.PDF_1_3,
+                4 => iText.Kernel.Pdf.PdfVersion.PDF_1_4,
+                5 => iText.Kernel.Pdf.PdfVersion.PDF_1_5,
+                6 => iText.Kernel.Pdf.PdfVersion.PDF_1_6,
+                7 => iText.Kernel.Pdf.PdfVersion.PDF_1_7,
+                _ => iText.Kernel.Pdf.PdfVersion.PDF_1_7,
+            };
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetEncryptionMethod
+        ///
+        /// <summary>
+        /// Gets the value corresponding to the specified method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private int GetEncryptionMethod(EncryptionMethod src) => src switch
+        {
+            EncryptionMethod.Standard40  => EncryptionConstants.STANDARD_ENCRYPTION_40,
+            EncryptionMethod.Standard128 => EncryptionConstants.STANDARD_ENCRYPTION_128,
+            EncryptionMethod.Aes128      => EncryptionConstants.ENCRYPTION_AES_128,
+            EncryptionMethod.Aes256      => EncryptionConstants.ENCRYPTION_AES_256,
+            _                            => EncryptionConstants.STANDARD_ENCRYPTION_40,
+        };
+
+        #endregion
+
+        #region Fields
+        private readonly PdfDocument _document;
+        private readonly PdfMerger _merger;
         #endregion
     }
 }
