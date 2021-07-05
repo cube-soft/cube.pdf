@@ -331,11 +331,11 @@ namespace Cube.Pdf.Tests.Itext
         /// Args
         ///
         /// <summary>
-        /// Converts params to an object array.
+        /// Converts params to an IEnumerable(object) object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private object[] Args(params object[] src) => src;
+        private IEnumerable<object> Args(params object[] src) => src;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -346,7 +346,7 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string Path(object[] parts, [CallerMemberName] string name = null) =>
+        private string Path(IEnumerable<object> parts, [CallerMemberName] string name = null) =>
            Get($"{name}_{string.Join("_", parts)}.pdf");
 
         /* ----------------------------------------------------------------- */

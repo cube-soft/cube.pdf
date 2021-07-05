@@ -170,8 +170,10 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         public void Clear()
         {
             var files = new[] { "Sample.pdf", "SampleRotation.pdf" };
+
             using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
+            using (vm.Subscribe<DialogMessage>(e => Assert.Fail(e.Text)))
             {
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
                 Assert.That(vm.GetFiles().Count(), Is.EqualTo(2));
@@ -243,10 +245,10 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create_Throws()
-        {
-            Assert.That(() => { using (new MainViewModel(Enumerable.Empty<string>())) { } }, Throws.ArgumentNullException);
-        }
+        public void Create_Throws() => Assert.That(
+            () => { using (new MainViewModel(Enumerable.Empty<string>())) { } },
+            Throws.ArgumentNullException
+        );
 
         #endregion
     }

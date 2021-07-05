@@ -55,6 +55,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             using (vm.Subscribe<SaveFileMessage>(e => e.Value = dest))
+            using (vm.Subscribe<DialogMessage>(e => Assert.Fail(e.Text)))
             {
                 Assert.That(vm.Invokable, Is.False);
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));

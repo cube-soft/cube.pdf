@@ -75,28 +75,13 @@ namespace Cube.Pdf.Itext
         ///
         /* ----------------------------------------------------------------- */
         public static PdfDocument From(File src, OpenOption options) =>
-            src is PdfFile   f0 ? FromPdf(f0.FullName, new(null, f0.Password), options) :
+            src is PdfFile   f0 ? From(f0.FullName, new(null, f0.Password), options) :
             src is ImageFile f1 ? FromImage(f1.FullName) :
             default;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FromPdf
-        ///
-        /// <summary>
-        /// Creates a new instance of the PdfReader class.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        ///
-        /// <returns>PdfReader object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static PdfDocument FromPdf(string src) => new(new PdfReader(src));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FromPdf
+        /// From
         ///
         /// <summary>
         /// Creates a new instance of the PdfReader class.
@@ -109,21 +94,23 @@ namespace Cube.Pdf.Itext
         /// <returns>PdfReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfDocument FromPdf(string src, Password password, OpenOption options)
+        public static PdfDocument From(string src, Password password, OpenOption options)
         {
             while (true)
             {
                 try
                 {
                     using var ss = Io.Open(src);
-                    var dest = new PdfReader(ss, GetOptions(password.Value))
-                        .SetMemorySavingMode(options.SaveMemory);
-                    if (options.FullAccess && !dest.IsOpenedWithFullPermission())
+                    var obj = new PdfReader(ss, GetOptions(password.Value));
+                    var dest = new PdfDocument(obj.SetMemorySavingMode(options.SaveMemory));
+
+                    if (options.FullAccess && !dest.GetReader().IsOpenedWithFullPermission())
                     {
                         dest.Close();
                         throw new BadPasswordException("PdfReader is not opened with owner password");
                     }
-                    return new(dest);
+
+                    return dest;
                 }
                 catch (BadPasswordException)
                 {
@@ -175,9 +162,8 @@ namespace Cube.Pdf.Itext
             }
 
             doc.Close();
-
-            var bytes = new RandomAccessSourceFactory().CreateSource(ms.ToArray());
-            return new(new PdfReader(bytes, new()));
+            var dest = new RandomAccessSourceFactory().CreateSource(ms.ToArray());
+            return new(new PdfReader(dest, new()));
         }
 
         #endregion
