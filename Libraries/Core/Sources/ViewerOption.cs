@@ -61,39 +61,4 @@ namespace Cube.Pdf
         /// <summary>Shows attached objects.</summary>
         Attachment = 0x0800,
     }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// ViewerOptionFactory
-    ///
-    /// <summary>
-    /// Provides extended methods of the ViewerOptionFactory.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static class ViewerOptionFactory
-    {
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new ViewerOption value from the specified value.
-        /// </summary>
-        ///
-        /// <param name="src">Value for options.</param>
-        ///
-        /// <returns>ViewerOption objects.</returns>
-        ///
-        /// <remarks>
-        /// Ignores flags that do not define in the ViewerOption.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static ViewerOption Create(int src) => (ViewerOption)(src & 0x0fff);
-
-        #endregion
-    }
 }

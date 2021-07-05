@@ -48,13 +48,13 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /// <param name="src">PdfDocument object.</param>
-        /// <param name="file">Path of the source PDF file.</param>
-        /// <param name="password">Password of the source PDF file.</param>
+        /// <param name="path">Path of the source PDF file.</param>
+        /// <param name="pw">Password of the source PDF file.</param>
         ///
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfFile GetFile(this PdfDocument src, string file, string password) => new(file, password)
+        public static PdfFile GetFile(this PdfDocument src, string path, string pw) => new(path, pw)
         {
             Count      = src.GetNumberOfPages(),
             FullAccess = src.GetReader().IsOpenedWithFullPermission(),
@@ -108,7 +108,7 @@ namespace Cube.Pdf.Itext
                 Keywords = info.GetKeywords(),
                 Creator  = info.GetCreator(),
                 Producer = info.GetProducer(),
-                //Options = src.GetCatalog().GetViewerPreferences().ToPageLayoutAndPageMode(),
+                Options  = GetViewerOption(src.GetCatalog()),
             };
         }
 
@@ -201,6 +201,24 @@ namespace Cube.Pdf.Itext
             var obj = src.GetPage(pagenum).GetPageSize();
             return new(obj.GetWidth(), obj.GetHeight());
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetViewerOption
+        ///
+        /// <summary>
+        /// Gets the viewer options from the specified object.
+        /// </summary>
+        ///
+        /// <param name="src">PdfCatalog object.</param>
+        ///
+        /// <returns>ViewerOption value.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static ViewerOption GetViewerOption(PdfCatalog src) => ViewerOptionFactory.Create(
+            src.GetPageLayout()?.GetValue() ?? string.Empty,
+            src.GetPageMode()?.GetValue()   ?? string.Empty
+        );
 
         /* ----------------------------------------------------------------- */
         ///

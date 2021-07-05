@@ -31,7 +31,7 @@ namespace Cube.Pdf.Itext
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// SmartCopy
+        /// Smart
         ///
         /// <summary>
         /// Gets or sets the value indicating whether to use the smart

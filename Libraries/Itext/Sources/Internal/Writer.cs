@@ -155,6 +155,12 @@ namespace Cube.Pdf.Itext
                     .SetSubject(src.Subject)
                     .SetKeywords(src.Keywords)
                     .SetCreator(src.Creator);
+
+            var pl = src.Options.ToPageLayout();
+            if (pl != ViewerOption.None) _ = dest.GetCatalog().SetPageLayout(new(pl.ToName()));
+
+            var pm = src.Options.ToPageMode();
+            if (pm != ViewerOption.None) _ = dest.GetCatalog().SetPageMode(new(pm.ToName()));
         }
 
         /* ----------------------------------------------------------------- */

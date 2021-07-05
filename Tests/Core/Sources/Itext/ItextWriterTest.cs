@@ -240,9 +240,9 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("日本語のテスト")]
         public void SetMetadata(string value)
         {
-            var src  = GetSource("Sample.pdf");
+            var src  = GetSource("SampleViewerOption.pdf");
             var dest = Path(Args(value));
-            var op   = new OpenOption { SaveMemory = false };
+            var op   = new OpenOption { SaveMemory = true };
             var cmp  = new Metadata
             {
                 Title    = value,
@@ -307,59 +307,19 @@ namespace Cube.Pdf.Tests.Itext
                 w.Save(dest);
             }
 
-            using (var r = new DocumentReader(dest, cmp.OwnerPassword))
-            {
-                Assert.That(r.Encryption.Enabled,       Is.True);
-                Assert.That(r.Encryption.OwnerPassword, Is.EqualTo(cmp.OwnerPassword));
-                Assert.That(r.Encryption.Method,        Is.EqualTo(cmp.Method));
+            using var r = new DocumentReader(dest, cmp.OwnerPassword);
+            Assert.That(r.Encryption.Enabled,       Is.True);
+            Assert.That(r.Encryption.OwnerPassword, Is.EqualTo(cmp.OwnerPassword));
+            Assert.That(r.Encryption.Method,        Is.EqualTo(cmp.Method));
 
-                var x = r.Encryption.Permission;
-                var y = cmp.Permission;
-                Assert.That(x.Print,             Is.EqualTo(y.Print),             nameof(x.Print));
-                Assert.That(x.CopyContents,      Is.EqualTo(y.CopyContents),      nameof(x.CopyContents));
-                Assert.That(x.ModifyContents,    Is.EqualTo(y.ModifyContents),    nameof(x.ModifyContents));
-                Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
-                Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
-                Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotate_Failed
-        ///
-        /// <summary>
-        /// Confirms that the rotation settings is not applied.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Partial モードが有効な DocumentReader オブジェクトを指定した
-        /// 場合、回転情報の変更は適用されません。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Rotate_Failed()
-        {
-            var src    = GetSource("Sample.pdf");
-            var dest   = Path(Args("Sample"));
-            var op     = new OpenOption { SaveMemory = false };
-            var degree = 90;
-
-            using (var w = new DocumentWriter(new() { Smart = true }))
-            {
-                var r = new DocumentReader(src, "", op);
-
-                w.Set(r.Metadata);
-                w.Set(r.Encryption);
-                w.Add(Rotate(r.Pages, degree), r);
-                w.Save(dest);
-            }
-
-            using (var r = new DocumentReader(dest))
-            {
-                foreach (var page in r.Pages) Assert.That(page.Rotation, Is.Not.EqualTo(degree));
-            }
+            var x = r.Encryption.Permission;
+            var y = cmp.Permission;
+            Assert.That(x.Print,             Is.EqualTo(y.Print),             nameof(x.Print));
+            Assert.That(x.CopyContents,      Is.EqualTo(y.CopyContents),      nameof(x.CopyContents));
+            Assert.That(x.ModifyContents,    Is.EqualTo(y.ModifyContents),    nameof(x.ModifyContents));
+            Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
+            Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
+            Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
         }
 
         #endregion
