@@ -15,12 +15,10 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="net45">
-                <dependency id="Cube.Images" version="4.0.0" />
                 <dependency id="Cube.Pdf" version="4.0.0" />
-                <dependency id="iTextSharp" version="5.5.13.2" />
+                <dependency id="itext7" version="7.1.16" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.Images" version="4.0.0" />
                 <dependency id="Cube.Pdf" version="4.0.0" />
                 <dependency id="iTextSharp" version="5.5.13.2" />
             </group>
