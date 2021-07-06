@@ -98,6 +98,7 @@ namespace Cube.Pdf.Editor
                 Temp        = src.Folder.Value.Temp,
                 Target      = SaveTarget.All,
                 Split       = false,
+                Smart       = obj.Settings.Smart,
                 Destination = dest,
                 Metadata    = obj.Metadata,
                 Encryption  = obj.Encryption,
@@ -157,6 +158,7 @@ namespace Cube.Pdf.Editor
             Temp        = src.Folder.Value.Temp,
             Target      = SaveTarget.Selected,
             Split       = false,
+            Smart       = src.Folder.Value.Smart,
             Destination = dest,
         });
 

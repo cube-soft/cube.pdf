@@ -292,7 +292,8 @@ namespace Cube.Pdf.Itext
         protected void Release()
         {
             _hints.Clear();
-            _disposable.Dispose();
+            foreach (var e in _disposable) e.Dispose();
+            _disposable.Clear();
         }
 
         /* ----------------------------------------------------------------- */
@@ -342,7 +343,7 @@ namespace Cube.Pdf.Itext
         #region Fields
         private readonly List<Page> _pages = new();
         private readonly List<Attachment> _attachments = new();
-        private readonly DisposableContainer _disposable = new();
+        private readonly List<IDisposable> _disposable = new();
         private readonly Dictionary<string, IDisposable> _hints = new();
         #endregion
     }

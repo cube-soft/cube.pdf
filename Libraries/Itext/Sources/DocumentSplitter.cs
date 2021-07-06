@@ -115,12 +115,12 @@ namespace Cube.Pdf.Itext
                 Results.Clear();
                 foreach (var page in Pages)
                 {
-                    var src = Reader.From(GetRawReader(page));
-                    src.Rotate(page);
-
-                    var dest = Unique(directory, page.File, page.Number);
-                    Writer.Extract(dest, Options, src, page.Number, Metadata, Encryption);
-                    Results.Add(dest);
+                    var path = Unique(directory, page.File, page.Number);
+                    using (var dest = new Writer(path, Options, Metadata, Encryption))
+                    {
+                        dest.Add(GetRawReader(page), page);
+                    }
+                    Results.Add(path);
                 }
             }
             finally { base.OnReset(); } // see remarks

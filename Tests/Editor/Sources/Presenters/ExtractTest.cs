@@ -86,7 +86,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(evm.Title,               Is.EqualTo("Extraction details"));
                 Assert.That(evm.Formats.Count(),     Is.EqualTo(2));
                 Assert.That(evm.Destination.Text,    Is.EqualTo("Save path"));
-                Assert.That(evm.Destination.Value,   Is.Null, nameof(evm.Destination));
+                Assert.That(evm.Destination.Value,   Is.Empty, nameof(evm.Destination));
                 Assert.That(evm.Destination.Command, Is.Not.Null);
                 Assert.That(evm.Format.Text,         Is.EqualTo("Format"));
                 Assert.That(evm.Format.Value,        Is.EqualTo(SaveFormat.Pdf));
@@ -109,7 +109,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(evm.Specified.Value,     Is.False, nameof(evm.Specified));
                 Assert.That(evm.Specified.Command,   Is.Null);
                 Assert.That(evm.Range.Text,          Is.EqualTo("e.g. 1,2,4-7,9"));
-                Assert.That(evm.Range.Value,         Is.Null, nameof(evm.Range));
+                Assert.That(evm.Range.Value,         Is.Empty, nameof(evm.Range));
                 Assert.That(evm.Range.Command,       Is.Null);
                 Assert.That(evm.Split.Text,          Is.EqualTo("Save as a separate file per page"));
                 Assert.That(evm.Split.Value,         Is.False, nameof(evm.Split));

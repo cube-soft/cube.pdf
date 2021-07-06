@@ -14,7 +14,6 @@ CubePDF シリーズは全て [GNU Affero General Public License version 3 (AGPL
 * [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/)
 * [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/)
 * [CubePDF Viewer](https://www.cube-soft.jp/cubepdfviewer/)
-* [CubePDF ImagePicker](https://www.cube-soft.jp/cubepdfimagepicker/)
 * [CubePDF Clip](https://clown.cube-soft.jp/entry/2017/03/24/cubepdf-clip-1.0.0)
 
 この記事では、CubePDF シリーズのライセンスや利用条件等について、よくある質問事項について記載します。尚、有償版である [CubePDF Customize（カスタム仮想プリンタを構築する部分のみをパッケージしたもの）](https://www.cube-soft.jp/cubevp/) は AGPLv3 ではなくプロプライエタリなラインセンスを適用しているため、CubePDF Customize に関しては、この記事では除外します。

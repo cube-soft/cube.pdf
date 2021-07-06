@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -39,8 +40,6 @@ namespace Cube.Pdf.Itext
     internal static class ReaderExtension
     {
         #region Methods
-
-        #region Get
 
         /* ----------------------------------------------------------------- */
         ///
@@ -220,7 +219,8 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void GetBookmarks(this PdfReader src, int pagenum, int delta, Bookmark dest)
+        public static void GetBookmarks(this PdfReader src, int pagenum, int delta,
+            List<Dictionary<string, object>> dest)
         {
             var cmp = $"^{pagenum} (XYZ|Fit|FitH|FitBH)";
             var bookmarks = SimpleBookmark.GetBookmark(src);
@@ -233,8 +233,6 @@ namespace Cube.Pdf.Itext
                 if (found && Regex.IsMatch(obj.ToString(), cmp)) dest.Add(b);
             }
         }
-
-        #endregion
 
         /* ----------------------------------------------------------------- */
         ///

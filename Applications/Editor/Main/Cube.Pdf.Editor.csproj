@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
-        <Version>1.0.2</Version>
+        <Version>1.5.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePdfUtility</Product>
@@ -30,6 +30,7 @@
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
         <PackageReference Include="Cube.Forms" Version="4.0.0" />
+        <PackageReference Include="Cube.Images" version="4.0.0" />
         <PackageReference Include="Cube.Xui" Version="4.0.0" />
         <PackageReference Include="gong-wpf-dragdrop" Version="1.1.0" />
         <Reference Include="..\..\..\..\resources\net35\RibbonControlsLibrary.dll" />

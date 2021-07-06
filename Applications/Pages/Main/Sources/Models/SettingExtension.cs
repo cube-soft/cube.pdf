@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 //
-// Copyright (c) 2010 CubeSoft, Inc.
+// Copyright (c) 2013 CubeSoft, Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published
@@ -16,41 +16,55 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Reflection;
-using Cube.Logging;
-using NUnit.Framework;
+using Cube.Pdf.Itext;
 
-namespace Cube.Pdf.Picker.Tests
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// GlobalSetup
+    /// SettingExtension
     ///
     /// <summary>
-    /// Represents the global setup operations.
+    /// Provides extended methods of the SettingFolder class..
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [SetUpFixture]
-    public class GlobalSetup
+    public static class SettingExtension
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OneTimeSetup
+        /// ToOpenOption
         ///
         /// <summary>
-        /// Invokes the setup method only once.
+        /// Converts to a OpenOption object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [OneTimeSetUp]
-        public void OneTimeSetup()
+        public static OpenOption ToOpenOption(this SettingFolder _) => new()
         {
-            _ = Logger.ObserveTaskException();
-            typeof(GlobalSetup).LogInfo(Assembly.GetExecutingAssembly());
-        }
+            FullAccess = true,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ToSaveOption
+        ///
+        /// <summary>
+        /// Converts to a SaveOption object.
+        /// </summary>
+        ///
+        /// <param name="src">User settings.</param>
+        ///
+        /// <returns>SaveOption object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static SaveOption ToSaveOption(this SettingFolder src) => new()
+        {
+            Temp  = src.Value.Temp,
+            Smart = src.Value.Smart,
+        };
 
         #endregion
     }

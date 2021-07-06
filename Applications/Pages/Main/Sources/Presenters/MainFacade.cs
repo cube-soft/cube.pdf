@@ -25,6 +25,7 @@ using System.Reflection;
 using System.Threading;
 using Cube.FileSystem;
 using Cube.Logging;
+using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
 
@@ -52,12 +53,14 @@ namespace Cube.Pdf.Pages
         /// specified arguments.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SynchronizationContext context) : base(new ContextDispatcher(context, false))
+        public MainFacade(SettingFolder src, SynchronizationContext context) :
+            base(new ContextDispatcher(context, false))
         {
-            Settings = new(Assembly.GetExecutingAssembly());
+            Settings = src;
             _inner.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
 
@@ -107,9 +110,9 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; } = new Metadata
+        public Metadata Metadata { get; } = new()
         {
-            Version  = new PdfVersion(1, 7),
+            Version  = new(1, 7),
             Creator  = "CubePDF Page",
             Producer = "CubePDF Page",
         };
@@ -125,7 +128,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public bool Busy
         {
-            get => Get<bool>();
+            get => Get(() => false);
             private set => Set(value);
         }
 
@@ -160,16 +163,17 @@ namespace Cube.Pdf.Pages
         /// <param name="dest">Path to save.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Merge(string dest) => Invoke(() =>
+        public void Merge(string dest) => Lock(() =>
         {
-            var dir = Io.Get(dest).DirectoryName;
+            var op  = Settings.ToSaveOption();
+            var dir = op.Temp.HasValue() ? op.Temp : Io.Get(dest).DirectoryName;
             var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
             {
-                using (var writer = Make<DocumentWriter>()) writer.Save(tmp);
+                using (var w = Make(new DocumentWriter(op))) w.Save(tmp);
                 Io.Move(tmp, dest, true);
-                ClearItems();
+                _inner.Clear();
             }
             finally { GetType().LogWarn(() => Io.Delete(tmp)); }
         });
@@ -185,10 +189,11 @@ namespace Cube.Pdf.Pages
         /// <param name="directory">Directory to save.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Split(string directory) => Invoke(() =>
+        public void Split(string directory) => Lock(() =>
         {
-            using (var writer = Make<DocumentSplitter>()) writer.Save(directory);
-            ClearItems();
+            var op = Settings.ToSaveOption();
+            using (var w = Make(new DocumentSplitter(op))) w.Save(directory);
+            _inner.Clear();
         });
 
         /* ----------------------------------------------------------------- */
@@ -202,13 +207,17 @@ namespace Cube.Pdf.Pages
         /// <param name="src">PDF or image file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IEnumerable<string> src) => Invoke(() =>
+        public void Add(IEnumerable<string> src) => Lock(() =>
         {
             foreach (var f in new FileSelector().Get(src))
             {
                 if (_inner.Any(e => e.FullName == f)) continue;
-                var ext = Io.Get(f).Extension.ToLower();
-                if (ext == ".pdf") AddDocument(f);
+                if (Io.Get(f).Extension.ToLower() == ".pdf")
+                {
+                    var op = Settings.ToOpenOption();
+                    using var e = new DocumentReader(f, Query, op);
+                    _inner.Add(e.File);
+                }
                 else _inner.Add(new ImageFile(f));
             }
         });
@@ -225,7 +234,7 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Move(IEnumerable<int> indices, int offset) => Invoke(() =>
+        public bool Move(IEnumerable<int> indices, int offset) => Lock(() =>
         {
             if (offset == 0 || !indices.Any()) return false;
 
@@ -251,7 +260,7 @@ namespace Cube.Pdf.Pages
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => Invoke(() =>
+        public void Remove(IEnumerable<int> indices) => Lock(() =>
             indices.OrderByDescending(e => e).Each(i => _inner.RemoveAt(i)));
 
         /* ----------------------------------------------------------------- */
@@ -263,7 +272,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Invoke(() => ClearItems());
+        public void Clear() => Lock(_inner.Clear);
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
@@ -282,10 +295,6 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing) { }
 
-        #endregion
-
-        #region Implementations
-
         /* ----------------------------------------------------------------- */
         ///
         /// Make
@@ -295,61 +304,21 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private T Make<T>() where T : IDocumentWriter, new()
+        private DocumentWriterBase Make(DocumentWriterBase dest)
         {
-            var dest = new T();
-            foreach (var file in _inner)
+            foreach (var f in _inner)
             {
-                if (file is PdfFile) AddDocument(file as PdfFile, dest);
-                else AddImage(file as ImageFile, dest);
+                if (f is PdfFile pf)
+                {
+                    var op = Settings.ToOpenOption();
+                    var r  = new DocumentReader(pf.FullName, pf.Password, op);
+                    dest.Add(r.Pages, r);
+                }
+                else dest.Add(new ImagePageCollection(f.FullName));
             }
             dest.Set(Metadata);
             return dest;
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddDocument
-        ///
-        /// <summary>
-        /// Adds the specified PDF file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddDocument(string path)
-        {
-            var options = new OpenOption { FullAccess = true };
-            using var e = new DocumentReader(path, Query, options);
-            _inner.Add(e.File);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddDocument
-        ///
-        /// <summary>
-        /// Adds the specified PDF file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddDocument(PdfFile src, IDocumentWriter dest)
-        {
-            var options = new OpenOption { FullAccess = true };
-            using var e = new DocumentReader(src.FullName, src.Password, options);
-            dest.Add(e.Pages);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AddImage
-        ///
-        /// <summary>
-        /// Adds the specified image file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void AddImage(ImageFile src, IDocumentWriter dest) =>
-            dest.Add(new ImagePageCollection(src.FullName));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -363,37 +332,26 @@ namespace Cube.Pdf.Pages
         private void MoveItems(IEnumerable<int> indices, int offset)
         {
             var inserted = offset < 0 ? -1 : _inner.Count;
-            foreach (var index in indices.ToArray())
+            foreach (var i in indices.ToArray())
             {
                 var newindex = offset < 0 ?
-                    Math.Max(index + offset, inserted + 1) :
-                    Math.Min(index + offset, inserted - 1);
-                if (index != newindex) _inner.Move(index, newindex);
+                    Math.Max(i + offset, inserted + 1) :
+                    Math.Min(i + offset, inserted - 1);
+                if (i != newindex) _inner.Move(i, newindex);
                 inserted = newindex;
             }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Clear
+        /// Lock
         ///
         /// <summary>
-        /// Clears the added files.
+        /// Locks and invokes the specified action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void ClearItems() => _inner.Clear();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the specified action.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Invoke(Action action) => Invoke(() =>
+        private void Lock(Action action) => Lock(() =>
         {
             action();
             return true;
@@ -401,14 +359,14 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Lock
         ///
         /// <summary>
-        /// Invokes the specified function.
+        /// Locks and invokes the specified function.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private T Invoke<T>(Func<T> func)
+        private T Lock<T>(Func<T> func)
         {
             lock (_lock)
             {

@@ -28,7 +28,7 @@ namespace Cube.Pdf.Tests.Itext
     /// ItextReaderTest
     ///
     /// <summary>
-    /// Tests for the DocumentReader class.
+    /// Tests the ITest.DocumentReader class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -39,79 +39,48 @@ namespace Cube.Pdf.Tests.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open_Attachments_Count
+        /// Attachments_Count
         ///
         /// <summary>
-        /// 添付ファイルの個数を取得するテストを実行します。
+        /// Tests the Count property of the embedded file collection.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("SampleRotation.pdf",        ExpectedResult = 0)]
-        [TestCase("SampleAttachment.pdf",      ExpectedResult = 2)]
+        [TestCase("SampleRotation.pdf", ExpectedResult = 0)]
+        [TestCase("SampleAttachment.pdf", ExpectedResult = 2)]
         [TestCase("SampleAttachmentEmpty.pdf", ExpectedResult = 3)]
-        public int Open_Attachments_Count(string filename)
+        public int Attachments_Count(string filename)
         {
-            using (var reader = Create(filename))
+            using var reader = new DocumentReader(GetSource(filename));
+            foreach (var obj in reader.Attachments)
             {
-                foreach (var obj in reader.Attachments)
-                {
-                    Assert.That(obj.Data,            Is.Not.Null);
-                    Assert.That(obj.Checksum.Length, Is.EqualTo(32));
-                }
-                return reader.Attachments.Count();
+                Assert.That(obj.Data, Is.Not.Null);
+                Assert.That(obj.Checksum.Length, Is.EqualTo(32));
             }
+            return reader.Attachments.Count();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open_Attachments_Length
+        /// Attachments_Length
         ///
         /// <summary>
-        /// 添付ファイルのファイルサイズを取得するテストを実行します。
+        /// Tests the Length property of the specified embedded file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("SampleAttachment.pdf",      "CubePDF.png",         ExpectedResult =   3765L)]
-        [TestCase("SampleAttachment.pdf",      "CubeICE.png",         ExpectedResult = 165524L)]
-        [TestCase("SampleAttachmentEmpty.pdf", "Empty",               ExpectedResult =      0L)]
-        [TestCase("SampleAttachmentCjk.pdf",   "日本語のサンプル.md", ExpectedResult =  12843L)]
-        public long Open_Attachments_Length(string filename, string key)
+        [TestCase("SampleAttachment.pdf", "CubePDF.png", ExpectedResult = 3765L)]
+        [TestCase("SampleAttachment.pdf", "CubeICE.png", ExpectedResult = 165524L)]
+        [TestCase("SampleAttachmentEmpty.pdf", "Empty", ExpectedResult = 0L)]
+        [TestCase("SampleAttachmentCjk.pdf", "日本語のサンプル.md", ExpectedResult = 12843L)]
+        public long Attachments_Length(string filename, string key)
         {
-            using (var reader = Create(filename))
-            {
-                var dest = reader.Attachments.First(x => x.Name == key);
-                Assert.That(dest.Data,            Is.Not.Null);
-                Assert.That(dest.Checksum.Length, Is.EqualTo(32));
-                return dest.Length;
-            }
+            using var src = new DocumentReader(GetSource(filename));
+            var dest = src.Attachments.First(x => x.Name == key);
+            Assert.That(dest.Data, Is.Not.Null);
+            Assert.That(dest.Checksum.Length, Is.EqualTo(32));
+            return dest.Length;
         }
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// DocumentReader オブジェクトを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private DocumentReader Create(string filename) => Create(filename, string.Empty);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// DocumentReader オブジェクトを生成します。
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private DocumentReader Create(string filename, string password) =>
-            new DocumentReader(GetSource(filename), password);
 
         #endregion
     }

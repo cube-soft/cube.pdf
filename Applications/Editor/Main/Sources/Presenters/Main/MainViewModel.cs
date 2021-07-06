@@ -68,7 +68,10 @@ namespace Cube.Pdf.Editor
             base(new(src, context), new(), context)
         {
             var recent = Environment.SpecialFolder.Recent.GetName();
-            var mon    = new DirectoryMonitor(recent, "*.pdf.lnk", GetDispatcher(false));
+            var mon    = new DirectoryMonitor(recent, "*.pdf.lnk", GetDispatcher(false))
+            {
+                Enabled = src.Value.RecentVisible,
+            };
 
             Ribbon = new(Facade, Aggregator, context);
             Recent = new(mon, Aggregator, context);

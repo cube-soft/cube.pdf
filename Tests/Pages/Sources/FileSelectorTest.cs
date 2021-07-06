@@ -75,17 +75,17 @@ namespace Cube.Pdf.Pages.Tests
             {
                 var n = 0;
 
-                yield return new TestCaseData(n++,
+                yield return new(n++,
                     new List<string> { "Sample.pdf", "Sample.jpg", "Sample.txt" },
                     new List<string> { "Sample.jpg", "Sample.pdf" }
                 );
 
-                yield return new TestCaseData(n++,
+                yield return new(n++,
                     new List<string> { "Dir1" },
                     new List<string> { @"Dir1\Dir1Sample.jpg", @"Dir1\Dir1Sample.pdf" }
                 );
 
-                yield return new TestCaseData(n++,
+                yield return new(n++,
                     new List<string> { "Sample.pdf", "Sample.jpg", "Sample.txt", "Dir1", "Dir2" },
                     new List<string>
                     {
@@ -98,7 +98,7 @@ namespace Cube.Pdf.Pages.Tests
                     }
                 );
 
-                yield return new TestCaseData(n++, new List<string>(), new List<string>());
+                yield return new(n++, new List<string>(), new List<string>());
             }
         }
 

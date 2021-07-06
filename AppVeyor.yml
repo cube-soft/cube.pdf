@@ -1,9 +1,9 @@
 version: 4.0.0.{build}
 environment:
     PROJECT_NAME:  'Cube.Pdf'
-    TEST_TOOL:     '..\packages\OpenCover\4.7.922\tools\OpenCover.Console.exe'
+    TEST_TOOL:     '..\packages\OpenCover\4.7.1189\tools\OpenCover.Console.exe'
     TEST_ARGS:     'test --no-restore --no-build --logger:Appveyor'
-    TEST_FILTERS:  '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.App -[*]*Window -[*]*Control'
+    TEST_FILTERS:  '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.Program/* -[*]*.App -[*]*.App/* -[*]*Window -[*]*Window/* -[*]*Control -[*]*Control/*'
     TEST_COVERAGE: 'CoverResults.xml'
     TEST_RESULTS:  'TestResults'
 clone_folder: 'C:\Cube\%PROJECT_NAME%'
@@ -19,10 +19,9 @@ nuget:
     disable_publish_on_pr: true
 before_build:
     - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
-    - nuget sources add -name Cube.FileSystem -source https://ci.appveyor.com/nuget/cube.filesystem
+    - nuget sources add -name Cube.Forms -source https://ci.appveyor.com/nuget/cube.forms
     - nuget sources add -name Cube.Xui -source https://ci.appveyor.com/nuget/cube.xui
     - nuget sources add -name Cube.Images -source https://ci.appveyor.com/nuget/cube.images
-    - nuget sources add -name Cube.Forms -source https://ci.appveyor.com/nuget/cube.forms
     - nuget restore "%PROJECT_NAME%.sln"
 build:
     project: '%PROJECT_NAME%.sln'

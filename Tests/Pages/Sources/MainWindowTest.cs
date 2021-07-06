@@ -50,7 +50,7 @@ namespace Cube.Pdf.Pages.Tests
         public void Bind()
         {
             using var view = new MainWindow();
-            view.Bind(new MainViewModel(Enumerable.Empty<string>(), new()));
+            view.Bind(new MainViewModel(new(), Enumerable.Empty<string>(), new()));
             Assert.That(view.SelectedIndices.Count(), Is.EqualTo(0));
         }
 

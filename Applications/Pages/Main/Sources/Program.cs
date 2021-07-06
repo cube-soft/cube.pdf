@@ -56,8 +56,11 @@ namespace Cube.Pdf.Pages
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            var src = new SettingFolder();
+            src.Load();
+
             var view = new MainWindow();
-            view.Bind(new MainViewModel(args));
+            view.Bind(new MainViewModel(src, args));
             Application.Run(view);
         });
 

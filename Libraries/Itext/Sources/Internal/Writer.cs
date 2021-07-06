@@ -17,7 +17,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Cube.FileSystem;
+using Cube.Logging;
+using Cube.Mixin.String;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -32,36 +36,138 @@ namespace Cube.Pdf.Itext
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal static class Writer
+    internal class Writer : DisposableBase
     {
-        #region Methods
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Writer
         ///
         /// <summary>
-        /// Creates new PDF writer objects.
+        /// Initializes a new instance of the Writer class with the
+        /// specified arguments.
         /// </summary>
         ///
         /// <param name="path">Path of the PDF document.</param>
         /// <param name="options">Save options.</param>
         /// <param name="metadata">PDF metadata.</param>
-        ///
-        /// <returns>Document and PdfCopy objects.</returns>
+        /// <param name="crypt">PDF encryption settings.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static WriterEngine Create(string path, SaveOption options, Metadata metadata)
+        public Writer(string path, SaveOption options, Metadata metadata, Encryption crypt)
         {
-            var doc  = new Document();
-            var dest = options.SmartCopy ?
-                       new PdfSmartCopy(doc, Io.Create(path)) :
-                       new PdfCopy(doc, Io.Create(path));
+            var dir = options.Temp.HasValue() ?
+                      options.Temp :
+                      Io.Get(path).DirectoryName;
 
-            dest.PdfVersion = metadata.Version.Minor.ToString()[0];
-            dest.ViewerPreferences = (int)metadata.Options;
+            _dest     = path;
+            _tmp      = Io.Combine(dir, Guid.NewGuid().ToString("N"));
+            _metadata = metadata;
+            _crypt    = crypt;
+            _writer   = options.Smart ?
+                        new PdfSmartCopy(_document, Io.Create(_tmp)) :
+                        new PdfCopy(_document, Io.Create(_tmp));
 
-            return new(doc, dest);
+            _writer.PdfVersion = metadata.Version.Minor.ToString()[0];
+            _writer.ViewerPreferences = (int)metadata.Options;
+            _document.Open();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        ///
+        /// <summary>
+        /// Adds the specified page to the specified writer.
+        /// </summary>
+        ///
+        /// <param name="src">PdfReader object.</param>
+        /// <param name="page">Page object.</param>
+        ///
+        /// <remarks>
+        /// Note that the value of PdfCopy.PageNumber is automatically
+        /// incremented as soon as AddPage is executed.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Add(IDisposable src, Page page)
+        {
+            var obj = Reader.From(src);
+            obj.Rotate(page);
+            if (page.File is PdfFile)
+            {
+                var n = _writer.PageNumber; // see remarks
+                obj.GetBookmarks(n, n - page.Number, _bookmark);
+            }
+            _writer.AddPage(_writer.GetImportedPage(obj, page.Number));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Set
+        ///
+        /// <summary>
+        /// Sets attachments to the specified writer.
+        /// </summary>
+        ///
+        /// <param name="data">Collection of attachments.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Add(IEnumerable<Attachment> data)
+        {
+            var done = new List<Attachment>();
+
+            foreach (var item in data)
+            {
+                var dup = done.Any(e =>
+                    e.Name.ToLower() == item.Name.ToLower() &&
+                    e.Length == item.Length &&
+                    e.Checksum.SequenceEqual(item.Checksum)
+                );
+
+                if (dup) continue;
+
+                var fs = item is EmbeddedAttachment ?
+                         PdfFileSpecification.FileEmbedded(_writer, null, item.Name, item.Data) :
+                         PdfFileSpecification.FileEmbedded(_writer, item.Source, item.Name, null);
+
+                fs.SetUnicodeFileName(item.Name, true);
+                _writer.AddFileAttachment(fs);
+                done.Add(item);
+            }
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Releases the unmanaged resources used by the DocumentReader
+        /// and optionally releases the managed resources.
+        /// </summary>
+        ///
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources;
+        /// false to release only unmanaged resources.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void Dispose(bool disposing)
+        {
+            _document.Close();
+            _writer.Close();
+
+            Stamp();
+            GetType().LogWarn(() => Io.Delete(_tmp));
         }
 
         /* ----------------------------------------------------------------- */
@@ -73,54 +179,78 @@ namespace Cube.Pdf.Itext
         /// to the specified path.
         /// </summary>
         ///
-        /// <param name="path">Path to save the PDF file.</param>
-        /// <param name="src">Source PDF file.</param>
-        /// <param name="metadata">PDF metadata.</param>
-        /// <param name="encryption">PDF encryption settings.</param>
-        /// <param name="bookmark">Bookmark information.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public static void Stamp(string path, string src,
-            Metadata metadata, Encryption encryption, Bookmark bookmark)
+        private void Stamp()
         {
-            using var r = Reader.FromPdf(src);
-            using var e = new PdfStamper(r, Io.Create(path));
+            using var r = Reader.From(_tmp, new Password(null, ""), new());
+            using var w = new PdfStamper(r, Io.Create(_dest));
 
-            e.Writer.Outlines = bookmark;
-            e.Set(metadata, r.Info);
-            e.Writer.Set(encryption);
-            if (metadata.Version.Minor >= 5) e.SetFullCompression();
+            w.Writer.Outlines = _bookmark;
+            w.MoreInfo = new Dictionary<string, string>
+            {
+                { "Author",   _metadata.Author   },
+                { "Title",    _metadata.Title    },
+                { "Subject",  _metadata.Subject  },
+                { "Keywords", _metadata.Keywords },
+                { "Creator",  _metadata.Creator  },
+            };
+
+            SetEncryption(w.Writer);
+            if (_metadata.Version.Minor >= 5) w.SetFullCompression();
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Extract
+        /// SetEncryption
         ///
         /// <summary>
-        /// Extracts the specified page from the specified source reader
-        /// and saves to the specified path.
+        /// Sets the encryption settings to the specified writer.
         /// </summary>
         ///
-        /// <param name="path">Path to save the PDF file.</param>
-        /// <param name="options">Save options.</param>
-        /// <param name="src">PdfReader object.</param>
-        /// <param name="pagenum">Page number to save.</param>
-        /// <param name="metadata">PDF metadata.</param>
-        /// <param name="encryption">PDF encryption settings.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public static void Extract(string path, SaveOption options,
-            IDisposable src, int pagenum, Metadata metadata, Encryption encryption)
+        public void SetEncryption(PdfWriter src)
         {
-            var r = Reader.From(src);
-            var e = Create(path, options, metadata);
+            if (_crypt == null || !_crypt.Enabled || !_crypt.OwnerPassword.HasValue()) return;
 
-            e.Writer.Set(encryption);
-            e.Document.Open();
-            e.Writer.AddPage(e.Writer.GetImportedPage(r, pagenum));
-            e.Close();
+            var m = GetMethod(_crypt.Method);
+            var p = (int)_crypt.Permission.Value;
+
+            var owner = _crypt.OwnerPassword;
+            var user  = !_crypt.OpenWithPassword ? string.Empty :
+                        _crypt.UserPassword.HasValue() ? _crypt.UserPassword :
+                        owner;
+
+            src.SetEncryption(m, user, owner, p);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetMethod
+        ///
+        /// <summary>
+        /// Gets the value corresponding to the specified method.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private int GetMethod(EncryptionMethod src) => src switch
+        {
+            EncryptionMethod.Standard40  => PdfWriter.STANDARD_ENCRYPTION_40,
+            EncryptionMethod.Standard128 => PdfWriter.STANDARD_ENCRYPTION_128,
+            EncryptionMethod.Aes128      => PdfWriter.ENCRYPTION_AES_128,
+            EncryptionMethod.Aes256      => PdfWriter.ENCRYPTION_AES_256,
+            _                            => PdfWriter.STANDARD_ENCRYPTION_40,
+        };
+
+        #endregion
+
+        #region Fields
+        private readonly string _dest;
+        private readonly string _tmp;
+        private readonly Document _document = new();
+        private readonly PdfCopy _writer;
+        private readonly Metadata _metadata;
+        private readonly Encryption _crypt;
+        private readonly List<Dictionary<string, object>> _bookmark = new();
         #endregion
     }
 }

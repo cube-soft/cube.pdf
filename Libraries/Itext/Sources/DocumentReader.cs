@@ -128,7 +128,7 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         private DocumentReader(string src, Password password, OpenOption options)
         {
-            var obj  = Reader.FromPdf(src, password, options);
+            var obj  = Reader.From(src, password, options);
             var file = obj.GetFile(src, password.Value);
 
             Options     = options;

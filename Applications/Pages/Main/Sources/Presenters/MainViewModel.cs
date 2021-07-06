@@ -16,11 +16,12 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Pages
 {
@@ -45,10 +46,12 @@ namespace Cube.Pdf.Pages
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
         /// <param name="args">Program arguments.</param>
         ///
         /* --------------------------------------------------------------------- */
-        public MainViewModel(IEnumerable<string> args) : this(args, SynchronizationContext.Current) { }
+        public MainViewModel(SettingFolder src, IEnumerable<string> args) :
+            this(src, args, SynchronizationContext.Current) { }
 
         /* --------------------------------------------------------------------- */
         ///
@@ -59,24 +62,20 @@ namespace Cube.Pdf.Pages
         /// specified context.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
         /// <param name="args">Program arguments.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* --------------------------------------------------------------------- */
-        public MainViewModel(IEnumerable<string> args, SynchronizationContext context) : base(
-            new MainFacade(context),
-            new Aggregator(),
-            context
-        ) {
+        public MainViewModel(SettingFolder src, IEnumerable<string> args, SynchronizationContext context) :
+            base(new(src, context), new(), context)
+        {
             Arguments = args;
-            Files = new BindingSource { DataSource = Facade.Files };
-
+            Files = new() { DataSource = Facade.Files };
             Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
-            Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
-            Facade.CollectionChanged += (s, e) => {
-                Refresh(nameof(Invokable));
-                Send<UpdateListMessage>();
-            };
+
+            Assets.Add(new ObservableProxy(Facade, this));
+            Assets.Add(ObserveCollection());
         }
 
         #endregion
@@ -141,7 +140,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Setup() => Arguments.Any().Then(() => Add(Arguments));
+        public void Setup() { if (Arguments.Any()) Add(Arguments); }
 
         /* --------------------------------------------------------------------- */
         ///
@@ -260,6 +259,31 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public void About() => Send(new VersionViewModel(Facade.Settings, Context));
+
+        #endregion
+
+        #region Implementations
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// ObserveCollection
+        ///
+        /// <summary>
+        /// Starts to observe the CollectionChanged event.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private IDisposable ObserveCollection()
+        {
+            void handler(object s, NotifyCollectionChangedEventArgs e)
+            {
+                Refresh(nameof(Invokable));
+                Send<UpdateListMessage>();
+            }
+
+            Facade.CollectionChanged += handler;
+            return Disposable.Create(() => Facade.CollectionChanged -= handler);
+        }
 
         #endregion
     }

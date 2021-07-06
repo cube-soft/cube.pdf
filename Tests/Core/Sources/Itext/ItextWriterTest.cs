@@ -62,7 +62,7 @@ namespace Cube.Pdf.Tests.Itext
             var src  = GetSource(filename);
             var dest = Path(Args(filename));
 
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
+            using (var w = new DocumentWriter(new() { Smart = true }))
             using (var r = new DocumentReader(src, password))
             {
                 w.Set(r.Metadata);
@@ -91,7 +91,7 @@ namespace Cube.Pdf.Tests.Itext
 
             var op = new OpenOption { SaveMemory = false };
             var r  = new DocumentReader(dest, password, op);
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
+            using (var w = new DocumentWriter(new() { Smart = true }))
             {
                 w.Set(r.Metadata);
                 w.Set(r.Encryption);
@@ -119,7 +119,7 @@ namespace Cube.Pdf.Tests.Itext
             var r1   = new DocumentReader(GetSource(f1), "", op);
             var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
 
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
+            using (var w = new DocumentWriter(new() { Smart = true }))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree), r0);
                 w.Add(Rotate(r1.Pages, degree), r1);
@@ -144,7 +144,7 @@ namespace Cube.Pdf.Tests.Itext
             var r0   = new DocumentReader(GetSource(doc), "", op);
             var dest = Path(Args(r0.File.BaseName, Io.Get(image).BaseName));
 
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
+            using (var w = new DocumentWriter(new() { Smart = true }))
             using (var r = new DocumentReader(GetSource(doc), "", op))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
@@ -240,9 +240,9 @@ namespace Cube.Pdf.Tests.Itext
         [TestCase("日本語のテスト")]
         public void SetMetadata(string value)
         {
-            var src  = GetSource("Sample.pdf");
+            var src  = GetSource("SampleViewerOption.pdf");
             var dest = Path(Args(value));
-            var op   = new OpenOption { SaveMemory = false };
+            var op   = new OpenOption { SaveMemory = true };
             var cmp  = new Metadata
             {
                 Title    = value,
@@ -269,7 +269,7 @@ namespace Cube.Pdf.Tests.Itext
             Assert.That(m.Subject,       Is.EqualTo(cmp.Subject), nameof(m.Subject));
             Assert.That(m.Keywords,      Is.EqualTo(cmp.Keywords), nameof(m.Keywords));
             Assert.That(m.Creator,       Is.EqualTo(cmp.Creator), nameof(m.Creator));
-            Assert.That(m.Producer,      Does.StartWith("iTextSharp"));
+            Assert.That(m.Producer,      Does.StartWith("iText"));
             Assert.That(m.Version.Major, Is.EqualTo(cmp.Version.Major));
             Assert.That(m.Version.Minor, Is.EqualTo(cmp.Version.Minor));
             Assert.That(m.Options,       Is.EqualTo(cmp.Options));
@@ -307,59 +307,19 @@ namespace Cube.Pdf.Tests.Itext
                 w.Save(dest);
             }
 
-            using (var r = new DocumentReader(dest, cmp.OwnerPassword))
-            {
-                Assert.That(r.Encryption.Enabled,       Is.True);
-                Assert.That(r.Encryption.OwnerPassword, Is.EqualTo(cmp.OwnerPassword));
-                Assert.That(r.Encryption.Method,        Is.EqualTo(cmp.Method));
+            using var r = new DocumentReader(dest, cmp.OwnerPassword);
+            Assert.That(r.Encryption.Enabled,       Is.True);
+            Assert.That(r.Encryption.OwnerPassword, Is.EqualTo(cmp.OwnerPassword));
+            Assert.That(r.Encryption.Method,        Is.EqualTo(cmp.Method));
 
-                var x = r.Encryption.Permission;
-                var y = cmp.Permission;
-                Assert.That(x.Print,             Is.EqualTo(y.Print),             nameof(x.Print));
-                Assert.That(x.CopyContents,      Is.EqualTo(y.CopyContents),      nameof(x.CopyContents));
-                Assert.That(x.ModifyContents,    Is.EqualTo(y.ModifyContents),    nameof(x.ModifyContents));
-                Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
-                Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
-                Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotate_Failed
-        ///
-        /// <summary>
-        /// Confirms that the rotation settings is not applied.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Partial モードが有効な DocumentReader オブジェクトを指定した
-        /// 場合、回転情報の変更は適用されません。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Rotate_Failed()
-        {
-            var src    = GetSource("Sample.pdf");
-            var dest   = Path(Args("Sample"));
-            var op     = new OpenOption { SaveMemory = false };
-            var degree = 90;
-
-            using (var w = new DocumentWriter(new() { SmartCopy = true }))
-            {
-                var r = new DocumentReader(src, "", op);
-
-                w.Set(r.Metadata);
-                w.Set(r.Encryption);
-                w.Add(Rotate(r.Pages, degree), r);
-                w.Save(dest);
-            }
-
-            using (var r = new DocumentReader(dest))
-            {
-                foreach (var page in r.Pages) Assert.That(page.Rotation, Is.Not.EqualTo(degree));
-            }
+            var x = r.Encryption.Permission;
+            var y = cmp.Permission;
+            Assert.That(x.Print,             Is.EqualTo(y.Print),             nameof(x.Print));
+            Assert.That(x.CopyContents,      Is.EqualTo(y.CopyContents),      nameof(x.CopyContents));
+            Assert.That(x.ModifyContents,    Is.EqualTo(y.ModifyContents),    nameof(x.ModifyContents));
+            Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
+            Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
+            Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
         }
 
         #endregion
@@ -371,11 +331,11 @@ namespace Cube.Pdf.Tests.Itext
         /// Args
         ///
         /// <summary>
-        /// Converts params to an object array.
+        /// Converts params to an IEnumerable(object) object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private object[] Args(params object[] src) => src;
+        private IEnumerable<object> Args(params object[] src) => src;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -386,7 +346,7 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string Path(object[] parts, [CallerMemberName] string name = null) =>
+        private string Path(IEnumerable<object> parts, [CallerMemberName] string name = null) =>
            Get($"{name}_{string.Join("_", parts.Select(e => e.ToString()).ToArray())}.pdf");
 
         /* ----------------------------------------------------------------- */
