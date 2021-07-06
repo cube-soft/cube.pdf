@@ -51,8 +51,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Create() => Make(vm =>
         {
-            Assert.That(vm.Value.Settings.Width,  Is.EqualTo(800));
-            Assert.That(vm.Value.Settings.Height, Is.EqualTo(600));
+            var src = vm.Value.Settings;
+            Assert.That(src.Width,         Is.EqualTo(800));
+            Assert.That(src.Height,        Is.EqualTo(600));
+            Assert.That(src.ItemSize,      Is.EqualTo(250));
+            Assert.That(src.FrameOnly,     Is.False);
+            Assert.That(src.Smart,         Is.True);
+            Assert.That(src.RecentVisible, Is.True);
+            Assert.That(src.Temp,          Is.Empty);
 
             vm.Value.Settings.Width  = 1024;
             vm.Value.Settings.Height = 768;

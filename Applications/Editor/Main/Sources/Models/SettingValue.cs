@@ -103,6 +103,39 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// RecentVisible
+        ///
+        /// <summary>
+        /// Gets or sets the value indicating whether to show recent files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool RecentVisible
+        {
+            get => Get(() => true);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Smart
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the smart mode
+        /// when saving PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool Smart
+        {
+            get => Get(() => true);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Temp
         ///
         /// <summary>
@@ -112,6 +145,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
+        [DataMember]
         public string Temp
         {
             get => Get(() => string.Empty);

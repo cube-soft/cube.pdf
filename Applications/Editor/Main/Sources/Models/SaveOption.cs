@@ -179,6 +179,22 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Smart
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the smart mode
+        /// when saving PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Smart
+        {
+            get => Get(() => false);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Metadata
         ///
         /// <summary>
@@ -240,8 +256,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Itext.SaveOption ToItext() => new()
         {
-            Temp      = Temp,
-            Smart = true,
+            Temp  = Temp,
+            Smart = Smart,
         };
 
         #endregion

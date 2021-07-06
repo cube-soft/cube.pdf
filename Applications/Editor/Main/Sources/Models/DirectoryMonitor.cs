@@ -74,8 +74,6 @@ namespace Cube.Pdf.Editor
             _core.Changed += (s, e) => Refresh();
             _core.Deleted += (s, e) => Refresh();
             _core.EnableRaisingEvents = true;
-
-            Refresh();
         }
 
         #endregion
@@ -98,12 +96,33 @@ namespace Cube.Pdf.Editor
         /// Filter
         ///
         /// <summary>
-        /// Gets or the filter string used to determine what files are
-        /// monitored in a directory.
+        /// Gets the filter string used to determine what files are monitored
+        /// in a directory.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         public string Filter { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Enabled
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to monitor the provided
+        /// directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                if (_enabled == value) return;
+                _enabled = value;
+                Refresh();
+            }
+        }
 
         #endregion
 
@@ -160,7 +179,7 @@ namespace Cube.Pdf.Editor
                          .Select(e => Io.Get(e))
                          .OrderByDescending(e => e.LastWriteTime);
             _ = Interlocked.Exchange(ref _items, dest);
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            OnCollectionChanged(new(NotifyCollectionChangedAction.Reset));
         }).Forget();
 
         #endregion
@@ -168,6 +187,7 @@ namespace Cube.Pdf.Editor
         #region Fields
         private readonly System.IO.FileSystemWatcher _core;
         private IEnumerable<Entity> _items = Enumerable.Empty<Entity>();
+        private bool _enabled = false;
         #endregion
     }
 }
