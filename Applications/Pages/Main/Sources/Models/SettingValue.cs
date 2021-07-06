@@ -31,5 +31,45 @@ namespace Cube.Pdf.Pages
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public sealed class SettingValue : SerializableBase { }
+    public sealed class SettingValue : SerializableBase
+    {
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Temp
+        ///
+        /// <summary>
+        /// Gets or sets the path of the working directory. If this value is
+        /// empty, the program will use the same directory as the destination
+        /// path as its working directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Temp
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Smart
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the smart mode
+        /// when saving PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool Smart
+        {
+            get => Get(() => true);
+            set => Set(value);
+        }
+
+        #endregion
+    }
 }

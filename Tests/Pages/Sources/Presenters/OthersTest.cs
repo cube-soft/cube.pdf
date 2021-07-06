@@ -49,7 +49,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [Test]
         public void Setup()
         {
-            using var vm = new MainViewModel(new[] { GetSource("Dir1") }, new());
+            using var vm = new MainViewModel(new(), new[] { GetSource("Dir1") }, new());
 
             Assert.That(vm.Files, Is.Not.Null);
             Assert.That(vm.Test(vm.Setup), nameof(vm.Setup));
@@ -68,7 +68,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [Test]
         public void Password()
         {
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
+            using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleAes128.pdf") }))
             using (vm.Subscribe<PasswordViewModel>(e =>
             {
@@ -100,7 +100,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [Test]
         public void Password_Cancel()
         {
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
+            using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource("SampleAes128.pdf") }))
             {
                 Assert.That(vm.Files, Is.Not.Null);
@@ -123,7 +123,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         public void Move(int offset)
         {
             var files = new[] { "Sample.pdf", "SampleBookmark.pdf", "SampleRotation.pdf", "Sample.jpg" };
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
+            using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             {
                 Assert.That(vm.Files, Is.Not.Null);
@@ -145,7 +145,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         public void Remove()
         {
             var files = new[] { "Sample.pdf", "SampleRotation.pdf", "Sample.jpg" };
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
+            using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             {
                 Assert.That(vm.Test(vm.Add), nameof(vm.Add));
@@ -171,7 +171,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         {
             var files = new[] { "Sample.pdf", "SampleRotation.pdf" };
 
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
+            using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             using (vm.Subscribe<DialogMessage>(e => Assert.Fail(e.Text)))
             {
@@ -199,7 +199,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             var n     = 0;
             var files = new[] { "Sample.pdf", "SampleRotation.pdf" };
 
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
+            using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<OpenFileMessage>(e => e.Value = files.Select(f => GetSource(f))))
             using (vm.Subscribe<PreviewMessage>(e => ++n))
             {
@@ -223,7 +223,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         [Test]
         public void About()
         {
-            using (var vm = new MainViewModel(Enumerable.Empty<string>(), new()))
+            using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<VersionViewModel>(e =>
             {
                 var prev = e.CheckUpdate;
@@ -246,7 +246,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         /* ----------------------------------------------------------------- */
         [Test]
         public void Create_Throws() => Assert.That(
-            () => { using (new MainViewModel(Enumerable.Empty<string>())) { } },
+            () => { using (new MainViewModel(new(), Enumerable.Empty<string>())) { } },
             Throws.ArgumentNullException
         );
 

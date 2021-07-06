@@ -41,15 +41,11 @@ namespace Cube.Pdf.Pages
         /// SettingFolder
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingFolder with the
-        /// specified parameters.
+        /// Initializes a new instance of the SettingFolder class.
         /// </summary>
         ///
-        /// <param name="assembly">Assembly information.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly) :
-            this(assembly, Format.Registry, @"CubeSoft\CubePDF Page") { }
+        public SettingFolder() : this(typeof(Program).Assembly, Format.Registry, @"CubeSoft\CubePDF Page") { }
 
         /* ----------------------------------------------------------------- */
         ///

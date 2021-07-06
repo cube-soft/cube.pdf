@@ -46,10 +46,12 @@ namespace Cube.Pdf.Pages
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
         /// <param name="args">Program arguments.</param>
         ///
         /* --------------------------------------------------------------------- */
-        public MainViewModel(IEnumerable<string> args) : this(args, SynchronizationContext.Current) { }
+        public MainViewModel(SettingFolder src, IEnumerable<string> args) :
+            this(src, args, SynchronizationContext.Current) { }
 
         /* --------------------------------------------------------------------- */
         ///
@@ -60,12 +62,13 @@ namespace Cube.Pdf.Pages
         /// specified context.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
         /// <param name="args">Program arguments.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* --------------------------------------------------------------------- */
-        public MainViewModel(IEnumerable<string> args, SynchronizationContext context) :
-            base(new(context), new(), context)
+        public MainViewModel(SettingFolder src, IEnumerable<string> args, SynchronizationContext context) :
+            base(new(src, context), new(), context)
         {
             Arguments = args;
             Files = new() { DataSource = Facade.Files };

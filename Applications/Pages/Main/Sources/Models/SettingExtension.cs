@@ -16,78 +16,55 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
-using System.Linq;
-using Cube.FileSystem;
-using Cube.Tests;
-using NUnit.Framework;
+using Cube.Pdf.Itext;
 
-namespace Cube.Pdf.Pages.Tests.Presenters
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SplitTest
+    /// SettingExtension
     ///
     /// <summary>
-    /// Tests the Split method of the MainViewModel class.
+    /// Provides extended methods of the SettingFolder class..
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class SplitTest : FileFixture
+    public static class SettingExtension
     {
-        #region Tests
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Split
+        /// ToOpenOption
         ///
         /// <summary>
-        /// Tests the Split method.
+        /// Converts to a OpenOption object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCaseSource(nameof(TestCases))]
-        public int Split(int id, string filename)
+        public static OpenOption ToOpenOption(this SettingFolder _) => new()
         {
-            var dest = Get($"{nameof(Split)}-{id}");
-
-            using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
-            using (vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { GetSource(filename) }))
-            using (vm.Subscribe<OpenDirectoryMessage>(e => e.Value = dest))
-            {
-                Assert.That(vm.Invokable, Is.False);
-                Assert.That(vm.Test(vm.Add), nameof(vm.Add));
-                Assert.That(vm.Invokable, Is.True);
-                Assert.That(vm.Test(vm.Split), nameof(vm.Split));
-                Assert.That(vm.GetFiles().Count(), Is.EqualTo(0));
-            }
-
-            return Io.GetFiles(dest).Count();
-        }
-
-        #endregion
-
-        #region TestCases
+            FullAccess = true,
+        };
 
         /* ----------------------------------------------------------------- */
         ///
-        /// TestCases
+        /// ToSaveOption
         ///
         /// <summary>
-        /// Gets the test cases.
+        /// Converts to a SaveOption object.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
+        ///
+        /// <returns>SaveOption object.</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static SaveOption ToSaveOption(this SettingFolder src) => new()
         {
-            get
-            {
-                var n = 0;
-                yield return new TestCaseData(n++, "SampleRotation.pdf").Returns(9);
-                yield return new TestCaseData(n++, "Sample.jpg").Returns(1);
-            }
-        }
+            Temp  = src.Value.Temp,
+            Smart = src.Value.Smart,
+        };
 
         #endregion
     }

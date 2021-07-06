@@ -25,6 +25,7 @@ using System.Reflection;
 using System.Threading;
 using Cube.FileSystem;
 using Cube.Logging;
+using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
 
@@ -52,12 +53,14 @@ namespace Cube.Pdf.Pages
         /// specified arguments.
         /// </summary>
         ///
+        /// <param name="src">User settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SynchronizationContext context) : base(new ContextDispatcher(context, false))
+        public MainFacade(SettingFolder src, SynchronizationContext context) :
+            base(new ContextDispatcher(context, false))
         {
-            Settings = new(Assembly.GetExecutingAssembly());
+            Settings = src;
             _inner.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
 
@@ -160,14 +163,15 @@ namespace Cube.Pdf.Pages
         /// <param name="dest">Path to save.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Merge(string dest) => Invoke(() =>
+        public void Merge(string dest) => Lock(() =>
         {
-            var dir = Io.Get(dest).DirectoryName;
+            var op  = Settings.ToSaveOption();
+            var dir = op.Temp.HasValue() ? op.Temp : Io.Get(dest).DirectoryName;
             var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
             {
-                using (var w = Make(new DocumentWriter())) w.Save(tmp);
+                using (var w = Make(new DocumentWriter(op))) w.Save(tmp);
                 Io.Move(tmp, dest, true);
                 _inner.Clear();
             }
@@ -185,9 +189,10 @@ namespace Cube.Pdf.Pages
         /// <param name="directory">Directory to save.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Split(string directory) => Invoke(() =>
+        public void Split(string directory) => Lock(() =>
         {
-            using (var w = Make(new DocumentSplitter())) w.Save(directory);
+            var op = Settings.ToSaveOption();
+            using (var w = Make(new DocumentSplitter(op))) w.Save(directory);
             _inner.Clear();
         });
 
@@ -202,14 +207,15 @@ namespace Cube.Pdf.Pages
         /// <param name="src">PDF or image file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IEnumerable<string> src) => Invoke(() =>
+        public void Add(IEnumerable<string> src) => Lock(() =>
         {
             foreach (var f in new FileSelector().Get(src))
             {
                 if (_inner.Any(e => e.FullName == f)) continue;
                 if (Io.Get(f).Extension.ToLower() == ".pdf")
                 {
-                    using var e = new DocumentReader(f, Query, _ro);
+                    var op = Settings.ToOpenOption();
+                    using var e = new DocumentReader(f, Query, op);
                     _inner.Add(e.File);
                 }
                 else _inner.Add(new ImageFile(f));
@@ -228,7 +234,7 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Move(IEnumerable<int> indices, int offset) => Invoke(() =>
+        public bool Move(IEnumerable<int> indices, int offset) => Lock(() =>
         {
             if (offset == 0 || !indices.Any()) return false;
 
@@ -254,7 +260,7 @@ namespace Cube.Pdf.Pages
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => Invoke(() =>
+        public void Remove(IEnumerable<int> indices) => Lock(() =>
             indices.OrderByDescending(e => e).Each(i => _inner.RemoveAt(i)));
 
         /* ----------------------------------------------------------------- */
@@ -266,7 +272,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Invoke(_inner.Clear);
+        public void Clear() => Lock(_inner.Clear);
 
         #endregion
 
@@ -304,7 +310,8 @@ namespace Cube.Pdf.Pages
             {
                 if (f is PdfFile pf)
                 {
-                    var r = new DocumentReader(pf.FullName, pf.Password, _ro);
+                    var op = Settings.ToOpenOption();
+                    var r  = new DocumentReader(pf.FullName, pf.Password, op);
                     dest.Add(r.Pages, r);
                 }
                 else dest.Add(new ImagePageCollection(f.FullName));
@@ -337,14 +344,14 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Lock
         ///
         /// <summary>
-        /// Invokes the specified action.
+        /// Locks and invokes the specified action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Invoke(Action action) => Invoke(() =>
+        private void Lock(Action action) => Lock(() =>
         {
             action();
             return true;
@@ -352,14 +359,14 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Lock
         ///
         /// <summary>
-        /// Invokes the specified function.
+        /// Locks and invokes the specified function.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private T Invoke<T>(Func<T> func)
+        private T Lock<T>(Func<T> func)
         {
             lock (_lock)
             {
@@ -377,7 +384,6 @@ namespace Cube.Pdf.Pages
         #region Fields
         private readonly object _lock = new();
         private readonly ObservableCollection<File> _inner = new();
-        private readonly OpenOption _ro = new() { FullAccess = true };
         #endregion
     }
 }
