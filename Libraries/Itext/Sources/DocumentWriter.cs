@@ -94,7 +94,12 @@ namespace Cube.Pdf.Itext
                 dest.Add(Attachments);
                 Release(); // Dispose all readers before save.
             }
-            catch (Exception err) { throw err.Convert(); }
+            catch (Exception err)
+            {
+                var obj = err.Convert();
+                if (obj != err) throw obj;
+                else throw;
+            }
             finally { Reset(); }
         }
 
