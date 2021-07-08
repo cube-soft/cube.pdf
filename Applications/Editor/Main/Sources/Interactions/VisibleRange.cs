@@ -20,8 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interactivity;
 using Cube.Xui;
+using Microsoft.Xaml.Behaviors;
 
 namespace Cube.Pdf.Editor
 {
