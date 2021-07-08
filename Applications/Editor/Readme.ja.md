@@ -128,6 +128,7 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 * 2021-07-09 version 1.5.0
     - iText7 への移行を含む内部処理の修正
+    - Microsoft.Xaml.Behaviors.Wpf に移行
 * 2021-06-08 version 1.0.2
     - PDFium を Chromium 91 相当に更新
 * 2021-04-27 version 1.0.1
