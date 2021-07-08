@@ -114,10 +114,9 @@ You can get the executable installer from the [download page](https://www.cube-s
 Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries) are as follows. [Applications](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications) may use some other third-party libraries.
 
 * [Cube.Core](https://github.com/cube-soft/Cube.Core)
-* [Cube.FileSystem](https://github.com/cube-soft/Cube.FileSystem)
 * [PDFium](https://pdfium.googlesource.com/pdfium/) ... [Cube.Native.Pdfium.Lite](https://www.nuget.org/packages/Cube.Native.Pdfium.Lite) is a NuGet package of the PDFium.
 * [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) is a NuGet package of the Ghostscript.
-* [iTextSharp](https://www.nuget.org/packages/iTextSharp/)
+* [iText7](https://www.nuget.org/packages/itext7/) (net45) or [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35)
 
 ## Contributing
 
