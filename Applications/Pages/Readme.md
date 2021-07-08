@@ -51,21 +51,24 @@ CubePDF Page で有効なキーボードのショートカットキーは、以�
 CubePDF Page は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
-* iTextSharp
+* iText7 (net45) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
+    - https://www.nuget.org/packages/itext7/
     - https://www.nuget.org/packages/iTextSharp/
 * NLog
     - 3-clause BSD License
     - https://nlog-project.org/
     - https://www.nuget.org/packages/NLog/
-* AsyncBridge (.NET Framework 3.5)
+* AsyncBridge (net35)
     - MIT License
     - https://omermor.github.io/AsyncBridge/
-    - https://www.nuget.org/packages/AsyncBridge
+    - https://www.nuget.org/packages/AsyncBridge.Net35/
 
 ## バージョン履歴
 
+* 2021-07-09 version 3.5.0
+    - iText7 への移行を含む内部処理の修正
 * 2021-05-21 version 3.1.1
     - 複数項目を選択して上へ・下へボタンを押した時の不都合を修正
     - iTextSharp 5.5.13.2 に更新
