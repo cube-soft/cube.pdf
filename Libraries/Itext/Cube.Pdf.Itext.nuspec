@@ -6,7 +6,7 @@
         <title>Cube.Pdf.Itext</title>
         <authors>clown,cube-soft</authors>
         <owners>clown,cube-soft</owners>
-        <description>iTextSharp based PDF library.</description>
+        <description>iText based PDF library.</description>
         <copyright>Copyright © 2010 CubeSoft, Inc.</copyright>
         <tags>Cube PDF iText iTextSharp</tags>
         <icon>images\Icon.png</icon>
