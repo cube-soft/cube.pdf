@@ -90,9 +90,10 @@ When you lost files in some unexpected errors, please recover them from the back
 
 Dependencies of the CubePDF Utility are as follows.
 
-* iTextSharp
+* iText7 (net45) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
+    - https://www.nuget.org/packages/itext7/
     - https://www.nuget.org/packages/iTextSharp/
 * PDFium
     - 3-clause BSD License
@@ -103,7 +104,7 @@ Dependencies of the CubePDF Utility are as follows.
     - 3-clause BSD License
     - https://nlog-project.org/
     - https://www.nuget.org/packages/NLog/
-* Fluent.Ribbon
+* Fluent.Ribbon (net45)
     - MIT License
     - https://fluentribbon.github.io/
     - https://www.nuget.org/packages/Fluent.Ribbon/
@@ -111,13 +112,15 @@ Dependencies of the CubePDF Utility are as follows.
     - 3-clause BSD License
     - https://github.com/punker76/gong-wpf-dragdrop
     - https://www.nuget.org/packages/gong-wpf-dragdrop/
-* AsyncBridge (.NET Framework 3.5)
+* AsyncBridge (net35)
     - MIT License
-    - http://omermor.github.io/AsyncBridge/
-    - https://www.nuget.org/packages/AsyncBridge.Net35
+    - https://omermor.github.io/AsyncBridge/
+    - https://www.nuget.org/packages/AsyncBridge.Net35/
 
 ## History
 
+* 2021-07-09 version 1.5.0
+    - Migrate to iText7 and refactor the implementation.
 * 2021-06-09 version 1.0.2
     - Update PDFium to Chromium 91 compatible.
 * 2021-04-27 version 1.0.1

@@ -97,9 +97,10 @@ CubePDF Utility は、以下のフォルダに実行ログを出力していま�
 CubePDF Utility は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
-* iTextSharp
+* iText7 (net45) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
+    - https://www.nuget.org/packages/itext7/
     - https://www.nuget.org/packages/iTextSharp/
 * PDFium
     - 3-clause BSD License
@@ -110,7 +111,7 @@ CubePDF Utility は、以下のライブラリを利用しています。
     - 3-clause BSD License
     - https://nlog-project.org/
     - https://www.nuget.org/packages/NLog/
-* Fluent.Ribbon
+* Fluent.Ribbon (net45)
     - MIT License
     - https://fluentribbon.github.io/
     - https://www.nuget.org/packages/Fluent.Ribbon/
@@ -118,13 +119,15 @@ CubePDF Utility は、以下のライブラリを利用しています。
     - 3-clause BSD License
     - https://github.com/punker76/gong-wpf-dragdrop
     - https://www.nuget.org/packages/gong-wpf-dragdrop/
-* AsyncBridge (.NET Framework 3.5 のみ)
+* AsyncBridge (net35)
     - MIT License
     - https://omermor.github.io/AsyncBridge/
     - https://www.nuget.org/packages/AsyncBridge.Net35/
 
 ## バージョン履歴
 
+* 2021-07-09 version 1.5.0
+    - iText7 への移行を含む内部処理の修正
 * 2021-06-08 version 1.0.2
     - PDFium を Chromium 91 相当に更新
 * 2021-04-27 version 1.0.1
