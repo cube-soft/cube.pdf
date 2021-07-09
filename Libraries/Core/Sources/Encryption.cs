@@ -89,7 +89,7 @@ namespace Cube.Pdf
         public string OwnerPassword
         {
             get => Get(() => string.Empty);
-            set => Set(value);
+            set => Set(value ?? string.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -109,7 +109,7 @@ namespace Cube.Pdf
         public string UserPassword
         {
             get => Get(() => string.Empty);
-            set => Set(value);
+            set => Set(value ?? string.Empty);
         }
 
         /* ----------------------------------------------------------------- */

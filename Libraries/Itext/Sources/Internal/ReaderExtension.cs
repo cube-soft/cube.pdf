@@ -130,7 +130,7 @@ namespace Cube.Pdf.Itext
 
             var user  = src.GetUserPassword(file);
             var value = (uint)src.Permissions;
-            src.GetType().LogDebug($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
+            typeof(ReaderExtension).LogDebug($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
 
             return new()
             {
