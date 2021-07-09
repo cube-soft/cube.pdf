@@ -65,7 +65,7 @@ namespace Cube.Pdf
         public string Author
         {
             get => Get(() => string.Empty);
-            set => Set(value);
+            set => Set(value ?? string.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -81,7 +81,7 @@ namespace Cube.Pdf
         public string Title
         {
             get => Get(() => string.Empty);
-            set => Set(value);
+            set => Set(value ?? string.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -97,7 +97,7 @@ namespace Cube.Pdf
         public string Subject
         {
             get => Get(() => string.Empty);
-            set => Set(value);
+            set => Set(value ?? string.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -113,7 +113,7 @@ namespace Cube.Pdf
         public string Keywords
         {
             get => Get(() => string.Empty);
-            set => Set(value);
+            set => Set(value ?? string.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -129,7 +129,7 @@ namespace Cube.Pdf
         public string Creator
         {
             get => Get(() => string.Empty);
-            set => Set(value);
+            set => Set(value ?? string.Empty);
         }
 
         /* ----------------------------------------------------------------- */
@@ -145,7 +145,7 @@ namespace Cube.Pdf
         public string Producer
         {
             get => Get(() => string.Empty);
-            set => Set(value);
+            set => Set(value ?? string.Empty);
         }
 
         /* ----------------------------------------------------------------- */

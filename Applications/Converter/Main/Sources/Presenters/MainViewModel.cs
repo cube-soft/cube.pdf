@@ -19,7 +19,6 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Cube.Logging;
 using Cube.Mixin.Observing;
 using Cube.Pdf.Converter.Mixin;
 
@@ -289,11 +288,8 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        protected override DialogMessage OnMessage(Exception src)
-        {
-            GetType().LogError(src);
-            return src is OperationCanceledException ? null : Message.From(src);
-        }
+        protected override DialogMessage OnMessage(Exception src) =>
+            src is OperationCanceledException ? null : Message.From(src);
 
         /* ----------------------------------------------------------------- */
         ///
