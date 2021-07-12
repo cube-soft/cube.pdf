@@ -430,7 +430,7 @@ namespace Cube.Pdf.Pdfium
         #endregion
 
         #region Fields
-        private const string LibName = "pdfium.dll";
+        private const string LibName = "pdfium";
         #endregion
     }
 }
