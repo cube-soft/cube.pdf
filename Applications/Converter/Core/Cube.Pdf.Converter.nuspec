@@ -14,6 +14,10 @@
         <projectUrl>https://github.com/cube-soft/Cube.Pdf</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
+            <group targetFramework="netstandard2.0">
+                <dependency id="Cube.Pdf.Ghostscript" version="4.0.0" />
+                <dependency id="Cube.Pdf.Itext" version="4.0.0" />
+            </group>
             <group targetFramework="net45">
                 <dependency id="Cube.Pdf.Ghostscript" version="4.0.0" />
                 <dependency id="Cube.Pdf.Itext" version="4.0.0" />
@@ -26,6 +30,7 @@
     </metadata>
     <files>
         <file src="..\..\..\Icon.png" target="images" />
+        <file src="bin\Any CPU\Release\netstandard2.0\Cube.Pdf.Converter.*" target="lib\netstandard2.0" />
         <file src="bin\Any CPU\Release\net45\Cube.Pdf.Converter.*" target="lib\net45" />
         <file src="bin\Any CPU\Release\net35\Cube.Pdf.Converter.*" target="lib\net35" />
     </files>

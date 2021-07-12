@@ -97,7 +97,7 @@ namespace Cube.Pdf.Ghostscript
         #endregion
 
         #region Fields
-        private const string LibName = "gsdll32.dll";
+        private const string LibName = "gsdll32";
         #endregion
     }
 

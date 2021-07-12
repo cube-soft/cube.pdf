@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Linq;
-using Cube.Collections;
 using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Editor
@@ -271,7 +270,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private static IList<KeyValuePair<int, Page>> GetPair(ImageCollection src,
             IEnumerable<int> indices) =>
-            indices.Select(i => KeyValuePair.Create(i, src[i].RawObject)).ToList();
+            indices.Select(i => new KeyValuePair<int, Page>(i, src[i].RawObject)).ToList();
 
         #endregion
     }

@@ -185,7 +185,7 @@ namespace Cube.Pdf.Editor
                 _inner.Insert(pos, this.NewItem(pos, item));
                 ++pos;
             }
-            return KeyValuePair.Create(pos, Count);
+            return new(pos, Count);
         });
 
         /* ----------------------------------------------------------------- */
@@ -217,7 +217,7 @@ namespace Cube.Pdf.Editor
                     max = Math.Max(Math.Max(max, index), inew);
                 }
             }
-            return KeyValuePair.Create(min, max + 1);
+            return new(min, max + 1);
         });
 
         /* ----------------------------------------------------------------- */
@@ -240,7 +240,7 @@ namespace Cube.Pdf.Editor
                 _ = _inner.Remove(item);
                 item.Dispose();
             }
-            return KeyValuePair.Create(src.LastOrDefault(), Count);
+            return new(src.LastOrDefault(), Count);
         });
 
         #endregion
