@@ -9,7 +9,7 @@
         <AssemblyName>CubePdfPage</AssemblyName>
         <AssemblyTitle>CubePDF Page</AssemblyTitle>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net45</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64</Platforms>
         <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>

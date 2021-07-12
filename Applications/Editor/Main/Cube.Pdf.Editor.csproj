@@ -9,7 +9,7 @@
         <AssemblyName>CubePdfUtility</AssemblyName>
         <AssemblyTitle>CubePDF Utility</AssemblyTitle>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net452</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <UseWpf>true</UseWpf>
         <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64</Platforms>

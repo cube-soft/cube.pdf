@@ -155,7 +155,7 @@ namespace Cube.Pdf.Itext
                 var page = doc.AddNewPage(new PageSize(w, h));
 
                 _ = new PdfCanvas(page).AddImageFittedIntoRectangle(
-                    ImageDataFactory.Create(image, null),
+                    ImageDataFactory.Create(ToBytes(image)),
                     new(w, h),
                     false
                 );
@@ -169,6 +169,22 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ToBytes
+        ///
+        /// <summary>
+        /// Converts to the byte array from the specified Image object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static byte[] ToBytes(Image src)
+        {
+            using var dest = new System.IO.MemoryStream();
+            src.Save(dest, src.RawFormat);
+            return dest.ToArray();
+        }
 
         /* ----------------------------------------------------------------- */
         ///

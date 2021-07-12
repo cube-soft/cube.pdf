@@ -6,7 +6,7 @@
         <Copyright>Copyright © 2013 CubeSoft, Inc.</Copyright>
         <StartupObject>Cube.Pdf.Editor.Tests.Program</StartupObject>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net452</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
         <UseWpf>true</UseWpf>
         <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64</Platforms>

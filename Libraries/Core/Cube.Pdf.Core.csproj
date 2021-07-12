@@ -11,7 +11,7 @@
         <PackageProjectUrl>https://github.com/cube-soft/Cube.Pdf</PackageProjectUrl>
         <AssemblyName>Cube.Pdf</AssemblyName>
         <RootNamespace>Cube.Pdf</RootNamespace>
-        <TargetFramework>net45</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
@@ -26,7 +26,8 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Cube.FileSystem" Version="4.0.0" />
-        <Reference Include="System.Security" />
+        <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+        <PackageReference Include="System.Security.Cryptography.Csp" Version="4.3.0" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\Icon.png" Pack="true" PackagePath="images" />

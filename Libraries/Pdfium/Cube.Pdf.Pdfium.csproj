@@ -9,7 +9,7 @@
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <PackageIcon>images\Icon.png</PackageIcon>
         <PackageProjectUrl>https://github.com/cube-soft/Cube.Pdf</PackageProjectUrl>
-        <TargetFramework>net45</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
