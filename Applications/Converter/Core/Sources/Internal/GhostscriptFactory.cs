@@ -22,7 +22,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Logging;
 using Cube.Mixin.String;
@@ -153,7 +152,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private static Ghostscript.Converter CreateImageConverter(SettingFolder src)
         {
-            var key = KeyValuePair.Create(src.Value.Format, src.Value.Grayscale);
+            var key = new KeyValuePair<Format, bool>(src.Value.Format, src.Value.Grayscale);
             Debug.Assert(FormatMap.ContainsKey(key));
             return new ImageConverter(FormatMap[key]) { AntiAlias = true };
         }
@@ -192,14 +191,14 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private static readonly Dictionary<KeyValuePair<Format, bool>, Format> FormatMap = new()
         {
-            { KeyValuePair.Create(Format.Jpeg, false), Format.Jpeg24bppRgb      },
-            { KeyValuePair.Create(Format.Jpeg, true ), Format.Jpeg8bppGrayscale },
-            { KeyValuePair.Create(Format.Png,  false), Format.Png24bppRgb       },
-            { KeyValuePair.Create(Format.Png,  true ), Format.Png8bppGrayscale  },
-            { KeyValuePair.Create(Format.Bmp,  false), Format.Bmp24bppRgb       },
-            { KeyValuePair.Create(Format.Bmp,  true ), Format.Bmp8bppGrayscale  },
-            { KeyValuePair.Create(Format.Tiff, false), Format.Tiff24bppRgb      },
-            { KeyValuePair.Create(Format.Tiff, true ), Format.Tiff8bppGrayscale },
+            { new(Format.Jpeg, false), Format.Jpeg24bppRgb      },
+            { new(Format.Jpeg, true ), Format.Jpeg8bppGrayscale },
+            { new(Format.Png,  false), Format.Png24bppRgb       },
+            { new(Format.Png,  true ), Format.Png8bppGrayscale  },
+            { new(Format.Bmp,  false), Format.Bmp24bppRgb       },
+            { new(Format.Bmp,  true ), Format.Bmp8bppGrayscale  },
+            { new(Format.Tiff, false), Format.Tiff24bppRgb      },
+            { new(Format.Tiff, true ), Format.Tiff8bppGrayscale },
         };
 
         #endregion
