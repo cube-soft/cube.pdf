@@ -306,7 +306,7 @@ namespace Cube.Pdf.Editor
             GetDispatcher(false)
         ) {
             Command = IsSelected(() => SendInsert(Facade.Insert))
-        }.Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source)));
+        }.Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -370,7 +370,7 @@ namespace Cube.Pdf.Editor
             GetDispatcher(false)
         ) {
             Command = IsSelected(() => SendSave(Facade.Extract))
-        }.Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source)));
+        }.Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -404,7 +404,7 @@ namespace Cube.Pdf.Editor
             GetDispatcher(false)
         ) {
             Command = IsSelected(() => Track(Facade.Remove, true))
-        }.Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source)));
+        }.Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
 
         /* ----------------------------------------------------------------- */
         ///

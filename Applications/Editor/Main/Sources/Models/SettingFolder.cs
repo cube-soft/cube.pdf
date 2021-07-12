@@ -44,15 +44,11 @@ namespace Cube.Pdf.Editor
         /// SettingFolder
         ///
         /// <summary>
-        /// Initializes a new instance of the SettingFolder with the
-        /// specified parameters.
+        /// Initializes a new instance of the SettingFolder class.
         /// </summary>
         ///
-        /// <param name="assembly">Assembly information.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder(Assembly assembly) :
-            this(assembly, Format.Registry, @"CubeSoft\CubePDF Utility2") { }
+        public SettingFolder() : this(typeof(App).Assembly, Format.Registry, @"CubeSoft\CubePDF Utility2") { }
 
         /* ----------------------------------------------------------------- */
         ///

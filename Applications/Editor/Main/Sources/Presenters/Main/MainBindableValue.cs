@@ -24,23 +24,23 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainBindable
+    /// MainBindableValue
     ///
     /// <summary>
     /// Provides values for binding to the MainWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainBindable : ObservableBase
+    public sealed class MainBindableValue : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainBindable
+        /// MainBindableValue
         ///
         /// <summary>
-        /// Initializes a new instance of the MainBindable class
+        /// Initializes a new instance of the MainBindableValue class
         /// with the specified arguments.
         /// </summary>
         ///
@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable(ImageCollection images, SettingFolder settings, Dispatcher dispatcher) : base(dispatcher)
+        public MainBindableValue(ImageCollection images, SettingFolder settings, Dispatcher dispatcher) : base(dispatcher)
         {
             _settings = settings;
 
@@ -59,7 +59,7 @@ namespace Cube.Pdf.Editor
             images.Preferences.TextHeight    = 25;
 
             Images  = images;
-            History = new History(dispatcher);
+            History = new(dispatcher);
         }
 
         #endregion

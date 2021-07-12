@@ -80,7 +80,7 @@ namespace Cube.Pdf.Editor
         protected ICommand GetOpenLinkCommand() => new DelegateCommand<object>(
             e => Track(() => Facade.OpenLink(e as Entity)),
             e => !Facade.Value.Busy && e is Entity
-        ).Associate(Facade.Value, nameof(MainBindable.Busy));
+        ).Associate(Facade.Value, nameof(MainBindableValue.Busy));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Editor
                 else SendClose(e);
             },
             e => Facade.Value.Source != null && (e != null || !Facade.Value.Busy)
-        ).Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source));
+        ).Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected ICommand GetCommand(Action action) => new DelegateCommand(action,
             () => !Facade.Value.Busy
-        ).Associate(Facade.Value, nameof(MainBindable.Busy));
+        ).Associate(Facade.Value, nameof(MainBindableValue.Busy));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -134,7 +134,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected ICommand IsOpen(Action action) => new DelegateCommand(action,
             () => !Facade.Value.Busy && Facade.Value.Source != null
-        ).Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source));
+        ).Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -154,7 +154,7 @@ namespace Cube.Pdf.Editor
             () => !Facade.Value.Busy &&
                    Facade.Value.Source != null &&
                    Facade.Value.Images.Selection.Count > 0
-        ).Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Source))
+        ).Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source))
          .Associate(Facade.Value.Images.Selection);
 
         /* ----------------------------------------------------------------- */
@@ -173,7 +173,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected ICommand IsUndoable(Action action) => new DelegateCommand(action,
             () => !Facade.Value.Busy && Facade.Value.Modified
-        ).Associate(Facade.Value, nameof(MainBindable.Busy), nameof(MainBindable.Modified));
+        ).Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Modified));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -191,7 +191,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected ICommand IsRedoable(Action action) => new DelegateCommand(action,
             () => !Facade.Value.Busy && Facade.Value.History.Redoable
-        ).Associate(Facade.Value, nameof(MainBindable.Busy))
+        ).Associate(Facade.Value, nameof(MainBindableValue.Busy))
          .Associate(Facade.Value.History);
 
         #endregion

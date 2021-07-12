@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor
         public EncryptionViewModel(Action<Encryption> callback,
             Encryption src,
             SynchronizationContext context
-        ) : base(new EncryptionFacade(src), new Aggregator(), context)
+        ) : base(new(src), new(), context)
         {
             OK.Command = new DelegateCommand(
                 () =>

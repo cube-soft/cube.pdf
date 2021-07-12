@@ -50,7 +50,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public PasswordViewModel(QueryMessage<string, string> src, SynchronizationContext context) :
-            base(src, new Aggregator(), context)
+            base(src, new(), context)
         {
             Facade.Cancel = true;
             OK.Command = new DelegateCommand(
