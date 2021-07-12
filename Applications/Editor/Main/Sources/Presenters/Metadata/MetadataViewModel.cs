@@ -56,10 +56,8 @@ namespace Cube.Pdf.Editor
             Metadata src,
             Entity file,
             SynchronizationContext context
-        ) : base(new MetadataFacade(src, file),
-            new Aggregator(),
-            context
-        ) {
+        ) : base(new(src, file), new(), context)
+        {
             OK.Command = new DelegateCommand(() => { Send<CloseMessage>(); callback(src); });
         }
 

@@ -55,10 +55,8 @@ namespace Cube.Pdf.Editor
         public RemoveViewModel(Action<IEnumerable<int>> callback,
             int n,
             SynchronizationContext context
-        ) : base(new RemoveFacade(n, new ContextDispatcher(context, false)),
-            new Aggregator(),
-            context
-        ) {
+        ) : base(new(n, new ContextDispatcher(context, false)), new(), context)
+        {
             OK.Command = new DelegateCommand(
                 () => Track(() => {
                     callback(Facade.Get());

@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PositionViewModel : Presentable<InsertBindable>
+    public sealed class PositionViewModel : Presentable<InsertBindableValue>
     {
         #region Constructors
 
@@ -48,7 +48,7 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PositionViewModel(InsertBindable src,
+        public PositionViewModel(InsertBindableValue src,
             Aggregator aggregator,
             SynchronizationContext context
         ) : base(src, aggregator, context) { }

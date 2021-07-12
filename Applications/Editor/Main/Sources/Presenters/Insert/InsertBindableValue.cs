@@ -22,23 +22,23 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// InsertBindable
+    /// InsertBindableValue
     ///
     /// <summary>
     /// Provides values for binding to the InsertWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class InsertBindable : ObservableBase
+    public sealed class InsertBindableValue : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// InsertBindable
+        /// InsertBindableValue
         ///
         /// <summary>
-        /// Initializes a new instance of the InsertBindable class
+        /// Initializes a new instance of the InsertBindableValue class
         /// with the specified arguments.
         /// </summary>
         ///
@@ -47,10 +47,10 @@ namespace Cube.Pdf.Editor
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable(int index, int count, Dispatcher dispatcher) : base(dispatcher)
+        public InsertBindableValue(int index, int count, Dispatcher dispatcher) : base(dispatcher)
         {
-            Files         = new FileCollection(dispatcher);
-            Selection     = new Selection<FileItem>(dispatcher);
+            Files         = new(dispatcher);
+            Selection     = new(dispatcher);
             Count         = count;
             SelectedIndex = index;
             Index         = Math.Max(index, 0);

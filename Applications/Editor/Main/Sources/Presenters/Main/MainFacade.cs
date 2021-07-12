@@ -76,7 +76,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable Value { get; }
+        public MainBindableValue Value { get; }
 
         /* ----------------------------------------------------------------- */
         ///

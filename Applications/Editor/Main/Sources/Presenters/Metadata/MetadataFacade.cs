@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor
         {
             src.Version = Versions.FirstOrDefault(e => e.Minor == src.Version.Minor) ??
                           Versions.First();
-            if (src.Options == Pdf.ViewerOption.None) src.Options = Pdf.ViewerOption.OneColumn;
+            if (src.Options == ViewerOption.None) src.Options = ViewerOption.OneColumn;
 
             Value  = src;
             File   = file;
