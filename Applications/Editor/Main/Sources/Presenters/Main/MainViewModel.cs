@@ -49,10 +49,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel() : this (
-            new(Assembly.GetExecutingAssembly()) { AutoSave = true },
-            SynchronizationContext.Current
-        ) { }
+        public MainViewModel() : this (new() { AutoSave = true }, SynchronizationContext.Current) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -92,7 +89,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainBindable Value => Facade.Value;
+        public MainBindableValue Value => Facade.Value;
 
         /* ----------------------------------------------------------------- */
         ///

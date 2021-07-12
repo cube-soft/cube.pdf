@@ -48,11 +48,8 @@ namespace Cube.Pdf.Editor
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewViewModel(ImageCollection src, Entity file, SynchronizationContext context) : base(
-            new PreviewFacade(src, file, new ContextDispatcher(context, false)),
-            new Aggregator(),
-            context
-        ) { }
+        public PreviewViewModel(ImageCollection src, Entity file, SynchronizationContext context) :
+            base(new(src, file, new ContextDispatcher(context, false)), new(), context) { }
 
         #endregion
 
@@ -67,7 +64,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable Value => Facade.Value;
+        public PreviewBindableValue Value => Facade.Value;
 
         #endregion
 

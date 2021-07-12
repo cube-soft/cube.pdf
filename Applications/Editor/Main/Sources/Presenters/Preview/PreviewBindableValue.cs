@@ -24,23 +24,23 @@ namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// PreviewBindable
+    /// PreviewBindableValue
     ///
     /// <summary>
     /// Provides values for binding to the PreviewWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PreviewBindable : ObservableBase
+    public sealed class PreviewBindableValue : ObservableBase
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// PreviewBindable
+        /// PreviewBindableValue
         ///
         /// <summary>
-        /// Initializes a new instance of the PreviewBindable class
+        /// Initializes a new instance of the PreviewBindableValue class
         /// with the specified arguments.
         /// </summary>
         ///
@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor
         /// <param name="dispatcher">Dispatcher object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable(ImageCollection src, Entity file, Dispatcher dispatcher) : base(dispatcher)
+        public PreviewBindableValue(ImageCollection src, Entity file, Dispatcher dispatcher) : base(dispatcher)
         {
             var size  = src[src.Selection.First].RawObject.GetViewSize();
             var magic = 14.0; // Scrollbar width

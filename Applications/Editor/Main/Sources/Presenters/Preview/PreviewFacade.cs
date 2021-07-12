@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public PreviewFacade(ImageCollection src, Entity file, Dispatcher dispatcher)
         {
-            Value = new PreviewBindable(src, file, dispatcher);
+            Value = new(src, file, dispatcher);
             Task.Run(() => Setup(src.Selection.First)).Forget();
         }
 
@@ -69,7 +69,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PreviewBindable Value { get; }
+        public PreviewBindableValue Value { get; }
 
         #endregion
 

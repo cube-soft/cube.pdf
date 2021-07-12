@@ -57,12 +57,10 @@ namespace Cube.Pdf.Editor
             int index,
             int count,
             SynchronizationContext context
-        ) : base(new InsertFacade(index, count, new ContextDispatcher(context, false)),
-            new Aggregator(),
-            context
-        ) {
-            Position   = new PositionViewModel(Value, Aggregator, context);
-            DragMove   = new InsertDropTarget((f, t) => Facade.Move(f, t));
+        ) : base(new(index, count, new ContextDispatcher(context, false)), new(), context)
+        {
+            Position   = new(Value, Aggregator, context);
+            DragMove   = new((f, t) => Facade.Move(f, t));
             OK.Command = GetOkCommand(callback);
         }
 
@@ -79,7 +77,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertBindable Value => Facade.Value;
+        public InsertBindableValue Value => Facade.Value;
 
         /* ----------------------------------------------------------------- */
         ///
