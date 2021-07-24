@@ -22,7 +22,7 @@ require 'rake/clean'
 # configuration
 # --------------------------------------------------------------------------- #
 PROJECT     = "Cube.Pdf"
-BRANCHES    = ["master", "net50", "net35"]
+BRANCHES    = ["net45", "net50", "net35"]
 CONFIGS     = ["Release", "Debug"]
 PLATFORMS   = ["Any CPU", "x86", "x64"]
 PACKAGES    = ["Libraries/Core/Cube.Pdf.Core",
@@ -63,7 +63,7 @@ task :build, [:platform] do |_, e|
 
     Rake::Task[:restore].execute
     branch = %x(git rev-parse --abbrev-ref HEAD).chomp
-    build  = branch.include?("net5") || branch.include?("netstd") ?
+    build  = branch.include?("net50") ?
              "dotnet build -c Release" :
              "msbuild -v:m -p:Configuration=Release"
     cmd(%(#{build} -p:Platform="#{e.platform}" #{PROJECT}.sln))
