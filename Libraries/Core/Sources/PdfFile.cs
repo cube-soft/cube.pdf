@@ -47,7 +47,7 @@ namespace Cube.Pdf
         /// <param name="password">Password to open the PDF file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PdfFile(string src, string password) : base(src, IoEx.GetEntityController())
+        public PdfFile(string src, string password) : base(IoEx.GetEntitySource(src))
         {
             Password   = password;
             Resolution = new(Point, Point);
