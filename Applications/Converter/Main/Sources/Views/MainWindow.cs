@@ -191,7 +191,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void SetText(Language e)
         {
+            var preserve = Text;
             this.UpdateCulture(e);
+            Text = preserve;
 
             PathToolTip.ToolTipTitle = Properties.Resources.MessageInvalidChars;
             MainToolTip.SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
