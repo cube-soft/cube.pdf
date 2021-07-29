@@ -26,7 +26,7 @@ using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Converter.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -35,10 +35,6 @@ namespace Cube.Pdf.Converter.Tests
     /// <summary>
     /// Tests properties and methods of ViewModel classes.
     /// </summary>
-    ///
-    /// <remarks>
-    /// 変換処理を含むテストは ConverterTest で実行しています。
-    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]

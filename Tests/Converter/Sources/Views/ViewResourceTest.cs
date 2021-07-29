@@ -20,7 +20,7 @@ using System;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Converter.Tests.Views
 {
     /* --------------------------------------------------------------------- */
     ///
@@ -381,6 +381,24 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(ja[0].ToString(), Does.StartWith("実行可能なファイル"));
             Assert.That(ja[1].ToString(), Does.StartWith("すべてのファイル"));
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WordWrap
+        ///
+        /// <summary>
+        /// 特定の文字数で折り返すテストを実行します。
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("a",       5, ExpectedResult = 1)]
+        [TestCase("abcde",   5, ExpectedResult = 1)]
+        [TestCase("abcdefg", 5, ExpectedResult = 2)]
+        [TestCase("",        5, ExpectedResult = 1)]
+        public int WordWrap(string src, int n) =>
+            src.WordWrap(n)
+               .Split(new[] { Environment.NewLine }, StringSplitOptions.None)
+               .Length;
 
         #endregion
 

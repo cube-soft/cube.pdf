@@ -21,7 +21,7 @@ using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Converter.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///
