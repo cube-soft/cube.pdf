@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
+using System.Windows.Forms;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Converter.Tests.Views
@@ -48,17 +49,24 @@ namespace Cube.Pdf.Converter.Tests.Views
         [Test]
         public void Bind()
         {
+            var name = "WindowTest";
             var src  = new SettingFolder();
-            src.Set(new[] { "-DocumentName", "WindowTest" });
+            src.Set(new[] { "-DocumentName", name });
 
             using var view = new MainWindow();
             view.Bind(new MainViewModel(src));
-            Assert.That(view.Text, Does.Contain("WindowTest"));
+            view.StartPosition = FormStartPosition.Manual;
+            view.Location = new(0, Screen.PrimaryScreen.Bounds.Height + 10);
+            view.Show();
+
+            Assert.That(view.Busy, Is.False);
+            Assert.That(view.Text, Does.Contain(name));
 
             Assert.That(Locale.Language, Is.EqualTo(Language.Auto));
             Locale.Set(Language.Japanese);
-            Assert.That(view.Text, Does.Contain("WindowTest"));
+            Assert.That(view.Text, Does.Contain(name));
 
+            view.Close();
         }
 
         #endregion
