@@ -185,9 +185,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, Language>> Languages => new []
         {
-            Make(Properties.Resources.MenuAuto,     Language.Auto),
-            Make(Properties.Resources.MenuEnglish,  Language.English),
-            Make(Properties.Resources.MenuJapanese, Language.Japanese),
+            Make(Properties.Resources.GlobalMenuAuto,     Language.Auto),
+            Make(Properties.Resources.GlobalMenuEnglish,  Language.English),
+            Make(Properties.Resources.GlobalMenuJapanese, Language.Japanese),
         };
 
         /* ----------------------------------------------------------------- */

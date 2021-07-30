@@ -284,9 +284,9 @@ namespace Cube.Pdf.Converter.Tests.Views
 
             vm.General.Language = Language.Japanese;
             var ja = ViewResource.Languages;
-            Assert.That(ja[0].Key, Is.EqualTo("自動"));
-            Assert.That(ja[1].Key, Is.EqualTo("英語"));
-            Assert.That(ja[2].Key, Is.EqualTo("日本語"));
+            Assert.That(ja[0].Key, Is.EqualTo("Auto"));
+            Assert.That(ja[1].Key, Is.EqualTo("English"));
+            Assert.That(ja[2].Key, Is.EqualTo("Japanese"));
         });
 
         /* ----------------------------------------------------------------- */
