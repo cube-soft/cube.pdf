@@ -164,6 +164,7 @@ namespace Cube.Pdf.Converter
         private void SetText(Language e)
         {
             this.UpdateCulture(e);
+            Properties.Resources.Culture = e.ToCultureInfo();
 
             PathToolTip.ToolTipTitle = Properties.Resources.MessageInvalidChars;
             MainToolTip.SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
