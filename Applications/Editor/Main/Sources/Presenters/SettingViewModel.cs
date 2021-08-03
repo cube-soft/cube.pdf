@@ -123,7 +123,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<Uri> Link => Get(() => new BindableElement<Uri>(
             () => Assembly.GetExecutingAssembly().GetCopyright(),
-            () => Facade.Value.Uri,
+            () => Facade.ProductUri,
             GetDispatcher(false)
         ) { Command = new DelegateCommand(() => Post(Link.Value)) });
 

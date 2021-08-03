@@ -168,17 +168,6 @@ namespace Cube.Pdf.Editor
             set => Set(value);
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Uri
-        ///
-        /// <summary>
-        /// Gets the URL of the product Web page.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Uri Uri { get; } = new Uri("https://www.cube-soft.jp/cubepdfutility/");
-
         #endregion
     }
 }

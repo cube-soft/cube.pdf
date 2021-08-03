@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -103,6 +104,28 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public string Title { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ProductUri
+        ///
+        /// <summary>
+        /// Gets the URL of the product Web page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Uri ProductUri { get; } = new("https://www.cube-soft.jp/cubepdfutility/");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentUri
+        ///
+        /// <summary>
+        /// Gets the URL of the document Web page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Uri DocumentUri { get; } = new("https://docs.cube-soft.jp/entry/cubepdf-utility");
 
         #endregion
 
