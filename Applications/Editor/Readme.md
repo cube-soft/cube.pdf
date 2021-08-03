@@ -119,6 +119,9 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2021-08-06 version 1.5.1
+    - Add help menu.
+    - Update PDFium to Chromium 92 compatible.
 * 2021-07-09 version 1.5.0
     - Migrate to iText7 and refactor the implementation.
     - Migrate to Microsoft.Xaml.Behaviors.Wpf.
