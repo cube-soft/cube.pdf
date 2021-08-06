@@ -49,6 +49,8 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2021-08-06 version 1.5.1
+    - Fix the title bar to show the document name.
 * 2021-07-09 version 1.5.0
     - Migrate to iText7 and refactor the implementation.
 * 2021-04-13 version 1.2.2

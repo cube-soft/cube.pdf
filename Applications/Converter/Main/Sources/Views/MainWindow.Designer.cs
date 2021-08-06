@@ -815,6 +815,7 @@
             this.CancelButton = this.ExitButton;
             resources.ApplyResources(this, "$this");
             this.Controls.Add(this.RootPanel);
+            this.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MainBindingSource, "Title", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.RootPanel.ResumeLayout(false);

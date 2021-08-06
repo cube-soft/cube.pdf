@@ -48,7 +48,7 @@ namespace Cube.Pdf
         /// <param name="src">Path of the image file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageFile(string src) : base(src, IoEx.GetEntityController())
+        public ImageFile(string src) : base(IoEx.GetEntitySource(src))
         {
             using var ss = Io.Open(src);
             using var image = Image.FromStream(ss);
@@ -68,7 +68,7 @@ namespace Cube.Pdf
         /// <param name="image">Image object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageFile(string src, Image image) : base(src, IoEx.GetEntityController())
+        public ImageFile(string src, Image image) : base(IoEx.GetEntitySource(src))
         {
             Setup(image);
         }

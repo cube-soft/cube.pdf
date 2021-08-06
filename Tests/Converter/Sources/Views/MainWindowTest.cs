@@ -16,42 +16,58 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+using System.Threading;
+using System.Windows.Forms;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Converter.Tests
+namespace Cube.Pdf.Converter.Tests.Views
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// StringExtensionTest
+    /// MainWindowTest
     ///
     /// <summary>
-    /// StringExtension のテスト用クラスです。
+    /// Tests the MainWindowTest class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class StringExtensionTest
+    [Apartment(ApartmentState.STA)]
+    class MainWindowTest
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// WordWrap
+        /// Bind
         ///
         /// <summary>
-        /// 特定の文字数で折り返すテストを実行します。
+        /// Tests the Bind method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("a",       5, ExpectedResult = 1)]
-        [TestCase("abcde",   5, ExpectedResult = 1)]
-        [TestCase("abcdefg", 5, ExpectedResult = 2)]
-        [TestCase("",        5, ExpectedResult = 1)]
-        public int WordWrap(string src, int n) =>
-            src.WordWrap(n)
-               .Split(new[] { Environment.NewLine }, StringSplitOptions.None)
-               .Length;
+        [Test]
+        public void Bind()
+        {
+            var name = "WindowTest";
+            var src  = new SettingFolder();
+            src.Set(new[] { "-DocumentName", name });
+
+            using var view = new MainWindow();
+            view.Bind(new MainViewModel(src));
+            view.StartPosition = FormStartPosition.Manual;
+            view.Location = new(0, Screen.PrimaryScreen.Bounds.Height + 10);
+            view.Show();
+
+            Assert.That(view.Busy, Is.False);
+            Assert.That(view.Text, Does.Contain(name));
+
+            Assert.That(Locale.Language, Is.EqualTo(Language.Auto));
+            Locale.Set(Language.Japanese);
+            Assert.That(view.Text, Does.Contain(name));
+
+            view.Close();
+        }
 
         #endregion
     }

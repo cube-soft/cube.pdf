@@ -80,17 +80,17 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             var cts = new CancellationTokenSource();
             _ = vm.Subscribe<SettingViewModel>(e =>
             {
-                Assert.That(e.Title,             Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Text,      Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Value,     Does.StartWith("Cube.Pdf.Editor.Tests 1.5.0 "));
-                Assert.That(e.Windows.Text,      Does.StartWith("Microsoft Windows"));
-                Assert.That(e.Framework.Text,    Does.StartWith("Microsoft .NET Framework"));
-                Assert.That(e.Link.Text,         Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
-                Assert.That(e.Link.Value,        Is.EqualTo(new Uri("https://www.cube-soft.jp/cubepdfutility/")));
-                Assert.That(e.Update.Text,       Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Language.Text,     Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Language.Value,    Is.EqualTo(Language.Auto));
-                Assert.That(e.Languages.Count(), Is.EqualTo(3));
+                Assert.That(e.Title,                 Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Version.Text,          Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Version.Value,         Does.StartWith("Cube.Pdf.Editor.Tests 1.5.1 "));
+                Assert.That(e.Windows.Text,          Does.StartWith("Microsoft Windows"));
+                Assert.That(e.Framework.Text,        Does.StartWith("Microsoft .NET Framework"));
+                Assert.That(e.Link.Text,             Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
+                Assert.That(e.Link.Value.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdfutility/?lang="));
+                Assert.That(e.Update.Text,           Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Language.Text,         Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Language.Value,        Is.EqualTo(Language.Auto));
+                Assert.That(e.Languages.Count(),     Is.EqualTo(3));
 
                 Assert.That(e.OK.Command.CanExecute(),     Is.True);
                 Assert.That(e.Cancel.Command.CanExecute(), Is.True);

@@ -559,6 +559,21 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Help
+        ///
+        /// <summary>
+        /// Gets a menu to show the help page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public RibbonElement Help => Get(() => new RibbonElement(
+            nameof(Help),
+            () => Properties.Resources.MenuHelp,
+            GetDispatcher(false)
+        ) { Command = GetCommand(() => Send(Facade.Folder.DocumentUri)) });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Setting
         ///
         /// <summary>

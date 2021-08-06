@@ -60,6 +60,9 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox));
 
             SettingPanel.ApplyButton = ApplyButton;
+
+            // Manual bindings.
+            _ = DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         #endregion
@@ -144,39 +147,8 @@ namespace Cube.Pdf.Converter
 
             ShortcutKeys.Add(Keys.F1, vm.Help);
 
-            SetBindings();
-            SetValue(vm);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetBindings
-        ///
-        /// <summary>
-        /// Sets the additional bindings.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetBindings()
-        {
-            _ = DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SetValue
-        ///
-        /// <summary>
-        /// Sets the values of the specified ViewModel object to th View
-        /// properties.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SetValue(MainViewModel vm)
-        {
             SourceLabel.Visible = vm.General.SourceVisible;
             SourcePanel.Visible = vm.General.SourceVisible;
-            Text = vm.Title;
             SetText(vm.General.Language);
         }
 
@@ -185,13 +157,14 @@ namespace Cube.Pdf.Converter
         /// SetText
         ///
         /// <summary>
-        /// Sets the displayed text.
+        /// Sets the displayed text with the specified language.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private void SetText(Language e)
         {
             this.UpdateCulture(e);
+            Properties.Resources.Culture = e.ToCultureInfo();
 
             PathToolTip.ToolTipTitle = Properties.Resources.MessageInvalidChars;
             MainToolTip.SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
@@ -203,6 +176,11 @@ namespace Cube.Pdf.Converter
             ViewerPreferencesComboBox.Bind(ViewResource.ViewerOptions);
             PostProcessComboBox.Bind(ViewResource.PostProcesses);
             LanguageComboBox.Bind(ViewResource.Languages);
+
+            MainBindingSource.ResetBindings(false);
+            SettingBindingSource.ResetBindings(false);
+            MetadataBindingSource.ResetBindings(false);
+            EncryptionBindingSource.ResetBindings(false);
         }
 
         #endregion

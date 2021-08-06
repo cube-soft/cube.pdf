@@ -319,6 +319,16 @@
 
             <r:RibbonGroup>
                 <!-- **********************************************************
+                  Help
+                *********************************************************** -->
+                <r:RibbonButton
+                    Label="{Binding Ribbon.Help.Text}"
+                    SmallImageSource="{Binding Ribbon.Help.SmallIcon}"
+                    LargeImageSource="{Binding Ribbon.Help.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Help.Enabled}"
+                    Command="{Binding Ribbon.Help.Command}" />
+
+                <!-- **********************************************************
                   Setting
                 *********************************************************** -->
                 <r:RibbonButton
@@ -355,6 +365,14 @@
                     Header="{Binding Ribbon.SaveAs.Tooltip}"
                     ImageSource="{Binding Ribbon.SaveAs.LargeIcon}"
                     Command="{Binding Ribbon.SaveAs.Command}" />
+
+                <!-- **********************************************************
+                  Help (ApplicationMenu)
+                *********************************************************** -->
+                <r:RibbonApplicationMenuItem
+                    Header="{Binding Ribbon.Help.Tooltip}"
+                    ImageSource="{Binding Ribbon.Help.LargeIcon}"
+                    Command="{Binding Ribbon.Help.Command}" />
 
                 <!-- **********************************************************
                   Setting (ApplicationMenu)

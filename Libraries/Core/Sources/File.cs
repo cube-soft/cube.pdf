@@ -44,11 +44,10 @@ namespace Cube.Pdf
         /// arguments.
         /// </summary>
         ///
-        /// <param name="src">Path of the source file.</param>
-        /// <param name="controller">Entity controller.</param>
+        /// <param name="src">Information object of the source file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected File(string src, EntityController controller) : base(src, controller) { }
+        protected File(EntitySource src) : base(src) { }
 
         #endregion
 

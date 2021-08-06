@@ -142,6 +142,33 @@ namespace Cube.Pdf.Converter.Properties {
         }
 
         /// <summary>
+        ///   Auto に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string GlobalMenuAuto {
+            get {
+                return ResourceManager.GetString("GlobalMenuAuto", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   English に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string GlobalMenuEnglish {
+            get {
+                return ResourceManager.GetString("GlobalMenuEnglish", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Japanese に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string GlobalMenuJapanese {
+            get {
+                return ResourceManager.GetString("GlobalMenuJapanese", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap Header {
@@ -167,24 +194,6 @@ namespace Cube.Pdf.Converter.Properties {
         internal static string MenuAuto {
             get {
                 return ResourceManager.GetString("MenuAuto", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   English に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuEnglish {
-            get {
-                return ResourceManager.GetString("MenuEnglish", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Japanese に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuJapanese {
-            get {
-                return ResourceManager.GetString("MenuJapanese", resourceCulture);
             }
         }
 
