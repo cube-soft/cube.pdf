@@ -18,8 +18,10 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Cube.FileSystem;
+using Cube.Mixin.Uri;
 using Cube.Pdf.Ghostscript;
 
 namespace Cube.Pdf.Converter
@@ -46,7 +48,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Uri ProductUri { get; } = new Uri("https://www.cube-soft.jp/cubepdf/");
+        public static Uri ProductUri => GetUri("https://www.cube-soft.jp/cubepdf/");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -57,7 +59,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Uri DocumentUri { get; } = new Uri("https://docs.cube-soft.jp/entry/cubepdf");
+        public static Uri DocumentUri => GetUri("https://docs.cube-soft.jp/entry/cubepdf");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -185,9 +187,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static IList<KeyValuePair<string, Language>> Languages => new []
         {
-            Make(Properties.Resources.MenuAuto,     Language.Auto),
-            Make(Properties.Resources.MenuEnglish,  Language.English),
-            Make(Properties.Resources.MenuJapanese, Language.Japanese),
+            Make(Properties.Resources.GlobalMenuAuto,     Language.Auto),
+            Make(Properties.Resources.GlobalMenuEnglish,  Language.English),
+            Make(Properties.Resources.GlobalMenuJapanese, Language.Japanese),
         };
 
         /* ----------------------------------------------------------------- */
@@ -288,6 +290,18 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         private static KeyValuePair<K, V> Make<K, V>(K key, V value) => new(key, value);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetUri
+        ///
+        /// <summary>
+        /// Gets the Uri object from the specified URL string.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static Uri GetUri(string url) =>
+            new Uri(url).With("lang", CultureInfo.CurrentCulture.Name.ToLowerInvariant());
 
         #endregion
 

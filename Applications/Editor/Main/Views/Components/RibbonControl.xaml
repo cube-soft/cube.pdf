@@ -319,6 +319,16 @@
 
             <r:RibbonGroupBox>
                 <!-- **********************************************************
+                  Help
+                *********************************************************** -->
+                <r:Button
+                    Header="{Binding Ribbon.Help.Text}"
+                    Icon="{Binding Ribbon.Help.SmallIcon}"
+                    LargeIcon="{Binding Ribbon.Help.LargeIcon}"
+                    IsEnabled="{Binding Ribbon.Help.Enabled}"
+                    Command="{Binding Ribbon.Help.Command}" />
+
+                <!-- **********************************************************
                   Setting
                 *********************************************************** -->
                 <r:Button
@@ -356,6 +366,14 @@
                     Icon="{Binding Ribbon.SaveAs.LargeIcon}"
                     Command="{Binding Ribbon.SaveAs.Command}" />
                 <Separator />
+
+                <!-- **********************************************************
+                  Help (ApplicationMenu)
+                *********************************************************** -->
+                <r:MenuItem
+                    Header="{Binding Ribbon.Help.Tooltip}"
+                    Icon="{Binding Ribbon.Help.LargeIcon}"
+                    Command="{Binding Ribbon.Help.Command}" />
 
                 <!-- **********************************************************
                   Setting (ApplicationMenu)
