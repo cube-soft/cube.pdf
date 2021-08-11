@@ -1,22 +1,20 @@
 Cube.Pdf
 ====
 
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.svg?label=core)](https://www.nuget.org/packages/Cube.Pdf/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Ghostscript.svg?label=ghostscript)](https://www.nuget.org/packages/Cube.Pdf.Ghostscript/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Itext.svg?label=itext)](https://www.nuget.org/packages/Cube.Pdf.Itext/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Pdfium.svg?label=pdfium)](https://www.nuget.org/packages/Cube.Pdf.Pdfium/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Converter.svg?label=cubepdf)](https://www.nuget.org/packages/Cube.Pdf.Converter/)  
-[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Ghostscript.svg?label=ghostscript.native)](https://www.nuget.org/packages/Cube.Native.Ghostscript)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Pdfium.svg?label=pdfium.native)](https://www.nuget.org/packages/Cube.Native.Pdfium)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Pdfium.Lite.svg?label=pdfium.lite.native)](https://www.nuget.org/packages/Cube.Native.Pdfium.Lite)  
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
-[![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
+[![Core](https://badgen.net/nuget/v/cube.pdf?label=core)](https://www.nuget.org/packages/cube.pdf/)
+[![Ghostscript](https://badgen.net/nuget/v/cube.pdf.ghostscript?label=gs)](https://www.nuget.org/packages/cube.pdf.ghostscript/)
+[![iText](https://badgen.net/nuget/v/cube.pdf.itext?label=itext)](https://www.nuget.org/packages/cube.pdf.itext/)
+[![PDFium](https://badgen.net/nuget/v/cube.pdf.pdfium?label=pdfium)](https://www.nuget.org/packages/cube.pdf.pdfium/)
+[![CubePDF](https://badgen.net/nuget/v/cube.pdf.converter?label=cubepdf)](https://www.nuget.org/packages/cube.pdf.converter/)
+[![GS.Native](https://badgen.net/nuget/v/cube.native.ghostscript?label=native.gs)](https://www.nuget.org/packages/cube.native.ghostscript/)
+[![PDFium.Native](https://badgen.net/nuget/v/cube.native.pdfium?label=native.pdfium)](https://www.nuget.org/packages/cube.native.pdfium/)
+[![PDFium.Native.Lite](https://badgen.net/nuget/v/cube.native.pdfium.lite?label=native.pdfium.lite)](https://www.nuget.org/packages/cube.native.pdfium.lite/)
+[![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
+[![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
-Cube.Pdf libraries wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party PDF libraries. The repository also has some PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more.
-Libraries and applications are available for .NET Framework 3.5, 4.5, .NET Standard 2.0 (.NET Core 3.1 for applications), or later.
-Note that some projects are licensed under the GNU AGPLv3 and the others under the Apache 2.0. See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
+CubePDF SDK provides wrapper APIs for the [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), and [iText](https://itextpdf.com/) libraries. The project also has some Windows desktop applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. Libraries and applications are available for .NET Framework 3.5, 4.5, .NET Standard 2.0 (.NET Core 3.1 for applications), or later. Note that some projects are licensed under the GNU AGPLv3 and the others under the Apache 2.0. See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
 
-## Libraries
+## CubePDF SDK
 
 ### Cube.Pdf and related libraries
 
@@ -96,7 +94,7 @@ See the [Readme](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Gho
 
 ![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Overview.png?raw=true)
 
-[CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application uses Ghostscript and iTextSharp.
+[CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries.
 
 You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases).
 Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
@@ -105,7 +103,7 @@ Source codes of the CubePDF are in the [Applications/Converter](https://github.c
 
 ![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Overview.png?raw=true)
 
-[CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application uses PDFium and iTextSharp.
+[CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries.
 
 You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) (Japanese) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor).
 

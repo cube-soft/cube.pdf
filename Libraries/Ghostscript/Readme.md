@@ -1,15 +1,12 @@
 Cube.Pdf.Ghostscript
 ====
 
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Ghostscript.svg?label=ghostscript)](https://www.nuget.org/packages/Cube.Pdf.Ghostscript/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Ghostscript.svg?label=ghostscript.native)](https://www.nuget.org/packages/Cube.Native.Ghostscript)  
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
-[![Azure Pipelines](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_apis/build/status/cube-soft.Cube.Pdf?branchName=master)](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_build)
-[![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
+[![Ghostscript](https://badgen.net/nuget/v/cube.pdf.ghostscript?label=gs)](https://www.nuget.org/packages/cube.pdf.ghostscript/)
+[![GS.Native](https://badgen.net/nuget/v/cube.native.ghostscript?label=native.gs)](https://www.nuget.org/packages/cube.native.ghostscript/)
+[![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
+[![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
-Cube.Pdf.Ghostscript is a library to use the [Ghostscript](https://www.ghostscript.com/) in the .NET Framework 3.5, 4.5, or later.
-Note that the Cube.Pdf.Ghostscript library is available for NuGet, but you need to copy the gsdll32.dll to the executing directory manually.
-You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) NuGet package.
+Cube.Pdf.Ghostscript provides the wrapper APIs for the [Ghostscript](https://www.ghostscript.com/) in the .NET Framework 3.5, 4.5, .NET Standard 2.0, or later. Note that the Cube.Pdf.Ghostscript reuqires the gsdll32.dll. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) NuGet package.
 
 ## Usage
 
@@ -91,10 +88,10 @@ public class Argument
 ## Contributing
 
 1. Fork [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/fork) repository.
-2. Create a feature branch from the master or stable branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clean](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
+2. Create a feature branch from the master, net45, or net50 branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clobber](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
 3. Commit your changes.
-4. Rebase your local changes against the master or stable branch.
-5. Run test suite with the [NUnit](http://nunit.org/) console or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
+4. Rebase your local changes to the corresponding branch.
+5. Run the dotnet test command or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
 6. Create a new Pull Request.
 
 ## License
