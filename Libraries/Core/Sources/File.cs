@@ -44,10 +44,14 @@ namespace Cube.Pdf
         /// arguments.
         /// </summary>
         ///
-        /// <param name="src">Information object of the source file.</param>
+        /// <param name="src">Source file information.</param>
+        /// <param name="dispose">
+        /// Value indicating whether to dispose the specified src object
+        /// after initialization.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected File(EntitySource src) : base(src) { }
+        protected File(EntitySource src, bool dispose) : base(src, dispose) { }
 
         #endregion
 
@@ -62,7 +66,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public int Count { get; set; }
+        public int Count { get; init; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -73,7 +77,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PointF Resolution { get; set; }
+        public PointF Resolution { get; init; }
 
         #endregion
     }

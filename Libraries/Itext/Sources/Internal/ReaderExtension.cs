@@ -49,14 +49,15 @@ namespace Cube.Pdf.Itext
         ///
         /// <param name="src">PdfDocument object.</param>
         /// <param name="path">Path of the source PDF file.</param>
-        /// <param name="pw">Password of the source PDF file.</param>
+        /// <param name="password">Password of the source PDF file.</param>
         ///
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfFile GetFile(this PdfDocument src, string path, string pw) => new(path, pw)
+        public static PdfFile GetFile(this PdfDocument src, string path, string password) => new(path)
         {
             Count      = src.GetNumberOfPages(),
+            Password   = password,
             FullAccess = src.GetReader().IsOpenedWithFullPermission(),
         };
 
