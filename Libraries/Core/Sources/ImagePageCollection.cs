@@ -176,13 +176,14 @@ namespace Cube.Pdf
                 var x = image.HorizontalResolution;
                 var y = image.VerticalResolution;
 
-                _inner.Add(new(
-                    File,            // File
-                    i + 1,           // Number
-                    image.Size,      // Size
-                    new Angle(),     // Rotation
-                    new PointF(x, y) // Resolution
-                ));
+                _inner.Add(new()
+                {
+                    File       = File,
+                    Number     = i + 1,
+                    Size       = image.Size,
+                    Rotation   = new Angle(),
+                    Resolution = new PointF(x, y),
+                });
             }
         }
 

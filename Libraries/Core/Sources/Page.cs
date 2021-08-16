@@ -17,7 +17,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
-using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
@@ -31,39 +30,8 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public class Page : SerializableBase
+    public class Page
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Page
-        ///
-        /// <summary>
-        /// Initializes a new instance of the Page class.
-        /// </summary>
-        ///
-        /// <param name="file">
-        /// File information that owns the Page object.
-        /// </param>
-        ///
-        /// <param name="number">Page number.</param>
-        /// <param name="size">Page size.</param>
-        /// <param name="angle">Rotation of the page.</param>
-        /// <param name="dpi">Resolution of the page.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Page(File file, int number, SizeF size, Angle angle, PointF dpi)
-        {
-            File       = file;
-            Number     = number;
-            Size       = size;
-            Rotation   = angle;
-            Resolution = dpi;
-        }
-
-        #endregion
-
         #region Properties
 
         /* ----------------------------------------------------------------- */
@@ -75,7 +43,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public File File { get; }
+        public File File { get; init; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -90,7 +58,7 @@ namespace Cube.Pdf
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public int Number { get; }
+        public int Number { get; init; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -101,7 +69,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Angle Rotation { get; }
+        public Angle Rotation { get; init; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -112,7 +80,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public PointF Resolution { get; }
+        public PointF Resolution { get; init; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -123,7 +91,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SizeF Size { get; }
+        public SizeF Size { get; init; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,8 +109,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public Angle Delta
         {
-            get => Get(() => new Angle());
-            set => Set(value);
+            get => _delta;
+            set => _delta = value;
         }
 
         #endregion
@@ -171,6 +139,10 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         protected virtual void OnReset() => Delta = new();
 
+        #endregion
+
+        #region Fields
+        private Angle _delta = new();
         #endregion
     }
 }
