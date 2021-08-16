@@ -46,7 +46,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public bool Enabled
         {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
 
@@ -67,7 +67,7 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public bool OpenWithPassword
         {
-            get => Get<bool>();
+            get => Get(() => false);
             set => Set(value);
         }
 

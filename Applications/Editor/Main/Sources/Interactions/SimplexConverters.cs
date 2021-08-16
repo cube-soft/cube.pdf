@@ -205,7 +205,7 @@ namespace Cube.Pdf.Editor
             { EncryptionMethod.Standard128, "128-bit RC4"              },
             { EncryptionMethod.Aes128,      "128-bit AES"              },
             { EncryptionMethod.Aes256,      "256-bit AES"              },
-            { EncryptionMethod.Aes256r6,    "256-bit AES (Revision 6)" },
+            { EncryptionMethod.Aes256Ex,    "256-bit AES (Revision 6)" },
         }.TryGetValue(e.TryCast<EncryptionMethod>(), out var dest) ? dest : "Unknown") { }
     }
 

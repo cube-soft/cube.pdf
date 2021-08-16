@@ -17,6 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using Cube.FileSystem;
 
 namespace Cube.Pdf
 {
@@ -30,7 +31,7 @@ namespace Cube.Pdf
     ///
     /* --------------------------------------------------------------------- */
     [Serializable]
-    public class Page
+    public class Page : SerializableBase
     {
         #region Properties
 
@@ -109,8 +110,8 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         public Angle Delta
         {
-            get => _delta;
-            set => _delta = value;
+            get => Get(() => new Angle());
+            set => Set(value);
         }
 
         #endregion
@@ -139,10 +140,6 @@ namespace Cube.Pdf
         /* ----------------------------------------------------------------- */
         protected virtual void OnReset() => Delta = new();
 
-        #endregion
-
-        #region Fields
-        private Angle _delta = new();
         #endregion
     }
 }

@@ -209,7 +209,7 @@ namespace Cube.Pdf.Tests
 
                 yield return new TestCaseData(nameof(Cube.Pdf.Pdfium), "SampleAes256r6.pdf", "password", new Encryption
                 {
-                    Method           = EncryptionMethod.Aes256r6,
+                    Method           = EncryptionMethod.Aes256Ex,
                     Enabled          = true,
                     OwnerPassword    = "password",
                     OpenWithPassword = true,
