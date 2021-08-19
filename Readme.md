@@ -14,19 +14,38 @@ Cube.Pdf
 
 CubePDF SDK provides wrapper APIs for the [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), and [iText](https://itextpdf.com/) libraries. The project also has some Windows desktop applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. Libraries and applications are available for .NET Framework 3.5, 4.5, .NET Standard 2.0 (.NET Core 3.1 for applications), or later. Note that some projects are licensed under the GNU AGPLv3 and the others under the Apache 2.0. See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
 
+## Applications
+
+### CubePDF
+
+![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Overview.png?raw=true)
+
+[CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries.
+
+You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases).
+Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
+
+### CubePDF Utility
+
+![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Overview.png?raw=true)
+
+[CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries.
+
+You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) (Japanese) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor).
+
 ## CubePDF SDK
 
-### Cube.Pdf and related libraries
+### Cube.Pdf, Cube.Pdf.Itext, and Cube.Pdf.Pdfium
 
 You can install Cube.Pdf libraries through the NuGet package commands or UI on Visual Studio.
-The Libraries provide the functionality to treat third-party libraries as the same interface (except for the Cube.Pdf.Ghostscript).
+The Libraries provide the functionality to treat third-party libraries as the same interface.
 Basic interfaces of the Cube.Pdf are as follows:
 
 * [IDocumentReader](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentReader.cs)
 * [IDocumentRenderer](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentRenderer.cs)
 * [IDocumentWriter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentWriter.cs)
 
-For example, the following sample accesses a PDF document by using the iTextSharp library.
+For example, the following sample accesses a PDF document by using the iText library.
 And when you want to use the PDFium library, you only modify the description of "using Cube.Pdf.Itext" to "using Cube.Pdf.Pdfium".
 
 ```cs
@@ -87,25 +106,6 @@ converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
 
 See the [Readme](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Readme.md) in the Ghostscript directory for details.
-
-## Applications
-
-### CubePDF
-
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Overview.png?raw=true)
-
-[CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries.
-
-You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases).
-Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
-
-### CubePDF Utility
-
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Overview.png?raw=true)
-
-[CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries.
-
-You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) (Japanese) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor).
 
 ## Dependencies
 
