@@ -36,7 +36,7 @@ namespace Cube.Pdf.Pages
     /* --------------------------------------------------------------------- */
     public class FileListControl : DataGridView
     {
-        #region Constructorss
+        #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///

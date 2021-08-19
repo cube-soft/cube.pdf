@@ -74,20 +74,20 @@ namespace Cube.Pdf.Pages
             {
                 if (!Set(value)) return;
                 Facade.Value = value;
-                Refresh(nameof(Invokable));
+                Refresh(nameof(Ready));
             }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invokeable
+        /// Ready
         ///
         /// <summary>
         /// Gets a value indicating whether the password is ready.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Invokable => Password.HasValue();
+        public bool Ready => Password.HasValue();
 
         /* ----------------------------------------------------------------- */
         ///
