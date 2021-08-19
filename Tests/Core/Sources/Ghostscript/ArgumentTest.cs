@@ -27,7 +27,7 @@ namespace Cube.Pdf.Tests.Ghostscript
     /// ArgumentTest
     ///
     /// <summary>
-    /// Argument のテスト用クラスです。
+    /// Tests the Argument class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -41,7 +41,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// ToString
         ///
         /// <summary>
-        /// 引数を表す文字列を取得するテストを実行します。
+        /// Tests the ToString method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -57,51 +57,48 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// TestCases
         ///
         /// <summary>
-        /// テストケース一覧を取得します。
+        /// Gets the test cases.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
-            {
-                yield return new TestCaseData(
-                    new Argument('s', "DEVICE", "pdfwrite")
-                ).Returns("-sDEVICE=pdfwrite");
+            yield return new TestCaseData(
+                new Argument('s', "DEVICE", "pdfwrite")
+            ).Returns("-sDEVICE=pdfwrite");
 
-                yield return new TestCaseData(
-                    new Argument('I', string.Empty, @"Path\To\Resources")
-                ).Returns(@"-IPath\To\Resources");
+            yield return new TestCaseData(
+                new Argument('I', string.Empty, @"Path\To\Resources")
+            ).Returns(@"-IPath\To\Resources");
 
-                yield return new TestCaseData(
-                    new Argument("ColorConversionStrategy", "RGB")
-                ).Returns("-dColorConversionStrategy=/RGB");
+            yield return new TestCaseData(
+                new Argument("ColorConversionStrategy", "RGB")
+            ).Returns("-dColorConversionStrategy=/RGB");
 
-                yield return new TestCaseData(
-                    new Argument("DownsampleColorImages", true)
-                ).Returns("-dDownsampleColorImages=true");
+            yield return new TestCaseData(
+                new Argument("DownsampleColorImages", true)
+            ).Returns("-dDownsampleColorImages=true");
 
-                yield return new TestCaseData(
-                    new Argument("ColorImageResolution", 300)
-                ).Returns("-dColorImageResolution=300");
+            yield return new TestCaseData(
+                new Argument("ColorImageResolution", 300)
+            ).Returns("-dColorImageResolution=300");
 
-                yield return new TestCaseData(
-                    new Argument('r', 600)
-                ).Returns("-r600");
+            yield return new TestCaseData(
+                new Argument('r', 600)
+            ).Returns("-r600");
 
-                yield return new TestCaseData(
-                    new Argument('d', "BATCH")
-                ).Returns("-dBATCH");
+            yield return new TestCaseData(
+                new Argument('d', "BATCH")
+            ).Returns("-dBATCH");
 
-                yield return new TestCaseData(
-                    new Argument('f')
-                ).Returns("-f");
+            yield return new TestCaseData(
+                new Argument('f')
+            ).Returns("-f");
 
-                yield return new TestCaseData(
-                    new Code("<</Orientation 1}>> setpagedevice")
-                ).Returns("<</Orientation 1}>> setpagedevice");
-            }
-        }
+            yield return new TestCaseData(
+                new Code("<</Orientation 1}>> setpagedevice")
+            ).Returns("<</Orientation 1}>> setpagedevice");
+        }}
 
         #endregion
     }

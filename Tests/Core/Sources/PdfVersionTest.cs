@@ -39,11 +39,11 @@ namespace Cube.Pdf.Tests
         /// GetString
         ///
         /// <summary>
-        /// Executes the test to get string that represents PDF version.
+        /// Tests to get string that represents PDF version.
         /// </summary>
         ///
         /// <remarks>
-        /// 既知の PDF バージョンおよびサブセットを列挙します。
+        /// Enumerates known PDF versions and subsets.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

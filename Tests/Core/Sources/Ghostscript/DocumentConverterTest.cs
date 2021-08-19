@@ -124,314 +124,311 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
+            var n = 0;
+
+            /* --------------------------------------------------------- */
+            // Format
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new DocumentConverter(Format.Ps ), "Sample.ps", Format.Ps);
+            yield return TestCase(n++, new DocumentConverter(Format.Eps), "Sample.ps", Format.Eps);
+
+            /* --------------------------------------------------------- */
+            // Metadata
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new PdfConverter(), "SampleMetadata.ps", "Metadata");
+
+            /* --------------------------------------------------------- */
+            // Version
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new PdfConverter
             {
-                var n = 0;
+                Version = new PdfVersion(1, 2),
+            }, "SampleCjk.ps", new PdfVersion(1, 2));
 
-                /* --------------------------------------------------------- */
-                // Format
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new DocumentConverter(Format.Ps ), "Sample.ps", Format.Ps);
-                yield return TestCase(n++, new DocumentConverter(Format.Eps), "Sample.ps", Format.Eps);
+            /* --------------------------------------------------------- */
+            // Linearization
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new PdfConverter
+            {
+                Linearization = true,
+            }, "Sample.ps", "Linearization");
 
-                /* --------------------------------------------------------- */
-                // Metadata
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new PdfConverter(), "SampleMetadata.ps", "Metadata");
+            /* --------------------------------------------------------- */
+            // Orientation
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new PdfConverter
+            {
+                Orientation = Orientation.Auto,
+            }, "SampleMix.ps", Orientation.Auto);
 
-                /* --------------------------------------------------------- */
-                // Version
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Version = new PdfVersion(1, 2),
-                }, "SampleCjk.ps", new PdfVersion(1, 2));
+            yield return TestCase(n++, new PdfConverter
+            {
+                Orientation = Orientation.Portrait,
+            }, "SampleMix.ps", Orientation.Portrait);
 
-                /* --------------------------------------------------------- */
-                // Linearization
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Linearization = true,
-                }, "Sample.ps", "Linearization");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Orientation = Orientation.UpsideDown,
+            }, "SampleMix.ps", Orientation.UpsideDown);
 
-                /* --------------------------------------------------------- */
-                // Orientation
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Orientation = Orientation.Auto,
-                }, "SampleMix.ps", Orientation.Auto);
+            yield return TestCase(n++, new PdfConverter
+            {
+                Orientation = Orientation.Landscape,
+            }, "SampleMix.ps", Orientation.Landscape);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Orientation = Orientation.Portrait,
-                }, "SampleMix.ps", Orientation.Portrait);
+            yield return TestCase(n++, new PdfConverter
+            {
+                Orientation = Orientation.Seascape,
+            }, "SampleMix.ps", Orientation.Seascape);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Orientation = Orientation.UpsideDown,
-                }, "SampleMix.ps", Orientation.UpsideDown);
+            /* --------------------------------------------------------- */
+            // ColorMode
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode   = ColorMode.Rgb,
+            }, "SampleMix.ps", ColorMode.Rgb);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Orientation = Orientation.Landscape,
-                }, "SampleMix.ps", Orientation.Landscape);
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode = ColorMode.Rgb,
+            }, "SamplePdf.ps", "ColorMode_Rgb_RePdf");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Orientation = Orientation.Seascape,
-                }, "SampleMix.ps", Orientation.Seascape);
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode   = ColorMode.Cmyk,
+            }, "SampleMix.ps", ColorMode.Cmyk);
 
-                /* --------------------------------------------------------- */
-                // ColorMode
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode   = ColorMode.Rgb,
-                }, "SampleMix.ps", ColorMode.Rgb);
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode = ColorMode.Cmyk,
+            }, "SamplePdf.ps", "ColorMode_Cmyk_RePdf");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode = ColorMode.Rgb,
-                }, "SamplePdf.ps", "ColorMode_Rgb_RePdf");
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode   = ColorMode.Grayscale,
+            }, "SampleMix.ps", ColorMode.Grayscale);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode   = ColorMode.Cmyk,
-                }, "SampleMix.ps", ColorMode.Cmyk);
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode = ColorMode.Grayscale,
+            }, "SamplePdf.ps", "ColorMode_Grayscale_RePdf");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode = ColorMode.Cmyk,
-                }, "SamplePdf.ps", "ColorMode_Cmyk_RePdf");
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode   = ColorMode.SameAsSource,
+            }, "SampleMix.ps", ColorMode.SameAsSource);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode   = ColorMode.Grayscale,
-                }, "SampleMix.ps", ColorMode.Grayscale);
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode = ColorMode.SameAsSource,
+            }, "SamplePdf.ps", "ColorMode_SameAsSource_RePdf");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode = ColorMode.Grayscale,
-                }, "SamplePdf.ps", "ColorMode_Grayscale_RePdf");
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode = ColorMode.DeviceIndependent,
+            }, "SampleMix.ps", ColorMode.DeviceIndependent);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode   = ColorMode.SameAsSource,
-                }, "SampleMix.ps", ColorMode.SameAsSource);
+            yield return TestCase(n++, new PdfConverter
+            {
+                ColorMode = ColorMode.DeviceIndependent,
+            }, "SamplePdf.ps", "ColorMode_DeviceIndependent_RePdf");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode = ColorMode.SameAsSource,
-                }, "SamplePdf.ps", "ColorMode_SameAsSource_RePdf");
+            /* --------------------------------------------------------- */
+            // Compression
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression     = Encoding.None,
+                MonoCompression = Encoding.None,
+            }, "SampleMix.ps", Encoding.None);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode = ColorMode.DeviceIndependent,
-                }, "SampleMix.ps", ColorMode.DeviceIndependent);
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression     = Encoding.Flate,
+                MonoCompression = Encoding.Flate,
+            }, "SampleMix.ps", Encoding.Flate);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    ColorMode = ColorMode.DeviceIndependent,
-                }, "SamplePdf.ps", "ColorMode_DeviceIndependent_RePdf");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression     = Encoding.Jpeg,
+                MonoCompression = Encoding.Fax,
+            }, "SampleMix.ps", Encoding.Jpeg);
 
-                /* --------------------------------------------------------- */
-                // Compression
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression     = Encoding.None,
-                    MonoCompression = Encoding.None,
-                }, "SampleMix.ps", Encoding.None);
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression     = Encoding.Lzw,
+                MonoCompression = Encoding.Lzw,
+            }, "SampleMix.ps", Encoding.Lzw);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression     = Encoding.Flate,
-                    MonoCompression = Encoding.Flate,
-                }, "SampleMix.ps", Encoding.Flate);
+            /* --------------------------------------------------------- */
+            // Down-sampling
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new PdfConverter
+            {
+                Downsampling = Downsampling.None,
+            }, "SampleMix.ps", Downsampling.None);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression     = Encoding.Jpeg,
-                    MonoCompression = Encoding.Fax,
-                }, "SampleMix.ps", Encoding.Jpeg);
+            yield return TestCase(n++, new PdfConverter
+            {
+                Downsampling = Downsampling.Average,
+            }, "SampleMix.ps", Downsampling.Average);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression     = Encoding.Lzw,
-                    MonoCompression = Encoding.Lzw,
-                }, "SampleMix.ps", Encoding.Lzw);
+            yield return TestCase(n++, new PdfConverter
+            {
+                Downsampling = Downsampling.Bicubic,
+            }, "SampleMix.ps", Downsampling.Bicubic);
 
-                /* --------------------------------------------------------- */
-                // Down-sampling
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Downsampling = Downsampling.None,
-                }, "SampleMix.ps", Downsampling.None);
+            yield return TestCase(n++, new PdfConverter
+            {
+                Downsampling = Downsampling.Subsample,
+            }, "SampleMix.ps", Downsampling.Subsample);
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Downsampling = Downsampling.Average,
-                }, "SampleMix.ps", Downsampling.Average);
+            /* --------------------------------------------------------- */
+            // Compression and down-sampling
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Jpeg,
+                Downsampling = Downsampling.None,
+                Resolution   = 900,
+            }, "Sample600dpi.ps", "Jpeg_None_600_900");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Downsampling = Downsampling.Bicubic,
-                }, "SampleMix.ps", Downsampling.Bicubic);
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Jpeg,
+                Downsampling = Downsampling.None,
+                Resolution   = 600,
+            }, "Sample600dpi.ps", "Jpeg_None_600_600");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Downsampling = Downsampling.Subsample,
-                }, "SampleMix.ps", Downsampling.Subsample);
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Jpeg,
+                Downsampling = Downsampling.None,
+                Resolution   = 300,
+            }, "Sample600dpi.ps", "Jpeg_None_600_300");
 
-                /* --------------------------------------------------------- */
-                // Compression and down-sampling
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Jpeg,
-                    Downsampling = Downsampling.None,
-                    Resolution   = 900,
-                }, "Sample600dpi.ps", "Jpeg_None_600_900");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Jpeg,
+                Downsampling = Downsampling.None,
+                Resolution   = 150,
+            }, "Sample600dpi.ps", "Jpeg_None_600_150");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Jpeg,
-                    Downsampling = Downsampling.None,
-                    Resolution   = 600,
-                }, "Sample600dpi.ps", "Jpeg_None_600_600");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Jpeg,
+                Downsampling = Downsampling.Bicubic,
+                Resolution   = 900,
+            }, "Sample600dpi.ps", "Jpeg_Bicubic_600_900");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Jpeg,
-                    Downsampling = Downsampling.None,
-                    Resolution   = 300,
-                }, "Sample600dpi.ps", "Jpeg_None_600_300");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Jpeg,
+                Downsampling = Downsampling.Bicubic,
+                Resolution   = 600,
+            }, "Sample600dpi.ps", "Jpeg_Bicubic_600_600");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Jpeg,
-                    Downsampling = Downsampling.None,
-                    Resolution   = 150,
-                }, "Sample600dpi.ps", "Jpeg_None_600_150");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Jpeg,
+                Downsampling = Downsampling.Bicubic,
+                Resolution   = 300,
+            }, "Sample600dpi.ps", "Jpeg_Bicubic_600_300");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Jpeg,
-                    Downsampling = Downsampling.Bicubic,
-                    Resolution   = 900,
-                }, "Sample600dpi.ps", "Jpeg_Bicubic_600_900");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Jpeg,
+                Downsampling = Downsampling.Bicubic,
+                Resolution   = 150,
+            }, "Sample600dpi.ps", "Jpeg_Bicubic_600_150");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Jpeg,
-                    Downsampling = Downsampling.Bicubic,
-                    Resolution   = 600,
-                }, "Sample600dpi.ps", "Jpeg_Bicubic_600_600");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Flate,
+                Downsampling = Downsampling.None,
+                Resolution   = 900,
+            }, "Sample600dpi.ps", "Flate_None_600_900");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Jpeg,
-                    Downsampling = Downsampling.Bicubic,
-                    Resolution   = 300,
-                }, "Sample600dpi.ps", "Jpeg_Bicubic_600_300");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Flate,
+                Downsampling = Downsampling.None,
+                Resolution   = 600,
+            }, "Sample600dpi.ps", "Flate_None_600_600");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Jpeg,
-                    Downsampling = Downsampling.Bicubic,
-                    Resolution   = 150,
-                }, "Sample600dpi.ps", "Jpeg_Bicubic_600_150");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Flate,
+                Downsampling = Downsampling.None,
+                Resolution   = 300,
+            }, "Sample600dpi.ps", "Flate_None_600_300");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Flate,
-                    Downsampling = Downsampling.None,
-                    Resolution   = 900,
-                }, "Sample600dpi.ps", "Flate_None_600_900");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Flate,
+                Downsampling = Downsampling.None,
+                Resolution   = 150,
+            }, "Sample600dpi.ps", "Flate_None_600_150");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Flate,
-                    Downsampling = Downsampling.None,
-                    Resolution   = 600,
-                }, "Sample600dpi.ps", "Flate_None_600_600");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Flate,
+                Downsampling = Downsampling.Bicubic,
+                Resolution   = 900,
+            }, "Sample600dpi.ps", "Flate_Bicubic_600_900");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Flate,
-                    Downsampling = Downsampling.None,
-                    Resolution   = 300,
-                }, "Sample600dpi.ps", "Flate_None_600_300");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Flate,
+                Downsampling = Downsampling.Bicubic,
+                Resolution   = 600,
+            }, "Sample600dpi.ps", "Flate_Bicubic_600_600");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Flate,
-                    Downsampling = Downsampling.None,
-                    Resolution   = 150,
-                }, "Sample600dpi.ps", "Flate_None_600_150");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Flate,
+                Downsampling = Downsampling.Bicubic,
+                Resolution   = 300,
+            }, "Sample600dpi.ps", "Flate_Bicubic_600_300");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Flate,
-                    Downsampling = Downsampling.Bicubic,
-                    Resolution   = 900,
-                }, "Sample600dpi.ps", "Flate_Bicubic_600_900");
+            yield return TestCase(n++, new PdfConverter
+            {
+                Compression  = Encoding.Flate,
+                Downsampling = Downsampling.Bicubic,
+                Resolution   = 150,
+            }, "Sample600dpi.ps", "Flate_Bicubic_600_150");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Flate,
-                    Downsampling = Downsampling.Bicubic,
-                    Resolution   = 600,
-                }, "Sample600dpi.ps", "Flate_Bicubic_600_600");
+            /* --------------------------------------------------------- */
+            //
+            // EmbedFonts
+            //
+            // TODO: Fix the text garbling when setting EmbedFonts to
+            // false.
+            //
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new PdfConverter
+            {
+                EmbedFonts = true,
+            }, "Sample.ps", "EmbedFonts_True");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Flate,
-                    Downsampling = Downsampling.Bicubic,
-                    Resolution   = 300,
-                }, "Sample600dpi.ps", "Flate_Bicubic_600_300");
+            yield return TestCase(n++, new PdfConverter
+            {
+                EmbedFonts  = true,
+            }, "SampleCjk.ps", "EmbedFonts_True_Cjk");
 
-                yield return TestCase(n++, new PdfConverter
-                {
-                    Compression  = Encoding.Flate,
-                    Downsampling = Downsampling.Bicubic,
-                    Resolution   = 150,
-                }, "Sample600dpi.ps", "Flate_Bicubic_600_150");
+            yield return TestCase(n++, new PdfConverter
+            {
+                EmbedFonts = false,
+            }, "Sample.ps", "EmbedFonts_False");
 
-                /* --------------------------------------------------------- */
-                //
-                // EmbedFonts
-                //
-                // TODO: Fix the text garbling when setting EmbedFonts to
-                // false.
-                //
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new PdfConverter
-                {
-                    EmbedFonts = true,
-                }, "Sample.ps", "EmbedFonts_True");
-
-                yield return TestCase(n++, new PdfConverter
-                {
-                    EmbedFonts  = true,
-                }, "SampleCjk.ps", "EmbedFonts_True_Cjk");
-
-                yield return TestCase(n++, new PdfConverter
-                {
-                    EmbedFonts = false,
-                }, "Sample.ps", "EmbedFonts_False");
-
-                yield return TestCase(n++, new PdfConverter
-                {
-                    EmbedFonts = false,
-                }, "SampleCjk.ps", "EmbedFonts_False_Cjk");
-            }
-        }
+            yield return TestCase(n++, new PdfConverter
+            {
+                EmbedFonts = false,
+            }, "SampleCjk.ps", "EmbedFonts_False_Cjk");
+        }}
 
         #endregion
     }

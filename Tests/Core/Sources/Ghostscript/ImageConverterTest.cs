@@ -76,7 +76,7 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// Invoke
         ///
         /// <summary>
-        /// Exexutes the test to convert.
+        /// Tests the converter object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -100,74 +100,71 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
+            var n = 0;
+
+            /* --------------------------------------------------------- */
+            // AntiAlias
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new ImageConverter(Format.Png)
             {
-                var n = 0;
+                AntiAlias  = true,
+                Resolution = 72,
+            }, "Sample.ps", "AntiAlias_True");
 
-                /* --------------------------------------------------------- */
-                // AntiAlias
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new ImageConverter(Format.Png)
-                {
-                    AntiAlias  = true,
-                    Resolution = 72,
-                }, "Sample.ps", "AntiAlias_True");
+            yield return TestCase(n++, new ImageConverter(Format.Png)
+            {
+                AntiAlias  = false,
+                Resolution = 72,
+            }, "Sample.ps", "AntiAlias_False");
 
-                yield return TestCase(n++, new ImageConverter(Format.Png)
-                {
-                    AntiAlias  = false,
-                    Resolution = 72,
-                }, "Sample.ps", "AntiAlias_False");
+            /* --------------------------------------------------------- */
+            // ColorMode
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new ImageConverter(Format.Jpeg24bppRgb)
+            {
+                Resolution = 300,
+            }, "SampleMix.ps", Format.Jpeg24bppRgb);
 
-                /* --------------------------------------------------------- */
-                // ColorMode
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new ImageConverter(Format.Jpeg24bppRgb)
-                {
-                    Resolution = 300,
-                }, "SampleMix.ps", Format.Jpeg24bppRgb);
+            yield return TestCase(n++, new ImageConverter(Format.Jpeg32bppCmyk)
+            {
+                Resolution = 300,
+            }, "SampleMix.ps", Format.Jpeg32bppCmyk);
 
-                yield return TestCase(n++, new ImageConverter(Format.Jpeg32bppCmyk)
-                {
-                    Resolution = 300,
-                }, "SampleMix.ps", Format.Jpeg32bppCmyk);
+            yield return TestCase(n++, new ImageConverter(Format.Jpeg8bppGrayscale)
+            {
+                Resolution = 300,
+            }, "SampleMix.ps", Format.Jpeg8bppGrayscale);
 
-                yield return TestCase(n++, new ImageConverter(Format.Jpeg8bppGrayscale)
-                {
-                    Resolution = 300,
-                }, "SampleMix.ps", Format.Jpeg8bppGrayscale);
+            /* --------------------------------------------------------- */
+            // Quality
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
+            {
+                Quality = 1,
+            }, "Sample600dpi.ps", "Quality_1");
 
-                /* --------------------------------------------------------- */
-                // Quality
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-                {
-                    Quality = 1,
-                }, "Sample600dpi.ps", "Quality_1");
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
+            {
+                Quality = 25,
+            }, "Sample600dpi.ps", "Quality_25");
 
-                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-                {
-                    Quality = 25,
-                }, "Sample600dpi.ps", "Quality_25");
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
+            {
+                Quality = 50,
+            }, "Sample600dpi.ps", "Quality_50");
 
-                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-                {
-                    Quality = 50,
-                }, "Sample600dpi.ps", "Quality_50");
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
+            {
+                Quality = 75,
+            }, "Sample600dpi.ps", "Quality_75");
 
-                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-                {
-                    Quality = 75,
-                }, "Sample600dpi.ps", "Quality_75");
-
-                yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-                {
-                    Quality = 100,
-                }, "Sample600dpi.ps", "Quality_100");
-            }
-        }
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
+            {
+                Quality = 100,
+            }, "Sample600dpi.ps", "Quality_100");
+        }}
 
         #endregion
     }
