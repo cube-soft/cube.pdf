@@ -48,7 +48,6 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public FileCollection(Dispatcher dispatcher) : base(dispatcher)
         {
-            _inner = new ObservableCollection<FileItem>();
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
         }
 
@@ -185,7 +184,7 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private readonly ObservableCollection<FileItem> _inner;
+        private readonly ObservableCollection<FileItem> _inner = new();
         #endregion
     }
 }

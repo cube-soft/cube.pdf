@@ -57,10 +57,7 @@ namespace Cube.Pdf.Editor
         /// <param name="n">Maximum value.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Range(string src, int n)
-        {
-            _inner = Parse(src, n);
-        }
+        public Range(string src, int n) => _inner = Parse(src, n);
 
         #endregion
 

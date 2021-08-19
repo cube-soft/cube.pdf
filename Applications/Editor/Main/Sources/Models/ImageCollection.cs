@@ -65,7 +65,7 @@ namespace Cube.Pdf.Editor
         {
             _getter = getter;
 
-            _inner = new ObservableCollection<ImageItem>();
+            _inner = new();
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
 
             _cache = new CacheCollection<ImageItem, ImageSource>(e =>
@@ -303,7 +303,7 @@ namespace Cube.Pdf.Editor
         /// GetImage
         ///
         /// <summary>
-        /// Gets an Image object accroding to the specified arguments.
+        /// Gets an Image object according to the specified arguments.
         /// </summary>
         ///
         /// <param name="index">Index of the image collection.</param>

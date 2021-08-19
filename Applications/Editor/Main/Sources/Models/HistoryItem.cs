@@ -77,7 +77,7 @@ namespace Cube.Pdf.Editor
         public static HistoryItem Invoke(Action action, Action undo)
         {
             action();
-            return new HistoryItem
+            return new()
             {
                 Undo = undo,
                 Redo = action,
