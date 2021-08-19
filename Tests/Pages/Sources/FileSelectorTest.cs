@@ -69,38 +69,35 @@ namespace Cube.Pdf.Pages.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
-            {
-                var n = 0;
+            var n = 0;
 
-                yield return new(n++,
-                    new List<string> { "Sample.pdf", "Sample.jpg", "Sample.txt" },
-                    new List<string> { "Sample.jpg", "Sample.pdf" }
-                );
+            yield return new(n++,
+                new List<string> { "Sample.pdf", "Sample.jpg", "Sample.txt" },
+                new List<string> { "Sample.jpg", "Sample.pdf" }
+            );
 
-                yield return new(n++,
-                    new List<string> { "Dir1" },
-                    new List<string> { @"Dir1\Dir1Sample.jpg", @"Dir1\Dir1Sample.pdf" }
-                );
+            yield return new(n++,
+                new List<string> { "Dir1" },
+                new List<string> { @"Dir1\Dir1Sample.jpg", @"Dir1\Dir1Sample.pdf" }
+            );
 
-                yield return new(n++,
-                    new List<string> { "Sample.pdf", "Sample.jpg", "Sample.txt", "Dir1", "Dir2" },
-                    new List<string>
-                    {
-                        @"Dir1\Dir1Sample.jpg",
-                        @"Dir1\Dir1Sample.pdf",
-                        @"Dir2\Dir2Sample.jpg",
-                        @"Dir2\Dir2Sample.pdf",
-                        "Sample.jpg",
-                        "Sample.pdf",
-                    }
-                );
+            yield return new(n++,
+                new List<string> { "Sample.pdf", "Sample.jpg", "Sample.txt", "Dir1", "Dir2" },
+                new List<string>
+                {
+                    @"Dir1\Dir1Sample.jpg",
+                    @"Dir1\Dir1Sample.pdf",
+                    @"Dir2\Dir2Sample.jpg",
+                    @"Dir2\Dir2Sample.pdf",
+                    "Sample.jpg",
+                    "Sample.pdf",
+                }
+            );
 
-                yield return new(n++, new List<string>(), new List<string>());
-            }
-        }
+            yield return new(n++, new List<string>(), new List<string>());
+        }}
 
         #endregion
     }
