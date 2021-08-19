@@ -142,7 +142,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Detach(IEnumerable<int> indices) => Track(() => Facade.Detach(indices));
+        public void Detach(IEnumerable<int> indices) => Track(() => Facade.Detach(indices), true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -164,7 +164,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Reset() => Track(Facade.Reset);
+        public void Reset() => Track(Facade.Reset, true);
 
         #endregion
     }
