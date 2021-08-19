@@ -73,9 +73,7 @@ end
 # build_all
 # --------------------------------------------------------------------------- #
 desc "Build projects in pre-defined branches and platforms."
-task :build_all, [:test] do |_, e|
-    e.with_defaults(:test => false)
-    
+task :build_all do
     BRANCHES.product(PLATFORMS).each do |bp|
         checkout(bp[0]) do
             Rake::Task[:build].reenable
@@ -89,7 +87,7 @@ end
 # test
 # --------------------------------------------------------------------------- #
 desc "Test projects in the current branch."
-task :test do
+task :test  => [:build] do
     cmd("dotnet test -c Release --no-restore --no-build #{PROJECT}.sln")
 end
 
