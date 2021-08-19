@@ -28,14 +28,14 @@ namespace Cube.Pdf.Converter
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewResource
+    /// Resource
     ///
     /// <summary>
     /// Provides resources for display.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class ViewResource
+    public static class Resource
     {
         #region Properties
 
@@ -185,7 +185,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, Language>> Languages => new []
+        public static IList<KeyValuePair<string, Language>> Languages => new[]
         {
             Make(Properties.Resources.GlobalMenuAuto,     Language.Auto),
             Make(Properties.Resources.GlobalMenuEnglish,  Language.English),
@@ -201,12 +201,12 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<ExtensionFilter> SourceFilters => new[]
+        public static IList<ExtensionFilter> SourceFilters => new ExtensionFilter[]
         {
-            new ExtensionFilter(Properties.Resources.FilterPs,  ".ps"),
-            new ExtensionFilter(Properties.Resources.FilterEps, ".eps"),
-            new ExtensionFilter(Properties.Resources.FilterPdf, ".pdf"),
-            new ExtensionFilter(Properties.Resources.FilterAll, ".*"),
+            new(Properties.Resources.FilterPs,  ".ps"),
+            new(Properties.Resources.FilterEps, ".eps"),
+            new(Properties.Resources.FilterPdf, ".pdf"),
+            new(Properties.Resources.FilterAll, ".*"),
         };
 
         /* ----------------------------------------------------------------- */
@@ -218,15 +218,15 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<ExtensionFilter> DestinationFilters => new[]
+        public static IList<ExtensionFilter> DestinationFilters => new ExtensionFilter[]
         {
-            new ExtensionFilter(Properties.Resources.FilterPdf,  ".pdf"),
-            new ExtensionFilter(Properties.Resources.FilterPs,   ".ps"),
-            new ExtensionFilter(Properties.Resources.FilterEps,  ".eps"),
-            new ExtensionFilter(Properties.Resources.FilterPng,  ".png"),
-            new ExtensionFilter(Properties.Resources.FilterJpeg, ".jpg", ".jpeg"),
-            new ExtensionFilter(Properties.Resources.FilterBmp,  ".bmp"),
-            new ExtensionFilter(Properties.Resources.FilterTiff, ".tiff", ".tif"),
+            new(Properties.Resources.FilterPdf,  ".pdf"),
+            new(Properties.Resources.FilterPs,   ".ps"),
+            new(Properties.Resources.FilterEps,  ".eps"),
+            new(Properties.Resources.FilterPng,  ".png"),
+            new(Properties.Resources.FilterJpeg, ".jpg", ".jpeg"),
+            new(Properties.Resources.FilterBmp,  ".bmp"),
+            new(Properties.Resources.FilterTiff, ".tiff", ".tif"),
         };
 
         /* ----------------------------------------------------------------- */
@@ -238,10 +238,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<ExtensionFilter> UserProgramFilters => new[]
+        public static IList<ExtensionFilter> UserProgramFilters => new ExtensionFilter[]
         {
-            new ExtensionFilter(Properties.Resources.FilterExecutable, ".exe", ".bat"),
-            new ExtensionFilter(Properties.Resources.FilterAll, ".*"),
+            new(Properties.Resources.FilterExecutable, ".exe", ".bat"),
+            new(Properties.Resources.FilterAll, ".*"),
         };
 
         #endregion

@@ -57,7 +57,7 @@ namespace Cube.Pdf.Converter
             Source.LogInfo($"Ghostscript {GetGsVersion()}");
             Source.LogInfo($"[ {raw.Join(" ")} ]");
 
-            ViewResource.Configure();
+            Resource.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

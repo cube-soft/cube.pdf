@@ -87,10 +87,10 @@ namespace Cube.Pdf.Converter.Mixin
         public static void SetDestination(this Facade src, SaveFileMessage e)
         {
             Debug.Assert(e.FilterIndex > 0);
-            Debug.Assert(e.FilterIndex <= ViewResource.Formats.Count);
+            Debug.Assert(e.FilterIndex <= Resource.Formats.Count);
 
             src.Settings.Value.Destination = e.Value;
-            src.Settings.Value.Format = ViewResource.Formats[e.FilterIndex - 1].Value;
+            src.Settings.Value.Format = Resource.Formats[e.FilterIndex - 1].Value;
         }
 
         #endregion
