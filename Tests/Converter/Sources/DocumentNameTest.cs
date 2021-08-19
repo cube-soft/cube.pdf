@@ -25,7 +25,7 @@ namespace Cube.Pdf.Converter.Tests
     /// DocumentNameTest
     ///
     /// <summary>
-    /// DocumentName のテスト用クラスです。
+    /// Tests the DocumentName class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -39,13 +39,8 @@ namespace Cube.Pdf.Converter.Tests
         /// Name
         ///
         /// <summary>
-        /// ドキュメント名をファイル名に変換するテストを実行します。
+        /// Tests the constructor and Value property.
         /// </summary>
-        ///
-        /// <remarks>
-        /// "File - .txt" -> ".txt" の変換に関して、もう少し良い方法が
-        /// ないか要検討。
-        /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample",                            ExpectedResult = "Sample")]
@@ -55,7 +50,7 @@ namespace Cube.Pdf.Converter.Tests
         [TestCase("Application - Tail.txt",            ExpectedResult = "Tail.txt")]
         [TestCase("File - Application",                ExpectedResult = "File - Application")]
         [TestCase("- Application",                     ExpectedResult = "- Application")]
-        [TestCase("File - .txt",                       ExpectedResult = ".txt")] // see remarks
+        [TestCase("File - .txt",                       ExpectedResult = ".txt")] // any more better way?
         [TestCase("http://www.example.com/index.html", ExpectedResult = "index.html")]
         [TestCase("",                                  ExpectedResult = "Default")]
         [TestCase(null,                                ExpectedResult = "Default")]
