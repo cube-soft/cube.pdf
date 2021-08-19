@@ -82,7 +82,8 @@ namespace Cube.Pdf.Clip.Tests
         /// <returns>Collection of attached files.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<ClipItem> GetClips(this MainViewModel vm) => (IEnumerable<ClipItem>)vm.Clips.DataSource;
+        public static IEnumerable<ClipItem> GetClips(this MainViewModel vm) =>
+            (IEnumerable<ClipItem>)vm.Clips.DataSource;
 
         #endregion
     }
