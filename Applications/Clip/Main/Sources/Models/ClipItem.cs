@@ -43,10 +43,7 @@ namespace Cube.Pdf.Clip
         /// <param name="raw">Raw attachment data.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ClipItem(Attachment raw)
-        {
-            RawObject = raw;
-        }
+        public ClipItem(Attachment raw) => RawObject = raw;
 
         #endregion
 

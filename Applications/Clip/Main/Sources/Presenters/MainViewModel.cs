@@ -59,10 +59,8 @@ namespace Cube.Pdf.Clip
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SynchronizationContext context) : base(
-            new MainFacade(context),
-            new Aggregator(),
-            context)
+        public MainViewModel(SynchronizationContext context) :
+            base(new(context), new(8),context)
         {
             Clips = new BindingSource { DataSource = Facade.Clips };
 
