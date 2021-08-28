@@ -34,7 +34,7 @@
         <PackageReference Include="Cube.Images" version="4.0.2" />
         <PackageReference Include="Cube.Xui" Version="4.0.2" />
         <PackageReference Include="Fluent.Ribbon" Version="8.0.3" />
-        <PackageReference Include="gong-wpf-dragdrop" Version="2.3.2" />
+        <PackageReference Include="gong-wpf-dragdrop" Version="2.4.0" />
     </ItemGroup>
     <ItemGroup>
         <ApplicationDefinition Update="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />
