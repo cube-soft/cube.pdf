@@ -66,7 +66,8 @@ namespace Cube.Pdf.Itext
             _document = new(new PdfWriter(Io.Create(path), op));
             SetMetadata(metadata, _document);
 
-            _merger = new PdfMerger(_document, true, true).SetCloseSourceDocuments(false);
+            _merger = new(_document, true, true);
+            _ = _merger.SetCloseSourceDocuments(false);
         }
 
         #endregion
