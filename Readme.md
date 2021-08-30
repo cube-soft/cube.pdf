@@ -119,9 +119,9 @@ Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Li
 ## Contributing
 
 1. Fork [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/fork) repository.
-2. Create a feature branch from the master, net45, or net50 branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clobber](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
+2. Create a feature branch from the master branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clobber](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
 3. Commit your changes.
-4. Rebase your local changes to the corresponding branch.
+4. Rebase your local changes to the master branch.
 5. Run the dotnet test command or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
 6. Create a new Pull Request.
 
