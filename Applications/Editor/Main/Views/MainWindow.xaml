@@ -29,6 +29,7 @@
     mc:Ignorable="d"
 
     TitleBarHeight="30"
+    VerticalIconAlignment="Center"
     Height="{Binding Value.Settings.Height, Mode=TwoWay}"
     Width="{Binding Value.Settings.Width, Mode=TwoWay}"
     FontFamily="Meiryo UI"
