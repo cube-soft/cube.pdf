@@ -73,9 +73,12 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private static void MovePrevious(this MainFacade src, DragDropObject obj)
         {
-            var delta = obj.DropIndex - obj.DragIndex;
+            var drop  = Math.Max(obj.DropIndex, 0);
+            var delta = drop - obj.DragIndex;
             var n = src.Value.Images.Selection.Indices
-                       .Where(i => i < obj.DragIndex && i >= obj.DropIndex).Count();
+                       .Where(i => i < obj.DragIndex && i >= obj.DropIndex)
+                       .Count();
+
             src.Move(delta + n);
         }
 
@@ -90,9 +93,12 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private static void MoveNext(this MainFacade src, DragDropObject obj)
         {
-            var delta = obj.DropIndex - obj.DragIndex;
+            var drop  = Math.Min(obj.DropIndex, src.Value.Count - 1);
+            var delta = drop - obj.DragIndex;
             var n = src.Value.Images.Selection.Indices
-                       .Where(i => i > obj.DragIndex && i <= obj.DropIndex).Count();
+                       .Where(i => i > obj.DragIndex && i <= obj.DropIndex)
+                       .Count();
+
             src.Move(delta - n);
         }
 
