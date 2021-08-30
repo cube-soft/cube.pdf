@@ -33,7 +33,7 @@ namespace Cube.Pdf.Converter.Tests
     /// SettingTest
     ///
     /// <summary>
-    /// SettingFolder のテスト用クラスです。
+    /// Tests the SettingFolder class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Converter.Tests
         /// Create
         ///
         /// <summary>
-        /// オブジェクトの初期値を確認します。
+        /// Tests the properties of the SettingFolder class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -176,7 +176,7 @@ namespace Cube.Pdf.Converter.Tests
         /// Set
         ///
         /// <summary>
-        /// プログラム引数で更新するテストを実行します
+        /// Tests the Set method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -219,7 +219,7 @@ namespace Cube.Pdf.Converter.Tests
         /// Set_Empty
         ///
         /// <summary>
-        /// プログラム引数が空の時の挙動を確認します。
+        /// Tests the Set method with the empty arguments.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

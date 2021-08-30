@@ -55,10 +55,7 @@ namespace Cube.Pdf
         /// <param name="degree">Angle in degree unit.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Angle(int degree)
-        {
-            Degree = Normalize(degree);
-        }
+        public Angle(int degree) => Degree = Normalize(degree);
 
         #region Properties
 
@@ -67,7 +64,7 @@ namespace Cube.Pdf
         /// Degree
         ///
         /// <summary>
-        /// Gets the agnle in degree unit.
+        /// Gets the angle in degree unit.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -75,10 +72,10 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Ragian
+        /// Radian
         ///
         /// <summary>
-        /// Gets the agnle in ragian unit.
+        /// Gets the angle in radian unit.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

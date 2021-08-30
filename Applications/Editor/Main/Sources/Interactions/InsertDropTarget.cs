@@ -47,10 +47,7 @@ namespace Cube.Pdf.Editor
         /// <param name="callback">Callback action when dropped.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public InsertDropTarget(Action<int, int> callback)
-        {
-            _callback = callback;
-        }
+        public InsertDropTarget(Action<int, int> callback) => _callback = callback;
 
         #endregion
 
@@ -61,7 +58,7 @@ namespace Cube.Pdf.Editor
         /// DragOver
         ///
         /// <summary>
-        /// Invokes the dragover action.
+        /// Invokes the hover action.
         /// </summary>
         ///
         /// <param name="e">Dropped information.</param>

@@ -95,14 +95,11 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
-            {
-                var v = Enum.GetValues(typeof(Format)).Cast<Format>().Where(e => e != Format.Text);
-                foreach (var src in v) yield return new TestCaseData(src);
-            }
-        }
+            var v = Enum.GetValues(typeof(Format)).Cast<Format>().Where(e => e != Format.Text);
+            foreach (var src in v) yield return new(src);
+        }}
 
         #endregion
     }

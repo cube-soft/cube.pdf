@@ -60,7 +60,7 @@ namespace Cube.Pdf.Editor
             Directory  = directory;
             Filter     = filter;
 
-            _core = new System.IO.FileSystemWatcher
+            _core = new()
             {
                 Path                  = Directory,
                 Filter                = Filter,

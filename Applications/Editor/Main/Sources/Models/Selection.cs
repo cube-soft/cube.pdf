@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected ConcurrentDictionary<T, byte> RawObject { get; } = new ConcurrentDictionary<T, byte>();
+        protected ConcurrentDictionary<T, byte> RawObject { get; } = new();
 
         #endregion
 
@@ -111,8 +111,6 @@ namespace Cube.Pdf.Editor
             if (RawObject.TryRemove(src, out _)) Refresh(nameof(Count));
         }
 
-        #region IEnumerable<T>
-
         /* ----------------------------------------------------------------- */
         ///
         /// GetEnumerator
@@ -138,8 +136,6 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        #endregion
 
         /* ----------------------------------------------------------------- */
         ///

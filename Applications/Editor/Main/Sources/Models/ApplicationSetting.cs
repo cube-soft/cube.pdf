@@ -83,7 +83,7 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private static readonly OnceAction _core = new OnceAction(() => new ApplicationSetting());
+        private static readonly OnceAction _core = new(() => new ApplicationSetting());
         private readonly IDisposable _dispose;
         #endregion
     }

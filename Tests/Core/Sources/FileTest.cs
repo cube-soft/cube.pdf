@@ -137,13 +137,10 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestClasses
+        public static IEnumerable<TestCaseData> TestClasses { get
         {
-            get
-            {
-                foreach (var klass in GetClassIds()) yield return new TestCaseData(klass);
-            }
-        }
+            foreach (var klass in GetIds()) yield return new TestCaseData(klass);
+        }}
 
         /* ----------------------------------------------------------------- */
         ///
@@ -153,30 +150,19 @@ namespace Cube.Pdf.Tests
         /// Gets test cases.
         /// </summary>
         ///
-        /// <remarks>
-        /// テストケースは以下の順で指定します。
-        /// - IDocumentReader の実装を表す名前
-        /// - ファイル名
-        /// - パスワード
-        /// - フルアクセスな状態で開かれたかどうか
-        /// </remarks>
-        ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
+            foreach (var klass in GetIds())
             {
-                foreach (var klass in GetClassIds())
-                {
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", "",         true );
-                    yield return new TestCaseData(klass, "SampleRc40Open.pdf", "password", true );
-                    yield return new TestCaseData(klass, "SampleRc40Open.pdf", "",         false);
-                    yield return new TestCaseData(klass, "SampleAes128.pdf",   "password", true );
-                    yield return new TestCaseData(klass, "SampleAes128.pdf",   "view",     false);
-                    yield return new TestCaseData(klass, "SampleAes256.pdf",   "password", true );
-                }
+                yield return new(klass, "SampleRotation.pdf", "",         true );
+                yield return new(klass, "SampleRc40Open.pdf", "password", true );
+                yield return new(klass, "SampleRc40Open.pdf", "",         false);
+                yield return new(klass, "SampleAes128.pdf",   "password", true );
+                yield return new(klass, "SampleAes128.pdf",   "view",     false);
+                yield return new(klass, "SampleAes256.pdf",   "password", true );
             }
-        }
+        }}
 
         #endregion
     }

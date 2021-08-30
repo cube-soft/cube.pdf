@@ -119,6 +119,9 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2021-08-31 version 1.5.2
+    - Fix bugs that PDF pages cannot be Drag&Drop between windows.
+    - Update PDFium to Chromium 93 compatible.
 * 2021-08-06 version 1.5.1
     - Add help menu.
     - Update PDFium to Chromium 92 compatible.

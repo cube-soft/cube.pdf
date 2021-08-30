@@ -1,34 +1,51 @@
 Cube.Pdf
 ====
 
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.svg?label=core)](https://www.nuget.org/packages/Cube.Pdf/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Ghostscript.svg?label=ghostscript)](https://www.nuget.org/packages/Cube.Pdf.Ghostscript/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Itext.svg?label=itext)](https://www.nuget.org/packages/Cube.Pdf.Itext/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Pdfium.svg?label=pdfium)](https://www.nuget.org/packages/Cube.Pdf.Pdfium/)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Converter.svg?label=cubepdf)](https://www.nuget.org/packages/Cube.Pdf.Converter/)  
-[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Ghostscript.svg?label=ghostscript.native)](https://www.nuget.org/packages/Cube.Native.Ghostscript)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Pdfium.svg?label=pdfium.native)](https://www.nuget.org/packages/Cube.Native.Pdfium)
-[![NuGet](https://img.shields.io/nuget/v/Cube.Native.Pdfium.Lite.svg?label=pdfium.lite.native)](https://www.nuget.org/packages/Cube.Native.Pdfium.Lite)  
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
-[![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
+[![Core](https://badgen.net/nuget/v/cube.pdf?label=core)](https://www.nuget.org/packages/cube.pdf/)
+[![Ghostscript](https://badgen.net/nuget/v/cube.pdf.ghostscript?label=gs)](https://www.nuget.org/packages/cube.pdf.ghostscript/)
+[![iText](https://badgen.net/nuget/v/cube.pdf.itext?label=itext)](https://www.nuget.org/packages/cube.pdf.itext/)
+[![PDFium](https://badgen.net/nuget/v/cube.pdf.pdfium?label=pdfium)](https://www.nuget.org/packages/cube.pdf.pdfium/)
+[![CubePDF](https://badgen.net/nuget/v/cube.pdf.converter?label=cubepdf)](https://www.nuget.org/packages/cube.pdf.converter/)
+[![GS.Native](https://badgen.net/nuget/v/cube.native.ghostscript?label=native.gs)](https://www.nuget.org/packages/cube.native.ghostscript/)
+[![PDFium.Native](https://badgen.net/nuget/v/cube.native.pdfium?label=native.pdfium)](https://www.nuget.org/packages/cube.native.pdfium/)
+[![PDFium.Native.Lite](https://badgen.net/nuget/v/cube.native.pdfium.lite?label=native.pdfium.lite)](https://www.nuget.org/packages/cube.native.pdfium.lite/)
+[![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
+[![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
-Cube.Pdf libraries wrap [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), [iText](https://itextpdf.com/), and other third-party PDF libraries. The repository also has some PDF applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more.
-Libraries and applications are available for .NET Framework 3.5, 4.5, .NET Standard 2.0 (.NET Core 3.1 for applications), or later.
-Note that some projects are licensed under the GNU AGPLv3 and the others under the Apache 2.0. See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
+CubePDF SDK provides wrapper APIs for the [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), and [iText](https://itextpdf.com/) libraries. The project also has some Windows desktop applications, such as [CubePDF](https://www.cube-soft.jp/cubepdf/), [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/), [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/), and more. Libraries and applications are available for .NET Framework 3.5, 4.5, .NET Standard 2.0 (.NET Core 3.1 for applications), or later. Note that some projects are licensed under the GNU AGPLv3 and the others under the Apache 2.0. See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
 
-## Libraries
+## Applications
 
-### Cube.Pdf and related libraries
+### CubePDF
+
+![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Overview.png?raw=true)
+
+[CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries.
+
+You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases).
+Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
+
+### CubePDF Utility
+
+![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Overview.png?raw=true)
+
+[CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries.
+
+You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) (Japanese) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor).
+
+## CubePDF SDK
+
+### Cube.Pdf, Cube.Pdf.Itext, and Cube.Pdf.Pdfium
 
 You can install Cube.Pdf libraries through the NuGet package commands or UI on Visual Studio.
-The Libraries provide the functionality to treat third-party libraries as the same interface (except for the Cube.Pdf.Ghostscript).
+The Libraries provide the functionality to treat third-party libraries as the same interface.
 Basic interfaces of the Cube.Pdf are as follows:
 
 * [IDocumentReader](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentReader.cs)
 * [IDocumentRenderer](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentRenderer.cs)
 * [IDocumentWriter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Core/Sources/IDocumentWriter.cs)
 
-For example, the following sample accesses a PDF document by using the iTextSharp library.
+For example, the following sample accesses a PDF document by using the iText library.
 And when you want to use the PDFium library, you only modify the description of "using Cube.Pdf.Itext" to "using Cube.Pdf.Pdfium".
 
 ```cs
@@ -90,25 +107,6 @@ converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 
 See the [Readme](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Readme.md) in the Ghostscript directory for details.
 
-## Applications
-
-### CubePDF
-
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Overview.png?raw=true)
-
-[CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application uses Ghostscript and iTextSharp.
-
-You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases).
-Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
-
-### CubePDF Utility
-
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Overview.png?raw=true)
-
-[CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application uses PDFium and iTextSharp.
-
-You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) (Japanese) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor).
-
 ## Dependencies
 
 Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries) are as follows. [Applications](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications) may use some other third-party libraries.
@@ -121,9 +119,9 @@ Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Li
 ## Contributing
 
 1. Fork [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/fork) repository.
-2. Create a feature branch from the master, net45, or net50 branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clobber](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
+2. Create a feature branch from the master branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clobber](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
 3. Commit your changes.
-4. Rebase your local changes to the corresponding branch.
+4. Rebase your local changes to the master branch.
 5. Run the dotnet test command or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
 6. Create a new Pull Request.
 

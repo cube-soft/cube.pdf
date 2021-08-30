@@ -49,6 +49,6 @@ namespace Cube.Pdf
         /// <summary>Revision 5, 256bit AES (supported from PDF 1.7 ExtensionLevel 3)</summary>
         Aes256 = 5,
         /// <summary>Revision 6, 256bit AES (supported from Acrobat X)</summary>
-        Aes256r6 = 6,
+        Aes256Ex = 6,
     }
 }

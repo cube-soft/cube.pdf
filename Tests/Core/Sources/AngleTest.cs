@@ -24,7 +24,7 @@ namespace Cube.Pdf.Tests
     /// AngleTest
     ///
     /// <summary>
-    /// Angle のテスト用クラスです。
+    /// Tests the Angle class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -36,8 +36,8 @@ namespace Cube.Pdf.Tests
         /// Create
         ///
         /// <summary>
-        /// Angle オブジェクト生成時に [0, 360) で正規化される事を
-        /// 確認します。
+        /// Tests that the specified value is normalized to [0, 360) when
+        /// creating a new Angle object.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -51,10 +51,11 @@ namespace Cube.Pdf.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Plus
         ///
         /// <summary>
-        /// 角度の加算時に [0, 360) で正規化される事を確認します。
+        /// Tests that the specified degree value is normalized to [0, 360)
+        /// when the plus operator is invoked.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

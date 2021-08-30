@@ -15,31 +15,16 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
-
-namespace Cube.Pdf.Converter.Tests
+namespace System.Runtime.CompilerServices
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
+    /// IsExternalInit
     ///
     /// <summary>
-    /// Represents the main program.
+    /// Provides init accessor of properties.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Main
-        ///
-        /// <summary>
-        /// Represents the main method.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args) { }
-    }
+    internal sealed class IsExternalInit { }
 }

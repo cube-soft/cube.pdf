@@ -86,7 +86,8 @@ namespace Cube.Pdf.Pages.Tests
         /// <returns>Collection of added files.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<File> GetFiles(this MainViewModel vm) => (IEnumerable<File>)vm.Files.DataSource;
+        public static IEnumerable<File> GetFiles(this MainViewModel vm) =>
+            (IEnumerable<File>)vm.Files.DataSource;
 
         #endregion
     }

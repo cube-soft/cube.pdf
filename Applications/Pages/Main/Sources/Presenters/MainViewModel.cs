@@ -68,7 +68,7 @@ namespace Cube.Pdf.Pages
         ///
         /* --------------------------------------------------------------------- */
         public MainViewModel(SettingFolder src, IEnumerable<string> args, SynchronizationContext context) :
-            base(new(src, context), new(), context)
+            base(new(src, context), new(12), context)
         {
             Arguments = args;
             Files = new() { DataSource = Facade.Files };

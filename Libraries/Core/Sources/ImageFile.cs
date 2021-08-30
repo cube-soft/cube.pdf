@@ -48,12 +48,7 @@ namespace Cube.Pdf
         /// <param name="src">Path of the image file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageFile(string src) : base(IoEx.GetEntitySource(src))
-        {
-            using var ss = Io.Open(src);
-            using var image = Image.FromStream(ss);
-            Setup(image);
-        }
+        public ImageFile(string src) : this(new InitSource(src)) { }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -68,9 +63,31 @@ namespace Cube.Pdf
         /// <param name="image">Image object.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public ImageFile(string src, Image image) : base(IoEx.GetEntitySource(src))
+        public ImageFile(string src, Image image) : this(new InitSource(src, image)) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ImageFile
+        ///
+        /// <summary>
+        /// Initializes a new instance of the ImageFile class with the
+        /// specified source object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ImageFile(InitSource src) : base(IoEx.GetEntitySource(src.Path), true)
         {
-            Setup(image);
+            try
+            {
+                var guid = src.Image.FrameDimensionsList[0];
+                var dim  = new FrameDimension(guid);
+                var x    = src.Image.HorizontalResolution;
+                var y    = src.Image.VerticalResolution;
+
+                Count      = src.Image.GetFrameCount(dim);
+                Resolution = new(x, y);
+            }
+            finally { src.Disposable?.Dispose(); }
         }
 
         #endregion
@@ -79,24 +96,30 @@ namespace Cube.Pdf
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Setup
+        /// InitSource
         ///
         /// <summary>
-        /// Initializes properties of an ImageFile object.
+        /// Represents the resources when initialized.
         /// </summary>
         ///
-        /// <param name="src">Image object.</param>
-        ///
         /* ----------------------------------------------------------------- */
-        private void Setup(Image src)
+        private class InitSource
         {
-            var guid = src.FrameDimensionsList[0];
-            var dim  = new FrameDimension(guid);
-            var x    = src.HorizontalResolution;
-            var y    = src.VerticalResolution;
-
-            Count      = src.GetFrameCount(dim);
-            Resolution = new(x, y);
+            public InitSource(string src)
+            {
+                var ss = Io.Open(src);
+                Path       = src;
+                Image      = Image.FromStream(ss);
+                Disposable = new(Image, ss);
+            }
+            public InitSource(string src, Image image)
+            {
+                Path  = src;
+                Image = image;
+            }
+            public string Path { get; }
+            public Image Image { get; }
+            public DisposableContainer Disposable { get; }
         }
 
         #endregion

@@ -80,16 +80,13 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
-            {
-                var n = 0;
-                yield return new TestCaseData(n++, new[] { "Sample.pdf", "SampleRotation.pdf" });
-                yield return new TestCaseData(n++, new[] { "Sample.pdf", "Sample.jpg" });
-                yield return new TestCaseData(n++, new[] { "Sample.pdf", "Sample.pdf", "Sample.pdf" });
-            }
-        }
+            var n = 0;
+            yield return new(n++, new[] { "Sample.pdf", "SampleRotation.pdf" });
+            yield return new(n++, new[] { "Sample.pdf", "Sample.jpg" });
+            yield return new(n++, new[] { "Sample.pdf", "Sample.pdf", "Sample.pdf" });
+        }}
 
         #endregion
     }

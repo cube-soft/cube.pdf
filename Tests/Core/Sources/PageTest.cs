@@ -125,13 +125,15 @@ namespace Cube.Pdf.Tests
         [TestCase(315, 1016.1f, 1016.1f)]
         public void GetViewSize(int degree, float w, float h)
         {
-            var src = new Page(
-                null,                      // File
-                1,                         // Number
-                new SizeF(595.0f, 842.0f), // Size
-                new Angle(),               // Rotation
-                new PointF(72, 72)         // Resolution
-            ) { Delta = new Angle(degree) };
+            var src = new Page
+            {
+                File       = null,
+                Number     = 1,
+                Size       = new(595.0f, 842.0f),
+                Rotation   = new(),
+                Resolution = new(72, 72),
+                Delta      = new(degree),
+            };
 
             var dest = src.GetViewSize();
             Assert.That(dest.Width,  Is.EqualTo(w).Within(1.0));
@@ -151,20 +153,17 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
+            foreach (var klass in GetIds())
             {
-                foreach (var klass in GetClassIds())
-                {
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 1, 595.0f, 842.0f,   0);
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 2, 595.0f, 842.0f,  90);
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 3, 595.0f, 842.0f, 180);
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 4, 595.0f, 842.0f, 270);
-                    yield return new TestCaseData(klass, "SampleRotation.pdf", 5, 595.0f, 842.0f,   0);
-                }
+                yield return new TestCaseData(klass, "SampleRotation.pdf", 1, 595.0f, 842.0f,   0);
+                yield return new TestCaseData(klass, "SampleRotation.pdf", 2, 595.0f, 842.0f,  90);
+                yield return new TestCaseData(klass, "SampleRotation.pdf", 3, 595.0f, 842.0f, 180);
+                yield return new TestCaseData(klass, "SampleRotation.pdf", 4, 595.0f, 842.0f, 270);
+                yield return new TestCaseData(klass, "SampleRotation.pdf", 5, 595.0f, 842.0f,   0);
             }
-        }
+        }}
 
         #endregion
     }

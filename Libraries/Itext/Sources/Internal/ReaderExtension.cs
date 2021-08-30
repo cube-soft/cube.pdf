@@ -49,14 +49,15 @@ namespace Cube.Pdf.Itext
         ///
         /// <param name="src">PdfDocument object.</param>
         /// <param name="path">Path of the source PDF file.</param>
-        /// <param name="pw">Password of the source PDF file.</param>
+        /// <param name="password">Password of the source PDF file.</param>
         ///
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static PdfFile GetFile(this PdfDocument src, string path, string pw) => new(path, pw)
+        public static PdfFile GetFile(this PdfDocument src, string path, string password) => new(path)
         {
             Count      = src.GetNumberOfPages(),
+            Password   = password,
             FullAccess = src.GetReader().IsOpenedWithFullPermission(),
         };
 
@@ -75,13 +76,14 @@ namespace Cube.Pdf.Itext
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetPage(this PdfDocument src, PdfFile file, int pagenum) => new(
-            file,                                          // File
-            pagenum,                                       // Number
-            GetPageSize(src, pagenum),                     // Size
-            new Angle(src.GetPage(pagenum).GetRotation()), // Rotation
-            file.Resolution                                // Resolution
-        );
+        public static Page GetPage(this PdfDocument src, PdfFile file, int pagenum) => new()
+        {
+            File        = file,
+            Number      = pagenum,
+            Size        = GetPageSize(src, pagenum),
+            Rotation    = new(src.GetPage(pagenum).GetRotation()),
+            Resolution  = file.Resolution,
+        };
 
         /* ----------------------------------------------------------------- */
         ///

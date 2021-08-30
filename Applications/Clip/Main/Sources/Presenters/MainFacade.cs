@@ -160,7 +160,7 @@ namespace Cube.Pdf.Clip
             if (_source == null) return;
             foreach (var item in _source.Attachments)
             {
-                _clips.Add(new ClipItem(item) { Status = Properties.Resources.StatusEmbedded });
+                _clips.Add(new(item) { Status = Properties.Resources.StatusEmbedded });
             }
         });
 
@@ -211,10 +211,8 @@ namespace Cube.Pdf.Clip
             foreach (var f in src)
             {
                 if (_clips.Any(e => e.RawObject.Source == f)) continue;
-                _clips.Insert(0, new ClipItem(new Attachment(f))
-                {
-                    Status = Properties.Resources.StatusNew
-                });
+                var e = new ClipItem(new(f)) { Status = Properties.Resources.StatusNew };
+                _clips.Insert(0, e);
             }
         });
 

@@ -161,14 +161,11 @@ namespace Cube.Pdf.Clip.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
-            {
-                var n = 0;
-                yield return new TestCaseData(n++, "Sample.pdf", new[] { "Sample.jpg" });
-            }
-        }
+            var n = 0;
+            yield return new TestCaseData(n++, "Sample.pdf", new[] { "Sample.jpg" });
+        }}
 
         #endregion
     }

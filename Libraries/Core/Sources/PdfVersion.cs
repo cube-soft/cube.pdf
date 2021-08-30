@@ -18,6 +18,7 @@
 using System;
 using System.Runtime.Serialization;
 using System.Text;
+using Cube.FileSystem;
 using Cube.Mixin.String;
 
 namespace Cube.Pdf
@@ -33,7 +34,7 @@ namespace Cube.Pdf
     /* --------------------------------------------------------------------- */
     [Serializable]
     [DataContract]
-    public class PdfVersion
+    public class PdfVersion : SerializableBase
     {
         #region Constructors
 
@@ -117,7 +118,11 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public string Subset { get; set; }
+        public string Subset
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -129,7 +134,11 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public int Major { get; set; }
+        public int Major
+        {
+            get => Get(() => 1);
+            set => Set(value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,7 +150,11 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public int Minor { get; set; }
+        public int Minor
+        {
+            get => Get(() => 0);
+            set => Set(value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -153,7 +166,11 @@ namespace Cube.Pdf
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public int ExtensionLevel { get; set; }
+        public int ExtensionLevel
+        {
+            get => Get(() => 0);
+            set => Set(value);
+        }
 
         #endregion
 
@@ -176,28 +193,6 @@ namespace Cube.Pdf
             _ = sb.Append($"{Major}.{Minor}");
             if (ExtensionLevel > 0) _ = sb.Append($" {nameof(ExtensionLevel)} {ExtensionLevel}");
             return sb.ToString();
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnDeserializing
-        ///
-        /// <summary>
-        /// Occurs before deserializing.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext context)
-        {
-            Major          = 1;
-            Minor          = 0;
-            ExtensionLevel = 0;
-            Subset         = string.Empty;
         }
 
         #endregion
