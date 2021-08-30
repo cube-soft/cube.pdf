@@ -143,8 +143,8 @@ namespace Cube.Pdf.Converter
                 Text        = Properties.Resources.TitleSelectSource,
                 Value       = GetFileNames(path),
                 Multiselect = false,
-                Filter      = ViewResource.SourceFilters.GetFilter(),
-                FilterIndex = ViewResource.SourceFilters.GetFilterIndex(path),
+                Filter      = Resource.SourceFilters.GetFilter(),
+                FilterIndex = Resource.SourceFilters.GetFilterIndex(path),
             };
 
             if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
@@ -173,8 +173,8 @@ namespace Cube.Pdf.Converter
                 Text            = Properties.Resources.TitleSelectDestination,
                 Value           = GetFileName(path),
                 OverwritePrompt = false,
-                Filter          = ViewResource.DestinationFilters.GetFilter(),
-                FilterIndex     = ViewResource.DestinationFilters.GetFilterIndex(path),
+                Filter          = Resource.DestinationFilters.GetFilter(),
+                FilterIndex     = Resource.DestinationFilters.GetFilterIndex(path),
             };
 
             if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
@@ -203,7 +203,7 @@ namespace Cube.Pdf.Converter
                 Text        = Properties.Resources.TitleSelectUserProgram,
                 Value       = GetFileNames(path),
                 Multiselect = false,
-                Filter      = ViewResource.UserProgramFilters.GetFilter(),
+                Filter      = Resource.UserProgramFilters.GetFilter(),
             };
 
             if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);

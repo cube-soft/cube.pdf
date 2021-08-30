@@ -186,7 +186,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         [TestCase(EncryptionMethod.Standard128, Language.English,  ExpectedResult = "128-bit RC4")]
         [TestCase(EncryptionMethod.Aes128,      Language.English,  ExpectedResult = "128-bit AES")]
         [TestCase(EncryptionMethod.Aes256,      Language.English,  ExpectedResult = "256-bit AES")]
-        [TestCase(EncryptionMethod.Aes256r6,    Language.English,  ExpectedResult = "256-bit AES (Revision 6)")]
+        [TestCase(EncryptionMethod.Aes256Ex,    Language.English,  ExpectedResult = "256-bit AES (Revision 6)")]
         [TestCase(EncryptionMethod.Unknown,     Language.English,  ExpectedResult = "Unknown")]
         [TestCase(EncryptionMethod.Unknown,     Language.Japanese, ExpectedResult = "Unknown")]
         public string EncryptionMethodConverter(EncryptionMethod src, Language lang) =>

@@ -44,12 +44,10 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password to open the PDF file.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public PdfFile(string src, string password) : base(IoEx.GetEntitySource(src))
+        public PdfFile(string src) : base(IoEx.GetEntitySource(src), true)
         {
-            Password   = password;
             Resolution = new(Point, Point);
         }
 
@@ -77,7 +75,7 @@ namespace Cube.Pdf
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Password { get; set; } = string.Empty;
+        public string Password { get; init; } = string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -94,7 +92,7 @@ namespace Cube.Pdf
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public bool FullAccess { get; set; } = true;
+        public bool FullAccess { get; init; } = true;
 
         #endregion
     }

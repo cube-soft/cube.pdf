@@ -24,7 +24,7 @@ namespace Cube.Pdf.Tests
     /// Program
     ///
     /// <summary>
-    /// Represetns the main program.
+    /// Represents the main program.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

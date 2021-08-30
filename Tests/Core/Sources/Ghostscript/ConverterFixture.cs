@@ -29,7 +29,7 @@ namespace Cube.Pdf.Tests.Ghostscript
     /// ConverterFixture
     ///
     /// <summary>
-    /// Converter およびそのサブクラスのテストを補助するためのクラスです。
+    /// Provides functionality to test the Converter and inherited classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,47 +42,48 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// Run
         ///
         /// <summary>
-        /// Converter オブジェクトを実行します。
+        /// Invokes the specified Converter object with the specified
+        /// arguments.
         /// </summary>
         ///
-        /// <param name="cv">Converter オブジェクト</param>
-        /// <param name="src">入力ファイル名</param>
-        /// <param name="dest">拡張子を含まない出力ファイル名</param>
+        /// <param name="obj">Source Converter object.</param>
+        /// <param name="src">Source filename.</param>
+        /// <param name="dest">Filename without extension to save.</param>
         ///
-        /// <returns>出力パス</returns>
+        /// <returns>Path to save.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected string Run(Converter cv, string src, string dest) =>
-            Run(cv, src, dest, dest);
+        protected string Run(Converter obj, string src, string dest) => Run(obj, src, dest, dest);
 
         /* ----------------------------------------------------------------- */
         ///
         /// Run
         ///
         /// <summary>
-        /// Converter オブジェクトを実行します。
+        /// Invokes the specified Converter object with the specified
+        /// arguments.
         /// </summary>
         ///
-        /// <param name="cv">Converter オブジェクト</param>
-        /// <param name="src">入力ファイル名</param>
-        /// <param name="dest">拡張子を含まない出力ファイル名</param>
-        /// <param name="log">拡張子を含まないログファイル名</param>
+        /// <param name="obj">Source Converter object.</param>
+        /// <param name="src">Source filename.</param>
+        /// <param name="dest">Filename without extension to save.</param>
+        /// <param name="log">Log filename without extension.</param>
         ///
-        /// <returns>出力パス</returns>
+        /// <returns>Path to save.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected string Run(Converter cv, string src, string dest, string log)
+        protected string Run(Converter obj, string src, string dest, string log)
         {
             var asm = Assembly.GetExecutingAssembly();
             var sp  = GetSource(src);
-            var dp  = Get($"{dest}{cv.Format.GetExtension()}");
+            var dp  = Get($"{dest}{obj.Format.GetExtension()}");
             var dir = Io.Get(asm.Location).DirectoryName;
 
-            cv.Quiet = false;
-            cv.Log   = Get($"{log}.log");
-            cv.Temp  = Get("Tmp");
-            cv.Resources.Add(Io.Combine(dir, "lib"));
-            cv.Invoke(sp, dp);
+            obj.Quiet = false;
+            obj.Log   = Get($"{log}.log");
+            obj.Temp  = Get("Tmp");
+            obj.Resources.Add(Io.Combine(dir, "lib"));
+            obj.Invoke(sp, dp);
 
             return dp;
         }
@@ -92,41 +93,40 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// TestCase
         ///
         /// <summary>
-        /// テストケースを生成します。
+        /// Creates a new test case with the specified arguments.
         /// </summary>
         ///
-        /// <param name="id">テスト ID</param>
-        /// <param name="cv">Converter オブジェクト</param>
-        /// <param name="src">入力ファイル名</param>
-        /// <param name="obj">出力ファイル名を決定するオブジェクト</param>
+        /// <param name="id">Test ID.</param>
+        /// <param name="obj">Source Converter object.</param>
+        /// <param name="src">Source filename.</param>
+        /// <param name="predicate">
+        /// Object to determine the save filename.
+        /// </param>
         ///
-        /// <returns>テストケースオブジェクト</returns>
+        /// <returns>TestCaseData object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData TestCase<T>(int id, Converter cv, string src, T obj)
-        {
-            var cvt = $"{obj.GetType().Name}_{obj}";
-            return TestCase(id, cv, src, cvt);
-        }
+        protected static TestCaseData TestCase<T>(int id, Converter obj, string src, T predicate) =>
+            TestCase(id, obj, src, $"{predicate.GetType().Name}_{predicate}");
 
         /* ----------------------------------------------------------------- */
         ///
         /// TestCase
         ///
         /// <summary>
-        /// テストケースを生成します。
+        /// Creates a new test case with the specified arguments.
         /// </summary>
         ///
-        /// <param name="id">テスト ID</param>
-        /// <param name="cv">Converter オブジェクト</param>
-        /// <param name="src">入力ファイル名</param>
-        /// <param name="dest">拡張子を含まない出力ファイル名</param>
+        /// <param name="id">Test ID.</param>
+        /// <param name="obj">Source Converter object.</param>
+        /// <param name="src">Source filename.</param>
+        /// <param name="dest">Filename without extension to save.</param>
         ///
-        /// <returns>テストケースオブジェクト</returns>
+        /// <returns>TestCaseData object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static TestCaseData TestCase(int id, Converter cv, string src, string dest) =>
-            new(id, cv, src, dest);
+        protected static TestCaseData TestCase(int id, Converter obj, string src, string dest) =>
+            new(id, obj, src, dest);
 
         #endregion
     }

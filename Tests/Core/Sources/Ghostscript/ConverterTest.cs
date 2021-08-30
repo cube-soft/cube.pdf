@@ -30,7 +30,7 @@ namespace Cube.Pdf.Tests.Ghostscript
     /// ConverterTest
     ///
     /// <summary>
-    /// Represents tests of the Converter class.
+    /// Tests the Converter class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -133,54 +133,51 @@ namespace Cube.Pdf.Tests.Ghostscript
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
+            var n = 0;
+
+            /* --------------------------------------------------------- */
+            // Orientation
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new Converter(Format.Pdf)
             {
-                var n = 0;
+                Orientation = Orientation.Portrait,
+            }, "Sample.ps", Orientation.Portrait);
 
-                /* --------------------------------------------------------- */
-                // Orientation
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new Converter(Format.Pdf)
-                {
-                    Orientation = Orientation.Portrait,
-                }, "Sample.ps", Orientation.Portrait);
+            yield return TestCase(n++, new Converter(Format.Pdf)
+            {
+                Orientation = Orientation.UpsideDown,
+            }, "Sample.ps", Orientation.UpsideDown);
 
-                yield return TestCase(n++, new Converter(Format.Pdf)
-                {
-                    Orientation = Orientation.UpsideDown,
-                }, "Sample.ps", Orientation.UpsideDown);
+            yield return TestCase(n++, new Converter(Format.Pdf)
+            {
+                Orientation = Orientation.Landscape,
+            }, "Sample.ps", Orientation.Landscape);
 
-                yield return TestCase(n++, new Converter(Format.Pdf)
-                {
-                    Orientation = Orientation.Landscape,
-                }, "Sample.ps", Orientation.Landscape);
+            yield return TestCase(n++, new Converter(Format.Pdf)
+            {
+                Orientation = Orientation.Seascape,
+            }, "Sample.ps", Orientation.Seascape);
 
-                yield return TestCase(n++, new Converter(Format.Pdf)
-                {
-                    Orientation = Orientation.Seascape,
-                }, "Sample.ps", Orientation.Seascape);
+            /* --------------------------------------------------------- */
+            // Paper
+            /* --------------------------------------------------------- */
+            yield return TestCase(n++, new Converter(Format.Pdf)
+            {
+                Paper = Paper.IsoB4,
+            }, "Sample.ps", Paper.IsoB4);
 
-                /* --------------------------------------------------------- */
-                // Paper
-                /* --------------------------------------------------------- */
-                yield return TestCase(n++, new Converter(Format.Pdf)
-                {
-                    Paper = Paper.IsoB4,
-                }, "Sample.ps", Paper.IsoB4);
+            yield return TestCase(n++, new Converter(Format.Pdf)
+            {
+                Paper = Paper.JisB4,
+            }, "Sample.ps", Paper.JisB4);
 
-                yield return TestCase(n++, new Converter(Format.Pdf)
-                {
-                    Paper = Paper.JisB4,
-                }, "Sample.ps", Paper.JisB4);
-
-                yield return TestCase(n++, new Converter(Format.Pdf)
-                {
-                    Paper = Paper.Letter,
-                }, "Sample.ps", Paper.Letter);
-            }
-        }
+            yield return TestCase(n++, new Converter(Format.Pdf)
+            {
+                Paper = Paper.Letter,
+            }, "Sample.ps", Paper.Letter);
+        }}
 
         #endregion
     }

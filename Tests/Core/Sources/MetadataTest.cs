@@ -111,38 +111,35 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
+            foreach (var klass in GetIds())
             {
-                foreach (var klass in GetClassIds())
+                yield return new(klass, "Sample.pdf", new Metadata
                 {
-                    yield return new(klass, "Sample.pdf", new Metadata
-                    {
-                        Version  = new PdfVersion(1, 7),
-                        Title    = "README",
-                        Author   = "株式会社キューブ・ソフト",
-                        Subject  = "",
-                        Keywords = "",
-                        Creator  = "CubePDF",
-                        Producer = "GPL Ghostscript",
-                        Options  = VO.None,
-                    });
+                    Version  = new PdfVersion(1, 7),
+                    Title    = "README",
+                    Author   = "株式会社キューブ・ソフト",
+                    Subject  = "",
+                    Keywords = "",
+                    Creator  = "CubePDF",
+                    Producer = "GPL Ghostscript",
+                    Options  = VO.None,
+                });
 
-                    yield return new(klass, "SampleRotation.pdf", new Metadata
-                    {
-                        Version  = new PdfVersion(1, 7),
-                        Title    = "テスト用文書",
-                        Author   = "株式会社キューブ・ソフト",
-                        Subject  = "Cube.Pdf.Tests",
-                        Keywords = "CubeSoft,PDF,Test",
-                        Creator  = "CubePDF",
-                        Producer = "iTextSharp",
-                        Options   = VO.TwoPageLeft | VO.Thumbnail,
-                    });
-                }
+                yield return new(klass, "SampleRotation.pdf", new Metadata
+                {
+                    Version  = new PdfVersion(1, 7),
+                    Title    = "テスト用文書",
+                    Author   = "株式会社キューブ・ソフト",
+                    Subject  = "Cube.Pdf.Tests",
+                    Keywords = "CubeSoft,PDF,Test",
+                    Creator  = "CubePDF",
+                    Producer = "iTextSharp",
+                    Options  = VO.TwoPageLeft | VO.Thumbnail,
+                });
             }
-        }
+        }}
 
         #endregion
     }

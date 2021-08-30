@@ -114,7 +114,8 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <remarks>
-        /// 保持日数と同数のディレクトリまでは削除せずに保持する事とします。
+        /// Up to the number of directories equal to the number of days
+        /// retained will be retained without deleting them.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

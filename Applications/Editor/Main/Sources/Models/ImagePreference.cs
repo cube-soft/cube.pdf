@@ -63,7 +63,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IList<int> ItemSizeOptions { get; } = new List<int>
+        public IList<int> ItemSizeOptions { get; } = new[]
         {
             100, 150, 200, 250, 300, 400, 500, 600, 900,
         };
@@ -96,8 +96,8 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <remarks>
-        /// 設定時には ItemsSizeOptions の中で指定値を超えない最大の値が
-        /// 選択されます。
+        /// When set, the maximum value that does not exceed the specified
+        /// value in ItemsSizeOptions will be selected.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -175,8 +175,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ImageSource Dummy
         {
-            get => _dummy ??= GetDummyImage();
-            set => _dummy = value;
+            get => Get(() => GetDummyImage());
+            set => Set(value);
         }
 
         #endregion
@@ -212,10 +212,6 @@ namespace Cube.Pdf.Editor
         private ImageSource GetDummyImage() =>
             new BitmapImage(new Uri("pack://application:,,,/Assets/Medium/Loading.png"));
 
-        #endregion
-
-        #region Fields
-        private ImageSource _dummy;
         #endregion
     }
 }

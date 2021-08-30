@@ -54,29 +54,27 @@ namespace Cube.Pdf.Tests
         [TestCaseSource(nameof(TestCases))]
         public void Get(string klass, string filename, string password, Encryption cmp)
         {
-            using (var r = Create(klass, GetSource(filename), password))
-            {
-                var dest = r.Encryption;
+            using var r = Create(klass, GetSource(filename), password);
+            var dest = r.Encryption;
 
-                Assert.That(dest.Enabled,       Is.EqualTo(cmp.Enabled),       nameof(dest.Enabled));
-                Assert.That(dest.Method,        Is.EqualTo(cmp.Method),        nameof(dest.Method));
-                Assert.That(dest.OwnerPassword, Is.EqualTo(cmp.OwnerPassword), nameof(dest.OwnerPassword));
+            Assert.That(dest.Enabled,       Is.EqualTo(cmp.Enabled),       nameof(dest.Enabled));
+            Assert.That(dest.Method,        Is.EqualTo(cmp.Method),        nameof(dest.Method));
+            Assert.That(dest.OwnerPassword, Is.EqualTo(cmp.OwnerPassword), nameof(dest.OwnerPassword));
 
-                // TODO: Implementation of PDFium is incomplete.
-                // Assert.That(dest.OpenWithPassword, Is.EqualTo(cmp.OpenWithPassword), nameof(dest.OpenWithPassword));
-                // Assert.That(dest.UserPassword, Is.EqualTo(cmp.UserPassword), nameof(dest.UserPassword));
+            // TODO: Implementation of PDFium is incomplete.
+            // Assert.That(dest.OpenWithPassword, Is.EqualTo(cmp.OpenWithPassword), nameof(dest.OpenWithPassword));
+            // Assert.That(dest.UserPassword, Is.EqualTo(cmp.UserPassword), nameof(dest.UserPassword));
 
-                var x = dest.Permission;
-                var y = cmp.Permission;
+            var x = dest.Permission;
+            var y = cmp.Permission;
 
-                Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
-                Assert.That(x.CopyContents,      Is.EqualTo(y.CopyContents),      nameof(x.CopyContents));
-                Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
-                Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
-                Assert.That(x.ModifyContents,    Is.EqualTo(y.ModifyContents),    nameof(x.ModifyContents));
-                Assert.That(x.Print,             Is.EqualTo(y.Print),             nameof(x.Print));
-                Assert.That(x.Value,             Is.EqualTo(y.Value),             nameof(x.Value));
-            }
+            Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
+            Assert.That(x.CopyContents,      Is.EqualTo(y.CopyContents),      nameof(x.CopyContents));
+            Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
+            Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
+            Assert.That(x.ModifyContents,    Is.EqualTo(y.ModifyContents),    nameof(x.ModifyContents));
+            Assert.That(x.Print,             Is.EqualTo(y.Print),             nameof(x.Print));
+            Assert.That(x.Value,             Is.EqualTo(y.Value),             nameof(x.Value));
         }
 
         #endregion
@@ -92,108 +90,69 @@ namespace Cube.Pdf.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
+            foreach (var klass in GetIds())
             {
-                foreach (var klass in GetClassIds())
+                yield return new(klass, "Sample.pdf", "", new Encryption
                 {
-                    yield return new TestCaseData(klass, "Sample.pdf", "", new Encryption
+                    Method           = EncryptionMethod.Unknown,
+                    Enabled          = false,
+                    OwnerPassword    = string.Empty,
+                    OpenWithPassword = false,
+                    UserPassword     = string.Empty,
+                    Permission       = new Permission
                     {
-                        Method           = EncryptionMethod.Unknown,
-                        Enabled          = false,
-                        OwnerPassword    = string.Empty,
-                        OpenWithPassword = false,
-                        UserPassword     = string.Empty,
-                        Permission       = new Permission
-                        {
-                            Accessibility     = PermissionValue.Allow,
-                            CopyContents      = PermissionValue.Allow,
-                            InputForm         = PermissionValue.Allow,
-                            ModifyAnnotations = PermissionValue.Allow,
-                            ModifyContents    = PermissionValue.Allow,
-                            Print             = PermissionValue.Allow,
-                        }
-                    });
+                        Accessibility     = PermissionValue.Allow,
+                        CopyContents      = PermissionValue.Allow,
+                        InputForm         = PermissionValue.Allow,
+                        ModifyAnnotations = PermissionValue.Allow,
+                        ModifyContents    = PermissionValue.Allow,
+                        Print             = PermissionValue.Allow,
+                    }
+                });
 
-                    yield return new TestCaseData(klass, "SampleRc40.pdf", "password", new Encryption
+                yield return new(klass, "SampleRc40.pdf", "password", new Encryption
+                {
+                    Method           = EncryptionMethod.Standard40,
+                    Enabled          = true,
+                    OwnerPassword    = "password",
+                    OpenWithPassword = true,
+                    UserPassword     = "view",
+                    Permission       = new Permission
                     {
-                        Method           = EncryptionMethod.Standard40,
-                        Enabled          = true,
-                        OwnerPassword    = "password",
-                        OpenWithPassword = true,
-                        UserPassword     = "view",
-                        Permission       = new Permission
-                        {
-                            Accessibility     = PermissionValue.Allow,
-                            CopyContents      = PermissionValue.Allow,
-                            InputForm         = PermissionValue.Allow,
-                            ModifyAnnotations = PermissionValue.Allow,
-                            ModifyContents    = PermissionValue.Allow,
-                            Print             = PermissionValue.Allow,
-                        }
-                    });
+                        Accessibility     = PermissionValue.Allow,
+                        CopyContents      = PermissionValue.Allow,
+                        InputForm         = PermissionValue.Allow,
+                        ModifyAnnotations = PermissionValue.Allow,
+                        ModifyContents    = PermissionValue.Allow,
+                        Print             = PermissionValue.Allow,
+                    }
+                });
 
-                    yield return new TestCaseData(klass, "SampleRc128.pdf", "password", new Encryption
+                yield return new(klass, "SampleRc128.pdf", "password", new Encryption
+                {
+                    Method           = EncryptionMethod.Standard128,
+                    Enabled          = true,
+                    OwnerPassword    = "password",
+                    OpenWithPassword = true,
+                    UserPassword     = "view",
+                    Permission       = new Permission
                     {
-                        Method           = EncryptionMethod.Standard128,
-                        Enabled          = true,
-                        OwnerPassword    = "password",
-                        OpenWithPassword = true,
-                        UserPassword     = "view",
-                        Permission       = new Permission
-                        {
-                            Accessibility     = PermissionValue.Allow,
-                            CopyContents      = PermissionValue.Allow,
-                            InputForm         = PermissionValue.Allow,
-                            ModifyAnnotations = PermissionValue.Allow,
-                            ModifyContents    = PermissionValue.Allow,
-                            Print             = PermissionValue.Allow,
-                        }
-                    });
+                        Accessibility     = PermissionValue.Allow,
+                        CopyContents      = PermissionValue.Allow,
+                        InputForm         = PermissionValue.Allow,
+                        ModifyAnnotations = PermissionValue.Allow,
+                        ModifyContents    = PermissionValue.Allow,
+                        Print             = PermissionValue.Allow,
+                    }
+                });
 
-                    yield return new TestCaseData(klass, "SampleAes128.pdf", "view", new Encryption
-                    {
-                        Method           = EncryptionMethod.Aes128,
-                        Enabled          = true,
-                        OwnerPassword    = "", // "password"
-                        OpenWithPassword = true,
-                        UserPassword     = "view",
-                        Permission       = new Permission
-                        {
-                            Accessibility     = PermissionValue.Deny,
-                            CopyContents      = PermissionValue.Deny,
-                            InputForm         = PermissionValue.Deny,
-                            ModifyAnnotations = PermissionValue.Deny,
-                            ModifyContents    = PermissionValue.Deny,
-                            Print             = PermissionValue.Deny,
-                        }
-                    });
-
-                    yield return new TestCaseData(klass, "SampleAes256.pdf", "password", new Encryption
-                    {
-                        Method           = EncryptionMethod.Aes256,
-                        Enabled          = true,
-                        OwnerPassword    = "password",
-                        OpenWithPassword = true,
-                        UserPassword     = "view",
-                        Permission       = new Permission
-                        {
-                            Accessibility     = PermissionValue.Allow,
-                            CopyContents      = PermissionValue.Allow,
-                            InputForm         = PermissionValue.Allow,
-                            ModifyAnnotations = PermissionValue.Allow,
-                            ModifyContents    = PermissionValue.Allow,
-                            Print             = PermissionValue.Allow,
-                        }
-                    });
-                }
-
-                yield return new TestCaseData(nameof(Cube.Pdf.Itext), "SampleAes128.pdf", "password", new Encryption
+                yield return new(klass, "SampleAes128.pdf", "view", new Encryption
                 {
                     Method           = EncryptionMethod.Aes128,
                     Enabled          = true,
-                    OwnerPassword    = "password",
+                    OwnerPassword    = "", // "password"
                     OpenWithPassword = true,
                     UserPassword     = "view",
                     Permission       = new Permission
@@ -207,9 +166,9 @@ namespace Cube.Pdf.Tests
                     }
                 });
 
-                yield return new TestCaseData(nameof(Cube.Pdf.Pdfium), "SampleAes256r6.pdf", "password", new Encryption
+                yield return new(klass, "SampleAes256.pdf", "password", new Encryption
                 {
-                    Method           = EncryptionMethod.Aes256r6,
+                    Method           = EncryptionMethod.Aes256,
                     Enabled          = true,
                     OwnerPassword    = "password",
                     OpenWithPassword = true,
@@ -225,7 +184,43 @@ namespace Cube.Pdf.Tests
                     }
                 });
             }
-        }
+
+            yield return new(nameof(Cube.Pdf.Itext), "SampleAes128.pdf", "password", new Encryption
+            {
+                Method           = EncryptionMethod.Aes128,
+                Enabled          = true,
+                OwnerPassword    = "password",
+                OpenWithPassword = true,
+                UserPassword     = "view",
+                Permission       = new Permission
+                {
+                    Accessibility     = PermissionValue.Deny,
+                    CopyContents      = PermissionValue.Deny,
+                    InputForm         = PermissionValue.Deny,
+                    ModifyAnnotations = PermissionValue.Deny,
+                    ModifyContents    = PermissionValue.Deny,
+                    Print             = PermissionValue.Deny,
+                }
+            });
+
+            yield return new(nameof(Cube.Pdf.Pdfium), "SampleAes256r6.pdf", "password", new Encryption
+            {
+                Method           = EncryptionMethod.Aes256Ex,
+                Enabled          = true,
+                OwnerPassword    = "password",
+                OpenWithPassword = true,
+                UserPassword     = "view",
+                Permission       = new Permission
+                {
+                    Accessibility     = PermissionValue.Allow,
+                    CopyContents      = PermissionValue.Allow,
+                    InputForm         = PermissionValue.Allow,
+                    ModifyAnnotations = PermissionValue.Allow,
+                    ModifyContents    = PermissionValue.Allow,
+                    Print             = PermissionValue.Allow,
+                }
+            });
+        }}
 
         #endregion
     }

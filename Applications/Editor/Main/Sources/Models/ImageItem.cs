@@ -39,7 +39,7 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ImageEntry
+        /// ImageItem
         ///
         /// <summary>
         /// Initializes a new instance of the ImageItem class with the
@@ -192,9 +192,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /// <remarks>
-        /// 表示内容の生成方法はコンストラクタで指定されたオブジェクトに
-        /// 移譲されているため、このメソッドは Image を対象とした
-        /// PropertyChanged イベントを発生させます。
+        /// Since the method for generating the display content is
+        /// transferred to the object specified in the constructor, this
+        /// method raises the PropertyChanged event for the Image.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -260,7 +260,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void UpdateSize()
         {
-            var h_magic = 22; // how to calc?
+            var h_magic = 22; // how to calculate?
             var v_magic = 12;
 
             var src   = RawObject.GetViewSize();

@@ -1,12 +1,11 @@
 Cube.Pdf.Converter
 ====
 
-[![NuGet](https://img.shields.io/nuget/v/Cube.Pdf.Converter.svg)](https://www.nuget.org/packages/Cube.Pdf.Converter/)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/es768q3if3t40cbg?svg=true)](https://ci.appveyor.com/project/clown/cube-pdf)
-[![Azure Pipelines](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_apis/build/status/cube-soft.Cube.Pdf?branchName=master)](https://dev.azure.com/cube-soft-jp/Cube.Pdf/_build)
-[![Codecov](https://codecov.io/gh/cube-soft/Cube.Pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/cube-soft/Cube.Pdf)
+[![Package](https://badgen.net/nuget/v/cube.pdf.converter)](https://www.nuget.org/packages/cube.pdf.converter/)
+[![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
+[![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
-Cube.Pdf.Converter is the core module of the [CubePDF](https://www.cube-soft.jp/cubepdf/), which is available for .NET Framework 3.5, 4.5, or later. Note that the Cube.Pdf.Converter is available for NuGet, but you need to copy the gsdll32.dll to the executing directory manually. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) NuGet package.
+Cube.Pdf.Converter is the core module of the [CubePDF](https://www.cube-soft.jp/cubepdf/), which is available for .NET Framework 3.5, 4.5, .NET Standard 2.0, or later. Note that the Cube.Pdf.Converter reuqires the gsdll32.dll. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) NuGet package.
 
 The Cube.Pdf.Converter is used for a limited purpose, such as emulating the CubePDF conversion. For more general purposes, consider using the following packages:
 
@@ -18,18 +17,16 @@ The Cube.Pdf.Converter is used for a limited purpose, such as emulating the Cube
 ## Dependencies
 
 * [Cube.Core](https://github.com/cube-soft/Cube.Core)
-* [Cube.FileSystem](https://github.com/cube-soft/Cube.FileSystem)
-* [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf)
-* [iTextSharp](https://www.nuget.org/packages/iTextSharp/)
+* [iText7](https://www.nuget.org/packages/itext7/) (net45) or [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35)
 * [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) is an unofficial package.
 
 ## Contributing
 
 1. Fork [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/fork) repository.
-2. Create a feature branch from the master or stable branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clean](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
+2. Create a feature branch from the master, net45, or net50 branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clobber](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
 3. Commit your changes.
-4. Rebase your local changes against the master or stable branch.
-5. Run test suite with the [NUnit](http://nunit.org/) console or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
+4. Rebase your local changes to the corresponding branch.
+5. Run the dotnet test command or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
 6. Create a new Pull Request.
 
 ## License

@@ -146,29 +146,30 @@ namespace Cube.Pdf.Pdfium
                 var degree = GetPageRotation(page);
                 var size   = GetPageSize(page, degree);
 
-                return new Page(
-                    File,                    // File
-                    index + 1,               // Number
-                    size,                    // Size
-                    new Angle(degree),       // Rotation
-                    new PointF(72.0f, 72.0f) // Resolution
-                );
+                return new Page
+                {
+                    File       = File,
+                    Number     = index + 1,
+                    Size       = size,
+                    Rotation   = new(degree),
+                    Resolution = new(72.0f, 72.0f),
+                };
             }
             finally { NativeMethods.FPDF_ClosePage(page); }
         });
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetSize
+        /// GetPageSize
         ///
         /// <summary>
         /// Gets the page size.
         /// </summary>
         ///
         /// <remarks>
-        /// PDFium は回転後のサイズを返しますが、Page オブジェクトでは
-        /// 回転前の情報として格納します。そのため、場合によって幅と
-        /// 高さの情報を反転しています。
+        /// PDFium returns the rotated size, while the Page object stores it
+        /// as pre-rotated information. Therefore, in some cases, the width
+        /// and height information is inverted.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

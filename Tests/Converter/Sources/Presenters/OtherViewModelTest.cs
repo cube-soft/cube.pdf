@@ -44,7 +44,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MainViewModel
+        /// Main
         ///
         /// <summary>
         /// Confirms the properties of the MainViewModel class.
@@ -52,9 +52,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MainViewModel() => Invoke(vm =>
+        public void Main() => Invoke(vm =>
         {
-            Assert.That(vm.Title,   Does.StartWith(nameof(MainViewModel)));
+            Assert.That(vm.Title,   Does.StartWith(nameof(Main)));
             Assert.That(vm.Title,   Does.Contain("CubePDF 1.5.1"));
             Assert.That(vm.Version, Does.StartWith("1.5.1 (").And.EndsWith(")"));
             Assert.That(vm.Uri.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
@@ -62,15 +62,15 @@ namespace Cube.Pdf.Converter.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SettingViewModel
+        /// General
         ///
         /// <summary>
-        /// Confirms the properties of the SettingViewModel class.
+        /// Tests the properties of the SettingViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void SettingViewModel() => Invoke(vm =>
+        public void General() => Invoke(vm =>
         {
             var dest = vm.General;
             GetType().LogDebug($"CheckUpdate:{dest.CheckUpdate}");
@@ -106,15 +106,15 @@ namespace Cube.Pdf.Converter.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MetadataViewModel
+        /// Metadata
         ///
         /// <summary>
-        /// MetadataViewModel の各種プロパティを確認します。
+        /// Tests the properties of the MetadataViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MetadataViewModel() => Invoke(vm =>
+        public void Metadata() => Invoke(vm =>
         {
             var dest = vm.Metadata;
             Assert.That(dest.Title,    Is.Empty, nameof(dest.Title));
@@ -127,15 +127,15 @@ namespace Cube.Pdf.Converter.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EncryptionViewModel
+        /// Encryption
         ///
         /// <summary>
-        /// EncryptionViewModel の各種プロパティを確認します。
+        /// Tests the properties of the EncryptionViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void EncryptionViewModel() => Invoke(vm =>
+        public void Encryption() => Invoke(vm =>
         {
             var dest = vm.Encryption;
             Assert.That(dest.Enabled,            Is.False, nameof(dest.Enabled));
@@ -172,17 +172,17 @@ namespace Cube.Pdf.Converter.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// BrowseUserProgram
+        /// SelectSource
         ///
         /// <summary>
-        /// 保存パスを選択するテストを実行します。
+        /// Tests the SelectSource method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void BrowseSource() => Invoke(vm =>
+        public void SelectSource() => Invoke(vm =>
         {
-            var done = $"{nameof(BrowseSource)}_Done.pdf";
+            var done = $"{nameof(SelectSource)}_Done.pdf";
 
             _ = vm.Subscribe<OpenFileMessage>(e =>
             {
@@ -204,23 +204,23 @@ namespace Cube.Pdf.Converter.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// BrowseDestination
+        /// SelectDestination
         ///
         /// <summary>
-        /// 保存パスを選択するテストを実行します。
+        /// Tests the SelectDestination method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void BrowseDestination() => Invoke(vm =>
+        public void SelectDestination() => Invoke(vm =>
         {
-            var done = $"{nameof(BrowseDestination)}_Done.pdf";
+            var done = $"{nameof(SelectDestination)}_Done.pdf";
 
             _ = vm.Subscribe<SaveFileMessage>(e =>
             {
                 Assert.That(e.Text,             Is.EqualTo("名前を付けて保存"));
                 Assert.That(e.InitialDirectory, Is.Empty);
-                Assert.That(e.Value,            Is.EqualTo(nameof(BrowseDestination)));
+                Assert.That(e.Value,            Is.EqualTo(nameof(SelectDestination)));
                 Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
                 Assert.That(e.FilterIndex,      Is.EqualTo(1));
                 Assert.That(e.OverwritePrompt,  Is.False);
@@ -237,17 +237,17 @@ namespace Cube.Pdf.Converter.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// BrowseUserProgram
+        /// SelectUserProgram
         ///
         /// <summary>
-        /// ユーザプログラムを選択するテストを実行します。
+        /// Tests the SelectUserProgram method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void BrowseUserProgram() => Invoke(vm =>
+        public void SelectUserProgram() => Invoke(vm =>
         {
-            var done = $"{nameof(BrowseUserProgram)}_Done.pdf";
+            var done = $"{nameof(SelectUserProgram)}_Done.pdf";
 
             _ = vm.Subscribe<OpenFileMessage>(e =>
             {
@@ -272,7 +272,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         /// Validate_OwnerPassword
         ///
         /// <summary>
-        /// 管理用パスワードの入力チェック処理のテストを実行します。
+        /// Tests the process of checking the input of the owner password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -293,7 +293,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         /// Validate_UserPassword
         ///
         /// <summary>
-        /// 管理用パスワードの入力チェック処理のテストを実行します。
+        /// Tests the process of checking the input of the user password.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -321,7 +321,8 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         /// Invoke
         ///
         /// <summary>
-        /// ViewModel オブジェクトを生成し、処理を実行します。
+        /// Creates a new instance of the MainViewModel class and invokes
+        /// the specified action.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

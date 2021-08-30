@@ -33,7 +33,7 @@ namespace Cube.Pdf.Tests.Itext
     /// ItextWriterTest
     ///
     /// <summary>
-    /// DocumentWriter および DocumentSplitter のテスト用クラスです。
+    /// Tests the DocumentWriter and DocumentSplitter classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Save
         ///
         /// <summary>
-        /// Executes the test for saving the PDF document as a new file.
+        /// Tests to save the PDF document as a new file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -78,7 +78,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Overwrite
         ///
         /// <summary>
-        /// Executes the test for overwriting the PDF document.
+        /// Tests to overwrite the PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -106,7 +106,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Merge
         ///
         /// <summary>
-        /// Executes the test for merging PDF documents.
+        /// Tests to merge PDF documents.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -133,7 +133,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Merge_Image
         ///
         /// <summary>
-        /// Executes the test for merging a PDF document and an image file.
+        /// Tests to merge a PDF document and an image file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -159,7 +159,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Split
         ///
         /// <summary>
-        /// Executes the test for splitting a PDF document in page by page.
+        /// Tests to split a PDF document in page by page.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -196,7 +196,7 @@ namespace Cube.Pdf.Tests.Itext
         /// Attach
         ///
         /// <summary>
-        /// Executes the test for attaching a file to a PDF document.
+        /// Tests to attach a file to a PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -232,7 +232,7 @@ namespace Cube.Pdf.Tests.Itext
         /// SetMetadata
         ///
         /// <summary>
-        /// Executes the test for setting PDF metadata.
+        /// Test to set PDF metadata.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -280,7 +280,7 @@ namespace Cube.Pdf.Tests.Itext
         /// SetEncryption
         ///
         /// <summary>
-        /// Executes the test for setting the encryption settings.
+        /// Tests to set the encryption settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

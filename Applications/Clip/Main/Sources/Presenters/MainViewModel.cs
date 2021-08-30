@@ -59,10 +59,8 @@ namespace Cube.Pdf.Clip
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainViewModel(SynchronizationContext context) : base(
-            new MainFacade(context),
-            new Aggregator(),
-            context)
+        public MainViewModel(SynchronizationContext context) :
+            base(new(context), new(8),context)
         {
             Clips = new BindingSource { DataSource = Facade.Clips };
 
@@ -142,7 +140,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Detach(IEnumerable<int> indices) => Track(() => Facade.Detach(indices));
+        public void Detach(IEnumerable<int> indices) => Track(() => Facade.Detach(indices), true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -164,7 +162,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Reset() => Track(Facade.Reset);
+        public void Reset() => Track(Facade.Reset, true);
 
         #endregion
     }

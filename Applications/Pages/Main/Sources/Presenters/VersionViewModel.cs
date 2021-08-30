@@ -47,8 +47,7 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public VersionViewModel(SettingFolder src, SynchronizationContext context) :
-            base(src, new Aggregator(), context)
-        {}
+            base(src, new(), context) {}
 
         #endregion
 

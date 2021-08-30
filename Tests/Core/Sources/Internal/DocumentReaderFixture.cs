@@ -27,7 +27,7 @@ namespace Cube.Pdf.Tests
     /// DocumentReaderFixture
     ///
     /// <summary>
-    /// IDocumentReader の実装クラスをテストする際の補助用クラスです。
+    /// Provides functionality to test IDocumentReader implemented classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -37,27 +37,27 @@ namespace Cube.Pdf.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetClassIds
+        /// GetIds
         ///
         /// <summary>
-        /// テスト対象となる IDocumentReader 実装クラスを示す文字列の
-        /// 一覧を取得します。
+        /// Get a list of IDs indicating the IDocumentReader implementation
+        /// class to be tested.
         /// </summary>
         ///
-        /// <returns>文字列一覧</returns>
+        /// <returns>List of IDs.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static IEnumerable<string> GetClassIds() => GetFactory().Keys;
+        protected static IEnumerable<string> GetIds() => GetFactory().Keys;
 
         /* ----------------------------------------------------------------- */
         ///
         /// GetFactory
         ///
         /// <summary>
-        /// IDocumentReader の生成ルール一覧を取得します。
+        /// Get the list of IDocumentReader generating rules.
         /// </summary>
         ///
-        /// <returns>生成ルール一覧</returns>
+        /// <returns>List of generating rules.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected static IDictionary<string, Func<string, object, IDocumentReader>> GetFactory() =>
@@ -82,14 +82,15 @@ namespace Cube.Pdf.Tests
         /// Create
         ///
         /// <summary>
-        /// IDocumentReader の実装オブジェクトを生成します。
+        /// Creates a new instance of the IDocumentReader implemented class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="klass">生成オブジェクトを示す文字列</param>
-        /// <param name="src">入力ファイルのパス</param>
-        /// <param name="password">パスワード</param>
+        /// <param name="klass">Class ID.</param>
+        /// <param name="src">Path of the source file.</param>
+        /// <param name="password">Password to open.</param>
         ///
-        /// <returns>IDocumentReader オブジェクト</returns>
+        /// <returns>IDocumentReader implemented object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected IDocumentReader Create(string klass, string src, string password)
@@ -103,14 +104,15 @@ namespace Cube.Pdf.Tests
         /// Create
         ///
         /// <summary>
-        /// IDocumentReader の実装オブジェクトを生成します。
+        /// Creates a new instance of the IDocumentReader implemented class
+        /// with the specified arguments.
         /// </summary>
         ///
-        /// <param name="klass">生成オブジェクトを示す文字列</param>
-        /// <param name="src">入力ファイルのパス</param>
-        /// <param name="query">パスワード問い合わせ用オブジェクト</param>
+        /// <param name="klass">Class ID.</param>
+        /// <param name="src">Path of the source file.</param>
+        /// <param name="query">Password query.</param>
         ///
-        /// <returns>IDocumentReader オブジェクト</returns>
+        /// <returns>IDocumentReader implemented object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected IDocumentReader Create(string klass, string src, IQuery<string, string> query)

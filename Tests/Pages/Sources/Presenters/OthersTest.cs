@@ -74,12 +74,12 @@ namespace Cube.Pdf.Pages.Tests.Presenters
             {
                 Assert.That(e.Password,  Is.Null);
                 Assert.That(e.Message,   Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Invokable, Is.False);
+                Assert.That(e.Ready, Is.False);
 
                 e.Password = "password";
                 e.Password = "password";
 
-                Assert.That(e.Invokable, Is.True);
+                Assert.That(e.Ready, Is.True);
                 e.Apply();
             })) {
                 Assert.That(vm.Files, Is.Not.Null);

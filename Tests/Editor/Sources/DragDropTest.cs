@@ -17,6 +17,11 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using Cube.FileSystem;
+using Cube.Tests;
+using Cube.Pdf.Itext;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests
@@ -31,7 +36,7 @@ namespace Cube.Pdf.Editor.Tests
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class DragDropTest
+    class DragDropTest : FileFixture
     {
         #region Tests
 
@@ -89,6 +94,31 @@ namespace Cube.Pdf.Editor.Tests
             Assert.That(() => obj.IsSameDragDropContextAsSource, Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.EffectText,                    Throws.TypeOf<NotImplementedException>());
             Assert.That(() => obj.EffectText = null,             Throws.TypeOf<NotImplementedException>());
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Serialize
+        ///
+        /// <summary>
+        /// Tests to serialize a DragDropObject object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Serialize()
+        {
+            using var doc = new DocumentReader(GetSource("SampleRotation.pdf"));
+            var src = new DragDropObject(4)
+            {
+                DropIndex = 2,
+                Pages     = doc.Pages.ToList()
+            };
+
+            var dest = Get("DragDrop.bin");
+            using (var fs = Io.Create(dest)) new BinaryFormatter().Serialize(fs, src);
+
+            Assert.That(Io.Exists(dest), Is.True);
         }
 
         #endregion

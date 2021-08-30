@@ -28,7 +28,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
     /// MainViewModelTest
     ///
     /// <summary>
-    /// CubePDF による変換処理をテストするためのクラスです。
+    /// Tests the MainViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -42,12 +42,12 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         /// Invoke
         ///
         /// <summary>
-        /// CubePDF による変換処理のテストを実行します。
+        /// Tests the conversion process with CubePDF.
         /// </summary>
         ///
         /// <remarks>
-        /// いくつかのオプションはメイン画面から設定できないようにして
-        /// いるため、テスト用として直接設定しています。
+        /// Some options are not settable from the main screen, so they are
+        /// set directly for testing purposes.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
@@ -88,7 +88,8 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         /// UserProgram_Error
         ///
         /// <summary>
-        /// ユーザプログラムの実行中にエラーが発生した時の挙動を確認します。
+        /// Check the behavior when an error occurs during the execution of
+        /// a user program.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -118,255 +119,253 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         /// TestCases
         ///
         /// <summary>
-        /// テストケースを取得します。
+        /// Gets test cases.
         /// </summary>
         ///
         /// <remarks>
-        /// テストケースには、以下の順で指定します。
-        /// - 設定情報
-        /// - プログラム引数一覧
-        /// - 入力ファイル名（省略時 SampleMix.ps）
-        /// - 出力と同名のファイルを事前に生成しておくかどうか（オプション）
+        /// The test cases should be specified in the following order:
+        /// - Settings
+        /// - Program arguments
+        /// - Source filename (SampleMix.ps as default)
+        /// - Whether or not to pre-generate a file with the same name as
+        ///   the output (optional)
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
-            {
-                var n = 0;
+            var n = 0;
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format          = Format.Pdf,
-                        Grayscale       = true,
-                        Resolution      = 72,
-                        ImageFilter     = false,
-                    },
-                    GetArgs("PDF テスト")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format          = Format.Pdf,
+                    Grayscale       = true,
+                    Resolution      = 72,
+                    ImageFilter     = false,
+                },
+                GetArgs("PDF テスト")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format          = Format.Pdf,
-                        Grayscale       = false,
-                        Resolution      = 72,
-                        ImageFilter     = true,
-                    },
-                    GetArgs("PDF テスト (Jpeg)")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format          = Format.Pdf,
+                    Grayscale       = false,
+                    Resolution      = 72,
+                    ImageFilter     = true,
+                },
+                GetArgs("PDF テスト (Jpeg)")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format          = Format.Pdf,
-                        Grayscale       = true,
-                        Resolution      = 72,
-                        ImageFilter     = false,
-                        Downsampling    = Downsampling.Bicubic,
-                    },
-                    GetArgs("PDF テスト (Bicubic)")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format          = Format.Pdf,
+                    Grayscale       = true,
+                    Resolution      = 72,
+                    ImageFilter     = false,
+                    Downsampling    = Downsampling.Bicubic,
+                },
+                GetArgs("PDF テスト (Bicubic)")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Pdf,
-                        Grayscale        = true,
-                        Resolution       = 72,
-                        PostProcess      = PostProcess.Others,
-                    },
-                    GetArgs("PDF テスト (Gray)")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Pdf,
+                    Grayscale        = true,
+                    Resolution       = 72,
+                    PostProcess      = PostProcess.Others,
+                },
+                GetArgs("PDF テスト (Gray)")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Pdf,
-                        Grayscale        = true,
-                        Resolution       = 72,
-                        EmbedFonts       = false,
-                    },
-                    GetArgs("PDF テスト (NoEmbed)")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Pdf,
+                    Grayscale        = true,
+                    Resolution       = 72,
+                    EmbedFonts       = false,
+                },
+                GetArgs("PDF テスト (NoEmbed)")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Pdf,
-                        Grayscale        = false,
-                        Resolution       = 72,
-                        SaveOption       = SaveOption.MergeHead,
-                    },
-                    GetArgs("PDF テスト (MergeHead)"),
-                    true // pre-copy
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Pdf,
+                    Grayscale        = false,
+                    Resolution       = 72,
+                    SaveOption       = SaveOption.MergeHead,
+                },
+                GetArgs("PDF テスト (MergeHead)"),
+                true // pre-copy
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Pdf,
-                        Grayscale        = false,
-                        Resolution       = 72,
-                        SaveOption       = SaveOption.MergeTail,
-                    },
-                    GetArgs("PDF テスト (MergeTail)"),
-                    true // pre-copy
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Pdf,
+                    Grayscale        = false,
+                    Resolution       = 72,
+                    SaveOption       = SaveOption.MergeTail,
+                },
+                GetArgs("PDF テスト (MergeTail)"),
+                true // pre-copy
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Pdf,
-                        Grayscale        = false,
-                        Resolution       = 72,
-                        SaveOption       = SaveOption.Rename,
-                    },
-                    GetArgs("PDF テスト (Rename)"),
-                    true // pre-copy
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Pdf,
+                    Grayscale        = false,
+                    Resolution       = 72,
+                    SaveOption       = SaveOption.Rename,
+                },
+                GetArgs("PDF テスト (Rename)"),
+                true // pre-copy
+            );
 
-                yield return Create(n++,
-                    new SettingValue
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Pdf,
+                    Grayscale        = false,
+                    Resolution       = 72,
+                    Linearization    = true,
+                    Metadata         = new Metadata
                     {
-                        Format           = Format.Pdf,
-                        Grayscale        = false,
-                        Resolution       = 72,
-                        Linearization    = true,
-                        Metadata         = new Metadata
+                        Title    = "Linearization test title",
+                        Author   = "Linearization test author",
+                        Subject  = "Linearization test Subject",
+                        Keywords = "Linearization test keywords",
+                        Creator  = "Linearization test creator",
+                        Options  = ViewerOption.SinglePage,
+                    }
+                },
+                GetArgs("PDF テスト (Linearization)")
+            );
+
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Pdf,
+                    Grayscale        = false,
+                    Resolution       = 72,
+                    Linearization    = true, // ignore
+                    Encryption       = new Encryption
+                    {
+                        Enabled          = true,
+                        OwnerPassword    = "Password",
+                        UserPassword     = "User",
+                        OpenWithPassword = true,
+                        Permission       = new Permission
                         {
-                            Title    = "Linearization test title",
-                            Author   = "Linearization test author",
-                            Subject  = "Linearization test Subject",
-                            Keywords = "Linearization test keywords",
-                            Creator  = "Linearization test creator",
-                            Options  = ViewerOption.SinglePage,
+                            Accessibility     = PermissionValue.Allow,
+                            CopyContents      = PermissionValue.Deny,
+                            InputForm         = PermissionValue.Allow,
+                            ModifyAnnotations = PermissionValue.Deny,
+                            ModifyContents    = PermissionValue.Deny,
+                            Print             = PermissionValue.Deny,
                         }
                     },
-                    GetArgs("PDF テスト (Linearization)")
-                );
-
-                yield return Create(n++,
-                    new SettingValue
+                    Metadata = new Metadata
                     {
-                        Format           = Format.Pdf,
-                        Grayscale        = false,
-                        Resolution       = 72,
-                        Linearization    = true, // ignore
-                        Encryption       = new Encryption
-                        {
-                            Enabled          = true,
-                            OwnerPassword    = "Password",
-                            UserPassword     = "User",
-                            OpenWithPassword = true,
-                            Permission       = new Permission
-                            {
-                                Accessibility     = PermissionValue.Allow,
-                                CopyContents      = PermissionValue.Deny,
-                                InputForm         = PermissionValue.Allow,
-                                ModifyAnnotations = PermissionValue.Deny,
-                                ModifyContents    = PermissionValue.Deny,
-                                Print             = PermissionValue.Deny,
-                            }
-                        },
-                        Metadata = new Metadata
-                        {
-                            Title    = "Encryption test title",
-                            Author   = "Encryption test author",
-                            Subject  = "Encryption test Subject",
-                            Keywords = "Encryption test keywords",
-                            Creator  = "Encryption test creator",
-                            Options  = ViewerOption.SinglePage,
-                        }
-                    },
-                    GetArgs("PDF テスト (Encryption)")
-                );
+                        Title    = "Encryption test title",
+                        Author   = "Encryption test author",
+                        Subject  = "Encryption test Subject",
+                        Keywords = "Encryption test keywords",
+                        Creator  = "Encryption test creator",
+                        Options  = ViewerOption.SinglePage,
+                    }
+                },
+                GetArgs("PDF テスト (Encryption)")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Ps,
-                        Grayscale        = false,
-                        Resolution       = 72,
-                    },
-                    GetArgs("PS テスト")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Ps,
+                    Grayscale        = false,
+                    Resolution       = 72,
+                },
+                GetArgs("PS テスト")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Ps,
-                        Grayscale        = true,
-                        Resolution       = 72,
-                    },
-                    GetArgs("PS テスト (Gray)")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Ps,
+                    Grayscale        = true,
+                    Resolution       = 72,
+                },
+                GetArgs("PS テスト (Gray)")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Eps,
-                        Grayscale        = false,
-                        Resolution       = 72,
-                    },
-                    GetArgs("EPS テスト")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Eps,
+                    Grayscale        = false,
+                    Resolution       = 72,
+                },
+                GetArgs("EPS テスト")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Eps,
-                        Grayscale        = true,
-                        Resolution       = 72,
-                    },
-                    GetArgs("EPS テスト (Gray)")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Eps,
+                    Grayscale        = true,
+                    Resolution       = 72,
+                },
+                GetArgs("EPS テスト (Gray)")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Png,
-                        Grayscale        = false,
-                        Resolution       = 72,
-                    },
-                    GetArgs("PNG テスト")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Png,
+                    Grayscale        = false,
+                    Resolution       = 72,
+                },
+                GetArgs("PNG テスト")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Png,
-                        Grayscale        = false,
-                        Resolution       = 144,
-                    },
-                    GetArgs("PNG テスト (144 dpi)")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Png,
+                    Grayscale        = false,
+                    Resolution       = 144,
+                },
+                GetArgs("PNG テスト (144 dpi)")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Png,
-                        Grayscale        = true,
-                        Resolution       = 72,
-                    },
-                    GetArgs("PNG テスト (Gray)")
-                );
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Png,
+                    Grayscale        = true,
+                    Resolution       = 72,
+                },
+                GetArgs("PNG テスト (Gray)")
+            );
 
-                yield return Create(n++,
-                    new SettingValue
-                    {
-                        Format           = Format.Png,
-                        Grayscale        = true,
-                        Resolution       = 72,
-                    },
-                    GetArgs("PNG テスト (複数ファイル)"),
-                    "SampleCjk.ps",
-                    false
-                );
-            }
-        }
+            yield return Create(n++,
+                new SettingValue
+                {
+                    Format           = Format.Png,
+                    Grayscale        = true,
+                    Resolution       = 72,
+                },
+                GetArgs("PNG テスト (複数ファイル)"),
+                "SampleCjk.ps",
+                false
+            );
+        }}
 
         #endregion
 
@@ -377,14 +376,14 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         /// IsCreated
         ///
         /// <summary>
-        /// ファイルが生成されたかどうかを判別します。
+        /// Determines if a file has been generated.
         /// </summary>
         ///
         /// <remarks>
-        /// 不完全なファイルが生成されたかどうかも併せて判別するため、
-        /// 1 KB 以上のファイルであれば正常に生成されたと見なしています。
-        /// また、画像形式で変換した場合、元のファイル名に連番が付与された
-        /// ファイルが生成されるため、そのチェックを実行します。
+        /// If the file is larger than 1 KB, it is considered to have been
+        /// generated successfully. In addition, if the file is converted in
+        /// image format, it will be generated with a sequential number
+        /// added to the original file name, so this check is performed.
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */

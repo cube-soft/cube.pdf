@@ -181,8 +181,8 @@ namespace Cube.Pdf.Editor
         #endregion
 
         #region Fields
-        private readonly Stack<HistoryItem> _forward = new Stack<HistoryItem>();
-        private readonly Stack<HistoryItem> _reverse = new Stack<HistoryItem>();
+        private readonly Stack<HistoryItem> _forward = new();
+        private readonly Stack<HistoryItem> _reverse = new();
         #endregion
     }
 }

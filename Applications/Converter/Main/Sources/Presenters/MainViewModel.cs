@@ -65,7 +65,7 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public MainViewModel(SettingFolder src, SynchronizationContext context) :
-            base(new(src), new(), context)
+            base(new(src), new(12), context)
         {
             Locale.Set(src.Value.Language);
 
@@ -159,7 +159,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri => ViewResource.ProductUri;
+        public Uri Uri => Resource.ProductUri;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -215,7 +215,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Help() => Send(ViewResource.DocumentUri);
+        public void Help() => Send(Resource.DocumentUri);
 
         /* ----------------------------------------------------------------- */
         ///

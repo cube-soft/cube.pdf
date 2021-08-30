@@ -49,10 +49,7 @@ namespace Cube.Pdf.Editor
         /// <param name="query">Function to get the password query.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public RendererCache(Func<IQuery<string>> query)
-        {
-            _query = query;
-        }
+        public RendererCache(Func<IQuery<string>> query) => _query = query;
 
         #endregion
 

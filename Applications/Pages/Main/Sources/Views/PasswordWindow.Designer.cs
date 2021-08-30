@@ -166,7 +166,7 @@
             // ExecButton
             //
             this.ExecButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.ExecButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.PasswordBindingSource, "Invokable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.ExecButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.PasswordBindingSource, "Ready", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.ExecButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ExecButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.ExecButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
