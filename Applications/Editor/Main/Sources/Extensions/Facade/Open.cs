@@ -93,17 +93,19 @@ namespace Cube.Pdf.Editor
         ///
         /// <remarks>
         /// PDFium は Metadata や Encryption の情報取得が不完全なため、
-        /// これらの情報は、必要になったタイミングで iTextSharp を用いて
-        /// 取得します。
+        /// これらの情報は、必要になったタイミングで iText を用いて取得します。
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
         public static void Load(this MainFacade src, string path)
         {
             src.Value.SetMessage(Properties.Resources.MessageLoading, path);
+
             var doc = src.Cache.GetOrAdd(path);
             src.Value.Source = doc.File;
             if (!doc.Encryption.Enabled) src.Value.Encryption = doc.Encryption;
+
+            Shell32.NativeMethods.SHAddToRecentDocs(0x03, path);
             src.Value.Images.Add(doc.Pages);
             src.Value.SetMessage(string.Empty);
         }
