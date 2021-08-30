@@ -78,7 +78,6 @@ task :build_all do
         checkout(bp[0]) do
             Rake::Task[:build].reenable
             Rake::Task[:build].invoke(bp[1])
-            Rake::Task[:test].execute if (e.test)
         end
     end
 end
