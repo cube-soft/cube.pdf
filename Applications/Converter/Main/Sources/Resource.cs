@@ -201,7 +201,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<ExtensionFilter> SourceFilters => new ExtensionFilter[]
+        public static IList<FileDialogFilter> SourceFilters => new FileDialogFilter[]
         {
             new(Properties.Resources.FilterPs,  ".ps"),
             new(Properties.Resources.FilterEps, ".eps"),
@@ -218,7 +218,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<ExtensionFilter> DestinationFilters => new ExtensionFilter[]
+        public static IList<FileDialogFilter> DestinationFilters => new FileDialogFilter[]
         {
             new(Properties.Resources.FilterPdf,  ".pdf"),
             new(Properties.Resources.FilterPs,   ".ps"),
@@ -238,7 +238,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<ExtensionFilter> UserProgramFilters => new ExtensionFilter[]
+        public static IList<FileDialogFilter> UserProgramFilters => new FileDialogFilter[]
         {
             new(Properties.Resources.FilterExecutable, ".exe", ".bat"),
             new(Properties.Resources.FilterAll, ".*"),

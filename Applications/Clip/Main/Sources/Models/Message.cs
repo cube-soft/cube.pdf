@@ -60,7 +60,7 @@ namespace Cube.Pdf.Clip
             Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = false,
-            Filter          = new ExtensionFilter[] {
+            Filter          = new FileDialogFilter[] {
                 new(Properties.Resources.FilterPdf, true, "*.pdf"),
                 new(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Clip
             Text            = Properties.Resources.TitleAttach,
             CheckPathExists = true,
             Multiselect     = true,
-            Filter          = new ExtensionFilter[] {
+            Filter          = new FileDialogFilter[] {
                 new(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };

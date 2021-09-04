@@ -65,7 +65,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public DocumentName(string src, string alternate)
         {
-            _filter = new(src)
+            _path = new(src)
             {
                 AllowCurrentDirectory = false,
                 AllowDriveLetter      = false,
@@ -74,7 +74,7 @@ namespace Cube.Pdf.Converter
                 AllowUnc              = false,
             };
 
-            Value = GetValue(_filter, alternate);
+            Value = GetValue(_path, alternate);
         }
 
         #endregion
@@ -90,7 +90,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Source => _filter.Source;
+        public string Source => _path.Source;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetValue(PathFilter src, string alternate)
+        private string GetValue(SafePath src, string alternate)
         {
             if (!Source.HasValue()) return alternate;
 
@@ -136,7 +136,7 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Fields
-        private readonly PathFilter _filter;
+        private readonly SafePath _path;
         #endregion
     }
 }

@@ -74,10 +74,10 @@ namespace Cube.Pdf.Editor
             Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = false,
-            Filter          = new []
+            Filter          = new FileDialogFilter[]
             {
-                new ExtensionFilter(Properties.Resources.FilterPdf, true, ".pdf"),
-                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
+                new(Properties.Resources.FilterPdf, true, ".pdf"),
+                new(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
 
@@ -97,10 +97,10 @@ namespace Cube.Pdf.Editor
             Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = true,
-            Filter          = new []
+            Filter          = new FileDialogFilter[]
             {
-                new ExtensionFilter(Properties.Resources.FilterInsertable, true, ".pdf", ".png", ".jpg", ".jpeg", ".bmp"),
-                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
+                new(Properties.Resources.FilterInsertable, true, ".pdf", ".png", ".jpg", ".jpeg", ".bmp"),
+                new(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
 
@@ -120,10 +120,10 @@ namespace Cube.Pdf.Editor
             Text            = Properties.Resources.MenuSaveAs,
             OverwritePrompt = true,
             CheckPathExists = false,
-            Filter          = new[]
+            Filter          = new FileDialogFilter[]
             {
-                new ExtensionFilter(Properties.Resources.FilterExtract, true, ".pdf", ".png"),
-                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
+                new(Properties.Resources.FilterExtract, true, ".pdf", ".png"),
+                new(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
 
@@ -143,10 +143,10 @@ namespace Cube.Pdf.Editor
             Text            = Properties.Resources.TitleSaveAs,
             OverwritePrompt = true,
             CheckPathExists = false,
-            Filter          = new[]
+            Filter          = new FileDialogFilter[]
             {
-                new ExtensionFilter(Properties.Resources.FilterPdf, true, ".pdf"),
-                new ExtensionFilter(Properties.Resources.FilterAll, true, ".*"),
+                new(Properties.Resources.FilterPdf, true, ".pdf"),
+                new(Properties.Resources.FilterAll, true, ".*"),
             }.GetFilter(),
         };
 
