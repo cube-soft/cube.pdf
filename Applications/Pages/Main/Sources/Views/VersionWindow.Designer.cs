@@ -76,7 +76,7 @@
             this.MainVersionControl.Size = new System.Drawing.Size(361, 110);
             this.MainVersionControl.TabIndex = 0;
             this.MainVersionControl.Uri = null;
-            this.MainVersionControl.Version = "Version 4.0.2.0";
+            this.MainVersionControl.Version = "Version 5.0.0.0";
             //
             // UpdateCheckBox
             //
