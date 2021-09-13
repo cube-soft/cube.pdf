@@ -49,6 +49,8 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2021-09-17 version 1.5.2
+    - Roll back the framework for creating installers.
 * 2021-08-06 version 1.5.1
     - Fix the title bar to show the document name.
 * 2021-07-09 version 1.5.0
