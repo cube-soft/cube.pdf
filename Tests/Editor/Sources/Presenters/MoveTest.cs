@@ -35,7 +35,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class MoveTest : ViewModelFixture
+    class MoveTest : VmFixture
     {
         #region Tests
 

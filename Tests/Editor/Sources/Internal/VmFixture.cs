@@ -19,7 +19,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Media.Imaging;
@@ -42,7 +41,7 @@ namespace Cube.Pdf.Editor.Tests
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class ViewModelFixture : FileFixture
+    internal abstract class VmFixture : FileFixture
     {
         #region Properties
 
@@ -114,7 +113,7 @@ namespace Cube.Pdf.Editor.Tests
         /* ----------------------------------------------------------------- */
         protected void Make(Action<MainViewModel> callback)
         {
-            using (var src = Create())
+            using (var src = NewVM())
             using (Subscribe(src))
             {
                 callback(src);
@@ -145,6 +144,30 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
+        /// NewVM
+        ///
+        /// <summary>
+        /// Creates a new instance of the MainViewModel class.
+        /// </summary>
+        ///
+        /// <returns>MainViewModel object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected MainViewModel NewVM()
+        {
+            var src   = new SettingFolder(Format.Json, Get("Settings.json"));
+            var dest  = new MainViewModel(src, new SynchronizationContext());
+            var dummy = new BitmapImage(new Uri(GetSource("Loading.png")));
+
+            dest.Value.Images.Preferences.Dummy = dummy;
+            dest.Value.Images.Preferences.VisibleFirst = 0;
+            dest.Value.Images.Preferences.VisibleLast = 10;
+
+            return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Get
         ///
         /// <summary>
@@ -154,7 +177,7 @@ namespace Cube.Pdf.Editor.Tests
         ///
         /* ----------------------------------------------------------------- */
         protected string Get(IEnumerable<object> parts, [CallerMemberName] string name = null) =>
-           Get($"{name}_{parts.Join("_", e => e.ToString())}.pdf");
+           Get($"{name}-{parts.Join("-", e => e.ToString())}.pdf");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -173,36 +196,6 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new instance of the MainViewModel class.
-        /// </summary>
-        ///
-        /// <returns>MainViewModel object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        private MainViewModel Create()
-        {
-            var src = new SettingFolder(
-                Assembly.GetExecutingAssembly(),
-                Format.Registry,
-                @"CubeSoft\Cube.Pdf.Editor.Tests"
-            ) { AutoSave = false };
-
-            var dest  = new MainViewModel(src, new SynchronizationContext());
-            var dummy = new BitmapImage(new Uri(GetSource("Loading.png")));
-
-            dest.Value.Images.Preferences.Dummy = dummy;
-            dest.Value.Images.Preferences.VisibleFirst = 0;
-            dest.Value.Images.Preferences.VisibleLast = 10;
-
-            Assert.That(dest.Value.Message, Is.Empty);
-            return dest;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Subscribe
         ///
         /// <summary>
@@ -211,7 +204,7 @@ namespace Cube.Pdf.Editor.Tests
         ///
         /* ----------------------------------------------------------------- */
         private DisposableContainer Subscribe(IBindable src) => new(
-            src.Subscribe<DialogMessage    >(e => Select(e)),
+            //src.Subscribe<DialogMessage    >(e => Select(e)),
             src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { Source }),
             src.Subscribe<SaveFileMessage  >(e => e.Value = Destination),
             src.Subscribe<PasswordViewModel>(e =>

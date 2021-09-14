@@ -18,7 +18,9 @@
 /* ------------------------------------------------------------------------- */
 using System.ComponentModel;
 using System.Threading;
+using Cube.Logging;
 using Cube.Mixin.Commands;
+using Cube.Mixin.String;
 using Cube.Tests;
 using Cube.Xui;
 using NUnit.Framework;
@@ -27,14 +29,14 @@ namespace Cube.Pdf.Editor.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewModelExtension
+    /// VmExtension
     ///
     /// <summary>
     /// Provides extended methods of the MainViewModel class for testing.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class ViewModelExtension
+    static class VmExtension
     {
         #region Methods
 
@@ -52,20 +54,45 @@ namespace Cube.Pdf.Editor.Tests
         /* ----------------------------------------------------------------- */
         public static void Test(this MainViewModel vm, BindableElement src)
         {
-            var cs = new CancellationTokenSource();
+            var cts = new CancellationTokenSource();
             void observe(object s, PropertyChangedEventArgs e)
             {
                 if (e.PropertyName != nameof(vm.Value.Busy) || vm.Value.Busy) return;
                 vm.Value.PropertyChanged -= observe;
-                cs.Cancel();
+                cts.Cancel();
             }
 
             Assert.That(vm.Value.Busy, Is.False, $"Busy ({src.Text})");
             vm.Value.PropertyChanged += observe;
             Assert.That(src.Command.CanExecute(), Is.True, $"CanExecute ({src.Text})");
             src.Command.Execute();
-            Assert.That(Wait.For(cs.Token), $"Timeout ({src.Text})");
+            Assert.That(Wait.For(cts.Token), $"Timeout ({src.Text})");
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Subscribe
+        ///
+        /// <summary>
+        /// Sets some dummy callbacks to the specified Messenger.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DisposableContainer Subscribe(this IBindable src, VmParam data) => new(
+            src.Subscribe<DialogMessage    >(e => src.GetType().LogDebug($"{e.Icon}", e.Text)),
+            src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { data.Source }),
+            src.Subscribe<SaveFileMessage  >(e => e.Value = data.Destination),
+            src.Subscribe<PasswordViewModel>(e => {
+                Assert.That(e.Title, Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Password.Text, Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Password.Value, Is.Null);
+
+                e.Password.Value = data.Password;
+                var dest = data.Password.HasValue() ? e.OK : e.Cancel;
+                Assert.That(dest.Command.CanExecute(), Is.True, dest.Text);
+                dest.Command.Execute();
+            })
+        );
 
         #endregion
     }

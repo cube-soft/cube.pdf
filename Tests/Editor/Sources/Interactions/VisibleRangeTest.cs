@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
     /* --------------------------------------------------------------------- */
     [TestFixture]
     [Apartment(ApartmentState.STA)]
-    class VisibleRangeTest : ViewModelFixture
+    class VisibleRangeTest : VmFixture
     {
         #region Tests
 

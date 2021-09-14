@@ -16,49 +16,51 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Threading;
-using System.Windows.Controls;
-using NUnit.Framework;
-
-namespace Cube.Pdf.Editor.Tests.Interactions
+namespace Cube.Pdf.Editor.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SelectionBehaviorTest
+    /// VmParam
     ///
     /// <summary>
-    /// Tests for the SelectionBehavior class.
+    /// Represents the data to be set for the properties of the message
+    /// published by the ViewModel.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    [Apartment(ApartmentState.STA)]
-    class SelectionBehaviorTest : VmFixture
+    internal class VmParam
     {
-        #region Tests
-
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Source
         ///
         /// <summary>
-        /// Tests the create, attach, and detach methods.
+        /// Gets or sets the loading path.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [Test]
-        public void Create()
-        {
-            var view = new ListView();
-            var src  = new SelectionBehavior();
+        public string Source { get; set; }
 
-            src.Attach(view);
-            Assert.That(src.Popup, Is.False);
-            src.Popup = true;
-            Assert.That(src.Popup, Is.True);
-            src.Detach();
-        }
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Destination
+        ///
+        /// <summary>
+        /// Gets or sets the saving path.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Destination { get; set; }
 
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Password
+        ///
+        /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Password { get; set; }
     }
 }
