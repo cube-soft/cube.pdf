@@ -48,8 +48,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Remove() => Open("SampleRotation.pdf", "", vm =>
+        public void Remove()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var src = vm.Value.Images.ToList();
             src[3].Selected = true;
             src[5].Selected = true;
@@ -58,7 +63,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count, Is.EqualTo(7));
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -71,8 +76,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void RemoveOthers() => Open("SampleRotation.pdf", "", vm =>
+        public void RemoveOthers()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var cts = new CancellationTokenSource();
             using (vm.Subscribe<RemoveViewModel>(e =>
             {
@@ -95,7 +105,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 vm.Ribbon.RemoveOthers.Command.Execute();
                 Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Remove)");
             };
-        });
+        }
 
         #endregion
     }

@@ -49,8 +49,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MoveNext() => Open("SampleRotation.pdf", "", vm =>
+        public void MoveNext()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var src = vm.Value.Images.ToList();
             src[1].Selected = true;
             src[3].Selected = true;
@@ -69,7 +74,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[7].RawObject.Number, Is.EqualTo(8));
             Assert.That(dest[8].RawObject.Number, Is.EqualTo(9));
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -81,8 +86,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MovePrevious() => Open("SampleRotation.pdf", "", vm =>
+        public void MovePrevious()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var src = vm.Value.Images.ToList();
             src[0].Selected = true;
             src[3].Selected = true;
@@ -101,7 +111,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[7].RawObject.Number, Is.EqualTo(8));
             Assert.That(dest[8].RawObject.Number, Is.EqualTo(9));
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -113,8 +123,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MoveNext_DragDrop() => Open("SampleRotation.pdf", "", vm =>
+        public void MoveNext_DragDrop()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var src = vm.Value.Images.ToList();
             var obj = new DragDropObject(1) { DropIndex = 4 };
             src[1].Selected = true;
@@ -135,7 +150,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[8].RawObject.Number, Is.EqualTo(7));
 
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -147,8 +162,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MovePrevious_DragDrop() => Open("SampleRotation.pdf", "", vm =>
+        public void MovePrevious_DragDrop()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var src = vm.Value.Images.ToList();
             var obj = new DragDropObject(6) { DropIndex = 3 };
             src[1].Selected = true;
@@ -169,7 +189,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[8].RawObject.Number, Is.EqualTo(9));
 
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
+        }
 
         #endregion
 

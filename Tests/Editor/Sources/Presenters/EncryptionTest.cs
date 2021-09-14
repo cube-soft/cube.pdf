@@ -51,8 +51,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Set(int id, Encryption cmp) => Open("Sample.pdf", "", vm =>
+        public void Set(int id, Encryption cmp)
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var cts = new CancellationTokenSource();
             vm.Value.PropertyChanged += (s, e) =>
             {
@@ -65,7 +70,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(Test(vm.Ribbon.Encryption, cts), $"Timeout (No.{id})");
                 AssertEquals(vm.Value.Encryption, cmp);
             }
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -78,8 +83,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => Open("Sample.pdf", "", vm =>
+        public void Cancel()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var cts = new CancellationTokenSource();
             using (vm.Subscribe<EncryptionViewModel>(e => {
                 e.OwnerPassword.Value = "dummy";
@@ -89,7 +99,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(Test(vm.Ribbon.Encryption, cts), "Timeout");
                 Assert.That(vm.Value.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
             }
-        });
+        }
 
         #endregion
 

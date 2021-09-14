@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.ComponentModel;
 using System.Threading;
 using Cube.Logging;
@@ -71,17 +72,37 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Subscribe
+        /// Hook
         ///
         /// <summary>
         /// Sets some dummy callbacks to the specified Messenger.
         /// </summary>
         ///
+        /// <param name="src">Bindable source.</param>
+        ///
+        /// <returns>Disposable object.</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        public static DisposableContainer Subscribe(this IBindable src, VmParam data) => new(
+        public static IDisposable Hook(this IBindable src) => Hook(src, new());
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Hook
+        ///
+        /// <summary>
+        /// Sets some dummy callbacks to the specified Messenger.
+        /// </summary>
+        ///
+        /// <param name="src">Bindable source.</param>
+        /// <param name="data">Dataset for testing.</param>
+        ///
+        /// <returns>Disposable object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IDisposable Hook(this IBindable src, VmParam data) => new DisposableContainer(
             src.Subscribe<DialogMessage    >(e => src.GetType().LogDebug($"{e.Icon}", e.Text)),
             src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { data.Source }),
-            src.Subscribe<SaveFileMessage  >(e => e.Value = data.Destination),
+            src.Subscribe<SaveFileMessage  >(e => e.Value = data.Save),
             src.Subscribe<PasswordViewModel>(e => {
                 Assert.That(e.Title, Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Password.Text, Is.Not.Null.And.Not.Empty);

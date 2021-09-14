@@ -51,10 +51,20 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Extract() => Open("SampleRotation.pdf", "", vm =>
+        public void Extract()
         {
-            Destination = Get(Args("Sample"));
-            Assert.That(Io.Exists(Destination), Is.False, Destination);
+            var vp = new VmParam
+            {
+                Source   = GetSource("SampleRotation.pdf"),
+                Save     = Path(Args("Sample")),
+            };
+
+            using var vm = NewVM();
+            using var d0 = vm.Hook(vp);
+
+            vm.Test(vm.Ribbon.Open);
+
+            Assert.That(Io.Exists(vp.Save), Is.False, vp.Save);
 
             vm.Value.Images.Skip(1).First().Selected = true;
             vm.Value.Images.First().Selected = true;
@@ -62,10 +72,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             vm.Test(vm.Ribbon.Extract);
 
-            using var r = new DocumentReader(Destination);
+            using var r = new DocumentReader(vp.Save);
             Assert.That(r.GetPage(1).GetViewSize().Width, Is.EqualTo(595.0f).Within(1.0f));
             Assert.That(r.GetPage(2).GetViewSize().Width, Is.EqualTo(842.0f).Within(1.0f));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -77,8 +87,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void ExtractOthers() => Open("SampleRotation.pdf", "", vm =>
+        public void ExtractOthers()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             vm.Value.Settings.Language = Language.English;
             var cts = new CancellationTokenSource();
             using (vm.Subscribe<ExtractViewModel>(evm =>
@@ -127,7 +142,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 vm.Ribbon.ExtractOthers.Command.Execute();
                 Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Extract)");
             }
-        });
+        }
 
         #endregion
     }

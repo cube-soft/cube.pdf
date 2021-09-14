@@ -44,8 +44,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_English() => Make(vm =>
+        public void GetText_English()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook();
+
             vm.Value.Settings.Language = Language.English;
             var dest = vm.Ribbon;
 
@@ -80,7 +83,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("ZoomIn"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("Settings"));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -92,8 +95,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetTooltip_English() => Make(vm =>
+        public void GetTooltip_English()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook();
+
             vm.Value.Settings.Language = Language.English;
             var dest = vm.Ribbon;
 
@@ -128,7 +134,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -140,8 +146,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_Japanese() => Make(vm =>
+        public void GetText_Japanese()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook();
+
             vm.Value.Settings.Language = Language.Japanese;
             var dest = vm.Ribbon;
 
@@ -176,7 +185,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("拡大"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("設定"));
-        });
+        }
 
          /* ----------------------------------------------------------------- */
         ///
@@ -188,8 +197,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetTooltip_Japanese() => Make(vm =>
+        public void GetTooltip_Japanese()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook();
+
             vm.Value.Settings.Language = Language.Japanese;
             var dest = vm.Ribbon;
 
@@ -224,7 +236,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
-        });
+        }
 
        /* ----------------------------------------------------------------- */
         ///
@@ -236,8 +248,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_Dynamically() => Make(vm =>
+        public void GetText_Dynamically()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook();
+
             var dest = vm.Ribbon;
             vm.Value.Settings.Language = Language.English;
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");
@@ -254,7 +269,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             vm.Value.Settings.Language = Language.Auto;
             Assert.That(dest.Open.Text,    Is.Not.Null.And.Not.Empty, "empty");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "empty");
-        });
+        }
 
         #endregion
     }

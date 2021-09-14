@@ -51,8 +51,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Set(int id, Metadata cmp) => Open("Sample.pdf", "", vm =>
+        public void Set(int id, Metadata cmp)
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var cts = new CancellationTokenSource();
             vm.Value.PropertyChanged += (s, e) =>
             {
@@ -65,7 +70,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(Test(vm.Ribbon.Metadata, cts), $"Timeout (No.{id})");
                 AssertEquals(vm.Value.Metadata, cmp);
             }
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -78,8 +83,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => Open("Sample.pdf", "", vm =>
+        public void Cancel()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var cts = new CancellationTokenSource();
             using (vm.Subscribe<MetadataViewModel>(e => {
                 e.Document.Value = "dummy";
@@ -89,7 +99,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 Assert.That(Test(vm.Ribbon.Metadata, cts), "Timeout");
                 Assert.That(vm.Value.Metadata.Title, Is.Not.EqualTo("dummy"));
             };
-        });
+        }
 
         #endregion
 

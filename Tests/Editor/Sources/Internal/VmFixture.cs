@@ -23,124 +23,23 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Media.Imaging;
 using Cube.FileSystem.DataContract;
-using Cube.Logging;
 using Cube.Mixin.Collections;
-using Cube.Mixin.Commands;
-using Cube.Mixin.String;
 using Cube.Tests;
-using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewModelFixture
+    /// VmFixture
     ///
     /// <summary>
-    /// Provides functionality to test ViewModel classes.
+    /// Provides functionality to test the ViewModel classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     internal abstract class VmFixture : FileFixture
     {
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Source
-        ///
-        /// <summary>
-        /// Gets or sets a loading path.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected string Source { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Destination
-        ///
-        /// <summary>
-        /// Gets or sets a saving path.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected string Destination { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Password
-        ///
-        /// <summary>
-        /// Gets or sets a password.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected string Password { get; set; }
-
-        #endregion
-
         #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Setup
-        ///
-        /// <summary>
-        /// Executes before each test.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [SetUp]
-        protected virtual void Setup()
-        {
-            Source      = string.Empty;
-            Destination = string.Empty;
-            Password    = string.Empty;
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Make
-        ///
-        /// <summary>
-        /// Creates a new instance of the MainViewModel class, initializes
-        /// some properties, and execute the specified action.
-        /// </summary>
-        ///
-        /// <param name="callback">User action.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void Make(Action<MainViewModel> callback)
-        {
-            using (var src = NewVM())
-            using (Subscribe(src))
-            {
-                callback(src);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// Creates a new instance of the MainViewModel class, executes
-        /// the Open command, and runs the specified action.
-        /// </summary>
-        ///
-        /// <param name="filename">Filename of the source.</param>
-        /// <param name="password">Password of the source.</param>
-        /// <param name="next">User action.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected void Open(string filename, string password, Action<MainViewModel> next) => Make(vm =>
-        {
-            Source   = GetSource(filename);
-            Password = password;
-            vm.Test(vm.Ribbon.Open);
-            next(vm);
-        });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -168,80 +67,35 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Get
+        /// Path
         ///
         /// <summary>
-        /// Gets a path with the specified arguments and the Results
-        /// directory.
+        /// Gets a path with the specified arguments.
         /// </summary>
         ///
+        /// <param name="args">Arguments to determine the path.</param>
+        /// <param name="name">Name used for a part of the path.</param>
+        ///
+        /// <returns>Full path.</returns>
+        ///
         /* ----------------------------------------------------------------- */
-        protected string Get(IEnumerable<object> parts, [CallerMemberName] string name = null) =>
-           Get($"{name}-{parts.Join("-", e => e.ToString())}.pdf");
+        protected string Path(IEnumerable<object> args, [CallerMemberName] string name = null) =>
+           Get($"{name}-{args.Join("-", e => e.ToString())}.pdf");
 
         /* ----------------------------------------------------------------- */
         ///
         /// Args
         ///
         /// <summary>
-        /// Creates a collection with the specified arguments.
+        /// Converts from the specified argument to a collection.
         /// </summary>
+        ///
+        /// <param name="src">Source arguments.</param>
+        ///
+        /// <returns>Collection object.</returns>
         ///
         /* ----------------------------------------------------------------- */
         protected IEnumerable<object> Args(params object[] src) => src;
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Subscribe
-        ///
-        /// <summary>
-        /// Sets some dummy callbacks to the specified Messenger.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private DisposableContainer Subscribe(IBindable src) => new(
-            //src.Subscribe<DialogMessage    >(e => Select(e)),
-            src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { Source }),
-            src.Subscribe<SaveFileMessage  >(e => e.Value = Destination),
-            src.Subscribe<PasswordViewModel>(e =>
-            {
-                Assert.That(e.Title,          Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Password.Text,  Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Password.Value, Is.Null);
-                e.Password.Value = Password;
-                var dest = Password.HasValue() ? e.OK : e.Cancel;
-                Assert.That(dest.Command.CanExecute(), Is.True, dest.Text);
-                dest.Command.Execute();
-            })
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Select
-        ///
-        /// <summary>
-        /// Selects a button.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Select(DialogMessage src)
-        {
-            var found = new Dictionary<DialogButtons, DialogStatus>
-            {
-                { DialogButtons.Ok,          DialogStatus.Ok  },
-                { DialogButtons.OkCancel,    DialogStatus.Ok  },
-                { DialogButtons.YesNo,       DialogStatus.Yes },
-                { DialogButtons.YesNoCancel, DialogStatus.Yes },
-            }.TryGetValue(src.Buttons, out var dest);
-
-            GetType().LogDebug($"{src.Text.Quote()} ({found})");
-            Assert.That(found, Is.True, $"{src.Buttons}");
-            src.Value = dest;
-        }
 
         #endregion
     }

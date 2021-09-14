@@ -49,8 +49,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create() => Make(vm =>
+        public void Create()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook();
+
             var src = vm.Value.Settings;
             Assert.That(src.Width,         Is.EqualTo(800));
             Assert.That(src.Height,        Is.EqualTo(600));
@@ -62,7 +65,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             vm.Value.Settings.Width  = 1024;
             vm.Value.Settings.Height = 768;
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -75,14 +78,19 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Cancel() => Open("Sample.pdf", "", vm =>
+        public void Cancel()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var cts = new CancellationTokenSource();
-            _ = vm.Subscribe<SettingViewModel>(e =>
+            using var d1 = vm.Subscribe<SettingViewModel>(e =>
             {
                 Assert.That(e.Title,                 Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Version.Text,          Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Value,         Does.StartWith("Cube.Pdf.Editor.Tests 1.5.3 "));
+                Assert.That(e.Version.Value,         Does.StartWith("CubePDF Utility 1.5.3 "));
                 Assert.That(e.Windows.Text,          Does.StartWith("Microsoft Windows"));
                 Assert.That(e.Framework.Text,        Does.StartWith("Microsoft .NET Framework"));
                 Assert.That(e.Link.Text,             Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
@@ -102,7 +110,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(vm.Ribbon.Setting.Command.CanExecute(), Is.True);
             vm.Ribbon.Setting.Command.Execute();
             Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Cancel)");
-        });
+        }
 
         #endregion
     }

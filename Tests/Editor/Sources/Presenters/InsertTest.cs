@@ -57,10 +57,20 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("Sample.pdf",  11)]
         [TestCase("Loading.png", 10)]
         [TestCase("Sample.jpg",  10)]
-        public void Insert(string filename, int n) => Open("SampleRotation.pdf", "", vm =>
+        public void Insert(string filename, int n)
         {
+            var vp = new VmParam
+            {
+                Source = GetSource("SampleRotation.pdf"),
+                Save   = Path(Args(filename.Replace('.', '_')))
+            };
+
+            using var vm = NewVM();
+            using var d0 = vm.Hook(vp);
+
+            vm.Test(vm.Ribbon.Open);
             vm.Value.Images.Skip(2).First().Selected = true;
-            Source = GetSource(filename);
+            vp.Source = GetSource(filename);
             Assert.That(vm.Ribbon.Insert.Command.CanExecute(), Is.True);
             vm.Ribbon.Insert.Command.Execute();
             Assert.That(Wait.For(() => vm.Value.Count == n), "Timeout (Insert)");
@@ -72,10 +82,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[3].RawObject.Number, Is.EqualTo(1)); // Insert
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
 
-            Destination = Get(Args(filename.Replace('.', '_')));
             vm.Ribbon.SaveAs.Command.Execute();
-            Assert.That(Wait.For(() => Io.Exists(Destination)), "Timeout (Save)");
-        });
+            Assert.That(Wait.For(() => Io.Exists(vp.Save)), "Timeout (Save)");
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -87,22 +96,27 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void InsertOthers() => Open("SampleRotation.pdf", "", vm =>
+        public void InsertOthers()
         {
-            _ = vm.Subscribe<InsertViewModel>(ivm =>
-            {
-                _ = ivm.Subscribe<OpenFileMessage>(e => {
-                    e.Value  = new[] { GetSource("Sample.pdf") };
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
+            using var d1 = vm.Subscribe<InsertViewModel>(ivm => {
+                using (ivm.Subscribe<OpenFileMessage>(e => {
+                    e.Value = new[] { GetSource("Sample.pdf") };
                     e.Cancel = false;
-                });
-                ivm.Add.Command.Execute();
-                ivm.OK.Command.Execute();
+                })) {
+                    ivm.Add.Command.Execute();
+                    ivm.OK.Command.Execute();
+                }
             });
 
             Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute(), Is.True);
             vm.Ribbon.InsertOthers.Command.Execute();
             Assert.That(Wait.For(() => vm.Value.Count == 11), "Timeout");
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -115,8 +129,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Inser_DragDrop() => Open("SampleRotation.pdf", "", vm =>
+        public void Inser_DragDrop()
         {
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+
+            vm.Test(vm.Ribbon.Open);
+
             var f = GetSource("Sample.pdf");
             var pages = new List<Page>();
             using (var r = new DocumentReader(f)) pages.AddRange(r.Pages);
@@ -144,7 +163,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[10].RawObject.Number, Is.EqualTo(9));
 
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
+        }
 
         #region InsertWindow
 
@@ -411,13 +430,21 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void CreateIvm(string filename, string password, Action<InsertViewModel> action) =>
-            Open(filename, password, vm =>
+        private void CreateIvm(string filename, string password, Action<InsertViewModel> action)
         {
-            var cts = new CancellationTokenSource();
-            _ = vm.Subscribe<InsertViewModel>(ivm =>
+            using var vm = NewVM();
+            using var d0 = vm.Hook(new()
             {
-                _ = ivm.Subscribe<OpenFileMessage>(e => {
+                Source   = GetSource(filename),
+                Password = password,
+            });
+
+            vm.Test(vm.Ribbon.Open);
+
+            var cts = new CancellationTokenSource();
+            using var d1 = vm.Subscribe<InsertViewModel>(ivm =>
+            {
+                using var d2 = ivm.Subscribe<OpenFileMessage>(e => {
                     e.Cancel = false;
                     e.Value  = new[]
                     {
@@ -427,6 +454,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                         GetSource("Loading.png"),
                     };
                 });
+
                 ivm.Add.Command.Execute();
                 action(ivm);
                 ivm.Dispose();
@@ -437,7 +465,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute(), Is.True);
             vm.Ribbon.InsertOthers.Command.Execute();
             Assert.That(Wait.For(cts.Token), "Timeout");
-        });
+        }
 
         #endregion
     }

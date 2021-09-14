@@ -43,14 +43,14 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Destination
+        /// Save
         ///
         /// <summary>
         /// Gets or sets the saving path.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string Destination { get; set; }
+        public string Save { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///

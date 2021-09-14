@@ -49,15 +49,25 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("SampleAes128.pdf",   "password")]
         [TestCase("SampleRc40.pdf",     "password")]
         [TestCase("SampleRc40Open.pdf", "password")]
-        public void SaveAs(string filename, string password) => Open(filename, password, vm =>
+        public void SaveAs(string filename, string password)
         {
-            Destination = Get(Args(Io.Get(Source).BaseName));
-            Password    = string.Empty;
+            var vp = new VmParam
+            {
+                Source   = GetSource(filename),
+                Save     = Path(Args(Io.Get(filename).BaseName)),
+                Password = password,
+            };
 
-            Assert.That(Io.Exists(Destination), Is.False);
+            using var vm = NewVM();
+            using var d0 = vm.Hook(vp);
+
+            vm.Test(vm.Ribbon.Open);
+
+            vp.Password = string.Empty;
+            Assert.That(Io.Exists(vp.Save), Is.False);
             vm.Test(vm.Ribbon.SaveAs);
-            Assert.That(Io.Exists(Destination), Is.True);
-        });
+            Assert.That(Io.Exists(vp.Save), Is.True);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -69,17 +79,23 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", "")]
-        public void Overwrite(string filename, string password) => Make(vm =>
+        public void Overwrite(string filename, string password)
         {
-            Source   = Get(Args(Io.Get(GetSource(filename)).BaseName));
-            Password = password;
+            var vp = new VmParam
+            {
+                Source   = Path(Args(Io.Get(GetSource(filename)).BaseName)),
+                Password = password,
+            };
 
-            Io.Copy(GetSource(filename), Source, true);
+            using var vm = NewVM();
+            using var d0 = vm.Hook(vp);
+
+            Io.Copy(GetSource(filename), vp.Source, true);
             vm.Test(vm.Ribbon.Open);
             vm.Value.Images.First().Selected = true;
             vm.Test(vm.Ribbon.RotateLeft);
             vm.Test(vm.Ribbon.Save);
-        });
+        }
 
         #endregion
     }
