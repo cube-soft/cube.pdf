@@ -54,7 +54,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             var vp = new VmParam
             {
                 Source   = GetSource(filename),
-                Save     = Path(Args(Io.Get(filename).BaseName)),
+                Save     = Get(Args(Io.Get(filename).BaseName)),
                 Password = password,
             };
 
@@ -83,7 +83,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             var vp = new VmParam
             {
-                Source   = Path(Args(Io.Get(GetSource(filename)).BaseName)),
+                Source   = Get(Args(Io.Get(GetSource(filename)).BaseName)),
                 Password = password,
             };
 

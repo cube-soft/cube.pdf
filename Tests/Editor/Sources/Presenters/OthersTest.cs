@@ -73,12 +73,12 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf", 2, true )]
-        [TestCase("Sample.pdf", 2, false)]
+        [TestCase("Sample.pdf", 9, true )]
+        [TestCase("Sample.pdf", 9, false)]
         public void Close(string filename, int n, bool modify)
         {
             var fi = Io.Get(GetSource(filename));
-            var src = Path(Args(fi.BaseName, modify));
+            var src = Get(Args(fi.BaseName, modify));
             Io.Copy(fi.FullName, src, true);
 
             using var vm = NewVM();

@@ -16,11 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows.Media.Imaging;
 using Cube.FileSystem.DataContract;
 using Cube.Mixin.Collections;
@@ -55,8 +53,8 @@ namespace Cube.Pdf.Editor.Tests
         protected MainViewModel NewVM()
         {
             var src   = new SettingFolder(Format.Json, Get("Settings.json"));
-            var dest  = new MainViewModel(src, new SynchronizationContext());
-            var dummy = new BitmapImage(new Uri(GetSource("Loading.png")));
+            var dest  = new MainViewModel(src, new());
+            var dummy = new BitmapImage(new(GetSource("Loading.png")));
 
             dest.Value.Images.Preferences.Dummy = dummy;
             dest.Value.Images.Preferences.VisibleFirst = 0;
@@ -67,7 +65,7 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Path
+        /// Get
         ///
         /// <summary>
         /// Gets a path with the specified arguments.
@@ -79,8 +77,8 @@ namespace Cube.Pdf.Editor.Tests
         /// <returns>Full path.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected string Path(IEnumerable<object> args, [CallerMemberName] string name = null) =>
-           Get($"{name}-{args.Join("-", e => e.ToString())}.pdf");
+        protected string Get(IEnumerable<object> args, [CallerMemberName] string name = null) =>
+           Get($"{name}-{args.Join("", e => e.ToString())}.pdf");
 
         /* ----------------------------------------------------------------- */
         ///

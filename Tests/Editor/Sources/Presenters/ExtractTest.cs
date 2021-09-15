@@ -46,7 +46,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// Extract
         ///
         /// <summary>
-        /// Tests to extract the selected items as a new PDF document.
+        /// Tests to extract the selected items as a new PDF file.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -55,21 +55,17 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             var vp = new VmParam
             {
-                Source   = GetSource("SampleRotation.pdf"),
-                Save     = Path(Args("Sample")),
+                Source = GetSource("SampleRotation.pdf"),
+                Save   = Get(Args("Sample")),
             };
 
             using var vm = NewVM();
-            using var d0 = vm.Hook(vp);
-
-            vm.Test(vm.Ribbon.Open);
+            using var z0 = vm.Boot(vp);
 
             Assert.That(Io.Exists(vp.Save), Is.False, vp.Save);
-
             vm.Value.Images.Skip(1).First().Selected = true;
             vm.Value.Images.First().Selected = true;
             Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
-
             vm.Test(vm.Ribbon.Extract);
 
             using var r = new DocumentReader(vp.Save);
@@ -85,63 +81,81 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// Tests the ExtractOthers command.
         /// </summary>
         ///
+        /// <remarks>
+        /// TODO: Tests the OK command, instead of the Cancel command.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         [Test]
         public void ExtractOthers()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
-
-            vm.Test(vm.Ribbon.Open);
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
             vm.Value.Settings.Language = Language.English;
             var cts = new CancellationTokenSource();
-            using (vm.Subscribe<ExtractViewModel>(evm =>
+            using var z1 = vm.Subscribe<ExtractViewModel>(evm =>
             {
-                Assert.That(evm.Title,               Is.EqualTo("Extraction details"));
-                Assert.That(evm.Formats.Count(),     Is.EqualTo(2));
-                Assert.That(evm.Destination.Text,    Is.EqualTo("Save path"));
-                Assert.That(evm.Destination.Value,   Is.Empty, nameof(evm.Destination));
-                Assert.That(evm.Destination.Command, Is.Not.Null);
-                Assert.That(evm.Format.Text,         Is.EqualTo("Format"));
-                Assert.That(evm.Format.Value,        Is.EqualTo(SaveFormat.Pdf));
-                Assert.That(evm.Format.Command,      Is.Null);
-                Assert.That(evm.Resolution.Text,     Is.EqualTo("dpi"));
-                Assert.That(evm.Resolution.Value,    Is.EqualTo(144));
-                Assert.That(evm.Resolution.Command,  Is.Null);
-                Assert.That(evm.Count.Text,          Is.EqualTo("Page count"));
-                Assert.That(evm.Count.Value,         Is.EqualTo(9), nameof(evm.Count));
-                Assert.That(evm.Count.Command,       Is.Null);
-                Assert.That(evm.Target.Text,         Is.EqualTo("Target pages"));
-                Assert.That(evm.Target.Command,      Is.Null);
-                Assert.That(evm.Selected.Text,       Is.EqualTo("Selected pages"));
-                Assert.That(evm.Selected.Value,      Is.False, nameof(evm.Selected));
-                Assert.That(evm.Selected.Command,    Is.Not.Null);
-                Assert.That(evm.All.Text,            Is.EqualTo("All pages"));
-                Assert.That(evm.All.Value,           Is.True, nameof(evm.All));
-                Assert.That(evm.All.Command,         Is.Null);
-                Assert.That(evm.Specified.Text,      Is.EqualTo("Specified range"));
-                Assert.That(evm.Specified.Value,     Is.False, nameof(evm.Specified));
-                Assert.That(evm.Specified.Command,   Is.Null);
-                Assert.That(evm.Range.Text,          Is.EqualTo("e.g. 1,2,4-7,9"));
-                Assert.That(evm.Range.Value,         Is.Empty, nameof(evm.Range));
-                Assert.That(evm.Range.Command,       Is.Null);
-                Assert.That(evm.Split.Text,          Is.EqualTo("Save as a separate file per page"));
-                Assert.That(evm.Split.Value,         Is.False, nameof(evm.Split));
-                Assert.That(evm.Split.Command,       Is.Not.Null);
-                Assert.That(evm.Option.Text,         Is.EqualTo("Options"));
-                Assert.That(evm.Option.Command,      Is.Null);
-
-                evm.Destination.Value = Results;
-                Assert.That(evm.OK.Command.CanExecute(), Is.False);
-
+                AssertObject(evm);
                 evm.Cancel.Command.Execute();
                 cts.Cancel();
-            })) {
-                Assert.That(vm.Ribbon.ExtractOthers.Command.CanExecute(), Is.True);
-                vm.Ribbon.ExtractOthers.Command.Execute();
-                Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Extract)");
-            }
+            });
+
+            Assert.That(vm.Ribbon.ExtractOthers.Command.CanExecute());
+            vm.Ribbon.ExtractOthers.Command.Execute();
+            Assert.That(Wait.For(cts.Token), Is.True, "Timeout");
+        }
+
+        #endregion
+
+        #region Others
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AssertObject
+        ///
+        /// <summary>
+        /// Confirms the properties of the specified object.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void AssertObject(ExtractViewModel src)
+        {
+            Assert.That(src.Title,               Is.EqualTo("Extraction details"));
+            Assert.That(src.Formats.Count(),     Is.EqualTo(2));
+            Assert.That(src.Destination.Text,    Is.EqualTo("Save path"));
+            Assert.That(src.Destination.Value,   Is.Empty, nameof(src.Destination));
+            Assert.That(src.Destination.Command, Is.Not.Null);
+            Assert.That(src.Format.Text,         Is.EqualTo("Format"));
+            Assert.That(src.Format.Value,        Is.EqualTo(SaveFormat.Pdf));
+            Assert.That(src.Format.Command,      Is.Null);
+            Assert.That(src.Resolution.Text,     Is.EqualTo("dpi"));
+            Assert.That(src.Resolution.Value,    Is.EqualTo(144));
+            Assert.That(src.Resolution.Command,  Is.Null);
+            Assert.That(src.Count.Text,          Is.EqualTo("Page count"));
+            Assert.That(src.Count.Value,         Is.EqualTo(9), nameof(src.Count));
+            Assert.That(src.Count.Command,       Is.Null);
+            Assert.That(src.Target.Text,         Is.EqualTo("Target pages"));
+            Assert.That(src.Target.Command,      Is.Null);
+            Assert.That(src.Selected.Text,       Is.EqualTo("Selected pages"));
+            Assert.That(src.Selected.Value,      Is.False, nameof(src.Selected));
+            Assert.That(src.Selected.Command,    Is.Not.Null);
+            Assert.That(src.All.Text,            Is.EqualTo("All pages"));
+            Assert.That(src.All.Value,           Is.True, nameof(src.All));
+            Assert.That(src.All.Command,         Is.Null);
+            Assert.That(src.Specified.Text,      Is.EqualTo("Specified range"));
+            Assert.That(src.Specified.Value,     Is.False, nameof(src.Specified));
+            Assert.That(src.Specified.Command,   Is.Null);
+            Assert.That(src.Range.Text,          Is.EqualTo("e.g. 1,2,4-7,9"));
+            Assert.That(src.Range.Value,         Is.Empty, nameof(src.Range));
+            Assert.That(src.Range.Command,       Is.Null);
+            Assert.That(src.Split.Text,          Is.EqualTo("Save as a separate file per page"));
+            Assert.That(src.Split.Value,         Is.False, nameof(src.Split));
+            Assert.That(src.Split.Command,       Is.Not.Null);
+            Assert.That(src.Option.Text,         Is.EqualTo("Options"));
+            Assert.That(src.Option.Command,      Is.Null);
         }
 
         #endregion

@@ -21,8 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cube.Mixin.Commands;
+using Cube.Mixin.Observing;
 using Cube.Tests;
-using Cube.Xui;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
@@ -32,7 +32,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// EncryptionTest
     ///
     /// <summary>
-    /// Tests for the EncryptionViewModel class.
+    /// Tests the EncryptionViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -43,33 +43,28 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Set
+        /// Test
         ///
         /// <summary>
-        /// Executes the test for setting the encryption settings.
+        /// Tests the normal case of the EncryptionViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Set(int id, Encryption cmp)
+        public void Test(int id, Encryption cmp)
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
-
-            vm.Test(vm.Ribbon.Open);
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
             var cts = new CancellationTokenSource();
-            vm.Value.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == nameof(vm.Value.Encryption)) cts.Cancel();
-            };
+            using var z1 = vm.Value.Subscribe(e => { if (e == "Encryption") cts.Cancel(); });
+            using var z2 = Subscribe(vm, cmp);
 
-            using (Subscribe(vm, cmp, false))
-            {
-                Assert.That(vm.Value.Encryption, Is.Not.Null);
-                Assert.That(Test(vm.Ribbon.Encryption, cts), $"Timeout (No.{id})");
-                AssertEquals(vm.Value.Encryption, cmp);
-            }
+            Assert.That(vm.Value.Encryption, Is.Not.Null);
+            Assert.That(vm.Ribbon.Encryption.Command.CanExecute());
+            vm.Ribbon.Encryption.Command.Execute();
+            Assert.That(Wait.For(cts.Token), $"Timeout (No.{id})");
+            AssertEquals(vm.Value.Encryption, cmp);
         }
 
         /* ----------------------------------------------------------------- */
@@ -77,8 +72,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test for selecting the cancel button in the
-        /// EncryptionWindow.
+        /// Tests to select the cancel button in the EncryptionWindow.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -86,19 +80,20 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Cancel()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
-
-            vm.Test(vm.Ribbon.Open);
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
             var cts = new CancellationTokenSource();
-            using (vm.Subscribe<EncryptionViewModel>(e => {
+            using var z1 = vm.Subscribe<EncryptionViewModel>(e => {
                 e.OwnerPassword.Value = "dummy";
-                using (e.Subscribe<CloseMessage>(z => cts.Cancel())) e.Cancel.Command.Execute();
-            })) {
-                Assert.That(vm.Value.Encryption, Is.Not.Null);
-                Assert.That(Test(vm.Ribbon.Encryption, cts), "Timeout");
-                Assert.That(vm.Value.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
-            }
+                using var z2 = e.Subscribe<CloseMessage>(z => cts.Cancel());
+                e.Cancel.Command.Execute();
+            });
+
+            Assert.That(vm.Value.Encryption, Is.Not.Null);
+            Assert.That(vm.Ribbon.Encryption.Command.CanExecute());
+            vm.Ribbon.Encryption.Command.Execute();
+            Assert.That(Wait.For(cts.Token), $"Timeout");
+            Assert.That(vm.Value.Encryption.OwnerPassword, Is.Not.EqualTo("dummy"));
         }
 
         #endregion
@@ -114,23 +109,20 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
-            {
-                var n = 0;
+            var n = 0;
 
-                yield return new TestCaseData(n++, new Encryption
-                {
-                    OwnerPassword    = "owner",
-                    UserPassword     = "user",
-                    OpenWithPassword = true,
-                    Method           = EncryptionMethod.Aes128,
-                    Enabled          = true,
-                    Permission       = new Permission(0xfffff0c0L),
-                });
-            }
-        }
+            yield return new(n++, new Encryption
+            {
+                OwnerPassword    = "owner",
+                UserPassword     = "user",
+                OpenWithPassword = true,
+                Method           = EncryptionMethod.Aes128,
+                Enabled          = true,
+                Permission       = new Permission(0xfffff0c0L),
+            });
+        }}
 
         #endregion
 
@@ -146,31 +138,30 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IDisposable Subscribe(MainViewModel vm, Encryption src, bool share) =>
+        private IDisposable Subscribe(MainViewModel vm, Encryption src) =>
             vm.Subscribe<EncryptionViewModel>(e =>
         {
             vm.Value.Settings.Language = Language.English;
-            var pm = src.Permission;
-
             e.Enabled.Value            = src.Enabled;
             e.OwnerPassword.Value      = src.OwnerPassword;
             e.OwnerConfirm.Value       = src.OwnerPassword;
             e.Method.Value             = src.Method;
             e.OpenPassword.Value       = src.OpenWithPassword;
-            e.SharePassword.Value      = share;
+            e.SharePassword.Value      = false;
             e.UserPassword.Value       = src.UserPassword;
             e.UserConfirm.Value        = src.UserPassword;
-            e.AllowPrint.Value         = pm.Print.IsAllowed();
-            e.AllowCopy.Value          = pm.CopyContents.IsAllowed();
-            e.AllowModify.Value        = pm.ModifyContents.IsAllowed();
-            e.AllowAnnotation.Value    = pm.ModifyAnnotations.IsAllowed();
-            e.AllowForm.Value          = pm.InputForm.IsAllowed();
-            e.AllowAccessibility.Value = pm.Accessibility.IsAllowed();
+            e.AllowPrint.Value         = src.Permission.Print.IsAllowed();
+            e.AllowCopy.Value          = src.Permission.CopyContents.IsAllowed();
+            e.AllowModify.Value        = src.Permission.ModifyContents.IsAllowed();
+            e.AllowAnnotation.Value    = src.Permission.ModifyAnnotations.IsAllowed();
+            e.AllowForm.Value          = src.Permission.InputForm.IsAllowed();
+            e.AllowAccessibility.Value = src.Permission.Accessibility.IsAllowed();
 
             Assert.That(e.Title,           Is.EqualTo("Encryption"));
             Assert.That(e.Methods.Count(), Is.EqualTo(4));
             Assert.That(e.Operation.Value, Is.True);
             Assert.That(e.OK.Command.CanExecute(), Is.True);
+
             e.OK.Command.Execute();
         });
 
@@ -198,22 +189,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(x.ModifyAnnotations, Is.EqualTo(y.ModifyAnnotations), nameof(x.ModifyAnnotations));
             Assert.That(x.InputForm,         Is.EqualTo(y.InputForm),         nameof(x.InputForm));
             Assert.That(x.Accessibility,     Is.EqualTo(y.Accessibility),     nameof(x.Accessibility));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Test
-        ///
-        /// <summary>
-        /// Tests the command of the specified element.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool Test(IElement src, CancellationTokenSource cts)
-        {
-            Assert.That(src.Command.CanExecute(), Is.True);
-            src.Command.Execute();
-            return Wait.For(cts.Token);
         }
 
         #endregion

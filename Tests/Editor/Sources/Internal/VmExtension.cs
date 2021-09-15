@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using Cube.Logging;
 using Cube.Mixin.Commands;
@@ -37,9 +38,39 @@ namespace Cube.Pdf.Editor.Tests
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class VmExtension
+    internal static class VmExtension
     {
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Boot
+        ///
+        /// <summary>
+        /// Hooks some messages, opens the specified PDF file, and makes it
+        /// ready for testing.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel object.</param>
+        /// <param name="vp">Dataset for testing.</param>
+        ///
+        /// <returns>Disposable object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IDisposable Boot(this MainViewModel vm, VmParam vp)
+        {
+            var dest = Hook(vm, vp);
+
+            vm.Test(vm.Ribbon.Open);
+            vm.Test(vm.Ribbon.Redraw);
+
+            var obj = vm.Value.Images.First();
+            var cmp = vm.Value.Images.Preferences.Dummy;
+
+            Assert.That(Wait.For(() => obj.Image != cmp), "Timeout (Boot)");
+
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -49,7 +80,7 @@ namespace Cube.Pdf.Editor.Tests
         /// Tests the command of the specified element.
         /// </summary>
         ///
-        /// <param name="vm">MainViewModel instance.</param>
+        /// <param name="vm">MainViewModel object.</param>
         /// <param name="src">Target element.</param>
         ///
         /* ----------------------------------------------------------------- */
@@ -65,7 +96,7 @@ namespace Cube.Pdf.Editor.Tests
 
             Assert.That(vm.Value.Busy, Is.False, $"Busy ({src.Text})");
             vm.Value.PropertyChanged += observe;
-            Assert.That(src.Command.CanExecute(), Is.True, $"CanExecute ({src.Text})");
+            Assert.That(src.Command.CanExecute(), $"CanExecute ({src.Text})");
             src.Command.Execute();
             Assert.That(Wait.For(cts.Token), $"Timeout ({src.Text})");
         }
@@ -78,12 +109,27 @@ namespace Cube.Pdf.Editor.Tests
         /// Sets some dummy callbacks to the specified Messenger.
         /// </summary>
         ///
-        /// <param name="src">Bindable source.</param>
+        /// <param name="vm">Bindable source.</param>
+        /// <param name="vp">Dataset for testing.</param>
         ///
         /// <returns>Disposable object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IDisposable Hook(this IBindable src) => Hook(src, new());
+        public static IDisposable Hook(this IBindable vm, VmParam vp) => new DisposableContainer(
+            vm.Subscribe<DialogMessage    >(e => vm.GetType().LogDebug($"{e.Icon}", e.Text)),
+            vm.Subscribe<OpenFileMessage  >(e => e.Value = new[] { vp.Source }),
+            vm.Subscribe<SaveFileMessage  >(e => e.Value = vp.Save),
+            vm.Subscribe<PasswordViewModel>(e => {
+                Assert.That(e.Title, Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Password.Text, Is.Not.Null.And.Not.Empty);
+                Assert.That(e.Password.Value, Is.Null);
+
+                e.Password.Value = vp.Password;
+                var dest = vp.Password.HasValue() ? e.OK : e.Cancel;
+                Assert.That(dest.Command.CanExecute(), Is.True, dest.Text);
+                dest.Command.Execute();
+            })
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -93,27 +139,12 @@ namespace Cube.Pdf.Editor.Tests
         /// Sets some dummy callbacks to the specified Messenger.
         /// </summary>
         ///
-        /// <param name="src">Bindable source.</param>
-        /// <param name="data">Dataset for testing.</param>
+        /// <param name="vm">Bindable source.</param>
         ///
         /// <returns>Disposable object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static IDisposable Hook(this IBindable src, VmParam data) => new DisposableContainer(
-            src.Subscribe<DialogMessage    >(e => src.GetType().LogDebug($"{e.Icon}", e.Text)),
-            src.Subscribe<OpenFileMessage  >(e => e.Value = new[] { data.Source }),
-            src.Subscribe<SaveFileMessage  >(e => e.Value = data.Save),
-            src.Subscribe<PasswordViewModel>(e => {
-                Assert.That(e.Title, Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Password.Text, Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Password.Value, Is.Null);
-
-                e.Password.Value = data.Password;
-                var dest = data.Password.HasValue() ? e.OK : e.Cancel;
-                Assert.That(dest.Command.CanExecute(), Is.True, dest.Text);
-                dest.Command.Execute();
-            })
-        );
+        public static IDisposable Hook(this IBindable vm) => Hook(vm, new());
 
         #endregion
     }
