@@ -34,7 +34,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
     /// SimplexConverterTest
     ///
     /// <summary>
-    /// Tests for various converter classes.
+    /// Tests the converter classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

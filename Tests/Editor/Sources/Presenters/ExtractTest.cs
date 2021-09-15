@@ -17,22 +17,20 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Linq;
-using System.Threading;
 using Cube.FileSystem;
 using Cube.Mixin.Commands;
 using Cube.Pdf.Itext;
 using Cube.Pdf.Mixin;
-using Cube.Tests;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// InsertTest
+    /// ExtractTest
     ///
     /// <summary>
-    /// Tests the Insert commands and the InsertViewModel class.
+    /// Tests the Extract commands and the ExtractViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -65,7 +63,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(Io.Exists(vp.Save), Is.False, vp.Save);
             vm.Value.Images.Skip(1).First().Selected = true;
             vm.Value.Images.First().Selected = true;
-            Assert.That(Wait.For(() => vm.Ribbon.Extract.Command.CanExecute()));
+            Assert.That(vm.Ribbon.Extract.Command.CanExecute());
             vm.Test(vm.Ribbon.Extract);
 
             using var r = new DocumentReader(vp.Save);
@@ -91,19 +89,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
-
-            vm.Value.Settings.Language = Language.English;
-            var cts = new CancellationTokenSource();
-            using var z1 = vm.Subscribe<ExtractViewModel>(evm =>
-            {
+            using var z1 = vm.Subscribe<ExtractViewModel>(evm => {
+                vm.Value.Settings.Language = Language.English;
                 AssertObject(evm);
                 evm.Cancel.Command.Execute();
-                cts.Cancel();
             });
 
             Assert.That(vm.Ribbon.ExtractOthers.Command.CanExecute());
             vm.Ribbon.ExtractOthers.Command.Execute();
-            Assert.That(Wait.For(cts.Token), Is.True, "Timeout");
         }
 
         #endregion

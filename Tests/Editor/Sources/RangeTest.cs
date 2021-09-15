@@ -26,7 +26,7 @@ namespace Cube.Pdf.Editor.Tests
     /// RangeTest
     ///
     /// <summary>
-    /// Tests for the Range class.
+    /// Tests the Range class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,7 +40,7 @@ namespace Cube.Pdf.Editor.Tests
         /// Parse
         ///
         /// <summary>
-        /// Executes the test for parsing the string.
+        /// Tests to parse the specified text.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -57,8 +57,7 @@ namespace Cube.Pdf.Editor.Tests
         /// Parse_Throws
         ///
         /// <summary>
-        /// Executes the test for confirming the result when the specified
-        /// string is wrong.
+        /// Checks the behavior when the specified text is wrong.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

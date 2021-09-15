@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Linq;
-using System.Threading;
 using Cube.Mixin.Commands;
 using Cube.Tests;
 using NUnit.Framework;
@@ -29,7 +28,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// RemoveTest
     ///
     /// <summary>
-    /// Tests for Remove commands and the RemoveViewModel class.
+    /// Tests the Remove commands and the RemoveViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -43,7 +42,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// Remove
         ///
         /// <summary>
-        /// Executes the test for removing selected items.
+        /// Tests to remove the selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -51,9 +50,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Remove()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
-
-            vm.Test(vm.Ribbon.Open);
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
             var src = vm.Value.Images.ToList();
             src[3].Selected = true;
@@ -61,7 +58,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             vm.Test(vm.Ribbon.Remove);
 
             var dest = vm.Value.Images.ToList();
-            Assert.That(dest.Count, Is.EqualTo(7));
+            Assert.That(dest.Count,               Is.EqualTo(7));
+            Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
+            Assert.That(dest[1].RawObject.Number, Is.EqualTo(2));
+            Assert.That(dest[2].RawObject.Number, Is.EqualTo(3));
+            Assert.That(dest[3].RawObject.Number, Is.EqualTo(5));
+            Assert.That(dest[4].RawObject.Number, Is.EqualTo(7));
+            Assert.That(dest[5].RawObject.Number, Is.EqualTo(8));
+            Assert.That(dest[6].RawObject.Number, Is.EqualTo(9));
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
         }
 
@@ -70,8 +74,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// RemoveOthers
         ///
         /// <summary>
-        /// Executes the test for showing the RemoveWindow and remove
-        /// specified items.
+        /// Tests the RemoveOthers command.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -79,13 +82,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void RemoveOthers()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
-
-            vm.Test(vm.Ribbon.Open);
-
-            var cts = new CancellationTokenSource();
-            using (vm.Subscribe<RemoveViewModel>(e =>
-            {
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+            using var z1 = vm.Subscribe<RemoveViewModel>(e => {
                 vm.Value.Settings.Language = Language.English;
 
                 Assert.That(e.Title,        Is.EqualTo("Removal details"));
@@ -99,12 +97,18 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 e.Range.Value = "1,3,5-7,9";
                 Assert.That(e.OK.Command.CanExecute(), Is.True);
                 e.OK.Command.Execute();
-                cts.Cancel(); // done
-            })) {
-                Assert.That(vm.Ribbon.RemoveOthers.Command.CanExecute(), Is.True);
-                vm.Ribbon.RemoveOthers.Command.Execute();
-                Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Remove)");
-            };
+            });
+
+            Assert.That(vm.Ribbon.RemoveOthers.Command.CanExecute());
+            vm.Ribbon.RemoveOthers.Command.Execute();
+            Assert.That(Wait.For(() => vm.Value.Count == 3), "Timeout");
+
+            var dest = vm.Value.Images.ToList();
+            Assert.That(dest.Count,               Is.EqualTo(3));
+            Assert.That(dest[0].RawObject.Number, Is.EqualTo(2));
+            Assert.That(dest[1].RawObject.Number, Is.EqualTo(4));
+            Assert.That(dest[2].RawObject.Number, Is.EqualTo(8));
+            for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
         }
 
         #endregion

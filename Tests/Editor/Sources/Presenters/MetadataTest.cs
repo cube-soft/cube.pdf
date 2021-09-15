@@ -19,10 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Cube.Mixin.Commands;
-using Cube.Tests;
-using Cube.Xui;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
@@ -43,33 +40,24 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Set
+        /// Test
         ///
         /// <summary>
-        /// Executes the test for setting the PDF metadata.
+        /// Tests the normal case of the MetadataViewModel class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [TestCaseSource(nameof(TestCases))]
-        public void Set(int id, Metadata cmp)
+        public void Test(int _, Metadata cmp)
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+            using var z1 = Subscribe(vm, cmp);
 
-            vm.Test(vm.Ribbon.Open);
-
-            var cts = new CancellationTokenSource();
-            vm.Value.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == nameof(vm.Value.Metadata)) cts.Cancel();
-            };
-
-            using (Subscribe(vm, cmp))
-            {
-                Assert.That(vm.Value.Metadata, Is.Not.Null);
-                Assert.That(Test(vm.Ribbon.Metadata, cts), $"Timeout (No.{id})");
-                AssertEquals(vm.Value.Metadata, cmp);
-            }
+            Assert.That(vm.Ribbon.Metadata.Command.CanExecute());
+            vm.Ribbon.Metadata.Command.Execute();
+            Assert.That(vm.Value.Metadata, Is.Not.Null);
+            AssertEquals(vm.Value.Metadata, cmp);
         }
 
         /* ----------------------------------------------------------------- */
@@ -77,8 +65,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// Cancel
         ///
         /// <summary>
-        /// Executes the test for selecting the cancel button in the
-        /// MetadataWindow.
+        /// Tests the Cancel command in the MetadataViewModel.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -86,19 +73,16 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Cancel()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+            using var z1 = vm.Subscribe<MetadataViewModel>(mvm => {
+                mvm.Document.Value = "dummy";
+                mvm.Cancel.Command.Execute();
+            });
 
-            vm.Test(vm.Ribbon.Open);
-
-            var cts = new CancellationTokenSource();
-            using (vm.Subscribe<MetadataViewModel>(e => {
-                e.Document.Value = "dummy";
-                using (e.Subscribe<CloseMessage>(z => cts.Cancel())) e.Cancel.Command.Execute();
-            })) {
-                Assert.That(vm.Value.Metadata, Is.Not.Null);
-                Assert.That(Test(vm.Ribbon.Metadata, cts), "Timeout");
-                Assert.That(vm.Value.Metadata.Title, Is.Not.EqualTo("dummy"));
-            };
+            Assert.That(vm.Ribbon.Metadata.Command.CanExecute());
+            vm.Ribbon.Metadata.Command.Execute();
+            Assert.That(vm.Value.Metadata, Is.Not.Null);
+            Assert.That(vm.Value.Metadata.Title, Is.Not.EqualTo("dummy"));
         }
 
         #endregion
@@ -114,37 +98,34 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases
+        public static IEnumerable<TestCaseData> TestCases { get
         {
-            get
+            var n = 0;
+
+            yield return new(n++, new Metadata
             {
-                var n = 0;
+                Title    = "Test title",
+                Author   = "Test author",
+                Subject  = "Test subject",
+                Keywords = "Test keywords",
+                Creator  = "Test creator",
+                Producer = "Test producer",
+                Version  = new PdfVersion(1, 6),
+                Options  = ViewerOption.TwoColumnRight,
+            });
 
-                yield return new TestCaseData(n++, new Metadata
-                {
-                    Title    = "Test title",
-                    Author   = "Test author",
-                    Subject  = "Test subject",
-                    Keywords = "Test keywords",
-                    Creator  = "Test creator",
-                    Producer = "Test producer",
-                    Version  = new PdfVersion(1, 6),
-                    Options  = ViewerOption.TwoColumnRight,
-                });
-
-                yield return new TestCaseData(n++, new Metadata
-                {
-                    Title    = "日本語のタイトル",
-                    Author   = "日本語の著者",
-                    Subject  = "日本語のサブタイトル",
-                    Keywords = "日本語のキーワード",
-                    Creator  = "日本語のアプリケーション",
-                    Producer = "日本語の PDF 変換",
-                    Version  = new PdfVersion(1, 7),
-                    Options  = ViewerOption.OneColumn,
-                });
-            }
-        }
+            yield return new(n++, new Metadata
+            {
+                Title    = "日本語のタイトル",
+                Author   = "日本語の著者",
+                Subject  = "日本語のサブタイトル",
+                Keywords = "日本語のキーワード",
+                Creator  = "日本語のアプリケーション",
+                Producer = "日本語の PDF 変換",
+                Version  = new PdfVersion(1, 7),
+                Options  = ViewerOption.OneColumn,
+            });
+        }}
 
         #endregion
 
@@ -161,41 +142,42 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         private IDisposable Subscribe(MainViewModel vm, Metadata src) =>
-            vm.Subscribe<MetadataViewModel>(e =>
+            vm.Subscribe<MetadataViewModel>(mvm =>
         {
             vm.Value.Settings.Language = Language.English;
-            Assert.That(e.Title,               Is.EqualTo("PDF Metadata"));
-            Assert.That(e.Versions.Count(),    Is.EqualTo(6), nameof(e.Versions));
-            Assert.That(e.Options.Count(),     Is.EqualTo(6), nameof(e.Options));
-            Assert.That(e.Document.Text,       Is.EqualTo("Title"));
-            Assert.That(e.Author.Text,         Is.EqualTo("Author"));
-            Assert.That(e.Subject.Text,        Is.EqualTo("Subject"));
-            Assert.That(e.Keywords.Text,       Is.EqualTo("Keywords"));
-            Assert.That(e.Creator.Text,        Is.EqualTo("Creator"));
-            Assert.That(e.Option.Text,         Is.EqualTo("Layout"));
-            Assert.That(e.Version.Text,        Is.EqualTo("Version"));
-            Assert.That(e.Filename.Text,       Is.EqualTo("Filename"));
-            Assert.That(e.Filename.Value,      Is.Not.Null.And.Not.Empty);
-            Assert.That(e.Producer.Text,       Is.EqualTo("Producer"));
-            Assert.That(e.Producer.Value,      Is.Not.Null.And.Not.Empty);
-            Assert.That(e.Length.Text,         Is.EqualTo("Filesize"));
-            Assert.That(e.Length.Value,        Is.GreaterThan(0));
-            Assert.That(e.CreationTime.Text,   Is.EqualTo("Creation"));
-            Assert.That(e.CreationTime.Value,  Is.GreaterThan(DateTime.MinValue));
-            Assert.That(e.LastWriteTime.Text,  Is.EqualTo("Last updated"));
-            Assert.That(e.LastWriteTime.Value, Is.GreaterThan(DateTime.MinValue));
-            Assert.That(e.Summary.Text,        Is.EqualTo("Summary"));
-            Assert.That(e.Details.Text,        Is.EqualTo("Details"));
+            Assert.That(mvm.Title,               Is.EqualTo("PDF Metadata"));
+            Assert.That(mvm.Versions.Count(),    Is.EqualTo(6), nameof(mvm.Versions));
+            Assert.That(mvm.Options.Count(),     Is.EqualTo(6), nameof(mvm.Options));
+            Assert.That(mvm.Document.Text,       Is.EqualTo("Title"));
+            Assert.That(mvm.Author.Text,         Is.EqualTo("Author"));
+            Assert.That(mvm.Subject.Text,        Is.EqualTo("Subject"));
+            Assert.That(mvm.Keywords.Text,       Is.EqualTo("Keywords"));
+            Assert.That(mvm.Creator.Text,        Is.EqualTo("Creator"));
+            Assert.That(mvm.Option.Text,         Is.EqualTo("Layout"));
+            Assert.That(mvm.Version.Text,        Is.EqualTo("Version"));
+            Assert.That(mvm.Filename.Text,       Is.EqualTo("Filename"));
+            Assert.That(mvm.Filename.Value,      Is.Not.Null.And.Not.Empty);
+            Assert.That(mvm.Producer.Text,       Is.EqualTo("Producer"));
+            Assert.That(mvm.Producer.Value,      Is.Not.Null.And.Not.Empty);
+            Assert.That(mvm.Length.Text,         Is.EqualTo("Filesize"));
+            Assert.That(mvm.Length.Value,        Is.GreaterThan(0));
+            Assert.That(mvm.CreationTime.Text,   Is.EqualTo("Creation"));
+            Assert.That(mvm.CreationTime.Value,  Is.GreaterThan(DateTime.MinValue));
+            Assert.That(mvm.LastWriteTime.Text,  Is.EqualTo("Last updated"));
+            Assert.That(mvm.LastWriteTime.Value, Is.GreaterThan(DateTime.MinValue));
+            Assert.That(mvm.Summary.Text,        Is.EqualTo("Summary"));
+            Assert.That(mvm.Details.Text,        Is.EqualTo("Details"));
 
-            e.Document.Value = src.Title;
-            e.Author.Value   = src.Author;
-            e.Subject.Value  = src.Subject;
-            e.Keywords.Value = src.Keywords;
-            e.Creator.Value  = src.Creator;
-            e.Option.Value  = src.Options;
-            e.Version.Value  = src.Version;
-            Assert.That(e.OK.Command.CanExecute(), Is.True);
-            e.OK.Command.Execute();
+            mvm.Document.Value = src.Title;
+            mvm.Author.Value   = src.Author;
+            mvm.Subject.Value  = src.Subject;
+            mvm.Keywords.Value = src.Keywords;
+            mvm.Creator.Value  = src.Creator;
+            mvm.Option.Value   = src.Options;
+            mvm.Version.Value  = src.Version;
+
+            Assert.That(mvm.OK.Command.CanExecute());
+            mvm.OK.Command.Execute();
         });
 
         /* ----------------------------------------------------------------- */
@@ -209,30 +191,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /* ----------------------------------------------------------------- */
         private void AssertEquals(Metadata src, Metadata cmp)
         {
-            Assert.That(src.Title,         Is.EqualTo(cmp.Title),    nameof(src.Title));
-            Assert.That(src.Author,        Is.EqualTo(cmp.Author),   nameof(src.Author));
-            Assert.That(src.Subject,       Is.EqualTo(cmp.Subject),  nameof(src.Subject));
-            Assert.That(src.Keywords,      Is.EqualTo(cmp.Keywords), nameof(src.Keywords));
-            Assert.That(src.Creator,       Is.EqualTo(cmp.Creator),  nameof(src.Creator));
-            Assert.That(src.Options,       Is.EqualTo(cmp.Options));
+            Assert.That(src.Title,    Is.EqualTo(cmp.Title),    nameof(src.Title));
+            Assert.That(src.Author,   Is.EqualTo(cmp.Author),   nameof(src.Author));
+            Assert.That(src.Subject,  Is.EqualTo(cmp.Subject),  nameof(src.Subject));
+            Assert.That(src.Keywords, Is.EqualTo(cmp.Keywords), nameof(src.Keywords));
+            Assert.That(src.Creator,  Is.EqualTo(cmp.Creator),  nameof(src.Creator));
+            Assert.That(src.Options,  Is.EqualTo(cmp.Options));
             Assert.That(src.Version.Major, Is.EqualTo(cmp.Version.Major));
             Assert.That(src.Version.Minor, Is.EqualTo(cmp.Version.Minor));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Test
-        ///
-        /// <summary>
-        /// Tests the command of the specified element.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool Test(IElement src, CancellationTokenSource cts)
-        {
-            Assert.That(src.Command.CanExecute(), Is.True);
-            src.Command.Execute();
-            return Wait.For(cts.Token);
         }
 
         #endregion

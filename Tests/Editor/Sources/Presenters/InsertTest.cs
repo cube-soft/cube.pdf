@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows;
 using Cube.FileSystem;
 using Cube.Mixin.Commands;
@@ -68,11 +67,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(vp);
 
-            vm.Value.Images.Skip(2).First().Selected = true;
             vp.Source = GetSource(file);
-            Assert.That(vm.Ribbon.Insert.Command.CanExecute());
-            vm.Ribbon.Insert.Command.Execute();
-            Assert.That(Wait.For(() => vm.Value.Count == n), "Timeout (Insert)");
+            vm.Value.Images.Skip(2).First().Selected = true;
+            vm.Test(vm.Ribbon.Insert);
+            Assert.That(vm.Value.Count, Is.EqualTo(n));
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
@@ -81,8 +79,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[3].RawObject.Number, Is.EqualTo(1)); // Insert
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
 
-            vm.Ribbon.SaveAs.Command.Execute();
-            Assert.That(Wait.For(() => Io.Exists(vp.Save)), "Timeout (Save)");
+            vm.Test(vm.Ribbon.SaveAs);
+            Assert.That(Wait.For(() => Io.Exists(vp.Save)), vp.Save);
         }
 
         /* ----------------------------------------------------------------- */
@@ -100,19 +98,18 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
-            var f = GetSource("SampleAnnotation.pdf");
             var pages = new List<Page>();
+            var f = GetSource("SampleAnnotation.pdf");
             using (var r = new DocumentReader(f)) pages.AddRange(r.Pages);
 
-            vm.InsertOrMove.Execute(new DragDropObject(-1, 0)
+            vm.Test(() => vm.InsertOrMove.Execute(new DragDropObject(-1, 0)
             {
                 DropIndex = 4,
                 Pages     = pages,
-            });
-
-            Assert.That(Wait.For(() => vm.Value.Count == 11), "Timeout (Insert)");
+            }));
 
             var dest = vm.Value.Images.ToList();
+            Assert.That(dest.Count,                Is.EqualTo(11));
             Assert.That(dest[ 0].RawObject.Number, Is.EqualTo(1));
             Assert.That(dest[ 1].RawObject.Number, Is.EqualTo(2));
             Assert.That(dest[ 2].RawObject.Number, Is.EqualTo(3));
@@ -331,22 +328,17 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             using var vm = NewVM();
             using var z0 = vm.Boot(vp);
-
-            var cts   = new CancellationTokenSource();
-            var pages = apply ? 22 : 9;
-            var files = new[]
-            {
-                GetSource("SampleAnnotation.pdf"),
-                GetSource("SampleRotation.pdf"),
-                GetSource("Sample.jpg"),
-                GetSource("Loading.png"),
-            };
-
             using var z1 = vm.Subscribe<InsertViewModel>(ivm =>
             {
                 using var z2 = ivm.Subscribe<OpenFileMessage>(e => {
-                    e.Value  = files;
                     e.Cancel = false;
+                    e.Value  = new[]
+                    {
+                        GetSource("SampleAnnotation.pdf"),
+                        GetSource("SampleRotation.pdf"),
+                        GetSource("Sample.jpg"),
+                        GetSource("Loading.png"),
+                    };
                 });
 
                 Assert.That(ivm.Add.Command.CanExecute());
@@ -357,17 +349,17 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 var cmd = apply ? ivm.OK.Command : ivm.Cancel.Command;
                 Assert.That(cmd.CanExecute());
                 cmd.Execute();
-                cts.Cancel();
             });
 
             vm.Value.Settings.Language = Language.English;
             Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute());
             vm.Ribbon.InsertOthers.Command.Execute();
-            Assert.That(Wait.For(cts.Token));
-            Assert.That(Wait.For(() => vm.Value.Count == pages), "Timeout (Insert)");
 
-            vm.Ribbon.SaveAs.Command.Execute();
-            Assert.That(Wait.For(() => Io.Exists(vp.Save)), "Timeout (Save)");
+            var n = apply ? 22 : 9;
+            Assert.That(Wait.For(() => vm.Value.Count == n), "Timeout");
+
+            vm.Test(vm.Ribbon.SaveAs);
+            Assert.That(Wait.For(() => Io.Exists(vp.Save)), vp.Save);
         }
 
         /* ----------------------------------------------------------------- */

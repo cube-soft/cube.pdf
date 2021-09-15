@@ -34,7 +34,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
     /* --------------------------------------------------------------------- */
     [TestFixture]
     [Apartment(ApartmentState.STA)]
-    class MouseBehaviorTest : VmFixture
+    class MouseBehaviorTest
     {
         #region Tests
 

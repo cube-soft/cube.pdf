@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Linq;
-using System.Threading;
 using Cube.Mixin.Commands;
 using Cube.Tests;
 using NUnit.Framework;
@@ -50,29 +49,21 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [Test]
         public void Preview()
         {
-            var cts = new CancellationTokenSource();
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+            using var z1 = vm.Subscribe<PreviewViewModel>(pvm => {
+                Assert.That(Wait.For(() => pvm.Value.Image != null), "Timeout");
+                Assert.That(pvm.Title,        Is.Not.Null.And.Not.Empty);
+                Assert.That(pvm.Value.File,   Is.Not.Null);
+                Assert.That(pvm.Value.Width,  Is.GreaterThan(0));
+                Assert.That(pvm.Value.Height, Is.GreaterThan(0));
+                Assert.That(pvm.Value.Busy,   Is.False);
+                pvm.Cancel.Command.Execute();
+            });
 
-            vm.Test(vm.Ribbon.Open);
-
-            using (vm.Subscribe<PreviewViewModel>(e =>
-            {
-                Assert.That(e.Title,        Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Value.File,   Is.Not.Null);
-                Assert.That(e.Value.Width,  Is.GreaterThan(0));
-                Assert.That(e.Value.Height, Is.GreaterThan(0));
-                Assert.That(Wait.For(() => e.Value.Image != null), "Timeout (PreviewImage)");
-                Assert.That(e.Value.Busy,   Is.False);
-
-                e.Cancel.Command.Execute();
-                cts.Cancel(); // done
-            })) {
-                vm.Test(vm.Ribbon.Select);
-                Assert.That(vm.Ribbon.Preview.Command.CanExecute(), Is.True);
-                vm.Ribbon.Preview.Command.Execute();
-                Assert.That(Wait.For(cts.Token), "Timeout (Preview)");
-            }
+            vm.Test(vm.Ribbon.Select);
+            Assert.That(vm.Ribbon.Preview.Command.CanExecute(), Is.True);
+            vm.Ribbon.Preview.Command.Execute();
         }
 
         /* ----------------------------------------------------------------- */
@@ -80,7 +71,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// Select
         ///
         /// <summary>
-        /// Tests the Select command.
+        /// Tests the Select commands.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -88,9 +79,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Select()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
-
-            vm.Test(vm.Ribbon.Open);
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
             var unit    = 3; // Number of PropertyChanged events per action.
             var changed = 0;
@@ -102,7 +91,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Last,    Is.EqualTo(-1));
 
             vm.Value.Images.First().Selected = true;
-            Assert.That(Wait.For(() => !vm.Value.Busy));
             Assert.That(changed,    Is.EqualTo(1 * unit));
             Assert.That(dest.Count, Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(0), nameof(dest.Last));
@@ -118,7 +106,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Last,  Is.EqualTo(8), nameof(dest.Last));
 
             vm.Test(vm.Ribbon.Select); // SelectClear
-            Assert.That(changed, Is.EqualTo(20 * unit));
+            Assert.That(changed,    Is.EqualTo(20 * unit));
             Assert.That(dest.Count, Is.EqualTo(0));
         }
 
@@ -135,18 +123,17 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Zoom()
         {
             using var vm = NewVM();
-            using (vm.Hook(new() { Source = GetSource("Sample.pdf") }))
-            {
-                var ip = vm.Value.Images.Preferences;
-                Assert.That(ip.ItemSizeOptions.Count, Is.EqualTo(9));
-                Assert.That(ip.ItemSizeIndex,         Is.EqualTo(3));
-                Assert.That(ip.ItemSize,              Is.EqualTo(250));
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
-                vm.Value.ItemSize = 325;
-                Assert.That(Wait.For(() => !vm.Value.Busy), "Timeout");
-                Assert.That(ip.ItemSizeIndex, Is.EqualTo(4));
-                Assert.That(ip.ItemSize,      Is.EqualTo(300));
-            }
+            var ip = vm.Value.Images.Preferences;
+            Assert.That(ip.ItemSizeOptions.Count, Is.EqualTo(9));
+            Assert.That(ip.ItemSizeIndex,         Is.EqualTo(3));
+            Assert.That(ip.ItemSize,              Is.EqualTo(250));
+
+            vm.Value.ItemSize = 325;
+            Assert.That(Wait.For(() => !vm.Value.Busy), "Timeout");
+            Assert.That(ip.ItemSizeIndex, Is.EqualTo(4));
+            Assert.That(ip.ItemSize,      Is.EqualTo(300));
         }
 
         /* ----------------------------------------------------------------- */
@@ -162,12 +149,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void FrameOnly()
         {
             using var vm = NewVM();
-            using (vm.Hook(new() { Source = GetSource("Sample.pdf") }))
-            {
-                Assert.That(vm.Ribbon.FrameOnly.Value, Is.False);
-                vm.Ribbon.FrameOnly.Value = true;
-                foreach (var item in vm.Value.Images) Assert.That(item.Image, Is.Null);
-            }
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+
+            Assert.That(vm.Ribbon.FrameOnly.Value, Is.False);
+            vm.Ribbon.FrameOnly.Value = true;
+            foreach (var item in vm.Value.Images) Assert.That(item.Image, Is.Null);
         }
 
         #endregion

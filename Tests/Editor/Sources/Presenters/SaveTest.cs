@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Linq;
 using Cube.FileSystem;
+using Cube.Tests;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
@@ -27,7 +28,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// SaveTest
     ///
     /// <summary>
-    /// Tests for Save commands.
+    /// Tests the Save commands.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -49,24 +50,22 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("SampleAes128.pdf",   "password")]
         [TestCase("SampleRc40.pdf",     "password")]
         [TestCase("SampleRc40Open.pdf", "password")]
-        public void SaveAs(string filename, string password)
+        public void SaveAs(string file, string password)
         {
             var vp = new VmParam
             {
-                Source   = GetSource(filename),
-                Save     = Get(Args(Io.Get(filename).BaseName)),
+                Source   = GetSource(file),
+                Save     = Get(Args(Io.Get(file).BaseName)),
                 Password = password,
             };
 
             using var vm = NewVM();
-            using var d0 = vm.Hook(vp);
-
-            vm.Test(vm.Ribbon.Open);
+            using var z0 = vm.Boot(vp);
 
             vp.Password = string.Empty;
             Assert.That(Io.Exists(vp.Save), Is.False);
             vm.Test(vm.Ribbon.SaveAs);
-            Assert.That(Io.Exists(vp.Save), Is.True);
+            Assert.That(Wait.For(() => Io.Exists(vp.Save)), vp.Save);
         }
 
         /* ----------------------------------------------------------------- */
@@ -79,19 +78,19 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", "")]
-        public void Overwrite(string filename, string password)
+        public void Overwrite(string file, string password)
         {
             var vp = new VmParam
             {
-                Source   = Get(Args(Io.Get(GetSource(filename)).BaseName)),
+                Source   = Get(Args(Io.Get(GetSource(file)).BaseName)),
                 Password = password,
             };
 
-            using var vm = NewVM();
-            using var d0 = vm.Hook(vp);
+            Io.Copy(GetSource(file), vp.Source, true);
 
-            Io.Copy(GetSource(filename), vp.Source, true);
-            vm.Test(vm.Ribbon.Open);
+            using var vm = NewVM();
+            using var z0 = vm.Boot(vp);
+
             vm.Value.Images.First().Selected = true;
             vm.Test(vm.Ribbon.RotateLeft);
             vm.Test(vm.Ribbon.Save);

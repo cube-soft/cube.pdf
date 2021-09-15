@@ -29,7 +29,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// OthersTest
     ///
     /// <summary>
-    /// Uncategorized tests of the MainViewModel class.
+    /// Tests the uncategorized operations of the MainViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,18 +40,18 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Check
         ///
         /// <summary>
-        /// Confirms default values of properties.
+        /// Checks the default values of properties.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create()
+        public void Check()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook();
+            using var z0 = vm.Hook();
 
             vm.Value.Settings.Language = Language.English;
             Assert.That(vm.Recent.Items,        Is.Not.Null);
@@ -75,16 +75,15 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", 9, true )]
         [TestCase("Sample.pdf", 9, false)]
-        public void Close(string filename, int n, bool modify)
+        public void Close(string file, int n, bool modify)
         {
-            var fi = Io.Get(GetSource(filename));
+            var fi  = Io.Get(GetSource(file));
             var src = Get(Args(fi.BaseName, modify));
             Io.Copy(fi.FullName, src, true);
 
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = src });
+            using var z0 = vm.Boot(new() { Source = src });
 
-            vm.Test(vm.Ribbon.Open);
             Assert.That(vm.Value.Count, Is.EqualTo(n));
 
             if (modify)
@@ -101,7 +100,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// Rotate
         ///
         /// <summary>
-        /// Executes the test for rotating selected items.
+        /// Tests to rotate the selected items.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -109,22 +108,19 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Rotate()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("Sample.pdf") });
-
-            vm.Test(vm.Ribbon.Open);
-
-            var images = vm.Value.Images.ToList();
-            var dest   = images[0];
-            var dummy  = vm.Value.Images.Preferences.Dummy;
-            Assert.That(Wait.For(() => dest.Image != dummy), "Timeout");
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
             Assert.That(vm.Ribbon.RotateLeft.Command.CanExecute(),  Is.False);
             Assert.That(vm.Ribbon.RotateRight.Command.CanExecute(), Is.False);
 
+            var images = vm.Value.Images.ToList();
+            var dummy  = vm.Value.Images.Preferences.Dummy;
+            var dest   = images[0];
             var image  = dest.Image;
             var width  = dest.Width;
             var height = dest.Height;
             var count  = 0;
+
             dest.Selected = true;
             dest.PropertyChanged += (s, e) => ++count;
 
@@ -144,7 +140,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// Undo
         ///
         /// <summary>
-        /// Executes the test for canceling the last action.
+        /// Tests the Undo and Redo commands.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -152,25 +148,24 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void Undo()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook(new() { Source = GetSource("SampleRotation.pdf") });
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
-            vm.Test(vm.Ribbon.Open);
             vm.Test(vm.Ribbon.Select);
             vm.Test(vm.Ribbon.Remove);
 
-            Assert.That(vm.Value.Images.Count, Is.EqualTo(0));
+            Assert.That(vm.Value.Images.Count,     Is.EqualTo(0));
             Assert.That(vm.Value.History.Undoable, Is.True);
             Assert.That(vm.Value.History.Redoable, Is.False);
 
             vm.Test(vm.Ribbon.Undo);
 
-            Assert.That(vm.Value.Images.Count, Is.EqualTo(9));
+            Assert.That(vm.Value.Images.Count,     Is.EqualTo(9));
             Assert.That(vm.Value.History.Undoable, Is.False);
             Assert.That(vm.Value.History.Redoable, Is.True);
 
             vm.Test(vm.Ribbon.Redo);
 
-            Assert.That(vm.Value.Images.Count, Is.EqualTo(0));
+            Assert.That(vm.Value.Images.Count,     Is.EqualTo(0));
             Assert.That(vm.Value.History.Undoable, Is.True);
             Assert.That(vm.Value.History.Redoable, Is.False);
         }

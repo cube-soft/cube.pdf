@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Threading;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests
@@ -26,7 +25,7 @@ namespace Cube.Pdf.Editor.Tests
     /// RibbonElementTest
     ///
     /// <summary>
-    /// Tests for the RibbonElement class.
+    /// Tests the RibbonElement class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -40,30 +39,26 @@ namespace Cube.Pdf.Editor.Tests
         /// Properties
         ///
         /// <summary>
-        /// 各種プロパティ内容を確認します。
+        /// Checks the default values of properties.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Properties()
+        public void Check()
         {
             var name = nameof(Properties);
             var text = "GetText";
-            var dispatcher = new ContextDispatcher(new SynchronizationContext(), false);
 
-            using (var dest = new RibbonElement(name, () => text, dispatcher))
-            {
-                Assert.That(dest.Name,      Is.EqualTo(name));
-                Assert.That(dest.Text,      Is.EqualTo(text));
-                Assert.That(dest.Tooltip,   Is.EqualTo(text));
-                Assert.That(dest.LargeIcon, Is.EqualTo($"pack://application:,,,/Assets/Large/{name}.png"));
-                Assert.That(dest.SmallIcon, Is.EqualTo($"pack://application:,,,/Assets/Small/{name}.png"));
+            using var dest = new RibbonElement(name, () => text, Dispatcher.Vanilla);
+            Assert.That(dest.Name,      Is.EqualTo(name));
+            Assert.That(dest.Text,      Is.EqualTo(text));
+            Assert.That(dest.Tooltip,   Is.EqualTo(text));
+            Assert.That(dest.LargeIcon, Is.EqualTo($"pack://application:,,,/Assets/Large/{name}.png"));
+            Assert.That(dest.SmallIcon, Is.EqualTo($"pack://application:,,,/Assets/Small/{name}.png"));
 
-                Locale.Set(Language.French);
-                Assert.That(dest.Text,      Is.EqualTo(text));
-                Assert.That(dest.Tooltip,   Is.EqualTo(text));
-            }
-
+            Locale.Set(Language.French);
+            Assert.That(dest.Text,      Is.EqualTo(text));
+            Assert.That(dest.Tooltip,   Is.EqualTo(text));
             Locale.Set(Language.Japanese);
         }
 

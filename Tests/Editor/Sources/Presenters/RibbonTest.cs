@@ -25,7 +25,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// RibbonTest
     ///
     /// <summary>
-    /// Tests for the RibbonViewModel class.
+    /// Tests the RibbonViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -39,7 +39,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// GetText_English
         ///
         /// <summary>
-        /// 英語の表示テキストを確認します。
+        /// Checks the display text in English.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -47,8 +47,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void GetText_English()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook();
-
             vm.Value.Settings.Language = Language.English;
             var dest = vm.Ribbon;
 
@@ -90,7 +88,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// GetTooltip_English
         ///
         /// <summary>
-        /// 英語のツールチップを確認します。
+        /// Checks the tooltip in English.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -98,8 +96,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void GetTooltip_English()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook();
-
             vm.Value.Settings.Language = Language.English;
             var dest = vm.Ribbon;
 
@@ -141,7 +137,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// GetText_Japanese
         ///
         /// <summary>
-        /// 日本語の表示テキストを確認します。
+        /// Checks the display text in Japanese.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -149,8 +145,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void GetText_Japanese()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook();
-
             vm.Value.Settings.Language = Language.Japanese;
             var dest = vm.Ribbon;
 
@@ -187,12 +181,12 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Setting.Text,       Is.EqualTo("設定"));
         }
 
-         /* ----------------------------------------------------------------- */
+        /* ----------------------------------------------------------------- */
         ///
         /// GetTooltip_English
         ///
         /// <summary>
-        /// 日本語のツールチップを確認します。
+        /// Checks the tooltip in Japanese.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -200,8 +194,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void GetTooltip_Japanese()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook();
-
             vm.Value.Settings.Language = Language.Japanese;
             var dest = vm.Ribbon;
 
@@ -238,12 +230,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
         }
 
-       /* ----------------------------------------------------------------- */
+        /* ----------------------------------------------------------------- */
         ///
         /// GetText_Dynamically
         ///
         /// <summary>
-        /// 表示言語が動的に変更する時の挙動を確認します。
+        /// Checks the behavior when the display language changes
+        /// dynamically.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -251,9 +244,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         public void GetText_Dynamically()
         {
             using var vm = NewVM();
-            using var d0 = vm.Hook();
-
             var dest = vm.Ribbon;
+
             vm.Value.Settings.Language = Language.English;
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "en");
