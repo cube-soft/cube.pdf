@@ -20,6 +20,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
+using System.Windows.Input;
 using Cube.Logging;
 using Cube.Mixin.Commands;
 using Cube.Mixin.String;
@@ -40,7 +41,7 @@ namespace Cube.Pdf.Editor.Tests
     /* --------------------------------------------------------------------- */
     internal static class VmExtension
     {
-        #region Methods
+        #region Boot
 
         /* ----------------------------------------------------------------- */
         ///
@@ -72,34 +73,9 @@ namespace Cube.Pdf.Editor.Tests
             return dest;
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Test
-        ///
-        /// <summary>
-        /// Tests the command of the specified element.
-        /// </summary>
-        ///
-        /// <param name="vm">MainViewModel object.</param>
-        /// <param name="src">Target element.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Test(this MainViewModel vm, BindableElement src)
-        {
-            var cts = new CancellationTokenSource();
-            void observe(object s, PropertyChangedEventArgs e)
-            {
-                if (e.PropertyName != nameof(vm.Value.Busy) || vm.Value.Busy) return;
-                vm.Value.PropertyChanged -= observe;
-                cts.Cancel();
-            }
+        #endregion
 
-            Assert.That(vm.Value.Busy, Is.False, $"Busy ({src.Text})");
-            vm.Value.PropertyChanged += observe;
-            Assert.That(src.Command.CanExecute(), $"CanExecute ({src.Text})");
-            src.Command.Execute();
-            Assert.That(Wait.For(cts.Token), $"Timeout ({src.Text})");
-        }
+        #region Hook
 
         /* ----------------------------------------------------------------- */
         ///
@@ -116,9 +92,9 @@ namespace Cube.Pdf.Editor.Tests
         ///
         /* ----------------------------------------------------------------- */
         public static IDisposable Hook(this IBindable vm, VmParam vp) => new DisposableContainer(
-            vm.Subscribe<DialogMessage    >(e => vm.GetType().LogDebug($"{e.Icon}", e.Text)),
-            vm.Subscribe<OpenFileMessage  >(e => e.Value = new[] { vp.Source }),
-            vm.Subscribe<SaveFileMessage  >(e => e.Value = vp.Save),
+            vm.Subscribe<DialogMessage>(e => vm.GetType().LogDebug($"{e.Icon}", e.Text)),
+            vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { vp.Source }),
+            vm.Subscribe<SaveFileMessage>(e => e.Value = vp.Save),
             vm.Subscribe<PasswordViewModel>(e => {
                 Assert.That(e.Title, Is.Not.Null.And.Not.Empty);
                 Assert.That(e.Password.Text, Is.Not.Null.And.Not.Empty);
@@ -145,6 +121,72 @@ namespace Cube.Pdf.Editor.Tests
         ///
         /* ----------------------------------------------------------------- */
         public static IDisposable Hook(this IBindable vm) => Hook(vm, new());
+
+        #endregion
+
+        #region Test
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Test
+        ///
+        /// <summary>
+        /// Tests the specified action.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel object.</param>
+        /// <param name="action">User action.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Test(this MainViewModel vm, Action action)
+        {
+            var cts = new CancellationTokenSource();
+            void observe(object s, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName != nameof(vm.Value.Busy) || vm.Value.Busy) return;
+                vm.Value.PropertyChanged -= observe;
+                cts.Cancel();
+            }
+
+            Assert.That(vm.Value.Busy, Is.False, nameof(vm.Value.Busy));
+            vm.Value.PropertyChanged += observe;
+            action();
+            Assert.That(Wait.For(cts.Token), "Timeout");
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Test
+        ///
+        /// <summary>
+        /// Tests the specified command.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel object.</param>
+        /// <param name="command">Target command.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Test(this MainViewModel vm, ICommand command)
+        {
+            Assert.That(vm.Value.Busy, Is.False, nameof(vm.Value.Busy));
+            Assert.That(command.CanExecute(), nameof(command.CanExecute));
+            Test(vm, command.Execute);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Test
+        ///
+        /// <summary>
+        /// Tests the command of the specified element.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel object.</param>
+        /// <param name="element">Target element.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Test(this MainViewModel vm, BindableElement element) =>
+            Test(vm, element.Command);
 
         #endregion
     }
