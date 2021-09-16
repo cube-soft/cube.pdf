@@ -21,6 +21,7 @@ using System.Security.Cryptography;
 using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
+using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using NUnit.Framework;
 
@@ -49,49 +50,24 @@ namespace Cube.Pdf.Converter.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [Test]
-        public void Convert()
+        [TestCase(Format.Pdf,  "Sdk.pdf")]
+        [TestCase(Format.Png,  "Sdk.png")]
+        [TestCase(Format.Jpeg, "Sdk.jpg")]
+        [TestCase(Format.Ps,   "Sdk.ps")]
+        public void Convert(Format format, string file)
         {
-            var dest = Get($"{nameof(Convert)}.pdf");
-
             using var src = new Facade();
-            src.Settings.Value.Source = GetSource("Sample.ps");
-            src.Settings.Value.Destination = dest;
+            src.Settings.Value.Source      = GetSource("SampleMix.ps");
+            src.Settings.Value.Destination = Get(file);
+            src.Settings.Value.Format      = format;
             src.Settings.Value.PostProcess = PostProcess.None;
+            src.Settings.Value.Resolution  = 96;
             src.Invoke();
 
+            var n = ImageConverter.SupportedFormats.Contains(format) ? 3 : 1;
             Assert.That(src.Busy, Is.False);
-            Assert.That(src.Results.Count(), Is.EqualTo(1));
-            Assert.That(src.Results.First(), Is.EqualTo(dest));
-            Assert.That(Io.Exists(dest), Is.True);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Convert_Png
-        ///
-        /// <summary>
-        /// Tests the Convert method.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Convert_Png()
-        {
-            var dest = Get($"{nameof(Convert)}.png");
-
-            using var src = new Facade();
-            src.Settings.Value.Source = GetSource("SampleCjk.ps");
-            src.Settings.Value.Destination = dest;
-            src.Settings.Value.PostProcess = PostProcess.None;
-            src.Settings.Value.Format = Ghostscript.Format.Png;
-            src.Settings.Value.Resolution = 72;
-            src.Invoke();
-
-            Assert.That(src.Busy, Is.False);
-            Assert.That(src.Results.Count(), Is.EqualTo(5));
-            Assert.That(src.Results.First(), Does.EndWith($"{nameof(Convert)}-01.png"));
-            Assert.That(Io.Exists(dest), Is.False);
+            Assert.That(src.Results.Count(), Is.EqualTo(n));
+            foreach (var f in src.Results) Assert.That(Io.Exists(f), f);
         }
 
         /* ----------------------------------------------------------------- */
@@ -109,7 +85,7 @@ namespace Cube.Pdf.Converter.Tests
         [TestCase(SaveOption.Rename)]
         public void Convert_SaveOption(SaveOption so)
         {
-            var dest = Get($"{nameof(Convert)}_{so}.pdf");
+            var dest = Get($"So-{so}.pdf");
             Io.Copy(GetSource("Sample.pdf"), dest, true);
 
             using var src = new Facade();
@@ -136,8 +112,8 @@ namespace Cube.Pdf.Converter.Tests
         [Test]
         public void Convert_CryptographicException()
         {
-            var dest = Get($"{nameof(Convert_CryptographicException)}.pdf");
-            var args = new ArgumentCollection(new[] { "-Digest", "dummy" }, Argument.Windows, true);
+            var dest = Get("digest.pdf");
+            var args = new ArgumentCollection(new[] { "-Digest", "dummy" });
             var settings = new SettingFolder();
 
             settings.Value.Source = GetSource("Sample.ps");
