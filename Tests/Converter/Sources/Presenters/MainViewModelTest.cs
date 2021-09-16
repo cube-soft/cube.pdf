@@ -304,25 +304,25 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 GetArgs("PS テスト (Gray)")
             );
 
-            yield return Create(n++,
-                new SettingValue
-                {
-                    Format           = Format.Eps,
-                    Grayscale        = false,
-                    Resolution       = 72,
-                },
-                GetArgs("EPS テスト")
-            );
+            //yield return Create(n++,
+            //    new SettingValue
+            //    {
+            //        Format           = Format.Eps,
+            //        Grayscale        = false,
+            //        Resolution       = 72,
+            //    },
+            //    GetArgs("EPS テスト")
+            //);
 
-            yield return Create(n++,
-                new SettingValue
-                {
-                    Format           = Format.Eps,
-                    Grayscale        = true,
-                    Resolution       = 72,
-                },
-                GetArgs("EPS テスト (Gray)")
-            );
+            //yield return Create(n++,
+            //    new SettingValue
+            //    {
+            //        Format           = Format.Eps,
+            //        Grayscale        = true,
+            //        Resolution       = 72,
+            //    },
+            //    GetArgs("EPS テスト (Gray)")
+            //);
 
             yield return Create(n++,
                 new SettingValue
