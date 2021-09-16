@@ -50,10 +50,19 @@ namespace Cube.Pdf.Converter.Tests
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(Format.Pdf,  "Sdk.pdf")]
-        [TestCase(Format.Png,  "Sdk.png")]
-        [TestCase(Format.Jpeg, "Sdk.jpg")]
-        [TestCase(Format.Ps,   "Sdk.ps")]
+        [TestCase(Format.Pdf,                "Sdk.pdf")]
+        [TestCase(Format.Ps,                 "Sdk.ps")]
+        [TestCase(Format.Png,                "Sdk.png")]
+        [TestCase(Format.Png32bppArgb,       "Sdk-Alpha.png")]
+        [TestCase(Format.Png8bppIndexed,     "Sdk-Index.png")]
+        [TestCase(Format.Png8bppGrayscale,   "Sdk-Gray.png")]
+        [TestCase(Format.Png1bppMonochrome,  "Sdk-Mono.png")]
+        [TestCase(Format.Jpeg,               "Sdk.jpg")]
+        [TestCase(Format.Jpeg8bppGrayscale,  "Sdk-Gray.jpg")]
+        [TestCase(Format.Tiff,               "Sdk.tiff")]
+        [TestCase(Format.Tiff12bppRgb,       "Sdk-12bpp.tiff")]
+        [TestCase(Format.Tiff8bppGrayscale,  "Sdk-Gray.tiff")]
+        [TestCase(Format.Tiff1bppMonochrome, "Sdk-Mono.tiff")]
         public void Convert(Format format, string file)
         {
             using var src = new Facade();
