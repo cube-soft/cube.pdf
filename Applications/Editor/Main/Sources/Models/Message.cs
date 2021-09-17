@@ -16,8 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
+using Cube.Pdf.Pdfium;
 
 namespace Cube.Pdf.Editor
 {
@@ -33,6 +35,26 @@ namespace Cube.Pdf.Editor
     internal static class Message
     {
         #region DialogMessage
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// From
+        ///
+        /// <summary>
+        /// Creates a message to show a MessageBox of error confirmation.
+        /// </summary>
+        ///
+        /// <param name="src">Source exception.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogMessage From(Exception src)
+        {
+            var dest = DialogMessage.From(src);
+            if (src is PdfiumException e) dest.Text = $"{Properties.Resources.MessageOpenError} ({(int)e.Status})";
+            return dest;
+        }
 
         /* ----------------------------------------------------------------- */
         ///

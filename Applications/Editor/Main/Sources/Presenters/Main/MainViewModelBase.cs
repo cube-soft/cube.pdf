@@ -196,6 +196,31 @@ namespace Cube.Pdf.Editor
 
         #endregion
 
+        #region OnMessage
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnMessage
+        ///
+        /// <summary>
+        /// Converts the specified exception to a new instance of the
+        /// DialogMessage class.
+        /// </summary>
+        ///
+        /// <param name="src">Source exception.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /// <remarks>
+        /// The Method is called from the Track methods.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override DialogMessage OnMessage(Exception src) =>
+            src is OperationCanceledException ? null : Message.From(src);
+
+        #endregion
+
         #region Send
 
         /* ----------------------------------------------------------------- */
