@@ -144,7 +144,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         private IDisposable Subscribe(MainViewModel vm, Metadata src) =>
             vm.Subscribe<MetadataViewModel>(mvm =>
         {
-            vm.Value.Settings.Language = Language.English;
             Assert.That(mvm.Title,               Is.EqualTo("PDF Metadata"));
             Assert.That(mvm.Versions.Count(),    Is.EqualTo(6), nameof(mvm.Versions));
             Assert.That(mvm.Options.Count(),     Is.EqualTo(6), nameof(mvm.Options));

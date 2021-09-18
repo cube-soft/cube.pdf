@@ -53,7 +53,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Hook();
 
-            vm.Value.Settings.Language = Language.English;
             Assert.That(vm.Recent.Items,        Is.Not.Null);
             Assert.That(vm.Recent.Menu.Text,    Is.EqualTo("Recent files"));
             Assert.That(vm.Recent.Menu.Command, Is.Not.Null);

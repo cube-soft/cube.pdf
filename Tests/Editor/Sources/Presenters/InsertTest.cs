@@ -351,7 +351,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 cmd.Execute();
             });
 
-            vm.Value.Settings.Language = Language.English;
             Assert.That(vm.Ribbon.InsertOthers.Command.CanExecute());
             vm.Ribbon.InsertOthers.Command.Execute();
 

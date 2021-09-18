@@ -90,7 +90,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
             using var z1 = vm.Subscribe<ExtractViewModel>(evm => {
-                vm.Value.Settings.Language = Language.English;
                 AssertObject(evm);
                 evm.Cancel.Command.Execute();
             });

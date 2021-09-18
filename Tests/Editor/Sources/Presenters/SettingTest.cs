@@ -104,6 +104,12 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /// <param name="src">Source object.</param>
         ///
+        /// <remarks>
+        /// The NewVM method sets the Language.English to the generated
+        /// MainViewModel object. Therefore, Language.Value will be English
+        /// instead of Auto.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         private void AssertObject(SettingViewModel src)
         {
@@ -116,7 +122,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(src.Link.Value.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdfutility/?lang="));
             Assert.That(src.Update.Text,           Is.Not.Null.And.Not.Empty);
             Assert.That(src.Language.Text,         Is.Not.Null.And.Not.Empty);
-            Assert.That(src.Language.Value,        Is.EqualTo(Language.Auto));
+            Assert.That(src.Language.Value,        Is.EqualTo(Language.English)); // see remarks.
             Assert.That(src.Languages.Count(),     Is.EqualTo(3));
         }
 

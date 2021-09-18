@@ -56,6 +56,7 @@ namespace Cube.Pdf.Editor.Tests
             var dest  = new MainViewModel(src, new());
             var dummy = new BitmapImage(new(GetSource("Loading.png")));
 
+            dest.Value.Settings.Language = Language.English;
             dest.Value.Images.Preferences.Dummy = dummy;
             dest.Value.Images.Preferences.VisibleFirst = 0;
             dest.Value.Images.Preferences.VisibleLast = 10;

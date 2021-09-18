@@ -111,7 +111,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         private IDisposable Subscribe(MainViewModel vm, Encryption src) =>
             vm.Subscribe<EncryptionViewModel>(evm =>
         {
-            vm.Value.Settings.Language = Language.English;
             evm.Enabled.Value            = src.Enabled;
             evm.OwnerPassword.Value      = src.OwnerPassword;
             evm.OwnerConfirm.Value       = src.OwnerPassword;

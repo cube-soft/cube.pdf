@@ -84,8 +84,6 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
             using var z1 = vm.Subscribe<RemoveViewModel>(e => {
-                vm.Value.Settings.Language = Language.English;
-
                 Assert.That(e.Title,        Is.EqualTo("Removal details"));
                 Assert.That(e.Count.Text,   Is.EqualTo("Page count"));
                 Assert.That(e.Count.Value,  Is.AtLeast(1));
