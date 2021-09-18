@@ -189,5 +189,29 @@ namespace Cube.Pdf.Editor.Tests
             Test(vm, element.Command);
 
         #endregion
+
+        #region Select
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// Selects the specified indices.
+        /// </summary>
+        ///
+        /// <param name="vm">MainViewModel object.</param>
+        /// <param name="indices">Indices to be selected.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void Select(this MainViewModel vm, params int[] indices)
+        {
+            var src = vm.Value.Images;
+            var cvt = src.ToList();
+            foreach (var i in indices) cvt[i].Selected = true;
+            Assert.That(Wait.For(() => src.Selection.Count == indices.Length), "Timeout (Select)");
+        }
+
+        #endregion
     }
 }

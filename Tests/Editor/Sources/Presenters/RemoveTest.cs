@@ -52,9 +52,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
-            var src = vm.Value.Images.ToList();
-            src[3].Selected = true;
-            src[5].Selected = true;
+            vm.Select(3, 5);
             vm.Test(vm.Ribbon.Remove);
 
             var dest = vm.Value.Images.ToList();

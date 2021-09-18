@@ -91,7 +91,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(vp);
 
-            vm.Value.Images.First().Selected = true;
+            vm.Select(0);
             vm.Test(vm.Ribbon.RotateLeft);
             vm.Test(vm.Ribbon.Save);
         }

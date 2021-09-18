@@ -90,7 +90,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Indices, Is.Not.Null);
             Assert.That(dest.Last,    Is.EqualTo(-1));
 
-            vm.Value.Images.First().Selected = true;
+            vm.Select(0);
             Assert.That(changed,    Is.EqualTo(1 * unit));
             Assert.That(dest.Count, Is.EqualTo(1), nameof(dest.Count));
             Assert.That(dest.Last,  Is.EqualTo(0), nameof(dest.Last));

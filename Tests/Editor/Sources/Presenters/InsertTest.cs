@@ -68,7 +68,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var z0 = vm.Boot(vp);
 
             vp.Source = GetSource(file);
-            vm.Value.Images.Skip(2).First().Selected = true;
+            vm.Select(2);
             vm.Test(vm.Ribbon.Insert);
             Assert.That(vm.Value.Count, Is.EqualTo(n));
 

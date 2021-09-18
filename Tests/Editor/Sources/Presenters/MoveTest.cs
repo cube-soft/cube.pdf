@@ -50,10 +50,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
-            var src = vm.Value.Images.ToList();
-            src[1].Selected = true;
-            src[3].Selected = true;
-            src[8].Selected = true;
+            vm.Select(1, 3, 8);
             vm.Test(vm.Ribbon.MoveNext);
 
             var dest = vm.Value.Images.ToList();
@@ -85,10 +82,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
-            var src = vm.Value.Images.ToList();
-            src[0].Selected = true;
-            src[3].Selected = true;
-            src[6].Selected = true;
+            vm.Select(0, 3, 6);
             vm.Test(vm.Ribbon.MovePrevious);
 
             var dest = vm.Value.Images.ToList();
@@ -120,11 +114,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
-            var src = vm.Value.Images.ToList();
             var obj = new DragDropObject(1) { DropIndex = 4 };
-            src[1].Selected = true;
-            src[3].Selected = true;
-            src[6].Selected = true;
+            vm.Select(1, 3, 6);
             vm.Test(() => vm.InsertOrMove.Execute(obj));
 
             var dest = vm.Value.Images.ToList();
@@ -156,11 +147,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
-            var src = vm.Value.Images.ToList();
             var obj = new DragDropObject(6) { DropIndex = 3 };
-            src[1].Selected = true;
-            src[3].Selected = true;
-            src[6].Selected = true;
+            vm.Select(1, 3, 6);
             vm.Test(() => vm.InsertOrMove.Execute(obj));
 
             var dest = vm.Value.Images.ToList();

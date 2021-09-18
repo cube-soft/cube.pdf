@@ -61,8 +61,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var z0 = vm.Boot(vp);
 
             Assert.That(Io.Exists(vp.Save), Is.False, vp.Save);
-            vm.Value.Images.Skip(1).First().Selected = true;
-            vm.Value.Images.First().Selected = true;
+            vm.Select(1, 0);
             Assert.That(vm.Ribbon.Extract.Command.CanExecute());
             vm.Test(vm.Ribbon.Extract);
 
