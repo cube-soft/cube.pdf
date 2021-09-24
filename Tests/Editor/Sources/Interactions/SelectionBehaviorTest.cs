@@ -27,19 +27,19 @@ namespace Cube.Pdf.Editor.Tests.Interactions
     /// SelectionBehaviorTest
     ///
     /// <summary>
-    /// Tests for the SelectionBehavior class.
+    /// Tests the SelectionBehavior class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
     [Apartment(ApartmentState.STA)]
-    class SelectionBehaviorTest : ViewModelFixture
+    class SelectionBehaviorTest
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Test
         ///
         /// <summary>
         /// Tests the create, attach, and detach methods.
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create()
+        public void Test()
         {
             var view = new ListView();
             var src  = new SelectionBehavior();

@@ -16,57 +16,51 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.ComponentModel;
-using System.Threading;
-using Cube.Mixin.Commands;
-using Cube.Tests;
-using Cube.Xui;
-using NUnit.Framework;
-
 namespace Cube.Pdf.Editor.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ViewModelExtension
+    /// VmParam
     ///
     /// <summary>
-    /// Provides extended methods of the MainViewModel class for testing.
+    /// Represents the data to be set for the properties of the message
+    /// published by the ViewModel.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class ViewModelExtension
+    internal class VmParam
     {
-        #region Methods
-
         /* ----------------------------------------------------------------- */
         ///
-        /// Test
+        /// Source
         ///
         /// <summary>
-        /// Tests the command of the specified element.
+        /// Gets or sets the loading path.
         /// </summary>
         ///
-        /// <param name="vm">MainViewModel instance.</param>
-        /// <param name="src">Target element.</param>
+        /* ----------------------------------------------------------------- */
+        public string Source { get; set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Save
+        ///
+        /// <summary>
+        /// Gets or sets the saving path.
+        /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Test(this MainViewModel vm, BindableElement src)
-        {
-            var cs = new CancellationTokenSource();
-            void observe(object s, PropertyChangedEventArgs e)
-            {
-                if (e.PropertyName != nameof(vm.Value.Busy) || vm.Value.Busy) return;
-                vm.Value.PropertyChanged -= observe;
-                cs.Cancel();
-            }
+        public string Save { get; set; }
 
-            Assert.That(vm.Value.Busy, Is.False, $"Busy ({src.Text})");
-            vm.Value.PropertyChanged += observe;
-            Assert.That(src.Command.CanExecute(), Is.True, $"CanExecute ({src.Text})");
-            src.Command.Execute();
-            Assert.That(Wait.For(cs.Token), $"Timeout ({src.Text})");
-        }
-
-        #endregion
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Password
+        ///
+        /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Password { get; set; }
     }
 }

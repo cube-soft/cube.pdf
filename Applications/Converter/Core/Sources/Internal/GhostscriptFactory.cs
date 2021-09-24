@@ -153,8 +153,8 @@ namespace Cube.Pdf.Converter
         private static Ghostscript.Converter CreateImageConverter(SettingFolder src)
         {
             var key = new KeyValuePair<Format, bool>(src.Value.Format, src.Value.Grayscale);
-            Debug.Assert(FormatMap.ContainsKey(key));
-            return new ImageConverter(FormatMap[key]) { AntiAlias = true };
+            var cvt = FormatMap.ContainsKey(key) ? FormatMap[key] : src.Value.Format;
+            return new ImageConverter(cvt) { AntiAlias = true };
         }
 
         /* ----------------------------------------------------------------- */

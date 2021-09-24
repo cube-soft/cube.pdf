@@ -88,7 +88,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public DocumentRenderer GetOrAdd(string src, string password)
         {
-            if (Disposed || !src.IsPdf()) return null;
+            if (Disposed) return null;
             if (_inner.TryGetValue(src, out var value)) return value;
             return _inner.GetOrAdd(src, e => Create(e, password));
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>4.0.2</version>
+        <version>5.0.0</version>
         <id>Cube.Pdf</id>
         <title>Cube.Pdf</title>
         <authors>clown,cube-soft</authors>
@@ -17,13 +17,13 @@
             <group targetFramework="netstandard2.0">
                 <dependency id="System.Drawing.Common" version="5.0.2" />
                 <dependency id="System.Security.Cryptography.Csp" version="4.3.0" />
-                <dependency id="Cube.FileSystem" version="4.0.2" />
+                <dependency id="Cube.FileSystem" version="5.0.0" />
             </group>
             <group targetFramework="net45">
-                <dependency id="Cube.FileSystem" version="4.0.2" />
+                <dependency id="Cube.FileSystem" version="5.0.0" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.FileSystem" version="4.0.2" />
+                <dependency id="Cube.FileSystem" version="5.0.0" />
             </group>
         </dependencies>
     </metadata>

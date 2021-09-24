@@ -16,26 +16,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Linq;
-using System.Threading;
-using Cube.Mixin.Commands;
-using Cube.Tests;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainTest
+    /// MoveTest
     ///
     /// <summary>
-    /// Tests for editing operations of the MainViewModel class.
+    /// Tests the Move commands.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class MoveTest : ViewModelFixture
+    class MoveTest : VmFixture
     {
         #region Tests
 
@@ -49,13 +45,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MoveNext() => Open("SampleRotation.pdf", "", vm =>
+        public void MoveNext()
         {
-            var src = vm.Value.Images.ToList();
-            src[1].Selected = true;
-            src[3].Selected = true;
-            src[8].Selected = true;
-            Assert.That(Test(vm, () => vm.Ribbon.MoveNext.Command.Execute()), "Invoke");
+            using var vm = NewVM();
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+
+            vm.Select(1, 3, 8);
+            vm.Test(vm.Ribbon.MoveNext);
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
@@ -69,7 +65,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[7].RawObject.Number, Is.EqualTo(8));
             Assert.That(dest[8].RawObject.Number, Is.EqualTo(9));
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -81,13 +77,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MovePrevious() => Open("SampleRotation.pdf", "", vm =>
+        public void MovePrevious()
         {
-            var src = vm.Value.Images.ToList();
-            src[0].Selected = true;
-            src[3].Selected = true;
-            src[6].Selected = true;
-            Assert.That(Test(vm, () => vm.Ribbon.MovePrevious.Command.Execute()), "Invoke");
+            using var vm = NewVM();
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+
+            vm.Select(0, 3, 6);
+            vm.Test(vm.Ribbon.MovePrevious);
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
@@ -101,7 +97,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[7].RawObject.Number, Is.EqualTo(8));
             Assert.That(dest[8].RawObject.Number, Is.EqualTo(9));
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -113,14 +109,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MoveNext_DragDrop() => Open("SampleRotation.pdf", "", vm =>
+        public void MoveNext_DragDrop()
         {
-            var src = vm.Value.Images.ToList();
+            using var vm = NewVM();
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+
             var obj = new DragDropObject(1) { DropIndex = 4 };
-            src[1].Selected = true;
-            src[3].Selected = true;
-            src[6].Selected = true;
-            Assert.That(Test(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
+            vm.Select(1, 3, 6);
+            vm.Test(() => vm.InsertOrMove.Execute(obj));
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
@@ -133,9 +129,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[6].RawObject.Number, Is.EqualTo(8));
             Assert.That(dest[7].RawObject.Number, Is.EqualTo(9));
             Assert.That(dest[8].RawObject.Number, Is.EqualTo(7));
-
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -147,14 +142,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void MovePrevious_DragDrop() => Open("SampleRotation.pdf", "", vm =>
+        public void MovePrevious_DragDrop()
         {
-            var src = vm.Value.Images.ToList();
+            using var vm = NewVM();
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+
             var obj = new DragDropObject(6) { DropIndex = 3 };
-            src[1].Selected = true;
-            src[3].Selected = true;
-            src[6].Selected = true;
-            Assert.That(Test(vm, () => vm.InsertOrMove.Execute(obj)), "Invoke");
+            vm.Select(1, 3, 6);
+            vm.Test(() => vm.InsertOrMove.Execute(obj));
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest.Count,               Is.EqualTo(9));
@@ -167,29 +162,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest[6].RawObject.Number, Is.EqualTo(6));
             Assert.That(dest[7].RawObject.Number, Is.EqualTo(8));
             Assert.That(dest[8].RawObject.Number, Is.EqualTo(9));
-
             for (var i = 0; i < dest.Count; ++i) Assert.That(dest[i].Index, Is.EqualTo(i));
-        });
-
-        #endregion
-
-        #region Others
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Test
-        ///
-        /// <summary>
-        /// Invokes the specified action and wait for completion.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool Test(MainViewModel vm, Action action)
-        {
-            var cts = new CancellationTokenSource();
-            vm.Value.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(vm.Value.Modified)) cts.Cancel(); };
-            action();
-            return Wait.For(cts.Token);
         }
 
         #endregion

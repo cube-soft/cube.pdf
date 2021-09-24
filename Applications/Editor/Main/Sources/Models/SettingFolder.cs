@@ -51,7 +51,22 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingFolder() : this(typeof(App).Assembly, Format.Registry, @"CubeSoft\CubePDF Utility2") { }
+        public SettingFolder() : this(Format.Registry, @"CubeSoft\CubePDF Utility2") { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SettingFolder
+        ///
+        /// <summary>
+        /// Initializes a new instance of the SettingFolder with the
+        /// specified parameters.
+        /// </summary>
+        ///
+        /// <param name="format">Serialized format.</param>
+        /// <param name="location">Location for the settings.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public SettingFolder(Format format, string location) : this(typeof(App).Assembly, format, location) { }
 
         /* ----------------------------------------------------------------- */
         ///

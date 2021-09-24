@@ -970,6 +970,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   File not in PDF format or corrupted. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageOpenError {
+            get {
+                return ResourceManager.GetString("MessageOpenError", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   PDF is modified. Do you want to overwrite? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageOverwrite {

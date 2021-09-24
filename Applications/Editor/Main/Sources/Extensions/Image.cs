@@ -64,7 +64,7 @@ namespace Cube.Pdf.Editor
         /// Select
         ///
         /// <summary>
-        /// Sets the IsSelected property of all items to be the specified
+        /// Sets the Selected property of all items to be the specified
         /// value.
         /// </summary>
         ///
