@@ -23,10 +23,10 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Editor\Main\Cube.Pdf.Editor.csproj" />
-        <PackageReference Include="Cube.Tests" Version="5.0.*" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.*" />
-        <PackageReference Include="NUnit3TestAdapter" Version="4.0.*" />
-        <PackageReference Include="Appveyor.TestLogger" Version="2.0.*" />
+        <PackageReference Include="Cube.Tests" Version="5.0.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
+        <PackageReference Include="NUnit3TestAdapter" Version="*" />
+        <PackageReference Include="Appveyor.TestLogger" Version="*" />
     </ItemGroup>
     <ItemGroup>
         <None Include="App.*" />
