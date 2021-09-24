@@ -56,8 +56,8 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new PathLintBehavior(SourceTextBox, PathToolTip));
             Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathToolTip));
             Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathToolTip));
-            Behaviors.Add(new PasswordBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
-            Behaviors.Add(new PasswordBehavior(UserPasswordTextBox, UserConfirmTextBox));
+            Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
+            Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
 
             SettingPanel.ApplyButton = ApplyButton;
 

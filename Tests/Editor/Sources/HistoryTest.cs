@@ -27,7 +27,7 @@ namespace Cube.Pdf.Editor.Tests
     /// HistoryTest
     ///
     /// <summary>
-    /// Tests for the History class.
+    /// Tests the History class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -49,7 +49,7 @@ namespace Cube.Pdf.Editor.Tests
         public void Undo()
         {
             var src = Create();
-            var dispatcher = new ContextDispatcher(new SynchronizationContext(), false);
+            var dispatcher = new ContextDispatcher(new(), false);
             var history    = new History(dispatcher);
 
             Assert.That(src.Count, Is.EqualTo(10));

@@ -16,11 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Linq;
-using System.Threading;
 using Cube.Mixin.Commands;
-using Cube.Tests;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
@@ -30,79 +27,104 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// SettingTest
     ///
     /// <summary>
-    /// Tests the settings related classes.
+    /// Tests the Setting commands and the SettingViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SettingTest : ViewModelFixture
+    class SettingTest : VmFixture
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Test
         ///
         /// <summary>
-        /// Confirms the values of settings.
+        /// Tests the Setting command.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create() => Make(vm =>
+        public void Test()
         {
-            var src = vm.Value.Settings;
-            Assert.That(src.Width,         Is.EqualTo(800));
-            Assert.That(src.Height,        Is.EqualTo(600));
-            Assert.That(src.ItemSize,      Is.EqualTo(250));
-            Assert.That(src.FrameOnly,     Is.False);
-            Assert.That(src.Smart,         Is.True);
-            Assert.That(src.RecentVisible, Is.True);
-            Assert.That(src.Temp,          Is.Empty);
+            using var vm = NewVM();
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+            using var z1 = vm.Subscribe<SettingViewModel>(svm =>
+            {
+                AssertObject(svm);
+                Assert.That(svm.OK.Command.CanExecute());
+                Assert.That(svm.Cancel.Command.CanExecute());
+                svm.Cancel.Command.Execute();
+            });
+
+            Assert.That(vm.Ribbon.Setting.Command.CanExecute());
+            vm.Ribbon.Setting.Command.Execute();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Check
+        ///
+        /// <summary>
+        /// Checks the default settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Check()
+        {
+            using var vm = NewVM();
+            using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
+
+            var dest = vm.Value.Settings;
+            Assert.That(dest.Width,         Is.EqualTo(800));
+            Assert.That(dest.Height,        Is.EqualTo(600));
+            Assert.That(dest.ItemSize,      Is.EqualTo(250));
+            Assert.That(dest.FrameOnly,     Is.False);
+            Assert.That(dest.Smart,         Is.True);
+            Assert.That(dest.RecentVisible, Is.True);
+            Assert.That(dest.Temp,          Is.Empty);
 
             vm.Value.Settings.Width  = 1024;
             vm.Value.Settings.Height = 768;
-        });
+        }
+
+        #endregion
+
+        #region Others
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Cancel
+        /// AssertObject
         ///
         /// <summary>
-        /// Confirms properties of the SettingViewModel class and invokes
-        /// the Cancel command.
+        /// Confirms the properties of the specified object.
         /// </summary>
         ///
+        /// <param name="src">Source object.</param>
+        ///
+        /// <remarks>
+        /// The NewVM method sets the Language.English to the generated
+        /// MainViewModel object. Therefore, Language.Value will be English
+        /// instead of Auto.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        [Test]
-        public void Cancel() => Open("Sample.pdf", "", vm =>
+        private void AssertObject(SettingViewModel src)
         {
-            var cts = new CancellationTokenSource();
-            _ = vm.Subscribe<SettingViewModel>(e =>
-            {
-                Assert.That(e.Title,                 Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Text,          Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Version.Value,         Does.StartWith("Cube.Pdf.Editor.Tests 1.5.2 "));
-                Assert.That(e.Windows.Text,          Does.StartWith("Microsoft Windows"));
-                Assert.That(e.Framework.Text,        Does.StartWith("Microsoft .NET Framework"));
-                Assert.That(e.Link.Text,             Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
-                Assert.That(e.Link.Value.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdfutility/?lang="));
-                Assert.That(e.Update.Text,           Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Language.Text,         Is.Not.Null.And.Not.Empty);
-                Assert.That(e.Language.Value,        Is.EqualTo(Language.Auto));
-                Assert.That(e.Languages.Count(),     Is.EqualTo(3));
-
-                Assert.That(e.OK.Command.CanExecute(),     Is.True);
-                Assert.That(e.Cancel.Command.CanExecute(), Is.True);
-
-                e.Cancel.Command.Execute();
-                cts.Cancel(); // done
-            });
-
-            Assert.That(vm.Ribbon.Setting.Command.CanExecute(), Is.True);
-            vm.Ribbon.Setting.Command.Execute();
-            Assert.That(Wait.For(cts.Token), Is.True, "Timeout (Cancel)");
-        });
+            Assert.That(src.Title,                 Is.Not.Null.And.Not.Empty);
+            Assert.That(src.Version.Text,          Is.Not.Null.And.Not.Empty);
+            Assert.That(src.Version.Value,         Does.StartWith("CubePDF Utility 1.6.0 "));
+            Assert.That(src.Windows.Text,          Does.StartWith("Microsoft Windows"));
+            Assert.That(src.Framework.Text,        Does.StartWith("Microsoft .NET Framework"));
+            Assert.That(src.Link.Text,             Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
+            Assert.That(src.Link.Value.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdfutility/?lang="));
+            Assert.That(src.Update.Text,           Is.Not.Null.And.Not.Empty);
+            Assert.That(src.Language.Text,         Is.Not.Null.And.Not.Empty);
+            Assert.That(src.Language.Value,        Is.EqualTo(Language.English)); // see remarks.
+            Assert.That(src.Languages.Count(),     Is.EqualTo(3));
+        }
 
         #endregion
     }

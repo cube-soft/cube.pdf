@@ -25,12 +25,12 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// RibbonTest
     ///
     /// <summary>
-    /// Tests for the RibbonViewModel class.
+    /// Tests the RibbonViewModel class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class RibbonTest : ViewModelFixture
+    class RibbonTest : VmFixture
     {
         #region Tests
 
@@ -39,13 +39,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /// GetText_English
         ///
         /// <summary>
-        /// 英語の表示テキストを確認します。
+        /// Checks the display text in English.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_English() => Make(vm =>
+        public void GetText_English()
         {
+            using var vm = NewVM();
             vm.Value.Settings.Language = Language.English;
             var dest = vm.Ribbon;
 
@@ -80,20 +81,21 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("ZoomIn"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("ZoomOut"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("Settings"));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// GetTooltip_English
         ///
         /// <summary>
-        /// 英語のツールチップを確認します。
+        /// Checks the tooltip in English.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetTooltip_English() => Make(vm =>
+        public void GetTooltip_English()
         {
+            using var vm = NewVM();
             vm.Value.Settings.Language = Language.English;
             var dest = vm.Ribbon;
 
@@ -128,20 +130,21 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
-        });
+        }
 
         /* ----------------------------------------------------------------- */
         ///
         /// GetText_Japanese
         ///
         /// <summary>
-        /// 日本語の表示テキストを確認します。
+        /// Checks the display text in Japanese.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_Japanese() => Make(vm =>
+        public void GetText_Japanese()
         {
+            using var vm = NewVM();
             vm.Value.Settings.Language = Language.Japanese;
             var dest = vm.Ribbon;
 
@@ -176,20 +179,21 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Text,        Is.EqualTo("拡大"));
             Assert.That(dest.ZoomOut.Text,       Is.EqualTo("縮小"));
             Assert.That(dest.Setting.Text,       Is.EqualTo("設定"));
-        });
+        }
 
-         /* ----------------------------------------------------------------- */
+        /* ----------------------------------------------------------------- */
         ///
         /// GetTooltip_English
         ///
         /// <summary>
-        /// 日本語のツールチップを確認します。
+        /// Checks the tooltip in Japanese.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetTooltip_Japanese() => Make(vm =>
+        public void GetTooltip_Japanese()
         {
+            using var vm = NewVM();
             vm.Value.Settings.Language = Language.Japanese;
             var dest = vm.Ribbon;
 
@@ -224,21 +228,24 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
             Assert.That(dest.ZoomOut.Tooltip,       Is.EqualTo(dest.ZoomOut.Text));
             Assert.That(dest.Setting.Tooltip,       Is.EqualTo(dest.Setting.Text));
-        });
+        }
 
-       /* ----------------------------------------------------------------- */
+        /* ----------------------------------------------------------------- */
         ///
         /// GetText_Dynamically
         ///
         /// <summary>
-        /// 表示言語が動的に変更する時の挙動を確認します。
+        /// Checks the behavior when the display language changes
+        /// dynamically.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void GetText_Dynamically() => Make(vm =>
+        public void GetText_Dynamically()
         {
+            using var vm = NewVM();
             var dest = vm.Ribbon;
+
             vm.Value.Settings.Language = Language.English;
             Assert.That(dest.Open.Text,    Is.EqualTo("Open"), "en");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "en");
@@ -254,7 +261,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             vm.Value.Settings.Language = Language.Auto;
             Assert.That(dest.Open.Text,    Is.Not.Null.And.Not.Empty, "empty");
             Assert.That(dest.Open.Tooltip, Is.EqualTo(dest.Open.Text), "empty");
-        });
+        }
 
         #endregion
     }

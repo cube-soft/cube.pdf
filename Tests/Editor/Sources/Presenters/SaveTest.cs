@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Linq;
 using Cube.FileSystem;
+using Cube.Tests;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
@@ -27,12 +28,12 @@ namespace Cube.Pdf.Editor.Tests.Presenters
     /// SaveTest
     ///
     /// <summary>
-    /// Tests for Save commands.
+    /// Tests the Save commands.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
-    class SaveTest : ViewModelFixture
+    class SaveTest : VmFixture
     {
         #region Tests
 
@@ -49,15 +50,23 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("SampleAes128.pdf",   "password")]
         [TestCase("SampleRc40.pdf",     "password")]
         [TestCase("SampleRc40Open.pdf", "password")]
-        public void SaveAs(string filename, string password) => Open(filename, password, vm =>
+        public void SaveAs(string file, string password)
         {
-            Destination = Get(Args(Io.Get(Source).BaseName));
-            Password    = string.Empty;
+            var vp = new VmParam
+            {
+                Source   = GetSource(file),
+                Save     = Get(Args(Io.Get(file).BaseName)),
+                Password = password,
+            };
 
-            Assert.That(Io.Exists(Destination), Is.False);
+            using var vm = NewVM();
+            using var z0 = vm.Boot(vp);
+
+            vp.Password = string.Empty;
+            Assert.That(Io.Exists(vp.Save), Is.False);
             vm.Test(vm.Ribbon.SaveAs);
-            Assert.That(Io.Exists(Destination), Is.True);
-        });
+            Assert.That(Wait.For(() => Io.Exists(vp.Save)), vp.Save);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -69,17 +78,23 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         ///
         /* ----------------------------------------------------------------- */
         [TestCase("Sample.pdf", "")]
-        public void Overwrite(string filename, string password) => Make(vm =>
+        public void Overwrite(string file, string password)
         {
-            Source   = Get(Args(Io.Get(GetSource(filename)).BaseName));
-            Password = password;
+            var vp = new VmParam
+            {
+                Source   = Get(Args(Io.Get(GetSource(file)).BaseName)),
+                Password = password,
+            };
 
-            Io.Copy(GetSource(filename), Source, true);
-            vm.Test(vm.Ribbon.Open);
-            vm.Value.Images.First().Selected = true;
+            Io.Copy(GetSource(file), vp.Source, true);
+
+            using var vm = NewVM();
+            using var z0 = vm.Boot(vp);
+
+            vm.Select(0);
             vm.Test(vm.Ribbon.RotateLeft);
             vm.Test(vm.Ribbon.Save);
-        });
+        }
 
         #endregion
     }

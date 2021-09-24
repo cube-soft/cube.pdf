@@ -27,7 +27,7 @@ namespace Cube.Pdf.Editor.Tests
     /// InsertPositionBehaviorTest
     ///
     /// <summary>
-    /// Tests for the InsertPositionBehavior class.
+    /// Tests the InsertPositionBehavior class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -39,7 +39,7 @@ namespace Cube.Pdf.Editor.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Test
         ///
         /// <summary>
         /// Tests the create, attach, detach, and some other methods.
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Editor.Tests
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Invoke()
+        public void Test()
         {
             var view = new ToggleButton();
             var src  = new InsertPositionBehavior();

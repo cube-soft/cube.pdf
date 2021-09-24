@@ -27,13 +27,13 @@ namespace Cube.Pdf.Editor.Tests.Interactions
     /// DialogBehaviorTest
     ///
     /// <summary>
-    /// Tests for ShowDialogBehavior(T, U) inherited classes.
+    /// Tests the ShowDialogBehavior(T, U) inherited classes.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
     [Apartment(ApartmentState.STA)]
-    class DialogBehaviorTest : ViewModelFixture
+    class DialogBehaviorTest
     {
         #region Tests
 

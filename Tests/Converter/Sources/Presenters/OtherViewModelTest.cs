@@ -55,8 +55,8 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         public void Main() => Invoke(vm =>
         {
             Assert.That(vm.Title,   Does.StartWith(nameof(Main)));
-            Assert.That(vm.Title,   Does.Contain("CubePDF 1.5.2"));
-            Assert.That(vm.Version, Does.StartWith("1.5.2 (").And.EndsWith(")"));
+            Assert.That(vm.Title,   Does.Contain("CubePDF 1.5.3"));
+            Assert.That(vm.Version, Does.StartWith("1.5.3 (").And.EndsWith(")"));
             Assert.That(vm.Uri.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
         });
 

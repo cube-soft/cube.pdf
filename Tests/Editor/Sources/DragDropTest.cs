@@ -119,7 +119,7 @@ namespace Cube.Pdf.Editor.Tests
             var dest = Get("DragDrop.bin");
             using (var fs = Io.Create(dest)) new BinaryFormatter().Serialize(fs, src);
 
-            Assert.That(Io.Exists(dest), Is.True);
+            Assert.That(Io.Exists(dest));
         }
 
         #endregion

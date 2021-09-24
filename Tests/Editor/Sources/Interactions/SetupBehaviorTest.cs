@@ -27,19 +27,19 @@ namespace Cube.Pdf.Editor.Tests.Interactions
     /// SetupBehaviorTest
     ///
     /// <summary>
-    /// Tests for the SetupBehavior class.
+    /// Tests the SetupBehavior class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
     [Apartment(ApartmentState.STA)]
-    class SetupBehaviorTest : ViewModelFixture
+    class SetupBehaviorTest
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Test
         ///
         /// <summary>
         /// Tests the create, attach, and detach methods.
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create()
+        public void Test()
         {
             var view = new Window();
             var src  = new SetupBehavior();

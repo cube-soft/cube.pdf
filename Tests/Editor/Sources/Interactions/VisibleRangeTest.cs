@@ -27,19 +27,19 @@ namespace Cube.Pdf.Editor.Tests.Interactions
     /// VisibleRangeTest
     ///
     /// <summary>
-    /// Tests for the VisibleRange class.
+    /// Tests the VisibleRange class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [TestFixture]
     [Apartment(ApartmentState.STA)]
-    class VisibleRangeTest : ViewModelFixture
+    class VisibleRangeTest
     {
         #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invoke
+        /// Test
         ///
         /// <summary>
         /// Tests the create, attach, detach, and some other methods.
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Invoke()
+        public void Test()
         {
             var view = new ScrollViewer();
             var src  = new VisibleRange();
