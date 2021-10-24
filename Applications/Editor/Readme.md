@@ -119,6 +119,10 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2021-10-26 version 1.6.1
+    - Fix to preserve nested outlines when merging PDFs.
+    - Fix the update notification program.
+    - Update PDFium to Chromium 95 compatible.
 * 2021-09-24 version 1.6.0
     - Fix bugs that CubePDF Utility fails to start.
     - Fix behaviors when opening other than *.pdf.

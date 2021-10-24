@@ -301,19 +301,19 @@ namespace Cube.Pdf.Itext
         /// GetRawReader
         ///
         /// <summary>
-        /// Gets the PdfReader corresponding to the specified Page.
+        /// Gets the PdfReader corresponding to the specified File.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IDisposable GetRawReader(Page src)
+        protected IDisposable GetRawReader(File src)
         {
-            if (_hints.TryGetValue(src.File.FullName, out var hit)) return hit;
+            if (_hints.TryGetValue(src.FullName, out var hit)) return hit;
 
-            var dest = Reader.From(src.File, new() { SaveMemory = true });
+            var dest = Reader.From(src, new() { SaveMemory = true });
             if (dest is not null)
             {
                 _disposable.Add(dest);
-                _hints.Add(src.File.FullName, dest);
+                _hints.Add(src.FullName, dest);
             }
             return dest;
         }

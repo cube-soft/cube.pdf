@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Cube.FileSystem;
 using Cube.Mixin.String;
@@ -86,15 +87,32 @@ namespace Cube.Pdf.Itext
         /// <param name="page">Page information.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IDisposable src, Page page)
-        {
-            var obj    = Reader.From(src);
-            var pp     = obj.GetPage(page.Number);
-            var cmp    = pp.GetRotation();
-            var degree = (page.Rotation + page.Delta).Degree;
-            if (degree != cmp) _ = pp.SetRotation(degree);
+        public void Add(IDisposable src, Page page) => Add(src, new[] { page });
 
-            _ = _merger.Merge(obj, new[] { page.Number });
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Add
+        ///
+        /// <summary>
+        /// Adds the specified page to the writer.
+        /// </summary>
+        ///
+        /// <param name="src">iText reader.</param>
+        /// <param name="pages">Page collection.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Add(IDisposable src, IEnumerable<Page> pages)
+        {
+            var obj = Reader.From(src);
+
+            foreach (var page in pages)
+            {
+                var pp     = obj.GetPage(page.Number);
+                var cmp    = pp.GetRotation();
+                var degree = (page.Rotation + page.Delta).Degree;
+                if (degree != cmp) _ = pp.SetRotation(degree);
+            }
+            _ = _merger.Merge(obj, pages.Select(e => e.Number).ToArray());
         }
 
         /* ----------------------------------------------------------------- */

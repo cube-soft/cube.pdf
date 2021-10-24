@@ -113,12 +113,13 @@ namespace Cube.Pdf.Itext
             {
                 Io.CreateDirectory(directory);
                 Results.Clear();
+
                 foreach (var page in Pages)
                 {
                     var path = Unique(directory, page.File, page.Number);
                     using (var dest = new Writer(path, Options, Metadata, Encryption))
                     {
-                        dest.Add(GetRawReader(page), page);
+                        dest.Add(GetRawReader(page.File), page);
                     }
                     Results.Add(path);
                 }
