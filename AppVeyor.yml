@@ -1,4 +1,4 @@
-version: 5.0.0.{build}
+version: 5.0.1.{build}
 environment:
     PROJECT_NAME:  'Cube.Pdf'
     TEST_TOOL:     '..\packages\OpenCover\4.7.1221\tools\OpenCover.Console.exe'
@@ -41,7 +41,7 @@ test_script:
       -output:"%TEST_COVERAGE%"
       -filter:"%TEST_FILTERS%"
 after_test:
-    - pip install codecov
+    - choco install codecov
     - codecov -f "%TEST_COVERAGE%"
     - cmd: for /f "delims=" %%x in ('dir /b /s *.log') do xcopy /q /Y /I "%%x" "%TEST_RESULTS%\"
 artifacts:

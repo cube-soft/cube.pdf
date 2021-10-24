@@ -110,8 +110,10 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf", "SampleBookmark.pdf", 90, ExpectedResult = 11)]
-        [TestCase("Sample.pdf", "Sample.pdf",          0, ExpectedResult =  4)]
+        [TestCase("Sample.pdf",     "SampleBookmark.pdf", 90, ExpectedResult = 11)]
+        [TestCase("Sample.pdf",     "SampleTag.pdf",       0, ExpectedResult = 21)]
+        [TestCase("SampleTag.pdf",  "Sample.pdf",          0, ExpectedResult = 21)]
+        [TestCase("Sample.pdf",     "Sample.pdf",          0, ExpectedResult =  4)]
         public int Merge(string f0, string f1, int degree)
         {
             var op   = new OpenOption { SaveMemory = false };

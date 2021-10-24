@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Linq;
 
 namespace Cube.Pdf.Itext
 {
@@ -86,10 +87,11 @@ namespace Cube.Pdf.Itext
             try
             {
                 using var dest = new Writer(path, Options, Metadata, Encryption);
-                foreach (var page in Pages)
+
+                foreach (var group in Pages.GroupBy(e => e.File))
                 {
-                    var src = Reader.From(GetRawReader(page));
-                    dest.Add(src, page);
+                    var src = Reader.From(GetRawReader(group.Key));
+                    dest.Add(src, group);
                 }
                 dest.Add(Attachments);
                 Release(); // Dispose all readers before save.

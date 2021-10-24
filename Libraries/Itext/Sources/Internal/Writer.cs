@@ -109,6 +109,23 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Add
+        ///
+        /// <summary>
+        /// Adds the specified page to the writer.
+        /// </summary>
+        ///
+        /// <param name="src">iText reader.</param>
+        /// <param name="pages">Page collection.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Add(IDisposable src, IEnumerable<Page> pages)
+        {
+            foreach (var page in pages) Add(src, page);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Set
         ///
         /// <summary>
