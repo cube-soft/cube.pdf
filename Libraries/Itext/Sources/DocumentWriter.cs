@@ -88,10 +88,10 @@ namespace Cube.Pdf.Itext
             {
                 using var dest = new Writer(path, Options, Metadata, Encryption);
 
-                foreach (var group in Pages.GroupBy(e => e.File))
+                foreach (var chunk in Pages.ChunkBy(e => e.File))
                 {
-                    var src = Reader.From(GetRawReader(group.Key));
-                    dest.Add(src, group);
+                    var src = Reader.From(GetRawReader(chunk.Key));
+                    dest.Add(src, chunk);
                 }
                 dest.Add(Attachments);
                 Release(); // Dispose all readers before save.
