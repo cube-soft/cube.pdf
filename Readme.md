@@ -6,9 +6,9 @@ Cube.Pdf
 [![iText](https://badgen.net/nuget/v/cube.pdf.itext?label=itext)](https://www.nuget.org/packages/cube.pdf.itext/)
 [![PDFium](https://badgen.net/nuget/v/cube.pdf.pdfium?label=pdfium)](https://www.nuget.org/packages/cube.pdf.pdfium/)
 [![CubePDF](https://badgen.net/nuget/v/cube.pdf.converter?label=cubepdf)](https://www.nuget.org/packages/cube.pdf.converter/)
-[![GS.Native](https://badgen.net/nuget/v/cube.native.ghostscript?label=native.gs)](https://www.nuget.org/packages/cube.native.ghostscript/)
-[![PDFium.Native](https://badgen.net/nuget/v/cube.native.pdfium?label=native.pdfium)](https://www.nuget.org/packages/cube.native.pdfium/)
-[![PDFium.Native.Lite](https://badgen.net/nuget/v/cube.native.pdfium.lite?label=native.pdfium.lite)](https://www.nuget.org/packages/cube.native.pdfium.lite/)
+[![GS.Native](https://badgen.net/nuget/v/cube.native.ghostscript?label=gs.native)](https://www.nuget.org/packages/cube.native.ghostscript/)
+[![PDFium.Native](https://badgen.net/nuget/v/cube.native.pdfium?label=pdfium.native)](https://www.nuget.org/packages/cube.native.pdfium/)
+[![PDFium.Native.Lite](https://badgen.net/nuget/v/cube.native.pdfium.lite?label=pdfium.native.lite)](https://www.nuget.org/packages/cube.native.pdfium.lite/)
 [![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
 [![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
@@ -109,9 +109,8 @@ See the [Readme](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Gho
 
 ## Dependencies
 
-Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries) are as follows. [Applications](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications) may use some other third-party libraries.
+Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries) are as follows. [Applications](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications) may use some more third-party libraries.
 
-* [Cube.Core](https://github.com/cube-soft/Cube.Core)
 * [PDFium](https://pdfium.googlesource.com/pdfium/) ... [Cube.Native.Pdfium.Lite](https://www.nuget.org/packages/Cube.Native.Pdfium.Lite) is a NuGet package of the PDFium.
 * [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) is a NuGet package of the Ghostscript.
 * [iText7](https://www.nuget.org/packages/itext7/) (net45) or [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35)
