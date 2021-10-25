@@ -211,24 +211,15 @@ namespace Cube.Pdf.Tests.Itext
 
             using (var w = new DocumentWriter(new() { Smart = true }))
             {
-                var p0 = r0.Pages.ToList();
-                var p1 = r1.Pages.ToList();
-                w.Add(p0[0], r0);
-                w.Add(p0[1], r0);
-                w.Add(p0[2], r0);
-                w.Add(p0[3], r0);
-                w.Add(p0[4], r0);
-                w.Add(p1[1], r1); // Insert
-                w.Add(p0[5], r0);
-                w.Add(p0[6], r0);
-                w.Add(p0[7], r0);
-                w.Add(p0[8], r0);
+                w.Add(r0.Pages.Take(5), r0);
+                w.Add(r1.Pages.Skip(1).Take(1), r1); // insert
+                w.Add(r0.Pages.Skip(5), r0);
                 w.Save(dest);
             }
 
             using var r = new DocumentReader(dest, "", op);
             var p = r.Pages.ToList();
-            Assert.That(p.Count, Is.EqualTo(10));
+            Assert.That(p.Count, Is.EqualTo(20));
             Assert.That(p[5].Rotation.Degree, Is.EqualTo(90));
         }
 
