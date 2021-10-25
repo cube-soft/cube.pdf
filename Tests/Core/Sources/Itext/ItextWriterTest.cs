@@ -110,10 +110,10 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase("Sample.pdf",     "SampleBookmark.pdf", 90, ExpectedResult = 11)]
-        [TestCase("Sample.pdf",     "SampleTag.pdf",       0, ExpectedResult = 21)]
-        [TestCase("SampleTag.pdf",  "Sample.pdf",          0, ExpectedResult = 21)]
-        [TestCase("Sample.pdf",     "Sample.pdf",          0, ExpectedResult =  4)]
+        [TestCase("Sample.pdf", "SampleBookmark.pdf",     90, ExpectedResult = 11)]
+        [TestCase("Sample.pdf", "SampleBookmarkNest.pdf",  0, ExpectedResult = 21)]
+        [TestCase("SampleBookmarkNest.pdf", "Sample.pdf",  0, ExpectedResult = 21)]
+        [TestCase("Sample.pdf", "Sample.pdf",              0, ExpectedResult =  4)]
         public int Merge(string f0, string f1, int degree)
         {
             var op   = new OpenOption { SaveMemory = false };
@@ -147,7 +147,6 @@ namespace Cube.Pdf.Tests.Itext
             var dest = Path(Args(r0.File.BaseName, Io.Get(image).BaseName));
 
             using (var w = new DocumentWriter(new() { Smart = true }))
-            using (var r = new DocumentReader(GetSource(doc), "", op))
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
                 w.Add(Rotate(new ImagePageCollection(GetSource(image)), degree));
@@ -191,6 +190,46 @@ namespace Cube.Pdf.Tests.Itext
             Assert.That(w.Results.Count, Is.EqualTo(0));
 
             return n;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Insert
+        ///
+        /// <summary>
+        /// Tests to insert a page to the source PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Insert()
+        {
+            var op   = new OpenOption { SaveMemory = false };
+            var r0   = new DocumentReader(GetSource("SampleBookmarkNest.pdf"), "", op);
+            var r1   = new DocumentReader(GetSource("SampleRotation.pdf"), "", op);
+            var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
+
+            using (var w = new DocumentWriter(new() { Smart = true }))
+            {
+                var p0 = r0.Pages.ToList();
+                var p1 = r1.Pages.ToList();
+                w.Add(p0[0], r0);
+                w.Add(p0[1], r0);
+                w.Add(p0[2], r0);
+                w.Add(p0[3], r0);
+                w.Add(p0[4], r0);
+                w.Add(p1[1], r1); // Insert
+                w.Add(p0[5], r0);
+                w.Add(p0[6], r0);
+                w.Add(p0[7], r0);
+                w.Add(p0[8], r0);
+                w.Save(dest);
+            }
+
+            using var r = new DocumentReader(dest, "", op);
+            var p = r.Pages.ToList();
+            Assert.That(p.Count, Is.EqualTo(10));
+            Assert.That(p[5].Rotation.Degree, Is.EqualTo(90));
         }
 
         /* ----------------------------------------------------------------- */
