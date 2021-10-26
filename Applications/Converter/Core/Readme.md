@@ -11,14 +11,13 @@ The Cube.Pdf.Converter is used for a limited purpose, such as emulating the Cube
 
 * [Cube.Pdf](https://www.nuget.org/packages/Cube.Pdf/)
 * [Cube.Pdf.Ghostscript](https://www.nuget.org/packages/Cube.Pdf.Ghostscript/)
-* [Cube.Pdf.Pdfium](https://www.nuget.org/packages/Cube.Pdf.Pdfium/)
 * [Cube.Pdf.Itext](https://www.nuget.org/packages/Cube.Pdf.Itext/)
+* [Cube.Pdf.Pdfium](https://www.nuget.org/packages/Cube.Pdf.Pdfium/)
 
 ## Dependencies
 
-* [Cube.Core](https://github.com/cube-soft/Cube.Core)
-* [iText7](https://www.nuget.org/packages/itext7/) (net45) or [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35)
 * [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) is an unofficial package.
+* [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35) or [itext7](https://www.nuget.org/packages/itext7/) (other branches)
 
 ## Contributing
 
@@ -32,4 +31,4 @@ The Cube.Pdf.Converter is used for a limited purpose, such as emulating the Cube
 ## License
  
 Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.jp/)
-The Cube.Pdf.Ghostscript library is licensed under the [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/License.txt).
+See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
