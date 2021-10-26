@@ -17,7 +17,7 @@ The Cube.Pdf.Converter is used for a limited purpose, such as emulating the Cube
 ## Dependencies
 
 * [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) is an unofficial package.
-* [iText7](https://www.nuget.org/packages/itext7/) (net45) or [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35)
+* [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35) or [itext7](https://www.nuget.org/packages/itext7/) (other branches)
 
 ## Contributing
 

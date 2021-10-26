@@ -113,7 +113,7 @@ Dependencies of [Libraries](https://github.com/cube-soft/Cube.Pdf/tree/master/Li
 
 * [PDFium](https://pdfium.googlesource.com/pdfium/) ... [Cube.Native.Pdfium.Lite](https://www.nuget.org/packages/Cube.Native.Pdfium.Lite) is a NuGet package of the PDFium.
 * [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) is a NuGet package of the Ghostscript.
-* [iText7](https://www.nuget.org/packages/itext7/) (net45) or [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35)
+* [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35) or [itext7](https://www.nuget.org/packages/itext7/) (other branches)
 
 ## Contributing
 
