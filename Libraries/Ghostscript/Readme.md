@@ -2,7 +2,7 @@ Cube.Pdf.Ghostscript
 ====
 
 [![Ghostscript](https://badgen.net/nuget/v/cube.pdf.ghostscript?label=gs)](https://www.nuget.org/packages/cube.pdf.ghostscript/)
-[![GS.Native](https://badgen.net/nuget/v/cube.native.ghostscript?label=native.gs)](https://www.nuget.org/packages/cube.native.ghostscript/)
+[![Native](https://badgen.net/nuget/v/cube.native.ghostscript?label=gs.native)](https://www.nuget.org/packages/cube.native.ghostscript/)
 [![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
 [![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
@@ -78,12 +78,6 @@ public class Argument
 }
 ```
 
-## Dependencies
-
-* [Cube.Core](https://github.com/cube-soft/Cube.Core)
-* [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf)
-* [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) is an unofficial package.
-
 ## Contributing
 
 1. Fork [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/fork) repository.
@@ -96,4 +90,4 @@ public class Argument
 ## License
  
 Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.jp/)
-The Cube.Pdf.Ghostscript library is licensed under the [GNU AGPLv3](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/License.txt).
+See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
