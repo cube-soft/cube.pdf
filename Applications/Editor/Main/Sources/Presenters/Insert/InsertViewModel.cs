@@ -352,7 +352,7 @@ namespace Cube.Pdf.Editor
         private ICommand GetOkCommand(Action<int, IEnumerable<FileItem>> callback)
         {
             var dest = new DelegateCommand(
-                () => Close(() => callback?.Invoke(Value.Index, Value.Files), false),
+                () => Quit(() => callback?.Invoke(Value.Index, Value.Files), false),
                 () => Value.Files.Count > 0
             );
 

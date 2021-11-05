@@ -63,7 +63,7 @@ namespace Cube.Pdf.Editor
         ) : base(new(selection, count, new ContextDispatcher(context, false)), new(), context)
         {
             OK.Command = new DelegateCommand(
-                () => Close(() => callback(Facade.Value), true),
+                () => Quit(() => callback(Facade.Value), true),
                 () => Facade.Value.Destination.HasValue() &&
                       !Io.Get(Facade.Value.Destination).IsDirectory
             ).Hook(Facade.Value, nameof(SaveOption.Destination));

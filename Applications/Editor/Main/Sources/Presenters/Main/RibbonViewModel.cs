@@ -171,14 +171,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Finish
+        /// Close
         ///
         /// <summary>
         /// Gets a menu to close the current PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Finish => Get(() => new RibbonElement(
+        public RibbonElement Close => Get(() => new RibbonElement(
             nameof(Close),
             () => Properties.Resources.MenuClose,
             GetDispatcher(false)

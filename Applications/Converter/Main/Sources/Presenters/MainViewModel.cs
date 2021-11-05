@@ -192,7 +192,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            if (Confirm()) Close(Facade.InvokeEx, false);
+            if (Confirm()) Quit(Facade.InvokeEx, false);
         }
 
         /* ----------------------------------------------------------------- */

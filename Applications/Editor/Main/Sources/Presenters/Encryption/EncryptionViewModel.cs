@@ -57,7 +57,7 @@ namespace Cube.Pdf.Editor
         ) : base(new(src), new(), context)
         {
             OK.Command = new DelegateCommand(
-                () => Close(() =>
+                () => Quit(() =>
                 {
                     Facade.Normalize();
                     callback(Facade.Value);

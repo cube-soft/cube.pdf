@@ -58,7 +58,7 @@ namespace Cube.Pdf.Editor
             SynchronizationContext context
         ) : base(new(src, file), new(), context)
         {
-            OK.Command = new DelegateCommand(() => Close(() => callback(src), true));
+            OK.Command = new DelegateCommand(() => Quit(() => callback(src), true));
         }
 
         #endregion

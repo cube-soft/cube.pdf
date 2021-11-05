@@ -93,7 +93,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Apply() => Close(Facade.Save, true);
+        public void Apply() => Quit(Facade.Save, true);
 
         #endregion
     }
