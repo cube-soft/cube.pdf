@@ -30,7 +30,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class VersionViewModel : Presentable<SettingFolder>
+    public sealed class VersionViewModel : PresentableBase<SettingFolder>
     {
         #region Constructors
 
@@ -93,11 +93,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Apply()
-        {
-            Facade.Save();
-            Send<CloseMessage>();
-        }
+        public void Apply() => Close(Facade.Save, true);
 
         #endregion
     }

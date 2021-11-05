@@ -52,7 +52,7 @@ namespace Cube.Pdf.Converter
             InitializeComponent();
 
             Behaviors.Add(Locale.Subscribe(SetText));
-            Behaviors.Add(new ClickBehavior(ExitButton, Close));
+            Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
             Behaviors.Add(new PathLintBehavior(SourceTextBox, PathToolTip));
             Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathToolTip));
             Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathToolTip));
@@ -134,10 +134,10 @@ namespace Cube.Pdf.Converter
             MetadataBindingSource.DataSource   = vm.Metadata;
             EncryptionBindingSource.DataSource = vm.Encryption;
 
-            Behaviors.Add(new ClickBehavior(ConvertButton, vm.Convert));
-            Behaviors.Add(new ClickBehavior(SourceButton, vm.SelectSource));
-            Behaviors.Add(new ClickBehavior(DestinationButton, vm.SelectDestination));
-            Behaviors.Add(new ClickBehavior(UserProgramButton, vm.SelectUserProgram));
+            Behaviors.Add(new ClickEventBehavior(ConvertButton, vm.Convert));
+            Behaviors.Add(new ClickEventBehavior(SourceButton, vm.SelectSource));
+            Behaviors.Add(new ClickEventBehavior(DestinationButton, vm.SelectDestination));
+            Behaviors.Add(new ClickEventBehavior(UserProgramButton, vm.SelectUserProgram));
             Behaviors.Add(new EventBehavior(SettingPanel, nameof(SettingPanel.Apply), vm.Save));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));

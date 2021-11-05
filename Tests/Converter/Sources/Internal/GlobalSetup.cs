@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Reflection;
-using Cube.Logging;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Converter.Tests

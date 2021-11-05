@@ -168,7 +168,7 @@ namespace Cube.Pdf.Converter.Tests
         protected SettingFolder Create(IEnumerable<string> args)
         {
             var asm  = typeof(MainWindow).Assembly;
-            var fmt  = Cube.FileSystem.DataContract.Format.Registry;
+            var fmt  = DataContract.Format.Registry;
             var path = $@"CubeSoft\CubePDF\{GetType().Name}";
             var dest = new SettingFolder(asm, fmt, path);
 
@@ -241,8 +241,9 @@ namespace Cube.Pdf.Converter.Tests
         protected void SetMessage(DialogMessage e)
         {
             Assert.That(e.Icon, Is.EqualTo(DialogIcon.Error).Or.EqualTo(DialogIcon.Warning));
-            Message = e.Text;
-            e.Value = DialogStatus.Yes;
+            Message  = e.Text;
+            e.Value  = DialogStatus.Yes;
+            e.Cancel = false;
         }
 
         /* ----------------------------------------------------------------- */

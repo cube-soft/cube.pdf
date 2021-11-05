@@ -91,7 +91,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
                 vm.Test(vm.Ribbon.RotateLeft);
             }
 
-            vm.Test(vm.Ribbon.Close);
+            vm.Test(vm.Ribbon.Finish);
         }
 
         /* ----------------------------------------------------------------- */

@@ -19,7 +19,6 @@
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using Cube.Logging;
 using Cube.Mixin.Collections;
 
 namespace Cube.Pdf.Pages

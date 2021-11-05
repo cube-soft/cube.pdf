@@ -32,7 +32,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class SettingViewModel : Presentable<SettingFacade>
+    public sealed class SettingViewModel : PresentableBase<SettingFacade>
     {
         #region Constructors
 
@@ -406,7 +406,7 @@ namespace Cube.Pdf.Converter
             {
                 var m = Message.From(Destination, SaveOption);
                 Send(m);
-                return m.Value == DialogStatus.Yes;
+                return !m.Cancel;
             }
         }
 

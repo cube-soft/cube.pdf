@@ -34,7 +34,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : Presentable<MainFacade>
+    public sealed class MainViewModel : PresentableBase<MainFacade>
     {
         #region Constructors
 
@@ -151,7 +151,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Merge() => Track(Message.ForMerge(), Facade.Merge);
+        public void Merge() => Send(Message.ForMerge(), Facade.Merge, false);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -162,7 +162,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Split() => Track(Message.ForSplit(), Facade.Split);
+        public void Split() => Send(Message.ForSplit(), Facade.Split, false);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -173,7 +173,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Add() => Track(Message.ForAdd(), Facade.Add, true);
+        public void Add() => Send(Message.ForAdd(), Facade.Add, true);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -186,7 +186,7 @@ namespace Cube.Pdf.Pages
         /// <param name="src">Files to add.</param>
         ///
         /* --------------------------------------------------------------------- */
-        public void Add(IEnumerable<string> src) => Track(() => Facade.Add(src), true);
+        public void Add(IEnumerable<string> src) => Run(() => Facade.Add(src), true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -201,7 +201,7 @@ namespace Cube.Pdf.Pages
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => Track(() => Facade.Remove(indices), true);
+        public void Remove(IEnumerable<int> indices) => Run(() => Facade.Remove(indices), true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -212,7 +212,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Track(Facade.Clear, true);
+        public void Clear() => Run(Facade.Clear, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -226,7 +226,7 @@ namespace Cube.Pdf.Pages
         /// <param name="offset">Offset to move.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IEnumerable<int> indices, int offset) => Track(() =>
+        public void Move(IEnumerable<int> indices, int offset) => Run(() =>
         {
             if (Facade.Move(indices, offset)) Send(Message.ForSelect(
                 indices, offset, Facade.Files.Count
@@ -278,7 +278,7 @@ namespace Cube.Pdf.Pages
             void handler(object s, NotifyCollectionChangedEventArgs e)
             {
                 Refresh(nameof(Invokable));
-                Send<UpdateListMessage>();
+                Send(new UpdateListMessage());
             }
 
             Facade.CollectionChanged += handler;

@@ -127,7 +127,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand Setup => Get(() => new DelegateCommand(
-            () => Track(() => Facade.Setup(App.Arguments))
+            () => Run(() => Facade.Setup(App.Arguments), false)
         ));
 
         /* ----------------------------------------------------------------- */
@@ -140,9 +140,9 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand Open => Get(() => new DelegateCommand<string[]>(
-            e => Track(() => Facade.Open(e.FirstPdf())),
+            e => Run(() => Facade.Open(e.FirstPdf()), false),
             e => !Value.Busy && e.FirstPdf().HasValue()
-        ).Associate(Value, nameof(Value.Busy)));
+        ).Hook(Value, nameof(Value.Busy)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -154,10 +154,10 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public ICommand InsertOrMove => Get(() => new DelegateCommand<DragDropObject>(
-            e => Track(() => Facade.InsertOrMove(e)),
+            e => Run(() => Facade.InsertOrMove(e), false),
             e => !Value.Busy && Value.Source != null &&
                  (!e.IsCurrentProcess || e.DropIndex - e.DragIndex != 0)
-        ).Associate(Value, nameof(Value.Busy), nameof(Value.Source)));
+        ).Hook(Value, nameof(Value.Busy), nameof(Value.Source)));
 
         #endregion
 

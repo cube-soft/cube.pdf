@@ -152,7 +152,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuSave,
             () => Properties.Resources.TooltipSave,
             GetDispatcher(false)
-        ) { Command = IsOpen(() => Track(Facade.Overwrite)) });
+        ) { Command = IsOpen(() => Run(Facade.Overwrite, false)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -171,14 +171,14 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Close
+        /// Finish
         ///
         /// <summary>
-        /// Gets a menu to closes the current PDF document.
+        /// Gets a menu to close the current PDF document.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RibbonElement Close => Get(() => new RibbonElement(
+        public RibbonElement Finish => Get(() => new RibbonElement(
             nameof(Close),
             () => Properties.Resources.MenuClose,
             GetDispatcher(false)
@@ -197,7 +197,7 @@ namespace Cube.Pdf.Editor
             nameof(Exit),
             () => Properties.Resources.MenuExit,
             GetDispatcher(false)
-        ) { Command = GetCommand(Send<CloseMessage>) });
+        ) { Command = GetCommand(() => Send(new CloseMessage())) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -212,7 +212,7 @@ namespace Cube.Pdf.Editor
             nameof(Undo),
             () => Properties.Resources.MenuUndo,
             GetDispatcher(false)
-        ) { Command = IsUndoable(() => Track(Facade.Undo, true)) });
+        ) { Command = IsUndoable(() => Run(Facade.Undo, true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -227,7 +227,7 @@ namespace Cube.Pdf.Editor
             nameof(Redo),
             () => Properties.Resources.MenuRedo,
             GetDispatcher(false)
-        ) { Command = IsRedoable(() => Track(Facade.Redo, true)) });
+        ) { Command = IsRedoable(() => Run(Facade.Redo, true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -242,7 +242,7 @@ namespace Cube.Pdf.Editor
             nameof(Select),
             () => Properties.Resources.MenuSelect,
             GetDispatcher(false)
-        ) { Command = IsOpen(() => Track(Facade.Select, true)) });
+        ) { Command = IsOpen(() => Run(Facade.Select, true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -257,7 +257,7 @@ namespace Cube.Pdf.Editor
             nameof(Select),
             () => Properties.Resources.MenuSelectAll,
             GetDispatcher(false)
-        ) { Command = IsOpen(() => Track(() => Facade.Select(true), true)) });
+        ) { Command = IsOpen(() => Run(() => Facade.Select(true), true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -272,7 +272,7 @@ namespace Cube.Pdf.Editor
             nameof(Select),
             () => Properties.Resources.MenuSelectFlip,
             GetDispatcher(false)
-        ) { Command = IsOpen(() => Track(Facade.Flip, true)) });
+        ) { Command = IsOpen(() => Run(Facade.Flip, true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -287,7 +287,7 @@ namespace Cube.Pdf.Editor
             nameof(Select),
             () => Properties.Resources.MenuSelectClear,
             GetDispatcher(false)
-        ) { Command = IsOpen(() => Track(() => Facade.Select(false), true)) });
+        ) { Command = IsOpen(() => Run(() => Facade.Select(false), true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -306,7 +306,7 @@ namespace Cube.Pdf.Editor
             GetDispatcher(false)
         ) {
             Command = IsSelected(() => SendInsert(Facade.Insert))
-        }.Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
+        }.Hook(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -370,7 +370,7 @@ namespace Cube.Pdf.Editor
             GetDispatcher(false)
         ) {
             Command = IsSelected(() => SendSave(Facade.Extract))
-        }.Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
+        }.Hook(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -403,8 +403,8 @@ namespace Cube.Pdf.Editor
             () => !Facade.Value.Busy,
             GetDispatcher(false)
         ) {
-            Command = IsSelected(() => Track(Facade.Remove, true))
-        }.Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
+            Command = IsSelected(() => Run(Facade.Remove, true))
+        }.Hook(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -434,7 +434,7 @@ namespace Cube.Pdf.Editor
             nameof(MoveNext),
             () => Properties.Resources.MenuMoveNext,
             GetDispatcher(false)
-        ) { Command = IsSelected(() => Track(() => Facade.Move(1), true)) });
+        ) { Command = IsSelected(() => Run(() => Facade.Move(1), true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -449,7 +449,7 @@ namespace Cube.Pdf.Editor
             nameof(MovePrevious),
             () => Properties.Resources.MenuMovePrevious,
             GetDispatcher(false)
-        ) { Command = IsSelected(() => Track(() => Facade.Move(-1), true)) });
+        ) { Command = IsSelected(() => Run(() => Facade.Move(-1), true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -464,7 +464,7 @@ namespace Cube.Pdf.Editor
             nameof(RotateLeft),
             () => Properties.Resources.MenuRotateLeft,
             GetDispatcher(false)
-        ) { Command = IsSelected(() => Track(() => Facade.Rotate(-90), true)) });
+        ) { Command = IsSelected(() => Run(() => Facade.Rotate(-90), true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -479,7 +479,7 @@ namespace Cube.Pdf.Editor
             nameof(RotateRight),
             () => Properties.Resources.MenuRotateRight,
             GetDispatcher(false)
-        ) { Command = IsSelected(() => Track(() => Facade.Rotate(90), true)) });
+        ) { Command = IsSelected(() => Run(() => Facade.Rotate(90), true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -525,7 +525,7 @@ namespace Cube.Pdf.Editor
             nameof(Redraw),
             () => Properties.Resources.MenuRedraw,
             GetDispatcher(false)
-        ) { Command = IsOpen(() => Track(Facade.Redraw, true)) });
+        ) { Command = IsOpen(() => Run(Facade.Redraw, true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -540,7 +540,7 @@ namespace Cube.Pdf.Editor
             nameof(ZoomIn),
             () => Properties.Resources.MenuZoomIn,
             GetDispatcher(false)
-        ) { Command = GetCommand(() => Track(() => Facade.Zoom(1), true)) });
+        ) { Command = GetCommand(() => Run(() => Facade.Zoom(1), true)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -555,7 +555,7 @@ namespace Cube.Pdf.Editor
             nameof(ZoomOut),
             () => Properties.Resources.MenuZoomOut,
             GetDispatcher(false)
-        ) { Command = GetCommand(() => Track(() => Facade.Zoom(-1), true)) });
+        ) { Command = GetCommand(() => Run(() => Facade.Zoom(-1), true)) });
 
         /* ----------------------------------------------------------------- */
         ///

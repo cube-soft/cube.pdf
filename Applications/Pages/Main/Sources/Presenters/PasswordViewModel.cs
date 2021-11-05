@@ -32,7 +32,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PasswordViewModel : Presentable<QueryMessage<string, string>>
+    public sealed class PasswordViewModel : PresentableBase<QueryMessage<string, string>>
     {
         #region Constructors
 
@@ -113,11 +113,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Apply()
-        {
-            Facade.Cancel = false;
-            Send<CloseMessage>();
-        }
+        public void Apply() => Close(() => Facade.Cancel = false, true);
 
         #endregion
     }

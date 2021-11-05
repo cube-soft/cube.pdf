@@ -20,8 +20,7 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 using Cube.Collections;
-using Cube.FileSystem.DataContract;
-using Cube.Logging;
+using Cube.DataContract;
 using Cube.Mixin.Collections;
 using Cube.Pdf.Converter.Mixin;
 

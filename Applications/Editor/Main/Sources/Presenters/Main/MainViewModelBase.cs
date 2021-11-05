@@ -23,7 +23,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Input;
 using Cube.FileSystem;
-using Cube.Mixin.Generics;
+using Cube.Mixin.Generic;
 using Cube.Mixin.Observing;
 using Cube.Pdf.Mixin;
 using Cube.Xui;
@@ -39,7 +39,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class MainViewModelBase : Presentable<MainFacade>
+    public abstract class MainViewModelBase : PresentableBase<MainFacade>
     {
         #region Constructors
 
@@ -78,9 +78,9 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected ICommand GetOpenLinkCommand() => new DelegateCommand<object>(
-            e => Track(() => Facade.OpenLink(e as Entity)),
+            e => Run(() => Facade.OpenLink(e as Entity), false),
             e => !Facade.Value.Busy && e is Entity
-        ).Associate(Facade.Value, nameof(MainBindableValue.Busy));
+        ).Hook(Facade.Value, nameof(MainBindableValue.Busy));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -95,11 +95,11 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected ICommand GetCloseCommand() => new DelegateCommand<CancelEventArgs>(
             e => {
-                if (!Facade.Value.Modified) Track(() => Facade.Close(false), true);
+                if (!Facade.Value.Modified) Run(() => Facade.Close(false), true);
                 else SendClose(e);
             },
             e => Facade.Value.Source != null && (e != null || !Facade.Value.Busy)
-        ).Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source));
+        ).Hook(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -114,9 +114,10 @@ namespace Cube.Pdf.Editor
         /// <returns>ICommand object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected ICommand GetCommand(Action action) => new DelegateCommand(action,
+        protected ICommand GetCommand(Action action) => new DelegateCommand(
+            action,
             () => !Facade.Value.Busy
-        ).Associate(Facade.Value, nameof(MainBindableValue.Busy));
+        ).Hook(Facade.Value, nameof(MainBindableValue.Busy));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -132,9 +133,10 @@ namespace Cube.Pdf.Editor
         /// <returns>ICommand object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected ICommand IsOpen(Action action) => new DelegateCommand(action,
+        protected ICommand IsOpen(Action action) => new DelegateCommand(
+            action,
             () => !Facade.Value.Busy && Facade.Value.Source != null
-        ).Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source));
+        ).Hook(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -150,12 +152,13 @@ namespace Cube.Pdf.Editor
         /// <returns>ICommand object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected ICommand IsSelected(Action action) => new DelegateCommand(action,
+        protected ICommand IsSelected(Action action) => new DelegateCommand(
+            action,
             () => !Facade.Value.Busy &&
                    Facade.Value.Source != null &&
                    Facade.Value.Images.Selection.Count > 0
-        ).Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source))
-         .Associate(Facade.Value.Images.Selection);
+        ).Hook(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source))
+         .Hook(Facade.Value.Images.Selection);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -171,9 +174,10 @@ namespace Cube.Pdf.Editor
         /// <returns>ICommand object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected ICommand IsUndoable(Action action) => new DelegateCommand(action,
+        protected ICommand IsUndoable(Action action) => new DelegateCommand(
+            action,
             () => !Facade.Value.Busy && Facade.Value.Modified
-        ).Associate(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Modified));
+        ).Hook(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Modified));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -189,10 +193,11 @@ namespace Cube.Pdf.Editor
         /// <returns>ICommand object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected ICommand IsRedoable(Action action) => new DelegateCommand(action,
+        protected ICommand IsRedoable(Action action) => new DelegateCommand(
+            action,
             () => !Facade.Value.Busy && Facade.Value.History.Redoable
-        ).Associate(Facade.Value, nameof(MainBindableValue.Busy))
-         .Associate(Facade.Value.History);
+        ).Hook(Facade.Value, nameof(MainBindableValue.Busy))
+         .Hook(Facade.Value.History);
 
         #endregion
 
@@ -244,8 +249,8 @@ namespace Cube.Pdf.Editor
             if (e.Cancel) return;
 
             void close() => Facade.Close(m.Value == DialogStatus.Yes);
-            if (src != null) Track(close, true);
-            else Track(close);
+            if (src != null) Run(close, true);
+            else Run(close, false);
         }
 
         /* ----------------------------------------------------------------- */
@@ -262,7 +267,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendOpen(Action<string> action) =>
-            Track(Message.ForOpen(), e => action(e.First()));
+            Send(Message.ForOpen(), e => action(e.First()), false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -278,7 +283,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendSave(Action<string> action) =>
-            Track(Message.ForSave(), action);
+            Send(Message.ForSave(), action, false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -294,7 +299,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendInsert(Action<IEnumerable<string>> action) =>
-            Track(Message.ForInsert(), action);
+            Send(Message.ForInsert(), action, false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -307,7 +312,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendInsert() => Send(new InsertViewModel(
-            (i, v) => Track(() => Facade.Insert(i + 1, v.Select(e => e.FullName))),
+            (i, v) => Run(() => Facade.Insert(i + 1, v.Select(e => e.FullName)), false),
             Facade.Value.Images.Selection.First,
             Facade.Value.Count,
             Context

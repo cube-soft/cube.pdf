@@ -96,11 +96,11 @@ namespace Cube.Pdf.Editor
             Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = false,
-            Filter          = new FileDialogFilter[]
+            Filters         = new FileDialogFilter[]
             {
                 new(Properties.Resources.FilterPdf, true, ".pdf"),
                 new(Properties.Resources.FilterAll, true, ".*"),
-            }.GetFilter(),
+            },
         };
 
         /* ----------------------------------------------------------------- */
@@ -119,11 +119,11 @@ namespace Cube.Pdf.Editor
             Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = true,
-            Filter          = new FileDialogFilter[]
+            Filters         = new FileDialogFilter[]
             {
                 new(Properties.Resources.FilterInsertable, true, ".pdf", ".png", ".jpg", ".jpeg", ".bmp"),
                 new(Properties.Resources.FilterAll, true, ".*"),
-            }.GetFilter(),
+            },
         };
 
         /* ----------------------------------------------------------------- */
@@ -142,11 +142,11 @@ namespace Cube.Pdf.Editor
             Text            = Properties.Resources.MenuSaveAs,
             OverwritePrompt = true,
             CheckPathExists = false,
-            Filter          = new FileDialogFilter[]
+            Filters         = new FileDialogFilter[]
             {
                 new(Properties.Resources.FilterExtract, true, ".pdf", ".png"),
                 new(Properties.Resources.FilterAll, true, ".*"),
-            }.GetFilter(),
+            },
         };
 
         /* ----------------------------------------------------------------- */
@@ -165,11 +165,11 @@ namespace Cube.Pdf.Editor
             Text            = Properties.Resources.TitleSaveAs,
             OverwritePrompt = true,
             CheckPathExists = false,
-            Filter          = new FileDialogFilter[]
+            Filters         = new FileDialogFilter[]
             {
                 new(Properties.Resources.FilterPdf, true, ".pdf"),
                 new(Properties.Resources.FilterAll, true, ".*"),
-            }.GetFilter(),
+            },
         };
 
         #endregion

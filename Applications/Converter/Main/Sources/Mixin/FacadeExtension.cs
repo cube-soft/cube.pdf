@@ -81,16 +81,19 @@ namespace Cube.Pdf.Converter.Mixin
         /// </summary>
         ///
         /// <param name="src">Source facade.</param>
-        /// <param name="e">Result message.</param>
+        /// <param name="path">Path to save.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public static void SetDestination(this Facade src, SaveFileMessage e)
+        public static void SetDestination(this Facade src, string path)
         {
-            Debug.Assert(e.FilterIndex > 0);
-            Debug.Assert(e.FilterIndex <= Resource.Formats.Count);
-
-            src.Settings.Value.Destination = e.Value;
-            src.Settings.Value.Format = Resource.Formats[e.FilterIndex - 1].Value;
+            src.Settings.Value.Destination = path;
+            var cmp = path.ToLowerInvariant();
+            foreach (var e in Resource.Extensions)
+            {
+                if (!cmp.EndsWith(e.Key)) continue;
+                src.Settings.Value.Format = e.Value;
+                break;
+            }
         }
 
         #endregion

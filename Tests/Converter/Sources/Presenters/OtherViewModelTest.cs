@@ -20,7 +20,6 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Cube.Logging;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
@@ -55,8 +54,8 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         public void Main() => Invoke(vm =>
         {
             Assert.That(vm.Title,   Does.StartWith(nameof(Main)));
-            Assert.That(vm.Title,   Does.Contain("CubePDF 1.5.4"));
-            Assert.That(vm.Version, Does.StartWith("1.5.4 (").And.EndsWith(")"));
+            Assert.That(vm.Title,   Does.Contain("CubePDF 1.6.0"));
+            Assert.That(vm.Version, Does.StartWith("1.6.0 (").And.EndsWith(")"));
             Assert.That(vm.Uri.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
         });
 
@@ -189,9 +188,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 Assert.That(e.Text,             Is.EqualTo("入力ファイルを選択"));
                 Assert.That(e.InitialDirectory, Is.Empty);
                 Assert.That(e.Value.Count(),    Is.EqualTo(1));
-                Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
-                Assert.That(e.FilterIndex,      Is.EqualTo(0));
                 Assert.That(e.CheckPathExists,  Is.True);
+                Assert.That(e.GetFilterText(),  Is.Not.Null.And.Not.Empty);
+                Assert.That(e.GetFilterIndex(), Is.EqualTo(0));
 
                 e.Value  = new[] { done };
                 e.Cancel = false;
@@ -221,10 +220,10 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 Assert.That(e.Text,             Is.EqualTo("名前を付けて保存"));
                 Assert.That(e.InitialDirectory, Is.Empty);
                 Assert.That(e.Value,            Is.EqualTo(nameof(SelectDestination)));
-                Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
-                Assert.That(e.FilterIndex,      Is.EqualTo(1));
                 Assert.That(e.OverwritePrompt,  Is.False);
                 Assert.That(e.CheckPathExists,  Is.False);
+                Assert.That(e.GetFilterText(),  Is.Not.Null.And.Not.Empty);
+                Assert.That(e.GetFilterIndex(), Is.EqualTo(0));
 
                 e.Value  = done;
                 e.Cancel = false;
@@ -254,9 +253,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 Assert.That(e.Text,             Is.EqualTo("変換完了時に実行するプログラムを選択"));
                 Assert.That(e.InitialDirectory, Is.Empty);
                 Assert.That(e.Value.Count(),    Is.EqualTo(0));
-                Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
-                Assert.That(e.FilterIndex,      Is.EqualTo(0));
                 Assert.That(e.CheckPathExists,  Is.True);
+                Assert.That(e.GetFilterText(),  Is.Not.Null.And.Not.Empty);
+                Assert.That(e.GetFilterIndex(), Is.EqualTo(0));
 
                 e.Value  = new[] { done };
                 e.Cancel = false;

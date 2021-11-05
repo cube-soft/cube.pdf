@@ -33,7 +33,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class RecentViewModel : Presentable<DirectoryMonitor>
+    public sealed class RecentViewModel : PresentableBase<DirectoryMonitor>
     {
         #region Constructors
 
@@ -83,7 +83,7 @@ namespace Cube.Pdf.Editor
         public IElement Menu => Get(() => new BindableElement(
             () => Properties.Resources.MenuRecent,
             GetDispatcher(false)
-        ) { Command = new DelegateCommand(() => Track(() => Process.Start(Items.Directory))) });
+        ) { Command = new DelegateCommand(() => Run(() => Process.Start(Items.Directory), false)) });
 
         #endregion
 

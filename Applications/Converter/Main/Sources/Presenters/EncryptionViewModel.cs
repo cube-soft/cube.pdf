@@ -30,7 +30,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class EncryptionViewModel : Presentable<Encryption>
+    public sealed class EncryptionViewModel : PresentableBase<Encryption>
     {
         #region Constructors
 
