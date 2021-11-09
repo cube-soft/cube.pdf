@@ -28,15 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
             this.SettingPanel = new Cube.Forms.Controls.SettingControl();
             this.SettingTabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ResolutionControl = new System.Windows.Forms.NumericUpDown();
-            this.SettingBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ResolutionNumeric = new System.Windows.Forms.NumericUpDown();
             this.PostProcessComboBox = new System.Windows.Forms.ComboBox();
             this.UserProgramPanel = new System.Windows.Forms.TableLayoutPanel();
             this.UserProgramButton = new System.Windows.Forms.Button();
@@ -60,11 +58,10 @@
             this.DestinationTextBox = new System.Windows.Forms.TextBox();
             this.FormatPanel = new System.Windows.Forms.TableLayoutPanel();
             this.PdfVersionComboBox = new System.Windows.Forms.ComboBox();
-            this.MetadataBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.FormatComboBox = new System.Windows.Forms.ComboBox();
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ViewerPreferencesComboBox = new System.Windows.Forms.ComboBox();
+            this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
             this.ViewerPreferencesLabel = new System.Windows.Forms.Label();
             this.CreatorTextBox = new System.Windows.Forms.TextBox();
             this.CreatorLabel = new System.Windows.Forms.Label();
@@ -78,8 +75,7 @@
             this.TitleLabel = new System.Windows.Forms.Label();
             this.EncryptionTabPage = new System.Windows.Forms.TabPage();
             this.EncryptionOuterPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.EnableEncryptionCheckBox = new System.Windows.Forms.CheckBox();
-            this.EncryptionBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.EncryptionCheckBox = new System.Windows.Forms.CheckBox();
             this.EncryptionPanel = new System.Windows.Forms.TableLayoutPanel();
             this.UserPasswordCheckBox = new System.Windows.Forms.CheckBox();
             this.OperationLabel = new System.Windows.Forms.Label();
@@ -104,13 +100,12 @@
             this.LanguageLabel = new System.Windows.Forms.Label();
             this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
             this.OptionsLabel = new System.Windows.Forms.Label();
-            this.ImageFilterCheckBox = new System.Windows.Forms.CheckBox();
+            this.JpegCheckBox = new System.Windows.Forms.CheckBox();
             this.LinearizationCheckBox = new System.Windows.Forms.CheckBox();
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.AboutLabel = new System.Windows.Forms.Label();
             this.VersionPanel = new Cube.Forms.Controls.VersionControl();
-            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.ConvertProgressBar = new System.Windows.Forms.ProgressBar();
@@ -118,33 +113,27 @@
             this.ConvertButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
             this.HeaderPictureBox = new System.Windows.Forms.PictureBox();
-            this.PathToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.RootPanel.SuspendLayout();
             this.SettingPanel.SuspendLayout();
             this.SettingTabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ResolutionNumeric)).BeginInit();
             this.UserProgramPanel.SuspendLayout();
             this.OrientationPanel.SuspendLayout();
             this.SourcePanel.SuspendLayout();
             this.DestinationPanel.SuspendLayout();
             this.FormatPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).BeginInit();
             this.DocumentPage.SuspendLayout();
             this.DocumentPanel.SuspendLayout();
             this.EncryptionTabPage.SuspendLayout();
             this.EncryptionOuterPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EncryptionBindingSource)).BeginInit();
             this.EncryptionPanel.SuspendLayout();
             this.OperationPanel.SuspendLayout();
             this.UserPasswordPanel.SuspendLayout();
             this.PermissionPanel.SuspendLayout();
             this.OthersTabPage.SuspendLayout();
             this.OthersPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).BeginInit();
             this.FooterPanel.SuspendLayout();
             this.ToolsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).BeginInit();
@@ -185,7 +174,7 @@
             // GeneralPanel
             //
             resources.ApplyResources(this.GeneralPanel, "GeneralPanel");
-            this.GeneralPanel.Controls.Add(this.ResolutionControl, 1, 1);
+            this.GeneralPanel.Controls.Add(this.ResolutionNumeric, 1, 1);
             this.GeneralPanel.Controls.Add(this.PostProcessComboBox, 1, 4);
             this.GeneralPanel.Controls.Add(this.UserProgramPanel, 1, 5);
             this.GeneralPanel.Controls.Add(this.OrientationPanel, 1, 2);
@@ -200,39 +189,33 @@
             this.GeneralPanel.Controls.Add(this.FormatPanel, 1, 0);
             this.GeneralPanel.Name = "GeneralPanel";
             //
-            // ResolutionControl
+            // ResolutionNumeric
             //
-            this.ResolutionControl.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.SettingBindingSource, "Resolution", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            resources.ApplyResources(this.ResolutionControl, "ResolutionControl");
-            this.ResolutionControl.Increment = new decimal(new int[] {
+            resources.ApplyResources(this.ResolutionNumeric, "ResolutionNumeric");
+            this.ResolutionNumeric.Increment = new decimal(new int[] {
             50,
             0,
             0,
             0});
-            this.ResolutionControl.Maximum = new decimal(new int[] {
+            this.ResolutionNumeric.Maximum = new decimal(new int[] {
             6000,
             0,
             0,
             0});
-            this.ResolutionControl.Minimum = new decimal(new int[] {
+            this.ResolutionNumeric.Minimum = new decimal(new int[] {
             72,
             0,
             0,
             0});
-            this.ResolutionControl.Name = "ResolutionControl";
-            this.ResolutionControl.Value = new decimal(new int[] {
+            this.ResolutionNumeric.Name = "ResolutionNumeric";
+            this.ResolutionNumeric.Value = new decimal(new int[] {
             600,
             0,
             0,
             0});
             //
-            // SettingBindingSource
-            //
-            this.SettingBindingSource.DataSource = typeof(Cube.Pdf.Converter.SettingViewModel);
-            //
             // PostProcessComboBox
             //
-            this.PostProcessComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingBindingSource, "PostProcess", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.PostProcessComboBox, "PostProcessComboBox");
             this.PostProcessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PostProcessComboBox.FormattingEnabled = true;
@@ -243,7 +226,6 @@
             resources.ApplyResources(this.UserProgramPanel, "UserProgramPanel");
             this.UserProgramPanel.Controls.Add(this.UserProgramButton, 0, 0);
             this.UserProgramPanel.Controls.Add(this.UserProgramTextBox, 0, 0);
-            this.UserProgramPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingBindingSource, "EnableUserProgram", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.UserProgramPanel.Name = "UserProgramPanel";
             //
             // UserProgramButton
@@ -254,7 +236,6 @@
             //
             // UserProgramTextBox
             //
-            this.UserProgramTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingBindingSource, "UserProgram", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.UserProgramTextBox, "UserProgramTextBox");
             this.UserProgramTextBox.Name = "UserProgramTextBox";
             //
@@ -269,7 +250,6 @@
             // PortraitRadioButton
             //
             resources.ApplyResources(this.PortraitRadioButton, "PortraitRadioButton");
-            this.PortraitRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "IsPortrait", true));
             this.PortraitRadioButton.Name = "PortraitRadioButton";
             this.PortraitRadioButton.TabStop = true;
             this.PortraitRadioButton.UseVisualStyleBackColor = true;
@@ -277,7 +257,6 @@
             // LandscapeRadioButton
             //
             resources.ApplyResources(this.LandscapeRadioButton, "LandscapeRadioButton");
-            this.LandscapeRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "IsLandscape", true));
             this.LandscapeRadioButton.Name = "LandscapeRadioButton";
             this.LandscapeRadioButton.TabStop = true;
             this.LandscapeRadioButton.UseVisualStyleBackColor = true;
@@ -285,7 +264,6 @@
             // AutoRadioButton
             //
             resources.ApplyResources(this.AutoRadioButton, "AutoRadioButton");
-            this.AutoRadioButton.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "IsAutoOrientation", true));
             this.AutoRadioButton.Name = "AutoRadioButton";
             this.AutoRadioButton.TabStop = true;
             this.AutoRadioButton.UseVisualStyleBackColor = true;
@@ -300,7 +278,6 @@
             resources.ApplyResources(this.SourcePanel, "SourcePanel");
             this.SourcePanel.Controls.Add(this.SourceButton, 0, 0);
             this.SourcePanel.Controls.Add(this.SourceTextBox, 0, 0);
-            this.SourcePanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingBindingSource, "SourceEditable", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.SourcePanel.Name = "SourcePanel";
             //
             // SourceButton
@@ -311,7 +288,6 @@
             //
             // SourceTextBox
             //
-            this.SourceTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingBindingSource, "Source", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.SourceTextBox, "SourceTextBox");
             this.SourceTextBox.Name = "SourceTextBox";
             //
@@ -350,7 +326,6 @@
             //
             // SaveOptionComboBox
             //
-            this.SaveOptionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingBindingSource, "SaveOption", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.SaveOptionComboBox, "SaveOptionComboBox");
             this.SaveOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SaveOptionComboBox.FormattingEnabled = true;
@@ -364,7 +339,6 @@
             //
             // DestinationTextBox
             //
-            this.DestinationTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.SettingBindingSource, "Destination", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.DestinationTextBox, "DestinationTextBox");
             this.DestinationTextBox.Name = "DestinationTextBox";
             //
@@ -377,20 +351,13 @@
             //
             // PdfVersionComboBox
             //
-            this.PdfVersionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "Version", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.PdfVersionComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.SettingBindingSource, "IsPdf", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             resources.ApplyResources(this.PdfVersionComboBox, "PdfVersionComboBox");
             this.PdfVersionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PdfVersionComboBox.FormattingEnabled = true;
             this.PdfVersionComboBox.Name = "PdfVersionComboBox";
             //
-            // MetadataBindingSource
-            //
-            this.MetadataBindingSource.DataSource = typeof(Cube.Pdf.Converter.MetadataViewModel);
-            //
             // FormatComboBox
             //
-            this.FormatComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingBindingSource, "Format", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.FormatComboBox, "FormatComboBox");
             this.FormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FormatComboBox.FormattingEnabled = true;
@@ -406,7 +373,7 @@
             // DocumentPanel
             //
             resources.ApplyResources(this.DocumentPanel, "DocumentPanel");
-            this.DocumentPanel.Controls.Add(this.ViewerPreferencesComboBox, 1, 5);
+            this.DocumentPanel.Controls.Add(this.ViewOptionComboBox, 1, 5);
             this.DocumentPanel.Controls.Add(this.ViewerPreferencesLabel, 0, 5);
             this.DocumentPanel.Controls.Add(this.CreatorTextBox, 1, 4);
             this.DocumentPanel.Controls.Add(this.CreatorLabel, 0, 4);
@@ -420,13 +387,12 @@
             this.DocumentPanel.Controls.Add(this.TitleLabel, 0, 0);
             this.DocumentPanel.Name = "DocumentPanel";
             //
-            // ViewerPreferencesComboBox
+            // ViewOptionComboBox
             //
-            this.ViewerPreferencesComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.MetadataBindingSource, "Options", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            resources.ApplyResources(this.ViewerPreferencesComboBox, "ViewerPreferencesComboBox");
-            this.ViewerPreferencesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ViewerPreferencesComboBox.FormattingEnabled = true;
-            this.ViewerPreferencesComboBox.Name = "ViewerPreferencesComboBox";
+            resources.ApplyResources(this.ViewOptionComboBox, "ViewOptionComboBox");
+            this.ViewOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ViewOptionComboBox.FormattingEnabled = true;
+            this.ViewOptionComboBox.Name = "ViewOptionComboBox";
             //
             // ViewerPreferencesLabel
             //
@@ -435,7 +401,6 @@
             //
             // CreatorTextBox
             //
-            this.CreatorTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Creator", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.CreatorTextBox, "CreatorTextBox");
             this.CreatorTextBox.Name = "CreatorTextBox";
             //
@@ -446,7 +411,6 @@
             //
             // KeywordsTextBox
             //
-            this.KeywordsTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Keywords", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.KeywordsTextBox, "KeywordsTextBox");
             this.KeywordsTextBox.Name = "KeywordsTextBox";
             //
@@ -457,7 +421,6 @@
             //
             // SubjectTextBox
             //
-            this.SubjectTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Subject", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.SubjectTextBox, "SubjectTextBox");
             this.SubjectTextBox.Name = "SubjectTextBox";
             //
@@ -468,7 +431,6 @@
             //
             // AuthorTextBox
             //
-            this.AuthorTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Author", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.AuthorTextBox, "AuthorTextBox");
             this.AuthorTextBox.Name = "AuthorTextBox";
             //
@@ -479,7 +441,6 @@
             //
             // TitleTextBox
             //
-            this.TitleTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MetadataBindingSource, "Title", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.TitleTextBox, "TitleTextBox");
             this.TitleTextBox.Name = "TitleTextBox";
             //
@@ -498,20 +459,15 @@
             // EncryptionOuterPanel
             //
             resources.ApplyResources(this.EncryptionOuterPanel, "EncryptionOuterPanel");
-            this.EncryptionOuterPanel.Controls.Add(this.EnableEncryptionCheckBox, 0, 0);
+            this.EncryptionOuterPanel.Controls.Add(this.EncryptionCheckBox, 0, 0);
             this.EncryptionOuterPanel.Controls.Add(this.EncryptionPanel, 0, 1);
             this.EncryptionOuterPanel.Name = "EncryptionOuterPanel";
             //
-            // EnableEncryptionCheckBox
+            // EncryptionCheckBox
             //
-            resources.ApplyResources(this.EnableEncryptionCheckBox, "EnableEncryptionCheckBox");
-            this.EnableEncryptionCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "Enabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.EnableEncryptionCheckBox.Name = "EnableEncryptionCheckBox";
-            this.EnableEncryptionCheckBox.UseVisualStyleBackColor = true;
-            //
-            // EncryptionBindingSource
-            //
-            this.EncryptionBindingSource.DataSource = typeof(Cube.Pdf.Converter.EncryptionViewModel);
+            resources.ApplyResources(this.EncryptionCheckBox, "EncryptionCheckBox");
+            this.EncryptionCheckBox.Name = "EncryptionCheckBox";
+            this.EncryptionCheckBox.UseVisualStyleBackColor = true;
             //
             // EncryptionPanel
             //
@@ -523,13 +479,11 @@
             this.EncryptionPanel.Controls.Add(this.OwnerPasswordTextBox, 1, 0);
             this.EncryptionPanel.Controls.Add(this.OwnerPasswordLabel, 0, 0);
             this.EncryptionPanel.Controls.Add(this.OperationPanel, 1, 3);
-            this.EncryptionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.EncryptionBindingSource, "Enabled", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.EncryptionPanel.Name = "EncryptionPanel";
             //
             // UserPasswordCheckBox
             //
             resources.ApplyResources(this.UserPasswordCheckBox, "UserPasswordCheckBox");
-            this.UserPasswordCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "OpenWithPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.UserPasswordCheckBox.Name = "UserPasswordCheckBox";
             this.UserPasswordCheckBox.UseVisualStyleBackColor = true;
             //
@@ -541,7 +495,6 @@
             //
             // OwnerConfirmTextBox
             //
-            this.OwnerConfirmTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.EncryptionBindingSource, "OwnerConfirm", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.OwnerConfirmTextBox, "OwnerConfirmTextBox");
             this.OwnerConfirmTextBox.Name = "OwnerConfirmTextBox";
             this.OwnerConfirmTextBox.UseSystemPasswordChar = true;
@@ -553,7 +506,6 @@
             //
             // OwnerPasswordTextBox
             //
-            this.OwnerPasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.EncryptionBindingSource, "OwnerPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.OwnerPasswordTextBox, "OwnerPasswordTextBox");
             this.OwnerPasswordTextBox.Name = "OwnerPasswordTextBox";
             this.OwnerPasswordTextBox.UseSystemPasswordChar = true;
@@ -574,8 +526,6 @@
             // SharePasswordCheckBox
             //
             resources.ApplyResources(this.SharePasswordCheckBox, "SharePasswordCheckBox");
-            this.SharePasswordCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "UseOwnerPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.SharePasswordCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.EncryptionBindingSource, "OpenWithPassword", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
             this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
             //
@@ -586,19 +536,16 @@
             this.UserPasswordPanel.Controls.Add(this.UserPasswordTextBox, 1, 0);
             this.UserPasswordPanel.Controls.Add(this.UserConfirmLabel, 0, 1);
             this.UserPasswordPanel.Controls.Add(this.UserPasswordLabel, 0, 0);
-            this.UserPasswordPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.EncryptionBindingSource, "EnableUserPassword", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.UserPasswordPanel.Name = "UserPasswordPanel";
             //
             // UserConfirmTextBox
             //
-            this.UserConfirmTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.EncryptionBindingSource, "UserConfirm", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.UserConfirmTextBox, "UserConfirmTextBox");
             this.UserConfirmTextBox.Name = "UserConfirmTextBox";
             this.UserConfirmTextBox.UseSystemPasswordChar = true;
             //
             // UserPasswordTextBox
             //
-            this.UserPasswordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.EncryptionBindingSource, "UserPassword", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.UserPasswordTextBox, "UserPasswordTextBox");
             this.UserPasswordTextBox.Name = "UserPasswordTextBox";
             this.UserPasswordTextBox.UseSystemPasswordChar = true;
@@ -620,34 +567,29 @@
             this.PermissionPanel.Controls.Add(this.AllowFormCheckBox, 0, 2);
             this.PermissionPanel.Controls.Add(this.AllowCopyCheckBox, 0, 1);
             this.PermissionPanel.Controls.Add(this.AllowPrintCheckBox, 0, 0);
-            this.PermissionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.EncryptionBindingSource, "EnablePermission", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.PermissionPanel.Name = "PermissionPanel";
             //
             // AllowModifyCheckBox
             //
             resources.ApplyResources(this.AllowModifyCheckBox, "AllowModifyCheckBox");
-            this.AllowModifyCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowModify", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowModifyCheckBox.Name = "AllowModifyCheckBox";
             this.AllowModifyCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowFormCheckBox
             //
             resources.ApplyResources(this.AllowFormCheckBox, "AllowFormCheckBox");
-            this.AllowFormCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowInputForm", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowFormCheckBox.Name = "AllowFormCheckBox";
             this.AllowFormCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowCopyCheckBox
             //
             resources.ApplyResources(this.AllowCopyCheckBox, "AllowCopyCheckBox");
-            this.AllowCopyCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowCopy", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowCopyCheckBox.Name = "AllowCopyCheckBox";
             this.AllowCopyCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowPrintCheckBox
             //
             resources.ApplyResources(this.AllowPrintCheckBox, "AllowPrintCheckBox");
-            this.AllowPrintCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.EncryptionBindingSource, "AllowPrint", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.AllowPrintCheckBox.Name = "AllowPrintCheckBox";
             this.AllowPrintCheckBox.UseVisualStyleBackColor = true;
             //
@@ -664,7 +606,7 @@
             this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 6);
             this.OthersPanel.Controls.Add(this.GrayscaleCheckBox, 1, 0);
             this.OthersPanel.Controls.Add(this.OptionsLabel, 0, 0);
-            this.OthersPanel.Controls.Add(this.ImageFilterCheckBox, 1, 1);
+            this.OthersPanel.Controls.Add(this.JpegCheckBox, 1, 1);
             this.OthersPanel.Controls.Add(this.LinearizationCheckBox, 1, 2);
             this.OthersPanel.Controls.Add(this.UpdateCheckBox, 1, 5);
             this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 6);
@@ -680,7 +622,6 @@
             // GrayscaleCheckBox
             //
             resources.ApplyResources(this.GrayscaleCheckBox, "GrayscaleCheckBox");
-            this.GrayscaleCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "Grayscale", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
             this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
             //
@@ -689,30 +630,26 @@
             resources.ApplyResources(this.OptionsLabel, "OptionsLabel");
             this.OptionsLabel.Name = "OptionsLabel";
             //
-            // ImageFilterCheckBox
+            // JpegCheckBox
             //
-            resources.ApplyResources(this.ImageFilterCheckBox, "ImageFilterCheckBox");
-            this.ImageFilterCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "ImageFilter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.ImageFilterCheckBox.Name = "ImageFilterCheckBox";
-            this.ImageFilterCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.JpegCheckBox, "JpegCheckBox");
+            this.JpegCheckBox.Name = "JpegCheckBox";
+            this.JpegCheckBox.UseVisualStyleBackColor = true;
             //
             // LinearizationCheckBox
             //
             resources.ApplyResources(this.LinearizationCheckBox, "LinearizationCheckBox");
-            this.LinearizationCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "Linearization", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.LinearizationCheckBox.Name = "LinearizationCheckBox";
             this.LinearizationCheckBox.UseVisualStyleBackColor = true;
             //
             // UpdateCheckBox
             //
             resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
-            this.UpdateCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.SettingBindingSource, "CheckUpdate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.UpdateCheckBox.Name = "UpdateCheckBox";
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
             //
             // LanguageComboBox
             //
-            this.LanguageComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.SettingBindingSource, "Language", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resources.ApplyResources(this.LanguageComboBox, "LanguageComboBox");
             this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LanguageComboBox.FormattingEnabled = true;
@@ -727,8 +664,6 @@
             // VersionPanel
             //
             this.VersionPanel.Copyright = "Copyright © 2010 CubeSoft, Inc.";
-            this.VersionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Uri", this.MainBindingSource, "Uri", true, System.Windows.Forms.DataSourceUpdateMode.Never));
-            this.VersionPanel.DataBindings.Add(new System.Windows.Forms.Binding("Version", this.MainBindingSource, "Version", true, System.Windows.Forms.DataSourceUpdateMode.Never));
             this.VersionPanel.Description = "";
             resources.ApplyResources(this.VersionPanel, "VersionPanel");
             this.VersionPanel.Image = null;
@@ -738,10 +673,6 @@
             this.VersionPanel.TabStop = false;
             this.VersionPanel.Uri = null;
             this.VersionPanel.Version = "1.0.0 (x64)";
-            //
-            // MainBindingSource
-            //
-            this.MainBindingSource.DataSource = typeof(Cube.Pdf.Converter.MainViewModel);
             //
             // FooterPanel
             //
@@ -802,12 +733,6 @@
             this.HeaderPictureBox.Name = "HeaderPictureBox";
             this.HeaderPictureBox.TabStop = false;
             //
-            // MainToolTip
-            //
-            this.MainToolTip.AutoPopDelay = 30000;
-            this.MainToolTip.InitialDelay = 100;
-            this.MainToolTip.ReshowDelay = 100;
-            //
             // MainWindow
             //
             this.AcceptButton = this.ConvertButton;
@@ -815,7 +740,6 @@
             this.CancelButton = this.ExitButton;
             resources.ApplyResources(this, "$this");
             this.Controls.Add(this.RootPanel);
-            this.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.MainBindingSource, "Title", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.RootPanel.ResumeLayout(false);
@@ -824,8 +748,7 @@
             this.GeneralTabPage.ResumeLayout(false);
             this.GeneralPanel.ResumeLayout(false);
             this.GeneralPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ResolutionControl)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SettingBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ResolutionNumeric)).EndInit();
             this.UserProgramPanel.ResumeLayout(false);
             this.UserProgramPanel.PerformLayout();
             this.OrientationPanel.ResumeLayout(false);
@@ -835,14 +758,12 @@
             this.DestinationPanel.ResumeLayout(false);
             this.DestinationPanel.PerformLayout();
             this.FormatPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.MetadataBindingSource)).EndInit();
             this.DocumentPage.ResumeLayout(false);
             this.DocumentPanel.ResumeLayout(false);
             this.DocumentPanel.PerformLayout();
             this.EncryptionTabPage.ResumeLayout(false);
             this.EncryptionOuterPanel.ResumeLayout(false);
             this.EncryptionOuterPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EncryptionBindingSource)).EndInit();
             this.EncryptionPanel.ResumeLayout(false);
             this.EncryptionPanel.PerformLayout();
             this.OperationPanel.ResumeLayout(false);
@@ -854,7 +775,6 @@
             this.OthersTabPage.ResumeLayout(false);
             this.OthersPanel.ResumeLayout(false);
             this.OthersPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).EndInit();
             this.FooterPanel.ResumeLayout(false);
             this.ToolsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).EndInit();
@@ -896,9 +816,9 @@
         private System.Windows.Forms.TextBox KeywordsTextBox;
         private System.Windows.Forms.TextBox CreatorTextBox;
         private System.Windows.Forms.Label ViewerPreferencesLabel;
-        private System.Windows.Forms.ComboBox ViewerPreferencesComboBox;
+        private System.Windows.Forms.ComboBox ViewOptionComboBox;
         private System.Windows.Forms.TableLayoutPanel EncryptionOuterPanel;
-        private System.Windows.Forms.CheckBox EnableEncryptionCheckBox;
+        private System.Windows.Forms.CheckBox EncryptionCheckBox;
         private System.Windows.Forms.TableLayoutPanel EncryptionPanel;
         private System.Windows.Forms.Label OwnerPasswordLabel;
         private System.Windows.Forms.TextBox OwnerPasswordTextBox;
@@ -927,7 +847,7 @@
         private System.Windows.Forms.RadioButton LandscapeRadioButton;
         private System.Windows.Forms.RadioButton AutoRadioButton;
         private System.Windows.Forms.CheckBox UpdateCheckBox;
-        private System.Windows.Forms.CheckBox ImageFilterCheckBox;
+        private System.Windows.Forms.CheckBox JpegCheckBox;
         private System.Windows.Forms.CheckBox LinearizationCheckBox;
         private System.Windows.Forms.TableLayoutPanel FormatPanel;
         private System.Windows.Forms.ComboBox PdfVersionComboBox;
@@ -939,7 +859,7 @@
         private System.Windows.Forms.Button UserProgramButton;
         private System.Windows.Forms.TextBox UserProgramTextBox;
         private System.Windows.Forms.CheckBox GrayscaleCheckBox;
-        private System.Windows.Forms.NumericUpDown ResolutionControl;
+        private System.Windows.Forms.NumericUpDown ResolutionNumeric;
         private System.Windows.Forms.Button ConvertButton;
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
@@ -947,13 +867,7 @@
         private System.Windows.Forms.Button ApplyButton;
         private Cube.Forms.Controls.VersionControl VersionPanel;
         private Cube.Forms.Controls.SettingControl SettingPanel;
-        private System.Windows.Forms.BindingSource MainBindingSource;
-        private System.Windows.Forms.BindingSource SettingBindingSource;
-        private System.Windows.Forms.BindingSource MetadataBindingSource;
-        private System.Windows.Forms.BindingSource EncryptionBindingSource;
         private System.Windows.Forms.Label LanguageLabel;
-        private System.Windows.Forms.ToolTip PathToolTip;
-        private System.Windows.Forms.ToolTip MainToolTip;
     }
 }
 

@@ -403,7 +403,7 @@ namespace Cube.Pdf.Converter.Tests
 
             vm.AllowPrint       = src.Permission.Print.IsAllowed();
             vm.AllowCopy        = src.Permission.CopyContents.IsAllowed();
-            vm.AllowInputForm   = src.Permission.InputForm.IsAllowed();
+            vm.AllowForm   = src.Permission.InputForm.IsAllowed();
             vm.AllowModify      = src.Permission.ModifyContents.IsAllowed();
         }
 

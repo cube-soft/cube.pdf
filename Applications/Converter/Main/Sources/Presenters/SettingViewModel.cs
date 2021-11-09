@@ -111,7 +111,7 @@ namespace Cube.Pdf.Converter
             set
             {
                 Facade.Settings.PostProcess = value;
-                Refresh(nameof(EnableUserProgram));
+                Refresh(nameof(UserProgramEditable));
             }
         }
 
@@ -365,7 +365,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EnableUserProgram
+        /// UserProgramEditable
         ///
         /// <summary>
         /// Gets or sets a value indicating whether the input form of the
@@ -373,7 +373,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool EnableUserProgram => PostProcess == PostProcess.Others;
+        public bool UserProgramEditable => PostProcess == PostProcess.Others;
 
         #endregion
 
@@ -388,7 +388,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Facade.Save();
+        public void Save() => Run(Facade.Save, true);
 
         /* ----------------------------------------------------------------- */
         ///

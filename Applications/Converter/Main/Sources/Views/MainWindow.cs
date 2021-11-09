@@ -51,18 +51,21 @@ namespace Cube.Pdf.Converter
         {
             InitializeComponent();
 
-            Behaviors.Add(Locale.Subscribe(SetText));
+            _tips = new ToolTip[]
+            {
+                new() { AutoPopDelay = 1000, InitialDelay = 100, ReshowDelay = 100, },
+                new() { AutoPopDelay = 1000, InitialDelay = 100, ReshowDelay = 100, },
+            };
+
+            Behaviors.Add(Locale.Subscribe(BindText));
             Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
-            Behaviors.Add(new PathLintBehavior(SourceTextBox, PathToolTip));
-            Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathToolTip));
-            Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathToolTip));
+            Behaviors.Add(new PathLintBehavior(SourceTextBox, _tips[0]));
+            Behaviors.Add(new PathLintBehavior(DestinationTextBox, _tips[0]));
+            Behaviors.Add(new PathLintBehavior(UserProgramTextBox, _tips[0]));
             Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
             Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
 
             SettingPanel.ApplyButton = ApplyButton;
-
-            // Manual bindings.
-            _ = DataBindings.Add("Busy", MainBindingSource, "Busy", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         #endregion
@@ -95,7 +98,7 @@ namespace Cube.Pdf.Converter
 
         #endregion
 
-        #region Implementations
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -129,10 +132,7 @@ namespace Cube.Pdf.Converter
         {
             if (src is not MainViewModel vm) return;
 
-            MainBindingSource.DataSource       = vm;
-            SettingBindingSource.DataSource    = vm.General;
-            MetadataBindingSource.DataSource   = vm.Metadata;
-            EncryptionBindingSource.DataSource = vm.Encryption;
+            BindCore(vm);
 
             Behaviors.Add(new ClickEventBehavior(ConvertButton, vm.Convert));
             Behaviors.Add(new ClickEventBehavior(SourceButton, vm.SelectSource));
@@ -146,43 +146,123 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new UriBehavior(vm));
 
             ShortcutKeys.Add(Keys.F1, vm.Help);
+        }
 
-            SourceLabel.Visible = vm.General.SourceVisible;
-            SourcePanel.Visible = vm.General.SourceVisible;
-            SetText(vm.General.Language);
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BindCore
+        ///
+        /// <summary>
+        /// Invokes the binding settings.
+        /// </summary>
+        ///
+        /// <param name="vm">VM object to bind.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void BindCore(MainViewModel vm)
+        {
+            // General
+            var s0 = vm;
+            var b0 = Behaviors.Hook(new BindingSource(s0, ""));
+            b0.Bind(nameof(s0.Title),   this,         nameof(Text));
+            b0.Bind(nameof(s0.Busy),    this,         nameof(Busy));
+            b0.Bind(nameof(s0.Version), VersionPanel, nameof(VersionPanel.Version));
+            b0.Bind(nameof(s0.Uri),     VersionPanel, nameof(VersionPanel.Uri));
+
+            // Settings in General tab
+            var s1 = vm.General;
+            var b1 = Behaviors.Hook(new BindingSource(s1, ""));
+            b1.Bind(nameof(s1.Format),              FormatComboBox,       nameof(ComboBox.SelectedValue));
+            b1.Bind(nameof(s1.IsPdf),               PdfVersionComboBox,   nameof(Enabled));
+            b1.Bind(nameof(s1.Resolution),          ResolutionNumeric,    nameof(NumericUpDown.Value));
+            b1.Bind(nameof(s1.IsPortrait),          PortraitRadioButton,  nameof(RadioButton.Checked));
+            b1.Bind(nameof(s1.IsLandscape),         LandscapeRadioButton, nameof(RadioButton.Checked));
+            b1.Bind(nameof(s1.IsAutoOrientation),   AutoRadioButton,      nameof(RadioButton.Checked));
+            b1.Bind(nameof(s1.Destination),         DestinationTextBox,   nameof(TextBox.Text));
+            b1.Bind(nameof(s1.SaveOption),          SaveOptionComboBox,   nameof(ComboBox.SelectedValue));
+            b1.Bind(nameof(s1.PostProcess),         PostProcessComboBox,  nameof(ComboBox.SelectedValue));
+            b1.Bind(nameof(s1.UserProgramEditable), UserProgramPanel,     nameof(Enabled));
+            b1.Bind(nameof(s1.UserProgram),         UserProgramTextBox,   nameof(TextBox.Text));
+            b1.Bind(nameof(s1.SourceVisible),       SourceLabel,          nameof(Visible));
+            b1.Bind(nameof(s1.SourceVisible),       SourcePanel,          nameof(Visible));
+            b1.Bind(nameof(s1.SourceEditable),      SourcePanel,          nameof(Enabled));
+            b1.Bind(nameof(s1.Source),              SourceTextBox,        nameof(TextBox.Text));
+
+            // Settings in Others tab
+            b1.Bind(nameof(s1.Grayscale),     GrayscaleCheckBox,     nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.ImageFilter),   JpegCheckBox,          nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.Linearization), LinearizationCheckBox, nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.CheckUpdate),   UpdateCheckBox,        nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.Language),      LanguageComboBox,      nameof(ComboBox.SelectedValue));
+
+            // Metadata
+            var s2 = vm.Metadata;
+            var b2 = Behaviors.Hook(new BindingSource(s2, ""));
+            b2.Bind(nameof(s2.Version),  PdfVersionComboBox, nameof(ComboBox.SelectedValue));
+            b2.Bind(nameof(s2.Title),    TitleTextBox,       nameof(TextBox.Text));
+            b2.Bind(nameof(s2.Author),   AuthorTextBox,      nameof(TextBox.Text));
+            b2.Bind(nameof(s2.Subject),  SubjectTextBox,     nameof(TextBox.Text));
+            b2.Bind(nameof(s2.Keywords), KeywordsTextBox,    nameof(TextBox.Text));
+            b2.Bind(nameof(s2.Creator),  CreatorTextBox,     nameof(TextBox.Text));
+            b2.Bind(nameof(s2.Options),  ViewOptionComboBox, nameof(ComboBox.SelectedValue));
+
+            // Encryption
+            var s3 = vm.Encryption;
+            var b3 = Behaviors.Hook(new BindingSource(s3, ""));
+            b3.Bind(nameof(s3.Enabled),            EncryptionCheckBox,    nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.Enabled),            EncryptionPanel,       nameof(Enabled));
+            b3.Bind(nameof(s3.OwnerPassword),      OwnerPasswordTextBox,  nameof(TextBox.Text));
+            b3.Bind(nameof(s3.OwnerConfirm),       OwnerConfirmTextBox,   nameof(TextBox.Text));
+            b3.Bind(nameof(s3.OpenWithPassword),   UserPasswordCheckBox,  nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.OpenWithPassword),   SharePasswordCheckBox, nameof(Enabled));
+            b3.Bind(nameof(s3.UserPassword),       UserPasswordTextBox,   nameof(TextBox.Text));
+            b3.Bind(nameof(s3.UserConfirm),        UserConfirmTextBox,    nameof(TextBox.Text));
+            b3.Bind(nameof(s3.SharePassword),      SharePasswordCheckBox, nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.DividePassword),     UserPasswordPanel,     nameof(Enabled));
+            b3.Bind(nameof(s3.PermissionEditable), PermissionPanel,       nameof(Enabled));
+            b3.Bind(nameof(s3.AllowPrint),         AllowPrintCheckBox,    nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.AllowCopy),          AllowCopyCheckBox,     nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.AllowForm),          AllowFormCheckBox,     nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.AllowModify),        AllowModifyCheckBox,   nameof(CheckBox.Checked));
+
+            // Text (i18n)
+            LanguageComboBox.Bind(Resource.Languages);
+            BindText(vm.General.Language);
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetText
+        /// BindText
         ///
         /// <summary>
         /// Sets the displayed text with the specified language.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetText(Language e)
+        private void BindText(Language e)
         {
             this.UpdateCulture(e);
             Properties.Resources.Culture = e.ToCultureInfo();
 
-            PathToolTip.ToolTipTitle = Properties.Resources.MessageInvalidChars;
-            MainToolTip.SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
-            MainToolTip.SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));
+            _tips[0].ToolTipTitle = Properties.Resources.MessageInvalidChars;
+            _tips[1].SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
+            _tips[1].SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));
 
             FormatComboBox.Bind(Resource.Formats);
             PdfVersionComboBox.Bind(Resource.PdfVersions);
             SaveOptionComboBox.Bind(Resource.SaveOptions);
-            ViewerPreferencesComboBox.Bind(Resource.ViewerOptions);
+            ViewOptionComboBox.Bind(Resource.ViewerOptions);
             PostProcessComboBox.Bind(Resource.PostProcesses);
-            LanguageComboBox.Bind(Resource.Languages);
-
-            MainBindingSource.ResetBindings(false);
-            SettingBindingSource.ResetBindings(false);
-            MetadataBindingSource.ResetBindings(false);
-            EncryptionBindingSource.ResetBindings(false);
         }
 
+        #endregion
+
+        #region Fields
+        private readonly ToolTip[] _tips;
         #endregion
     }
 }
