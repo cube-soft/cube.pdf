@@ -128,7 +128,7 @@
   <data name="EncryptionTabPage.Text" xml:space="preserve">
     <value>セキュリティ</value>
   </data>
-  <data name="EnableEncryptionCheckBox.Text" xml:space="preserve">
+  <data name="EncryptionCheckBox.Text" xml:space="preserve">
     <value>PDF ファイルをパスワードで保護する</value>
   </data>
   <data name="UserPasswordCheckBox.Text" xml:space="preserve">
@@ -176,7 +176,7 @@
   <data name="OptionsLabel.Text" xml:space="preserve">
     <value>オプション</value>
   </data>
-  <data name="ImageFilterCheckBox.Text" xml:space="preserve">
+  <data name="JpegCheckBox.Text" xml:space="preserve">
     <value>PDF ファイル中の画像を JPEG 形式で圧縮する</value>
   </data>
   <data name="LinearizationCheckBox.Text" xml:space="preserve">
