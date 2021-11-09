@@ -57,7 +57,6 @@ namespace Cube.Pdf.Converter
                 new() { AutoPopDelay = 1000, InitialDelay = 100, ReshowDelay = 100, },
             };
 
-            Behaviors.Add(Locale.Subscribe(BindText));
             Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
             Behaviors.Add(new PathLintBehavior(SourceTextBox, _tips[0]));
             Behaviors.Add(new PathLintBehavior(DestinationTextBox, _tips[0]));
@@ -144,6 +143,7 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new OpenFileBehavior(vm));
             Behaviors.Add(new SaveFileBehavior(vm));
             Behaviors.Add(new UriBehavior(vm));
+            Behaviors.Add(Locale.Subscribe(_ => BindText(vm)));
 
             ShortcutKeys.Add(Keys.F1, vm.Help);
         }
@@ -168,7 +168,6 @@ namespace Cube.Pdf.Converter
             // General
             var s0 = vm;
             var b0 = Behaviors.Hook(new BindingSource(s0, ""));
-            b0.Bind(nameof(s0.Title),   this,         nameof(Text));
             b0.Bind(nameof(s0.Busy),    this,         nameof(Busy));
             b0.Bind(nameof(s0.Version), VersionPanel, nameof(VersionPanel.Version));
             b0.Bind(nameof(s0.Uri),     VersionPanel, nameof(VersionPanel.Uri));
@@ -231,7 +230,7 @@ namespace Cube.Pdf.Converter
 
             // Text (i18n)
             LanguageComboBox.Bind(Resource.Languages);
-            BindText(vm.General.Language);
+            BindText(vm);
         }
 
         /* ----------------------------------------------------------------- */
@@ -243,10 +242,13 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void BindText(Language e)
+        private void BindText(MainViewModel vm)
         {
-            this.UpdateCulture(e);
-            Properties.Resources.Culture = e.ToCultureInfo();
+            var lang = vm.General.Language;
+            this.UpdateCulture(lang);
+            Properties.Resources.Culture = lang.ToCultureInfo();
+
+            Text = vm.Title;
 
             _tips[0].ToolTipTitle = Properties.Resources.MessageInvalidChars;
             _tips[1].SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
