@@ -49,6 +49,10 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2021-11-12 version 1.6.0
+    - Fix to preserve nested outlines when merging PDFs.
+    - Fix the update notification program.
+    - Update Ghostscript 9.55.0.
 * 2021-09-17 version 1.5.2
     - Roll back the framework for creating installers.
 * 2021-08-06 version 1.5.1
