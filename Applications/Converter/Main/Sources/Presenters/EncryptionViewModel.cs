@@ -107,7 +107,7 @@ namespace Cube.Pdf.Converter
         ///
         /// <summary>
         /// Gets a value indicating whether the entered owner password is
-        /// valid.
+        /// correct.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -165,7 +165,7 @@ namespace Cube.Pdf.Converter
         ///
         /// <summary>
         /// Gets a value indicating whether the entered user password is
-        /// valid. The property will also be true when the OpenWithPassword
+        /// correct. The property will also be true when the OpenWithPassword
         /// is set to false.
         /// </summary>
         ///
@@ -197,7 +197,7 @@ namespace Cube.Pdf.Converter
         ///
         /// <summary>
         /// Gets or sets a value indicating whether the user password is
-        /// enabled to input.
+        /// required to input.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */

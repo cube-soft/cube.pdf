@@ -133,7 +133,7 @@ namespace Cube.Pdf.Converter
         /// Title
         ///
         /// <summary>
-        /// Gets the title of the window.
+        /// Gets the view title of the main window.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
