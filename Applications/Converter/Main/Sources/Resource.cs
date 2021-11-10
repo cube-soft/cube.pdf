@@ -272,14 +272,14 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Configure
+        /// UpdateCulture
         ///
         /// <summary>
-        /// Invokes the configuration of the ViewResource related operations.
+        /// Updates the culture information of resource objects.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static void Configure() => _core.Invoke();
+        public static void UpdateCulture(Language src) => Properties.Resources.Culture = src.ToCultureInfo();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -325,12 +325,6 @@ namespace Cube.Pdf.Converter
         private static Uri GetUri(string url) =>
             new Uri(url).With("lang", CultureInfo.CurrentCulture.Name.ToLowerInvariant());
 
-        #endregion
-
-        #region Fields
-        private static readonly OnceAction _core = new(() =>
-            Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo()
-        ));
         #endregion
     }
 }

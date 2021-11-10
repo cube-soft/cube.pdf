@@ -246,7 +246,7 @@ namespace Cube.Pdf.Converter
         {
             var lang = vm.General.Language;
             this.UpdateCulture(lang);
-            Properties.Resources.Culture = lang.ToCultureInfo();
+            Resource.UpdateCulture(lang);
 
             Text = vm.Title;
 
