@@ -168,15 +168,15 @@ namespace Cube.Pdf.Converter
             // General
             var s0 = vm;
             var b0 = Behaviors.Hook(new BindingSource(s0, ""));
-            b0.Bind(nameof(s0.Busy),    this,         nameof(Busy));
-            b0.Bind(nameof(s0.Version), VersionPanel, nameof(VersionPanel.Version));
-            b0.Bind(nameof(s0.Uri),     VersionPanel, nameof(VersionPanel.Uri));
+            b0.Bind(nameof(s0.Busy),    this,         nameof(Busy), true);
+            b0.Bind(nameof(s0.Version), VersionPanel, nameof(VersionPanel.Version), true);
+            b0.Bind(nameof(s0.Uri),     VersionPanel, nameof(VersionPanel.Uri), true);
 
             // Settings in General tab
             var s1 = vm.General;
             var b1 = Behaviors.Hook(new BindingSource(s1, ""));
             b1.Bind(nameof(s1.Format),              FormatComboBox,       nameof(ComboBox.SelectedValue));
-            b1.Bind(nameof(s1.IsPdf),               PdfVersionComboBox,   nameof(Enabled));
+            b1.Bind(nameof(s1.IsPdf),               PdfVersionComboBox,   nameof(Enabled), true);
             b1.Bind(nameof(s1.Resolution),          ResolutionNumeric,    nameof(NumericUpDown.Value));
             b1.Bind(nameof(s1.IsPortrait),          PortraitRadioButton,  nameof(RadioButton.Checked));
             b1.Bind(nameof(s1.IsLandscape),         LandscapeRadioButton, nameof(RadioButton.Checked));
@@ -184,11 +184,11 @@ namespace Cube.Pdf.Converter
             b1.Bind(nameof(s1.Destination),         DestinationTextBox,   nameof(TextBox.Text));
             b1.Bind(nameof(s1.SaveOption),          SaveOptionComboBox,   nameof(ComboBox.SelectedValue));
             b1.Bind(nameof(s1.PostProcess),         PostProcessComboBox,  nameof(ComboBox.SelectedValue));
-            b1.Bind(nameof(s1.UserProgramEditable), UserProgramPanel,     nameof(Enabled));
+            b1.Bind(nameof(s1.UserProgramEditable), UserProgramPanel,     nameof(Enabled), true);
             b1.Bind(nameof(s1.UserProgram),         UserProgramTextBox,   nameof(TextBox.Text));
-            b1.Bind(nameof(s1.SourceVisible),       SourceLabel,          nameof(Visible));
-            b1.Bind(nameof(s1.SourceVisible),       SourcePanel,          nameof(Visible));
-            b1.Bind(nameof(s1.SourceEditable),      SourcePanel,          nameof(Enabled));
+            b1.Bind(nameof(s1.SourceVisible),       SourceLabel,          nameof(Visible), true);
+            b1.Bind(nameof(s1.SourceVisible),       SourcePanel,          nameof(Visible), true);
+            b1.Bind(nameof(s1.SourceEditable),      SourcePanel,          nameof(Enabled), true);
             b1.Bind(nameof(s1.Source),              SourceTextBox,        nameof(TextBox.Text));
 
             // Settings in Others tab
@@ -213,16 +213,16 @@ namespace Cube.Pdf.Converter
             var s3 = vm.Encryption;
             var b3 = Behaviors.Hook(new BindingSource(s3, ""));
             b3.Bind(nameof(s3.Enabled),            EncryptionCheckBox,    nameof(CheckBox.Checked));
-            b3.Bind(nameof(s3.Enabled),            EncryptionPanel,       nameof(Enabled));
+            b3.Bind(nameof(s3.Enabled),            EncryptionPanel,       nameof(Enabled), true);
             b3.Bind(nameof(s3.OwnerPassword),      OwnerPasswordTextBox,  nameof(TextBox.Text));
             b3.Bind(nameof(s3.OwnerConfirm),       OwnerConfirmTextBox,   nameof(TextBox.Text));
             b3.Bind(nameof(s3.OpenWithPassword),   UserPasswordCheckBox,  nameof(CheckBox.Checked));
-            b3.Bind(nameof(s3.OpenWithPassword),   SharePasswordCheckBox, nameof(Enabled));
+            b3.Bind(nameof(s3.OpenWithPassword),   SharePasswordCheckBox, nameof(Enabled), true);
             b3.Bind(nameof(s3.UserPassword),       UserPasswordTextBox,   nameof(TextBox.Text));
             b3.Bind(nameof(s3.UserConfirm),        UserConfirmTextBox,    nameof(TextBox.Text));
             b3.Bind(nameof(s3.SharePassword),      SharePasswordCheckBox, nameof(CheckBox.Checked));
-            b3.Bind(nameof(s3.DividePassword),     UserPasswordPanel,     nameof(Enabled));
-            b3.Bind(nameof(s3.PermissionEditable), PermissionPanel,       nameof(Enabled));
+            b3.Bind(nameof(s3.DividePassword),     UserPasswordPanel,     nameof(Enabled), true);
+            b3.Bind(nameof(s3.PermissionEditable), PermissionPanel,       nameof(Enabled), true);
             b3.Bind(nameof(s3.AllowPrint),         AllowPrintCheckBox,    nameof(CheckBox.Checked));
             b3.Bind(nameof(s3.AllowCopy),          AllowCopyCheckBox,     nameof(CheckBox.Checked));
             b3.Bind(nameof(s3.AllowForm),          AllowFormCheckBox,     nameof(CheckBox.Checked));
