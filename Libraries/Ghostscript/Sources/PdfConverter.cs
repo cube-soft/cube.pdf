@@ -206,9 +206,13 @@ namespace Cube.Pdf.Ghostscript
         /// implementation.
         /// </summary>
         ///
+        /// <remarks>
+        /// An error may occur when the Linearization is set to true.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         private Argument CreateNewPdf() =>
-            GsApi.Information.Revision == 9550 ? new('d', "NEWPDF") : default;
+            GsApi.Information.Revision == 9550 && !Linearization ? new('d', "NEWPDF") : default;
 
         #endregion
     }
