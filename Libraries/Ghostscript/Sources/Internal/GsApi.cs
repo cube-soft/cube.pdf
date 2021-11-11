@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Cube.FileSystem;
-using Cube.Logging;
 using Cube.Mixin.String;
 
 namespace Cube.Pdf.Ghostscript

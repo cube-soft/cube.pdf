@@ -33,7 +33,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : Presentable<Facade>
+    public sealed class MainViewModel : PresentableBase<Facade>
     {
         #region Constructors
 
@@ -133,7 +133,7 @@ namespace Cube.Pdf.Converter
         /// Title
         ///
         /// <summary>
-        /// Gets the title of the window.
+        /// Gets the view title of the main window.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -192,7 +192,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Convert()
         {
-            if (Confirm()) Track(Facade.InvokeEx, Post<CloseMessage>);
+            if (Confirm()) Quit(Facade.InvokeEx, false);
         }
 
         /* ----------------------------------------------------------------- */
@@ -227,7 +227,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectSource() => Track(
+        public void SelectSource() => Send(
             Message.ForSource(Facade.Settings),
             e => Facade.Settings.Value.Source = e.First(),
             true
@@ -243,12 +243,11 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectDestination()
-        {
-            var m = Message.ForDestination(Facade.Settings);
-            Send(m);
-            if (!m.Cancel) Facade.SetDestination(m);
-        }
+        public void SelectDestination() => Send(
+            Message.ForDestination(Facade.Settings),
+            Facade.SetDestination,
+            true
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -260,7 +259,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectUserProgram() => Track(
+        public void SelectUserProgram() => Send(
             Message.ForUserProgram(Facade.Settings),
             e => General.UserProgram = e.First(),
             true

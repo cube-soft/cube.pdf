@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Runtime.Serialization;
-using Cube.FileSystem;
 using Cube.Mixin.Environment;
 using Cube.Pdf.Ghostscript;
 
@@ -34,7 +33,7 @@ namespace Cube.Pdf.Converter
     ///
     /* --------------------------------------------------------------------- */
     [DataContract]
-    public class SettingValue : SerializableBase
+    public class SettingValue : DataContract.SerializableBase
     {
         #region DataMember
 

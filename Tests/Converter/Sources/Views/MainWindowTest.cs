@@ -56,7 +56,7 @@ namespace Cube.Pdf.Converter.Tests.Views
             using var view = new MainWindow();
             view.Bind(new MainViewModel(src));
             view.StartPosition = FormStartPosition.Manual;
-            view.Location = new(0, Screen.PrimaryScreen.Bounds.Height + 10);
+            view.Location = new(0, -view.Height);
             view.Show();
 
             Assert.That(view.Busy, Is.False);

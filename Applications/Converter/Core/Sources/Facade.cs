@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Cube.FileSystem;
-using Cube.Logging;
 
 namespace Cube.Pdf.Converter
 {

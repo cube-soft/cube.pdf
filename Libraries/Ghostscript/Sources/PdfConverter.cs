@@ -151,7 +151,7 @@ namespace Cube.Pdf.Ghostscript
             .Concat(CreateImageArguments("Color", Compression))
             .Concat(CreateImageArguments("Gray",  Compression))
             .Concat(CreateImageArguments("Mono",  MonoCompression))
-            .Concat(new[] { CreateVersion(), CreateFastWebView() })
+            .Concat(new[] { CreateVersion(), CreateFastWebView(), CreateNewPdf() })
             .Compact();
 
         /* ----------------------------------------------------------------- */
@@ -196,6 +196,19 @@ namespace Cube.Pdf.Ghostscript
         /* ----------------------------------------------------------------- */
         private Argument CreateFastWebView() =>
             Linearization ? new('d', "FastWebView") : default;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateNewPdf
+        ///
+        /// <summary>
+        /// Creates a new instance of the Argument class to use the New PDF
+        /// implementation.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Argument CreateNewPdf() =>
+            GsApi.Information.Revision == 9550 ? new('d', "NEWPDF") : default;
 
         #endregion
     }

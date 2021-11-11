@@ -25,10 +25,10 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
 using Cube.FileSystem;
-using Cube.Images.Icons;
+using Cube.Icons;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.ByteFormat;
-using Cube.Mixin.Generics;
+using Cube.Mixin.Generic;
 using Cube.Xui.Converters;
 
 namespace Cube.Pdf.Editor

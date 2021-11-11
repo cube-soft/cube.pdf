@@ -16,9 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Drawing;
-using Cube.Images;
 using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Editor
@@ -108,12 +106,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private static Image Create(ImageFile src, SizeF size)
         {
-            using (var obj = new ImageResizer(src.FullName)
-            {
-                ResizeMode          = ImageResizeMode.HighSpeed,
-                PreserveAspectRatio = true,
-                LongSide            = (int)Math.Max(size.Width, size.Height),
-            }) return obj.Resized;
+            // TODO: reize image.
+            return Image.FromFile(src.FullName);
         }
 
         #endregion

@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
-using Cube.FileSystem.DataContract;
+using Cube.DataContract;
 using Cube.Mixin.Collections;
 using Cube.Tests;
 

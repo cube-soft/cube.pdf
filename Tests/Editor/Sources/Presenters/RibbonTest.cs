@@ -55,7 +55,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Others.Text,        Is.EqualTo("Others"));
             Assert.That(dest.Open.Text,          Is.EqualTo("Open"));
             Assert.That(dest.Save.Text,          Is.EqualTo("Save"));
-            Assert.That(dest.Close.Text,         Is.EqualTo("Close"));
+            Assert.That(dest.Close.Text,        Is.EqualTo("Close"));
             Assert.That(dest.Exit.Text,          Is.EqualTo("Exit"));
             Assert.That(dest.Undo.Text,          Is.EqualTo("Undo"));
             Assert.That(dest.Redo.Text,          Is.EqualTo("Redo"));
@@ -104,7 +104,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
             Assert.That(dest.Save.Tooltip,          Is.EqualTo("Save"));
-            Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
+            Assert.That(dest.Close.Tooltip,        Is.EqualTo(dest.Close.Text));
             Assert.That(dest.Exit.Tooltip,          Is.EqualTo(dest.Exit.Text));
             Assert.That(dest.Undo.Tooltip,          Is.EqualTo(dest.Undo.Text));
             Assert.That(dest.Redo.Tooltip,          Is.EqualTo(dest.Redo.Text));
@@ -153,7 +153,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Others.Text,        Is.EqualTo("その他"));
             Assert.That(dest.Open.Text,          Is.EqualTo("開く"));
             Assert.That(dest.Save.Text,          Is.EqualTo("保存"));
-            Assert.That(dest.Close.Text,         Is.EqualTo("閉じる"));
+            Assert.That(dest.Close.Text,        Is.EqualTo("閉じる"));
             Assert.That(dest.Exit.Text,          Is.EqualTo("終了"));
             Assert.That(dest.Undo.Text,          Is.EqualTo("元に戻す"));
             Assert.That(dest.Redo.Text,          Is.EqualTo("やり直し"));
@@ -202,7 +202,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
             Assert.That(dest.Save.Tooltip,          Is.EqualTo("上書き保存"));
-            Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
+            Assert.That(dest.Close.Tooltip,        Is.EqualTo(dest.Close.Text));
             Assert.That(dest.Exit.Tooltip,          Is.EqualTo(dest.Exit.Text));
             Assert.That(dest.Undo.Tooltip,          Is.EqualTo(dest.Undo.Text));
             Assert.That(dest.Redo.Tooltip,          Is.EqualTo(dest.Redo.Text));

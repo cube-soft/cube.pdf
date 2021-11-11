@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Runtime.Serialization;
-using Cube.FileSystem;
+using Cube.DataContract;
 
 namespace Cube.Pdf.Pages
 {

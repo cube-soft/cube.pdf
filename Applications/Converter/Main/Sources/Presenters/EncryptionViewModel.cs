@@ -30,7 +30,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class EncryptionViewModel : Presentable<Encryption>
+    public sealed class EncryptionViewModel : PresentableBase<Encryption>
     {
         #region Constructors
 
@@ -103,15 +103,35 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OwnerPasswordIsValid
+        /// OwnerCorrect
         ///
         /// <summary>
         /// Gets a value indicating whether the entered owner password is
-        /// valid.
+        /// correct.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool OwnerPasswordIsValid => OwnerPassword == OwnerConfirm;
+        public bool OwnerCorrect => OwnerPassword == OwnerConfirm;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OpenWithPassword
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to require password a
+        /// when opening the PDF file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool OpenWithPassword
+        {
+            get => Facade.OpenWithPassword;
+            set
+            {
+                Facade.OpenWithPassword = value;
+                Refresh(nameof(DividePassword), nameof(PermissionEditable));
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -141,43 +161,23 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UserPasswordIsValid
+        /// UserCorrect
         ///
         /// <summary>
         /// Gets a value indicating whether the entered user password is
-        /// valid. The property will also be true when the OpenWithPassword
+        /// correct. The property will also be true when the OpenWithPassword
         /// is set to false.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool UserPasswordIsValid =>
+        public bool UserCorrect =>
             !OpenWithPassword ||
-             UseOwnerPassword ||
+             SharePassword ||
             (OwnerPassword != UserPassword && UserPassword == UserConfirm);
 
         /* ----------------------------------------------------------------- */
         ///
-        /// OpenWithPassword
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether to require password a
-        /// when opening the PDF file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool OpenWithPassword
-        {
-            get => Facade.OpenWithPassword;
-            set
-            {
-                Facade.OpenWithPassword = value;
-                Refresh(nameof(EnableUserPassword), nameof(EnablePermission));
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UseOwnerPassword
+        /// SharePassword
         ///
         /// <summary>
         /// Gets or sets a value indicating whether to share the owner
@@ -185,27 +185,27 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool UseOwnerPassword
+        public bool SharePassword
         {
             get => Get<bool>();
-            set { if (Set(value)) Refresh(nameof(EnableUserPassword), nameof(EnablePermission)); }
+            set { if (Set(value)) Refresh(nameof(DividePassword), nameof(PermissionEditable)); }
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EnableUserPassword
+        /// DividePassword
         ///
         /// <summary>
         /// Gets or sets a value indicating whether the user password is
-        /// enabled to input.
+        /// required to input.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool EnableUserPassword => OpenWithPassword && !UseOwnerPassword;
+        public bool DividePassword => OpenWithPassword && !SharePassword;
 
         /* ----------------------------------------------------------------- */
         ///
-        /// EnablePermission
+        /// PermissionEditable
         ///
         /// <summary>
         /// Gets or sets a value indicating whether the permission values
@@ -218,18 +218,7 @@ namespace Cube.Pdf.Converter
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public bool EnablePermission => !(OpenWithPassword && UseOwnerPassword);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Permission
-        ///
-        /// <summary>
-        /// Gets the Permission object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Permission Permission => Facade.Permission;
+        public bool PermissionEditable => !(OpenWithPassword && SharePassword);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -242,8 +231,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowPrint
         {
-            get => Permission.Print.IsAllowed();
-            set => this.Refresh(() => Permission.Print = value.ToPermission());
+            get => Facade.Permission.Print.IsAllowed();
+            set => this.Refresh(() => Facade.Permission.Print = value.ToPermission());
         }
 
         /* ----------------------------------------------------------------- */
@@ -258,8 +247,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowCopy
         {
-            get => Permission.CopyContents.IsAllowed();
-            set => this.Refresh(() => Permission.CopyContents = value.ToPermission());
+            get => Facade.Permission.CopyContents.IsAllowed();
+            set => this.Refresh(() => Facade.Permission.CopyContents = value.ToPermission());
         }
 
         /* ----------------------------------------------------------------- */
@@ -272,10 +261,10 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool AllowInputForm
+        public bool AllowForm
         {
-            get => Permission.InputForm.IsAllowed();
-            set => this.Refresh(() => Permission.InputForm = value.ToPermission());
+            get => Facade.Permission.InputForm.IsAllowed();
+            set => this.Refresh(() => Facade.Permission.InputForm = value.ToPermission());
         }
 
         /* ----------------------------------------------------------------- */
@@ -290,11 +279,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool AllowModify
         {
-            get => Permission.ModifyContents.IsAllowed();
+            get => Facade.Permission.ModifyContents.IsAllowed();
             set => this.Refresh(() =>
             {
-                Permission.ModifyContents    = value.ToPermission();
-                Permission.ModifyAnnotations = value.ToPermission();
+                Facade.Permission.ModifyContents    = value.ToPermission();
+                Facade.Permission.ModifyAnnotations = value.ToPermission();
             });
         }
 
@@ -313,7 +302,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Confirm()
         {
-            if (!Enabled || OwnerPasswordIsValid && UserPasswordIsValid) return true;
+            if (!Enabled || OwnerCorrect && UserCorrect) return true;
             Send(Message.ForError(Properties.Resources.MessagePassword));
             return false;
         }

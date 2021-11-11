@@ -63,13 +63,10 @@ namespace Cube.Pdf.Editor
         ) : base(new(selection, count, new ContextDispatcher(context, false)), new(), context)
         {
             OK.Command = new DelegateCommand(
-                () => Track(() => {
-                    callback(Facade.Value);
-                    Send<CloseMessage>();
-                }),
+                () => Quit(() => callback(Facade.Value), true),
                 () => Facade.Value.Destination.HasValue() &&
                       !Io.Get(Facade.Value.Destination).IsDirectory
-            ).Associate(Facade.Value, nameof(SaveOption.Destination));
+            ).Hook(Facade.Value, nameof(SaveOption.Destination));
         }
 
         #endregion
@@ -103,11 +100,12 @@ namespace Cube.Pdf.Editor
             e  => Facade.Value.Destination = e,
             GetDispatcher(false)
         ) {
-            Command = new DelegateCommand(() => Track(
+            Command = new DelegateCommand(() => Send(
                 Message.ForExtract(),
-                e => Facade.Value.Destination = e
+                e => Facade.Value.Destination = e,
+                true
             ))
-        }).Associate(Facade.Value, nameof(SaveOption.Destination));
+        }).Hook(Facade.Value, nameof(SaveOption.Destination));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -123,7 +121,7 @@ namespace Cube.Pdf.Editor
             () => Facade.Value.Format,
             e  => Facade.Value.Format = e,
             GetDispatcher(false)
-        )).Associate(Facade.Value, nameof(SaveOption.Format));
+        )).Hook(Facade.Value, nameof(SaveOption.Format));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -178,7 +176,7 @@ namespace Cube.Pdf.Editor
                 () => { },
                 () => Facade.Selection.Count > 0
             )
-        }).Associate(Facade.Value, nameof(SaveOption.Target));
+        }).Hook(Facade.Value, nameof(SaveOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -195,7 +193,7 @@ namespace Cube.Pdf.Editor
             () => Facade.Value.Target == SaveTarget.All,
             e  => e.Then(() => Facade.Value.Target = SaveTarget.All),
             GetDispatcher(false)
-        )).Associate(Facade.Value, nameof(SaveOption.Target));
+        )).Hook(Facade.Value, nameof(SaveOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -212,7 +210,7 @@ namespace Cube.Pdf.Editor
             () => Facade.Value.Target == SaveTarget.Range,
             e  => e.Then(() => Facade.Value.Target = SaveTarget.Range),
             GetDispatcher(false)
-        )).Associate(Facade.Value, nameof(SaveOption.Target));
+        )).Hook(Facade.Value, nameof(SaveOption.Target));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -265,7 +263,7 @@ namespace Cube.Pdf.Editor
             Command = new DelegateCommand(
                 () => { },
                 () => Facade.Value.Format == SaveFormat.Pdf
-            ).Associate(Facade.Value, nameof(SaveOption.Format))
+            ).Hook(Facade.Value, nameof(SaveOption.Format))
         });
 
         /* ----------------------------------------------------------------- */

@@ -32,7 +32,7 @@ namespace Cube.Pdf.Clip
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MainViewModel : Presentable<MainFacade>
+    public sealed class MainViewModel : PresentableBase<MainFacade>
     {
         #region Constructors
 
@@ -64,8 +64,8 @@ namespace Cube.Pdf.Clip
         {
             Clips = new BindingSource { DataSource = Facade.Clips };
 
-            Facade.CollectionChanged += (s, e) => Send<UpdateListMessage>();
-            Facade.PropertyChanged   += (s, e) => OnPropertyChanged(e);
+            Assets.Add(new ObservableProxy(Facade, this));
+            Facade.CollectionChanged += (s, e) => Send(new UpdateListMessage());
         }
 
         #endregion
@@ -118,7 +118,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Open() => Track(Message.ForOpen(), e => Facade.Open(e.First()));
+        public void Open() => Send(Message.ForOpen(), e => Facade.Open(e.First()), false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -129,7 +129,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Attach() => Track(Message.ForAttach(), Facade.Attach);
+        public void Attach() => Send(Message.ForAttach(), Facade.Attach, false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -140,7 +140,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Detach(IEnumerable<int> indices) => Track(() => Facade.Detach(indices), true);
+        public void Detach(IEnumerable<int> indices) => Run(() => Facade.Detach(indices), true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -151,7 +151,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Track(Facade.Save);
+        public void Save() => Run(Facade.Save, false);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -162,7 +162,7 @@ namespace Cube.Pdf.Clip
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Reset() => Track(Facade.Reset, true);
+        public void Reset() => Run(Facade.Reset, true);
 
         #endregion
     }

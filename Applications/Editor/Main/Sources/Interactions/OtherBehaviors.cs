@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ShowPasswordWindow : ShowBehavior<PasswordWindow, PasswordViewModel> { }
+    public class ShowPasswordWindow : ShowDialogBehavior<PasswordWindow, PasswordViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -41,7 +41,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ShowPreviewWindow : ShowBehavior<PreviewWindow, PreviewViewModel> { }
+    public class ShowPreviewWindow : ShowDialogBehavior<PreviewWindow, PreviewViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ShowInsertWindow : ShowBehavior<InsertWindow, InsertViewModel> { }
+    public class ShowInsertWindow : ShowDialogBehavior<InsertWindow, InsertViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -63,7 +63,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ShowRemoveWindow : ShowBehavior<RemoveWindow, RemoveViewModel> { }
+    public class ShowRemoveWindow : ShowDialogBehavior<RemoveWindow, RemoveViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -74,7 +74,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ShowExtractWindow : ShowBehavior<ExtractWindow, ExtractViewModel> { }
+    public class ShowExtractWindow : ShowDialogBehavior<ExtractWindow, ExtractViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -85,7 +85,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ShowMetadataWindow : ShowBehavior<MetadataWindow, MetadataViewModel> { }
+    public class ShowMetadataWindow : ShowDialogBehavior<MetadataWindow, MetadataViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -96,7 +96,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ShowEncryptionWindow : ShowBehavior<EncryptionWindow, EncryptionViewModel> { }
+    public class ShowEncryptionWindow : ShowDialogBehavior<EncryptionWindow, EncryptionViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -107,7 +107,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ShowSettingWindow : ShowBehavior<SettingWindow, SettingViewModel> { }
+    public class ShowSettingWindow : ShowDialogBehavior<SettingWindow, SettingViewModel> { }
 
     /* --------------------------------------------------------------------- */
     ///

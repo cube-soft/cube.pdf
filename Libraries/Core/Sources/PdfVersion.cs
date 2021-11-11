@@ -18,7 +18,7 @@
 using System;
 using System.Runtime.Serialization;
 using System.Text;
-using Cube.FileSystem;
+using Cube.DataContract;
 using Cube.Mixin.String;
 
 namespace Cube.Pdf

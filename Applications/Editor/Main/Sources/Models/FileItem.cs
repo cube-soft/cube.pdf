@@ -19,7 +19,7 @@
 using System;
 using System.Windows.Media;
 using Cube.FileSystem;
-using Cube.Images.Icons;
+using Cube.Icons;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

@@ -32,7 +32,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class MetadataViewModel : Presentable<Metadata>
+    public sealed class MetadataViewModel : PresentableBase<Metadata>
     {
         #region Constructors
 
@@ -189,11 +189,7 @@ namespace Cube.Pdf.Converter
         {
             var src = new[] { Title, Author, Subject, Keywords };
             if (src.All(e => !e.HasValue())) callback();
-            else Track(
-                Message.ForWarning(Properties.Resources.MessageSave),
-                e => { if (e.Any(DialogStatus.Yes)) callback(); },
-                true
-            );
+            else Send(Message.ForWarning(Properties.Resources.MessageSave), _ => callback(), true);
         }
 
         #endregion

@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DialogViewModel<TModel> : Presentable<TModel>
+    public abstract class DialogViewModel<TModel> : PresentableBase<TModel>
     {
         #region Constructors
 
@@ -97,7 +97,7 @@ namespace Cube.Pdf.Editor
         public IElement Cancel => Get(() => new BindableElement(
             () => Properties.Resources.MenuCancel,
             GetDispatcher(false)
-        ) { Command = new DelegateCommand(() => Send<CloseMessage>()) });
+        ) { Command = new DelegateCommand(() => Send(new CloseMessage())) });
 
         #endregion
 
