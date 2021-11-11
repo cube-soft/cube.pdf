@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Logging;
 using Cube.Mixin.String;
 using iTextSharp.text;
 using iTextSharp.text.pdf;

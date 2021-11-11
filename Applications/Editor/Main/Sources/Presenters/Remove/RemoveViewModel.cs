@@ -58,12 +58,9 @@ namespace Cube.Pdf.Editor
         ) : base(new(n, new ContextDispatcher(context, false)), new(), context)
         {
             OK.Command = new DelegateCommand(
-                () => Track(() => {
-                    callback(Facade.Get());
-                    Send<CloseMessage>();
-                }),
+                () => Quit(() => callback(Facade.Get()), false),
                 () => Facade.Range.HasValue()
-            ).Associate(Facade, nameof(Facade.Range));
+            ).Hook(Facade, nameof(Facade.Range));
         }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
     <PropertyGroup>
-        <Version>3.6.0</Version>
+        <Version>3.6.1</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF Page</Product>
@@ -29,7 +29,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
-        <PackageReference Include="Cube.Forms" Version="5.0.0" />
+        <PackageReference Include="Cube.Forms" Version="6.0.0" />
         <Reference Include="WindowsBase" />
     </ItemGroup>
     <ItemGroup>

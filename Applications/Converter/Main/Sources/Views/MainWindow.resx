@@ -1,64 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
-    Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
-    associated with the data types.
-
-    Example:
-
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-
-    There are any number of "resheader" rows that contain simple
-    name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
-    mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
-    extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
-    read any of the formats listed below.
-
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -127,39 +68,36 @@
   <data name="GeneralPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <metadata name="SettingBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>191, 17</value>
-  </metadata>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ResolutionControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="ResolutionNumeric.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="ResolutionControl.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="ResolutionNumeric.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>Disable</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ResolutionControl.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ResolutionNumeric.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 33</value>
   </data>
-  <data name="ResolutionControl.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ResolutionNumeric.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 23</value>
   </data>
-  <data name="ResolutionControl.TabIndex" type="System.Int32, mscorlib">
+  <data name="ResolutionNumeric.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="ResolutionControl.ThousandsSeparator" type="System.Boolean, mscorlib">
+  <data name="ResolutionNumeric.ThousandsSeparator" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;ResolutionControl.Name" xml:space="preserve">
-    <value>ResolutionControl</value>
+  <data name="&gt;&gt;ResolutionNumeric.Name" xml:space="preserve">
+    <value>ResolutionNumeric</value>
   </data>
-  <data name="&gt;&gt;ResolutionControl.Type" xml:space="preserve">
+  <data name="&gt;&gt;ResolutionNumeric.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ResolutionControl.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ResolutionNumeric.Parent" xml:space="preserve">
     <value>GeneralPanel</value>
   </data>
-  <data name="&gt;&gt;ResolutionControl.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ResolutionNumeric.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="PostProcessComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -964,7 +902,7 @@
     <value>0</value>
   </data>
   <data name="GeneralPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ResolutionControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessComboBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserProgramPanel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SourcePanel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SourceLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FormatPanel" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ResolutionNumeric" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessComboBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserProgramPanel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OrientationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SourcePanel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SourceLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FormatLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="DestinationPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FormatPanel" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="GeneralTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -999,31 +937,28 @@
   <data name="DocumentPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <metadata name="MetadataBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>407, 17</value>
-  </metadata>
-  <data name="ViewerPreferencesComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="ViewOptionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="ViewerPreferencesComboBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ViewOptionComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 153</value>
   </data>
-  <data name="ViewerPreferencesComboBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ViewOptionComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 23</value>
   </data>
-  <data name="ViewerPreferencesComboBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="ViewOptionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;ViewerPreferencesComboBox.Name" xml:space="preserve">
-    <value>ViewerPreferencesComboBox</value>
+  <data name="&gt;&gt;ViewOptionComboBox.Name" xml:space="preserve">
+    <value>ViewOptionComboBox</value>
   </data>
-  <data name="&gt;&gt;ViewerPreferencesComboBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionComboBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ViewerPreferencesComboBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionComboBox.Parent" xml:space="preserve">
     <value>DocumentPanel</value>
   </data>
-  <data name="&gt;&gt;ViewerPreferencesComboBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="ViewerPreferencesLabel.AutoSize" type="System.Boolean, mscorlib">
@@ -1408,7 +1343,7 @@
     <value>0</value>
   </data>
   <data name="DocumentPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ViewerPreferencesComboBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ViewerPreferencesLabel" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsTextBox" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ViewOptionComboBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ViewerPreferencesLabel" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsTextBox" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsLabel" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="DocumentPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -1443,40 +1378,37 @@
   <data name="EncryptionOuterPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="EnableEncryptionCheckBox.AutoSize" type="System.Boolean, mscorlib">
+  <data name="EncryptionCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <metadata name="EncryptionBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>589, 17</value>
-  </metadata>
-  <data name="EnableEncryptionCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="EncryptionCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="EnableEncryptionCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="EncryptionCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="EnableEncryptionCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="EncryptionCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
-  <data name="EnableEncryptionCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="EncryptionCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>428, 19</value>
   </data>
-  <data name="EnableEncryptionCheckBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="EncryptionCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="EnableEncryptionCheckBox.Text" xml:space="preserve">
+  <data name="EncryptionCheckBox.Text" xml:space="preserve">
     <value>Encrypt the PDF with password</value>
   </data>
-  <data name="&gt;&gt;EnableEncryptionCheckBox.Name" xml:space="preserve">
-    <value>EnableEncryptionCheckBox</value>
+  <data name="&gt;&gt;EncryptionCheckBox.Name" xml:space="preserve">
+    <value>EncryptionCheckBox</value>
   </data>
-  <data name="&gt;&gt;EnableEncryptionCheckBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;EncryptionCheckBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;EnableEncryptionCheckBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;EncryptionCheckBox.Parent" xml:space="preserve">
     <value>EncryptionOuterPanel</value>
   </data>
-  <data name="&gt;&gt;EnableEncryptionCheckBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;EncryptionCheckBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="EncryptionPanel.ColumnCount" type="System.Int32, mscorlib">
@@ -2146,7 +2078,7 @@
     <value>0</value>
   </data>
   <data name="EncryptionOuterPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="EnableEncryptionCheckBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="EncryptionPanel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="EncryptionCheckBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="EncryptionPanel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="EncryptionTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -2289,37 +2221,37 @@
   <data name="&gt;&gt;OptionsLabel.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="ImageFilterCheckBox.AutoSize" type="System.Boolean, mscorlib">
+  <data name="JpegCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="ImageFilterCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="JpegCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="ImageFilterCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="JpegCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="ImageFilterCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="JpegCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>103, 28</value>
   </data>
-  <data name="ImageFilterCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="JpegCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 19</value>
   </data>
-  <data name="ImageFilterCheckBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="JpegCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="ImageFilterCheckBox.Text" xml:space="preserve">
+  <data name="JpegCheckBox.Text" xml:space="preserve">
     <value>Compress PDF images as JPEG</value>
   </data>
-  <data name="&gt;&gt;ImageFilterCheckBox.Name" xml:space="preserve">
-    <value>ImageFilterCheckBox</value>
+  <data name="&gt;&gt;JpegCheckBox.Name" xml:space="preserve">
+    <value>JpegCheckBox</value>
   </data>
-  <data name="&gt;&gt;ImageFilterCheckBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;JpegCheckBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ImageFilterCheckBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;JpegCheckBox.Parent" xml:space="preserve">
     <value>OthersPanel</value>
   </data>
-  <data name="&gt;&gt;ImageFilterCheckBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;JpegCheckBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="LinearizationCheckBox.AutoSize" type="System.Boolean, mscorlib">
@@ -2448,9 +2380,6 @@
   <data name="&gt;&gt;AboutLabel.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <metadata name="MainBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="VersionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -2467,7 +2396,7 @@
     <value>VersionPanel</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Parent" xml:space="preserve">
     <value>OthersPanel</value>
@@ -2503,7 +2432,7 @@
     <value>0</value>
   </data>
   <data name="OthersPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LanguageLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="ImageFilterCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LinearizationCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AboutLabel" Row="4" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LanguageLabel" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="GrayscaleCheckBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OptionsLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="JpegCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LinearizationCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AboutLabel" Row="4" RowSpan="2" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,20,Percent,100,Absolute,25,Absolute,30,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="OthersTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -2584,7 +2513,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.SettingControl, Cube.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.SettingControl, Cube.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
     <value>RootPanel</value>
@@ -2839,14 +2768,8 @@
     <value>0</value>
   </data>
   <data name="RootPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SettingsPanel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="HeaderPictureBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,50,Percent,100,Absolute,53" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SettingPanel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="HeaderPictureBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,50,Percent,100,Absolute,53" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <metadata name="PathToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>897, 17</value>
-  </metadata>
-  <metadata name="MainToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>777, 17</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -3311,46 +3234,10 @@
   <data name="$this.Text" xml:space="preserve">
     <value>CubePDF</value>
   </data>
-  <data name="&gt;&gt;SettingBindingSource.Name" xml:space="preserve">
-    <value>SettingBindingSource</value>
-  </data>
-  <data name="&gt;&gt;SettingBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MetadataBindingSource.Name" xml:space="preserve">
-    <value>MetadataBindingSource</value>
-  </data>
-  <data name="&gt;&gt;MetadataBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;EncryptionBindingSource.Name" xml:space="preserve">
-    <value>EncryptionBindingSource</value>
-  </data>
-  <data name="&gt;&gt;EncryptionBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MainBindingSource.Name" xml:space="preserve">
-    <value>MainBindingSource</value>
-  </data>
-  <data name="&gt;&gt;MainBindingSource.Type" xml:space="preserve">
-    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;PathToolTip.Name" xml:space="preserve">
-    <value>PathToolTip</value>
-  </data>
-  <data name="&gt;&gt;PathToolTip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MainToolTip.Name" xml:space="preserve">
-    <value>MainToolTip</value>
-  </data>
-  <data name="&gt;&gt;MainToolTip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainWindow</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.Window, Cube.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Window, Cube.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
 </root>

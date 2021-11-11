@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Reflection;
-using Cube.Logging;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Converter.Tests
@@ -50,7 +49,6 @@ namespace Cube.Pdf.Converter.Tests
         {
             _ = Logger.ObserveTaskException();
             typeof(GlobalSetup).LogInfo(Assembly.GetExecutingAssembly());
-            Resource.Configure();
         }
 
         #endregion

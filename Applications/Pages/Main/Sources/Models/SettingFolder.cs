@@ -17,8 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Reflection;
+using Cube.DataContract;
 using Cube.FileSystem;
-using Cube.FileSystem.DataContract;
 using Cube.Mixin.Assembly;
 
 namespace Cube.Pdf.Pages

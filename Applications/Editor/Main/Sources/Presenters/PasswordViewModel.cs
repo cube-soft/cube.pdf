@@ -54,9 +54,9 @@ namespace Cube.Pdf.Editor
         {
             Facade.Cancel = true;
             OK.Command = new DelegateCommand(
-                () => { src.Cancel = false; Send<CloseMessage>(); },
+                () => Quit(() => src.Cancel = false, true),
                 () => Password.Value.HasValue()
-            ).Associate(Password);
+            ).Hook(Password);
         }
 
         #endregion

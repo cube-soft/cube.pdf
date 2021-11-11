@@ -107,18 +107,18 @@
         <xb:SaveFileBehavior />
         <xb:UriBehavior />
         <xb:CloseBehavior />
-        <xb:DisposeBehavior />
-        <xb:ClosingToCommand     Command="{Binding Ribbon.Close.Command}" />
-        <my:SetupBehavior        Command="{Binding Setup}" />
-        <my:MouseOpenBehavior    Command="{Binding Open}" />
-        <my:ShowPasswordWindow   Modal="True" />
-        <my:ShowPreviewWindow    Modal="True" />
-        <my:ShowInsertWindow     Modal="True" />
-        <my:ShowRemoveWindow     Modal="True" />
-        <my:ShowExtractWindow    Modal="True" />
-        <my:ShowMetadataWindow   Modal="True" />
-        <my:ShowEncryptionWindow Modal="True" />
-        <my:ShowSettingWindow    Modal="True" />
+        <xb:ClosedToDispose />
+        <xb:ClosingToCommand Command="{Binding Ribbon.Close.Command}" />
+        <my:SetupBehavior Command="{Binding Setup}" />
+        <my:MouseOpenBehavior Command="{Binding Open}" />
+        <my:ShowPasswordWindow />
+        <my:ShowPreviewWindow />
+        <my:ShowInsertWindow />
+        <my:ShowRemoveWindow />
+        <my:ShowExtractWindow />
+        <my:ShowMetadataWindow />
+        <my:ShowEncryptionWindow />
+        <my:ShowSettingWindow />
         <my:Hack35Behavior />
     </i:Interaction.Behaviors>
 

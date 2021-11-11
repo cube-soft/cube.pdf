@@ -16,7 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using Cube.FileSystem;
+using Cube.DataContract;
 
 namespace Cube.Pdf
 {

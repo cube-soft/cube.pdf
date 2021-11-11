@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
-using Cube.Logging;
 using Cube.Mixin.String;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;

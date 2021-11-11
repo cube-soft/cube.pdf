@@ -20,7 +20,6 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Cube.Logging;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
@@ -55,8 +54,8 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         public void Main() => Invoke(vm =>
         {
             Assert.That(vm.Title,   Does.StartWith(nameof(Main)));
-            Assert.That(vm.Title,   Does.Contain("CubePDF 1.5.4"));
-            Assert.That(vm.Version, Does.StartWith("1.5.4 (").And.EndsWith(")"));
+            Assert.That(vm.Title,   Does.Contain("CubePDF 1.6.0"));
+            Assert.That(vm.Version, Does.StartWith("1.6.0 (").And.EndsWith(")"));
             Assert.That(vm.Uri.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
         });
 
@@ -74,24 +73,24 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         {
             var dest = vm.General;
             GetType().LogDebug($"CheckUpdate:{dest.CheckUpdate}");
-            Assert.That(dest.Resolution,         Is.EqualTo(600));
-            Assert.That(dest.Language,           Is.EqualTo(Language.Auto));
-            Assert.That(dest.IsAutoOrientation,  Is.True,  nameof(dest.IsAutoOrientation));
-            Assert.That(dest.IsPortrait,         Is.False, nameof(dest.IsPortrait));
-            Assert.That(dest.IsLandscape,        Is.False, nameof(dest.IsLandscape));
-            Assert.That(dest.Grayscale,          Is.False, nameof(dest.Grayscale));
-            Assert.That(dest.ImageFilter,        Is.True,  nameof(dest.ImageFilter));
-            Assert.That(dest.Linearization,      Is.False, nameof(dest.Linearization));
-            Assert.That(dest.IsPdf,              Is.True,  nameof(dest.IsPdf));
-            Assert.That(dest.EnableUserProgram,  Is.False, nameof(dest.EnableUserProgram));
-            Assert.That(dest.SourceEditable,     Is.False, nameof(dest.SourceEditable));
-            Assert.That(dest.SourceVisible,      Is.False, nameof(dest.SourceVisible));
+            Assert.That(dest.Resolution,           Is.EqualTo(600));
+            Assert.That(dest.Language,             Is.EqualTo(Language.Auto));
+            Assert.That(dest.IsAutoOrientation,    Is.True,  nameof(dest.IsAutoOrientation));
+            Assert.That(dest.IsPortrait,           Is.False, nameof(dest.IsPortrait));
+            Assert.That(dest.IsLandscape,          Is.False, nameof(dest.IsLandscape));
+            Assert.That(dest.Grayscale,            Is.False, nameof(dest.Grayscale));
+            Assert.That(dest.ImageFilter,          Is.True,  nameof(dest.ImageFilter));
+            Assert.That(dest.Linearization,        Is.False, nameof(dest.Linearization));
+            Assert.That(dest.IsPdf,                Is.True,  nameof(dest.IsPdf));
+            Assert.That(dest.UserProgramEditable,  Is.False, nameof(dest.UserProgramEditable));
+            Assert.That(dest.SourceEditable,       Is.False, nameof(dest.SourceEditable));
+            Assert.That(dest.SourceVisible,        Is.False, nameof(dest.SourceVisible));
 
             dest.Format = Format.Png;
             Assert.That(dest.IsPdf, Is.False, nameof(dest.IsPdf));
 
             dest.PostProcess = PostProcess.Others;
-            Assert.That(dest.EnableUserProgram,  Is.True,  nameof(dest.EnableUserProgram));
+            Assert.That(dest.UserProgramEditable,  Is.True,  nameof(dest.UserProgramEditable));
 
             dest.IsPortrait = true;
             Assert.That(dest.IsAutoOrientation,  Is.False, nameof(dest.IsAutoOrientation));
@@ -142,15 +141,15 @@ namespace Cube.Pdf.Converter.Tests.Presenters
             Assert.That(dest.OwnerPassword,      Is.Empty, nameof(dest.OwnerPassword));
             Assert.That(dest.OwnerConfirm,       Is.Empty, nameof(dest.OwnerConfirm));
             Assert.That(dest.OpenWithPassword,   Is.False, nameof(dest.OpenWithPassword));
-            Assert.That(dest.UseOwnerPassword,   Is.False, nameof(dest.UseOwnerPassword));
-            Assert.That(dest.EnableUserPassword, Is.False, nameof(dest.EnableUserPassword));
+            Assert.That(dest.SharePassword,      Is.False, nameof(dest.SharePassword));
+            Assert.That(dest.DividePassword,     Is.False, nameof(dest.DividePassword));
             Assert.That(dest.UserPassword,       Is.Empty, nameof(dest.UserPassword));
             Assert.That(dest.UserConfirm,        Is.Empty, nameof(dest.UserConfirm));
             Assert.That(dest.AllowCopy,          Is.False, nameof(dest.AllowCopy));
-            Assert.That(dest.AllowInputForm,     Is.False, nameof(dest.AllowInputForm));
+            Assert.That(dest.AllowForm,          Is.False, nameof(dest.AllowForm));
             Assert.That(dest.AllowModify,        Is.False, nameof(dest.AllowModify));
             Assert.That(dest.AllowPrint,         Is.False, nameof(dest.AllowPrint));
-            Assert.That(dest.EnablePermission,   Is.True,  nameof(dest.EnablePermission));
+            Assert.That(dest.PermissionEditable, Is.True,  nameof(dest.PermissionEditable));
 
             dest.Enabled          = true;
             dest.OwnerPassword    = "Password";
@@ -159,15 +158,15 @@ namespace Cube.Pdf.Converter.Tests.Presenters
 
             Assert.That(dest.Enabled,            Is.True,  nameof(dest.Enabled));
             Assert.That(dest.OpenWithPassword,   Is.True,  nameof(dest.OpenWithPassword));
-            Assert.That(dest.UseOwnerPassword,   Is.False, nameof(dest.UseOwnerPassword));
-            Assert.That(dest.EnableUserPassword, Is.True,  nameof(dest.EnableUserPassword));
-            Assert.That(dest.EnablePermission,   Is.True,  nameof(dest.EnablePermission));
+            Assert.That(dest.SharePassword,      Is.False, nameof(dest.SharePassword));
+            Assert.That(dest.DividePassword,     Is.True,  nameof(dest.DividePassword));
+            Assert.That(dest.PermissionEditable, Is.True,  nameof(dest.PermissionEditable));
 
-            dest.UseOwnerPassword = true;
+            dest.SharePassword = true;
 
-            Assert.That(dest.UseOwnerPassword,   Is.True,  nameof(dest.UseOwnerPassword));
-            Assert.That(dest.EnableUserPassword, Is.False, nameof(dest.EnableUserPassword));
-            Assert.That(dest.EnablePermission,   Is.False, nameof(dest.EnablePermission));
+            Assert.That(dest.SharePassword,      Is.True,  nameof(dest.SharePassword));
+            Assert.That(dest.DividePassword,     Is.False, nameof(dest.DividePassword));
+            Assert.That(dest.PermissionEditable, Is.False, nameof(dest.PermissionEditable));
         });
 
         /* ----------------------------------------------------------------- */
@@ -189,9 +188,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 Assert.That(e.Text,             Is.EqualTo("入力ファイルを選択"));
                 Assert.That(e.InitialDirectory, Is.Empty);
                 Assert.That(e.Value.Count(),    Is.EqualTo(1));
-                Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
-                Assert.That(e.FilterIndex,      Is.EqualTo(0));
                 Assert.That(e.CheckPathExists,  Is.True);
+                Assert.That(e.GetFilterText(),  Is.Not.Null.And.Not.Empty);
+                Assert.That(e.GetFilterIndex(), Is.EqualTo(0));
 
                 e.Value  = new[] { done };
                 e.Cancel = false;
@@ -221,10 +220,10 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 Assert.That(e.Text,             Is.EqualTo("名前を付けて保存"));
                 Assert.That(e.InitialDirectory, Is.Empty);
                 Assert.That(e.Value,            Is.EqualTo(nameof(SelectDestination)));
-                Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
-                Assert.That(e.FilterIndex,      Is.EqualTo(1));
                 Assert.That(e.OverwritePrompt,  Is.False);
                 Assert.That(e.CheckPathExists,  Is.False);
+                Assert.That(e.GetFilterText(),  Is.Not.Null.And.Not.Empty);
+                Assert.That(e.GetFilterIndex(), Is.EqualTo(0));
 
                 e.Value  = done;
                 e.Cancel = false;
@@ -254,9 +253,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 Assert.That(e.Text,             Is.EqualTo("変換完了時に実行するプログラムを選択"));
                 Assert.That(e.InitialDirectory, Is.Empty);
                 Assert.That(e.Value.Count(),    Is.EqualTo(0));
-                Assert.That(e.Filter,           Is.Not.Null.And.Not.Empty);
-                Assert.That(e.FilterIndex,      Is.EqualTo(0));
                 Assert.That(e.CheckPathExists,  Is.True);
+                Assert.That(e.GetFilterText(),  Is.Not.Null.And.Not.Empty);
+                Assert.That(e.GetFilterIndex(), Is.EqualTo(0));
 
                 e.Value  = new[] { done };
                 e.Cancel = false;

@@ -57,21 +57,20 @@ namespace Cube.Pdf.Editor
         ) : base(new(src), new(), context)
         {
             OK.Command = new DelegateCommand(
-                () =>
+                () => Quit(() =>
                 {
-                    Send<CloseMessage>();
                     Facade.Normalize();
                     callback(Facade.Value);
-                },
+                }, true),
                 () => Facade.IsAcceptable()
             )
-            .Associate(Enabled)
-            .Associate(OwnerPassword)
-            .Associate(OwnerConfirm)
-            .Associate(OpenPassword)
-            .Associate(SharePassword)
-            .Associate(UserPassword)
-            .Associate(UserConfirm);
+            .Hook(Enabled)
+            .Hook(OwnerPassword)
+            .Hook(OwnerConfirm)
+            .Hook(OpenPassword)
+            .Hook(SharePassword)
+            .Hook(UserPassword)
+            .Hook(UserConfirm);
         }
 
         #endregion
@@ -120,7 +119,7 @@ namespace Cube.Pdf.Editor
             () => Properties.Resources.MenuOperations,
             () => !OpenPassword.Value || !SharePassword.Value,
             GetDispatcher(false)
-        ).Associate(OpenPassword).Associate(SharePassword));
+        ).Hook(OpenPassword).Hook(SharePassword));
 
         /* ----------------------------------------------------------------- */
         ///

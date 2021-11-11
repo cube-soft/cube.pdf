@@ -54,11 +54,7 @@ namespace Cube.Pdf.Editor
         public SettingViewModel(SettingFolder src, SynchronizationContext context) :
             base(src, new(), context)
         {
-            OK.Command = new DelegateCommand(() =>
-            {
-                Send<ApplyMessage>();
-                Send<CloseMessage>();
-            });
+            OK.Command = new DelegateCommand(() => Quit(() => Send(new ApplyMessage()), true));
         }
 
         #endregion

@@ -1,11 +1,10 @@
-version: 5.0.1.{build}
+version: 6.0.0.{build}
 environment:
     PROJECT_NAME:  'Cube.Pdf'
     TEST_TOOL:     '..\packages\OpenCover\4.7.1221\tools\OpenCover.Console.exe'
-    TEST_ARGS:     'test --no-restore --no-build --logger:Appveyor'
     TEST_FILTERS:  '+[Cube*]* -[*]*.NativeMethods -[*]*.Properties.* -[*]*.Program -[*]*.Program/* -[*]*.App -[*]*.App/* -[*]*Window -[*]*Window/* -[*]*Control -[*]*Control/*'
-    TEST_COVERAGE: 'CoverResults.xml'
-    TEST_RESULTS:  'TestResults'
+    TEST_COVERAGE: 'Coverage.xml'
+    TEST_RESULTS:  'Results'
 clone_folder: 'C:\Cube\%PROJECT_NAME%'
 image: Visual Studio 2019
 platform: Any CPU
@@ -19,9 +18,6 @@ nuget:
     disable_publish_on_pr: true
 before_build:
     - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
-    - nuget sources add -name Cube.Forms -source https://ci.appveyor.com/nuget/cube.forms
-    - nuget sources add -name Cube.Xui -source https://ci.appveyor.com/nuget/cube.xui
-    - nuget sources add -name Cube.Images -source https://ci.appveyor.com/nuget/cube.images
     - nuget restore "%PROJECT_NAME%.sln"
 build:
     project: '%PROJECT_NAME%.sln'
@@ -34,7 +30,7 @@ test_script:
       -log:Error
       -register:appveyor
       -target:dotnet.exe
-      -targetargs:"%TEST_ARGS% %PROJECT_NAME%.sln"
+      -targetargs:"test --no-restore --no-build --logger:Appveyor %PROJECT_NAME%.sln"
       -returntargetcode
       -hideskipped:All
       -mergeoutput
@@ -46,3 +42,4 @@ after_test:
     - cmd: for /f "delims=" %%x in ('dir /b /s *.log') do xcopy /q /Y /I "%%x" "%TEST_RESULTS%\"
 artifacts:
     - path: '%TEST_RESULTS%'
+    - path: '%TEST_COVERAGE%'

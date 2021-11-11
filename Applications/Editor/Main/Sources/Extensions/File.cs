@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 using Cube.FileSystem;
-using Cube.Images.Icons;
+using Cube.Icons;
 using Cube.Mixin.Drawing;
 using Cube.Mixin.String;
 
@@ -121,7 +121,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static ImageSource GetIconSource(this Entity src, IconSize size) =>
-            src.GetIcon(size)?.ToBitmap().ToBitmapImage(true);
+            FileIcon.GetImage(src?.FullName, size).ToBitmapImage(true);
 
         #endregion
     }

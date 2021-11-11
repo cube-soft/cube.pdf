@@ -52,12 +52,12 @@ namespace Cube.Pdf.Pages
             Text            = Properties.Resources.TitleAdd,
             CheckPathExists = true,
             Multiselect     = true,
-            Filter          = new FileDialogFilter[]
+            Filters         = new FileDialogFilter[]
             {
                 new(Properties.Resources.FilterSupported, true,
-                    "*.pdf", "*.bmp", "*.gif", "*.jpg", "*.jpeg", "*.png", "*.tiff"),
+                    ".pdf", ".bmp", ".gif", ".jpg", ".jpeg", ".png", ".tiff"),
                 new(Properties.Resources.FilterAll, true, ".*"),
-            }.GetFilter(),
+            },
         };
 
         /* ----------------------------------------------------------------- */
@@ -76,11 +76,11 @@ namespace Cube.Pdf.Pages
             Text            = Properties.Resources.TitleMerge,
             OverwritePrompt = true,
             CheckPathExists = false,
-            Filter          = new FileDialogFilter[]
+            Filters         = new FileDialogFilter[]
             {
                 new(Properties.Resources.FilterPdf, true, ".pdf"),
                 new(Properties.Resources.FilterAll, true, ".*"),
-            }.GetFilter(),
+            },
         };
 
         /* ----------------------------------------------------------------- */

@@ -18,7 +18,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using Cube.Backports;
-using Cube.FileSystem;
+using Cube.DataContract;
 
 namespace Cube.Pdf
 {

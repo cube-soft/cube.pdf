@@ -111,10 +111,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static DialogMessage ForWarning(string src) => new()
         {
-            Text    = src,
-            Title   = Properties.Resources.TitleWarning,
-            Icon    = DialogIcon.Warning,
-            Buttons = DialogButtons.YesNo,
+            Text             = src,
+            Title            = Properties.Resources.TitleWarning,
+            Icon             = DialogIcon.Warning,
+            Buttons          = DialogButtons.YesNo,
+            CancelCandidates = new[] { DialogStatus.No, DialogStatus.Cancel },
         };
 
         #endregion
@@ -143,8 +144,7 @@ namespace Cube.Pdf.Converter
                 Text        = Properties.Resources.TitleSelectSource,
                 Value       = GetFileNames(path),
                 Multiselect = false,
-                Filter      = Resource.SourceFilters.GetFilter(),
-                FilterIndex = Resource.SourceFilters.GetFilterIndex(path),
+                Filters     = Resource.SourceFilters,
             };
 
             if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
@@ -173,8 +173,7 @@ namespace Cube.Pdf.Converter
                 Text            = Properties.Resources.TitleSelectDestination,
                 Value           = GetFileName(path),
                 OverwritePrompt = false,
-                Filter          = Resource.DestinationFilters.GetFilter(),
-                FilterIndex     = Resource.DestinationFilters.GetFilterIndex(path),
+                Filters         = Resource.DestinationFilters,
             };
 
             if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
@@ -203,7 +202,7 @@ namespace Cube.Pdf.Converter
                 Text        = Properties.Resources.TitleSelectUserProgram,
                 Value       = GetFileNames(path),
                 Multiselect = false,
-                Filter      = Resource.UserProgramFilters.GetFilter(),
+                Filters     = Resource.UserProgramFilters,
             };
 
             if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
