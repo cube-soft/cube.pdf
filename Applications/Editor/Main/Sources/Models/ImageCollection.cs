@@ -26,11 +26,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Cube.Collections;
-using Cube.Logging;
 using Cube.Mixin.Collections;
 using Cube.Mixin.Drawing;
 using Cube.Mixin.Syntax;
 using Cube.Mixin.Tasks;
+using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Editor
 {
@@ -68,8 +68,10 @@ namespace Cube.Pdf.Editor
             _inner = new();
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
 
-            _cache = new CacheCollection<ImageItem, ImageSource>(e =>
-                getter(e.RawObject.File.FullName).Create(e).ToBitmapImage(true));
+            _cache = new(e => getter(e.RawObject.File.FullName)
+                ?.Render(e.RawObject, new(e.Width, e.Height))
+                ?.ToBitmapImage(true)
+            );
             _cache.Created += (s, e) => e.Key.Refresh();
             _cache.Failed  += (s, e) => GetType().LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
@@ -316,7 +318,7 @@ namespace Cube.Pdf.Editor
         {
             if (index < 0 || index >= Count) return null;
             var src = _inner[index].RawObject;
-            return _getter(src.File.FullName).Create(src, ratio);
+            return _getter(src.File.FullName)?.Render(src, src.GetViewSize(ratio));
         }
 
         /* ----------------------------------------------------------------- */
