@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using Cube.FileSystem;
 
 namespace Cube.Pdf.Editor
@@ -84,6 +85,11 @@ namespace Cube.Pdf.Editor
                 var w = (int)(src.Width * ratio);
                 var h = (int)(src.Height * ratio);
                 var dest = new Bitmap(w, h);
+
+                var dim = new FrameDimension(src.FrameDimensionsList[0]);
+                var max = src.GetFrameCount(dim);
+                var index = Math.Max(Math.Min(page.Number - 1, max), 0);
+                _ = src.SelectActiveFrame(dim, index);
 
                 using var gs = Graphics.FromImage(dest);
                 gs.DrawImage(src, 0, 0, w, h);
