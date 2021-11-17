@@ -20,6 +20,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Cube.FileSystem;
+using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Editor
 {
@@ -76,26 +77,80 @@ namespace Cube.Pdf.Editor
         {
             using var ss = Io.Open(page.File.FullName);
 
-            var src = Image.FromStream(ss);
-            var ratio = Math.Min(size.Width / (double)src.Width, size.Height / (double)src.Height);
+            var ratio = GetRatio(page, size);
+            var src   = Image.FromStream(ss);
             if (ratio > 1.0) return src;
 
             try
             {
-                var w = (int)(src.Width * ratio);
+                var w = (int)(src.Width  * ratio);
                 var h = (int)(src.Height * ratio);
                 var dest = new Bitmap(w, h);
 
-                var dim = new FrameDimension(src.FrameDimensionsList[0]);
-                var max = src.GetFrameCount(dim);
-                var index = Math.Max(Math.Min(page.Number - 1, max), 0);
-                _ = src.SelectActiveFrame(dim, index);
-
-                using var gs = Graphics.FromImage(dest);
-                gs.DrawImage(src, 0, 0, w, h);
+                Select(src, page);
+                using (var gs = Graphics.FromImage(dest)) gs.DrawImage(src, 0, 0, w, h);
+                Rotate(dest, page.Rotation + page.Delta);
                 return dest;
             }
             finally { src.Dispose(); }
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetRatio
+        ///
+        /// <summary>
+        /// Get the drawing size scale factor.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private double GetRatio(Page page, SizeF size)
+        {
+            var src = page.GetViewSize();
+            var rw  = size.Width  / src.Width;
+            var rh  = size.Height / src.Height;
+            return Math.Min(rw, rh);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Select
+        ///
+        /// <summary>
+        /// Selects the active frame.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Select(Image src, Page page)
+        {
+            if (page.Number <= 1) return;
+
+            var dim   = new FrameDimension(src.FrameDimensionsList[0]);
+            var max   = src.GetFrameCount(dim);
+            var index = Math.Min(page.Number - 1, max);
+            _ = src.SelectActiveFrame(dim, index);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Rotate
+        ///
+        /// <summary>
+        /// Rotates the specified image.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Rotate(Image src, Angle angle)
+        {
+            var degree = angle.Degree;
+            if (degree < 90) return;
+            else if (degree is >=  90 and < 180) src.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            else if (degree is >= 180 and < 270) src.RotateFlip(RotateFlipType.Rotate180FlipNone);
+            else if (degree is >= 270 and < 360) src.RotateFlip(RotateFlipType.Rotate270FlipNone);
         }
 
         #endregion
