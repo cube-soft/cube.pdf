@@ -66,10 +66,10 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="src">File path.</param>
         ///
-        /// <returns>DocumentReader object.</returns>
+        /// <returns>IDocumentReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentRenderer GetOrAdd(string src) => GetOrAdd(src, string.Empty);
+        public IDocumentRenderer GetOrAdd(string src) => GetOrAdd(src, string.Empty);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -83,10 +83,10 @@ namespace Cube.Pdf.Editor
         /// <param name="src">File path.</param>
         /// <param name="password">Password of the source.</param>
         ///
-        /// <returns>DocumentReader object.</returns>
+        /// <returns>IDocumentReader object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public DocumentRenderer GetOrAdd(string src, string password)
+        public IDocumentRenderer GetOrAdd(string src, string password)
         {
             if (Disposed) return null;
             if (_inner.TryGetValue(src, out var value)) return value;
@@ -104,7 +104,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Clear()
         {
-            foreach (var kv in _inner) kv.Value.Dispose();
+            foreach (var kv in _inner)
+            {
+                if (kv.Value is IDisposable e) e.Dispose();
+            }
             _inner.Clear();
         }
 
@@ -142,7 +145,22 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DocumentRenderer Create(string src, string password)
+        private IDocumentRenderer Create(string src, string password) =>
+            src.IsPdf() ?
+            CreateDocumentRenderer(src, password) :
+            CreateImageRenderer(src, password);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateDocumentRenderer
+        ///
+        /// <summary>
+        /// Creates a new instance of the DocumentRenderer class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private DocumentRenderer CreateDocumentRenderer(string src, string password)
         {
             var opt  = new OpenOption { FullAccess = true };
             var dest = password.HasValue() ?
@@ -154,11 +172,23 @@ namespace Cube.Pdf.Editor
             return dest;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CreateImageRenderer
+        ///
+        /// <summary>
+        /// Creates a new instance of the ImageRenderer class with the
+        /// specified arguments.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private ImageRenderer CreateImageRenderer(string src, string password) => new();
+
         #endregion
 
         #region Fields
         private readonly Func<IQuery<string>> _query;
-        private readonly ConcurrentDictionary<string, DocumentRenderer> _inner = new();
+        private readonly ConcurrentDictionary<string, IDocumentRenderer> _inner = new();
         #endregion
     }
 }

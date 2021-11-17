@@ -108,6 +108,22 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// GetPdfium
+        ///
+        /// <summary>
+        /// Casts the DocumentRenderer object.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Pdfium.DocumentRenderer GetPdfium(this IDocumentRenderer src)
+        {
+            if (src is Pdfium.DocumentRenderer dest) return dest;
+            typeof(OpenExtension).LogWarn("IDocumentRenderer to PDFium failed");
+            return default;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetIconSource
         ///
         /// <summary>

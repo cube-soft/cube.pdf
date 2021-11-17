@@ -211,7 +211,7 @@ namespace Cube.Pdf.Editor
                 src.SelectMany(e => {
                     Value.SetMessage(Properties.Resources.MessageLoading, e);
                     return !this.CanInsert(e) ? Enumerable.Empty<Page>() :
-                           e.IsPdf()          ? Cache.GetOrAdd(e).Pages  :
+                           e.IsPdf()          ? Cache.GetOrAdd(e).GetPdfium().Pages  :
                            new ImagePageCollection(e);
                 })
             ));
