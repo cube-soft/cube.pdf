@@ -146,9 +146,9 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private IDocumentRenderer Create(string src, string password) =>
-            src.IsPdf() ?
-            CreateDocumentRenderer(src, password) :
-            CreateImageRenderer(src, password);
+            src.IsImageFile() ?
+            CreateImageRenderer(src, password) :
+            CreateDocumentRenderer(src, password);
 
         /* ----------------------------------------------------------------- */
         ///
