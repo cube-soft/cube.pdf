@@ -75,24 +75,18 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Image Render(Page page, SizeF size)
         {
-            using var ss = Io.Open(page.File.FullName);
+            using var ss  = Io.Open(page.File.FullName);
+            using var src = Image.FromStream(ss);
 
-            var ratio = GetRatio(page, size);
-            var src   = Image.FromStream(ss);
-            if (ratio > 1.0) return src;
+            var r = GetRatio(page, size);
+            var w = (int)(src.Width  * r);
+            var h = (int)(src.Height * r);
+            var dest = new Bitmap(w, h);
 
-            try
-            {
-                var w = (int)(src.Width  * ratio);
-                var h = (int)(src.Height * ratio);
-                var dest = new Bitmap(w, h);
-
-                Select(src, page);
-                using (var gs = Graphics.FromImage(dest)) gs.DrawImage(src, 0, 0, w, h);
-                Rotate(dest, page.Rotation + page.Delta);
-                return dest;
-            }
-            finally { src.Dispose(); }
+            Select(src, page);
+            using (var gs = Graphics.FromImage(dest)) gs.DrawImage(src, 0, 0, w, h);
+            Rotate(dest, page.Rotation + page.Delta);
+            return dest;
         }
 
         #endregion
