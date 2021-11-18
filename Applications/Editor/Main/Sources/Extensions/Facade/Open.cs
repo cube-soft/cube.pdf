@@ -20,7 +20,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Logging;
+using Cube.Pdf.Pdfium;
 
 namespace Cube.Pdf.Editor
 {
@@ -101,7 +101,7 @@ namespace Cube.Pdf.Editor
         {
             src.Value.SetMessage(Properties.Resources.MessageLoading, path);
 
-            var doc = src.Cache.GetOrAdd(path);
+            var doc = src.Cache.GetOrAdd(path).GetPdfium();
             src.Value.Source = doc.File;
             if (!doc.Encryption.Enabled) src.Value.Encryption = doc.Encryption;
 
@@ -124,7 +124,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Reload(this MainFacade src, string path)
         {
-            var doc = src.Cache.GetOrAdd(path, src.Value.Encryption.OwnerPassword);
+            var doc = src.Cache.GetOrAdd(path, src.Value.Encryption.OwnerPassword).GetPdfium();
             var items = doc.Pages.Select((v, i) => new { Value = v, Index = i });
             foreach (var e in items) src.Value.Images[e.Index].RawObject = e.Value;
             src.Value.Source = doc.File;
