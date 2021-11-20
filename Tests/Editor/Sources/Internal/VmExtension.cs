@@ -21,7 +21,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Input;
-using Cube.Logging;
 using Cube.Mixin.Commands;
 using Cube.Mixin.String;
 using Cube.Tests;
