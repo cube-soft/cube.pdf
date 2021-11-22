@@ -42,13 +42,21 @@ namespace Cube.Pdf.Pdfium
         /// Executes the rendering with the specified arguments.
         /// </summary>
         ///
+        /// <param name="core">PDFium core object.</param>
+        /// <param name="pagenum">Page number.</param>
+        /// <param name="size">Width and height to render.</param>
+        /// <param name="delta">
+        /// Additional rotation for the original PDF page.
+        /// </param>
+        /// <param name="options">Render options.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public static Image Render(IntPtr core, Page page, SizeF size,
-            RenderOption options) => Load(core, page.Number, hp =>
+        public static Image Render(IntPtr core, int pagenum, SizeF size, Angle delta,
+            RenderOption options) => Load(core, pagenum, hp =>
         {
             var width  = (int)size.Width;
             var height = (int)size.Height;
-            var degree = GetRotation(page.Delta);
+            var degree = GetRotation(delta);
             var flags  = options.GetFlags();
 
             var bpp  = 4;
@@ -72,10 +80,20 @@ namespace Cube.Pdf.Pdfium
         /// Executes the rendering with the specified arguments.
         /// </summary>
         ///
+        /// <param name="core">PDFium core object.</param>
+        /// <param name="dest">Graphic object to render.</param>
+        /// <param name="pagenum">Page number.</param>
+        /// <param name="point">Top-left coordinate to render.</param>
+        /// <param name="size">Width and height to render.</param>
+        /// <param name="delta">
+        /// Additional rotation for the original PDF page.
+        /// </param>
+        /// <param name="options">Render options.</param>
+        ///
         /* ----------------------------------------------------------------- */
         public static void Render(IntPtr core, Graphics dest,
-            Page page, PointF point, SizeF size,
-            RenderOption options) => Load(core, page.Number, hp =>
+            int pagenum, PointF point, SizeF size, Angle delta,
+            RenderOption options) => Load(core, pagenum, hp =>
         {
             options.DrawBackground(e => dest.Clear(e));
 
@@ -83,7 +101,7 @@ namespace Cube.Pdf.Pdfium
             var y      = (int)point.Y;
             var width  = (int)size.Width;
             var height = (int)size.Height;
-            var degree = GetRotation(page.Delta);
+            var degree = GetRotation(delta);
             var flags  = options.GetFlags();
 
             var hdc = dest.GetHdc();
