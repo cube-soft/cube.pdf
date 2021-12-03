@@ -8,7 +8,7 @@ https://www.cube-soft.jp/cubepdf/
 
 ### はじめに
 
-CubePDF シリーズは全て [GNU Affero General Public License version 3 (AGPLv3)](https://www.gnu.org/licenses/agpl-3.0.ja.html) と言うライセンスで提供しています。AGPLv3 は [オープンソースライセンス](https://ja.wikipedia.org/wiki/%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%E3%82%BD%E3%83%BC%E3%82%B9%E3%83%A9%E3%82%A4%E3%82%BB%E3%83%B3%E3%82%B9) と呼ばれるものの一つです。また、CubePDF シリーズとは下記のアプリケーションを指します。
+CubePDF シリーズは全て [GNU Affero General Public License version 3 (AGPLv3)](https://www.gnu.org/licenses/agpl-3.0.ja.html) と言うライセンスで提供しています。AGPLv3 は [オープンソースライセンス](https://ja.wikipedia.org/wiki/オープンソースライセンス) と呼ばれるものの一つです。また、CubePDF シリーズとは下記のアプリケーションを指します。
 
 * [CubePDF](https://www.cube-soft.jp/cubepdf/)
 * [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/)
