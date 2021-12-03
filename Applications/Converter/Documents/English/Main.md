@@ -1,4 +1,4 @@
-CubePDF documents
+CubePDF Documents
 ====
 
 Copyright © 2010 CubeSoft, Inc.  
@@ -8,7 +8,7 @@ https://www.cube-soft.jp/cubepdf/
 
 ## Overview
 
-![How to convert to PDF](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/overview.ja.png)
+![How to convert to PDF](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/overview.en.png)
 
 CubePDF is installed as a **Virtual Printer**. Therefore, any application that has a **Print** button, such as Microsoft Edge, Google Chrome, Microsoft Word, Excel, PowerPoint, etc., can be converted to PDF in the following 3 steps.
 
