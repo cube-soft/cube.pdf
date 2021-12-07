@@ -6,7 +6,7 @@ GNU Affero General Public License version 3 (AGPLv3)
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdf/
 
-### Overview
+### Introduction
 
 All CubePDF series are licensed under the [GNU Affero General Public License version 3 (AGPLv3)](https://www.gnu.org/licenses/agpl-3.0.en.html). AGPLv 3 is an [Open source license](https://en.wikipedia.org/wiki/Open-source_license), and CubePDF series refer to the following applications.
 

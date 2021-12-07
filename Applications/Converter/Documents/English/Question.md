@@ -6,9 +6,11 @@ GNU Affero General Public License version 3 (AGPLv3)
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdf/
 
+### Introduction
+
 This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF](https://www.cube-soft.jp/cubepdf/?lang=en). For more information on using CubePDF, please refer to [CubePDF Documents](https://en.cube-soft.jp/entry/cubepdf).
 
-### I don't know how to use CubePDF.
+### I don't know how to use CubePDF
 
 ![How to use CubePDF](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/overview.en.png)
 
@@ -51,7 +53,7 @@ However, if there is a large difference in the file size of the converted PDF fi
 
 ![In case the PDF file is encrypted by a password](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/faq-security-01.png)
 
-If the merging of PDF files fails, one of the possible causes is that the destination PDF file is encrypted by a password. For example, if you see the word **Protected** when you open a PDF file with Adobe Acrobat Reader DC, the PDF file is encrypted. In this case, you need to enter the **Owner Password** of the PDF file to be merged in the **Encryption** tab of the CubePDF main window.
+If the merging of PDF files fails, one of the possible causes is that the destination PDF file is encrypted by a password. For example, if you see the word **Protected** or **Secured** when you open a PDF file with Adobe Acrobat Reader DC, the PDF file is encrypted. In this case, you need to enter the **Owner Password** of the PDF file to be merged in the **Encryption** tab of the CubePDF main window.
 
 ![In case the PDF file is opened in another application](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/faq-security-02.png)
 

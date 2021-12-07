@@ -35,7 +35,7 @@ CubePDF is a software called **Virtual Printer**, which runs via **Printing** in
 
 In addition, CubePDF only provides the conversion function, and another application is required to view the converted files (for example, [Adobe Acrobat Reader DC](https://get.adobe.com/reader/), etc.).
 
-## CubePDF settings
+## CubePDF application settings
 
 ### General
 
@@ -97,7 +97,7 @@ However, if you share both passwords, the restrictions on printing, copying, etc
 
 Moreover, if a PDF file is recognized as having been opened with an owner password, all PDF editing, including removal of the user password, will be possible. Please make sure you fully understand these behaviors when you share the user password with the owner password.
 
-### Others
+### Other settings
 
 Other settings for conversion are as follows:
 
@@ -124,15 +124,15 @@ However, various security items and the file name part of the destination are no
 
 ## CubePDF printer settings
 
-CubePDF has settings for the **CubePDF printer** in addition to the application settings described above. To change the printer settings, first right-click CubePDF on the window that appears in **Devices and Printers** in **Control Panel** and select **Print Settings**.
+CubePDF has settings for the **CubePDF printer** in addition to the application settings described above. To change the printer settings, first right-click CubePDF on the window that appears in **Devices and Printers** in **Control Panel** and select **Print preferences**.
 
 ![Printer settings in the control pannel](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/printer-01.png)
 
-You can also do the same from **Settings** in Windows 8 or later. From **Settings**, select **Devices**, **Printers and Scanners**, CubePDF, **Manage**, and **Print Settings**.
+You can also do the same from **Settings** in Windows 8 or later. From **Settings**, select **Devices**, **Printers & scanners**, **CubePDF**, **Manage**, and **Print preferences**.
 
 ![Printer settings for Windows 8 and later](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/printer-02.png)
 
-In the print settings, the **Paper/Quality** tab allows you to change the settings for printing in black and white or color. For other settings, click the **Advanced Settings** button at the bottom right.
+In the print settings, the **Paper/Quality** tab allows you to change the settings for printing in black and white or color. For other settings, click the **Advanced...** button at the bottom right.
 
 ![Advanced settings for printer](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/printer-03.png)
 
@@ -161,7 +161,7 @@ The CubePDF printer settings may not be reflected depending on the application t
 
 ## How to uninstall CubePDF
 
-To uninstall CubePDF, first select **Uninstall a program** in **Control Panel** or **Apps and Features** in **Settings** (Windows 8 or later). Then select the CubePDF icon on the window that appears and run the **Uninstall** item.
+To uninstall CubePDF, first select **Uninstall a program** in **Control Panel** or **Apps** in **Settings** (Windows 8 or later). Then select the CubePDF icon on the window that appears and run the **Uninstall** item.
 
 ![Uninstall in the control pannel](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/uninstall-01.png)
 ![Uninstall for Windows 8 and later](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/uninstall-02.png)
