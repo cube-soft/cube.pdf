@@ -18,7 +18,7 @@ CubePDF SDK provides wrapper APIs for the [PDFium](https://pdfium.googlesource.c
 
 ### CubePDF
 
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Overview.png?raw=true)
+![Screenshot](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/overview.en.png)
 
 [CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries.
 
