@@ -10,7 +10,7 @@ https://www.cube-soft.jp/cubepdfutility/
 CubPDF Utility は、既存の PDF ファイルに対してページ挿入や削除、文書プロパティ、
 各種セキュリティ機能などの設定を変更するためのソフトウェアです。
 
-![CubePDF Utility メイン画面](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Open.01.ja.png?raw=true)
+![CubePDF Utility メイン画面](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/overview.ja.png)
 
 CubPDF Utility を使用するためにはまず、編集したい PDF ファイルを開きます。
 PDF ファイルを開く方法は、下記の 3 通りが用意されています。
@@ -22,12 +22,12 @@ PDF ファイルを開く方法は、下記の 3 通りが用意されていま�
 選択した PDF ファイルに対して既にセキュリティ機能が設定されている場合、
 管理用パスワードを入力するためのダイアログボックスが表示されますので、正しいパスワードを入力して下さい。
 
-![パスワード入力画面](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Open.02.ja.png?raw=true)
+![パスワード入力画面](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/open-02.png)
 
 PDF ファイルを開き、必要な操作を終えたら、最後に **保存（上書き保存）** または
 **名前を付けて保存** ボタンを押して PDF への編集は完了です。
 
-![保存](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Save.01.ja.png?raw=true)
+![保存](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/save.png)
 
 ### PDF ファイルのパスワードについて
 
@@ -43,7 +43,7 @@ CubePDF Utility は PDF ファイルを編集すると言う性質上、開く�
 
 ### 挿入
 
-![挿入](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Insert.01.ja.png?raw=true)
+![挿入](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/insert-01.png)
 
 CubePDF Utility では、PDF ファイルに対して、下記のファイルを挿入する事ができます。
 
@@ -61,30 +61,30 @@ CubePDF Utility では、PDF ファイルに対して、下記のファイルを
 **詳細を設定して挿入** を選択した場合、挿入位置や挿入するファイルを詳細に設定するための下記専用ダイアログが表示されます。
 それ以外のメニューを選択した場合、ファイルを選択するためのダイアログが表示されます。
 
-![詳細を設定して挿入](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Insert.02.ja.png?raw=true)
+![詳細を設定して挿入](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/insert-02.png)
 
 この他、CubePDF Utility では PDF ファイルのページ単位で挿入する事もできます。
 ページ単位で挿入するには、まず挿入元と挿入先、2 つの PDF ファイルを両方とも CubePDF Utility で開きます。
 そして、挿入したいページのサムネイル画像をドラッグ&amp;ドロップする事で挿入操作が完了します。
 
-![ドラッグ&amp;ドロップによる挿入](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Insert.03.ja.png?raw=true)
+![ドラッグ&amp;ドロップによる挿入](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/insert-03.png)
 
 ### 削除
 
-![削除](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Remove.01.ja.png?raw=true)
+![削除](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/remove-01.png)
 
 **削除** メニューでは、開いた PDF ファイルの一部のページを削除する事ができます。
 **選択ページを削除**（**削除** も同様）メニューを選択した場合、メイン画面上で現在選択状態となっているページを削除します。
 **詳細を設定して削除** メニューを選択した場合、下記の専用ダイアログが表示されます。
 
-![詳細を設定して削除](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Remove.02.ja.png?raw=true)
+![詳細を設定して削除](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/remove-02.png)
 
 **対象ページ** には削除するページ範囲を記載します。
 使用可能な文字は、数字、&quot;,&quot;（コンマ）、および &quot;-&quot;（ハイフン）となります（例. 1,2,4,7-9）。
 
 ### 抽出
 
-![抽出](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Extract.01.ja.png?raw=true)
+![抽出](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/extract-01.png)
 
 CubePDF Utility では、PDF ファイル中の任意のページを抽出して、下記のファイル形式で保存する事ができます。
 
@@ -95,7 +95,7 @@ CubePDF Utility では、PDF ファイル中の任意のページを抽出して
 PNG 形式で抽出する場合、**詳細を設定して抽出** メニューを選択後に表示される下記専用ダイアログで
 必要な設定を行って下さい。
 
-![*詳細を設定して抽出](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Extract.02.ja.png?raw=true)
+![*詳細を設定して抽出](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/extract-02.png)
 
 詳細ダイアログの **出力ファイル** には、抽出した結果を保存するパスを設定します。
 **ファイルタイプ** は、**PDF** と **PNG** の 2 種類が選択できるので、必要な形式を選択します。
@@ -122,7 +122,7 @@ Sample-01.pdf、Sample-02.pdf、のようになります。
 
 ### ページ順序の変更
 
-![ページ順序の変更](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Move.01.ja.png?raw=true)
+![ページ順序の変更](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/move.png)
 
 **前へ** および **後へ** メニューは、メイン画面上で現在選択状態となっているページの順序をそれぞれ
 1 ページだけ、前、または後ろに移動させます。
@@ -131,14 +131,14 @@ Sample-01.pdf、Sample-02.pdf、のようになります。
 
 ### 回転
 
-![回転](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Rotate.01.ja.png?raw=true)
+![回転](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/rotate.png)
 
 **左90度** および **右90度** メニューは、メイン画面上で現在選択状態となっているページをそれぞれ
 左方向、または右方向に 90 度だけ回転させます。
 
 ### 文書プロパティ
 
-![文書プロパティ](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Metadata.01.ja.png?raw=true)
+![文書プロパティ](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/metadata.png)
 
 **文書プロパティ** メニューでは、タイトルや作成者などの情報を登録する事ができます。
 ここで登録した情報は、Adobe Acrobat Reader DC などの PDF 閲覧ソフトのプロパティ画面で
@@ -147,7 +147,7 @@ Sample-01.pdf、Sample-02.pdf、のようになります。
 
 ### セキュリティ
 
-![セキュリティ](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Security.01.ja.png?raw=true)
+![セキュリティ](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/encryption.png)
 
 **セキュリティ** メニューでは、PDF ファイルにパスワード等を設定する事ができます。
 パスワードを設定する場合は、まず **PDF ファイルをパスワードで保護する** の項目を有効にし、
@@ -182,7 +182,7 @@ Sample-01.pdf、Sample-02.pdf、のようになります。
 
 ### メイン画面の表示に関する設定
 
-![表示](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/View.01.ja.png?raw=true)
+![表示](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/view.png)
 
 メイン画面の **その他** タブでは、CubePDF Utility の表示方法に関する設定を変更できます。
 **拡大**、**縮小**、およびピクセル数の選択ボックスでは、サムネイル画像の表示サイズを変更できます。
@@ -194,7 +194,7 @@ Sample-01.pdf、Sample-02.pdf、のようになります。
 
 ### バージョン情報
 
-![バージョン情報](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Version.01.ja.png?raw=true)
+![バージョン情報](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/version.png)
 
 メイン画面の **その他** タブにある **設定** ボタンを押すと、バージョン情報および関連項目の設定画面が表示されます。
 **バージョン情報** では、CubePDF Utility のバージョン情報が表示されます。
@@ -240,8 +240,8 @@ CubePDF Utility をアンインストールするには、まず、設定のア�
 コントロールパネルのプログラムのアンインストールを選択します。そして、表示される画面で
 CubePDF Utility のアイコンを選択してアンインストールの項目を実行して下さい。
 
-![アンインストール（設定）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Uninstall.01.ja.png?raw=true)
-![アンインストール（コントロールパネル）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Documents/Uninstall.02.ja.png?raw=true)
+![アンインストール（設定）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/uninstall-01.png)
+![アンインストール（コントロールパネル）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/uninstall-02.png)
 
 ## CubePDF Utility で問題が発生した場合
 

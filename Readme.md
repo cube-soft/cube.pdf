@@ -27,7 +27,7 @@ Source codes of the CubePDF are in the [Applications/Converter](https://github.c
 
 ### CubePDF Utility
 
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Overview.png?raw=true)
+![Screenshot](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/overview.en.png)
 
 [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries.
 
