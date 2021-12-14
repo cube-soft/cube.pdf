@@ -73,7 +73,7 @@ Also, please refer to [About communication that occurs when running CubePDF (Jap
 
 ### What version of Windows does it work on?
 
-CubePDF works only on Windows versions within the valid period.  There is no guarantee that CubePDF will work on Windows with expired support, and no fix will be made just for it if it stops working.
+CubePDF works only on Windows versions within the valid period. There is no guarantee that CubePDF will work on Windows with expired support, and no fix will be made just for it if it stops working.
 
 As for Windows 10 and Windows 11, considering the framework and libraries CubePDF uses, we believe it is unlikely that there will be a situation where CubePDF will not work on a specific version. For this reason, we will only announce when there is a specific problem, and in other cases, we do not plan to specify whether or not each version will work. In the end, please install the software yourself to determine whether or not it works and whether or not you can use it.
 
@@ -92,7 +92,7 @@ To update CubePDF, download the latest version of the installer from the [CubePD
 
 ### What are the install options?
 
-The CubePDF installer is built using a framework called [Inno Setup](http://www.jrsoftware.org/isinfo.php). For a list of the installation options provided by Inno Setup, see [Setup For a list of installation options provided by Inno Setup, see [Setup Command Line Parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline).
+The CubePDF installer is built using a framework called [Inno Setup](http://www.jrsoftware.org/isinfo.php). For a list of the installation options provided by Inno Setup, see [Setup Command Line Parameters](http://www.jrsoftware.org/ishelp/index.php?topic=setupcmdline).
 
 ### CubePDF printer does not appear in the list
 
