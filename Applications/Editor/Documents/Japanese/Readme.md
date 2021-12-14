@@ -185,4 +185,4 @@ CubePDF Utility をアンインストールするには、まず、設定のア�
 
 ## CubePDF Utility で問題が発生した場合
 
-CubePDF は、**C:\Users\＜ユーザ名＞\AppData\Local\CubeSoft\CubePdfUtility2\Log** フォルダに実行ログを出力しています。問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡お願いします（＜ユーザ名＞の箇所は、ログオン中のユーザ名に置き換えて下さい）。
+CubePDF は、```C:\Users\%UserName%\AppData\Local\CubeSoft\CubePdfUtility2\Log``` フォルダに実行ログを出力しています。問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡お願いします（%UserName% の箇所は、ログオン中のユーザ名に置き換えて下さい）。

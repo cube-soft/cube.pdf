@@ -186,4 +186,4 @@ To uninstall CubePDF Utility, first select **Uninstall a program** in **Control 
 
 ## Having problems with CubePDF Utility?
 
-CubePDF Utility outputs logs in the **C:\Users\%UserName%\AppData\Local\CubeSoft\CubePdfUtility2\Log** folder. If you encounter any problems, please contact us at support@cube-soft.jp with these logs attached (Replace %UserName% with the name of the user currently logged on).
+CubePDF Utility outputs logs in the ```C:\Users\%UserName%\AppData\Local\CubeSoft\CubePdfUtility2\Log``` folder. If you encounter any problems, please contact us at support@cube-soft.jp with these logs attached (Replace %UserName% with the name of the user currently logged on).

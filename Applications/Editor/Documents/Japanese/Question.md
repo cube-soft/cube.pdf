@@ -37,4 +37,4 @@ CubePDF Utility は、実行時に CubePDF Utility 自体が意図的にネッ�
 
 ### 使用中にエラーが発生しました
 
-CubePDF Utility は ```C:\Users\＜ユーザ名＞\AppData\Local\CubeSoft\CubePdfUtility2\Log``` フォルダに実行ログを出力しています。何らかの問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡下さい（＜ユーザ名＞の箇所は、ログオン中のユーザ名に置き換えて下さい）。
+CubePDF Utility は ```C:\Users\%UserName%\AppData\Local\CubeSoft\CubePdfUtility2\Log``` フォルダに実行ログを出力しています。何らかの問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡下さい（%UserName% の箇所は、ログオン中のユーザ名に置き換えて下さい）。

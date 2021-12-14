@@ -84,7 +84,7 @@ As for Windows Server, for the same reason, we expect it to work basically witho
 
 .NET Framework 3.5 or later (4.5.2 or later is strongly recommended) is required to use CubePDF as it is developed using it. .NET Framework should already be installed in most cases, but if you need to install it, you can download it from [Download .NET Framework](https://dotnet.microsoft.com/download/dotnet-framework).
 
-Also, CubePDF uses PScript5, which is a standard Windows printer driver, to build a virtual printer. Therefore, if the corresponding modules (pscript5.dll and ps5ui.dll) do not exist on your PC, the installation will fail. If the installation fails, please contact us at support@cube-soft.jp with ``C:\ProgramData\CubeSoft\CubePDF\Log\CubeVpc.log`` as an attachment.
+Also, CubePDF uses PScript5, which is a standard Windows printer driver, to build a virtual printer. Therefore, if the corresponding modules (pscript5.dll and ps5ui.dll) do not exist on your PC, the installation will fail. If the installation fails, please contact us at support@cube-soft.jp with ```C:\ProgramData\CubeSoft\CubePDF\Log\CubeVpc.log``` as an attachment.
 
 ### How do I update my version?
 
@@ -96,7 +96,7 @@ The CubePDF installer is built using a framework called [Inno Setup](http://www.
 
 ### CubePDF printer does not appear in the list
 
-CubePDF outputs installation and execution logs in ```C:\ProgramData\CubeSoft\CubePdf\Log`` folder. If you encounter any problems, please contact us at support@cube-soft.jp with these logs attached. Also, if you encounter any errors while using CubePDF, please attach the logs as well.
+CubePDF outputs installation and execution logs in ```C:\ProgramData\CubeSoft\CubePdf\Log``` folder. If you encounter any problems, please contact us at support@cube-soft.jp with these logs attached. Also, if you encounter any errors while using CubePDF, please attach the logs as well.
 
 ### Can I hide the GUI and automate the conversion?
 
