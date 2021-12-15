@@ -20,11 +20,11 @@ To use CubPDF Utility, first open the PDF file you want to edit in one of the fo
 
 If the selected PDF file is protected by a password, a dialog box will appear asking you to enter the administrative password. Please enter the correct password.
 
-![Password dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/open-02.png)
+![Password dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/open-02.png)
 
 After opening and editing the PDF file, click the **Save (Overwrite)** or **Save as** button at the end. This will complete the editing of the PDF.
 
-![Save menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/save.png)
+![Save menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/save.png)
 
 ### About PDF password
 
@@ -36,7 +36,7 @@ CubePDF Utility always requires **Owner password** when opening PDF files due to
 
 ### Insert
 
-![Insert menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/insert-01.png)
+![Insert menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/insert-01.png)
 
 CubePDF Utility allows you to insert the following files into a PDF file.
 
@@ -52,25 +52,25 @@ To insert a file, specify the insertion position using the one of following four
 
 When **Insert at other position** is selected, the following dialog will be displayed to set the insertion position and the files to be inserted. Otherwise, a system dialog for selecting files will be displayed.
 
-![Insert at other position](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/insert-02.png)
+![Insert at other position](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/insert-02.png)
 
 In addition, CubePDF Utility can also insert PDF files by pages. To insert a page by page, first open both the source and destination PDF files in CubePDF Utility. Then, Drag&Drop the thumbnail images of the pages you want to insert.
 
-![Insert by Drag&Drop](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/insert-03.png)
+![Insert by Drag&Drop](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/insert-03.png)
 
 ### Remove
 
-![Remove menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/remove-01.png)
+![Remove menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/remove-01.png)
 
 The **Remove** menu allows you to remove some pages of an opened PDF file. When you select **Remove** or **Remove the selected  pages** menu, the currently selected pages on the main window will be removed. Also, if you select the **Remove other pages** menu, the following dedicated dialog will be displayed.
 
-![Remove other pages](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/remove-02.png)
+![Remove other pages](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/remove-02.png)
 
 **Target pages** should contain the range of pages to be removed. The allowed characters are numbers, "," (comma), and "-" (hyphen) (e.g. 1,2,4,7-9).
 
 ### Extract
 
-![Extract menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/extract-01.png)
+![Extract menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/extract-01.png)
 
 CubePDF Utility allows you to extract any page in a PDF file and save it in the following file formats.
 
@@ -79,7 +79,7 @@ CubePDF Utility allows you to extract any page in a PDF file and save it in the 
 
 Note that if you select the **Extract** or **Extract the selected pages** menu, the saved format will be PDF. If you want to extract in PNG format, please make the necessary settings in the following dialog after selecting the **Extract with other settings** menu.
 
-![Extract with other settings](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/extract-02.png)
+![Extract with other settings](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/extract-02.png)
 
 In the **Save path** section of the dialog, set the path where the extracted results will be saved. For **Format** section, you can select either **PDF** or **PNG**. If you select PNG, you can set the DPI. This value is used to determine the size (width and height) of the PDF content when it is converted to bitmap format. For example, if you want to convert an A4 size PDF file, the width and height will be as follows, depending on the DPI setting.
 
@@ -94,25 +94,25 @@ If the **Save as a separate file per page** option is enabled, for example, extr
 
 ### Reorder
 
-![Reorder menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/move.png)
+![Reorder menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/reorder.png)
 
 The **Next** and **Prev** menus allow you to move the currently selected page in the main window forward or backward by one page, respectively. The page order can also be changed by Drag&Drop operation. Select the pages you want to change, and then Drag&Drop them to the target position.
 
 ### Rotate
 
-![Rotate menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/rotate.png)
+![Rotate menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/rotate.png)
 
 The **Left** and **Right** menus allow you to rotate the currently selected pages on the main window left or right by 90 degrees, respectively.
 
 ### Metadata
 
-![Metadata dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/metadata.png)
+![Metadata dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/metadata.png)
 
 In the **Metadata** dialog, you can register information such as the title and creator. The information registered here can be viewed in the properties dialog of PDF viewer such as Adobe Acrobat Reader DC. In addition, the **Layout** item allows you to change the way the document will be displayed when opened in PDF viewer.
 
 ### Encryption
 
-![Encryption dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/encryption.png)
+![Encryption dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/encryption.png)
 
 In the **Encryption (Security)** dialog, you can protect the PDF file with a password. To set a password, first enable the **Encrypt the PDF with password** option, and then enter the same password twice in the **Password** and **Confirm** fields. Currently, four encryption methods are supported: **40-bit RC4**, **128-bit RC4**, **128-bit AES**, and **256-bit AES**.
 
@@ -136,7 +136,7 @@ Moreover, if a PDF file is recognized as having been opened with the owner passw
 
 ### View settings for the main window
 
-![View menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/view.png)
+![View menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/view.png)
 
 On the **Others** tab of the main window, you can change the view settings of the CubePDF Utility. You can change the display size of the thumbnail image by using the **ZoomIn**, **ZoomOut**, and Pixels selection boxes. Note that immediately after changing the size, the thumbnail image before the change will be used as it is, so the display may be blurry. In this case, click the **Refresh** button.
 
@@ -144,7 +144,7 @@ On the **Others** tab of the main window, you can change the view settings of th
 
 ### Version information
 
-![Version dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/version.png)
+![Version dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/version.png)
 
 Click the **Settings** button on the **Others** tab of the main window to display the version information and related settings. In **Version** section, the version information of CubePDF Utility will be displayed. If you enable the **Check for updates on startup** item below it, you will be notified in the lower right corner of your computer when the CubePDF Utility is updated. Checking for updates will be performed when your computer starts up. The information sent to confirm the update is the version number of CubePDF, Windows, and .NET Framework.
 
@@ -181,8 +181,8 @@ The keyboard shortcuts available in CubePDF Utility are as follows.
 
 To uninstall CubePDF Utility, first select **Uninstall a program** in **Control Panel** or **Apps** in **Settings** (Windows 8 or later). Then select the CubePDF Utility icon on the window that appears and run the **Uninstall** item.
 
-![Uninstall for Windows 8 and later](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/uninstall-01.png)
-![Uninstall in the control pannel](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/uninstall-02.png)
+![Uninstall for Windows 8 and later](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/uninstall-01.png)
+![Uninstall in the control pannel](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/uninstall-02.png)
 
 ## Having problems with CubePDF Utility?
 

@@ -5,7 +5,7 @@ Copyright © 2013 CubeSoft, Inc.
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
 
-## はじめに
+### はじめに
 
 この記事は [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) について、よくある質問 (FAQ) をまとめたものです。CubePDF Utility の使用方法については、[CubePDF Utility ユーザーマニュアル](https://docs.cube-soft.jp/entry/cubepdfutility) も参照下さい。
 

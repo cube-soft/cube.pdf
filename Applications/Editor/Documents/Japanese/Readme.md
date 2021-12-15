@@ -93,7 +93,7 @@ CubePDF Utility では、PDF ファイル中の任意のページを抽出して
 
 ### ページ順序の変更
 
-![ページ順序の変更](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/move.png)
+![ページ順序の変更](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/ja/reorder.png)
 
 **前へ** および **後へ** メニューは、メイン画面上で現在選択状態となっているページの順序をそれぞれ1 ページだけ、前、または後ろに移動させます。ページ順序はドラッグ&ドロップ操作によっても変更する事ができます。変更したいページを選択した状態で、それらのページを変更位置までドラッグ&ドロップ操作で移動させます。
 
@@ -185,4 +185,4 @@ CubePDF Utility をアンインストールするには、まず、設定のア�
 
 ## CubePDF Utility で問題が発生した場合
 
-CubePDF は、```C:\Users\%UserName%\AppData\Local\CubeSoft\CubePdfUtility2\Log``` フォルダに実行ログを出力しています。問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡お願いします（%UserName% の箇所は、ログオン中のユーザ名に置き換えて下さい）。
+CubePDF Utility は、```C:\Users\%UserName%\AppData\Local\CubeSoft\CubePdfUtility2\Log``` フォルダに実行ログを出力しています。問題が発生した時は、これらのログを添付して support@cube-soft.jp までご連絡お願いします（%UserName% の箇所は、ログオン中のユーザ名に置き換えて下さい）。
