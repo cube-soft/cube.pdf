@@ -7,11 +7,9 @@ https://www.cube-soft.jp/cubepdfutility/
 
 ## Overview
 
-CubPDF Utility is a software that allows you to insert, extract, or remove pages, edit document metadata, and encryption settings for existing PDF files.
-
 ![CubePDF Utility main window](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/overview.en.png)
 
-To use CubPDF Utility, first open the PDF file you want to edit in one of the following three ways.
+CubPDF Utility is a software that allows you to insert, extract, or remove pages, edit document metadata, and encryption settings for existing PDF files. To use CubPDF Utility, first open the PDF file you want to edit in one of the following three ways.
 
 1. Select from **Recent files** displayed in the center of the main window or in the **File** menu.
 2. Click the **Open** button and select from the displayed dialog.
@@ -92,7 +90,7 @@ For **Target pages**, select from **Selected pages**, **All pages**, or **Specif
 
 If the **Save as a separate file per page** option is enabled, for example, extracting a 10-page PDF file will generate 10 PDF files. In this case, the file name of each generated PDF file will be the one specified in **Save path** with a number added. For example, if you specify the file name "Sample.pdf", the generated PDF files will be Sample-01.pdf, Sample-02.pdf, and so on. If you specify PNG as the format, the same behavior will occur.
 
-### Reorder
+### Reorder (Move)
 
 ![Reorder menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/reorder.png)
 
@@ -110,7 +108,7 @@ The **Left** and **Right** menus allow you to rotate the currently selected page
 
 In the **Metadata** dialog, you can register information such as the title and creator. The information registered here can be viewed in the properties dialog of PDF viewer such as Adobe Acrobat Reader DC. In addition, the **Layout** item allows you to change the way the document will be displayed when opened in PDF viewer.
 
-### Encryption
+### Encryption (Security)
 
 ![Encryption dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/encryption.png)
 

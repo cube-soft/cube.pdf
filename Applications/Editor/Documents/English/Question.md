@@ -5,7 +5,7 @@ Copyright © 2013 CubeSoft, Inc.
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
 
-## Introduction
+### Introduction
 
 This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/?lang=en). For more information on using CubePDF Utility, please refer to [CubePDF Utility Documents](https://en.cube-soft.jp/entry/cubepdf-utility).
 

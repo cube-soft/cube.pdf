@@ -7,11 +7,9 @@ https://www.cube-soft.jp/cubepdfutility/
 
 ## 基本的な使い方
 
-CubPDF Utility は、既存の PDF ファイルに対してページ挿入や削除、文書プロパティ、各種セキュリティ機能などの設定を変更するためのソフトウェアです。
-
 ![CubePDF Utility メイン画面](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/overview.ja.png)
 
-CubPDF Utility を使用するためにはまず、編集したい PDF ファイルを開きます。PDF ファイルを開く方法は、下記の 3 通りが用意されています。
+CubPDF Utility は、既存の PDF ファイルに対してページ挿入や削除、文書プロパティ、各種セキュリティ機能などの設定を変更するためのソフトウェアです。CubPDF Utility を使用するためにはまず、編集したい PDF ファイルを開きます。PDF ファイルを開く方法は、下記の 3 通りが用意されています。
 
 1. メイン画面中央または **ファイル** メニューに表示される **最近開いたファイル** から選択
 2. **開く** ボタンをクリックして表示されるダイアログから選択
