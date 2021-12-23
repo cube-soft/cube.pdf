@@ -107,7 +107,7 @@ namespace Cube.Pdf.Itext
                         _cache[index] = _core.GetPage(File, index + 1);
                     }
                 }
-                return (Page)_cache[index];
+                return new((PageBase)_cache[index]);
             }
         }
 

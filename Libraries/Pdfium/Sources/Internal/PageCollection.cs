@@ -110,7 +110,7 @@ namespace Cube.Pdf.Pdfium
                         _cache[index] = GetPage(index);
                     }
                 }
-                return (Page)_cache[index];
+                return new((PageBase)_cache[index]);
             }
         }
 
@@ -151,7 +151,7 @@ namespace Cube.Pdf.Pdfium
         /// <param name="index">Zero for the first page.</param>
         ///
         /* ----------------------------------------------------------------- */
-        private Page GetPage(int index) => _core.Invoke(e =>
+        private PageBase GetPage(int index) => _core.Invoke(e =>
         {
             var page = NativeMethods.FPDF_LoadPage(e, index);
             if (page == IntPtr.Zero) throw _core.GetLastError();
@@ -161,7 +161,7 @@ namespace Cube.Pdf.Pdfium
                 var degree = GetPageRotation(page);
                 var size   = GetPageSize(page, degree);
 
-                return new Page
+                return new PageBase
                 {
                     File       = File,
                     Number     = index + 1,
