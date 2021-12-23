@@ -151,10 +151,20 @@ namespace Cube.Pdf.Converter.Tests.Presenters
             Assert.That(dest.AllowPrint,         Is.False, nameof(dest.AllowPrint));
             Assert.That(dest.PermissionEditable, Is.True,  nameof(dest.PermissionEditable));
 
-            dest.Enabled          = true;
-            dest.OwnerPassword    = "Password";
-            dest.OwnerConfirm     = "Password";
+            dest.Enabled = true;
+            Assert.That(dest.OwnerCorrect, Is.False);
+            dest.OwnerPassword = "Password";
+            Assert.That(dest.OwnerCorrect, Is.False);
+            dest.OwnerConfirm = "Password";
+            Assert.That(dest.OwnerCorrect, Is.True);
+
+            Assert.That(dest.UserCorrect, Is.True);
             dest.OpenWithPassword = true;
+            Assert.That(dest.UserCorrect, Is.False);
+            dest.UserPassword = "User";
+            Assert.That(dest.UserCorrect, Is.False);
+            dest.UserConfirm = "User";
+            Assert.That(dest.UserCorrect, Is.True);
 
             Assert.That(dest.Enabled,            Is.True,  nameof(dest.Enabled));
             Assert.That(dest.OpenWithPassword,   Is.True,  nameof(dest.OpenWithPassword));
