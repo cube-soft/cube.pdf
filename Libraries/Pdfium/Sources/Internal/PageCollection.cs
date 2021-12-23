@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -58,8 +59,9 @@ namespace Cube.Pdf.Pdfium
         {
             Debug.Assert(core != null && file != null);
 
+            File = file;
             _core = core;
-            File  = file;
+            _cache = new((int)(file.Count / 0.72) + 1);
         }
 
         #endregion
@@ -97,7 +99,20 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page this[int index] => GetPage(index);
+        public Page this[int index]
+        {
+            get
+            {
+                if (!_cache.ContainsKey(index))
+                {
+                    lock (_cache.SyncRoot)
+                    {
+                        _cache[index] = GetPage(index);
+                    }
+                }
+                return (Page)_cache[index];
+            }
+        }
 
         #endregion
 
@@ -218,6 +233,7 @@ namespace Cube.Pdf.Pdfium
 
         #region Fields
         private readonly PdfiumReader _core;
+        private readonly Hashtable _cache;
         #endregion
     }
 }
