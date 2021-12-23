@@ -171,10 +171,17 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool UserCorrect =>
-            !OpenWithPassword ||
-             SharePassword ||
-            (UserPassword.HasValue() && OwnerPassword != UserPassword && UserPassword == UserConfirm);
+        public bool UserCorrect
+        {
+            get
+            {
+                if (!OpenWithPassword) return true;
+                if (SharePassword) return true;
+                return UserPassword.HasValue() &&
+                       OwnerPassword != UserPassword &&
+                       UserPassword == UserConfirm;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
