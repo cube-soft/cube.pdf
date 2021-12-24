@@ -78,7 +78,7 @@ namespace Cube.Pdf.Converter
                 switch (e)
                 {
                     case nameof(src.Value.Format):
-                        Facade.ChangeExtension();
+                        ChangeExtension();
                         break;
                     case nameof(src.Value.PostProcess):
                         if (src.Value.PostProcess == PostProcess.Others) SelectUserProgram();
@@ -264,6 +264,17 @@ namespace Cube.Pdf.Converter
             e => General.UserProgram = e.First(),
             true
         );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ChangeExtension
+        ///
+        /// <summary>
+        /// Changes the extension of the destination path.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ChangeExtension() => Facade.ChangeExtension();
 
         #endregion
 
