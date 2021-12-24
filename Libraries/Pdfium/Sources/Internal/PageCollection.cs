@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -58,8 +59,9 @@ namespace Cube.Pdf.Pdfium
         {
             Debug.Assert(core != null && file != null);
 
+            File = file;
             _core = core;
-            File  = file;
+            _cache = new((int)(file.Count / 0.72) + 1);
         }
 
         #endregion
@@ -97,7 +99,20 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page this[int index] => GetPage(index);
+        public Page this[int index]
+        {
+            get
+            {
+                if (!_cache.ContainsKey(index))
+                {
+                    lock (_cache.SyncRoot)
+                    {
+                        _cache[index] = GetPage(index);
+                    }
+                }
+                return new((PageBase)_cache[index]);
+            }
+        }
 
         #endregion
 
@@ -136,7 +151,7 @@ namespace Cube.Pdf.Pdfium
         /// <param name="index">Zero for the first page.</param>
         ///
         /* ----------------------------------------------------------------- */
-        private Page GetPage(int index) => _core.Invoke(e =>
+        private PageBase GetPage(int index) => _core.Invoke(e =>
         {
             var page = NativeMethods.FPDF_LoadPage(e, index);
             if (page == IntPtr.Zero) throw _core.GetLastError();
@@ -146,7 +161,7 @@ namespace Cube.Pdf.Pdfium
                 var degree = GetPageRotation(page);
                 var size   = GetPageSize(page, degree);
 
-                return new Page
+                return new PageBase
                 {
                     File       = File,
                     Number     = index + 1,
@@ -218,6 +233,7 @@ namespace Cube.Pdf.Pdfium
 
         #region Fields
         private readonly PdfiumReader _core;
+        private readonly Hashtable _cache;
         #endregion
     }
 }

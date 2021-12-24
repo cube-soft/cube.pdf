@@ -259,12 +259,12 @@ namespace Cube.Pdf.Converter
         /// GetFileName
         ///
         /// <summary>
-        /// Gets a filename without extension.
+        /// Gets a filename.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         private static string GetFileName(string src) =>
-            src.HasValue() ? Io.Get(src).BaseName : string.Empty;
+            src.HasValue() ? Io.Get(src).Name : string.Empty;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -277,7 +277,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private static IEnumerable<string> GetFileNames(string src)
         {
-            if (src.HasValue()) yield return Io.Get(src).BaseName;
+            if (src.HasValue()) yield return Io.Get(src).Name;
         }
 
         /* ----------------------------------------------------------------- */

@@ -75,7 +75,7 @@ namespace Cube.Pdf.Itext
         /// <returns>Page object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static Page GetPage(this PdfDocument src, PdfFile file, int pagenum) => new()
+        public static PageBase GetPage(this PdfDocument src, PdfFile file, int pagenum) => new()
         {
             File        = file,
             Number      = pagenum,

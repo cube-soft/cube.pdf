@@ -1358,7 +1358,7 @@
     <value>1</value>
   </data>
   <data name="DocumentPage.Text" xml:space="preserve">
-    <value>Document</value>
+    <value>Metadata</value>
   </data>
   <data name="&gt;&gt;DocumentPage.Name" xml:space="preserve">
     <value>DocumentPage</value>
@@ -2093,7 +2093,7 @@
     <value>2</value>
   </data>
   <data name="EncryptionTabPage.Text" xml:space="preserve">
-    <value>Security</value>
+    <value>Encryption</value>
   </data>
   <data name="&gt;&gt;EncryptionTabPage.Name" xml:space="preserve">
     <value>EncryptionTabPage</value>
@@ -2306,7 +2306,7 @@
     <value>4</value>
   </data>
   <data name="UpdateCheckBox.Text" xml:space="preserve">
-    <value>Check for update when launched</value>
+    <value>Check for updates on startup</value>
   </data>
   <data name="&gt;&gt;UpdateCheckBox.Name" xml:space="preserve">
     <value>UpdateCheckBox</value>

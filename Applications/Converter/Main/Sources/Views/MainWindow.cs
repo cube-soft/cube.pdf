@@ -138,6 +138,7 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new ClickEventBehavior(DestinationButton, vm.SelectDestination));
             Behaviors.Add(new ClickEventBehavior(UserProgramButton, vm.SelectUserProgram));
             Behaviors.Add(new EventBehavior(SettingPanel, nameof(SettingPanel.Apply), vm.Save));
+            Behaviors.Add(new EventBehavior(DestinationTextBox, nameof(LostFocus), vm.ChangeExtension));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
             Behaviors.Add(new OpenFileBehavior(vm));

@@ -54,8 +54,8 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         public void Main() => Invoke(vm =>
         {
             Assert.That(vm.Title,   Does.StartWith(nameof(Main)));
-            Assert.That(vm.Title,   Does.Contain("CubePDF 1.6.0"));
-            Assert.That(vm.Version, Does.StartWith("1.6.0 (").And.EndsWith(")"));
+            Assert.That(vm.Title,   Does.Contain("CubePDF 1.6.1"));
+            Assert.That(vm.Version, Does.StartWith("1.6.1 (").And.EndsWith(")"));
             Assert.That(vm.Uri.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
         });
 
@@ -151,10 +151,20 @@ namespace Cube.Pdf.Converter.Tests.Presenters
             Assert.That(dest.AllowPrint,         Is.False, nameof(dest.AllowPrint));
             Assert.That(dest.PermissionEditable, Is.True,  nameof(dest.PermissionEditable));
 
-            dest.Enabled          = true;
-            dest.OwnerPassword    = "Password";
-            dest.OwnerConfirm     = "Password";
+            dest.Enabled = true;
+            Assert.That(dest.OwnerCorrect, Is.False);
+            dest.OwnerPassword = "Password";
+            Assert.That(dest.OwnerCorrect, Is.False);
+            dest.OwnerConfirm = "Password";
+            Assert.That(dest.OwnerCorrect, Is.True);
+
+            Assert.That(dest.UserCorrect, Is.True);
             dest.OpenWithPassword = true;
+            Assert.That(dest.UserCorrect, Is.False);
+            dest.UserPassword = "User";
+            Assert.That(dest.UserCorrect, Is.False);
+            dest.UserConfirm = "User";
+            Assert.That(dest.UserCorrect, Is.True);
 
             Assert.That(dest.Enabled,            Is.True,  nameof(dest.Enabled));
             Assert.That(dest.OpenWithPassword,   Is.True,  nameof(dest.OpenWithPassword));
@@ -215,15 +225,15 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         {
             var done = $"{nameof(SelectDestination)}_Done.pdf";
 
-            _ = vm.Subscribe<SaveFileMessage>(e =>
+            using var dis = vm.Subscribe<SaveFileMessage>(e =>
             {
                 Assert.That(e.Text,             Is.EqualTo("名前を付けて保存"));
                 Assert.That(e.InitialDirectory, Is.Empty);
-                Assert.That(e.Value,            Is.EqualTo(nameof(SelectDestination)));
+                Assert.That(e.Value,            Is.EqualTo($"{nameof(SelectDestination)}.pdf"));
                 Assert.That(e.OverwritePrompt,  Is.False);
                 Assert.That(e.CheckPathExists,  Is.False);
                 Assert.That(e.GetFilterText(),  Is.Not.Null.And.Not.Empty);
-                Assert.That(e.GetFilterIndex(), Is.EqualTo(0));
+                Assert.That(e.GetFilterIndex(), Is.EqualTo(1));
 
                 e.Value  = done;
                 e.Cancel = false;

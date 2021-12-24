@@ -8,15 +8,14 @@ https://www.cube-soft.jp/cubepdf/
 
 ## CubePDF による変換手順
 
-CubePDF は **仮想プリンター** としてインストールされます。そのため、Google Chrome や
-Microsoft Edge などの Web ブラウザ、Microsoft Word, Excel, PowerPoint など **印刷**
+![PDF への変換手順](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/overview.ja.png)
+
+CubePDF は **仮想プリンター** としてインストールされます。そのため、Microsoft Edge や Google Chrome やなどの Web ブラウザ、Microsoft Word, Excel, PowerPoint など **印刷**
 ボタンのあるアプリケーションであれば何でも、次の 3 ステップで PDF へ変換する事ができます。
 
 1. PDF 化したいものを適当なアプリケーションで表示し **印刷** を選択します。
 2. 利用できるプリンターの一覧から **CubePDF** を選択し **印刷** ボタンをクリックします。
 3. CubePDF のメイン画面が表示されるので、保存場所などを確認し **変換** ボタンをクリックします。
-
-![PDF への変換手順](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/01.ja.png?raw=true)
 
 指定した名前の PDF ファイルが既に存在する場合、既存の PDF ファイルに結合する事もできます。
 既存の PDF ファイルに対する指定方法は次の 4 通りです。
@@ -35,8 +34,8 @@ Microsoft Edge などの Web ブラウザ、Microsoft Word, Excel, PowerPoint �
 
 ### 注意
 
-CubePDF は「仮想プリンター」と呼ばれるソフトウェアで、他のアプリケーションの
-「印刷」を介して利用します。そのため、通常のアプリケーションのようにデスクトップや
+CubePDF は **仮想プリンター** と呼ばれるソフトウェアで、他のアプリケーションの
+**印刷** を介して実行されます。そのため、通常のアプリケーションのようにデスクトップや
 スタートメニュー等から直接 CubePDF を 実行したり、PDF ファイル等に関連付けたりして
 利用する事はできません。
 
@@ -55,7 +54,7 @@ CubePDF は PDF 以外のファイル形式にも変換する事ができます�
 ファイルが作成されます。例えば、出力ファイル名が Sample.png の場合、実際には
 Sample-01.png, Sample-02.png, ... と言った名前のファイルが作成されます。
 
-![ファイルタイプ](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/02.ja.png?raw=true)
+![ファイルタイプ](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/main-01.png)
 
 ファイルタイプが PDF の場合、PDF のバージョンを選択することができます。
 PDF のバージョンはファイルタイプの右側にある選択項目の中から必要なものを選択して下さい。
@@ -90,7 +89,7 @@ PDF のバージョンはファイルタイプの右側にある選択項目の�
 
 ### 文書プロパティ
 
-![文書プロパティ](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/03.ja.png?raw=true)
+![文書プロパティ](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/main-02.png)
 
 ファイルタイプで PDF を選択した場合、タイトルや作成者などの情報を登録する事ができます。
 ここで登録した情報は、Adobe Acrobat Reader DC などの PDF 閲覧ソフトのプロパティ画面で
@@ -107,7 +106,7 @@ PDF のバージョンはファイルタイプの右側にある選択項目の�
 パスワードを設定する場合は、まず **PDF ファイルをパスワードで保護する** の項目を有効にし、
 **管理用パスワード** とパスワード確認の項目に同じパスワードを 2 回 入力してください。
 
-![セキュリティ](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/04.ja.png?raw=true)
+![セキュリティ](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/main-03.png)
 
 次に、**操作** の項目で、ユーザに許可・制限する操作を指定します。
 設定可能な項目は以下の通りです。
@@ -153,7 +152,7 @@ CubePDF のバージョンアップ時にパソコンの右下に通知されま
 また、アップデートの確認のために送信する情報は、CubePDF, Windows, .NET Framework
 それぞれのバージョン番号です。
 
-![表示言語](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/05.ja.png?raw=true)
+![表示言語](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/main-04.png)
 
 **表示言語** では、CubePDF メイン画面のメニュー等の表示言語を設定する事ができます。
 対応言語は英語と日本語の 2 種類です。また、表示言語で自動を選択した場合、Windows の
@@ -178,18 +177,18 @@ CubePDF は、これまでに説明したアプリケーションの設定以外
 **デバイスとプリンターの表示** で表示される画面で CubePDF を右クリックし **印刷設定** を
 選択して下さい。
 
-![印刷設定（コントロールパネル）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/08.ja.png?raw=true)
+![印刷設定（コントロールパネル）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/printer-01.png)
 
 また、Windows 8 以降は **設定** からも同様の操作を行う事ができます。設定から、
 **デバイス**、**プリンターとスキャナー** で表示される画面で CubePDF を選択し、
 さらに **管理**、**印刷設定** の順で選択して下さい。
 
-![印刷設定（設定）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/09.ja.png?raw=true)
+![印刷設定（設定）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/printer-02.png)
 
 印刷設定では、**用紙/品質** タブで白黒またはカラーで印刷する設定を変更する事ができます。
 また、それ以外の設定を行う場合、右下にある **詳細設定** ボタンをクリックします。
 
-![印刷の詳細オプション](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/10.ja.png?raw=true)
+![印刷の詳細オプション](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/printer-03.png)
 
 **用紙サイズ** は、変換後の各ページのサイズに反映されます。
 設定可能な値は、A0-A6、B0-B6、はがき、角形 1 号-角形 4 号など実際の用紙サイズに
@@ -242,8 +241,8 @@ CubePDF をアンインストールするには、まず、コントロールパ
 または、設定のアプリと機能（Windows 8 以降）を選択します。そして、表示される画面で
 CubePDF のアイコンを選択してアンインストールの項目を実行して下さい。
 
-![アンインストール（コントロールパネル）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/06.ja.png?raw=true)
-![アンインストール（設定）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/07.ja.png?raw=true)
+![アンインストール（コントロールパネル）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/uninstall-01.png)
+![アンインストール（設定）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/uninstall-02.png)
 
 ## CubePDF で問題が発生した場合
 
