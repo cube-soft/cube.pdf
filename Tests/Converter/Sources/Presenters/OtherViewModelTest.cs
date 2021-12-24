@@ -225,15 +225,15 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         {
             var done = $"{nameof(SelectDestination)}_Done.pdf";
 
-            _ = vm.Subscribe<SaveFileMessage>(e =>
+            using var dis = vm.Subscribe<SaveFileMessage>(e =>
             {
                 Assert.That(e.Text,             Is.EqualTo("名前を付けて保存"));
                 Assert.That(e.InitialDirectory, Is.Empty);
-                Assert.That(e.Value,            Is.EqualTo(nameof(SelectDestination)));
+                Assert.That(e.Value,            Is.EqualTo($"{nameof(SelectDestination)}.pdf"));
                 Assert.That(e.OverwritePrompt,  Is.False);
                 Assert.That(e.CheckPathExists,  Is.False);
                 Assert.That(e.GetFilterText(),  Is.Not.Null.And.Not.Empty);
-                Assert.That(e.GetFilterIndex(), Is.EqualTo(0));
+                Assert.That(e.GetFilterIndex(), Is.EqualTo(1));
 
                 e.Value  = done;
                 e.Cancel = false;
