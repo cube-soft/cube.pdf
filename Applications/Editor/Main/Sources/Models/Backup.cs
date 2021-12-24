@@ -19,7 +19,6 @@
 using System;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Logging;
 
 namespace Cube.Pdf.Editor
 {

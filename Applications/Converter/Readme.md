@@ -49,6 +49,11 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2021-12-27 version 1.6.1
+    - Fix the issue in the save file dialog where the current format was not reflected in the initial value of the file extension.
+    - Fix the timing of completing the file extension specified for the destination.
+    - Fix to warn when owner and/and user passwords are not entered.
+    - Tweak the English text on the main window.
 * 2021-11-12 version 1.6.0
     - Fix to preserve nested outlines when merging PDFs.
     - Fix the update notification program.

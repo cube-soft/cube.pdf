@@ -78,7 +78,7 @@ namespace Cube.Pdf.Converter
                 switch (e)
                 {
                     case nameof(src.Value.Format):
-                        Facade.ChangeExtension();
+                        ChangeExtension();
                         break;
                     case nameof(src.Value.PostProcess):
                         if (src.Value.PostProcess == PostProcess.Others) SelectUserProgram();
@@ -243,11 +243,16 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectDestination() => Send(
-            Message.ForDestination(Facade.Settings),
-            Facade.SetDestination,
-            true
-        );
+        public void SelectDestination()
+        {
+            var src = Message.ForDestination(Facade.Settings);
+            GetType().LogError(src.GetFilterIndex().ToString(), src.Value, src.GetFilterText());
+            Send(
+                Message.ForDestination(Facade.Settings),
+                Facade.SetDestination,
+                true
+            );
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -264,6 +269,17 @@ namespace Cube.Pdf.Converter
             e => General.UserProgram = e.First(),
             true
         );
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ChangeExtension
+        ///
+        /// <summary>
+        /// Changes the extension of the destination path.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void ChangeExtension() => Facade.ChangeExtension();
 
         #endregion
 

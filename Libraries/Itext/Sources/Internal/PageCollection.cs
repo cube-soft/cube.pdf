@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections;
 using System.Collections.Generic;
 using Cube.Collections;
 using iTextSharp.text.pdf;
@@ -55,8 +56,9 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public PageCollection(PdfReader core, PdfFile file)
         {
-            File  = file;
+            File = file;
             _core = core;
+            _cache = new((int)(file.Count / 0.72) + 1);
         }
 
         #endregion
@@ -94,7 +96,20 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page this[int index] => _core.GetPage(File, index + 1);
+        public Page this[int index]
+        {
+            get
+            {
+                if (!_cache.ContainsKey(index))
+                {
+                    lock (_cache.SyncRoot)
+                    {
+                        _cache[index] = _core.GetPage(File, index + 1);
+                    }
+                }
+                return new((PageBase)_cache[index]);
+            }
+        }
 
         #endregion
 
@@ -139,6 +154,7 @@ namespace Cube.Pdf.Itext
 
         #region Fields
         private readonly PdfReader _core;
+        private readonly Hashtable _cache;
         #endregion
     }
 }

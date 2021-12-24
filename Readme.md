@@ -18,18 +18,17 @@ CubePDF SDK provides wrapper APIs for the [PDFium](https://pdfium.googlesource.c
 
 ### CubePDF
 
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Converter/Assets/Overview.png?raw=true)
+![Screenshot](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/overview.en.png)
 
-[CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries.
+[CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries. For more information, see [CubePDF Documents](https://docs.cube-soft.jp/entry/cubepdf).
 
-You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases).
-Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
+You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases). Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Converter) (except for the virtual printer).
 
 ### CubePDF Utility
 
-![Screenshot](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Editor/Assets/Overview.png?raw=true)
+![Screenshot](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/overview.en.png)
 
-[CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries.
+[CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries. For more information, see [CubePDF Utility Documents](https://docs.cube-soft.jp/entry/cubepdf-utility).
 
 You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) (Japanese) or [GitHub Releases](https://github.com/cube-soft/Cube.Pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/Cube.Pdf/tree/master/Applications/Editor).
 

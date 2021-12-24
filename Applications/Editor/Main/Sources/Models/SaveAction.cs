@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Logging;
 using Cube.Mixin.Iteration;
 using Cube.Mixin.String;
 using Cube.Mixin.Syntax;

@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Threading;
 using Cube.Pdf.Converter.Mixin;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter
 {
@@ -111,7 +112,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool OwnerCorrect => OwnerPassword == OwnerConfirm;
+        public bool OwnerCorrect => OwnerPassword.HasValue() && OwnerPassword == OwnerConfirm;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -170,10 +171,17 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool UserCorrect =>
-            !OpenWithPassword ||
-             SharePassword ||
-            (OwnerPassword != UserPassword && UserPassword == UserConfirm);
+        public bool UserCorrect
+        {
+            get
+            {
+                if (!OpenWithPassword) return true;
+                if (SharePassword) return true;
+                return UserPassword.HasValue() &&
+                       OwnerPassword != UserPassword &&
+                       UserPassword == UserConfirm;
+            }
+        }
 
         /* ----------------------------------------------------------------- */
         ///
