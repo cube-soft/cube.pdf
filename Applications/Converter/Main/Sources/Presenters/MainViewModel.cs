@@ -243,16 +243,11 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void SelectDestination()
-        {
-            var src = Message.ForDestination(Facade.Settings);
-            GetType().LogError(src.GetFilterIndex().ToString(), src.Value, src.GetFilterText());
-            Send(
-                Message.ForDestination(Facade.Settings),
-                Facade.SetDestination,
-                true
-            );
-        }
+        public void SelectDestination() => Send(
+            Message.ForDestination(Facade.Settings),
+            Facade.SetDestination,
+            true
+        );
 
         /* ----------------------------------------------------------------- */
         ///
