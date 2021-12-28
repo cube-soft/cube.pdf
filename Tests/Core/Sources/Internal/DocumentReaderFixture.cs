@@ -60,22 +60,21 @@ namespace Cube.Pdf.Tests
         /// <returns>List of generating rules.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected static IDictionary<string, Func<string, object, IDocumentReader>> GetFactory() =>
-            new Dictionary<string, Func<string, object, IDocumentReader>>
+        protected static Dictionary<string, Func<string, object, IDocumentReader>> GetFactory() => new()
+        {
             {
-                {
-                    nameof(Pdf.Itext), (s, o) =>
-                        o is string ?
-                        new Pdf.Itext.DocumentReader(s, o as string) :
-                        new Pdf.Itext.DocumentReader(s, o as IQuery<string>)
-                },
-                {
-                    nameof(Pdf.Pdfium), (s, o) =>
-                        o is string ?
-                        new Pdf.Pdfium.DocumentReader(s, o as string) :
-                        new Pdf.Pdfium.DocumentReader(s, o as IQuery<string>)
-                },
-            };
+                nameof(Pdf.Itext), (s, o) =>
+                    o is string ?
+                    new Pdf.Itext.DocumentReader(s, o as string) :
+                    new Pdf.Itext.DocumentReader(s, o as IQuery<string>)
+            },
+            {
+                nameof(Pdf.Pdfium), (s, o) =>
+                    o is string ?
+                    new Pdf.Pdfium.DocumentReader(s, o as string) :
+                    new Pdf.Pdfium.DocumentReader(s, o as IQuery<string>)
+            },
+        };
 
         /* ----------------------------------------------------------------- */
         ///
