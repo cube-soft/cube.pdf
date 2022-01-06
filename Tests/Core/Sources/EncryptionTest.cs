@@ -185,7 +185,7 @@ namespace Cube.Pdf.Tests
                 });
             }
 
-            yield return new(nameof(Cube.Pdf.Itext), "SampleAes128.pdf", "password", new Encryption
+            yield return new(nameof(Pdf.Itext), "SampleAes128.pdf", "password", new Encryption
             {
                 Method           = EncryptionMethod.Aes128,
                 Enabled          = true,
@@ -203,7 +203,7 @@ namespace Cube.Pdf.Tests
                 }
             });
 
-            yield return new(nameof(Cube.Pdf.Pdfium), "SampleAes256r6.pdf", "password", new Encryption
+            yield return new(nameof(Pdf.Pdfium), "SampleAes256r6.pdf", "password", new Encryption
             {
                 Method           = EncryptionMethod.Aes256Ex,
                 Enabled          = true,

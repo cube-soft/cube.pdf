@@ -132,31 +132,6 @@ namespace Cube.Pdf.Tests.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Merge_Image
-        ///
-        /// <summary>
-        /// Tests to merge a PDF document and an image file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("SampleBookmark.pdf", "SampleImage01.png", 90, ExpectedResult = 10)]
-        public int Merge_Image(string doc, string image, int degree)
-        {
-            var op   = new OpenOption { SaveMemory = false };
-            var r0   = new DocumentReader(GetSource(doc), "", op);
-            var dest = Path(Args(r0.File.BaseName, Io.Get(image).BaseName));
-
-            using (var w = new DocumentWriter(new() { Smart = true }))
-            {
-                foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
-                w.Add(Rotate(new ImagePageCollection(GetSource(image)), degree));
-                w.Save(dest);
-            }
-            return Count(dest, "", degree);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Split
         ///
         /// <summary>

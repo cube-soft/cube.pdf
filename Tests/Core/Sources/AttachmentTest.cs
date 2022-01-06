@@ -60,7 +60,7 @@ namespace Cube.Pdf.Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Create_NotFound
+        /// Create_WithNonExistent
         ///
         /// <summary>
         /// Executes the test for confirming the result when a non-existent
@@ -69,10 +69,10 @@ namespace Cube.Pdf.Tests
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void Create_NotFound()
+        public void Create_WithNonExistent()
         {
             var name = "NotFound.txt";
-            var src = GetSource(name);
+            var src  = GetSource(name);
             var dest = new Attachment(src);
 
             Assert.That(dest.Name,     Is.EqualTo(name));

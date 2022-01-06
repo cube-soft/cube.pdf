@@ -33,7 +33,7 @@ namespace Cube.Pdf.Tests
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// Create
+        /// Normalize
         ///
         /// <summary>
         /// Tests that the specified value is normalized to [0, 360) when
@@ -47,7 +47,7 @@ namespace Cube.Pdf.Tests
         [TestCase(1000, ExpectedResult = 280)]
         [TestCase(  -1, ExpectedResult = 359)]
         [TestCase(-900, ExpectedResult = 180)]
-        public int Create(int degree) => new Angle(degree).Degree;
+        public int Normalize(int degree) => new Angle(degree).Degree;
 
         /* ----------------------------------------------------------------- */
         ///
