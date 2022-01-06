@@ -149,8 +149,10 @@ namespace Cube.Pdf.Itext
                           ImageDataFactory.CreateTiff(UrlUtil.ToURL(src), false, i + 1, false) :
                           ImageDataFactory.Create(src);
 
-                var w = obj.GetWidth()  * (PdfFile.Point / obj.GetDpiX());
-                var h = obj.GetHeight() * (PdfFile.Point / obj.GetDpiY());
+                var dx = obj.GetDpiX() > 0 ? obj.GetDpiX() : 96;
+                var dy = obj.GetDpiY() > 0 ? obj.GetDpiY() : 96;
+                var w  = obj.GetWidth()  * (PdfFile.Point / dx);
+                var h  = obj.GetHeight() * (PdfFile.Point / dy);
 
                 _ = new PdfCanvas(doc.AddNewPage(new PageSize(w, h)))
                     .AddImageFittedIntoRectangle(obj, new(w, h), false);
