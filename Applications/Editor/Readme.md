@@ -122,6 +122,7 @@ Dependencies of the CubePDF Utility are as follows.
 * 2022-01-07 version 1.6.3
     - Fix an issue that increases the file size unnecessarily when merging image files.
     - Update PDFium to Chromium 97 compatible.
+    - Update itext7 7.1.17.
 * 2021-11-19 version 1.6.2
     - Fix problems with thumbnails not being displayed when adding image files.
     - Update PDFium to Chromium 96 compatible.
