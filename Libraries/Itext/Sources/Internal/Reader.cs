@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
@@ -24,6 +25,7 @@ using Cube.FileSystem;
 using Cube.Mixin.String;
 using iText.IO.Image;
 using iText.IO.Source;
+using iText.IO.Util;
 using iText.Kernel.Crypto;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
@@ -138,27 +140,20 @@ namespace Cube.Pdf.Itext
         public static PdfDocument FromImage(string src)
         {
             using var ms = new System.IO.MemoryStream();
-            using var ss = Io.Open(src);
-            using var image = Image.FromStream(ss);
+            var doc = new PdfDocument(new PdfWriter(ms));
+            var kv  = GetImageAttributes(src);
 
-            var doc  = new PdfDocument(new PdfWriter(ms));
-            var guid = image.FrameDimensionsList[0];
-            var dim  = new FrameDimension(guid);
-
-            for (var i = 0; i < image.GetFrameCount(dim); ++i)
+            for (var i = 0; i < kv.Value; ++i)
             {
-                _ = image.SelectActiveFrame(dim, i);
+                var obj = kv.Key.Equals(ImageFormat.Tiff) ?
+                          ImageDataFactory.CreateTiff(UrlUtil.ToURL(src), false, i + 1, false) :
+                          ImageDataFactory.Create(src);
 
-                var scale = PdfFile.Point / image.HorizontalResolution;
-                var w = image.Width * scale;
-                var h = image.Height * scale;
-                var page = doc.AddNewPage(new PageSize(w, h));
+                var w = obj.GetWidth()  * (PdfFile.Point / obj.GetDpiX());
+                var h = obj.GetHeight() * (PdfFile.Point / obj.GetDpiY());
 
-                _ = new PdfCanvas(page).AddImageFittedIntoRectangle(
-                    ImageDataFactory.Create(ToBytes(image)),
-                    new(w, h),
-                    false
-                );
+                _ = new PdfCanvas(doc.AddNewPage(new PageSize(w, h)))
+                    .AddImageFittedIntoRectangle(obj, new(w, h), false);
             }
 
             doc.Close();
@@ -169,22 +164,6 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ToBytes
-        ///
-        /// <summary>
-        /// Converts to the byte array from the specified Image object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static byte[] ToBytes(Image src)
-        {
-            using var dest = new System.IO.MemoryStream();
-            src.Save(dest, src.RawFormat);
-            return dest.ToArray();
-        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -227,6 +206,22 @@ namespace Cube.Pdf.Itext
             var dest = new ReaderProperties();
             if (password.HasValue()) _ = dest.SetPassword(Encoding.UTF8.GetBytes(password));
             return dest;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImageAttributes
+        ///
+        /// <summary>
+        /// Gets the type and number of pages of the specified image file.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static KeyValuePair<ImageFormat, int> GetImageAttributes(string src)
+        {
+            using var ss = Io.Open(src);
+            using var dest = Image.FromStream(ss);
+            return new(dest.RawFormat, dest.GetFrameCount(new(dest.FrameDimensionsList[0])));
         }
 
         #endregion
