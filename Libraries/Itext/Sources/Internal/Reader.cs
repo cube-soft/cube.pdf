@@ -26,7 +26,7 @@ using Cube.Mixin.String;
 using iText.IO.Image;
 using iText.IO.Source;
 using iText.IO.Util;
-using iText.Kernel.Crypto;
+using iText.Kernel.Exceptions;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;

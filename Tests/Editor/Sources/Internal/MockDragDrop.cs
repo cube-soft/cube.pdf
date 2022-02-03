@@ -248,6 +248,8 @@ namespace Cube.Pdf.Editor.Tests
         public Point DropPosition => throw new NotImplementedException();
         public IEnumerable TargetCollection => throw new NotImplementedException();
         public CollectionViewGroup TargetGroup => throw new NotImplementedException();
+        public ScrollViewer TargetScrollViewer => throw new NotImplementedException();
+        public ScrollingMode TargetScrollingMode => throw new NotImplementedException();
         public UIElement VisualTarget => throw new NotImplementedException();
         public UIElement VisualTargetItem => throw new NotImplementedException();
         public Orientation VisualTargetOrientation => throw new NotImplementedException();

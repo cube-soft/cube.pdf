@@ -2396,7 +2396,7 @@
     <value>VersionPanel</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Parent" xml:space="preserve">
     <value>OthersPanel</value>
@@ -2513,7 +2513,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.SettingControl, Cube.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.SettingControl, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
     <value>RootPanel</value>
@@ -3238,6 +3238,6 @@
     <value>MainWindow</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.Window, Cube.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Window, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
 </root>

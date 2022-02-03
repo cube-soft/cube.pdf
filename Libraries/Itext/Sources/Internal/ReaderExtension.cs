@@ -20,7 +20,7 @@ using System;
 using System.Drawing;
 using System.Text;
 using Cube.Mixin.String;
-using iText.Kernel.Crypto;
+using iText.Kernel.Exceptions;
 using iText.Kernel.Pdf;
 
 namespace Cube.Pdf.Itext

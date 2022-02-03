@@ -86,6 +86,32 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Drop(IDropInfo e) => _callback(e.DragInfo.SourceIndex, e.InsertIndex);
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DragEnter
+        ///
+        /// <summary>
+        /// Invokes the dragging action.
+        /// </summary>
+        ///
+        /// <param name="e">Dropped information.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void DragEnter(IDropInfo e) { }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DragLeave
+        ///
+        /// <summary>
+        /// Invokes the dragging action.
+        /// </summary>
+        ///
+        /// <param name="e">Dropped information.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void DragLeave(IDropInfo e) { }
+
         #endregion
 
         #region Fields
