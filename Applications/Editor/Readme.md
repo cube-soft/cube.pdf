@@ -119,6 +119,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2022-02-07 version 1.6.4
+    - Update PDFium to Chromium 98 compatible.
 * 2022-01-07 version 1.6.3
     - Fix an issue that increases the file size unnecessarily when merging image files.
     - Update PDFium to Chromium 97 compatible.
