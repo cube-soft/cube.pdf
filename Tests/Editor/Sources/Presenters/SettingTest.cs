@@ -115,7 +115,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             Assert.That(src.Title,                 Is.Not.Null.And.Not.Empty);
             Assert.That(src.Version.Text,          Is.Not.Null.And.Not.Empty);
-            Assert.That(src.Version.Value,         Does.StartWith("CubePDF Utility 1.6.3 "));
+            Assert.That(src.Version.Value,         Does.StartWith("CubePDF Utility 1.6.4 "));
             Assert.That(src.Windows.Text,          Does.StartWith("Microsoft Windows"));
             Assert.That(src.Framework.Text,        Does.StartWith("Microsoft .NET Framework"));
             Assert.That(src.Link.Text,             Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
