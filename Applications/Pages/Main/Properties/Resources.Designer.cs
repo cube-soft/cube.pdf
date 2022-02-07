@@ -10,8 +10,8 @@
 
 namespace Cube.Pdf.Pages.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
     /// </summary>
@@ -23,15 +23,15 @@ namespace Cube.Pdf.Pages.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
@@ -45,7 +45,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
@@ -59,79 +59,89 @@ namespace Cube.Pdf.Pages.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
-        ///   更新日時 に類似しているローカライズされた文字列を検索します。
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Background {
+            get {
+                object obj = ResourceManager.GetObject("Background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Last updated に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ColumnDate {
             get {
                 return ResourceManager.GetString("ColumnDate", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   サイズ に類似しているローカライズされた文字列を検索します。
+        ///   Filesize に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ColumnLength {
             get {
                 return ResourceManager.GetString("ColumnLength", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ファイル名 に類似しているローカライズされた文字列を検索します。
+        ///   Filename に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ColumnName {
             get {
                 return ResourceManager.GetString("ColumnName", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ページ数 に類似しているローカライズされた文字列を検索します。
+        ///   Pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ColumnPages {
             get {
                 return ResourceManager.GetString("ColumnPages", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   種類 に類似しているローカライズされた文字列を検索します。
+        ///   Type に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ColumnType {
             get {
                 return ResourceManager.GetString("ColumnType", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   すべてのファイル に類似しているローカライズされた文字列を検索します。
+        ///   All files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string FilterAll {
             get {
                 return ResourceManager.GetString("FilterAll", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   PDF ファイル に類似しているローカライズされた文字列を検索します。
+        ///   PDF files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string FilterPdf {
             get {
                 return ResourceManager.GetString("FilterPdf", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   追加可能なファイル に類似しているローカライズされた文字列を検索します。
+        ///   All supported files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string FilterSupported {
             get {
                 return ResourceManager.GetString("FilterSupported", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -141,7 +151,7 @@ namespace Cube.Pdf.Pages.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
@@ -151,90 +161,90 @@ namespace Cube.Pdf.Pages.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
-        ///   下へ に類似しているローカライズされた文字列を検索します。
+        ///   Down に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuDown {
             get {
                 return ResourceManager.GetString("MenuDown", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   プレビュー に類似しているローカライズされた文字列を検索します。
+        ///   Preview に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuPreview {
             get {
                 return ResourceManager.GetString("MenuPreview", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ファイルリストから削除 に類似しているローカライズされた文字列を検索します。
+        ///   Remove from file list に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRemove {
             get {
                 return ResourceManager.GetString("MenuRemove", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   上へ に類似しているローカライズされた文字列を検索します。
+        ///   Up に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuUp {
             get {
                 return ResourceManager.GetString("MenuUp", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   CubePDF Page について に類似しているローカライズされた文字列を検索します。
+        ///   About CubePDF Page に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageAbout {
             get {
                 return ResourceManager.GetString("MessageAbout", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   {0} はパスワードで保護されています。編集するためには管理用パスワードを入力して下さい。 に類似しているローカライズされた文字列を検索します。
+        ///   {0} is protected. Enter the owner password to edit. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessagePassword {
             get {
                 return ResourceManager.GetString("MessagePassword", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   ファイルを追加 に類似しているローカライズされた文字列を検索します。
+        ///   Add files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleAdd {
             get {
                 return ResourceManager.GetString("TitleAdd", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   処理を実行中です... - {0} に類似しているローカライズされた文字列を検索します。
+        ///   Processing... - {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleBusy {
             get {
                 return ResourceManager.GetString("TitleBusy", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   結合したファイルの保存 に類似しているローカライズされた文字列を検索します。
+        ///   Save merged file as に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleMerge {
             get {
                 return ResourceManager.GetString("TitleMerge", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   分割したファイルを保存するフォルダを選択して下さい。 に類似しているローカライズされた文字列を検索します。
+        ///   Select a folder to save the split files. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleSplit {
             get {

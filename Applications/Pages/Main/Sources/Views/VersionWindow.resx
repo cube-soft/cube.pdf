@@ -1,64 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -117,9 +58,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="VersionBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="&gt;&gt;UpdateCheckBox.Name" xml:space="preserve">
+    <value>UpdateCheckBox</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -569,4 +510,273 @@
         QYABrEGAAaxBgAGsQYABrEGAAaxBgAGsQeAHrEH4H6xB/D+sQQ==
 </value>
   </data>
+  <data name="&gt;&gt;FooterPanel.Name" xml:space="preserve">
+    <value>FooterPanel</value>
+  </data>
+  <data name="&gt;&gt;ExecButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="FooterPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ExecButton" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="&gt;&gt;VersionBindingSource.Name" xml:space="preserve">
+    <value>VersionBindingSource</value>
+  </data>
+  <data name="MainVersionControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 63</value>
+  </data>
+  <data name="&gt;&gt;MainVersionControl.Type" xml:space="preserve">
+    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+  </data>
+  <data name="&gt;&gt;LogoBox.Name" xml:space="preserve">
+    <value>LogoBox</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="RootPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>VersionWindow</value>
+  </data>
+  <data name="LogoBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>344, 54</value>
+  </data>
+  <data name="&gt;&gt;RootPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FooterPanel.Parent" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="&gt;&gt;ExecButton.Parent" xml:space="preserve">
+    <value>FooterPanel</value>
+  </data>
+  <data name="LanguageComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;DummyPanel.Name" xml:space="preserve">
+    <value>DummyPanel</value>
+  </data>
+  <data name="RootPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="LanguageComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;FooterPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ExecButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="FooterPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="FooterPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;LogoBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="ExecButton.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;LanguageComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LogoBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;VersionBindingSource.Type" xml:space="preserve">
+    <value>System.Windows.Forms.BindingSource, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LogoBox.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>CenterImage</value>
+  </data>
+  <data name="&gt;&gt;DummyPanel.Parent" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="&gt;&gt;DummyPanel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="MainVersionControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="FooterPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 231</value>
+  </data>
+  <data name="LanguageComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 188</value>
+  </data>
+  <data name="ExecButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;UpdateCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ExecButton.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="&gt;&gt;MainVersionControl.Parent" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="&gt;&gt;LogoBox.Parent" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="UpdateCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="DummyPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="UpdateCheckBox.Text" xml:space="preserve">
+    <value>Check for updates on startup</value>
+  </data>
+  <data name="RootPanel.RowCount" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Meiryo UI, 12px</value>
+  </data>
+  <data name="LogoBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 3</value>
+  </data>
+  <data name="&gt;&gt;ExecButton.Name" xml:space="preserve">
+    <value>ExecButton</value>
+  </data>
+  <data name="&gt;&gt;MainVersionControl.Name" xml:space="preserve">
+    <value>MainVersionControl</value>
+  </data>
+  <data name="MainVersionControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>344, 94</value>
+  </data>
+  <data name="LogoBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="MainVersionControl.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="FooterPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>384, 60</value>
+  </data>
+  <data name="UpdateCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="LanguageComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>344, 23</value>
+  </data>
+  <data name="&gt;&gt;FooterPanel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;UpdateCheckBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;LanguageComboBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="UpdateCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="RootPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;LanguageComboBox.Parent" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="&gt;&gt;MainVersionControl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RootPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>384, 291</value>
+  </data>
+  <data name="ExecButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>130, 36</value>
+  </data>
+  <data name="UpdateCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>344, 19</value>
+  </data>
+  <data name="FooterPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="RootPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="MainVersionControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="5" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;Control Name="LanguageComboBox" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LogoBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,17,Percent,100,Absolute,17" /&gt;&lt;Rows Styles="Absolute,60,Absolute,100,Absolute,25,Absolute,29,Percent,100,Absolute,60" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="UpdateCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 163</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>About CubePDF Page</value>
+  </data>
+  <data name="DummyPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>344, 11</value>
+  </data>
+  <data name="&gt;&gt;RootPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="ExecButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>127, 12</value>
+  </data>
+  <data name="&gt;&gt;UpdateCheckBox.Parent" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="FooterPanel.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;RootPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="DummyPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 217</value>
+  </data>
+  <data name="RootPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;RootPanel.Name" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="&gt;&gt;LogoBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DummyPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExecButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="FooterPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>384, 291</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>Cube.Forms.Window, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+  </data>
+  <data name="DummyPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="ExecButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="&gt;&gt;LanguageComboBox.Name" xml:space="preserve">
+    <value>LanguageComboBox</value>
+  </data>
+  <data name="LogoBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="UpdateCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="VersionBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>ja</value>
+  </metadata>
 </root>

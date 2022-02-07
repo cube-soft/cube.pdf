@@ -36,6 +36,7 @@
         <Compile Update="Sources\Views\*Window.cs" SubType="Form" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
         <EmbeddedResource Update="Sources\Views\*Window.resx" DependentUpon="%(Filename).cs" />
+        <EmbeddedResource Update="Sources\Views\*Window.ja.resx" DependentUpon="$([System.String]::Copy('%(Filename)').Replace('ja','cs'))" />
         <None Include="Properties\DataSources\*" />
         <None Include="Assets\**\*" />
         <None Include="App.*" />

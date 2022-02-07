@@ -30,130 +30,113 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VersionWindow));
-            this.RootLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
             this.MainVersionControl = new Cube.Forms.Controls.VersionControl();
-            this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
-            this.DummyPanel = new System.Windows.Forms.Panel();
-            this.ButtonsPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ExecButton = new System.Windows.Forms.Button();
             this.VersionBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.RootLayoutPanel.SuspendLayout();
-            this.ButtonsPanel.SuspendLayout();
+            this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
+            this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.ExecButton = new System.Windows.Forms.Button();
+            this.LanguageComboBox = new System.Windows.Forms.ComboBox();
+            this.LogoBox = new System.Windows.Forms.PictureBox();
+            this.RootPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VersionBindingSource)).BeginInit();
+            this.FooterPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoBox)).BeginInit();
             this.SuspendLayout();
             //
-            // RootLayoutPanel
+            // RootPanel
             //
-            this.RootLayoutPanel.BackColor = System.Drawing.Color.White;
-            this.RootLayoutPanel.ColumnCount = 1;
-            this.RootLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.RootLayoutPanel.Controls.Add(this.MainVersionControl, 0, 0);
-            this.RootLayoutPanel.Controls.Add(this.UpdateCheckBox, 0, 1);
-            this.RootLayoutPanel.Controls.Add(this.DummyPanel, 0, 2);
-            this.RootLayoutPanel.Controls.Add(this.ButtonsPanel, 0, 3);
-            this.RootLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RootLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.RootLayoutPanel.Name = "RootLayoutPanel";
-            this.RootLayoutPanel.RowCount = 4;
-            this.RootLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
-            this.RootLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.RootLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.RootLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.RootLayoutPanel.Size = new System.Drawing.Size(384, 241);
-            this.RootLayoutPanel.TabIndex = 0;
+            resources.ApplyResources(this.RootPanel, "RootPanel");
+            this.RootPanel.BackColor = System.Drawing.Color.White;
+            this.RootPanel.Controls.Add(this.MainVersionControl, 1, 1);
+            this.RootPanel.Controls.Add(this.UpdateCheckBox, 1, 2);
+            this.RootPanel.Controls.Add(this.FooterPanel, 0, 5);
+            this.RootPanel.Controls.Add(this.LanguageComboBox, 1, 3);
+            this.RootPanel.Controls.Add(this.LogoBox, 1, 0);
+            this.RootPanel.Name = "RootPanel";
             //
             // MainVersionControl
             //
+            resources.ApplyResources(this.MainVersionControl, "MainVersionControl");
             this.MainVersionControl.Copyright = "Copyright © 2013 CubeSoft, Inc.";
             this.MainVersionControl.DataBindings.Add(new System.Windows.Forms.Binding("Version", this.VersionBindingSource, "Version", true));
             this.MainVersionControl.Description = "";
-            this.MainVersionControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainVersionControl.Image = global::Cube.Pdf.Pages.Properties.Resources.Logo;
-            this.MainVersionControl.Location = new System.Drawing.Point(20, 20);
-            this.MainVersionControl.Margin = new System.Windows.Forms.Padding(20, 20, 3, 0);
+            this.MainVersionControl.Image = null;
             this.MainVersionControl.Name = "MainVersionControl";
+            this.MainVersionControl.OneLine = true;
             this.MainVersionControl.Product = "CubePDF Page";
-            this.MainVersionControl.Size = new System.Drawing.Size(361, 110);
-            this.MainVersionControl.TabIndex = 0;
             this.MainVersionControl.Uri = null;
-            this.MainVersionControl.Version = "Version 5.0.0.0";
-            //
-            // UpdateCheckBox
-            //
-            this.UpdateCheckBox.AutoSize = true;
-            this.UpdateCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.VersionBindingSource, "CheckUpdate", true));
-            this.UpdateCheckBox.Location = new System.Drawing.Point(78, 133);
-            this.UpdateCheckBox.Margin = new System.Windows.Forms.Padding(78, 3, 3, 3);
-            this.UpdateCheckBox.Name = "UpdateCheckBox";
-            this.UpdateCheckBox.Size = new System.Drawing.Size(176, 19);
-            this.UpdateCheckBox.TabIndex = 1;
-            this.UpdateCheckBox.Text = "起動時にアップデートを確認する";
-            this.UpdateCheckBox.UseVisualStyleBackColor = true;
-            //
-            // DummyPanel
-            //
-            this.DummyPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DummyPanel.Location = new System.Drawing.Point(3, 158);
-            this.DummyPanel.Name = "DummyPanel";
-            this.DummyPanel.Size = new System.Drawing.Size(378, 20);
-            this.DummyPanel.TabIndex = 2;
-            //
-            // ButtonsPanel
-            //
-            this.ButtonsPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.ButtonsPanel.ColumnCount = 1;
-            this.ButtonsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.ButtonsPanel.Controls.Add(this.ExecButton, 0, 0);
-            this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ButtonsPanel.Location = new System.Drawing.Point(0, 181);
-            this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.ButtonsPanel.Name = "ButtonsPanel";
-            this.ButtonsPanel.RowCount = 1;
-            this.ButtonsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.ButtonsPanel.Size = new System.Drawing.Size(384, 60);
-            this.ButtonsPanel.TabIndex = 3;
-            //
-            // ExecButton
-            //
-            this.ExecButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ExecButton.Location = new System.Drawing.Point(129, 15);
-            this.ExecButton.Name = "ExecButton";
-            this.ExecButton.Size = new System.Drawing.Size(125, 30);
-            this.ExecButton.TabIndex = 0;
-            this.ExecButton.Text = "OK";
-            this.ExecButton.UseVisualStyleBackColor = true;
+            this.MainVersionControl.Version = "7.0.0.0";
             //
             // VersionBindingSource
             //
             this.VersionBindingSource.DataSource = typeof(Cube.Pdf.Pages.VersionViewModel);
             //
+            // UpdateCheckBox
+            //
+            resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
+            this.UpdateCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.VersionBindingSource, "CheckUpdate", true));
+            this.UpdateCheckBox.Name = "UpdateCheckBox";
+            this.UpdateCheckBox.UseVisualStyleBackColor = true;
+            //
+            // FooterPanel
+            //
+            resources.ApplyResources(this.FooterPanel, "FooterPanel");
+            this.FooterPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.RootPanel.SetColumnSpan(this.FooterPanel, 3);
+            this.FooterPanel.Controls.Add(this.ExecButton, 0, 0);
+            this.FooterPanel.Name = "FooterPanel";
+            //
+            // ExecButton
+            //
+            resources.ApplyResources(this.ExecButton, "ExecButton");
+            this.ExecButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.ExecButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
+            this.ExecButton.ForeColor = System.Drawing.Color.White;
+            this.ExecButton.Name = "ExecButton";
+            this.ExecButton.UseVisualStyleBackColor = false;
+            //
+            // LanguageComboBox
+            //
+            resources.ApplyResources(this.LanguageComboBox, "LanguageComboBox");
+            this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LanguageComboBox.FormattingEnabled = true;
+            this.LanguageComboBox.Name = "LanguageComboBox";
+            //
+            // LogoBox
+            //
+            resources.ApplyResources(this.LogoBox, "LogoBox");
+            this.LogoBox.Image = global::Cube.Pdf.Pages.Properties.Resources.Logo;
+            this.LogoBox.Name = "LogoBox";
+            this.LogoBox.TabStop = false;
+            //
             // VersionWindow
             //
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(384, 241);
-            this.Controls.Add(this.RootLayoutPanel);
-            this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Controls.Add(this.RootPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "VersionWindow";
-            this.Text = "CubePDF Page について";
-            this.RootLayoutPanel.ResumeLayout(false);
-            this.RootLayoutPanel.PerformLayout();
-            this.ButtonsPanel.ResumeLayout(false);
+            this.RootPanel.ResumeLayout(false);
+            this.RootPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VersionBindingSource)).EndInit();
+            this.FooterPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LogoBox)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel RootLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel RootPanel;
         private Cube.Forms.Controls.VersionControl MainVersionControl;
         private System.Windows.Forms.CheckBox UpdateCheckBox;
-        private System.Windows.Forms.Panel DummyPanel;
-        private System.Windows.Forms.TableLayoutPanel ButtonsPanel;
+        private System.Windows.Forms.TableLayoutPanel FooterPanel;
         private System.Windows.Forms.Button ExecButton;
         private System.Windows.Forms.BindingSource VersionBindingSource;
+        private System.Windows.Forms.ComboBox LanguageComboBox;
+        private System.Windows.Forms.PictureBox LogoBox;
     }
 }

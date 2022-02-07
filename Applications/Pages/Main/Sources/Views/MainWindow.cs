@@ -111,7 +111,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new ShownEventBehavior(this, vm.Setup));
             Behaviors.Add(new ClickEventBehavior(MergeButton, vm.Merge));
             Behaviors.Add(new ClickEventBehavior(SplitButton, vm.Split));
-            Behaviors.Add(new ClickEventBehavior(FileButton, vm.Add));
+            Behaviors.Add(new ClickEventBehavior(AddButton, vm.Add));
             Behaviors.Add(new ClickEventBehavior(UpButton, () => vm.Move(SelectedIndices, -1)));
             Behaviors.Add(new ClickEventBehavior(DownButton, () => vm.Move(SelectedIndices, 1)));
             Behaviors.Add(new ClickEventBehavior(RemoveButton, () => vm.Remove(SelectedIndices)));
