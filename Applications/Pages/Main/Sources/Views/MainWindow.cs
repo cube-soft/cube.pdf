@@ -24,6 +24,8 @@ using System.Linq;
 using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
+using Cube.Mixin.Forms;
+using Cube.Mixin.Forms.Controls;
 using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Pages
@@ -50,14 +52,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            Behaviors.Add(SetupForAbout());
-            Behaviors.Add(new SelectionBehavior(FileListView));
-            Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
-        }
+        public MainWindow() => InitializeComponent();
 
         #endregion
 
@@ -82,7 +77,7 @@ namespace Cube.Pdf.Pages
 
         #endregion
 
-        #region Implementations
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -97,20 +92,17 @@ namespace Cube.Pdf.Pages
         {
             base.OnBind(src);
             if (src is not MainViewModel vm) return;
-            MainBindingSource.DataSource = vm;
 
-            ShortcutKeys.Clear();
-            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
-            ShortcutKeys.Add(Keys.Control | Keys.O, vm.Add);
-            ShortcutKeys.Add(Keys.Control | Keys.H, vm.About);
-            ShortcutKeys.Add(Keys.Control | Keys.K, () => vm.Move(SelectedIndices, -1));
-            ShortcutKeys.Add(Keys.Control | Keys.J, () => vm.Move(SelectedIndices, 1));
-            ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Invokable.Then(vm.Merge));
-            ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Invokable.Then(vm.Split));
+            var bs = Behaviors.Hook(new BindingSource(vm, ""));
+            bs.Bind(nameof(vm.Invokable), MergeButton, nameof(Enabled), true);
+            bs.Bind(nameof(vm.Invokable), SplitButton, nameof(Enabled), true);
+            bs.Bind(nameof(vm.Invokable), MetadataButton, nameof(Enabled), true);
 
+            Behaviors.Add(MakeToolTip());
             Behaviors.Add(new ShownEventBehavior(this, vm.Setup));
             Behaviors.Add(new ClickEventBehavior(MergeButton, vm.Merge));
             Behaviors.Add(new ClickEventBehavior(SplitButton, vm.Split));
+            Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
             Behaviors.Add(new ClickEventBehavior(AddButton, vm.Add));
             Behaviors.Add(new ClickEventBehavior(UpButton, () => vm.Move(SelectedIndices, -1)));
             Behaviors.Add(new ClickEventBehavior(DownButton, () => vm.Move(SelectedIndices, 1)));
@@ -124,6 +116,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new OpenDirectoryBehavior(vm));
             Behaviors.Add(new SaveFileBehavior(vm));
             Behaviors.Add(new FileDropBehavior(this, vm));
+            Behaviors.Add(new SelectionBehavior(FileListView));
             Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(vm));
             Behaviors.Add(new ShowDialogBehavior<VersionWindow, VersionViewModel>(vm));
             Behaviors.Add(vm.Subscribe<UpdateListMessage>(e => vm.Files.ResetBindings(false)));
@@ -138,18 +131,45 @@ namespace Cube.Pdf.Pages
 
             FileListView.ContextMenuStrip = ctx;
             FileListView.DataSource = vm.Files;
+
+            MakeShortcut(vm);
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MakeShortcut
+        ///
+        /// <summary>
+        /// Initializes the shortcut settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void MakeShortcut(MainViewModel vm)
+        {
+            ShortcutKeys.Clear();
+            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
+            ShortcutKeys.Add(Keys.Control | Keys.O, vm.Add);
+            ShortcutKeys.Add(Keys.Control | Keys.H, vm.About);
+            ShortcutKeys.Add(Keys.Control | Keys.K, () => vm.Move(SelectedIndices, -1));
+            ShortcutKeys.Add(Keys.Control | Keys.J, () => vm.Move(SelectedIndices, 1));
+            ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Invokable.Then(vm.Merge));
+            ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Invokable.Then(vm.Split));
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetupForAbout
+        /// MakeToolTip
         ///
         /// <summary>
-        /// Initializes for the About page.
+        /// Initializes a new instance of the ToolTip class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IDisposable SetupForAbout()
+        private IDisposable MakeToolTip()
         {
             var dest = new ToolTip
             {

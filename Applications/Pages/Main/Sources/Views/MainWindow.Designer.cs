@@ -21,7 +21,6 @@
 
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FilePanel = new System.Windows.Forms.TableLayoutPanel();
@@ -38,7 +37,6 @@
             this.MetadataButton = new Cube.Forms.Controls.Button();
             this.ExitButton = new Cube.Forms.Controls.Button();
             this.SplitButton = new Cube.Forms.Controls.Button();
-            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.MergeButton = new Cube.Forms.Controls.Button();
             this.RootPanel.SuspendLayout();
             this.FilePanel.SuspendLayout();
@@ -47,7 +45,6 @@
             this.HeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
             this.FooterPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).BeginInit();
             this.SuspendLayout();
             //
             // RootPanel
@@ -188,21 +185,15 @@
             //
             resources.ApplyResources(this.SplitButton, "SplitButton");
             this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(49)))), ((int)(((byte)(146)))));
-            this.SplitButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.MainBindingSource, "Invokable", true));
             this.SplitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(39)))), ((int)(((byte)(128)))));
             this.SplitButton.ForeColor = System.Drawing.Color.White;
             this.SplitButton.Name = "SplitButton";
             this.SplitButton.UseVisualStyleBackColor = false;
             //
-            // MainBindingSource
-            //
-            this.MainBindingSource.DataSource = typeof(Cube.Pdf.Pages.MainViewModel);
-            //
             // MergeButton
             //
             resources.ApplyResources(this.MergeButton, "MergeButton");
             this.MergeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.MergeButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.MainBindingSource, "Invokable", true));
             this.MergeButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.MergeButton.ForeColor = System.Drawing.Color.White;
             this.MergeButton.Name = "MergeButton";
@@ -223,7 +214,6 @@
             this.HeaderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).EndInit();
             this.FooterPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -235,7 +225,6 @@
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox TitleButton;
         private FileListControl FileListView;
-        private System.Windows.Forms.BindingSource MainBindingSource;
         private System.Windows.Forms.TableLayoutPanel FooterPanel;
         private Forms.Controls.Button ExitButton;
         private Forms.Controls.Button SplitButton;

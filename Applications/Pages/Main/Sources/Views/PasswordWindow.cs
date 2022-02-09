@@ -16,8 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Windows.Forms;
+using Cube.Forms;
+using Cube.Forms.Behaviors;
+using Cube.Mixin.Forms;
+using Cube.Mixin.Forms.Controls;
 
 namespace Cube.Pdf.Pages
 {
@@ -30,7 +33,7 @@ namespace Cube.Pdf.Pages
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class PasswordWindow : Cube.Forms.Window
+    public partial class PasswordWindow : Window
     {
         #region Constructors
 
@@ -43,16 +46,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public PasswordWindow()
-        {
-            InitializeComponent();
-            ShowPasswordCheckBox.CheckedChanged += (s, e) =>
-                PasswordTextBox.UseSystemPasswordChar = !ShowPasswordCheckBox.Checked;
-        }
+        public PasswordWindow() => InitializeComponent();
 
         #endregion
 
-        #region Implementations
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -68,25 +66,47 @@ namespace Cube.Pdf.Pages
             base.OnBind(src);
             if (src is not PasswordViewModel vm) return;
 
-            PasswordBindingSource.DataSource = vm;
-            ExecButton.Click += (s, e) => vm.Apply();
+            var bs = Behaviors.Hook(new BindingSource(vm, ""));
+            bs.Bind(nameof(vm.Password), PasswordTextBox, nameof(TextBox.Text));
+            bs.Bind(nameof(vm.Message), PasswordLabel, nameof(Label.Text), true);
+            bs.Bind(nameof(vm.Ready), ExecButton, nameof(Enabled), true);
+
+            Behaviors.Add(new CloseBehavior(this, vm));
+            Behaviors.Add(new ShownEventBehavior(this, Setup));
+            Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
+            Behaviors.Add(new EventBehavior(ShowPasswordCheckBox, nameof(CheckBox.CheckedChanged), UpdatePasswordMask));
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Setup
+        ///
+        /// <summary>
+        /// Initializes the settings when the window is shown.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        private void Setup()
+        {
+            ActiveControl = PasswordTextBox;
+            _ = PasswordTextBox.Focus();
         }
 
         /* --------------------------------------------------------------------- */
         ///
-        /// OnShown
+        /// UpdatePasswordMask
         ///
         /// <summary>
-        /// Occurs when the Shown event is fired.
+        /// Sets or resets the password mask.
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        protected override void OnShown(EventArgs e)
-        {
-            base.OnShown(e);
-            ActiveControl = PasswordTextBox;
-            _ = PasswordTextBox.Focus();
-        }
+        private void UpdatePasswordMask() =>
+            PasswordTextBox.UseSystemPasswordChar = !ShowPasswordCheckBox.Checked;
 
         #endregion
     }

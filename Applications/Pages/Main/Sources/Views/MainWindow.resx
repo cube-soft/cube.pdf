@@ -100,14 +100,11 @@
   <data name="AddButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 30</value>
   </data>
-  <data name="&gt;&gt;UpButton.Parent" xml:space="preserve">
-    <value>RightPanel</value>
-  </data>
   <data name="&gt;&gt;ExitButton.Name" xml:space="preserve">
     <value>ExitButton</value>
   </data>
-  <data name="TitleButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="FooterPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>7</value>
   </data>
   <data name="ExitButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -142,11 +139,11 @@
   <data name="&gt;&gt;HeaderPanel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="DownButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
   <data name="AddButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 12</value>
-  </data>
-  <data name="SplitButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>443, 12</value>
   </data>
   <data name="RightPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -208,17 +205,14 @@
   <data name="FooterPanel.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="UpButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 2, 0, 2</value>
-  </data>
   <data name="&gt;&gt;FooterPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="RightPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="&gt;&gt;RightPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;UpButton.Parent" xml:space="preserve">
+    <value>RightPanel</value>
   </data>
   <data name="FooterPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 241</value>
@@ -231,9 +225,6 @@
   </data>
   <data name="&gt;&gt;SplitButton.Name" xml:space="preserve">
     <value>SplitButton</value>
-  </data>
-  <data name="FileListView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;ClearButton.Parent" xml:space="preserve">
     <value>RightPanel</value>
@@ -267,6 +258,9 @@
   </data>
   <data name="ExitButton.Text" xml:space="preserve">
     <value>Exit</value>
+  </data>
+  <data name="MetadataButton.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="UpButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 48</value>
@@ -415,6 +409,9 @@
   <data name="RootPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="TitleButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
   <data name="HeaderPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
@@ -435,6 +432,9 @@
   </data>
   <data name="FileListView.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
+  </data>
+  <data name="&gt;&gt;RightPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;MetadataButton.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -472,8 +472,8 @@
   <data name="FilePanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 44</value>
   </data>
-  <data name="DownButton.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="SplitButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>443, 12</value>
   </data>
   <data name="&gt;&gt;HeaderPanel.Name" xml:space="preserve">
     <value>HeaderPanel</value>
@@ -938,9 +938,6 @@
         QYABrEGAAaxBgAGsQYABrEGAAaxBgAGsQeAHrEH4H6xB/D+sQQ==
 </value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MainWindow</value>
-  </data>
   <data name="&gt;&gt;RootPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -989,8 +986,8 @@
   <data name="&gt;&gt;FooterPanel.Name" xml:space="preserve">
     <value>FooterPanel</value>
   </data>
-  <data name="AddButton.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="FileListView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
   </data>
   <data name="&gt;&gt;ExitButton.Type" xml:space="preserve">
     <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
@@ -1004,8 +1001,8 @@
   <data name="ClearButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 30</value>
   </data>
-  <data name="MetadataButton.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;RemoveButton.Name" xml:space="preserve">
+    <value>RemoveButton</value>
   </data>
   <data name="&gt;&gt;FileListView.Name" xml:space="preserve">
     <value>FileListView</value>
@@ -1013,11 +1010,14 @@
   <data name="ClearButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="&gt;&gt;RemoveButton.Name" xml:space="preserve">
-    <value>RemoveButton</value>
+  <data name="UpButton.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 2, 0, 2</value>
   </data>
   <data name="RightPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="AddButton" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpButton" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DownButton" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="RemoveButton" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ClearButton" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Absolute,36,Absolute,36,Absolute,36,Absolute,36,Absolute,36,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="AddButton.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;RemoveButton.Type" xml:space="preserve">
     <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
@@ -1025,8 +1025,8 @@
   <data name="&gt;&gt;AddButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="FooterPanel.ColumnCount" type="System.Int32, mscorlib">
-    <value>7</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainWindow</value>
   </data>
   <data name="&gt;&gt;FilePanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1061,9 +1061,6 @@
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>570, 330</value>
   </data>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>ja</value>
-  </metadata>
   <metadata name="MainBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

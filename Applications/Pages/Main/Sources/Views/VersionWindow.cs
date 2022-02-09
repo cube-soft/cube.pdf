@@ -16,7 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Windows.Forms;
 using Cube.Forms;
+using Cube.Forms.Behaviors;
+using Cube.Mixin.Forms;
+using Cube.Mixin.Forms.Controls;
 
 namespace Cube.Pdf.Pages
 {
@@ -42,15 +46,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public VersionWindow()
-        {
-            InitializeComponent();
-            ExecButton.Click += (s, e) => Close();
-        }
+        public VersionWindow() => InitializeComponent();
 
         #endregion
 
-        #region Implementations
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -66,8 +66,12 @@ namespace Cube.Pdf.Pages
             base.OnBind(src);
             if (src is not VersionViewModel vm) return;
 
-            VersionBindingSource.DataSource = vm;
-            ExecButton.Click += (s, e) => vm.Apply();
+            var bs = Behaviors.Hook(new BindingSource(vm, ""));
+            bs.Bind(nameof(vm.Version), VersionPanel, nameof(VersionPanel.Version), true);
+            bs.Bind(nameof(vm.CheckUpdate), UpdateCheckBox, nameof(CheckBox.Checked));
+
+            Behaviors.Add(new CloseBehavior(this, vm));
+            Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
         }
 
         #endregion
