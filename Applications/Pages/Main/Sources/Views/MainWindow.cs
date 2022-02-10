@@ -94,14 +94,15 @@ namespace Cube.Pdf.Pages
             if (src is not MainViewModel vm) return;
 
             var bs = Behaviors.Hook(new BindingSource(vm, ""));
-            bs.Bind(nameof(vm.Invokable), MergeButton, nameof(Enabled), true);
-            bs.Bind(nameof(vm.Invokable), SplitButton, nameof(Enabled), true);
-            bs.Bind(nameof(vm.Invokable), MetadataButton, nameof(Enabled), true);
+            bs.Bind(nameof(vm.Ready), MergeButton, nameof(Enabled), true);
+            bs.Bind(nameof(vm.Ready), SplitButton, nameof(Enabled), true);
+            bs.Bind(nameof(vm.Ready), MetadataButton, nameof(Enabled), true);
 
             Behaviors.Add(MakeToolTip());
             Behaviors.Add(new ShownEventBehavior(this, vm.Setup));
             Behaviors.Add(new ClickEventBehavior(MergeButton, vm.Merge));
             Behaviors.Add(new ClickEventBehavior(SplitButton, vm.Split));
+            Behaviors.Add(new ClickEventBehavior(MetadataButton, vm.Metadata));
             Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
             Behaviors.Add(new ClickEventBehavior(AddButton, vm.Add));
             Behaviors.Add(new ClickEventBehavior(UpButton, () => vm.Move(SelectedIndices, -1)));
@@ -117,6 +118,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new SaveFileBehavior(vm));
             Behaviors.Add(new FileDropBehavior(this, vm));
             Behaviors.Add(new SelectionBehavior(FileListView));
+            Behaviors.Add(new ShowDialogBehavior<MetadataWindow, MetadataViewModel>(vm));
             Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(vm));
             Behaviors.Add(new ShowDialogBehavior<VersionWindow, VersionViewModel>(vm));
             Behaviors.Add(vm.Subscribe<UpdateListMessage>(e => vm.Files.ResetBindings(false)));
@@ -156,8 +158,8 @@ namespace Cube.Pdf.Pages
             ShortcutKeys.Add(Keys.Control | Keys.H, vm.About);
             ShortcutKeys.Add(Keys.Control | Keys.K, () => vm.Move(SelectedIndices, -1));
             ShortcutKeys.Add(Keys.Control | Keys.J, () => vm.Move(SelectedIndices, 1));
-            ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Invokable.Then(vm.Merge));
-            ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Invokable.Then(vm.Split));
+            ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Ready.Then(vm.Merge));
+            ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Ready.Then(vm.Split));
         }
 
         /* ----------------------------------------------------------------- */

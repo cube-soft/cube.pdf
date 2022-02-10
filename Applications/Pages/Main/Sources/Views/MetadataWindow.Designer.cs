@@ -370,6 +370,7 @@
             // ExitButton
             //
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.ExitButton, "ExitButton");
             this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.ExitButton.ForeColor = System.Drawing.Color.White;
@@ -378,7 +379,9 @@
             //
             // MetadataWindow
             //
+            this.AcceptButton = this.ExecButton;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.CancelButton = this.ExitButton;
             resources.ApplyResources(this, "$this");
             this.Controls.Add(this.RootPanel);
             this.Name = "MetadataWindow";

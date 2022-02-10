@@ -1,4 +1,10 @@
-﻿// by the Free Software Foundation, either version 3 of the License, or
+﻿/* ------------------------------------------------------------------------- */
+//
+// Copyright (c) 2013 CubeSoft, Inc.
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
@@ -10,33 +16,37 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Forms;
+using System.Threading;
 
 namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainWindow
+    /// MetadataViewModel
     ///
     /// <summary>
-    /// Represents the metadata and encryption window.
+    /// Represents the ViewModel for the MetadataWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MetadataWindow : Window
+    public class MetadataViewModel : PresentableBase<Metadata>
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// MetadataWindow
+        /// MetadataViewModel
         ///
         /// <summary>
-        /// Initializes a new instance of the MetadataWindow class.
+        /// Initializes a new instance of the MetadataViewModel class
+        /// with the specified arguments.
         /// </summary>
         ///
+        /// <param name="context">Synchronization context.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        public MetadataWindow() => InitializeComponent();
+        public MetadataViewModel(SynchronizationContext context) :
+            base(new(), new(), context) { }
 
         #endregion
     }

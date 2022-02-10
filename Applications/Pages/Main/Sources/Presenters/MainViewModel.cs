@@ -117,7 +117,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invokable
+        /// Ready
         ///
         /// <summary>
         /// Gets a value indicating whether the Merge or Split operation
@@ -125,7 +125,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Invokable => Facade.Files.Count > 0;
+        public bool Ready => Facade.Files.Count > 0;
 
         #endregion
 
@@ -152,6 +152,17 @@ namespace Cube.Pdf.Pages
         ///
         /* --------------------------------------------------------------------- */
         public void Merge() => Send(Message.ForMerge(), Facade.Merge, false);
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Invokes the Metadata command.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Metadata() => Send(new MetadataViewModel(Context), e => { }, true);
 
         /* --------------------------------------------------------------------- */
         ///
@@ -277,7 +288,7 @@ namespace Cube.Pdf.Pages
         {
             void handler(object s, NotifyCollectionChangedEventArgs e)
             {
-                Refresh(nameof(Invokable));
+                Refresh(nameof(Ready));
                 Send(new UpdateListMessage());
             }
 
