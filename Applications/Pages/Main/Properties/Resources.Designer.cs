@@ -172,6 +172,15 @@ namespace Cube.Pdf.Pages.Properties {
         }
 
         /// <summary>
+        ///   One column に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuOneColumn {
+            get {
+                return ResourceManager.GetString("MenuOneColumn", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Preview に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuPreview {
@@ -186,6 +195,51 @@ namespace Cube.Pdf.Pages.Properties {
         internal static string MenuRemove {
             get {
                 return ResourceManager.GetString("MenuRemove", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Single page に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSinglePage {
+            get {
+                return ResourceManager.GetString("MenuSinglePage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Two column (left) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuTwoColumnLeft {
+            get {
+                return ResourceManager.GetString("MenuTwoColumnLeft", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Two column (right) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuTwoColumnRight {
+            get {
+                return ResourceManager.GetString("MenuTwoColumnRight", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Two page (left) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuTwoPageLeft {
+            get {
+                return ResourceManager.GetString("MenuTwoPageLeft", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Two page (right) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuTwoPageRight {
+            get {
+                return ResourceManager.GetString("MenuTwoPageRight", resourceCulture);
             }
         }
 

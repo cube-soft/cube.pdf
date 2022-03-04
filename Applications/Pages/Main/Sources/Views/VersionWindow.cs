@@ -70,6 +70,8 @@ namespace Cube.Pdf.Pages
             bs.Bind(nameof(vm.Version), VersionPanel, nameof(VersionPanel.Version), true);
             bs.Bind(nameof(vm.CheckUpdate), UpdateCheckBox, nameof(CheckBox.Checked));
 
+            LanguageComboBox.Bind(Resource.Languages);
+
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
         }
