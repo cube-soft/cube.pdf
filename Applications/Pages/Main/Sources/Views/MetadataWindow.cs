@@ -11,6 +11,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using Cube.Forms;
+using Cube.Forms.Behaviors;
+using Cube.Mixin.Forms;
+using Cube.Mixin.Forms.Controls;
 
 namespace Cube.Pdf.Pages
 {
@@ -37,6 +40,67 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public MetadataWindow() => InitializeComponent();
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnBind
+        ///
+        /// <summary>
+        /// Binds the specified object.
+        /// </summary>
+        ///
+        /// <param name="src">Bindable object.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnBind(IBindable src)
+        {
+            if (src is not MetadataViewModel vm) return;
+
+            BindCore(vm);
+
+            Behaviors.Add(new CloseBehavior(this, vm));
+            Behaviors.Add(new DialogBehavior(vm));
+            Behaviors.Add(Locale.Subscribe(_ => BindText(vm)));
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BindCore
+        ///
+        /// <summary>
+        /// Invokes the binding settings.
+        /// </summary>
+        ///
+        /// <param name="vm">VM object to bind.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void BindCore(MetadataViewModel vm)
+        {
+            BindText(vm);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BindText
+        ///
+        /// <summary>
+        /// Sets the displayed text with the specified language.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void BindText(MetadataViewModel vm)
+        {
+            VersionComboBox.Bind(Resource.PdfVersions);
+            LayoutComboBox.Bind(Resource.ViewerOptions);
+        }
 
         #endregion
     }
