@@ -515,7 +515,7 @@
     <value>9</value>
   </data>
   <data name="MetadataPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>426, 395</value>
+    <value>426, 375</value>
   </data>
   <data name="MetadataPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -542,7 +542,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="MetadataTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>432, 401</value>
+    <value>432, 381</value>
   </data>
   <data name="MetadataTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -575,13 +575,13 @@
     <value>NoControl</value>
   </data>
   <data name="AllowAnnotationCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 362</value>
+    <value>109, 333</value>
   </data>
   <data name="AllowAnnotationCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 19</value>
   </data>
   <data name="AllowAnnotationCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+    <value>17</value>
   </data>
   <data name="AllowAnnotationCheckBox.Text" xml:space="preserve">
     <value>Allow creating and editing annotations</value>
@@ -608,13 +608,13 @@
     <value>NoControl</value>
   </data>
   <data name="AllowFormCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 337</value>
+    <value>109, 308</value>
   </data>
   <data name="AllowFormCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 19</value>
   </data>
   <data name="AllowFormCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
+    <value>16</value>
   </data>
   <data name="AllowFormCheckBox.Text" xml:space="preserve">
     <value>Allow filling in form fields</value>
@@ -641,13 +641,13 @@
     <value>NoControl</value>
   </data>
   <data name="AllowAccessibilityCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 312</value>
+    <value>109, 283</value>
   </data>
   <data name="AllowAccessibilityCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 19</value>
   </data>
   <data name="AllowAccessibilityCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>15</value>
   </data>
   <data name="AllowAccessibilityCheckBox.Text" xml:space="preserve">
     <value>Allow using contents for accessibility</value>
@@ -674,13 +674,13 @@
     <value>NoControl</value>
   </data>
   <data name="AllowModifyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 287</value>
+    <value>109, 258</value>
   </data>
   <data name="AllowModifyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 19</value>
   </data>
   <data name="AllowModifyCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>14</value>
   </data>
   <data name="AllowModifyCheckBox.Text" xml:space="preserve">
     <value>Allow inserting and removing pages</value>
@@ -707,13 +707,13 @@
     <value>NoControl</value>
   </data>
   <data name="AllowCopyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 262</value>
+    <value>109, 233</value>
   </data>
   <data name="AllowCopyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 19</value>
   </data>
   <data name="AllowCopyCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>13</value>
   </data>
   <data name="AllowCopyCheckBox.Text" xml:space="preserve">
     <value>Allow copying text and images</value>
@@ -740,13 +740,13 @@
     <value>NoControl</value>
   </data>
   <data name="AllowPrintCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 237</value>
+    <value>109, 208</value>
   </data>
   <data name="AllowPrintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 19</value>
   </data>
   <data name="AllowPrintCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>12</value>
   </data>
   <data name="AllowPrintCheckBox.Text" xml:space="preserve">
     <value>Allow printing</value>
@@ -767,13 +767,13 @@
     <value>Fill</value>
   </data>
   <data name="UserConfirmTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 183</value>
+    <value>209, 154</value>
   </data>
   <data name="UserConfirmTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 23</value>
   </data>
   <data name="UserConfirmTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>10</value>
   </data>
   <data name="&gt;&gt;UserConfirmTextBox.Name" xml:space="preserve">
     <value>UserConfirmTextBox</value>
@@ -797,7 +797,7 @@
     <value>NoControl</value>
   </data>
   <data name="UserConfirmLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 183</value>
+    <value>109, 154</value>
   </data>
   <data name="UserConfirmLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -806,7 +806,7 @@
     <value>94, 23</value>
   </data>
   <data name="UserConfirmLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>9</value>
   </data>
   <data name="UserConfirmLabel.Text" xml:space="preserve">
     <value>Confirm</value>
@@ -830,13 +830,13 @@
     <value>Fill</value>
   </data>
   <data name="UserPasswordTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 154</value>
+    <value>209, 125</value>
   </data>
   <data name="UserPasswordTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 23</value>
   </data>
   <data name="UserPasswordTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;UserPasswordTextBox.Name" xml:space="preserve">
     <value>UserPasswordTextBox</value>
@@ -860,7 +860,7 @@
     <value>NoControl</value>
   </data>
   <data name="UserPasswordLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 154</value>
+    <value>109, 125</value>
   </data>
   <data name="UserPasswordLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -869,7 +869,7 @@
     <value>94, 23</value>
   </data>
   <data name="UserPasswordLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>7</value>
   </data>
   <data name="UserPasswordLabel.Text" xml:space="preserve">
     <value>Password</value>
@@ -899,7 +899,7 @@
     <value>NoControl</value>
   </data>
   <data name="OperationLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 125</value>
+    <value>9, 96</value>
   </data>
   <data name="OperationLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -908,7 +908,7 @@
     <value>94, 23</value>
   </data>
   <data name="OperationLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>5</value>
   </data>
   <data name="OperationLabel.Text" xml:space="preserve">
     <value>Operations</value>
@@ -927,45 +927,6 @@
   </data>
   <data name="&gt;&gt;OperationLabel.ZOrder" xml:space="preserve">
     <value>10</value>
-  </data>
-  <data name="MethodLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="MethodLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="MethodLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="MethodLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 96</value>
-  </data>
-  <data name="MethodLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="MethodLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
-  </data>
-  <data name="MethodLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="MethodLabel.Text" xml:space="preserve">
-    <value>Method</value>
-  </data>
-  <data name="MethodLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;MethodLabel.Name" xml:space="preserve">
-    <value>MethodLabel</value>
-  </data>
-  <data name="&gt;&gt;MethodLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MethodLabel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;MethodLabel.ZOrder" xml:space="preserve">
-    <value>11</value>
   </data>
   <data name="OwnerConfirmTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -989,7 +950,7 @@
     <value>EncryptionPanel</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmTextBox.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>11</value>
   </data>
   <data name="OwnerConfirmLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1028,7 +989,7 @@
     <value>EncryptionPanel</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmLabel.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>12</value>
   </data>
   <data name="OwnerPasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1058,7 +1019,7 @@
     <value>EncryptionPanel</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordCheckBox.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>13</value>
   </data>
   <data name="OwnerPasswordLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1094,7 +1055,7 @@
     <value>EncryptionPanel</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordLabel.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>14</value>
   </data>
   <data name="OwnerPasswordTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1118,31 +1079,7 @@
     <value>EncryptionPanel</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordTextBox.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="MethodComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="MethodComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 96</value>
-  </data>
-  <data name="MethodComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 23</value>
-  </data>
-  <data name="MethodComboBox.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;MethodComboBox.Name" xml:space="preserve">
-    <value>MethodComboBox</value>
-  </data>
-  <data name="&gt;&gt;MethodComboBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MethodComboBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;MethodComboBox.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>15</value>
   </data>
   <data name="UserPasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1151,13 +1088,13 @@
     <value>Fill</value>
   </data>
   <data name="UserPasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 125</value>
+    <value>109, 96</value>
   </data>
   <data name="UserPasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 23</value>
   </data>
   <data name="UserPasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
+    <value>6</value>
   </data>
   <data name="UserPasswordCheckBox.Text" xml:space="preserve">
     <value>Open with password</value>
@@ -1172,7 +1109,7 @@
     <value>EncryptionPanel</value>
   </data>
   <data name="&gt;&gt;UserPasswordCheckBox.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>16</value>
   </data>
   <data name="SharePasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1181,13 +1118,13 @@
     <value>Fill</value>
   </data>
   <data name="SharePasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 212</value>
+    <value>209, 183</value>
   </data>
   <data name="SharePasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 19</value>
   </data>
   <data name="SharePasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>11</value>
   </data>
   <data name="SharePasswordCheckBox.Text" xml:space="preserve">
     <value>Use owner password</value>
@@ -1202,7 +1139,7 @@
     <value>EncryptionPanel</value>
   </data>
   <data name="&gt;&gt;SharePasswordCheckBox.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>17</value>
   </data>
   <data name="EncryptionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1211,10 +1148,10 @@
     <value>3, 3</value>
   </data>
   <data name="EncryptionPanel.RowCount" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>15</value>
   </data>
   <data name="EncryptionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>426, 395</value>
+    <value>426, 365</value>
   </data>
   <data name="EncryptionPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1232,7 +1169,7 @@
     <value>0</value>
   </data>
   <data name="EncryptionPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="AllowAnnotationCheckBox" Row="14" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowFormCheckBox" Row="13" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowAccessibilityCheckBox" Row="12" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowModifyCheckBox" Row="11" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowCopyCheckBox" Row="10" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowPrintCheckBox" Row="9" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="UserConfirmTextBox" Row="7" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="UserConfirmLabel" Row="7" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordTextBox" Row="6" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordLabel" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="OperationLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="MethodLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OwnerConfirmLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="3" /&gt;&lt;Control Name="OwnerPasswordLabel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordTextBox" Row="2" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="MethodComboBox" Row="4" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="UserPasswordCheckBox" Row="5" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="SharePasswordCheckBox" Row="8" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Absolute,100,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,6,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="AllowAnnotationCheckBox" Row="13" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowFormCheckBox" Row="12" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowAccessibilityCheckBox" Row="11" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowModifyCheckBox" Row="10" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowCopyCheckBox" Row="9" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowPrintCheckBox" Row="8" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="UserConfirmTextBox" Row="6" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="UserConfirmLabel" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordTextBox" Row="5" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordLabel" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="OperationLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OwnerConfirmLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="3" /&gt;&lt;Control Name="OwnerPasswordLabel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordTextBox" Row="2" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="UserPasswordCheckBox" Row="4" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="SharePasswordCheckBox" Row="7" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Absolute,100,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,6,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Percent,100,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="EncryptionTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -1241,7 +1178,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="EncryptionTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>432, 401</value>
+    <value>432, 371</value>
   </data>
   <data name="EncryptionTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1268,7 +1205,7 @@
     <value>12, 12</value>
   </data>
   <data name="MainTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>440, 429</value>
+    <value>440, 399</value>
   </data>
   <data name="MainTabControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1352,7 +1289,7 @@
     <value>Fill</value>
   </data>
   <data name="FooterPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 451</value>
+    <value>0, 421</value>
   </data>
   <data name="FooterPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -1391,7 +1328,7 @@
     <value>4</value>
   </data>
   <data name="RootPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>464, 511</value>
+    <value>464, 481</value>
   </data>
   <data name="RootPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1409,13 +1346,13 @@
     <value>0</value>
   </data>
   <data name="RootPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="MainTabControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="3" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Absolute,435,Percent,100,Absolute,60" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="MainTabControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="3" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Absolute,405,Percent,100,Absolute,60" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>464, 511</value>
+    <value>464, 481</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Meiryo UI, 12px</value>
@@ -1868,8 +1805,11 @@
         QYABrEGAAaxBgAGsQYABrEGAAaxBgAGsQeAHrEH4H6xB/D+sQQ==
 </value>
   </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>430, 550</value>
+    <value>430, 520</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>PDF Metadata</value>

@@ -112,9 +112,6 @@
   <data name="OperationLabel.Text" xml:space="preserve">
     <value>操作</value>
   </data>
-  <data name="MethodLabel.Text" xml:space="preserve">
-    <value>暗号化方式</value>
-  </data>
   <data name="OwnerConfirmLabel.Text" xml:space="preserve">
     <value>パスワード確認</value>
   </data>
