@@ -47,7 +47,11 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public VersionViewModel(SettingFolder src, SynchronizationContext context) :
-            base(src, new(), context) {}
+            base(src, new(), context)
+        {
+            CheckUpdate = src.Startup.Enabled;
+            Language    = src.Value.Language;
+        }
 
         #endregion
 
@@ -74,11 +78,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool CheckUpdate
-        {
-            get => Facade.Startup.Enabled;
-            set => Facade.Startup.Enabled = value;
-        }
+        public bool CheckUpdate { get; set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,11 +89,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Language Language
-        {
-            get => Facade.Value.Language;
-            set => Facade.Value.Language = value;
-        }
+        public Language Language { get; set; }
 
         #endregion
 
@@ -108,7 +104,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Apply() => Quit(Facade.Save, true);
+        public void Apply() => Quit(() => {
+            Facade.Startup.Enabled = CheckUpdate;
+            Facade.Value.Language  = Language;
+            Facade.Save();
+        }, true);
 
         #endregion
     }
