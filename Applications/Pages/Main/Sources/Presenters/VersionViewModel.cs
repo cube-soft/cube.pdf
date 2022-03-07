@@ -80,6 +80,21 @@ namespace Cube.Pdf.Pages
             set => Facade.Startup.Enabled = value;
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Language
+        ///
+        /// <summary>
+        /// Gets or sets the displayed language.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Language Language
+        {
+            get => Facade.Value.Language;
+            set => Facade.Value.Language = value;
+        }
+
         #endregion
 
         #region Methods

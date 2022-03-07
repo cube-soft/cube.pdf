@@ -22,6 +22,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Cube.Mixin.Observing;
 
 namespace Cube.Pdf.Pages
 {
@@ -70,12 +71,17 @@ namespace Cube.Pdf.Pages
         public MainViewModel(SettingFolder src, IEnumerable<string> args, SynchronizationContext context) :
             base(new(src, context), new(12), context)
         {
+            Locale.Set(src.Value.Language);
+
             Arguments = args;
             Files = new() { DataSource = Facade.Files };
             Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
 
             Assets.Add(new ObservableProxy(Facade, this));
             Assets.Add(ObserveCollection());
+            Assets.Add(src.Subscribe(e => {
+                if (e == nameof(src.Value.Language)) Locale.Set(src.Value.Language);
+            }));
         }
 
         #endregion
@@ -126,6 +132,17 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public bool Ready => Facade.Files.Count > 0;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Language
+        ///
+        /// <summary>
+        /// Gets the displayed language.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Language Language => Facade.Settings.Value.Language;
 
         #endregion
 

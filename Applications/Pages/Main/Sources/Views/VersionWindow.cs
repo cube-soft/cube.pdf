@@ -69,11 +69,12 @@ namespace Cube.Pdf.Pages
             var bs = Behaviors.Hook(new BindingSource(vm, ""));
             bs.Bind(nameof(vm.Version), VersionPanel, nameof(VersionPanel.Version), true);
             bs.Bind(nameof(vm.CheckUpdate), UpdateCheckBox, nameof(CheckBox.Checked));
-
-            LanguageComboBox.Bind(Resource.Languages);
+            bs.Bind(nameof(vm.Language), LanguageComboBox, nameof(ComboBox.SelectedValue));
 
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
+
+            LanguageComboBox.Bind(Resource.Languages);
         }
 
         #endregion

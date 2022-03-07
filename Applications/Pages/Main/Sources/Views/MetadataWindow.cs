@@ -64,7 +64,6 @@ namespace Cube.Pdf.Pages
 
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
-            Behaviors.Add(Locale.Subscribe(_ => BindText(vm)));
         }
 
         #endregion
@@ -83,20 +82,6 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         private void BindCore(MetadataViewModel vm)
-        {
-            BindText(vm);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// BindText
-        ///
-        /// <summary>
-        /// Sets the displayed text with the specified language.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void BindText(MetadataViewModel vm)
         {
             VersionComboBox.Bind(Resource.PdfVersions);
             LayoutComboBox.Bind(Resource.ViewerOptions);

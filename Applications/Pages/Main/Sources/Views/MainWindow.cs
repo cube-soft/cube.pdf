@@ -124,6 +124,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(vm.Subscribe<UpdateListMessage>(e => vm.Files.ResetBindings(false)));
             Behaviors.Add(vm.Subscribe<SelectMessage>(e => Select(e.Value)));
             Behaviors.Add(vm.Subscribe<PreviewMessage>(e => Process.Start(e.Value)));
+            Behaviors.Add(Locale.Subscribe(_ => BindText(vm)));
 
             var ctx = new FileContextMenu(() => SelectedIndices.Count() > 0);
             Behaviors.Add(new ClickEventBehavior(ctx.PreviewMenu, () => vm.Preview(SelectedIndices)));
@@ -135,6 +136,7 @@ namespace Cube.Pdf.Pages
             FileListView.DataSource = vm.Files;
 
             MakeShortcut(vm);
+            BindText(vm);
         }
 
         #endregion
@@ -196,6 +198,22 @@ namespace Cube.Pdf.Pages
         {
             FileListView.ClearSelection();
             foreach (var i in indices) FileListView.Rows[i].Selected = true;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BindText
+        ///
+        /// <summary>
+        /// Sets the displayed text with the specified language.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void BindText(MainViewModel vm)
+        {
+            var lang = vm.Language;
+            this.UpdateCulture(lang);
+            Resource.UpdateCulture(lang);
         }
 
         #endregion

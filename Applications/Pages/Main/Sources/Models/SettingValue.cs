@@ -37,6 +37,22 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Language
+        ///
+        /// <summary>
+        /// Gets or sets the displayed language.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Language Language
+        {
+            get => Get(() => Language.Auto);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Temp
         ///
         /// <summary>
