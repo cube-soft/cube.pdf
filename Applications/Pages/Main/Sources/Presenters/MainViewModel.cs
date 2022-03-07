@@ -179,7 +179,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Metadata() => Send(new MetadataViewModel(Context), e => { }, true);
+        public void Metadata() => Send(new MetadataViewModel(new(), new(), Context), e => { }, true);
 
         /* --------------------------------------------------------------------- */
         ///

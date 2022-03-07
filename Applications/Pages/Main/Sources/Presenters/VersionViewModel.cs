@@ -78,7 +78,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool CheckUpdate { get; set; }
+        public bool CheckUpdate
+        {
+            get => Get(() => false);
+            set => Set(value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -89,7 +93,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Language Language { get; set; }
+        public Language Language
+        {
+            get => Get(() => Language.Auto);
+            set => Set(value);
+        }
 
         #endregion
 
@@ -104,7 +112,8 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Apply() => Quit(() => {
+        public void Apply() => Quit(() =>
+        {
             Facade.Startup.Enabled = CheckUpdate;
             Facade.Value.Language  = Language;
             Facade.Save();

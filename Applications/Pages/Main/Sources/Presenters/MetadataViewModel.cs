@@ -42,11 +42,167 @@ namespace Cube.Pdf.Pages
         /// with the specified arguments.
         /// </summary>
         ///
+        /// <param name="src">Source metadata information.</param>
+        /// <param name="encryption">Source encryption information.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MetadataViewModel(SynchronizationContext context) :
-            base(new(), new(), context) { }
+        public MetadataViewModel(Metadata src, Encryption encryption, SynchronizationContext context) :
+            base(src, new(), context)
+        {
+            Encryption = new(encryption, context);
+            Title      = src.Title;
+            Author     = src.Author;
+            Subject    = src.Subject;
+            Keywords   = src.Keywords;
+            Creator    = src.Creator;
+            Version    = src.Version.Minor;
+            Options    = src.Options;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// Gets the ViewModel object for encryption settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public EncryptionViewModel Encryption { get; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Title
+        ///
+        /// <summary>
+        /// Gets or sets the title.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Title
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Author
+        ///
+        /// <summary>
+        /// Gets or sets the author.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Author
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Subject
+        ///
+        /// <summary>
+        /// Gets or sets the subject.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Subject
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Keywords
+        ///
+        /// <summary>
+        /// Gets or sets the keywords.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Keywords
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Creator
+        ///
+        /// <summary>
+        /// Gets or sets the name of creator program.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Creator
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version
+        ///
+        /// <summary>
+        /// Gets or sets the PDF version.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Version
+        {
+            get => Get(() => 7);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Options
+        ///
+        /// <summary>
+        /// Gets or sets the view options.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ViewerOption Options
+        {
+            get => Get(() => ViewerOption.None);
+            set => Set(value);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Apply
+        ///
+        /// <summary>
+        /// Apply the user settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Apply() => Quit(() =>
+        {
+            Facade.Title    = Title;
+            Facade.Author   = Author;
+            Facade.Subject  = Subject;
+            Facade.Keywords = Keywords;
+            Facade.Creator  = Creator;
+            Facade.Version  = new(1, Version);
+            Facade.Options  = Options;
+        }, true);
 
         #endregion
     }
