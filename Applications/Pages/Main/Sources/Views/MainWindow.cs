@@ -214,6 +214,7 @@ namespace Cube.Pdf.Pages
             var lang = vm.Language;
             this.UpdateCulture(lang);
             Resource.UpdateCulture(lang);
+            FileListView.Refresh();
         }
 
         #endregion
