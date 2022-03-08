@@ -33,8 +33,8 @@
             this.MainTabControl = new System.Windows.Forms.TabControl();
             this.MetadataTabPage = new System.Windows.Forms.TabPage();
             this.MetadataPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.LayoutComboBox = new System.Windows.Forms.ComboBox();
-            this.LayoutLabel = new System.Windows.Forms.Label();
+            this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
+            this.ViewOptionLabel = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
             this.CreatorTextBox = new System.Windows.Forms.TextBox();
             this.CreatorLabel = new System.Windows.Forms.Label();
@@ -104,8 +104,8 @@
             // MetadataPanel
             //
             resources.ApplyResources(this.MetadataPanel, "MetadataPanel");
-            this.MetadataPanel.Controls.Add(this.LayoutComboBox, 2, 7);
-            this.MetadataPanel.Controls.Add(this.LayoutLabel, 1, 7);
+            this.MetadataPanel.Controls.Add(this.ViewOptionComboBox, 2, 7);
+            this.MetadataPanel.Controls.Add(this.ViewOptionLabel, 1, 7);
             this.MetadataPanel.Controls.Add(this.VersionLabel, 1, 6);
             this.MetadataPanel.Controls.Add(this.CreatorTextBox, 2, 5);
             this.MetadataPanel.Controls.Add(this.CreatorLabel, 1, 5);
@@ -120,17 +120,17 @@
             this.MetadataPanel.Controls.Add(this.VersionComboBox, 2, 6);
             this.MetadataPanel.Name = "MetadataPanel";
             //
-            // LayoutComboBox
+            // ViewOptionComboBox
             //
-            resources.ApplyResources(this.LayoutComboBox, "LayoutComboBox");
-            this.LayoutComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.LayoutComboBox.FormattingEnabled = true;
-            this.LayoutComboBox.Name = "LayoutComboBox";
+            resources.ApplyResources(this.ViewOptionComboBox, "ViewOptionComboBox");
+            this.ViewOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ViewOptionComboBox.FormattingEnabled = true;
+            this.ViewOptionComboBox.Name = "ViewOptionComboBox";
             //
-            // LayoutLabel
+            // ViewOptionLabel
             //
-            resources.ApplyResources(this.LayoutLabel, "LayoutLabel");
-            this.LayoutLabel.Name = "LayoutLabel";
+            resources.ApplyResources(this.ViewOptionLabel, "ViewOptionLabel");
+            this.ViewOptionLabel.Name = "ViewOptionLabel";
             //
             // VersionLabel
             //
@@ -403,8 +403,8 @@
         private System.Windows.Forms.Label CreatorLabel;
         private System.Windows.Forms.Label VersionLabel;
         private System.Windows.Forms.ComboBox VersionComboBox;
-        private System.Windows.Forms.ComboBox LayoutComboBox;
-        private System.Windows.Forms.Label LayoutLabel;
+        private System.Windows.Forms.ComboBox ViewOptionComboBox;
+        private System.Windows.Forms.Label ViewOptionLabel;
         private System.Windows.Forms.TableLayoutPanel EncryptionPanel;
         private System.Windows.Forms.CheckBox OwnerPasswordCheckBox;
         private System.Windows.Forms.Label OwnerPasswordLabel;

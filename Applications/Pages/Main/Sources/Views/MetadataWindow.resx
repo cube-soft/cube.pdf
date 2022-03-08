@@ -66,68 +66,68 @@
     <value>4</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="LayoutComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="ViewOptionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="LayoutComboBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ViewOptionComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>109, 189</value>
   </data>
-  <data name="LayoutComboBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ViewOptionComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 23</value>
   </data>
-  <data name="LayoutComboBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="ViewOptionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
   </data>
-  <data name="&gt;&gt;LayoutComboBox.Name" xml:space="preserve">
-    <value>LayoutComboBox</value>
+  <data name="&gt;&gt;ViewOptionComboBox.Name" xml:space="preserve">
+    <value>ViewOptionComboBox</value>
   </data>
-  <data name="&gt;&gt;LayoutComboBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionComboBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LayoutComboBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionComboBox.Parent" xml:space="preserve">
     <value>MetadataPanel</value>
   </data>
-  <data name="&gt;&gt;LayoutComboBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="LayoutLabel.AutoSize" type="System.Boolean, mscorlib">
+  <data name="ViewOptionLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="LayoutLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="ViewOptionLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="LayoutLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="ViewOptionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="LayoutLabel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ViewOptionLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 189</value>
   </data>
-  <data name="LayoutLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="ViewOptionLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="LayoutLabel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ViewOptionLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>94, 23</value>
   </data>
-  <data name="LayoutLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="ViewOptionLabel.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
   </data>
-  <data name="LayoutLabel.Text" xml:space="preserve">
+  <data name="ViewOptionLabel.Text" xml:space="preserve">
     <value>Layout</value>
   </data>
-  <data name="LayoutLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="ViewOptionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <data name="&gt;&gt;LayoutLabel.Name" xml:space="preserve">
-    <value>LayoutLabel</value>
+  <data name="&gt;&gt;ViewOptionLabel.Name" xml:space="preserve">
+    <value>ViewOptionLabel</value>
   </data>
-  <data name="&gt;&gt;LayoutLabel.Type" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;LayoutLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionLabel.Parent" xml:space="preserve">
     <value>MetadataPanel</value>
   </data>
-  <data name="&gt;&gt;LayoutLabel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionLabel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="VersionLabel.AutoSize" type="System.Boolean, mscorlib">
@@ -515,7 +515,7 @@
     <value>9</value>
   </data>
   <data name="MetadataPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>426, 375</value>
+    <value>426, 365</value>
   </data>
   <data name="MetadataPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -533,7 +533,7 @@
     <value>0</value>
   </data>
   <data name="MetadataPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LayoutComboBox" Row="7" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="LayoutLabel" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="VersionLabel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordTextBox" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="KeywordLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="VersionComboBox" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,12,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ViewOptionComboBox" Row="7" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="ViewOptionLabel" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="VersionLabel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordTextBox" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="KeywordLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="VersionComboBox" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,12,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="MetadataTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -542,7 +542,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="MetadataTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>432, 381</value>
+    <value>432, 371</value>
   </data>
   <data name="MetadataTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1804,9 +1804,6 @@
         wwgIyMQICMgUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/D+sQfAPrEHgB6xBgAGsQYABrEGAAaxBgAGs
         QYABrEGAAaxBgAGsQYABrEGAAaxBgAGsQeAHrEH4H6xB/D+sQQ==
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
     <value>430, 520</value>

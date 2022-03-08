@@ -10,6 +10,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
 using Cube.Mixin.Forms;
@@ -83,8 +84,20 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void BindCore(MetadataViewModel vm)
         {
+            // Metadata
+            var s0 = vm;
+            var b0 = Behaviors.Hook(new BindingSource(s0, ""));
+            b0.Bind(nameof(s0.Version),  VersionComboBox,    nameof(ComboBox.SelectedValue));
+            b0.Bind(nameof(s0.Title),    TitleTextBox,       nameof(TextBox.Text));
+            b0.Bind(nameof(s0.Author),   AuthorTextBox,      nameof(TextBox.Text));
+            b0.Bind(nameof(s0.Subject),  SubjectTextBox,     nameof(TextBox.Text));
+            b0.Bind(nameof(s0.Keywords), KeywordTextBox,     nameof(TextBox.Text));
+            b0.Bind(nameof(s0.Creator),  CreatorTextBox,     nameof(TextBox.Text));
+            b0.Bind(nameof(s0.Options),  ViewOptionComboBox, nameof(ComboBox.SelectedValue));
+
+            // Text (i18n)
             VersionComboBox.Bind(Resource.PdfVersions);
-            LayoutComboBox.Bind(Resource.ViewerOptions);
+            ViewOptionComboBox.Bind(Resource.ViewerOptions);
         }
 
         #endregion
