@@ -50,6 +50,7 @@
             this.EncryptionTabPage = new System.Windows.Forms.TabPage();
             this.EncryptionPanel = new System.Windows.Forms.TableLayoutPanel();
             this.EncryptionSubPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.SharePasswordCheckBox = new System.Windows.Forms.CheckBox();
             this.OperationLabel = new System.Windows.Forms.Label();
             this.OwnerConfirmTextBox = new System.Windows.Forms.TextBox();
             this.OwnerConfirmLabel = new System.Windows.Forms.Label();
@@ -57,7 +58,6 @@
             this.OwnerPasswordTextBox = new System.Windows.Forms.TextBox();
             this.UserPasswordCheckBox = new System.Windows.Forms.CheckBox();
             this.UserPasswordPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.SharePasswordCheckBox = new System.Windows.Forms.CheckBox();
             this.UserConfirmTextBox = new System.Windows.Forms.TextBox();
             this.UserConfirmLabel = new System.Windows.Forms.Label();
             this.UserPasswordTextBox = new System.Windows.Forms.TextBox();
@@ -217,6 +217,7 @@
             // EncryptionSubPanel
             //
             resources.ApplyResources(this.EncryptionSubPanel, "EncryptionSubPanel");
+            this.EncryptionSubPanel.Controls.Add(this.SharePasswordCheckBox, 1, 4);
             this.EncryptionSubPanel.Controls.Add(this.OperationLabel, 0, 2);
             this.EncryptionSubPanel.Controls.Add(this.OwnerConfirmTextBox, 1, 1);
             this.EncryptionSubPanel.Controls.Add(this.OwnerConfirmLabel, 0, 1);
@@ -224,8 +225,14 @@
             this.EncryptionSubPanel.Controls.Add(this.OwnerPasswordTextBox, 1, 0);
             this.EncryptionSubPanel.Controls.Add(this.UserPasswordCheckBox, 1, 2);
             this.EncryptionSubPanel.Controls.Add(this.UserPasswordPanel, 1, 3);
-            this.EncryptionSubPanel.Controls.Add(this.PermissionPanel, 1, 4);
+            this.EncryptionSubPanel.Controls.Add(this.PermissionPanel, 1, 5);
             this.EncryptionSubPanel.Name = "EncryptionSubPanel";
+            //
+            // SharePasswordCheckBox
+            //
+            resources.ApplyResources(this.SharePasswordCheckBox, "SharePasswordCheckBox");
+            this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
+            this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
             //
             // OperationLabel
             //
@@ -261,18 +268,11 @@
             // UserPasswordPanel
             //
             resources.ApplyResources(this.UserPasswordPanel, "UserPasswordPanel");
-            this.UserPasswordPanel.Controls.Add(this.SharePasswordCheckBox, 2, 2);
             this.UserPasswordPanel.Controls.Add(this.UserConfirmTextBox, 2, 1);
             this.UserPasswordPanel.Controls.Add(this.UserConfirmLabel, 0, 1);
             this.UserPasswordPanel.Controls.Add(this.UserPasswordTextBox, 1, 0);
             this.UserPasswordPanel.Controls.Add(this.UserPasswordLabel, 0, 0);
             this.UserPasswordPanel.Name = "UserPasswordPanel";
-            //
-            // SharePasswordCheckBox
-            //
-            resources.ApplyResources(this.SharePasswordCheckBox, "SharePasswordCheckBox");
-            this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
-            this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
             //
             // UserConfirmTextBox
             //
@@ -435,7 +435,6 @@
         private System.Windows.Forms.TextBox OwnerPasswordTextBox;
         private System.Windows.Forms.CheckBox UserPasswordCheckBox;
         private System.Windows.Forms.TableLayoutPanel UserPasswordPanel;
-        private System.Windows.Forms.CheckBox SharePasswordCheckBox;
         private System.Windows.Forms.TextBox UserConfirmTextBox;
         private System.Windows.Forms.Label UserConfirmLabel;
         private System.Windows.Forms.TextBox UserPasswordTextBox;
@@ -447,5 +446,6 @@
         private System.Windows.Forms.CheckBox AllowModifyCheckBox;
         private System.Windows.Forms.CheckBox AllowCopyCheckBox;
         private System.Windows.Forms.CheckBox AllowPrintCheckBox;
+        private System.Windows.Forms.CheckBox SharePasswordCheckBox;
     }
 }

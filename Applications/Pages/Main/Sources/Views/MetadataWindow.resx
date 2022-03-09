@@ -568,6 +568,42 @@
   <data name="EncryptionSubPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="SharePasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SharePasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SharePasswordCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SharePasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 148</value>
+  </data>
+  <data name="SharePasswordCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>103, 3, 3, 3</value>
+  </data>
+  <data name="SharePasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 19</value>
+  </data>
+  <data name="SharePasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="SharePasswordCheckBox.Text" xml:space="preserve">
+    <value>Use owner password</value>
+  </data>
+  <data name="&gt;&gt;SharePasswordCheckBox.Name" xml:space="preserve">
+    <value>SharePasswordCheckBox</value>
+  </data>
+  <data name="&gt;&gt;SharePasswordCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SharePasswordCheckBox.Parent" xml:space="preserve">
+    <value>EncryptionSubPanel</value>
+  </data>
+  <data name="&gt;&gt;SharePasswordCheckBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="OperationLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -605,7 +641,7 @@
     <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;OperationLabel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="OwnerConfirmTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -629,7 +665,7 @@
     <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmTextBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="OwnerConfirmLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -668,7 +704,7 @@
     <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="OwnerPasswordLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -707,7 +743,7 @@
     <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="OwnerPasswordTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -731,7 +767,7 @@
     <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordTextBox.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="UserPasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -764,43 +800,10 @@
     <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;UserPasswordCheckBox.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="UserPasswordPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="SharePasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="SharePasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="SharePasswordCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="SharePasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>103, 61</value>
-  </data>
-  <data name="SharePasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 19</value>
-  </data>
-  <data name="SharePasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="SharePasswordCheckBox.Text" xml:space="preserve">
-    <value>Use owner password</value>
-  </data>
-  <data name="&gt;&gt;SharePasswordCheckBox.Name" xml:space="preserve">
-    <value>SharePasswordCheckBox</value>
-  </data>
-  <data name="&gt;&gt;SharePasswordCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SharePasswordCheckBox.Parent" xml:space="preserve">
-    <value>UserPasswordPanel</value>
-  </data>
-  <data name="&gt;&gt;SharePasswordCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="UserConfirmTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -824,7 +827,7 @@
     <value>UserPasswordPanel</value>
   </data>
   <data name="&gt;&gt;UserConfirmTextBox.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="UserConfirmLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -863,7 +866,7 @@
     <value>UserPasswordPanel</value>
   </data>
   <data name="&gt;&gt;UserConfirmLabel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="UserPasswordTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -887,7 +890,7 @@
     <value>UserPasswordPanel</value>
   </data>
   <data name="&gt;&gt;UserPasswordTextBox.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="UserPasswordLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -926,7 +929,7 @@
     <value>UserPasswordPanel</value>
   </data>
   <data name="&gt;&gt;UserPasswordLabel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="UserPasswordPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -938,10 +941,10 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="UserPasswordPanel.RowCount" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="UserPasswordPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 83</value>
+    <value>314, 58</value>
   </data>
   <data name="UserPasswordPanel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -956,10 +959,10 @@
     <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;UserPasswordPanel.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="UserPasswordPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SharePasswordCheckBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserConfirmTextBox" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserConfirmLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,29,Absolute,29,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="UserConfirmTextBox" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserConfirmLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,29,Percent,100,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="PermissionPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1178,7 +1181,7 @@
     <value>314, 150</value>
   </data>
   <data name="PermissionPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="&gt;&gt;PermissionPanel.Name" xml:space="preserve">
     <value>PermissionPanel</value>
@@ -1190,7 +1193,7 @@
     <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;PermissionPanel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="PermissionPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="AllowAnnotationCheckBox" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowFormCheckBox" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowAccessibilityCheckBox" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowModifyCheckBox" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowCopyCheckBox" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowPrintCheckBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Percent,100,Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -1205,7 +1208,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="EncryptionSubPanel.RowCount" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="EncryptionSubPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>414, 320</value>
@@ -1226,7 +1229,7 @@
     <value>0</value>
   </data>
   <data name="EncryptionSubPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="OperationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmTextBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PermissionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,29,Absolute,29,Absolute,29,Absolute,83,Percent,100,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SharePasswordCheckBox" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OperationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmTextBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PermissionPanel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,29,Absolute,29,Absolute,29,Absolute,58,Absolute,25,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="OwnerPasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>

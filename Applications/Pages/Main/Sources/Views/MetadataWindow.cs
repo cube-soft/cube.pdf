@@ -95,6 +95,27 @@ namespace Cube.Pdf.Pages
             b0.Bind(nameof(s0.Creator),  CreatorTextBox,     nameof(TextBox.Text));
             b0.Bind(nameof(s0.Options),  ViewOptionComboBox, nameof(ComboBox.SelectedValue));
 
+            // Encryption
+            var s1 = vm.Encryption;
+            var b1 = Behaviors.Hook(new BindingSource(s1, ""));
+            b1.Bind(nameof(s1.Enabled),            OwnerPasswordCheckBox,      nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.Enabled),            EncryptionSubPanel,         nameof(Enabled), true);
+            b1.Bind(nameof(s1.OwnerPassword),      OwnerPasswordTextBox,       nameof(TextBox.Text));
+            b1.Bind(nameof(s1.OwnerConfirm),       OwnerConfirmTextBox,        nameof(TextBox.Text));
+            b1.Bind(nameof(s1.OpenWithPassword),   UserPasswordCheckBox,       nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.OpenWithPassword),   SharePasswordCheckBox,      nameof(Enabled), true);
+            b1.Bind(nameof(s1.UserRequired),       UserPasswordPanel,          nameof(Enabled), true);
+            b1.Bind(nameof(s1.UserPassword),       UserPasswordTextBox,        nameof(TextBox.Text));
+            b1.Bind(nameof(s1.UserConfirm),        UserConfirmTextBox,         nameof(TextBox.Text));
+            b1.Bind(nameof(s1.SharePassword),      SharePasswordCheckBox,      nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.Permissible),        PermissionPanel,            nameof(Enabled), true);
+            b1.Bind(nameof(s1.AllowPrint),         AllowPrintCheckBox,         nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.AllowCopy),          AllowCopyCheckBox,          nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.AllowModify),        AllowModifyCheckBox,        nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.AllowAccessibility), AllowAccessibilityCheckBox, nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.AllowForm),          AllowFormCheckBox,          nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.AllowAnnotation),    AllowAnnotationCheckBox,    nameof(CheckBox.Checked));
+
             // Text (i18n)
             VersionComboBox.Bind(Resource.PdfVersions);
             ViewOptionComboBox.Bind(Resource.ViewerOptions);

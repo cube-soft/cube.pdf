@@ -104,7 +104,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string OwnerConfirm { get; set; } = string.Empty;
+        public string OwnerConfirm
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -117,6 +121,22 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public bool OpenWithPassword
+        {
+            get => Get(() => false);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SharePassword
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to share the owner
+        /// password with the user password.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool SharePassword
         {
             get => Get(() => false);
             set => Set(value);
@@ -146,23 +166,40 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public string UserConfirm { get; set; } = string.Empty;
+        public string UserConfirm
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SharePassword
+        /// UserRequired
         ///
         /// <summary>
-        /// Gets or sets a value indicating whether to share the owner
-        /// password with the user password.
+        /// Gets or sets a value indicating whether the user password is
+        /// required to input.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool SharePassword
-        {
-            get => Get(() => false);
-            set => Set(value);
-        }
+        public bool UserRequired => OpenWithPassword && !SharePassword;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Permissible
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether the permission values
+        /// are enabled to input.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// If the user password is shared with the owner password,
+        /// the permission settings are not permitted.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool Permissible => !(OpenWithPassword && SharePassword);
 
         /* ----------------------------------------------------------------- */
         ///
