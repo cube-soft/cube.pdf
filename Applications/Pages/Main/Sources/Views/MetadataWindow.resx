@@ -563,331 +563,10 @@
     <value>0</value>
   </data>
   <data name="EncryptionPanel.ColumnCount" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="AllowAnnotationCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="AllowAnnotationCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="AllowAnnotationCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="AllowAnnotationCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 333</value>
-  </data>
-  <data name="AllowAnnotationCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
-  </data>
-  <data name="AllowAnnotationCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
-  </data>
-  <data name="AllowAnnotationCheckBox.Text" xml:space="preserve">
-    <value>Allow creating and editing annotations</value>
-  </data>
-  <data name="&gt;&gt;AllowAnnotationCheckBox.Name" xml:space="preserve">
-    <value>AllowAnnotationCheckBox</value>
-  </data>
-  <data name="&gt;&gt;AllowAnnotationCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AllowAnnotationCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;AllowAnnotationCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="AllowFormCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="AllowFormCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="AllowFormCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="AllowFormCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 308</value>
-  </data>
-  <data name="AllowFormCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
-  </data>
-  <data name="AllowFormCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
-  </data>
-  <data name="AllowFormCheckBox.Text" xml:space="preserve">
-    <value>Allow filling in form fields</value>
-  </data>
-  <data name="&gt;&gt;AllowFormCheckBox.Name" xml:space="preserve">
-    <value>AllowFormCheckBox</value>
-  </data>
-  <data name="&gt;&gt;AllowFormCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AllowFormCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;AllowFormCheckBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="AllowAccessibilityCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="AllowAccessibilityCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="AllowAccessibilityCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="AllowAccessibilityCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 283</value>
-  </data>
-  <data name="AllowAccessibilityCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
-  </data>
-  <data name="AllowAccessibilityCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="AllowAccessibilityCheckBox.Text" xml:space="preserve">
-    <value>Allow using contents for accessibility</value>
-  </data>
-  <data name="&gt;&gt;AllowAccessibilityCheckBox.Name" xml:space="preserve">
-    <value>AllowAccessibilityCheckBox</value>
-  </data>
-  <data name="&gt;&gt;AllowAccessibilityCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AllowAccessibilityCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;AllowAccessibilityCheckBox.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="AllowModifyCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="AllowModifyCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="AllowModifyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="AllowModifyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 258</value>
-  </data>
-  <data name="AllowModifyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
-  </data>
-  <data name="AllowModifyCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
-  </data>
-  <data name="AllowModifyCheckBox.Text" xml:space="preserve">
-    <value>Allow inserting and removing pages</value>
-  </data>
-  <data name="&gt;&gt;AllowModifyCheckBox.Name" xml:space="preserve">
-    <value>AllowModifyCheckBox</value>
-  </data>
-  <data name="&gt;&gt;AllowModifyCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AllowModifyCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;AllowModifyCheckBox.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="AllowCopyCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="AllowCopyCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="AllowCopyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="AllowCopyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 233</value>
-  </data>
-  <data name="AllowCopyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
-  </data>
-  <data name="AllowCopyCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="AllowCopyCheckBox.Text" xml:space="preserve">
-    <value>Allow copying text and images</value>
-  </data>
-  <data name="&gt;&gt;AllowCopyCheckBox.Name" xml:space="preserve">
-    <value>AllowCopyCheckBox</value>
-  </data>
-  <data name="&gt;&gt;AllowCopyCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AllowCopyCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;AllowCopyCheckBox.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="AllowPrintCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="AllowPrintCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="AllowPrintCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="AllowPrintCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 208</value>
-  </data>
-  <data name="AllowPrintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
-  </data>
-  <data name="AllowPrintCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="AllowPrintCheckBox.Text" xml:space="preserve">
-    <value>Allow printing</value>
-  </data>
-  <data name="&gt;&gt;AllowPrintCheckBox.Name" xml:space="preserve">
-    <value>AllowPrintCheckBox</value>
-  </data>
-  <data name="&gt;&gt;AllowPrintCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AllowPrintCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;AllowPrintCheckBox.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="UserConfirmTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="UserConfirmTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 154</value>
-  </data>
-  <data name="UserConfirmTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 23</value>
-  </data>
-  <data name="UserConfirmTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;UserConfirmTextBox.Name" xml:space="preserve">
-    <value>UserConfirmTextBox</value>
-  </data>
-  <data name="&gt;&gt;UserConfirmTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;UserConfirmTextBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;UserConfirmTextBox.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="UserConfirmLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="UserConfirmLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="UserConfirmLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="UserConfirmLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 154</value>
-  </data>
-  <data name="UserConfirmLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="UserConfirmLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
-  </data>
-  <data name="UserConfirmLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="UserConfirmLabel.Text" xml:space="preserve">
-    <value>Confirm</value>
-  </data>
-  <data name="UserConfirmLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;UserConfirmLabel.Name" xml:space="preserve">
-    <value>UserConfirmLabel</value>
-  </data>
-  <data name="&gt;&gt;UserConfirmLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;UserConfirmLabel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;UserConfirmLabel.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="UserPasswordTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="UserPasswordTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 125</value>
-  </data>
-  <data name="UserPasswordTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 23</value>
-  </data>
-  <data name="UserPasswordTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordTextBox.Name" xml:space="preserve">
-    <value>UserPasswordTextBox</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordTextBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordTextBox.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="UserPasswordLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="UserPasswordLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="UserPasswordLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="UserPasswordLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 125</value>
-  </data>
-  <data name="UserPasswordLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="UserPasswordLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
-  </data>
-  <data name="UserPasswordLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="UserPasswordLabel.Text" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="UserPasswordLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordLabel.Name" xml:space="preserve">
-    <value>UserPasswordLabel</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordLabel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordLabel.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="EncryptionSubPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="OperationLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -899,7 +578,7 @@
     <value>NoControl</value>
   </data>
   <data name="OperationLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 96</value>
+    <value>3, 61</value>
   </data>
   <data name="OperationLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -908,7 +587,7 @@
     <value>94, 23</value>
   </data>
   <data name="OperationLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>4</value>
   </data>
   <data name="OperationLabel.Text" xml:space="preserve">
     <value>Operations</value>
@@ -923,22 +602,22 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OperationLabel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;OperationLabel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>0</value>
   </data>
   <data name="OwnerConfirmTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="OwnerConfirmTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 67</value>
+    <value>103, 32</value>
   </data>
   <data name="OwnerConfirmTextBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>308, 23</value>
   </data>
   <data name="OwnerConfirmTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmTextBox.Name" xml:space="preserve">
     <value>OwnerConfirmTextBox</value>
@@ -947,10 +626,10 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmTextBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmTextBox.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>1</value>
   </data>
   <data name="OwnerConfirmLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -962,7 +641,7 @@
     <value>NoControl</value>
   </data>
   <data name="OwnerConfirmLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 67</value>
+    <value>3, 32</value>
   </data>
   <data name="OwnerConfirmLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
@@ -971,7 +650,7 @@
     <value>94, 23</value>
   </data>
   <data name="OwnerConfirmLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="OwnerConfirmLabel.Text" xml:space="preserve">
     <value>Confirm</value>
@@ -986,10 +665,568 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmLabel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>EncryptionSubPanel</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmLabel.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>2</value>
+  </data>
+  <data name="OwnerPasswordLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="OwnerPasswordLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="OwnerPasswordLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="OwnerPasswordLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="OwnerPasswordLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="OwnerPasswordLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 23</value>
+  </data>
+  <data name="OwnerPasswordLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="OwnerPasswordLabel.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="OwnerPasswordLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;OwnerPasswordLabel.Name" xml:space="preserve">
+    <value>OwnerPasswordLabel</value>
+  </data>
+  <data name="&gt;&gt;OwnerPasswordLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OwnerPasswordLabel.Parent" xml:space="preserve">
+    <value>EncryptionSubPanel</value>
+  </data>
+  <data name="&gt;&gt;OwnerPasswordLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="OwnerPasswordTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="OwnerPasswordTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 3</value>
+  </data>
+  <data name="OwnerPasswordTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>308, 23</value>
+  </data>
+  <data name="OwnerPasswordTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;OwnerPasswordTextBox.Name" xml:space="preserve">
+    <value>OwnerPasswordTextBox</value>
+  </data>
+  <data name="&gt;&gt;OwnerPasswordTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OwnerPasswordTextBox.Parent" xml:space="preserve">
+    <value>EncryptionSubPanel</value>
+  </data>
+  <data name="&gt;&gt;OwnerPasswordTextBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="UserPasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="UserPasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="UserPasswordCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="UserPasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 61</value>
+  </data>
+  <data name="UserPasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>308, 23</value>
+  </data>
+  <data name="UserPasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="UserPasswordCheckBox.Text" xml:space="preserve">
+    <value>Open with password</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordCheckBox.Name" xml:space="preserve">
+    <value>UserPasswordCheckBox</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordCheckBox.Parent" xml:space="preserve">
+    <value>EncryptionSubPanel</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordCheckBox.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="UserPasswordPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="SharePasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="SharePasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="SharePasswordCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SharePasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 61</value>
+  </data>
+  <data name="SharePasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 19</value>
+  </data>
+  <data name="SharePasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="SharePasswordCheckBox.Text" xml:space="preserve">
+    <value>Use owner password</value>
+  </data>
+  <data name="&gt;&gt;SharePasswordCheckBox.Name" xml:space="preserve">
+    <value>SharePasswordCheckBox</value>
+  </data>
+  <data name="&gt;&gt;SharePasswordCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SharePasswordCheckBox.Parent" xml:space="preserve">
+    <value>UserPasswordPanel</value>
+  </data>
+  <data name="&gt;&gt;SharePasswordCheckBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="UserConfirmTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="UserConfirmTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 32</value>
+  </data>
+  <data name="UserConfirmTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 23</value>
+  </data>
+  <data name="UserConfirmTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;UserConfirmTextBox.Name" xml:space="preserve">
+    <value>UserConfirmTextBox</value>
+  </data>
+  <data name="&gt;&gt;UserConfirmTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UserConfirmTextBox.Parent" xml:space="preserve">
+    <value>UserPasswordPanel</value>
+  </data>
+  <data name="&gt;&gt;UserConfirmTextBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="UserConfirmLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="UserConfirmLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="UserConfirmLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="UserConfirmLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 32</value>
+  </data>
+  <data name="UserConfirmLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="UserConfirmLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 23</value>
+  </data>
+  <data name="UserConfirmLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="UserConfirmLabel.Text" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="UserConfirmLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;UserConfirmLabel.Name" xml:space="preserve">
+    <value>UserConfirmLabel</value>
+  </data>
+  <data name="&gt;&gt;UserConfirmLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UserConfirmLabel.Parent" xml:space="preserve">
+    <value>UserPasswordPanel</value>
+  </data>
+  <data name="&gt;&gt;UserConfirmLabel.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="UserPasswordTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="UserPasswordTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 3</value>
+  </data>
+  <data name="UserPasswordTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>208, 23</value>
+  </data>
+  <data name="UserPasswordTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordTextBox.Name" xml:space="preserve">
+    <value>UserPasswordTextBox</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordTextBox.Parent" xml:space="preserve">
+    <value>UserPasswordPanel</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordTextBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="UserPasswordLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="UserPasswordLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="UserPasswordLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="UserPasswordLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="UserPasswordLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="UserPasswordLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 23</value>
+  </data>
+  <data name="UserPasswordLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="UserPasswordLabel.Text" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="UserPasswordLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordLabel.Name" xml:space="preserve">
+    <value>UserPasswordLabel</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordLabel.Parent" xml:space="preserve">
+    <value>UserPasswordPanel</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordLabel.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="UserPasswordPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="UserPasswordPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 87</value>
+  </data>
+  <data name="UserPasswordPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="UserPasswordPanel.RowCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="UserPasswordPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>314, 83</value>
+  </data>
+  <data name="UserPasswordPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordPanel.Name" xml:space="preserve">
+    <value>UserPasswordPanel</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordPanel.Parent" xml:space="preserve">
+    <value>EncryptionSubPanel</value>
+  </data>
+  <data name="&gt;&gt;UserPasswordPanel.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="UserPasswordPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SharePasswordCheckBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserConfirmTextBox" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserConfirmLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,29,Absolute,29,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="PermissionPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="AllowAnnotationCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AllowAnnotationCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="AllowAnnotationCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AllowAnnotationCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 128</value>
+  </data>
+  <data name="AllowAnnotationCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>308, 19</value>
+  </data>
+  <data name="AllowAnnotationCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="AllowAnnotationCheckBox.Text" xml:space="preserve">
+    <value>Allow creating and editing annotations</value>
+  </data>
+  <data name="&gt;&gt;AllowAnnotationCheckBox.Name" xml:space="preserve">
+    <value>AllowAnnotationCheckBox</value>
+  </data>
+  <data name="&gt;&gt;AllowAnnotationCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AllowAnnotationCheckBox.Parent" xml:space="preserve">
+    <value>PermissionPanel</value>
+  </data>
+  <data name="&gt;&gt;AllowAnnotationCheckBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AllowFormCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AllowFormCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="AllowFormCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AllowFormCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 103</value>
+  </data>
+  <data name="AllowFormCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>308, 19</value>
+  </data>
+  <data name="AllowFormCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="AllowFormCheckBox.Text" xml:space="preserve">
+    <value>Allow filling in form fields</value>
+  </data>
+  <data name="&gt;&gt;AllowFormCheckBox.Name" xml:space="preserve">
+    <value>AllowFormCheckBox</value>
+  </data>
+  <data name="&gt;&gt;AllowFormCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AllowFormCheckBox.Parent" xml:space="preserve">
+    <value>PermissionPanel</value>
+  </data>
+  <data name="&gt;&gt;AllowFormCheckBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="AllowAccessibilityCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AllowAccessibilityCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="AllowAccessibilityCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AllowAccessibilityCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 78</value>
+  </data>
+  <data name="AllowAccessibilityCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>308, 19</value>
+  </data>
+  <data name="AllowAccessibilityCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="AllowAccessibilityCheckBox.Text" xml:space="preserve">
+    <value>Allow using contents for accessibility</value>
+  </data>
+  <data name="&gt;&gt;AllowAccessibilityCheckBox.Name" xml:space="preserve">
+    <value>AllowAccessibilityCheckBox</value>
+  </data>
+  <data name="&gt;&gt;AllowAccessibilityCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AllowAccessibilityCheckBox.Parent" xml:space="preserve">
+    <value>PermissionPanel</value>
+  </data>
+  <data name="&gt;&gt;AllowAccessibilityCheckBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="AllowModifyCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AllowModifyCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="AllowModifyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AllowModifyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 53</value>
+  </data>
+  <data name="AllowModifyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>308, 19</value>
+  </data>
+  <data name="AllowModifyCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="AllowModifyCheckBox.Text" xml:space="preserve">
+    <value>Allow inserting and removing pages</value>
+  </data>
+  <data name="&gt;&gt;AllowModifyCheckBox.Name" xml:space="preserve">
+    <value>AllowModifyCheckBox</value>
+  </data>
+  <data name="&gt;&gt;AllowModifyCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AllowModifyCheckBox.Parent" xml:space="preserve">
+    <value>PermissionPanel</value>
+  </data>
+  <data name="&gt;&gt;AllowModifyCheckBox.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="AllowCopyCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AllowCopyCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="AllowCopyCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AllowCopyCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 28</value>
+  </data>
+  <data name="AllowCopyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>308, 19</value>
+  </data>
+  <data name="AllowCopyCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="AllowCopyCheckBox.Text" xml:space="preserve">
+    <value>Allow copying text and images</value>
+  </data>
+  <data name="&gt;&gt;AllowCopyCheckBox.Name" xml:space="preserve">
+    <value>AllowCopyCheckBox</value>
+  </data>
+  <data name="&gt;&gt;AllowCopyCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AllowCopyCheckBox.Parent" xml:space="preserve">
+    <value>PermissionPanel</value>
+  </data>
+  <data name="&gt;&gt;AllowCopyCheckBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="AllowPrintCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AllowPrintCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="AllowPrintCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AllowPrintCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="AllowPrintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>308, 19</value>
+  </data>
+  <data name="AllowPrintCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="AllowPrintCheckBox.Text" xml:space="preserve">
+    <value>Allow printing</value>
+  </data>
+  <data name="&gt;&gt;AllowPrintCheckBox.Name" xml:space="preserve">
+    <value>AllowPrintCheckBox</value>
+  </data>
+  <data name="&gt;&gt;AllowPrintCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AllowPrintCheckBox.Parent" xml:space="preserve">
+    <value>PermissionPanel</value>
+  </data>
+  <data name="&gt;&gt;AllowPrintCheckBox.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="PermissionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PermissionPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>100, 170</value>
+  </data>
+  <data name="PermissionPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="PermissionPanel.RowCount" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="PermissionPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>314, 150</value>
+  </data>
+  <data name="PermissionPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;PermissionPanel.Name" xml:space="preserve">
+    <value>PermissionPanel</value>
+  </data>
+  <data name="&gt;&gt;PermissionPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PermissionPanel.Parent" xml:space="preserve">
+    <value>EncryptionSubPanel</value>
+  </data>
+  <data name="&gt;&gt;PermissionPanel.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="PermissionPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="AllowAnnotationCheckBox" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowFormCheckBox" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowAccessibilityCheckBox" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowModifyCheckBox" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowCopyCheckBox" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="AllowPrintCheckBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Percent,100,Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="EncryptionSubPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="EncryptionSubPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 31</value>
+  </data>
+  <data name="EncryptionSubPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="EncryptionSubPanel.RowCount" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="EncryptionSubPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>414, 320</value>
+  </data>
+  <data name="EncryptionSubPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;EncryptionSubPanel.Name" xml:space="preserve">
+    <value>EncryptionSubPanel</value>
+  </data>
+  <data name="&gt;&gt;EncryptionSubPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EncryptionSubPanel.Parent" xml:space="preserve">
+    <value>EncryptionPanel</value>
+  </data>
+  <data name="&gt;&gt;EncryptionSubPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="EncryptionSubPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="OperationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmTextBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PermissionPanel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,29,Absolute,29,Absolute,29,Absolute,83,Percent,100,Absolute,20,Absolute,20,Absolute,20,Absolute,20,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="OwnerPasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1001,7 +1238,7 @@
     <value>9, 9</value>
   </data>
   <data name="OwnerPasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 23</value>
+    <value>408, 19</value>
   </data>
   <data name="OwnerPasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1019,127 +1256,7 @@
     <value>EncryptionPanel</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordCheckBox.ZOrder" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="OwnerPasswordLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="OwnerPasswordLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="OwnerPasswordLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 38</value>
-  </data>
-  <data name="OwnerPasswordLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="OwnerPasswordLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
-  </data>
-  <data name="OwnerPasswordLabel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
-  </data>
-  <data name="OwnerPasswordLabel.Text" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="OwnerPasswordLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;OwnerPasswordLabel.Name" xml:space="preserve">
-    <value>OwnerPasswordLabel</value>
-  </data>
-  <data name="&gt;&gt;OwnerPasswordLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;OwnerPasswordLabel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;OwnerPasswordLabel.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="OwnerPasswordTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="OwnerPasswordTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 38</value>
-  </data>
-  <data name="OwnerPasswordTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 23</value>
-  </data>
-  <data name="OwnerPasswordTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;OwnerPasswordTextBox.Name" xml:space="preserve">
-    <value>OwnerPasswordTextBox</value>
-  </data>
-  <data name="&gt;&gt;OwnerPasswordTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;OwnerPasswordTextBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;OwnerPasswordTextBox.ZOrder" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="UserPasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="UserPasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="UserPasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 96</value>
-  </data>
-  <data name="UserPasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 23</value>
-  </data>
-  <data name="UserPasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="UserPasswordCheckBox.Text" xml:space="preserve">
-    <value>Open with password</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordCheckBox.Name" xml:space="preserve">
-    <value>UserPasswordCheckBox</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;UserPasswordCheckBox.ZOrder" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="SharePasswordCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="SharePasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="SharePasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 183</value>
-  </data>
-  <data name="SharePasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 19</value>
-  </data>
-  <data name="SharePasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="SharePasswordCheckBox.Text" xml:space="preserve">
-    <value>Use owner password</value>
-  </data>
-  <data name="&gt;&gt;SharePasswordCheckBox.Name" xml:space="preserve">
-    <value>SharePasswordCheckBox</value>
-  </data>
-  <data name="&gt;&gt;SharePasswordCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;SharePasswordCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
-  </data>
-  <data name="&gt;&gt;SharePasswordCheckBox.ZOrder" xml:space="preserve">
-    <value>17</value>
   </data>
   <data name="EncryptionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -1148,7 +1265,7 @@
     <value>3, 3</value>
   </data>
   <data name="EncryptionPanel.RowCount" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>4</value>
   </data>
   <data name="EncryptionPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>426, 365</value>
@@ -1169,7 +1286,7 @@
     <value>0</value>
   </data>
   <data name="EncryptionPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="AllowAnnotationCheckBox" Row="13" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowFormCheckBox" Row="12" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowAccessibilityCheckBox" Row="11" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowModifyCheckBox" Row="10" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowCopyCheckBox" Row="9" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="AllowPrintCheckBox" Row="8" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="UserConfirmTextBox" Row="6" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="UserConfirmLabel" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordTextBox" Row="5" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordLabel" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="OperationLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OwnerConfirmLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="3" /&gt;&lt;Control Name="OwnerPasswordLabel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordTextBox" Row="2" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="UserPasswordCheckBox" Row="4" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="SharePasswordCheckBox" Row="7" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Absolute,100,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,6,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,25,Percent,100,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="EncryptionSubPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,6,Absolute,25,Absolute,320,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="EncryptionTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>

@@ -49,24 +49,27 @@
             this.VersionComboBox = new System.Windows.Forms.ComboBox();
             this.EncryptionTabPage = new System.Windows.Forms.TabPage();
             this.EncryptionPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.EncryptionSubPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.OperationLabel = new System.Windows.Forms.Label();
+            this.OwnerConfirmTextBox = new System.Windows.Forms.TextBox();
+            this.OwnerConfirmLabel = new System.Windows.Forms.Label();
+            this.OwnerPasswordLabel = new System.Windows.Forms.Label();
+            this.OwnerPasswordTextBox = new System.Windows.Forms.TextBox();
+            this.UserPasswordCheckBox = new System.Windows.Forms.CheckBox();
+            this.UserPasswordPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.SharePasswordCheckBox = new System.Windows.Forms.CheckBox();
+            this.UserConfirmTextBox = new System.Windows.Forms.TextBox();
+            this.UserConfirmLabel = new System.Windows.Forms.Label();
+            this.UserPasswordTextBox = new System.Windows.Forms.TextBox();
+            this.UserPasswordLabel = new System.Windows.Forms.Label();
+            this.PermissionPanel = new System.Windows.Forms.TableLayoutPanel();
             this.AllowAnnotationCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowFormCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowAccessibilityCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowModifyCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowCopyCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowPrintCheckBox = new System.Windows.Forms.CheckBox();
-            this.UserConfirmTextBox = new System.Windows.Forms.TextBox();
-            this.UserConfirmLabel = new System.Windows.Forms.Label();
-            this.UserPasswordTextBox = new System.Windows.Forms.TextBox();
-            this.UserPasswordLabel = new System.Windows.Forms.Label();
-            this.OperationLabel = new System.Windows.Forms.Label();
-            this.OwnerConfirmTextBox = new System.Windows.Forms.TextBox();
-            this.OwnerConfirmLabel = new System.Windows.Forms.Label();
             this.OwnerPasswordCheckBox = new System.Windows.Forms.CheckBox();
-            this.OwnerPasswordLabel = new System.Windows.Forms.Label();
-            this.OwnerPasswordTextBox = new System.Windows.Forms.TextBox();
-            this.UserPasswordCheckBox = new System.Windows.Forms.CheckBox();
-            this.SharePasswordCheckBox = new System.Windows.Forms.CheckBox();
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ExecButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
@@ -76,6 +79,9 @@
             this.MetadataPanel.SuspendLayout();
             this.EncryptionTabPage.SuspendLayout();
             this.EncryptionPanel.SuspendLayout();
+            this.EncryptionSubPanel.SuspendLayout();
+            this.UserPasswordPanel.SuspendLayout();
+            this.PermissionPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
             this.SuspendLayout();
             //
@@ -204,67 +210,69 @@
             // EncryptionPanel
             //
             resources.ApplyResources(this.EncryptionPanel, "EncryptionPanel");
-            this.EncryptionPanel.Controls.Add(this.AllowAnnotationCheckBox, 2, 13);
-            this.EncryptionPanel.Controls.Add(this.AllowFormCheckBox, 2, 12);
-            this.EncryptionPanel.Controls.Add(this.AllowAccessibilityCheckBox, 2, 11);
-            this.EncryptionPanel.Controls.Add(this.AllowModifyCheckBox, 2, 10);
-            this.EncryptionPanel.Controls.Add(this.AllowCopyCheckBox, 2, 9);
-            this.EncryptionPanel.Controls.Add(this.AllowPrintCheckBox, 2, 8);
-            this.EncryptionPanel.Controls.Add(this.UserConfirmTextBox, 3, 6);
-            this.EncryptionPanel.Controls.Add(this.UserConfirmLabel, 2, 6);
-            this.EncryptionPanel.Controls.Add(this.UserPasswordTextBox, 3, 5);
-            this.EncryptionPanel.Controls.Add(this.UserPasswordLabel, 2, 5);
-            this.EncryptionPanel.Controls.Add(this.OperationLabel, 1, 4);
-            this.EncryptionPanel.Controls.Add(this.OwnerConfirmTextBox, 2, 3);
-            this.EncryptionPanel.Controls.Add(this.OwnerConfirmLabel, 1, 3);
+            this.EncryptionPanel.Controls.Add(this.EncryptionSubPanel, 1, 2);
             this.EncryptionPanel.Controls.Add(this.OwnerPasswordCheckBox, 1, 1);
-            this.EncryptionPanel.Controls.Add(this.OwnerPasswordLabel, 1, 2);
-            this.EncryptionPanel.Controls.Add(this.OwnerPasswordTextBox, 2, 2);
-            this.EncryptionPanel.Controls.Add(this.UserPasswordCheckBox, 2, 4);
-            this.EncryptionPanel.Controls.Add(this.SharePasswordCheckBox, 3, 7);
             this.EncryptionPanel.Name = "EncryptionPanel";
             //
-            // AllowAnnotationCheckBox
+            // EncryptionSubPanel
             //
-            resources.ApplyResources(this.AllowAnnotationCheckBox, "AllowAnnotationCheckBox");
-            this.EncryptionPanel.SetColumnSpan(this.AllowAnnotationCheckBox, 2);
-            this.AllowAnnotationCheckBox.Name = "AllowAnnotationCheckBox";
-            this.AllowAnnotationCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.EncryptionSubPanel, "EncryptionSubPanel");
+            this.EncryptionSubPanel.Controls.Add(this.OperationLabel, 0, 2);
+            this.EncryptionSubPanel.Controls.Add(this.OwnerConfirmTextBox, 1, 1);
+            this.EncryptionSubPanel.Controls.Add(this.OwnerConfirmLabel, 0, 1);
+            this.EncryptionSubPanel.Controls.Add(this.OwnerPasswordLabel, 0, 0);
+            this.EncryptionSubPanel.Controls.Add(this.OwnerPasswordTextBox, 1, 0);
+            this.EncryptionSubPanel.Controls.Add(this.UserPasswordCheckBox, 1, 2);
+            this.EncryptionSubPanel.Controls.Add(this.UserPasswordPanel, 1, 3);
+            this.EncryptionSubPanel.Controls.Add(this.PermissionPanel, 1, 4);
+            this.EncryptionSubPanel.Name = "EncryptionSubPanel";
             //
-            // AllowFormCheckBox
+            // OperationLabel
             //
-            resources.ApplyResources(this.AllowFormCheckBox, "AllowFormCheckBox");
-            this.EncryptionPanel.SetColumnSpan(this.AllowFormCheckBox, 2);
-            this.AllowFormCheckBox.Name = "AllowFormCheckBox";
-            this.AllowFormCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.OperationLabel, "OperationLabel");
+            this.OperationLabel.Name = "OperationLabel";
             //
-            // AllowAccessibilityCheckBox
+            // OwnerConfirmTextBox
             //
-            resources.ApplyResources(this.AllowAccessibilityCheckBox, "AllowAccessibilityCheckBox");
-            this.EncryptionPanel.SetColumnSpan(this.AllowAccessibilityCheckBox, 2);
-            this.AllowAccessibilityCheckBox.Name = "AllowAccessibilityCheckBox";
-            this.AllowAccessibilityCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.OwnerConfirmTextBox, "OwnerConfirmTextBox");
+            this.OwnerConfirmTextBox.Name = "OwnerConfirmTextBox";
             //
-            // AllowModifyCheckBox
+            // OwnerConfirmLabel
             //
-            resources.ApplyResources(this.AllowModifyCheckBox, "AllowModifyCheckBox");
-            this.EncryptionPanel.SetColumnSpan(this.AllowModifyCheckBox, 2);
-            this.AllowModifyCheckBox.Name = "AllowModifyCheckBox";
-            this.AllowModifyCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.OwnerConfirmLabel, "OwnerConfirmLabel");
+            this.OwnerConfirmLabel.Name = "OwnerConfirmLabel";
             //
-            // AllowCopyCheckBox
+            // OwnerPasswordLabel
             //
-            resources.ApplyResources(this.AllowCopyCheckBox, "AllowCopyCheckBox");
-            this.EncryptionPanel.SetColumnSpan(this.AllowCopyCheckBox, 2);
-            this.AllowCopyCheckBox.Name = "AllowCopyCheckBox";
-            this.AllowCopyCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.OwnerPasswordLabel, "OwnerPasswordLabel");
+            this.OwnerPasswordLabel.Name = "OwnerPasswordLabel";
             //
-            // AllowPrintCheckBox
+            // OwnerPasswordTextBox
             //
-            resources.ApplyResources(this.AllowPrintCheckBox, "AllowPrintCheckBox");
-            this.EncryptionPanel.SetColumnSpan(this.AllowPrintCheckBox, 2);
-            this.AllowPrintCheckBox.Name = "AllowPrintCheckBox";
-            this.AllowPrintCheckBox.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.OwnerPasswordTextBox, "OwnerPasswordTextBox");
+            this.OwnerPasswordTextBox.Name = "OwnerPasswordTextBox";
+            //
+            // UserPasswordCheckBox
+            //
+            resources.ApplyResources(this.UserPasswordCheckBox, "UserPasswordCheckBox");
+            this.UserPasswordCheckBox.Name = "UserPasswordCheckBox";
+            this.UserPasswordCheckBox.UseVisualStyleBackColor = true;
+            //
+            // UserPasswordPanel
+            //
+            resources.ApplyResources(this.UserPasswordPanel, "UserPasswordPanel");
+            this.UserPasswordPanel.Controls.Add(this.SharePasswordCheckBox, 2, 2);
+            this.UserPasswordPanel.Controls.Add(this.UserConfirmTextBox, 2, 1);
+            this.UserPasswordPanel.Controls.Add(this.UserConfirmLabel, 0, 1);
+            this.UserPasswordPanel.Controls.Add(this.UserPasswordTextBox, 1, 0);
+            this.UserPasswordPanel.Controls.Add(this.UserPasswordLabel, 0, 0);
+            this.UserPasswordPanel.Name = "UserPasswordPanel";
+            //
+            // SharePasswordCheckBox
+            //
+            resources.ApplyResources(this.SharePasswordCheckBox, "SharePasswordCheckBox");
+            this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
+            this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
             //
             // UserConfirmTextBox
             //
@@ -286,52 +294,58 @@
             resources.ApplyResources(this.UserPasswordLabel, "UserPasswordLabel");
             this.UserPasswordLabel.Name = "UserPasswordLabel";
             //
-            // OperationLabel
+            // PermissionPanel
             //
-            resources.ApplyResources(this.OperationLabel, "OperationLabel");
-            this.OperationLabel.Name = "OperationLabel";
+            resources.ApplyResources(this.PermissionPanel, "PermissionPanel");
+            this.PermissionPanel.Controls.Add(this.AllowAnnotationCheckBox, 0, 5);
+            this.PermissionPanel.Controls.Add(this.AllowFormCheckBox, 0, 4);
+            this.PermissionPanel.Controls.Add(this.AllowAccessibilityCheckBox, 0, 3);
+            this.PermissionPanel.Controls.Add(this.AllowModifyCheckBox, 0, 2);
+            this.PermissionPanel.Controls.Add(this.AllowCopyCheckBox, 0, 1);
+            this.PermissionPanel.Controls.Add(this.AllowPrintCheckBox, 0, 0);
+            this.PermissionPanel.Name = "PermissionPanel";
             //
-            // OwnerConfirmTextBox
+            // AllowAnnotationCheckBox
             //
-            this.EncryptionPanel.SetColumnSpan(this.OwnerConfirmTextBox, 2);
-            resources.ApplyResources(this.OwnerConfirmTextBox, "OwnerConfirmTextBox");
-            this.OwnerConfirmTextBox.Name = "OwnerConfirmTextBox";
+            resources.ApplyResources(this.AllowAnnotationCheckBox, "AllowAnnotationCheckBox");
+            this.AllowAnnotationCheckBox.Name = "AllowAnnotationCheckBox";
+            this.AllowAnnotationCheckBox.UseVisualStyleBackColor = true;
             //
-            // OwnerConfirmLabel
+            // AllowFormCheckBox
             //
-            resources.ApplyResources(this.OwnerConfirmLabel, "OwnerConfirmLabel");
-            this.OwnerConfirmLabel.Name = "OwnerConfirmLabel";
+            resources.ApplyResources(this.AllowFormCheckBox, "AllowFormCheckBox");
+            this.AllowFormCheckBox.Name = "AllowFormCheckBox";
+            this.AllowFormCheckBox.UseVisualStyleBackColor = true;
+            //
+            // AllowAccessibilityCheckBox
+            //
+            resources.ApplyResources(this.AllowAccessibilityCheckBox, "AllowAccessibilityCheckBox");
+            this.AllowAccessibilityCheckBox.Name = "AllowAccessibilityCheckBox";
+            this.AllowAccessibilityCheckBox.UseVisualStyleBackColor = true;
+            //
+            // AllowModifyCheckBox
+            //
+            resources.ApplyResources(this.AllowModifyCheckBox, "AllowModifyCheckBox");
+            this.AllowModifyCheckBox.Name = "AllowModifyCheckBox";
+            this.AllowModifyCheckBox.UseVisualStyleBackColor = true;
+            //
+            // AllowCopyCheckBox
+            //
+            resources.ApplyResources(this.AllowCopyCheckBox, "AllowCopyCheckBox");
+            this.AllowCopyCheckBox.Name = "AllowCopyCheckBox";
+            this.AllowCopyCheckBox.UseVisualStyleBackColor = true;
+            //
+            // AllowPrintCheckBox
+            //
+            resources.ApplyResources(this.AllowPrintCheckBox, "AllowPrintCheckBox");
+            this.AllowPrintCheckBox.Name = "AllowPrintCheckBox";
+            this.AllowPrintCheckBox.UseVisualStyleBackColor = true;
             //
             // OwnerPasswordCheckBox
             //
             resources.ApplyResources(this.OwnerPasswordCheckBox, "OwnerPasswordCheckBox");
-            this.EncryptionPanel.SetColumnSpan(this.OwnerPasswordCheckBox, 3);
             this.OwnerPasswordCheckBox.Name = "OwnerPasswordCheckBox";
             this.OwnerPasswordCheckBox.UseVisualStyleBackColor = true;
-            //
-            // OwnerPasswordLabel
-            //
-            resources.ApplyResources(this.OwnerPasswordLabel, "OwnerPasswordLabel");
-            this.OwnerPasswordLabel.Name = "OwnerPasswordLabel";
-            //
-            // OwnerPasswordTextBox
-            //
-            this.EncryptionPanel.SetColumnSpan(this.OwnerPasswordTextBox, 2);
-            resources.ApplyResources(this.OwnerPasswordTextBox, "OwnerPasswordTextBox");
-            this.OwnerPasswordTextBox.Name = "OwnerPasswordTextBox";
-            //
-            // UserPasswordCheckBox
-            //
-            resources.ApplyResources(this.UserPasswordCheckBox, "UserPasswordCheckBox");
-            this.EncryptionPanel.SetColumnSpan(this.UserPasswordCheckBox, 2);
-            this.UserPasswordCheckBox.Name = "UserPasswordCheckBox";
-            this.UserPasswordCheckBox.UseVisualStyleBackColor = true;
-            //
-            // SharePasswordCheckBox
-            //
-            resources.ApplyResources(this.SharePasswordCheckBox, "SharePasswordCheckBox");
-            this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
-            this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
             //
             // FooterPanel
             //
@@ -376,6 +390,12 @@
             this.EncryptionTabPage.ResumeLayout(false);
             this.EncryptionPanel.ResumeLayout(false);
             this.EncryptionPanel.PerformLayout();
+            this.EncryptionSubPanel.ResumeLayout(false);
+            this.EncryptionSubPanel.PerformLayout();
+            this.UserPasswordPanel.ResumeLayout(false);
+            this.UserPasswordPanel.PerformLayout();
+            this.PermissionPanel.ResumeLayout(false);
+            this.PermissionPanel.PerformLayout();
             this.FooterPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -406,23 +426,26 @@
         private System.Windows.Forms.ComboBox ViewOptionComboBox;
         private System.Windows.Forms.Label ViewOptionLabel;
         private System.Windows.Forms.TableLayoutPanel EncryptionPanel;
-        private System.Windows.Forms.CheckBox OwnerPasswordCheckBox;
-        private System.Windows.Forms.Label OwnerPasswordLabel;
-        private System.Windows.Forms.Label OwnerConfirmLabel;
-        private System.Windows.Forms.TextBox OwnerPasswordTextBox;
-        private System.Windows.Forms.TextBox OwnerConfirmTextBox;
+        private System.Windows.Forms.TableLayoutPanel EncryptionSubPanel;
         private System.Windows.Forms.Label OperationLabel;
+        private System.Windows.Forms.Label OwnerConfirmLabel;
+        private System.Windows.Forms.Label OwnerPasswordLabel;
+        private System.Windows.Forms.CheckBox OwnerPasswordCheckBox;
+        private System.Windows.Forms.TextBox OwnerConfirmTextBox;
+        private System.Windows.Forms.TextBox OwnerPasswordTextBox;
         private System.Windows.Forms.CheckBox UserPasswordCheckBox;
-        private System.Windows.Forms.TextBox UserPasswordTextBox;
-        private System.Windows.Forms.Label UserPasswordLabel;
+        private System.Windows.Forms.TableLayoutPanel UserPasswordPanel;
+        private System.Windows.Forms.CheckBox SharePasswordCheckBox;
         private System.Windows.Forms.TextBox UserConfirmTextBox;
         private System.Windows.Forms.Label UserConfirmLabel;
-        private System.Windows.Forms.CheckBox SharePasswordCheckBox;
+        private System.Windows.Forms.TextBox UserPasswordTextBox;
+        private System.Windows.Forms.Label UserPasswordLabel;
+        private System.Windows.Forms.TableLayoutPanel PermissionPanel;
+        private System.Windows.Forms.CheckBox AllowAnnotationCheckBox;
         private System.Windows.Forms.CheckBox AllowFormCheckBox;
         private System.Windows.Forms.CheckBox AllowAccessibilityCheckBox;
         private System.Windows.Forms.CheckBox AllowModifyCheckBox;
         private System.Windows.Forms.CheckBox AllowCopyCheckBox;
         private System.Windows.Forms.CheckBox AllowPrintCheckBox;
-        private System.Windows.Forms.CheckBox AllowAnnotationCheckBox;
     }
 }
