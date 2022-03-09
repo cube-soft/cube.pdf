@@ -243,6 +243,7 @@
             //
             resources.ApplyResources(this.OwnerConfirmTextBox, "OwnerConfirmTextBox");
             this.OwnerConfirmTextBox.Name = "OwnerConfirmTextBox";
+            this.OwnerConfirmTextBox.UseSystemPasswordChar = true;
             //
             // OwnerConfirmLabel
             //
@@ -258,6 +259,7 @@
             //
             resources.ApplyResources(this.OwnerPasswordTextBox, "OwnerPasswordTextBox");
             this.OwnerPasswordTextBox.Name = "OwnerPasswordTextBox";
+            this.OwnerPasswordTextBox.UseSystemPasswordChar = true;
             //
             // UserPasswordCheckBox
             //
@@ -278,6 +280,7 @@
             //
             resources.ApplyResources(this.UserConfirmTextBox, "UserConfirmTextBox");
             this.UserConfirmTextBox.Name = "UserConfirmTextBox";
+            this.UserConfirmTextBox.UseSystemPasswordChar = true;
             //
             // UserConfirmLabel
             //
@@ -288,6 +291,7 @@
             //
             resources.ApplyResources(this.UserPasswordTextBox, "UserPasswordTextBox");
             this.UserPasswordTextBox.Name = "UserPasswordTextBox";
+            this.UserPasswordTextBox.UseSystemPasswordChar = true;
             //
             // UserPasswordLabel
             //

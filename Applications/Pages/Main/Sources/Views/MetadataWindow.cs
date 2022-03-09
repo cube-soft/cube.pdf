@@ -65,6 +65,8 @@ namespace Cube.Pdf.Pages
 
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
+            Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
+            Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
         }
 
         #endregion

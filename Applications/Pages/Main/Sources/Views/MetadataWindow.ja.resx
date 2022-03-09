@@ -61,11 +61,11 @@
   <data name="MetadataTabPage.Text" xml:space="preserve">
     <value>概要</value>
   </data>
-  <data name="LayoutLabel.Text" xml:space="preserve">
-    <value>ページレイアウト</value>
-  </data>
   <data name="VersionLabel.Text" xml:space="preserve">
     <value>バージョン情報</value>
+  </data>
+  <data name="ViewOptionLabel.Text" xml:space="preserve">
+    <value>ページレイアウト</value>
   </data>
   <data name="CreatorLabel.Text" xml:space="preserve">
     <value>アプリケーション</value>
