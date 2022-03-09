@@ -24,7 +24,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FilePanel = new System.Windows.Forms.TableLayoutPanel();
-            this.FileListView = new Cube.Pdf.Pages.FileListControl();
+            this.MainGridView = new Cube.Pdf.Pages.FileGridView();
             this.RightPanel = new System.Windows.Forms.TableLayoutPanel();
             this.AddButton = new Cube.Forms.Controls.Button();
             this.UpButton = new Cube.Forms.Controls.Button();
@@ -40,7 +40,7 @@
             this.MergeButton = new Cube.Forms.Controls.Button();
             this.RootPanel.SuspendLayout();
             this.FilePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FileListView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainGridView)).BeginInit();
             this.RightPanel.SuspendLayout();
             this.HeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
@@ -58,28 +58,28 @@
             // FilePanel
             //
             resources.ApplyResources(this.FilePanel, "FilePanel");
-            this.FilePanel.Controls.Add(this.FileListView, 0, 0);
+            this.FilePanel.Controls.Add(this.MainGridView, 0, 0);
             this.FilePanel.Controls.Add(this.RightPanel, 1, 0);
             this.FilePanel.Name = "FilePanel";
             //
-            // FileListView
+            // MainGridView
             //
-            resources.ApplyResources(this.FileListView, "FileListView");
-            this.FileListView.AllowUserToAddRows = false;
-            this.FileListView.AllowUserToDeleteRows = false;
-            this.FileListView.AllowUserToResizeRows = false;
-            this.FileListView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.FileListView.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.FileListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.FileListView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.FileListView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.FileListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.FileListView.GridColor = System.Drawing.SystemColors.Control;
-            this.FileListView.Name = "FileListView";
-            this.FileListView.ReadOnly = true;
-            this.FileListView.RowHeadersVisible = false;
-            this.FileListView.RowTemplate.Height = 21;
-            this.FileListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.MainGridView.AllowUserToAddRows = false;
+            this.MainGridView.AllowUserToDeleteRows = false;
+            this.MainGridView.AllowUserToResizeRows = false;
+            this.MainGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MainGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.MainGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.MainGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.MainGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.MainGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            resources.ApplyResources(this.MainGridView, "MainGridView");
+            this.MainGridView.GridColor = System.Drawing.SystemColors.Control;
+            this.MainGridView.Name = "MainGridView";
+            this.MainGridView.ReadOnly = true;
+            this.MainGridView.RowHeadersVisible = false;
+            this.MainGridView.RowTemplate.Height = 21;
+            this.MainGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             //
             // RightPanel
             //
@@ -93,8 +93,8 @@
             //
             // AddButton
             //
-            resources.ApplyResources(this.AddButton, "AddButton");
             this.AddButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.AddButton, "AddButton");
             this.AddButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.AddButton.ForeColor = System.Drawing.Color.White;
             this.AddButton.Name = "AddButton";
@@ -102,8 +102,8 @@
             //
             // UpButton
             //
-            resources.ApplyResources(this.UpButton, "UpButton");
             this.UpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.UpButton, "UpButton");
             this.UpButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.UpButton.ForeColor = System.Drawing.Color.White;
             this.UpButton.Name = "UpButton";
@@ -111,8 +111,8 @@
             //
             // DownButton
             //
-            resources.ApplyResources(this.DownButton, "DownButton");
             this.DownButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.DownButton, "DownButton");
             this.DownButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.DownButton.ForeColor = System.Drawing.Color.White;
             this.DownButton.Name = "DownButton";
@@ -120,8 +120,8 @@
             //
             // RemoveButton
             //
-            resources.ApplyResources(this.RemoveButton, "RemoveButton");
             this.RemoveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.RemoveButton, "RemoveButton");
             this.RemoveButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.RemoveButton.ForeColor = System.Drawing.Color.White;
             this.RemoveButton.Name = "RemoveButton";
@@ -129,8 +129,8 @@
             //
             // ClearButton
             //
-            resources.ApplyResources(this.ClearButton, "ClearButton");
             this.ClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.ClearButton, "ClearButton");
             this.ClearButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.ClearButton.ForeColor = System.Drawing.Color.White;
             this.ClearButton.Name = "ClearButton";
@@ -138,17 +138,17 @@
             //
             // HeaderPanel
             //
-            resources.ApplyResources(this.HeaderPanel, "HeaderPanel");
             this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.HeaderPanel.BackgroundImage = global::Cube.Pdf.Pages.Properties.Resources.Background;
             this.HeaderPanel.Controls.Add(this.TitleButton);
+            resources.ApplyResources(this.HeaderPanel, "HeaderPanel");
             this.HeaderPanel.Name = "HeaderPanel";
             //
             // TitleButton
             //
-            resources.ApplyResources(this.TitleButton, "TitleButton");
             this.TitleButton.BackgroundImage = global::Cube.Pdf.Pages.Properties.Resources.Background;
             this.TitleButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            resources.ApplyResources(this.TitleButton, "TitleButton");
             this.TitleButton.Image = global::Cube.Pdf.Pages.Properties.Resources.HeaderTitle;
             this.TitleButton.Name = "TitleButton";
             this.TitleButton.TabStop = false;
@@ -164,8 +164,8 @@
             //
             // MetadataButton
             //
-            resources.ApplyResources(this.MetadataButton, "MetadataButton");
             this.MetadataButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.MetadataButton, "MetadataButton");
             this.MetadataButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.MetadataButton.ForeColor = System.Drawing.Color.White;
             this.MetadataButton.Name = "MetadataButton";
@@ -173,9 +173,9 @@
             //
             // ExitButton
             //
-            resources.ApplyResources(this.ExitButton, "ExitButton");
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.ExitButton, "ExitButton");
             this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.ExitButton.ForeColor = System.Drawing.Color.White;
             this.ExitButton.Name = "ExitButton";
@@ -183,8 +183,8 @@
             //
             // SplitButton
             //
-            resources.ApplyResources(this.SplitButton, "SplitButton");
             this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(49)))), ((int)(((byte)(146)))));
+            resources.ApplyResources(this.SplitButton, "SplitButton");
             this.SplitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(39)))), ((int)(((byte)(128)))));
             this.SplitButton.ForeColor = System.Drawing.Color.White;
             this.SplitButton.Name = "SplitButton";
@@ -192,8 +192,8 @@
             //
             // MergeButton
             //
-            resources.ApplyResources(this.MergeButton, "MergeButton");
             this.MergeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            resources.ApplyResources(this.MergeButton, "MergeButton");
             this.MergeButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.MergeButton.ForeColor = System.Drawing.Color.White;
             this.MergeButton.Name = "MergeButton";
@@ -201,15 +201,15 @@
             //
             // MainWindow
             //
-            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.ExitButton;
+            resources.ApplyResources(this, "$this");
             this.Controls.Add(this.RootPanel);
             this.KeyPreview = true;
             this.Name = "MainWindow";
             this.RootPanel.ResumeLayout(false);
             this.FilePanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.FileListView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MainGridView)).EndInit();
             this.RightPanel.ResumeLayout(false);
             this.HeaderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).EndInit();
@@ -224,7 +224,7 @@
         private System.Windows.Forms.TableLayoutPanel FilePanel;
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox TitleButton;
-        private FileListControl FileListView;
+        private FileGridView MainGridView;
         private System.Windows.Forms.TableLayoutPanel FooterPanel;
         private Forms.Controls.Button ExitButton;
         private Forms.Controls.Button SplitButton;

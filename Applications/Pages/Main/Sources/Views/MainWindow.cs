@@ -69,7 +69,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public IEnumerable<int> SelectedIndices => FileListView
+        public IEnumerable<int> SelectedIndices => MainGridView
             .SelectedRows
             .Cast<DataGridViewRow>()
             .Select(e => e.Index)
@@ -110,14 +110,14 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new ClickEventBehavior(RemoveButton, () => vm.Remove(SelectedIndices)));
             Behaviors.Add(new ClickEventBehavior(ClearButton, vm.Clear));
             Behaviors.Add(new ClickEventBehavior(TitleButton, vm.About));
-            Behaviors.Add(new EventBehavior(FileListView, "DoubleClick", () => vm.Preview(SelectedIndices)));
+            Behaviors.Add(new EventBehavior(MainGridView, "DoubleClick", () => vm.Preview(SelectedIndices)));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
             Behaviors.Add(new OpenFileBehavior(vm));
             Behaviors.Add(new OpenDirectoryBehavior(vm));
             Behaviors.Add(new SaveFileBehavior(vm));
             Behaviors.Add(new FileDropBehavior(this, vm));
-            Behaviors.Add(new SelectionBehavior(FileListView));
+            Behaviors.Add(new SelectionBehavior(MainGridView));
             Behaviors.Add(new ShowDialogBehavior<MetadataWindow, MetadataViewModel>(vm));
             Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(vm));
             Behaviors.Add(new ShowDialogBehavior<VersionWindow, VersionViewModel>(vm));
@@ -132,8 +132,8 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new ClickEventBehavior(ctx.DownMenu, () => vm.Move(SelectedIndices, 1)));
             Behaviors.Add(new ClickEventBehavior(ctx.RemoveMenu, () => vm.Remove(SelectedIndices)));
 
-            FileListView.ContextMenuStrip = ctx;
-            FileListView.DataSource = vm.Files;
+            MainGridView.ContextMenuStrip = ctx;
+            MainGridView.DataSource = vm.Files;
 
             MakeShortcut(vm);
             BindText(vm);
@@ -196,8 +196,8 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void Select(IEnumerable<int> indices)
         {
-            FileListView.ClearSelection();
-            foreach (var i in indices) FileListView.Rows[i].Selected = true;
+            MainGridView.ClearSelection();
+            foreach (var i in indices) MainGridView.Rows[i].Selected = true;
         }
 
         /* ----------------------------------------------------------------- */
@@ -214,7 +214,7 @@ namespace Cube.Pdf.Pages
             var lang = vm.Language;
             this.UpdateCulture(lang);
             Resource.UpdateCulture(lang);
-            FileListView.Refresh();
+            MainGridView.Refresh();
         }
 
         #endregion

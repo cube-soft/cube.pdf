@@ -26,27 +26,27 @@ namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileListControl
+    /// FileGridView
     ///
     /// <summary>
     /// Represents the collection view of PDF or image files to be combined.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileListControl : DataGridView
+    public class FileGridView : DataGridView
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileListControl
+        /// FileGridView
         ///
         /// <summary>
-        /// Initializes a new instance of the FileListControl class.
+        /// Initializes a new instance of the FileGridView class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileListControl()
+        public FileGridView()
         {
             AllowUserToAddRows          = false;
             AllowUserToDeleteRows       = false;
