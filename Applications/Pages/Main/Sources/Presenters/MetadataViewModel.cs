@@ -193,16 +193,20 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Apply() => Quit(() =>
+        public void Apply()
         {
-            Facade.Title    = Title;
-            Facade.Author   = Author;
-            Facade.Subject  = Subject;
-            Facade.Keywords = Keywords;
-            Facade.Creator  = Creator;
-            Facade.Version  = new(1, Version);
-            Facade.Options  = Options;
-        }, true);
+            Encryption.Apply();
+
+            Quit(() => {
+                Facade.Title    = Title;
+                Facade.Author   = Author;
+                Facade.Subject  = Subject;
+                Facade.Keywords = Keywords;
+                Facade.Creator  = Creator;
+                Facade.Version  = new(1, Version);
+                Facade.Options  = Options;
+            }, true);
+        }
 
         #endregion
     }

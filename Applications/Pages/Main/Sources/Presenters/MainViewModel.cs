@@ -179,7 +179,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Metadata() => Send(new MetadataViewModel(new(), new(), Context), e => { }, true);
+        public void Metadata() => Send(new MetadataViewModel(Facade.Metadata, Facade.Encryption, Context));
 
         /* --------------------------------------------------------------------- */
         ///
@@ -240,7 +240,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Run(Facade.Clear, true);
+        public void Clear() => Run(Facade.Reset, true);
 
         /* ----------------------------------------------------------------- */
         ///

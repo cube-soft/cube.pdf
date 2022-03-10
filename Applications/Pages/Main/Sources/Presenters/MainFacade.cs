@@ -59,6 +59,7 @@ namespace Cube.Pdf.Pages
             base(new ContextDispatcher(context, false))
         {
             Settings = src;
+            Reset();
             _inner.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
 
@@ -108,12 +109,18 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; } = new()
-        {
-            Version  = new(1, 7),
-            Creator  = "CubePDF Page",
-            Producer = "CubePDF Page",
-        };
+        public Metadata Metadata { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// Gets the PDF encryption settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encryption Encryption { get; private set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -171,7 +178,7 @@ namespace Cube.Pdf.Pages
             {
                 using (var w = Make(new DocumentWriter(op))) w.Save(tmp);
                 Io.Move(tmp, dest, true);
-                _inner.Clear();
+                Reset();
             }
             finally { GetType().LogWarn(() => Io.Delete(tmp)); }
         });
@@ -191,7 +198,7 @@ namespace Cube.Pdf.Pages
         {
             var op = Settings.ToSaveOption();
             using (var w = Make(new DocumentSplitter(op))) w.Save(directory);
-            _inner.Clear();
+            Reset();
         });
 
         /* ----------------------------------------------------------------- */
@@ -263,14 +270,24 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Clear
+        /// Reset
         ///
         /// <summary>
-        /// Clears the added files.
+        /// Resets the settings of files, metada, and encryption.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Lock(_inner.Clear);
+        public void Reset() => Lock(() =>
+        {
+            _inner.Clear();
+            Encryption = new();
+            Metadata   = new()
+            {
+                Version  = new(1, 7),
+                Creator  = "CubePDF Page",
+                Producer = "CubePDF Page",
+            };
+        });
 
         #endregion
 
@@ -315,6 +332,7 @@ namespace Cube.Pdf.Pages
                 else dest.Add(new ImagePageCollection(f.FullName));
             }
             dest.Set(Metadata);
+            dest.Set(Encryption);
             return dest;
         }
 

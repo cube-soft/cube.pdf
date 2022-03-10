@@ -63,6 +63,7 @@ namespace Cube.Pdf.Pages
 
             BindCore(vm);
 
+            Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
             Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));

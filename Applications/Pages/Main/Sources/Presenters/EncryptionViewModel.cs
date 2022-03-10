@@ -311,20 +311,18 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Apply()
         {
-            Quit(() => {
-                Facade.Enabled          = Enabled;
-                Facade.OwnerPassword    = OwnerPassword;
-                Facade.OpenWithPassword = OpenWithPassword;
-                Facade.UserPassword     = SharePassword ? OwnerPassword : UserPassword;
+            Facade.Enabled          = Enabled;
+            Facade.OwnerPassword    = OwnerPassword;
+            Facade.OpenWithPassword = OpenWithPassword;
+            Facade.UserPassword     = SharePassword ? OwnerPassword : UserPassword;
 
-                static PermissionValue cvt(bool e) => e ? PermissionValue.Allow : PermissionValue.Deny;
-                Facade.Permission.Print             = cvt(AllowPrint);
-                Facade.Permission.CopyContents      = cvt(AllowCopy);
-                Facade.Permission.ModifyContents    = cvt(AllowModify);
-                Facade.Permission.Accessibility     = cvt(AllowAccessibility);
-                Facade.Permission.InputForm         = cvt(AllowForm);
-                Facade.Permission.ModifyAnnotations = cvt(AllowAnnotation);
-            }, true);
+            static PermissionValue cvt(bool e) => e ? PermissionValue.Allow : PermissionValue.Deny;
+            Facade.Permission.Print             = cvt(AllowPrint);
+            Facade.Permission.CopyContents      = cvt(AllowCopy);
+            Facade.Permission.ModifyContents    = cvt(AllowModify);
+            Facade.Permission.Accessibility     = cvt(AllowAccessibility);
+            Facade.Permission.InputForm         = cvt(AllowForm);
+            Facade.Permission.ModifyAnnotations = cvt(AllowAnnotation);
         }
 
         #endregion
