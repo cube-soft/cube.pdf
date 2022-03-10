@@ -116,6 +116,24 @@ namespace Cube.Pdf.Pages.Properties {
         }
 
         /// <summary>
+        ///   Owner password is empty or does not match the confirmation. Please check your password and confirmation again. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorOwnerPassword {
+            get {
+                return ResourceManager.GetString("ErrorOwnerPassword", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   User password is empty or does not match the confirmation. Please check the user password or enable the &quot;Use owner password&quot; checkbox. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorUserPassword {
+            get {
+                return ResourceManager.GetString("ErrorUserPassword", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   All files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string FilterAll {

@@ -77,6 +77,12 @@
   <data name="ColumnType" xml:space="preserve">
     <value>Type</value>
   </data>
+  <data name="ErrorOwnerPassword" xml:space="preserve">
+    <value>Owner password is empty or does not match the confirmation. Please check your password and confirmation again.</value>
+  </data>
+  <data name="ErrorUserPassword" xml:space="preserve">
+    <value>User password is empty or does not match the confirmation. Please check the user password or enable the "Use owner password" checkbox.</value>
+  </data>
   <data name="FilterAll" xml:space="preserve">
     <value>All files</value>
   </data>

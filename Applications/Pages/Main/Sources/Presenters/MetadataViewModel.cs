@@ -50,7 +50,7 @@ namespace Cube.Pdf.Pages
         public MetadataViewModel(Metadata src, Encryption encryption, SynchronizationContext context) :
             base(src, new(), context)
         {
-            Encryption = new(encryption, context);
+            Encryption = new(encryption, Aggregator, context);
             Title      = src.Title;
             Author     = src.Author;
             Subject    = src.Subject;
@@ -195,9 +195,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Apply()
         {
-            Encryption.Apply();
-
-            Quit(() => {
+            if (Encryption.Apply()) Quit(() => {
                 Facade.Title    = Title;
                 Facade.Author   = Author;
                 Facade.Subject  = Subject;

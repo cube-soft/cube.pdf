@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
+using Cube.Mixin.String;
 
 namespace Cube.Pdf.Pages
 {
@@ -43,11 +44,12 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /// <param name="src">Source information.</param>
+        /// <param name="aggregator">Aggregator object.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public EncryptionViewModel(Encryption src, SynchronizationContext context) :
-            base(src, new(), context)
+        public EncryptionViewModel(Encryption src, Aggregator aggregator, SynchronizationContext context) :
+            base(src, aggregator, context)
         {
             Enabled            = src.Enabled;
             OwnerPassword      = src.OwnerPassword;
@@ -112,6 +114,18 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
+        /// OwnerCorrect
+        ///
+        /// <summary>
+        /// Gets a value indicating whether the entered owner password is
+        /// correct.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool OwnerCorrect => OwnerPassword.HasValue() && OwnerPassword == OwnerConfirm;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// OpenWithPassword
         ///
         /// <summary>
@@ -171,6 +185,23 @@ namespace Cube.Pdf.Pages
             get => Get(() => string.Empty);
             set => Set(value);
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// UserCorrect
+        ///
+        /// <summary>
+        /// Gets a value indicating whether the entered user password is
+        /// correct. The property will also be true when the OpenWithPassword
+        /// is set to false.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool UserCorrect => !OpenWithPassword || SharePassword || (
+            UserPassword.HasValue() &&
+            UserPassword != OwnerPassword &&
+            UserPassword == UserConfirm
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -309,8 +340,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Apply()
+        public bool Apply()
         {
+            if (Enabled && !OwnerCorrect) return Fail(Properties.Resources.ErrorOwnerPassword);
+            if (Enabled && !UserCorrect ) return Fail(Properties.Resources.ErrorUserPassword);
+
             Facade.Enabled          = Enabled;
             Facade.OwnerPassword    = OwnerPassword;
             Facade.OpenWithPassword = OpenWithPassword;
@@ -323,6 +357,27 @@ namespace Cube.Pdf.Pages
             Facade.Permission.Accessibility     = cvt(AllowAccessibility);
             Facade.Permission.InputForm         = cvt(AllowForm);
             Facade.Permission.ModifyAnnotations = cvt(AllowAnnotation);
+
+            return true;
+        }
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Fail
+        ///
+        /// <summary>
+        /// Sends the error message.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool Fail(string message)
+        {
+            Send(Message.ForError(message));
+            return false;
         }
 
         #endregion

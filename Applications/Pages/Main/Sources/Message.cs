@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cube.FileSystem;
+using Cube.Mixin.Assembly;
 
 namespace Cube.Pdf.Pages
 {
@@ -34,7 +34,33 @@ namespace Cube.Pdf.Pages
     /* --------------------------------------------------------------------- */
     internal static class Message
     {
-        #region OpenOrSaveMessage
+        #region DialogMessage
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ForError
+        ///
+        /// <summary>
+        /// Create a message to show a DialogBox with an error icon
+        /// and OK button.
+        /// </summary>
+        ///
+        /// <param name="src">Error message.</param>
+        ///
+        /// <returns>DialogMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static DialogMessage ForError(string src) => new()
+        {
+            Text    = src,
+            Title   = typeof(Message).Assembly.GetTitle(),
+            Icon    = DialogIcon.Error,
+            Buttons = DialogButtons.Ok,
+        };
+
+        #endregion
+
+        #region FileDialogMessage
 
         /* ----------------------------------------------------------------- */
         ///

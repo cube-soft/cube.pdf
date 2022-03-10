@@ -77,6 +77,12 @@
   <data name="ColumnType" xml:space="preserve">
     <value>種類</value>
   </data>
+  <data name="ErrorOwnerPassword" xml:space="preserve">
+    <value>パスワードが入力されていないか、または確認欄と一致しません。パスワードおよびパスワード確認欄を再度ご確認下さい。</value>
+  </data>
+  <data name="ErrorUserPassword" xml:space="preserve">
+    <value>閲覧用パスワードが入力されていないか、または確認欄と一致しません。パスワードを再度ご確認するか、「管理用パスワードと共用する」の項目を有効にして下さい。</value>
+  </data>
   <data name="FilterAll" xml:space="preserve">
     <value>すべてのファイル</value>
   </data>
