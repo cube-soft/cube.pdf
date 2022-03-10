@@ -331,8 +331,15 @@ namespace Cube.Pdf.Pages
                 }
                 else dest.Add(new ImagePageCollection(f.FullName));
             }
+
+            var v = Metadata.Version.Minor;
+            Encryption.Method = v >= 7 ? EncryptionMethod.Aes256 :
+                                v >= 6 ? EncryptionMethod.Aes128 :
+                                v >= 4 ? EncryptionMethod.Standard128 :
+                                         EncryptionMethod.Standard40;
             dest.Set(Metadata);
             dest.Set(Encryption);
+
             return dest;
         }
 
