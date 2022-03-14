@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Threading;
 using Cube.FileSystem;
 using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
@@ -52,11 +51,9 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /// <param name="src">User settings.</param>
-        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingFolder src, SynchronizationContext context) :
-            base(new ContextDispatcher(context, false))
+        public MainFacade(SettingFolder src)
         {
             Settings = src;
             Reset();

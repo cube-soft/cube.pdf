@@ -69,7 +69,7 @@ namespace Cube.Pdf.Pages
         ///
         /* --------------------------------------------------------------------- */
         public MainViewModel(SettingFolder src, IEnumerable<string> args, SynchronizationContext context) :
-            base(new(src, context), new(12), context)
+            base(new(src), new(), context)
         {
             Locale.Set(src.Value.Language);
 
