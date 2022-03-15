@@ -71,16 +71,16 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Smart
+        /// ShrinkResources
         ///
         /// <summary>
-        /// Gets or sets a value indicating whether to use the smart mode
-        /// when saving PDF files.
+        /// Gets or sets a value indicating whether to shrink deduplicated
+        /// resources when saving PDF files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public bool Smart
+        public bool ShrinkResources
         {
             get => Get(() => true);
             set => Set(value);

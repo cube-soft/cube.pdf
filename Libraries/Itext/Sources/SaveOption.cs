@@ -31,15 +31,15 @@ namespace Cube.Pdf.Itext
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// Smart
+        /// ShrinkResources
         ///
         /// <summary>
-        /// Gets or sets the value indicating whether to use the smart
-        /// copy algorithm.
+        /// Gets or sets a value indicating whether to shrink deduplicated
+        /// resources.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Smart { get; set; } = true;
+        public bool ShrinkResources { get; set; } = true;
 
         /* ----------------------------------------------------------------- */
         ///

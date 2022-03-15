@@ -62,8 +62,8 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public static SaveOption ToSaveOption(this SettingFolder src) => new()
         {
-            Temp  = src.Value.Temp,
-            Smart = src.Value.Smart,
+            Temp            = src.Value.Temp,
+            ShrinkResources = src.Value.ShrinkResources,
         };
 
         #endregion

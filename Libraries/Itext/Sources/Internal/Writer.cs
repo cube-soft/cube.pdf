@@ -61,7 +61,7 @@ namespace Cube.Pdf.Itext
             var op = new WriterProperties();
             _ = op.SetPdfVersion(GetVersion(metadata));
             _ = op.SetFullCompressionMode(metadata.Version.Minor >= 5);
-            if (options.Smart) _ = op.UseSmartMode();
+            if (options.ShrinkResources) _ = op.UseSmartMode();
             SetEncryption(encryption, op);
 
             _document = new(new PdfWriter(Io.Create(path), op));

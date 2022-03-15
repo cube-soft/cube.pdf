@@ -178,7 +178,7 @@ namespace Cube.Pdf.Clip
             var tmp   = System.IO.Path.GetTempFileName();
             var items = _clips.Select(e => e.RawObject).Where(e => Io.Exists(e.Source));
 
-            using (var writer = new DocumentWriter(new() { Smart = true }))
+            using (var writer = new DocumentWriter(new() { ShrinkResources = true }))
             {
                 writer.Set(_source.Metadata);
                 writer.Set(_source.Encryption);
