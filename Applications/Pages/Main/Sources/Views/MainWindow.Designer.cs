@@ -21,6 +21,7 @@
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
             this.FilePanel = new System.Windows.Forms.TableLayoutPanel();
@@ -38,6 +39,7 @@
             this.ExitButton = new Cube.Forms.Controls.Button();
             this.SplitButton = new Cube.Forms.Controls.Button();
             this.MergeButton = new Cube.Forms.Controls.Button();
+            this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.RootPanel.SuspendLayout();
             this.FilePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainGridView)).BeginInit();
@@ -199,6 +201,12 @@
             this.MergeButton.Name = "MergeButton";
             this.MergeButton.UseVisualStyleBackColor = false;
             //
+            // MainToolTip
+            //
+            this.MainToolTip.AutoPopDelay = 5000;
+            this.MainToolTip.InitialDelay = 200;
+            this.MainToolTip.ReshowDelay = 2000;
+            //
             // MainWindow
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -236,6 +244,7 @@
         private Forms.Controls.Button RemoveButton;
         private Forms.Controls.Button ClearButton;
         private Forms.Controls.Button MetadataButton;
+        private System.Windows.Forms.ToolTip MainToolTip;
     }
 }
 

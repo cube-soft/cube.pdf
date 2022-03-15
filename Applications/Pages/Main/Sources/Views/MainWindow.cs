@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -98,7 +97,6 @@ namespace Cube.Pdf.Pages
             bs.Bind(nameof(vm.Ready), SplitButton, nameof(Enabled), true);
             bs.Bind(nameof(vm.Ready), MetadataButton, nameof(Enabled), true);
 
-            Behaviors.Add(MakeToolTip());
             Behaviors.Add(new ShownEventBehavior(this, vm.Setup));
             Behaviors.Add(new ClickEventBehavior(MergeButton, vm.Merge));
             Behaviors.Add(new ClickEventBehavior(SplitButton, vm.Split));
@@ -109,7 +107,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new ClickEventBehavior(DownButton, () => vm.Move(SelectedIndices, 1)));
             Behaviors.Add(new ClickEventBehavior(RemoveButton, () => vm.Remove(SelectedIndices)));
             Behaviors.Add(new ClickEventBehavior(ClearButton, vm.Clear));
-            Behaviors.Add(new ClickEventBehavior(TitleButton, vm.About));
+            Behaviors.Add(new ClickEventBehavior(TitleButton, vm.Setting));
             Behaviors.Add(new EventBehavior(MainGridView, "DoubleClick", () => vm.Preview(SelectedIndices)));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
@@ -157,32 +155,11 @@ namespace Cube.Pdf.Pages
             ShortcutKeys.Clear();
             ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
             ShortcutKeys.Add(Keys.Control | Keys.O, vm.Add);
-            ShortcutKeys.Add(Keys.Control | Keys.H, vm.About);
+            ShortcutKeys.Add(Keys.Control | Keys.H, vm.Setting);
             ShortcutKeys.Add(Keys.Control | Keys.K, () => vm.Move(SelectedIndices, -1));
             ShortcutKeys.Add(Keys.Control | Keys.J, () => vm.Move(SelectedIndices, 1));
             ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Ready.Then(vm.Merge));
             ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Ready.Then(vm.Split));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MakeToolTip
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ToolTip class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IDisposable MakeToolTip()
-        {
-            var dest = new ToolTip
-            {
-                InitialDelay =  200,
-                AutoPopDelay = 5000,
-                ReshowDelay  = 1000,
-            };
-            dest.SetToolTip(TitleButton, Properties.Resources.MessageAbout);
-            return dest;
         }
 
         /* ----------------------------------------------------------------- */
@@ -214,6 +191,7 @@ namespace Cube.Pdf.Pages
             var lang = vm.Language;
             this.UpdateCulture(lang);
             Resource.UpdateCulture(lang);
+            MainToolTip.SetToolTip(TitleButton, Properties.Resources.MessageSettings);
             MainGridView.Refresh();
         }
 

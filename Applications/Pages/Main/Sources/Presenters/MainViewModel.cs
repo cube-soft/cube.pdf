@@ -279,14 +279,14 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// About
+        /// Setting
         ///
         /// <summary>
-        /// Shows the version dialog.
+        /// Shows the setting dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void About() => Send(new SettingViewModel(Facade.Settings, Context));
+        public void Setting() => Send(new SettingViewModel(Facade.Settings, Context));
 
         #endregion
 

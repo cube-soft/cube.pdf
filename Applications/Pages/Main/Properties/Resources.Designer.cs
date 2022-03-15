@@ -271,20 +271,20 @@ namespace Cube.Pdf.Pages.Properties {
         }
 
         /// <summary>
-        ///   About CubePDF Page に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageAbout {
-            get {
-                return ResourceManager.GetString("MessageAbout", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   {0} is protected. Enter the owner password to edit. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessagePassword {
             get {
                 return ResourceManager.GetString("MessagePassword", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   CubePDF Page settings に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MessageSettings {
+            get {
+                return ResourceManager.GetString("MessageSettings", resourceCulture);
             }
         }
 

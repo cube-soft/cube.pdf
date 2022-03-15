@@ -128,11 +128,11 @@
   <data name="MenuUp" xml:space="preserve">
     <value>Up</value>
   </data>
-  <data name="MessageAbout" xml:space="preserve">
-    <value>About CubePDF Page</value>
-  </data>
   <data name="MessagePassword" xml:space="preserve">
     <value>{0} is protected. Enter the owner password to edit.</value>
+  </data>
+  <data name="MessageSettings" xml:space="preserve">
+    <value>CubePDF Page settings</value>
   </data>
   <data name="TitleAdd" xml:space="preserve">
     <value>Add files</value>

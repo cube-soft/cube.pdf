@@ -232,7 +232,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 Assert.That(e.Version, Does.StartWith("4.0.0 ("));
                 e.CheckUpdate = prev;
                 e.Apply();
-            })) vm.About();
+            })) vm.Setting();
         }
 
         /* ----------------------------------------------------------------- */
