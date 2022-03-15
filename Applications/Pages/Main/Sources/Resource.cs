@@ -16,7 +16,10 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Collections.Generic;
+using System.Globalization;
+using Cube.Mixin.Uri;
 
 namespace Cube.Pdf.Pages
 {
@@ -31,6 +34,17 @@ namespace Cube.Pdf.Pages
     /* --------------------------------------------------------------------- */
     public static class Resource
     {
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ProductUri
+        ///
+        /// <summary>
+        /// Gets the URL of the product Web page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Uri ProductUri => GetUri("https://www.cube-soft.jp/cubepdfpage/");
+
         #region Methods
 
         /* ----------------------------------------------------------------- */
@@ -104,6 +118,22 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public static void UpdateCulture(Language src) => Properties.Resources.Culture = src.ToCultureInfo();
+
+        #endregion
+
+        #region Implementations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetUri
+        ///
+        /// <summary>
+        /// Gets the Uri object from the specified URL string.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static Uri GetUri(string url) =>
+            new Uri(url).With("lang", CultureInfo.CurrentCulture.Name.ToLowerInvariant());
 
         #endregion
     }

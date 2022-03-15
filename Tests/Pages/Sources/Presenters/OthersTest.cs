@@ -224,7 +224,7 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         public void About()
         {
             using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
-            using (vm.Subscribe<VersionViewModel>(e =>
+            using (vm.Subscribe<SettingViewModel>(e =>
             {
                 var prev = e.CheckUpdate;
                 e.CheckUpdate = false;

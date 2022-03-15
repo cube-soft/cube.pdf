@@ -144,6 +144,9 @@
     <value>結合したファイルの保存</value>
   </data>
   <data name="TitleSplit" xml:space="preserve">
-    <value>分割したファイルを保存するフォルダを選択して下さい。</value>
+    <value>分割したファイルを保存するフォルダーを選択して下さい。</value>
+  </data>
+  <data name="TitleTemp" xml:space="preserve">
+    <value>作業フォルダーを選択して下さい。作業フォルダーを明示しない場合、結合・分割元ファイルと同じフォルダーが使用されます。</value>
   </data>
 </root>

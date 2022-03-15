@@ -286,7 +286,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void About() => Send(new VersionViewModel(Facade.Settings, Context));
+        public void About() => Send(new SettingViewModel(Facade.Settings, Context));
 
         #endregion
 

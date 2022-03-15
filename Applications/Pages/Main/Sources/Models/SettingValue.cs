@@ -86,6 +86,23 @@ namespace Cube.Pdf.Pages
             set => Set(value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// KeepOutlines
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to keep outline
+        /// information when saving PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool KeepOutlines
+        {
+            get => Get(() => true);
+            set => Set(value);
+        }
+
         #endregion
     }
 }

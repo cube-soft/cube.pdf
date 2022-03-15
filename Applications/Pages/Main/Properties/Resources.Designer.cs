@@ -323,5 +323,14 @@ namespace Cube.Pdf.Pages.Properties {
                 return ResourceManager.GetString("TitleSplit", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Select a temp folder. If you do not specify a temp folder, the same folder as the source files will be used. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleTemp {
+            get {
+                return ResourceManager.GetString("TitleTemp", resourceCulture);
+            }
+        }
     }
 }

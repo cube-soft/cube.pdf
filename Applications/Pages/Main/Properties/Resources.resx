@@ -146,4 +146,7 @@
   <data name="TitleSplit" xml:space="preserve">
     <value>Select a folder to save the split files.</value>
   </data>
+  <data name="TitleTemp" xml:space="preserve">
+    <value>Select a temp folder. If you do not specify a temp folder, the same folder as the source files will be used.</value>
+  </data>
 </root>

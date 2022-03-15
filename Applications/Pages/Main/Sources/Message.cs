@@ -128,6 +128,23 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ForTemp
+        ///
+        /// <summary>
+        /// Creates a message to show a BrowserFolder dialog.
+        /// </summary>
+        ///
+        /// <returns>OpenDirectoryMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static OpenDirectoryMessage ForTemp() => new()
+        {
+            Text      = Properties.Resources.TitleTemp,
+            NewButton = true,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ForSelect
         ///
         /// <summary>

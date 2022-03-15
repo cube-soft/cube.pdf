@@ -120,7 +120,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new SelectionBehavior(MainGridView));
             Behaviors.Add(new ShowDialogBehavior<MetadataWindow, MetadataViewModel>(vm));
             Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(vm));
-            Behaviors.Add(new ShowDialogBehavior<VersionWindow, VersionViewModel>(vm));
+            Behaviors.Add(new ShowDialogBehavior<SettingWindow, SettingViewModel>(vm));
             Behaviors.Add(vm.Subscribe<UpdateListMessage>(e => vm.Files.ResetBindings(false)));
             Behaviors.Add(vm.Subscribe<SelectMessage>(e => Select(e.Value)));
             Behaviors.Add(vm.Subscribe<PreviewMessage>(e => Process.Start(e.Value)));
