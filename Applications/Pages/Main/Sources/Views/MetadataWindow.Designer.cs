@@ -89,7 +89,7 @@
             //
             resources.ApplyResources(this.RootPanel, "RootPanel");
             this.RootPanel.Controls.Add(this.MainTabControl, 1, 1);
-            this.RootPanel.Controls.Add(this.FooterPanel, 0, 3);
+            this.RootPanel.Controls.Add(this.FooterPanel, 0, 2);
             this.RootPanel.Name = "RootPanel";
             //
             // MainTabControl
@@ -99,11 +99,12 @@
             resources.ApplyResources(this.MainTabControl, "MainTabControl");
             this.MainTabControl.Name = "MainTabControl";
             this.MainTabControl.SelectedIndex = 0;
+            this.MainTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             //
             // MetadataTabPage
             //
-            this.MetadataTabPage.Controls.Add(this.MetadataPanel);
             resources.ApplyResources(this.MetadataTabPage, "MetadataTabPage");
+            this.MetadataTabPage.Controls.Add(this.MetadataPanel);
             this.MetadataTabPage.Name = "MetadataTabPage";
             this.MetadataTabPage.UseVisualStyleBackColor = true;
             //
@@ -202,8 +203,8 @@
             //
             // EncryptionTabPage
             //
-            this.EncryptionTabPage.Controls.Add(this.EncryptionPanel);
             resources.ApplyResources(this.EncryptionTabPage, "EncryptionTabPage");
+            this.EncryptionTabPage.Controls.Add(this.EncryptionPanel);
             this.EncryptionTabPage.Name = "EncryptionTabPage";
             this.EncryptionTabPage.UseVisualStyleBackColor = true;
             //

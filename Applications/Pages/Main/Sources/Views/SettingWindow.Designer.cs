@@ -68,9 +68,9 @@ namespace Cube.Pdf.Pages
             //
             // MainTabPanel
             //
-            resources.ApplyResources(this.MainTabPanel, "MainTabPanel");
             this.MainTabPanel.Controls.Add(this.SettingTabPage);
             this.MainTabPanel.Controls.Add(this.VersionTabPage);
+            resources.ApplyResources(this.MainTabPanel, "MainTabPanel");
             this.MainTabPanel.Name = "MainTabPanel";
             this.MainTabPanel.SelectedIndex = 0;
             this.MainTabPanel.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
@@ -121,8 +121,8 @@ namespace Cube.Pdf.Pages
             //
             // LanguageComboBox
             //
-            resources.ApplyResources(this.LanguageComboBox, "LanguageComboBox");
             this.SettingPanel.SetColumnSpan(this.LanguageComboBox, 2);
+            resources.ApplyResources(this.LanguageComboBox, "LanguageComboBox");
             this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LanguageComboBox.FormattingEnabled = true;
             this.LanguageComboBox.Name = "LanguageComboBox";
@@ -172,9 +172,9 @@ namespace Cube.Pdf.Pages
             //
             // VersionControl
             //
-            resources.ApplyResources(this.VersionControl, "VersionControl");
             this.VersionControl.Copyright = "Copyright © 2010 CubeSoft, Inc.";
             this.VersionControl.Description = "";
+            resources.ApplyResources(this.VersionControl, "VersionControl");
             this.VersionControl.Image = global::Cube.Pdf.Pages.Properties.Resources.Logo;
             this.VersionControl.Name = "VersionControl";
             this.VersionControl.OneLine = true;
@@ -192,9 +192,9 @@ namespace Cube.Pdf.Pages
             //
             // ExitButton
             //
-            resources.ApplyResources(this.ExitButton, "ExitButton");
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.ExitButton, "ExitButton");
             this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.ExitButton.ForeColor = System.Drawing.Color.White;
             this.ExitButton.Name = "ExitButton";
@@ -202,8 +202,8 @@ namespace Cube.Pdf.Pages
             //
             // ExecButton
             //
-            resources.ApplyResources(this.ExecButton, "ExecButton");
             this.ExecButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            resources.ApplyResources(this.ExecButton, "ExecButton");
             this.ExecButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.ExecButton.ForeColor = System.Drawing.Color.White;
             this.ExecButton.Name = "ExecButton";
@@ -212,9 +212,9 @@ namespace Cube.Pdf.Pages
             // SettingWindow
             //
             this.AcceptButton = this.ExecButton;
-            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.ExitButton;
+            resources.ApplyResources(this, "$this");
             this.Controls.Add(this.RootPanel);
             this.Name = "SettingWindow";
             this.RootPanel.ResumeLayout(false);

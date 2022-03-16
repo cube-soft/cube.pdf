@@ -62,6 +62,9 @@
   <data name="RootPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
+  <data name="MetadataTabPage.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="MetadataPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
@@ -506,7 +509,7 @@
     <value>13</value>
   </data>
   <data name="MetadataPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+    <value>Top</value>
   </data>
   <data name="MetadataPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
@@ -515,7 +518,7 @@
     <value>9</value>
   </data>
   <data name="MetadataPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>426, 365</value>
+    <value>426, 233</value>
   </data>
   <data name="MetadataPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -533,7 +536,7 @@
     <value>0</value>
   </data>
   <data name="MetadataPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ViewOptionComboBox" Row="7" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="ViewOptionLabel" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="VersionLabel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordTextBox" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="KeywordLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="VersionComboBox" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,12,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ViewOptionComboBox" Row="7" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="ViewOptionLabel" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="VersionLabel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordTextBox" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="KeywordLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="VersionComboBox" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,12,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,12" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="MetadataTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -542,7 +545,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="MetadataTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>432, 371</value>
+    <value>432, 378</value>
   </data>
   <data name="MetadataTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -561,6 +564,9 @@
   </data>
   <data name="&gt;&gt;MetadataTabPage.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="EncryptionTabPage.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="EncryptionPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1262,7 +1268,7 @@
     <value>1</value>
   </data>
   <data name="EncryptionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+    <value>Top</value>
   </data>
   <data name="EncryptionPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
@@ -1271,7 +1277,7 @@
     <value>4</value>
   </data>
   <data name="EncryptionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>426, 365</value>
+    <value>426, 363</value>
   </data>
   <data name="EncryptionPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1289,7 +1295,7 @@
     <value>0</value>
   </data>
   <data name="EncryptionPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="EncryptionSubPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,6,Absolute,25,Absolute,320,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="EncryptionSubPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,6,Absolute,25,Absolute,320,Absolute,6" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="EncryptionTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -1298,7 +1304,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="EncryptionTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>432, 371</value>
+    <value>432, 378</value>
   </data>
   <data name="EncryptionTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1325,7 +1331,7 @@
     <value>12, 12</value>
   </data>
   <data name="MainTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>440, 399</value>
+    <value>440, 406</value>
   </data>
   <data name="MainTabControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1445,7 +1451,7 @@
     <value>0, 0</value>
   </data>
   <data name="RootPanel.RowCount" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="RootPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>464, 481</value>
@@ -1466,7 +1472,7 @@
     <value>0</value>
   </data>
   <data name="RootPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="MainTabControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="3" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Absolute,405,Percent,100,Absolute,60" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="MainTabControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="2" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Percent,100,Absolute,60,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1926,7 +1932,7 @@
 </value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>430, 520</value>
+    <value>450, 250</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>PDF Metadata</value>

@@ -58,578 +58,230 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="RootPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="VersionControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="OtherLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="&gt;&gt;OptionLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="TempLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="RootPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
-  </data>
-  <data name="ExecButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;UpdateCheckBox.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;LanguageComboBox.Name" xml:space="preserve">
-    <value>LanguageComboBox</value>
-  </data>
-  <data name="SettingTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>452, 188</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="&gt;&gt;ExitButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FooterPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>484, 60</value>
-  </data>
-  <data name="ExitButton.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="ExitButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 36</value>
   </data>
   <data name="SettingTabPage.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="ExecButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>242, 12</value>
-  </data>
-  <data name="&gt;&gt;VersionTabPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ExitButton.Name" xml:space="preserve">
-    <value>ExitButton</value>
-  </data>
-  <data name="FooterPanel.ColumnCount" type="System.Int32, mscorlib">
+  <data name="SettingPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="VersionTabPage.AutoScroll" type="System.Boolean, mscorlib">
+  <data name="UpdateCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;FooterPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="UpdateCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
-  <data name="KeepOutlineCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 44</value>
+  <data name="UpdateCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;TempTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="UpdateCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>109, 131</value>
   </data>
-  <data name="ExitButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <data name="UpdateCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 23</value>
   </data>
-  <data name="&gt;&gt;SettingPanel.Name" xml:space="preserve">
+  <data name="UpdateCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="UpdateCheckBox.Text" xml:space="preserve">
+    <value>Check for updates on startup</value>
+  </data>
+  <data name="&gt;&gt;UpdateCheckBox.Name" xml:space="preserve">
+    <value>UpdateCheckBox</value>
+  </data>
+  <data name="&gt;&gt;UpdateCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;UpdateCheckBox.Parent" xml:space="preserve">
     <value>SettingPanel</value>
   </data>
-  <data name="&gt;&gt;TempTextBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;UpdateCheckBox.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="ShrinkResourceCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 15</value>
+  <data name="OtherLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="&gt;&gt;LanguageLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="OtherLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="OtherLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 131</value>
+  </data>
+  <data name="OtherLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="OtherLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 23</value>
+  </data>
+  <data name="OtherLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
   <data name="OtherLabel.Text" xml:space="preserve">
     <value>Others</value>
   </data>
-  <data name="LanguageLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="OtherLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
-  <data name="KeepOutlineCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 23</value>
+  <data name="&gt;&gt;OtherLabel.Name" xml:space="preserve">
+    <value>OtherLabel</value>
   </data>
-  <data name="&gt;&gt;TempButton.Name" xml:space="preserve">
-    <value>TempButton</value>
-  </data>
-  <data name="VersionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Meiryo UI, 12px</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>CubePDF Page Settings</value>
-  </data>
-  <data name="ExecButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 36</value>
-  </data>
-  <data name="ShrinkResourceCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;RootPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="FooterPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ExitButton" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="ExecButton" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,130,Absolute,106,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="&gt;&gt;MainTabPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;OtherLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OtherLabel.Parent" xml:space="preserve">
     <value>SettingPanel</value>
   </data>
-  <data name="TempButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;OtherLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="FooterPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="TempTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="TempTextBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>109, 73</value>
   </data>
+  <data name="TempTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>262, 23</value>
+  </data>
+  <data name="TempTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;TempTextBox.Name" xml:space="preserve">
+    <value>TempTextBox</value>
+  </data>
+  <data name="&gt;&gt;TempTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TempTextBox.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;TempTextBox.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="TempLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="TempLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="TempLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 73</value>
+  </data>
+  <data name="TempLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="TempLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 23</value>
+  </data>
+  <data name="TempLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="TempLabel.Text" xml:space="preserve">
+    <value>Temp</value>
+  </data>
+  <data name="TempLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;TempLabel.Name" xml:space="preserve">
+    <value>TempLabel</value>
+  </data>
+  <data name="&gt;&gt;TempLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TempLabel.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;TempLabel.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="LanguageComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="LanguageComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>109, 102</value>
+  </data>
+  <data name="LanguageComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 23</value>
+  </data>
+  <data name="LanguageComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;LanguageComboBox.Name" xml:space="preserve">
+    <value>LanguageComboBox</value>
+  </data>
+  <data name="&gt;&gt;LanguageComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LanguageComboBox.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;LanguageComboBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="LanguageLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="LanguageLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="LanguageLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 102</value>
+  </data>
+  <data name="LanguageLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="LanguageLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 23</value>
+  </data>
+  <data name="LanguageLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="LanguageLabel.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
   <data name="&gt;&gt;LanguageLabel.Name" xml:space="preserve">
     <value>LanguageLabel</value>
   </data>
-  <data name="SettingTabPage.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="&gt;&gt;LanguageLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;VersionControl.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;OptionLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;LanguageLabel.Parent" xml:space="preserve">
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;LanguageLabel.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="FooterPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ExitButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="OtherLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="OptionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 15</value>
-  </data>
-  <data name="TempTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="ExecButton.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="LanguageComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 23</value>
-  </data>
-  <data name="FooterPanel.RowCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;FooterPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="FooterPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 231</value>
-  </data>
-  <data name="&gt;&gt;VersionControl.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="MainTabPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>460, 216</value>
-  </data>
-  <data name="MainTabPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="VersionControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>400, 94</value>
-  </data>
-  <data name="ExecButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;LanguageComboBox.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;VersionPanel.Parent" xml:space="preserve">
-    <value>VersionTabPage</value>
-  </data>
-  <data name="LanguageLabel.Text" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="&gt;&gt;TempButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ExecButton.Text" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="UpdateCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 23</value>
-  </data>
-  <data name="VersionTabPage.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;MainTabPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;VersionPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="VersionPanel.ColumnCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="VersionPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="TempLabel.AutoSize" type="System.Boolean, mscorlib">
+  <data name="KeepOutlineCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="&gt;&gt;KeepOutlineCheckBox.Name" xml:space="preserve">
-    <value>KeepOutlineCheckBox</value>
-  </data>
-  <data name="LanguageLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="OptionLabel.Text" xml:space="preserve">
-    <value>Options</value>
-  </data>
-  <data name="TempButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>377, 72</value>
-  </data>
-  <data name="ShrinkResourceCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;UpdateCheckBox.Name" xml:space="preserve">
-    <value>UpdateCheckBox</value>
-  </data>
-  <data name="&gt;&gt;VersionControl.Parent" xml:space="preserve">
-    <value>VersionPanel</value>
-  </data>
-  <data name="ExitButton.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="OptionLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>SettingWindow</value>
-  </data>
-  <data name="OtherLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 131</value>
-  </data>
-  <data name="VersionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>446, 146</value>
-  </data>
-  <data name="&gt;&gt;ExecButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="LanguageComboBox.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="VersionControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>23, 23</value>
-  </data>
-  <data name="&gt;&gt;UpdateCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;SettingTabPage.Parent" xml:space="preserve">
-    <value>MainTabPanel</value>
-  </data>
-  <data name="VersionTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>446, 175</value>
-  </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>400, 250</value>
-  </data>
-  <data name="&gt;&gt;MainTabPanel.Name" xml:space="preserve">
-    <value>MainTabPanel</value>
-  </data>
-  <data name="&gt;&gt;ShrinkResourceCheckBox.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="LanguageComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;SettingTabPage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="OptionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="KeepOutlineCheckBox.Text" xml:space="preserve">
-    <value>Keep outlines</value>
-  </data>
-  <data name="&gt;&gt;ExecButton.Parent" xml:space="preserve">
-    <value>FooterPanel</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
-  </data>
-  <data name="&gt;&gt;FooterPanel.Parent" xml:space="preserve">
-    <value>RootPanel</value>
-  </data>
-  <data name="VersionTabPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 24</value>
-  </data>
-  <data name="&gt;&gt;TempLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="LanguageLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 102</value>
-  </data>
-  <data name="&gt;&gt;OptionLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="OtherLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
-  </data>
-  <data name="UpdateCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 131</value>
-  </data>
-  <data name="LanguageLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="TempTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ExitButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>372, 12</value>
-  </data>
-  <data name="ShrinkResourceCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;LanguageLabel.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="MainTabPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="VersionControl.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ExecButton.Name" xml:space="preserve">
-    <value>ExecButton</value>
-  </data>
-  <data name="LanguageLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
-  </data>
-  <data name="FooterPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="RootPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="RootPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="MainTabPanel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="2" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Percent,100,Absolute,60" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="VersionTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>452, 188</value>
-  </data>
-  <data name="LanguageLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="TempLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
-  </data>
-  <data name="UpdateCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;TempLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;VersionPanel.Name" xml:space="preserve">
-    <value>VersionPanel</value>
-  </data>
-  <data name="TempButton.Text" xml:space="preserve">
-    <value>...</value>
-  </data>
-  <data name="KeepOutlineCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="RootPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="SettingPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="&gt;&gt;VersionTabPage.Parent" xml:space="preserve">
-    <value>MainTabPanel</value>
-  </data>
-  <data name="TempButton.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="VersionPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="OtherLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="SettingTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="&gt;&gt;UpdateCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="SettingPanel.ColumnCount" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="VersionPanel.RowCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;TempTextBox.Name" xml:space="preserve">
-    <value>TempTextBox</value>
-  </data>
-  <data name="SettingPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OtherLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TempTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="TempLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="4" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="LanguageLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeepOutlineCheckBox" Row="2" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="ShrinkResourceCheckBox" Row="1" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OptionLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TempButton" Row="3" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Percent,100,Absolute,66,Absolute,6" /&gt;&lt;Rows Styles="Absolute,12,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,12" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="OtherLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;RootPanel.Name" xml:space="preserve">
-    <value>RootPanel</value>
-  </data>
-  <data name="OptionLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
-  </data>
-  <data name="KeepOutlineCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="SettingTabPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 24</value>
-  </data>
-  <data name="&gt;&gt;KeepOutlineCheckBox.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="ExitButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="TempLabel.Text" xml:space="preserve">
-    <value>Temp</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.Window, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="VersionPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="VersionControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,20,Percent,100,Absolute,20" /&gt;&lt;Rows Styles="Absolute,20,Absolute,100,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
-  <data name="UpdateCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ShrinkResourceCheckBox.Text" xml:space="preserve">
-    <value>Shrink duplicated resources</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="OtherLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="TempLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 73</value>
-  </data>
-  <data name="&gt;&gt;LanguageComboBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RootPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MainTabPanel.Parent" xml:space="preserve">
-    <value>RootPanel</value>
-  </data>
-  <data name="&gt;&gt;VersionTabPage.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;ShrinkResourceCheckBox.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="ExitButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="LanguageLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;OtherLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
-    <value>SettingTabPage</value>
   </data>
   <data name="KeepOutlineCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="&gt;&gt;OtherLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="KeepOutlineCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="UpdateCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+  <data name="KeepOutlineCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>109, 44</value>
   </data>
-  <data name="&gt;&gt;ShrinkResourceCheckBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RootPanel.RowCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="VersionTabPage.Text" xml:space="preserve">
-    <value>Version</value>
-  </data>
-  <data name="&gt;&gt;ExecButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;OtherLabel.Name" xml:space="preserve">
-    <value>OtherLabel</value>
-  </data>
-  <data name="&gt;&gt;TempButton.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;RootPanel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="ShrinkResourceCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="KeepOutlineCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>328, 23</value>
   </data>
-  <data name="KeepOutlineCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="KeepOutlineCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="&gt;&gt;TempButton.ZOrder" xml:space="preserve">
-    <value>9</value>
+  <data name="KeepOutlineCheckBox.Text" xml:space="preserve">
+    <value>Keep outlines</value>
   </data>
-  <data name="&gt;&gt;TempLabel.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="UpdateCheckBox.Text" xml:space="preserve">
-    <value>Check for updates on startup</value>
-  </data>
-  <data name="&gt;&gt;TempLabel.Name" xml:space="preserve">
-    <value>TempLabel</value>
-  </data>
-  <data name="TempLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="TempButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 25</value>
-  </data>
-  <data name="&gt;&gt;VersionPanel.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TempLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;KeepOutlineCheckBox.Name" xml:space="preserve">
+    <value>KeepOutlineCheckBox</value>
   </data>
   <data name="&gt;&gt;KeepOutlineCheckBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -637,8 +289,416 @@
   <data name="&gt;&gt;KeepOutlineCheckBox.Parent" xml:space="preserve">
     <value>SettingPanel</value>
   </data>
+  <data name="&gt;&gt;KeepOutlineCheckBox.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="ShrinkResourceCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ShrinkResourceCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ShrinkResourceCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ShrinkResourceCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>109, 15</value>
+  </data>
+  <data name="ShrinkResourceCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>328, 23</value>
+  </data>
+  <data name="ShrinkResourceCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="ShrinkResourceCheckBox.Text" xml:space="preserve">
+    <value>Shrink duplicated resources</value>
+  </data>
+  <data name="&gt;&gt;ShrinkResourceCheckBox.Name" xml:space="preserve">
+    <value>ShrinkResourceCheckBox</value>
+  </data>
+  <data name="&gt;&gt;ShrinkResourceCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ShrinkResourceCheckBox.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;ShrinkResourceCheckBox.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="OptionLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="OptionLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="OptionLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 15</value>
+  </data>
+  <data name="OptionLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="OptionLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 23</value>
+  </data>
+  <data name="OptionLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="OptionLabel.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="OptionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;OptionLabel.Name" xml:space="preserve">
+    <value>OptionLabel</value>
+  </data>
+  <data name="&gt;&gt;OptionLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OptionLabel.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;OptionLabel.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="TempButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="TempButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>377, 72</value>
+  </data>
+  <data name="TempButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="TempButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 25</value>
+  </data>
+  <data name="TempButton.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="TempButton.Text" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="&gt;&gt;TempButton.Name" xml:space="preserve">
+    <value>TempButton</value>
+  </data>
+  <data name="&gt;&gt;TempButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TempButton.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;TempButton.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="SettingPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="SettingPanel.RowCount" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>446, 175</value>
+  </data>
+  <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.Name" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
+    <value>SettingTabPage</value>
+  </data>
+  <data name="&gt;&gt;SettingPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="SettingPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OtherLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TempTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="TempLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="4" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="LanguageLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeepOutlineCheckBox" Row="2" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="ShrinkResourceCheckBox" Row="1" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OptionLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TempButton" Row="3" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Percent,100,Absolute,66,Absolute,6" /&gt;&lt;Rows Styles="Absolute,12,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,12" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="SettingTabPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 24</value>
+  </data>
+  <data name="SettingTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="SettingTabPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>452, 188</value>
+  </data>
+  <data name="SettingTabPage.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="SettingTabPage.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="&gt;&gt;SettingTabPage.Name" xml:space="preserve">
+    <value>SettingTabPage</value>
+  </data>
+  <data name="&gt;&gt;SettingTabPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingTabPage.Parent" xml:space="preserve">
+    <value>MainTabPanel</value>
+  </data>
+  <data name="&gt;&gt;SettingTabPage.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="VersionTabPage.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="VersionPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="VersionControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="VersionControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="VersionControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>400, 94</value>
+  </data>
+  <data name="VersionControl.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;VersionControl.Name" xml:space="preserve">
+    <value>VersionControl</value>
+  </data>
+  <data name="&gt;&gt;VersionControl.Type" xml:space="preserve">
+    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+  </data>
+  <data name="&gt;&gt;VersionControl.Parent" xml:space="preserve">
+    <value>VersionPanel</value>
+  </data>
+  <data name="&gt;&gt;VersionControl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="VersionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="VersionPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="VersionPanel.RowCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="VersionPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>446, 146</value>
+  </data>
+  <data name="VersionPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;VersionPanel.Name" xml:space="preserve">
+    <value>VersionPanel</value>
+  </data>
+  <data name="&gt;&gt;VersionPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;VersionPanel.Parent" xml:space="preserve">
+    <value>VersionTabPage</value>
+  </data>
+  <data name="&gt;&gt;VersionPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="VersionPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="VersionControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,20,Percent,100,Absolute,20" /&gt;&lt;Rows Styles="Absolute,20,Absolute,100,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="VersionTabPage.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="VersionTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="VersionTabPage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>452, 190</value>
+  </data>
+  <data name="VersionTabPage.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="VersionTabPage.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="&gt;&gt;VersionTabPage.Name" xml:space="preserve">
+    <value>VersionTabPage</value>
+  </data>
+  <data name="&gt;&gt;VersionTabPage.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;VersionTabPage.Parent" xml:space="preserve">
+    <value>MainTabPanel</value>
+  </data>
+  <data name="&gt;&gt;VersionTabPage.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="MainTabPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="MainTabPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="MainTabPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>460, 216</value>
+  </data>
+  <data name="MainTabPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;MainTabPanel.Name" xml:space="preserve">
+    <value>MainTabPanel</value>
+  </data>
+  <data name="&gt;&gt;MainTabPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MainTabPanel.Parent" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="&gt;&gt;MainTabPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="FooterPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="ExitButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ExitButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ExitButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ExitButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>372, 12</value>
+  </data>
+  <data name="ExitButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 36</value>
+  </data>
+  <data name="ExitButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="ExitButton.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;ExitButton.Name" xml:space="preserve">
+    <value>ExitButton</value>
+  </data>
+  <data name="&gt;&gt;ExitButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExitButton.Parent" xml:space="preserve">
+    <value>FooterPanel</value>
+  </data>
+  <data name="&gt;&gt;ExitButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ExecButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ExecButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ExecButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ExecButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>242, 12</value>
+  </data>
+  <data name="ExecButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 36</value>
+  </data>
+  <data name="ExecButton.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="ExecButton.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="&gt;&gt;ExecButton.Name" xml:space="preserve">
+    <value>ExecButton</value>
+  </data>
+  <data name="&gt;&gt;ExecButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExecButton.Parent" xml:space="preserve">
+    <value>FooterPanel</value>
+  </data>
+  <data name="&gt;&gt;ExecButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="FooterPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="FooterPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 231</value>
+  </data>
+  <data name="FooterPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="FooterPanel.RowCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="FooterPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>484, 60</value>
+  </data>
+  <data name="FooterPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;FooterPanel.Name" xml:space="preserve">
+    <value>FooterPanel</value>
+  </data>
+  <data name="&gt;&gt;FooterPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FooterPanel.Parent" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="&gt;&gt;FooterPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="FooterPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ExitButton" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="ExecButton" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,130,Absolute,106,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="RootPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="RootPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="RootPanel.RowCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="RootPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>484, 291</value>
+  </data>
+  <data name="RootPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;RootPanel.Name" xml:space="preserve">
+    <value>RootPanel</value>
+  </data>
+  <data name="&gt;&gt;RootPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RootPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;RootPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="RootPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="MainTabPanel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="2" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Percent,100,Absolute,60" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>484, 291</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Meiryo UI, 12px</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1088,82 +1148,22 @@
         QYABrEGAAaxBgAGsQYABrEGAAaxBgAGsQeAHrEH4H6xB/D+sQQ==
 </value>
   </data>
-  <data name="MainTabPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
-  <data name="LanguageComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 102</value>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>450, 250</value>
   </data>
-  <data name="SettingTabPage.Text" xml:space="preserve">
-    <value>Settings</value>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
   </data>
-  <data name="&gt;&gt;FooterPanel.Name" xml:space="preserve">
-    <value>FooterPanel</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>CubePDF Page Settings</value>
   </data>
-  <data name="TempTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 23</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>SettingWindow</value>
   </data>
-  <data name="&gt;&gt;VersionTabPage.Name" xml:space="preserve">
-    <value>VersionTabPage</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>Cube.Forms.Window, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
-  <data name="&gt;&gt;TempTextBox.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingTabPage.Name" xml:space="preserve">
-    <value>SettingTabPage</value>
-  </data>
-  <data name="TempButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 2, 3, 2</value>
-  </data>
-  <data name="&gt;&gt;OptionLabel.Name" xml:space="preserve">
-    <value>OptionLabel</value>
-  </data>
-  <data name="OptionLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="OptionLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ExitButton.Parent" xml:space="preserve">
-    <value>FooterPanel</value>
-  </data>
-  <data name="&gt;&gt;LanguageComboBox.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;SettingTabPage.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ExecButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="TempLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="ShrinkResourceCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="RootPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>484, 291</value>
-  </data>
-  <data name="SettingPanel.RowCount" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="RootPanel.ColumnCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="UpdateCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;ShrinkResourceCheckBox.Name" xml:space="preserve">
-    <value>ShrinkResourceCheckBox</value>
-  </data>
-  <data name="OptionLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;VersionControl.Name" xml:space="preserve">
-    <value>VersionControl</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>
