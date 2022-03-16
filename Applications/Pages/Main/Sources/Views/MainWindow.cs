@@ -153,13 +153,24 @@ namespace Cube.Pdf.Pages
         private void MakeShortcut(MainViewModel vm)
         {
             ShortcutKeys.Clear();
+            ShortcutKeys.Add(Keys.Delete, () => vm.Remove(SelectedIndices));
             ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
             ShortcutKeys.Add(Keys.Control | Keys.O, vm.Add);
             ShortcutKeys.Add(Keys.Control | Keys.H, vm.Setting);
+            ShortcutKeys.Add(Keys.Control | Keys.D, () => vm.Remove(SelectedIndices));
             ShortcutKeys.Add(Keys.Control | Keys.K, () => vm.Move(SelectedIndices, -1));
             ShortcutKeys.Add(Keys.Control | Keys.J, () => vm.Move(SelectedIndices, 1));
             ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Ready.Then(vm.Merge));
             ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Ready.Then(vm.Split));
+            ShortcutKeys.Add(Keys.Control | Keys.E, () => vm.Ready.Then(vm.Metadata));
+
+            // Same as Ctrl + key
+            ShortcutKeys.Add(Keys.Alt | Keys.O, vm.Add);
+            ShortcutKeys.Add(Keys.Alt | Keys.H, vm.Setting);
+            ShortcutKeys.Add(Keys.Alt | Keys.D, () => vm.Remove(SelectedIndices));
+            ShortcutKeys.Add(Keys.Alt | Keys.M, () => vm.Ready.Then(vm.Merge));
+            ShortcutKeys.Add(Keys.Alt | Keys.S, () => vm.Ready.Then(vm.Split));
+            ShortcutKeys.Add(Keys.Alt | Keys.E, () => vm.Ready.Then(vm.Metadata));
         }
 
         /* ----------------------------------------------------------------- */
