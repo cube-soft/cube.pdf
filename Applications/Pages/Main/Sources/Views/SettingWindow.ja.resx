@@ -78,7 +78,7 @@
     <value>言語</value>
   </data>
   <data name="KeepOutlineCheckBox.Text" xml:space="preserve">
-    <value>アウトライン情報を維持する</value>
+    <value>結合元 PDF ファイルのしおり情報を維持する</value>
   </data>
   <data name="ShrinkResourceCheckBox.Text" xml:space="preserve">
     <value>重複リソースを削除してファイルサイズを削減する</value>

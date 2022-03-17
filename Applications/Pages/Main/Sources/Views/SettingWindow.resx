@@ -278,7 +278,7 @@
     <value>2</value>
   </data>
   <data name="KeepOutlineCheckBox.Text" xml:space="preserve">
-    <value>Keep outlines</value>
+    <value>Keep bookmarks of source PDF files</value>
   </data>
   <data name="&gt;&gt;KeepOutlineCheckBox.Name" xml:space="preserve">
     <value>KeepOutlineCheckBox</value>
