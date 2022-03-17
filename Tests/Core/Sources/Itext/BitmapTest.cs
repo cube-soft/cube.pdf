@@ -59,7 +59,7 @@ namespace Cube.Pdf.Tests.Itext
         {
             var dest = Path(Args(filename));
 
-            using (var w = new DocumentWriter(new() { ShrinkResources = true }))
+            using (var w = new DocumentWriter())
             {
                 w.Add(new ImagePageCollection(GetSource(filename)));
                 w.Save(dest);
@@ -84,7 +84,7 @@ namespace Cube.Pdf.Tests.Itext
             var r0 = new DocumentReader(GetSource("SampleBookmark.pdf"), "", op);
             var dest = Path(Args(r0.File.BaseName, Io.Get(filename).BaseName));
 
-            using (var w = new DocumentWriter(new() { ShrinkResources = true }))
+            using (var w = new DocumentWriter())
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree));
                 w.Add(Rotate(new ImagePageCollection(GetSource(filename)), degree));

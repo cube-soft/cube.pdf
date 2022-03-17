@@ -43,6 +43,18 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
+        /// KeepOutlines
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to keep the outlines of
+        /// source files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool KeepOutlines { get; set; } = true;
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Temp
         ///
         /// <summary>

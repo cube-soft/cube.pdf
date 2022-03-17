@@ -64,6 +64,7 @@ namespace Cube.Pdf.Pages
         {
             Temp            = src.Value.Temp,
             ShrinkResources = src.Value.ShrinkResources,
+            KeepOutlines    = src.Value.KeepOutlines,
         };
 
         #endregion

@@ -258,6 +258,7 @@ namespace Cube.Pdf.Editor
         {
             Temp            = Temp,
             ShrinkResources = ShrinkResources,
+            KeepOutlines    = true,
         };
 
         #endregion
