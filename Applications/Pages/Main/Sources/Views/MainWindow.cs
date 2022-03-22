@@ -155,6 +155,7 @@ namespace Cube.Pdf.Pages
             ShortcutKeys.Clear();
             ShortcutKeys.Add(Keys.Delete, () => vm.Remove(SelectedIndices));
             ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
+            ShortcutKeys.Add(Keys.Control | Keys.Q, Close);
             ShortcutKeys.Add(Keys.Control | Keys.O, vm.Add);
             ShortcutKeys.Add(Keys.Control | Keys.H, vm.Setting);
             ShortcutKeys.Add(Keys.Control | Keys.D, () => vm.Remove(SelectedIndices));
