@@ -30,7 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.SettingPanel = new Cube.Forms.Controls.SettingControl();
+            this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ConvertProgressBar = new System.Windows.Forms.ProgressBar();
+            this.ApplyButton = new System.Windows.Forms.Button();
+            this.ConvertButton = new System.Windows.Forms.Button();
+            this.ExitButton = new System.Windows.Forms.Button();
+            this.HeaderPictureBox = new System.Windows.Forms.PictureBox();
             this.SettingTabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -106,15 +112,10 @@
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.AboutLabel = new System.Windows.Forms.Label();
             this.VersionPanel = new Cube.Forms.Controls.VersionControl();
-            this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.ConvertProgressBar = new System.Windows.Forms.ProgressBar();
-            this.ApplyButton = new System.Windows.Forms.Button();
-            this.ConvertButton = new System.Windows.Forms.Button();
-            this.ExitButton = new System.Windows.Forms.Button();
-            this.HeaderPictureBox = new System.Windows.Forms.PictureBox();
             this.RootPanel.SuspendLayout();
-            this.SettingPanel.SuspendLayout();
+            this.FooterPanel.SuspendLayout();
+            this.ToolsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).BeginInit();
             this.SettingTabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
@@ -134,24 +135,74 @@
             this.PermissionPanel.SuspendLayout();
             this.OthersTabPage.SuspendLayout();
             this.OthersPanel.SuspendLayout();
-            this.FooterPanel.SuspendLayout();
-            this.ToolsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).BeginInit();
             this.SuspendLayout();
             //
             // RootPanel
             //
             resources.ApplyResources(this.RootPanel, "RootPanel");
-            this.RootPanel.Controls.Add(this.SettingPanel, 0, 1);
+            this.RootPanel.Controls.Add(this.SettingTabControl, 0, 1);
             this.RootPanel.Controls.Add(this.FooterPanel, 0, 2);
             this.RootPanel.Controls.Add(this.HeaderPictureBox, 0, 0);
             this.RootPanel.Name = "RootPanel";
             //
-            // SettingPanel
+            // FooterPanel
             //
-            this.SettingPanel.Controls.Add(this.SettingTabControl);
-            resources.ApplyResources(this.SettingPanel, "SettingPanel");
-            this.SettingPanel.Name = "SettingPanel";
+            resources.ApplyResources(this.FooterPanel, "FooterPanel");
+            this.FooterPanel.Controls.Add(this.ToolsPanel, 0, 0);
+            this.FooterPanel.Controls.Add(this.ConvertButton, 1, 0);
+            this.FooterPanel.Controls.Add(this.ExitButton, 2, 0);
+            this.FooterPanel.Name = "FooterPanel";
+            //
+            // ToolsPanel
+            //
+            this.ToolsPanel.Controls.Add(this.ConvertProgressBar);
+            this.ToolsPanel.Controls.Add(this.ApplyButton);
+            resources.ApplyResources(this.ToolsPanel, "ToolsPanel");
+            this.ToolsPanel.Name = "ToolsPanel";
+            //
+            // ConvertProgressBar
+            //
+            resources.ApplyResources(this.ConvertProgressBar, "ConvertProgressBar");
+            this.ConvertProgressBar.Name = "ConvertProgressBar";
+            this.ConvertProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            //
+            // ApplyButton
+            //
+            this.ApplyButton.BackColor = System.Drawing.Color.White;
+            this.ApplyButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            resources.ApplyResources(this.ApplyButton, "ApplyButton");
+            this.ApplyButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.ApplyButton.Name = "ApplyButton";
+            this.ApplyButton.UseVisualStyleBackColor = false;
+            //
+            // ConvertButton
+            //
+            this.ConvertButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.ConvertButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ConvertButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            resources.ApplyResources(this.ConvertButton, "ConvertButton");
+            this.ConvertButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.ConvertButton.ForeColor = System.Drawing.Color.White;
+            this.ConvertButton.Name = "ConvertButton";
+            this.ConvertButton.UseVisualStyleBackColor = false;
+            //
+            // ExitButton
+            //
+            this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
+            this.ExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.ExitButton, "ExitButton");
+            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.ExitButton.ForeColor = System.Drawing.Color.White;
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.UseVisualStyleBackColor = false;
+            //
+            // HeaderPictureBox
+            //
+            resources.ApplyResources(this.HeaderPictureBox, "HeaderPictureBox");
+            this.HeaderPictureBox.Image = global::Cube.Pdf.Converter.Properties.Resources.Header;
+            this.HeaderPictureBox.Name = "HeaderPictureBox";
+            this.HeaderPictureBox.TabStop = false;
             //
             // SettingTabControl
             //
@@ -674,65 +725,6 @@
             this.VersionPanel.Uri = null;
             this.VersionPanel.Version = "1.0.0 (x64)";
             //
-            // FooterPanel
-            //
-            resources.ApplyResources(this.FooterPanel, "FooterPanel");
-            this.FooterPanel.Controls.Add(this.ToolsPanel, 0, 0);
-            this.FooterPanel.Controls.Add(this.ConvertButton, 1, 0);
-            this.FooterPanel.Controls.Add(this.ExitButton, 2, 0);
-            this.FooterPanel.Name = "FooterPanel";
-            //
-            // ToolsPanel
-            //
-            this.ToolsPanel.Controls.Add(this.ConvertProgressBar);
-            this.ToolsPanel.Controls.Add(this.ApplyButton);
-            resources.ApplyResources(this.ToolsPanel, "ToolsPanel");
-            this.ToolsPanel.Name = "ToolsPanel";
-            //
-            // ConvertProgressBar
-            //
-            resources.ApplyResources(this.ConvertProgressBar, "ConvertProgressBar");
-            this.ConvertProgressBar.Name = "ConvertProgressBar";
-            this.ConvertProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            //
-            // ApplyButton
-            //
-            this.ApplyButton.BackColor = System.Drawing.Color.White;
-            this.ApplyButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            resources.ApplyResources(this.ApplyButton, "ApplyButton");
-            this.ApplyButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ApplyButton.Name = "ApplyButton";
-            this.ApplyButton.UseVisualStyleBackColor = false;
-            //
-            // ConvertButton
-            //
-            this.ConvertButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.ConvertButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ConvertButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            resources.ApplyResources(this.ConvertButton, "ConvertButton");
-            this.ConvertButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.ConvertButton.ForeColor = System.Drawing.Color.White;
-            this.ConvertButton.Name = "ConvertButton";
-            this.ConvertButton.UseVisualStyleBackColor = false;
-            //
-            // ExitButton
-            //
-            this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.ExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            resources.ApplyResources(this.ExitButton, "ExitButton");
-            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.ExitButton.ForeColor = System.Drawing.Color.White;
-            this.ExitButton.Name = "ExitButton";
-            this.ExitButton.UseVisualStyleBackColor = false;
-            //
-            // HeaderPictureBox
-            //
-            resources.ApplyResources(this.HeaderPictureBox, "HeaderPictureBox");
-            this.HeaderPictureBox.Image = global::Cube.Pdf.Converter.Properties.Resources.Header;
-            this.HeaderPictureBox.Name = "HeaderPictureBox";
-            this.HeaderPictureBox.TabStop = false;
-            //
             // MainWindow
             //
             this.AcceptButton = this.ConvertButton;
@@ -743,7 +735,9 @@
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.RootPanel.ResumeLayout(false);
-            this.SettingPanel.ResumeLayout(false);
+            this.FooterPanel.ResumeLayout(false);
+            this.ToolsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).EndInit();
             this.SettingTabControl.ResumeLayout(false);
             this.GeneralTabPage.ResumeLayout(false);
             this.GeneralPanel.ResumeLayout(false);
@@ -775,9 +769,6 @@
             this.OthersTabPage.ResumeLayout(false);
             this.OthersPanel.ResumeLayout(false);
             this.OthersPanel.PerformLayout();
-            this.FooterPanel.ResumeLayout(false);
-            this.ToolsPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -787,48 +778,66 @@
         private System.Windows.Forms.TableLayoutPanel RootPanel;
         private System.Windows.Forms.PictureBox HeaderPictureBox;
         private System.Windows.Forms.TableLayoutPanel FooterPanel;
+        private System.Windows.Forms.Button ConvertButton;
+        private System.Windows.Forms.Button ExitButton;
+        private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
+        private System.Windows.Forms.ProgressBar ConvertProgressBar;
+        private System.Windows.Forms.Button ApplyButton;
         private System.Windows.Forms.TabControl SettingTabControl;
         private System.Windows.Forms.TabPage GeneralTabPage;
-        private System.Windows.Forms.TabPage DocumentPage;
-        private System.Windows.Forms.TabPage EncryptionTabPage;
-        private System.Windows.Forms.TabPage OthersTabPage;
         private System.Windows.Forms.TableLayoutPanel GeneralPanel;
-        private System.Windows.Forms.Label FormatLabel;
-        private System.Windows.Forms.Label ResolutionLabel;
-        private System.Windows.Forms.Label DestinationLabel;
-        private System.Windows.Forms.TableLayoutPanel DestinationPanel;
-        private System.Windows.Forms.Label PostProcessLabel;
+        private System.Windows.Forms.NumericUpDown ResolutionNumeric;
+        private System.Windows.Forms.ComboBox PostProcessComboBox;
+        private System.Windows.Forms.TableLayoutPanel UserProgramPanel;
+        private System.Windows.Forms.Button UserProgramButton;
+        private System.Windows.Forms.TextBox UserProgramTextBox;
+        private System.Windows.Forms.FlowLayoutPanel OrientationPanel;
+        private System.Windows.Forms.RadioButton PortraitRadioButton;
+        private System.Windows.Forms.RadioButton LandscapeRadioButton;
+        private System.Windows.Forms.RadioButton AutoRadioButton;
+        private System.Windows.Forms.Label OrientationLabel;
         private System.Windows.Forms.TableLayoutPanel SourcePanel;
-        private System.Windows.Forms.Label SourceLabel;
         private System.Windows.Forms.Button SourceButton;
         private System.Windows.Forms.TextBox SourceTextBox;
+        private System.Windows.Forms.Label SourceLabel;
+        private System.Windows.Forms.Label PostProcessLabel;
+        private System.Windows.Forms.Label DestinationLabel;
+        private System.Windows.Forms.Label ResolutionLabel;
+        private System.Windows.Forms.Label FormatLabel;
+        private System.Windows.Forms.TableLayoutPanel DestinationPanel;
+        private System.Windows.Forms.ComboBox SaveOptionComboBox;
         private System.Windows.Forms.Button DestinationButton;
         private System.Windows.Forms.TextBox DestinationTextBox;
+        private System.Windows.Forms.TableLayoutPanel FormatPanel;
+        private System.Windows.Forms.ComboBox PdfVersionComboBox;
+        private System.Windows.Forms.ComboBox FormatComboBox;
+        private System.Windows.Forms.TabPage DocumentPage;
         private System.Windows.Forms.TableLayoutPanel DocumentPanel;
-        private System.Windows.Forms.Label TitleLabel;
-        private System.Windows.Forms.TextBox TitleTextBox;
-        private System.Windows.Forms.Label AuthorLabel;
-        private System.Windows.Forms.TextBox AuthorTextBox;
-        private System.Windows.Forms.Label SubjectLabel;
-        private System.Windows.Forms.Label KeywordsLabel;
-        private System.Windows.Forms.TextBox SubjectTextBox;
+        private System.Windows.Forms.ComboBox ViewOptionComboBox;
+        private System.Windows.Forms.Label ViewerPreferencesLabel;
+        private System.Windows.Forms.TextBox CreatorTextBox;
         private System.Windows.Forms.Label CreatorLabel;
         private System.Windows.Forms.TextBox KeywordsTextBox;
-        private System.Windows.Forms.TextBox CreatorTextBox;
-        private System.Windows.Forms.Label ViewerPreferencesLabel;
-        private System.Windows.Forms.ComboBox ViewOptionComboBox;
+        private System.Windows.Forms.Label KeywordsLabel;
+        private System.Windows.Forms.TextBox SubjectTextBox;
+        private System.Windows.Forms.Label SubjectLabel;
+        private System.Windows.Forms.TextBox AuthorTextBox;
+        private System.Windows.Forms.Label AuthorLabel;
+        private System.Windows.Forms.TextBox TitleTextBox;
+        private System.Windows.Forms.Label TitleLabel;
+        private System.Windows.Forms.TabPage EncryptionTabPage;
         private System.Windows.Forms.TableLayoutPanel EncryptionOuterPanel;
         private System.Windows.Forms.CheckBox EncryptionCheckBox;
         private System.Windows.Forms.TableLayoutPanel EncryptionPanel;
-        private System.Windows.Forms.Label OwnerPasswordLabel;
-        private System.Windows.Forms.TextBox OwnerPasswordTextBox;
+        private System.Windows.Forms.CheckBox UserPasswordCheckBox;
+        private System.Windows.Forms.Label OperationLabel;
         private System.Windows.Forms.TextBox OwnerConfirmTextBox;
         private System.Windows.Forms.Label OwnerConfirmLabel;
-        private System.Windows.Forms.Label OperationLabel;
-        private System.Windows.Forms.CheckBox UserPasswordCheckBox;
+        private System.Windows.Forms.TextBox OwnerPasswordTextBox;
+        private System.Windows.Forms.Label OwnerPasswordLabel;
         private System.Windows.Forms.TableLayoutPanel OperationPanel;
-        private System.Windows.Forms.TableLayoutPanel UserPasswordPanel;
         private System.Windows.Forms.CheckBox SharePasswordCheckBox;
+        private System.Windows.Forms.TableLayoutPanel UserPasswordPanel;
         private System.Windows.Forms.TextBox UserConfirmTextBox;
         private System.Windows.Forms.TextBox UserPasswordTextBox;
         private System.Windows.Forms.Label UserConfirmLabel;
@@ -838,36 +847,17 @@
         private System.Windows.Forms.CheckBox AllowFormCheckBox;
         private System.Windows.Forms.CheckBox AllowCopyCheckBox;
         private System.Windows.Forms.CheckBox AllowPrintCheckBox;
+        private System.Windows.Forms.TabPage OthersTabPage;
         private System.Windows.Forms.TableLayoutPanel OthersPanel;
-        private System.Windows.Forms.ComboBox LanguageComboBox;
-        private System.Windows.Forms.Label AboutLabel;
-        private System.Windows.Forms.Label OrientationLabel;
-        private System.Windows.Forms.FlowLayoutPanel OrientationPanel;
-        private System.Windows.Forms.RadioButton PortraitRadioButton;
-        private System.Windows.Forms.RadioButton LandscapeRadioButton;
-        private System.Windows.Forms.RadioButton AutoRadioButton;
-        private System.Windows.Forms.CheckBox UpdateCheckBox;
+        private System.Windows.Forms.Label LanguageLabel;
+        private System.Windows.Forms.CheckBox GrayscaleCheckBox;
+        private System.Windows.Forms.Label OptionsLabel;
         private System.Windows.Forms.CheckBox JpegCheckBox;
         private System.Windows.Forms.CheckBox LinearizationCheckBox;
-        private System.Windows.Forms.TableLayoutPanel FormatPanel;
-        private System.Windows.Forms.ComboBox PdfVersionComboBox;
-        private System.Windows.Forms.ComboBox FormatComboBox;
-        private System.Windows.Forms.Label OptionsLabel;
-        private System.Windows.Forms.ComboBox SaveOptionComboBox;
-        private System.Windows.Forms.ComboBox PostProcessComboBox;
-        private System.Windows.Forms.TableLayoutPanel UserProgramPanel;
-        private System.Windows.Forms.Button UserProgramButton;
-        private System.Windows.Forms.TextBox UserProgramTextBox;
-        private System.Windows.Forms.CheckBox GrayscaleCheckBox;
-        private System.Windows.Forms.NumericUpDown ResolutionNumeric;
-        private System.Windows.Forms.Button ConvertButton;
-        private System.Windows.Forms.Button ExitButton;
-        private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
-        private System.Windows.Forms.ProgressBar ConvertProgressBar;
-        private System.Windows.Forms.Button ApplyButton;
-        private Cube.Forms.Controls.VersionControl VersionPanel;
-        private Cube.Forms.Controls.SettingControl SettingPanel;
-        private System.Windows.Forms.Label LanguageLabel;
+        private System.Windows.Forms.CheckBox UpdateCheckBox;
+        private System.Windows.Forms.ComboBox LanguageComboBox;
+        private System.Windows.Forms.Label AboutLabel;
+        private Forms.Controls.VersionControl VersionPanel;
     }
 }
 
