@@ -43,7 +43,7 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ReduceMemory
+        /// SaveMemory
         ///
         /// <summary>
         /// Gets or sets a value indicating whether to access the provided

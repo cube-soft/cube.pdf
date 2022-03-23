@@ -22,6 +22,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Cube.Mixin.Observing;
 
 namespace Cube.Pdf.Pages
 {
@@ -68,14 +69,19 @@ namespace Cube.Pdf.Pages
         ///
         /* --------------------------------------------------------------------- */
         public MainViewModel(SettingFolder src, IEnumerable<string> args, SynchronizationContext context) :
-            base(new(src, context), new(12), context)
+            base(new(src), new(), context)
         {
+            Locale.Set(src.Value.Language);
+
             Arguments = args;
             Files = new() { DataSource = Facade.Files };
             Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
 
             Assets.Add(new ObservableProxy(Facade, this));
             Assets.Add(ObserveCollection());
+            Assets.Add(src.Subscribe(e => {
+                if (e == nameof(src.Value.Language)) Locale.Set(src.Value.Language);
+            }));
         }
 
         #endregion
@@ -117,7 +123,7 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Invokable
+        /// Ready
         ///
         /// <summary>
         /// Gets a value indicating whether the Merge or Split operation
@@ -125,7 +131,18 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Invokable => Facade.Files.Count > 0;
+        public bool Ready => Facade.Files.Count > 0;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Language
+        ///
+        /// <summary>
+        /// Gets the displayed language.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Language Language => Facade.Settings.Value.Language;
 
         #endregion
 
@@ -152,6 +169,17 @@ namespace Cube.Pdf.Pages
         ///
         /* --------------------------------------------------------------------- */
         public void Merge() => Send(Message.ForMerge(), Facade.Merge, false);
+
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Metadata
+        ///
+        /// <summary>
+        /// Invokes the Metadata command.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Metadata() => Send(new MetadataViewModel(Facade.Metadata, Facade.Encryption, Context));
 
         /* --------------------------------------------------------------------- */
         ///
@@ -212,7 +240,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Run(Facade.Clear, true);
+        public void Clear() => Run(Facade.Reset, true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -251,14 +279,14 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// About
+        /// Setting
         ///
         /// <summary>
-        /// Shows the version dialog.
+        /// Shows the setting dialog.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void About() => Send(new VersionViewModel(Facade.Settings, Context));
+        public void Setting() => Send(new SettingViewModel(Facade.Settings, Context));
 
         #endregion
 
@@ -277,7 +305,7 @@ namespace Cube.Pdf.Pages
         {
             void handler(object s, NotifyCollectionChangedEventArgs e)
             {
-                Refresh(nameof(Invokable));
+                Refresh(nameof(Ready));
                 Send(new UpdateListMessage());
             }
 

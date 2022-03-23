@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 //
-// Copyright (c) 2010 CubeSoft, Inc.
+// Copyright (c) 2013 CubeSoft, Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published
@@ -16,136 +16,75 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Runtime.Serialization;
-using Cube.DataContract;
+using System.Threading;
 
-namespace Cube.Pdf.Editor
+namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingValue
+    /// MetadataViewModel
     ///
     /// <summary>
-    /// Represents the user settings.
+    /// Represents the ViewModel for the MetadataWindow.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [DataContract]
-    public sealed class SettingValue : SerializableBase
+    public class MetadataViewModel : PresentableBase<Metadata>
     {
+        #region Constructors
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// MetadataViewModel
+        ///
+        /// <summary>
+        /// Initializes a new instance of the MetadataViewModel class
+        /// with the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="src">Source metadata information.</param>
+        /// <param name="encryption">Source encryption information.</param>
+        /// <param name="context">Synchronization context.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public MetadataViewModel(Metadata src, Encryption encryption, SynchronizationContext context) :
+            base(src, new(), context)
+        {
+            Encryption = new(encryption, Aggregator, context);
+            Title      = src.Title;
+            Author     = src.Author;
+            Subject    = src.Subject;
+            Keywords   = src.Keywords;
+            Creator    = src.Creator;
+            Version    = src.Version.Minor;
+            Options    = src.Options;
+        }
+
+        #endregion
+
         #region Properties
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Width
+        /// Encryption
         ///
         /// <summary>
-        /// Gets or sets the width of main window.
+        /// Gets the ViewModel object for encryption settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember]
-        public int Width
-        {
-            get => Get(() => 800);
-            set => Set(value);
-        }
+        public EncryptionViewModel Encryption { get; }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Height
+        /// Title
         ///
         /// <summary>
-        /// Gets or sets the height of main window.
+        /// Gets or sets the title.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember]
-        public int Height
-        {
-            get => Get(() => 600);
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ItemSize
-        ///
-        /// <summary>
-        /// Gets or sets the displayed item size.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember(Name = "ViewSize")]
-        public int ItemSize
-        {
-            get => Get(() => 250);
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FrameOnly
-        ///
-        /// <summary>
-        /// Gets or sets the value indicating whether only the frame
-        /// of each item is displayed.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public bool FrameOnly
-        {
-            get => Get(() => false);
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RecentVisible
-        ///
-        /// <summary>
-        /// Gets or sets the value indicating whether to show recent files.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public bool RecentVisible
-        {
-            get => Get(() => true);
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ShrinkResources
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether to shrink deduplicated
-        /// resources when saving PDF files.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public bool ShrinkResources
-        {
-            get => Get(() => true);
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Temp
-        ///
-        /// <summary>
-        /// Gets or sets the path of the working directory. If this value is
-        /// empty, the program will use the same directory as the destination
-        /// path as its working directory.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [DataMember]
-        public string Temp
+        public string Title
         {
             get => Get(() => string.Empty);
             set => Set(value);
@@ -153,18 +92,118 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Language
+        /// Author
         ///
         /// <summary>
-        /// Gets or sets the display language.
+        /// Gets or sets the author.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [DataMember]
-        public Language Language
+        public string Author
         {
-            get => Get(() => Language.Auto);
+            get => Get(() => string.Empty);
             set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Subject
+        ///
+        /// <summary>
+        /// Gets or sets the subject.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Subject
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Keywords
+        ///
+        /// <summary>
+        /// Gets or sets the keywords.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Keywords
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Creator
+        ///
+        /// <summary>
+        /// Gets or sets the name of creator program.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public string Creator
+        {
+            get => Get(() => string.Empty);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Version
+        ///
+        /// <summary>
+        /// Gets or sets the PDF version.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public int Version
+        {
+            get => Get(() => 7);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Options
+        ///
+        /// <summary>
+        /// Gets or sets the view options.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public ViewerOption Options
+        {
+            get => Get(() => ViewerOption.None);
+            set => Set(value);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Apply
+        ///
+        /// <summary>
+        /// Apply the user settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public void Apply()
+        {
+            if (Encryption.Apply()) Quit(() => {
+                Facade.Title    = Title;
+                Facade.Author   = Author;
+                Facade.Subject  = Subject;
+                Facade.Keywords = Keywords;
+                Facade.Creator  = Creator;
+                Facade.Version  = new(1, Version);
+                Facade.Options  = Options;
+            }, true);
         }
 
         #endregion

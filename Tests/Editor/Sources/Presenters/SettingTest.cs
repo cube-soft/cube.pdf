@@ -78,13 +78,13 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
             var dest = vm.Value.Settings;
-            Assert.That(dest.Width,         Is.EqualTo(800));
-            Assert.That(dest.Height,        Is.EqualTo(600));
-            Assert.That(dest.ItemSize,      Is.EqualTo(250));
-            Assert.That(dest.FrameOnly,     Is.False);
-            Assert.That(dest.Smart,         Is.True);
-            Assert.That(dest.RecentVisible, Is.True);
-            Assert.That(dest.Temp,          Is.Empty);
+            Assert.That(dest.Width,           Is.EqualTo(800));
+            Assert.That(dest.Height,          Is.EqualTo(600));
+            Assert.That(dest.ItemSize,        Is.EqualTo(250));
+            Assert.That(dest.FrameOnly,       Is.False);
+            Assert.That(dest.ShrinkResources, Is.True);
+            Assert.That(dest.RecentVisible,   Is.True);
+            Assert.That(dest.Temp,            Is.Empty);
 
             vm.Value.Settings.Width  = 1024;
             vm.Value.Settings.Height = 768;

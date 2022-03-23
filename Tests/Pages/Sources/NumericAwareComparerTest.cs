@@ -16,56 +16,48 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using Cube.Pdf.Itext;
+using Cube.Collections;
+using NUnit.Framework;
 
-namespace Cube.Pdf.Pages
+namespace Cube.Pdf.Pages.Tests
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// SettingExtension
+    /// NumericAwareComparerTest
     ///
     /// <summary>
-    /// Provides extended methods of the SettingFolder class..
+    /// Tests the NumericAwareComparer class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class SettingExtension
+    [TestFixture]
+    class NumericAwareComparerTest
     {
-        #region Methods
+        #region Tests
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ToOpenOption
+        /// Compare
         ///
         /// <summary>
-        /// Converts to a OpenOption object.
+        /// Tests the Compare method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenOption ToOpenOption(this SettingFolder _) => new()
-        {
-            FullAccess = true,
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ToSaveOption
-        ///
-        /// <summary>
-        /// Converts to a SaveOption object.
-        /// </summary>
-        ///
-        /// <param name="src">User settings.</param>
-        ///
-        /// <returns>SaveOption object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static SaveOption ToSaveOption(this SettingFolder src) => new()
-        {
-            Temp            = src.Value.Temp,
-            ShrinkResources = src.Value.ShrinkResources,
-            KeepOutlines    = src.Value.KeepOutlines,
-        };
+        [TestCase( "2",  "2", ExpectedResult =  0)]
+        [TestCase( "2",  "1", ExpectedResult =  1)]
+        [TestCase( "2", "01", ExpectedResult =  1)]
+        [TestCase( "2", "02", ExpectedResult =  2)] // >= 1
+        [TestCase( "2", "10", ExpectedResult = -1)]
+        [TestCase( "2", "20", ExpectedResult = -1)]
+        [TestCase( "2", "-2", ExpectedResult =  5)] // >= 1
+        [TestCase("02", "01", ExpectedResult =  1)]
+        [TestCase("02", "10", ExpectedResult = -1)]
+        [TestCase("1.2.3-alpha",  "1.2.3-beta", ExpectedResult = -1)]
+        [TestCase("1.2.13-alpha", "1.2.3-beta", ExpectedResult =  1)]
+        [TestCase("sample", "test",   ExpectedResult = -1)]
+        [TestCase("sample", "Sample", ExpectedResult = 32)] // >= 1
+        public int Compare(string x, string y) => new NumericAwareComparer().Compare(x, y);
 
         #endregion
     }

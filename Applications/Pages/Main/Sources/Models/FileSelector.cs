@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Collections.Generic;
 using System.Linq;
+using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Mixin.String;
 
@@ -67,7 +68,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private IEnumerable<string> GetCore(IGrouping<bool, string> src) =>
             src.Key ?
-            src.OrderBy(e => e).SelectMany(e => Filter(Io.GetFiles(e))) :
+            src.OrderBy(e => e, new NumericAwareComparer()).SelectMany(e => Filter(Io.GetFiles(e))) :
             Filter(src);
 
         /* ----------------------------------------------------------------- */
@@ -80,7 +81,7 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         private IEnumerable<string> Filter(IEnumerable<string> src) =>
-            src.Where(e => IsTarget(e)).OrderBy(e => e);
+            src.Where(e => IsTarget(e)).OrderBy(e => e, new NumericAwareComparer());
 
         /* ----------------------------------------------------------------- */
         ///

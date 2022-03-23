@@ -60,11 +60,12 @@ namespace Cube.Pdf.Itext
                       options.Temp :
                       Io.Get(path).DirectoryName;
 
+            _options = options;
             _dest     = path;
             _tmp      = Io.Combine(dir, Guid.NewGuid().ToString("N"));
             _metadata = metadata;
             _crypt    = crypt;
-            _writer   = options.Smart ?
+            _writer   = options.ShrinkResources ?
                         new PdfSmartCopy(_document, Io.Create(_tmp)) :
                         new PdfCopy(_document, Io.Create(_tmp));
 
@@ -101,7 +102,7 @@ namespace Cube.Pdf.Itext
             if (page.File is PdfFile)
             {
                 var n = _writer.PageNumber; // see remarks
-                obj.GetBookmarks(n, n - page.Number, _bookmark);
+                if (_options.KeepOutlines) obj.GetOutlines(n, n - page.Number, _outlines);
             }
             _writer.AddPage(_writer.GetImportedPage(obj, page.Number));
         }
@@ -201,7 +202,7 @@ namespace Cube.Pdf.Itext
             using var r = Reader.From(_tmp, new Password(null, ""), new());
             using var w = new PdfStamper(r, Io.Create(_dest));
 
-            w.Writer.Outlines = _bookmark;
+            if (_options.KeepOutlines) w.Writer.Outlines = _outlines;
             w.MoreInfo = new Dictionary<string, string>
             {
                 { "Author",   _metadata.Author   },
@@ -262,11 +263,12 @@ namespace Cube.Pdf.Itext
         #region Fields
         private readonly string _dest;
         private readonly string _tmp;
+        private readonly SaveOption _options;
         private readonly Document _document = new();
         private readonly PdfCopy _writer;
         private readonly Metadata _metadata;
         private readonly Encryption _crypt;
-        private readonly List<Dictionary<string, object>> _bookmark = new();
+        private readonly List<Dictionary<string, object>> _outlines = new();
         #endregion
     }
 }

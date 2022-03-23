@@ -200,10 +200,10 @@ namespace Cube.Pdf.Itext
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetBookmarks
+        /// GetOutlines
         ///
         /// <summary>
-        /// Gets the collection of bookmarks embedded in the specified
+        /// Gets the collection of outlines embedded in the specified
         /// PDF document.
         /// </summary>
         ///
@@ -220,15 +220,15 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public static void GetBookmarks(this PdfReader src, int pagenum, int delta,
+        public static void GetOutlines(this PdfReader src, int pagenum, int delta,
             List<Dictionary<string, object>> dest)
         {
             var cmp = $"^{pagenum} (XYZ|Fit|FitH|FitBH)";
-            var bookmarks = SimpleBookmark.GetBookmark(src);
-            if (bookmarks == null) return;
+            var outlines = SimpleBookmark.GetBookmark(src);
+            if (outlines == null) return;
 
-            SimpleBookmark.ShiftPageNumbers(bookmarks, delta, null);
-            foreach (var b in bookmarks)
+            SimpleBookmark.ShiftPageNumbers(outlines, delta, null);
+            foreach (var b in outlines)
             {
                 var found = b.TryGetValue("Page", out object obj);
                 if (found && Regex.IsMatch(obj.ToString(), cmp)) dest.Add(b);

@@ -63,34 +63,34 @@
     <value>..\Assets\Background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColumnDate" xml:space="preserve">
-    <value>Last updated</value>
+    <value>更新日時</value>
   </data>
   <data name="ColumnLength" xml:space="preserve">
-    <value>Filesize</value>
+    <value>サイズ</value>
   </data>
   <data name="ColumnName" xml:space="preserve">
-    <value>Filename</value>
+    <value>ファイル名</value>
   </data>
   <data name="ColumnPages" xml:space="preserve">
-    <value>Pages</value>
+    <value>ページ数</value>
   </data>
   <data name="ColumnType" xml:space="preserve">
-    <value>Type</value>
+    <value>種類</value>
   </data>
   <data name="ErrorOwnerPassword" xml:space="preserve">
-    <value>Owner password is empty or does not match the confirmation. Please check your password and confirmation again.</value>
+    <value>パスワードが入力されていないか、または確認欄と一致しません。パスワードおよびパスワード確認欄を再度ご確認下さい。</value>
   </data>
   <data name="ErrorUserPassword" xml:space="preserve">
-    <value>User password is empty or does not match the confirmation. Please check the user password or enable the "Use owner password" checkbox.</value>
+    <value>閲覧用パスワードが入力されていないか、または確認欄と一致しません。パスワードを再度ご確認するか、「管理用パスワードと共用する」の項目を有効にして下さい。</value>
   </data>
   <data name="FilterAll" xml:space="preserve">
-    <value>All files</value>
+    <value>すべてのファイル</value>
   </data>
   <data name="FilterPdf" xml:space="preserve">
-    <value>PDF files</value>
+    <value>PDF ファイル</value>
   </data>
   <data name="FilterSupported" xml:space="preserve">
-    <value>All supported files</value>
+    <value>追加可能なファイル</value>
   </data>
   <data name="HeaderTitle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\HeaderTitle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -99,54 +99,54 @@
     <value>..\Assets\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="MenuDown" xml:space="preserve">
-    <value>Down</value>
+    <value>下へ</value>
   </data>
   <data name="MenuOneColumn" xml:space="preserve">
-    <value>One column</value>
+    <value>連続ページ</value>
   </data>
   <data name="MenuPreview" xml:space="preserve">
-    <value>Preview</value>
+    <value>プレビュー</value>
   </data>
   <data name="MenuRemove" xml:space="preserve">
-    <value>Remove from file list</value>
+    <value>ファイルリストから削除</value>
   </data>
   <data name="MenuSinglePage" xml:space="preserve">
-    <value>Single page</value>
+    <value>単一ページ</value>
   </data>
   <data name="MenuTwoColumnLeft" xml:space="preserve">
-    <value>Two column (left)</value>
+    <value>連続見開きページ（左綴じ）</value>
   </data>
   <data name="MenuTwoColumnRight" xml:space="preserve">
-    <value>Two column (right)</value>
+    <value>連続見開きページ（右綴じ）</value>
   </data>
   <data name="MenuTwoPageLeft" xml:space="preserve">
-    <value>Two page (left)</value>
+    <value>見開きページ（左綴じ）</value>
   </data>
   <data name="MenuTwoPageRight" xml:space="preserve">
-    <value>Two page (right)</value>
+    <value>見開きページ（右綴じ）</value>
   </data>
   <data name="MenuUp" xml:space="preserve">
-    <value>Up</value>
+    <value>上へ</value>
   </data>
   <data name="MessagePassword" xml:space="preserve">
-    <value>{0} is protected. Enter the owner password to edit.</value>
+    <value>{0} はパスワードで保護されています。編集するためには管理用パスワードを入力して下さい。</value>
   </data>
   <data name="MessageSettings" xml:space="preserve">
-    <value>CubePDF Page settings</value>
+    <value>CubePDF Page 設定</value>
   </data>
   <data name="TitleAdd" xml:space="preserve">
-    <value>Add files</value>
+    <value>ファイルを追加</value>
   </data>
   <data name="TitleBusy" xml:space="preserve">
-    <value>Processing... - {0}</value>
+    <value>処理中です... - {0}</value>
   </data>
   <data name="TitleMerge" xml:space="preserve">
-    <value>Save merged file as</value>
+    <value>結合したファイルの保存</value>
   </data>
   <data name="TitleSplit" xml:space="preserve">
-    <value>Select a folder to save the split files.</value>
+    <value>分割したファイルを保存するフォルダーを選択して下さい。</value>
   </data>
   <data name="TitleTemp" xml:space="preserve">
-    <value>Select a temp folder. If you do not specify a temp folder, the same folder as the source files will be used.</value>
+    <value>作業フォルダーを選択して下さい。作業フォルダーを明示しない場合、結合・分割元ファイルと同じフォルダーが使用されます。</value>
   </data>
 </root>

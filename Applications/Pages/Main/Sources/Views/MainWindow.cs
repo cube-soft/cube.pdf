@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -24,6 +23,8 @@ using System.Linq;
 using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
+using Cube.Mixin.Forms;
+using Cube.Mixin.Forms.Controls;
 using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Pages
@@ -50,14 +51,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            Behaviors.Add(SetupForAbout());
-            Behaviors.Add(new SelectionBehavior(FileListView));
-            Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
-        }
+        public MainWindow() => InitializeComponent();
 
         #endregion
 
@@ -74,7 +68,7 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public IEnumerable<int> SelectedIndices => FileListView
+        public IEnumerable<int> SelectedIndices => MainGridView
             .SelectedRows
             .Cast<DataGridViewRow>()
             .Select(e => e.Index)
@@ -82,7 +76,7 @@ namespace Cube.Pdf.Pages
 
         #endregion
 
-        #region Implementations
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -97,38 +91,38 @@ namespace Cube.Pdf.Pages
         {
             base.OnBind(src);
             if (src is not MainViewModel vm) return;
-            MainBindingSource.DataSource = vm;
 
-            ShortcutKeys.Clear();
-            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
-            ShortcutKeys.Add(Keys.Control | Keys.O, vm.Add);
-            ShortcutKeys.Add(Keys.Control | Keys.H, vm.About);
-            ShortcutKeys.Add(Keys.Control | Keys.K, () => vm.Move(SelectedIndices, -1));
-            ShortcutKeys.Add(Keys.Control | Keys.J, () => vm.Move(SelectedIndices, 1));
-            ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Invokable.Then(vm.Merge));
-            ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Invokable.Then(vm.Split));
+            var bs = Behaviors.Hook(new BindingSource(vm, ""));
+            bs.Bind(nameof(vm.Ready), MergeButton, nameof(Enabled), true);
+            bs.Bind(nameof(vm.Ready), SplitButton, nameof(Enabled), true);
+            bs.Bind(nameof(vm.Ready), MetadataButton, nameof(Enabled), true);
 
             Behaviors.Add(new ShownEventBehavior(this, vm.Setup));
             Behaviors.Add(new ClickEventBehavior(MergeButton, vm.Merge));
             Behaviors.Add(new ClickEventBehavior(SplitButton, vm.Split));
-            Behaviors.Add(new ClickEventBehavior(FileButton, vm.Add));
+            Behaviors.Add(new ClickEventBehavior(MetadataButton, vm.Metadata));
+            Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
+            Behaviors.Add(new ClickEventBehavior(AddButton, vm.Add));
             Behaviors.Add(new ClickEventBehavior(UpButton, () => vm.Move(SelectedIndices, -1)));
             Behaviors.Add(new ClickEventBehavior(DownButton, () => vm.Move(SelectedIndices, 1)));
             Behaviors.Add(new ClickEventBehavior(RemoveButton, () => vm.Remove(SelectedIndices)));
             Behaviors.Add(new ClickEventBehavior(ClearButton, vm.Clear));
-            Behaviors.Add(new ClickEventBehavior(TitleButton, vm.About));
-            Behaviors.Add(new EventBehavior(FileListView, "DoubleClick", () => vm.Preview(SelectedIndices)));
+            Behaviors.Add(new ClickEventBehavior(TitleButton, vm.Setting));
+            Behaviors.Add(new EventBehavior(MainGridView, "DoubleClick", () => vm.Preview(SelectedIndices)));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
             Behaviors.Add(new OpenFileBehavior(vm));
             Behaviors.Add(new OpenDirectoryBehavior(vm));
             Behaviors.Add(new SaveFileBehavior(vm));
             Behaviors.Add(new FileDropBehavior(this, vm));
+            Behaviors.Add(new SelectionBehavior(MainGridView));
+            Behaviors.Add(new ShowDialogBehavior<MetadataWindow, MetadataViewModel>(vm));
             Behaviors.Add(new ShowDialogBehavior<PasswordWindow, PasswordViewModel>(vm));
-            Behaviors.Add(new ShowDialogBehavior<VersionWindow, VersionViewModel>(vm));
+            Behaviors.Add(new ShowDialogBehavior<SettingWindow, SettingViewModel>(vm));
             Behaviors.Add(vm.Subscribe<UpdateListMessage>(e => vm.Files.ResetBindings(false)));
             Behaviors.Add(vm.Subscribe<SelectMessage>(e => Select(e.Value)));
             Behaviors.Add(vm.Subscribe<PreviewMessage>(e => Process.Start(e.Value)));
+            Behaviors.Add(Locale.Subscribe(_ => BindText(vm)));
 
             var ctx = new FileContextMenu(() => SelectedIndices.Count() > 0);
             Behaviors.Add(new ClickEventBehavior(ctx.PreviewMenu, () => vm.Preview(SelectedIndices)));
@@ -136,29 +130,49 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new ClickEventBehavior(ctx.DownMenu, () => vm.Move(SelectedIndices, 1)));
             Behaviors.Add(new ClickEventBehavior(ctx.RemoveMenu, () => vm.Remove(SelectedIndices)));
 
-            FileListView.ContextMenuStrip = ctx;
-            FileListView.DataSource = vm.Files;
+            MainGridView.ContextMenuStrip = ctx;
+            MainGridView.DataSource = vm.Files;
+
+            MakeShortcut(vm);
+            BindText(vm);
         }
+
+        #endregion
+
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// SetupForAbout
+        /// MakeShortcut
         ///
         /// <summary>
-        /// Initializes for the About page.
+        /// Initializes the shortcut settings.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IDisposable SetupForAbout()
+        private void MakeShortcut(MainViewModel vm)
         {
-            var dest = new ToolTip
-            {
-                InitialDelay =  200,
-                AutoPopDelay = 5000,
-                ReshowDelay  = 1000,
-            };
-            dest.SetToolTip(TitleButton, Properties.Resources.MessageAbout);
-            return dest;
+            ShortcutKeys.Clear();
+            ShortcutKeys.Add(Keys.Delete, () => vm.Remove(SelectedIndices));
+            ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
+            ShortcutKeys.Add(Keys.Control | Keys.Q, Close);
+            ShortcutKeys.Add(Keys.Control | Keys.O, vm.Add);
+            ShortcutKeys.Add(Keys.Control | Keys.H, vm.Setting);
+            ShortcutKeys.Add(Keys.Control | Keys.R, () => vm.Preview(SelectedIndices));
+            ShortcutKeys.Add(Keys.Control | Keys.D, () => vm.Remove(SelectedIndices));
+            ShortcutKeys.Add(Keys.Control | Keys.K, () => vm.Move(SelectedIndices, -1));
+            ShortcutKeys.Add(Keys.Control | Keys.J, () => vm.Move(SelectedIndices, 1));
+            ShortcutKeys.Add(Keys.Control | Keys.M, () => vm.Ready.Then(vm.Merge));
+            ShortcutKeys.Add(Keys.Control | Keys.S, () => vm.Ready.Then(vm.Split));
+            ShortcutKeys.Add(Keys.Control | Keys.E, () => vm.Ready.Then(vm.Metadata));
+
+            // Same as Ctrl + key
+            ShortcutKeys.Add(Keys.Alt | Keys.O, vm.Add);
+            ShortcutKeys.Add(Keys.Alt | Keys.H, vm.Setting);
+            ShortcutKeys.Add(Keys.Alt | Keys.D, () => vm.Remove(SelectedIndices));
+            ShortcutKeys.Add(Keys.Alt | Keys.M, () => vm.Ready.Then(vm.Merge));
+            ShortcutKeys.Add(Keys.Alt | Keys.S, () => vm.Ready.Then(vm.Split));
+            ShortcutKeys.Add(Keys.Alt | Keys.E, () => vm.Ready.Then(vm.Metadata));
         }
 
         /* ----------------------------------------------------------------- */
@@ -172,8 +186,26 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         private void Select(IEnumerable<int> indices)
         {
-            FileListView.ClearSelection();
-            foreach (var i in indices) FileListView.Rows[i].Selected = true;
+            MainGridView.ClearSelection();
+            foreach (var i in indices) MainGridView.Rows[i].Selected = true;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BindText
+        ///
+        /// <summary>
+        /// Sets the displayed text with the specified language.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void BindText(MainViewModel vm)
+        {
+            var lang = vm.Language;
+            this.UpdateCulture(lang);
+            Resource.UpdateCulture(lang);
+            MainToolTip.SetToolTip(TitleButton, Properties.Resources.MessageSettings);
+            MainGridView.Refresh();
         }
 
         #endregion

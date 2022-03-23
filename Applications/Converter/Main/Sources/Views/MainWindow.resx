@@ -80,7 +80,7 @@
     <value>103, 33</value>
   </data>
   <data name="ResolutionNumeric.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 23</value>
+    <value>346, 23</value>
   </data>
   <data name="ResolutionNumeric.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -107,7 +107,7 @@
     <value>103, 123</value>
   </data>
   <data name="PostProcessComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 23</value>
+    <value>346, 23</value>
   </data>
   <data name="PostProcessComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -134,7 +134,7 @@
     <value>NoControl</value>
   </data>
   <data name="UserProgramButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 2</value>
+    <value>309, 2</value>
   </data>
   <data name="UserProgramButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 2, 3, 3</value>
@@ -167,7 +167,7 @@
     <value>3, 3</value>
   </data>
   <data name="UserProgramTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>284, 23</value>
+    <value>302, 23</value>
   </data>
   <data name="UserProgramTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -197,7 +197,7 @@
     <value>1</value>
   </data>
   <data name="UserProgramPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>334, 30</value>
+    <value>352, 30</value>
   </data>
   <data name="UserProgramPanel.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -326,7 +326,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="OrientationPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>334, 30</value>
+    <value>352, 30</value>
   </data>
   <data name="OrientationPanel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -392,7 +392,7 @@
     <value>NoControl</value>
   </data>
   <data name="SourceButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>291, 2</value>
+    <value>309, 2</value>
   </data>
   <data name="SourceButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 2, 3, 3</value>
@@ -425,7 +425,7 @@
     <value>3, 3</value>
   </data>
   <data name="SourceTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>284, 23</value>
+    <value>302, 23</value>
   </data>
   <data name="SourceTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -455,7 +455,7 @@
     <value>1</value>
   </data>
   <data name="SourcePanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>334, 30</value>
+    <value>352, 30</value>
   </data>
   <data name="SourcePanel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -677,7 +677,7 @@
     <value>Fill</value>
   </data>
   <data name="SaveOptionComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>245, 3</value>
+    <value>263, 3</value>
   </data>
   <data name="SaveOptionComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 3, 3, 3</value>
@@ -707,7 +707,7 @@
     <value>NoControl</value>
   </data>
   <data name="DestinationButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>201, 2</value>
+    <value>219, 2</value>
   </data>
   <data name="DestinationButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 2, 3, 3</value>
@@ -740,7 +740,7 @@
     <value>3, 3</value>
   </data>
   <data name="DestinationTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 23</value>
+    <value>212, 23</value>
   </data>
   <data name="DestinationTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -770,7 +770,7 @@
     <value>1</value>
   </data>
   <data name="DestinationPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>334, 30</value>
+    <value>352, 30</value>
   </data>
   <data name="DestinationPanel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -797,10 +797,10 @@
     <value>Fill</value>
   </data>
   <data name="PdfVersionComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>203, 3</value>
+    <value>214, 3</value>
   </data>
   <data name="PdfVersionComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 23</value>
+    <value>135, 23</value>
   </data>
   <data name="PdfVersionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -824,7 +824,7 @@
     <value>3, 3</value>
   </data>
   <data name="FormatComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 23</value>
+    <value>205, 23</value>
   </data>
   <data name="FormatComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -854,7 +854,7 @@
     <value>1</value>
   </data>
   <data name="FormatPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>334, 30</value>
+    <value>352, 30</value>
   </data>
   <data name="FormatPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -884,7 +884,7 @@
     <value>7</value>
   </data>
   <data name="GeneralPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 210</value>
+    <value>452, 210</value>
   </data>
   <data name="GeneralPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -911,7 +911,7 @@
     <value>9, 18, 9, 9</value>
   </data>
   <data name="GeneralTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>452, 322</value>
+    <value>470, 334</value>
   </data>
   <data name="GeneralTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2396,7 +2396,7 @@
     <value>VersionPanel</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Parent" xml:space="preserve">
     <value>OthersPanel</value>
@@ -2468,16 +2468,13 @@
     <value>100, 20</value>
   </data>
   <data name="SettingTabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="SettingTabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
+    <value>3, 53</value>
   </data>
   <data name="SettingTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>460, 350</value>
+    <value>478, 362</value>
   </data>
   <data name="SettingTabControl.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;SettingTabControl.Name" xml:space="preserve">
     <value>SettingTabControl</value>
@@ -2486,39 +2483,9 @@
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;SettingTabControl.Parent" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingTabControl.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="SettingPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 59</value>
-  </data>
-  <data name="SettingPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>9, 9, 9, 3</value>
-  </data>
-  <data name="SettingPanel.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
-  </data>
-  <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>466, 356</value>
-  </data>
-  <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Name" xml:space="preserve">
-    <value>SettingPanel</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.SettingControl, Cube.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;SettingPanel.Parent" xml:space="preserve">
     <value>RootPanel</value>
   </data>
-  <data name="&gt;&gt;SettingPanel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SettingTabControl.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="FooterPanel.ColumnCount" type="System.Int32, mscorlib">
@@ -2768,7 +2735,7 @@
     <value>0</value>
   </data>
   <data name="RootPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SettingPanel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="HeaderPictureBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,50,Percent,100,Absolute,53" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SettingTabControl" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="HeaderPictureBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,50,Percent,100,Absolute,53,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -3238,6 +3205,6 @@
     <value>MainWindow</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.Window, Cube.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Window, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
 </root>
