@@ -172,7 +172,7 @@ namespace Cube.Pdf.Pages
             //
             // VersionControl
             //
-            this.VersionControl.Copyright = "Copyright © 2010 CubeSoft, Inc.";
+            this.VersionControl.Copyright = "Copyright © 2013 CubeSoft, Inc.";
             this.VersionControl.Description = "";
             resources.ApplyResources(this.VersionControl, "VersionControl");
             this.VersionControl.Image = global::Cube.Pdf.Pages.Properties.Resources.Logo;
