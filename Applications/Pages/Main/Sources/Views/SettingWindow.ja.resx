@@ -75,7 +75,7 @@
     <value>作業フォルダー</value>
   </data>
   <data name="LanguageLabel.Text" xml:space="preserve">
-    <value>言語</value>
+    <value>表示言語</value>
   </data>
   <data name="KeepOutlineCheckBox.Text" xml:space="preserve">
     <value>結合元 PDF ファイルのしおり情報を維持する</value>
