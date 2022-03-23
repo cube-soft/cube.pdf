@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>6.0.4</Version>
+        <Version>7.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubeProxy</Product>
@@ -9,7 +9,7 @@
         <AssemblyName>CubeProxy</AssemblyName>
         <OutputType>WinExe</OutputType>
         <LangVersion>latest</LangVersion>
-        <TargetFramework>net45</TargetFramework>
+        <TargetFramework>net47</TargetFramework>
         <Platforms>AnyCPU;x86;x64</Platforms>
         <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
         <IsPackable>false</IsPackable>
@@ -26,7 +26,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.Core" Version="6.0.0" />
+        <PackageReference Include="Cube.Core" Version="7.0.0" />
     </ItemGroup>
     <ItemGroup>
         <None Include="App.*" />

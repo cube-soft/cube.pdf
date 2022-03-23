@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>6.0.4</Version>
+        <Version>7.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>Basic data structures and interfaces for Cube.Pdf libraries.</Description>
@@ -11,7 +11,7 @@
         <PackageProjectUrl>https://github.com/cube-soft/Cube.Pdf</PackageProjectUrl>
         <AssemblyName>Cube.Pdf</AssemblyName>
         <RootNamespace>Cube.Pdf</RootNamespace>
-        <TargetFramework>net45</TargetFramework>
+        <TargetFramework>net47</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
@@ -25,7 +25,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.Core" Version="6.0.0" />
+        <PackageReference Include="Cube.Core" Version="7.0.0" />
         <Reference Include="System.Security" />
     </ItemGroup>
     <ItemGroup>
