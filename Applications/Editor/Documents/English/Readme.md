@@ -144,7 +144,7 @@ On the **Others** tab of the main window, you can change the view settings of th
 
 ![Version dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/version.png)
 
-Click the **Settings** button on the **Others** tab of the main window to display the version information and related settings. In **Version** section, the version information of CubePDF Utility will be displayed. If you enable the **Check for updates on startup** item below it, you will be notified in the lower right corner of your computer when the CubePDF Utility is updated. Checking for updates will be performed when your computer starts up. The information sent to confirm the update is the version number of CubePDF, Windows, and .NET Framework.
+Click the **Settings** button on the **Others** tab of the main window to display the version information and related settings. In **Version** section, the version information of CubePDF Utility will be displayed. If you enable the **Check for updates on startup** item below it, you will be notified in the lower right corner of your computer when the new version of the CubePDF Utility has been released. Checking for updates will be performed when your computer starts up. The information sent to confirm the update is the version number of CubePDF, Windows, and .NET Framework.
 
 In **Language** section, you can select the display language for the menu of the CubePDF Utility. There are two supported languages, English and Japanese. If you select **Auto** for the display language, one of the languages will be automatically selected according to the language setting of Windows.
 
