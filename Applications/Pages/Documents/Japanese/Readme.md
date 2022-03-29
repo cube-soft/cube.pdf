@@ -20,7 +20,7 @@ CubePDF Page には下記の 2 種類の機能が存在します。
 
 ### CubePDF Page メイン画面
 
-![CubePDF Page メイン画面](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Pages/Assets/Main.01.ja.png?raw=true)
+![CubePDF Page メイン画面](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/overview.ja.png)
 
 CubePDF Page メイン画面に表示されているボタン等の機能は下記の通りです。
 
@@ -92,8 +92,8 @@ CubePDF Page をアンインストールするには、まず、コントロー�
 または、設定のアプリと機能（Windows 8 以降）を選択します。そして、表示される画面で
 CubePDF Page のアイコンを選択してアンインストールの項目を実行して下さい。
 
-![アンインストール（コントロールパネル）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Pages/Assets/Uninstall.01.ja.png?raw=true)
-![アンインストール（設定）](https://github.com/cube-soft/Cube.Pdf/blob/master/Applications/Pages/Assets/Uninstall.02.ja.png?raw=true)
+![アンインストール（設定）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v1/ja/uninstall-01.png)
+![アンインストール（コントロールパネル）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v1/ja/uninstall-02.png)
 
 ## CubePDF Page で問題が発生した場合
 
