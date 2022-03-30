@@ -40,7 +40,7 @@ CubePDF Page ではページ順序の入れ替え、特定ページの抽出や�
 
 ### メイン画面
 
-![パスワード入力画面](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/ja/main.png)
+![CubePDF Page メイン画面](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/ja/main.png)
 
 CubePDF Page メイン画面に表示されているボタン等の機能は下記の通りです。
 
@@ -93,11 +93,11 @@ CubePDF Page メイン画面に表示されているボタン等の機能は下�
 
 ## その他の設定およびバージョン情報
 
+![設定](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/ja/settings.png)
+
 メイン画面のヘッダ部分に表示されている **CubePDF Page** をクリックすると CubePDF Page のバージョン情報および関連する設定画面が表示されます。
 
-### 設定
-
-![設定](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/ja/settings.png)
+### アプリケーション設定
 
 **設定** タブでは、CubePDF Page の挙動に関するいくつかの設定を変更する事ができます。
 

@@ -152,8 +152,11 @@ namespace Cube.Collections
                     var sy = GetNumericString(y);
 
                     // 1. compare as numeric
-                    var z0 = ulong.Parse(sx).CompareTo(ulong.Parse(sy));
-                    if (z0 != 0) return z0;
+                    if (long.TryParse(sx, out var nx) && long.TryParse(sy, out var ny))
+                    {
+                        var z0 = nx.CompareTo(ny);
+                        if (z0 != 0) return z0;
+                    }
 
                     // 2. compare as string
                     var z1 = _inner.Compare(sx, sy);
