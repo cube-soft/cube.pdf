@@ -55,9 +55,34 @@ namespace Cube.Pdf.Pages.Tests
         [TestCase("02", "10", ExpectedResult = -1)]
         [TestCase("1.2.3-alpha",  "1.2.3-beta", ExpectedResult = -1)]
         [TestCase("1.2.13-alpha", "1.2.3-beta", ExpectedResult =  1)]
-        [TestCase("sample", "test",   ExpectedResult = -1)]
+        [TestCase("sample", "test", ExpectedResult = -1)]
         [TestCase("sample", "Sample", ExpectedResult = 32)] // >= 1
         public int Compare(string x, string y) => new NumericAwareComparer().Compare(x, y);
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Compare
+        ///
+        /// <summary>
+        /// Tests the Compare method with the Japanese full-width numeric
+        /// characters.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// When the Japanese full-width numeric characters are specified,
+        /// these are compared as string (not number).
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase("２", "２", ExpectedResult = 0)]
+        [TestCase("２", "１", ExpectedResult = 1)]
+        [TestCase("２", "０１", ExpectedResult = 2)]
+        [TestCase("２", "０２", ExpectedResult = 2)]
+        [TestCase("２", "１０", ExpectedResult = 1)] // not < 0
+        [TestCase("２", "－２", ExpectedResult = 5)]
+        [TestCase("０２", "０１", ExpectedResult = 1)]
+        [TestCase("０２", "１０", ExpectedResult = -1)]
+        public int CompareEM(string x, string y) => new NumericAwareComparer().Compare(x, y);
 
         #endregion
     }
