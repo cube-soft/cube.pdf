@@ -66,7 +66,6 @@ namespace Cube.Pdf.Converter.Mixin
             value.Metadata.Creator  = GetCreator(value);
             value.Metadata.Producer = GetCreator(value);
             value.Encryption.Deny();
-            value.Encryption.Permission.Accessibility = PermissionValue.Allow;
         }
 
         /* ----------------------------------------------------------------- */
