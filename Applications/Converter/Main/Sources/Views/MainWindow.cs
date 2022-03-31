@@ -82,13 +82,13 @@ namespace Cube.Pdf.Converter
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool Busy
         {
-            get => ConvertProgressBar.Visible;
+            get => MainProgressBar.Visible;
             set
             {
                 SettingTabControl.Enabled  = !value;
-                ApplyButton.Visible        = !value;
-                ConvertButton.Enabled      = !value;
-                ConvertProgressBar.Visible =  value;
+                SettingButton.Visible        = !value;
+                ExecButton.Enabled      = !value;
+                MainProgressBar.Visible =  value;
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
             }
         }
@@ -131,11 +131,11 @@ namespace Cube.Pdf.Converter
 
             BindCore(vm);
 
-            Behaviors.Add(new ClickEventBehavior(ConvertButton, vm.Convert));
+            Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Convert));
             Behaviors.Add(new ClickEventBehavior(SourceButton, vm.SelectSource));
             Behaviors.Add(new ClickEventBehavior(DestinationButton, vm.SelectDestination));
             Behaviors.Add(new ClickEventBehavior(UserProgramButton, vm.SelectUserProgram));
-            Behaviors.Add(new ClickEventBehavior(ApplyButton, vm.Save));
+            Behaviors.Add(new ClickEventBehavior(SettingButton, vm.Save));
             Behaviors.Add(new EventBehavior(DestinationTextBox, nameof(LostFocus), vm.ChangeExtension));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));

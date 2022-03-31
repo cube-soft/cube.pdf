@@ -107,13 +107,13 @@
   <data name="DocumentPage.Text" xml:space="preserve">
     <value>文書プロパティ</value>
   </data>
-  <data name="ViewerPreferencesLabel.Text" xml:space="preserve">
-    <value>表示オプション</value>
+  <data name="ViewerOptionLabel.Text" xml:space="preserve">
+    <value>ページレイアウト</value>
   </data>
   <data name="CreatorLabel.Text" xml:space="preserve">
     <value>変換ソフト</value>
   </data>
-  <data name="KeywordsLabel.Text" xml:space="preserve">
+  <data name="KeywordLabel.Text" xml:space="preserve">
     <value>キーワード</value>
   </data>
   <data name="SubjectLabel.Text" xml:space="preserve">
@@ -152,11 +152,17 @@
   <data name="UserPasswordLabel.Text" xml:space="preserve">
     <value>閲覧用パスワード</value>
   </data>
-  <data name="AllowModifyCheckBox.Text" xml:space="preserve">
-    <value>ページの挿入、回転、削除を許可する</value>
+  <data name="AllowAnnotationCheckBox.Text" xml:space="preserve">
+    <value>注釈の追加、編集を許可する</value>
   </data>
   <data name="AllowFormCheckBox.Text" xml:space="preserve">
     <value>フォームへの入力を許可する</value>
+  </data>
+  <data name="AllowAccessibilityCheckBox.Text" xml:space="preserve">
+    <value>アクセシビリティのための内容の抽出を許可する</value>
+  </data>
+  <data name="AllowModifyCheckBox.Text" xml:space="preserve">
+    <value>ページの挿入、回転、削除を許可する</value>
   </data>
   <data name="AllowCopyCheckBox.Text" xml:space="preserve">
     <value>テキストや画像のコピーを許可する</value>
@@ -164,7 +170,7 @@
   <data name="AllowPrintCheckBox.Text" xml:space="preserve">
     <value>印刷を許可する</value>
   </data>
-  <data name="OthersTabPage.Text" xml:space="preserve">
+  <data name="OtherTabPage.Text" xml:space="preserve">
     <value>その他</value>
   </data>
   <data name="LanguageLabel.Text" xml:space="preserve">
@@ -173,7 +179,7 @@
   <data name="GrayscaleCheckBox.Text" xml:space="preserve">
     <value>グレースケール</value>
   </data>
-  <data name="OptionsLabel.Text" xml:space="preserve">
+  <data name="OptionLabel.Text" xml:space="preserve">
     <value>オプション</value>
   </data>
   <data name="JpegCheckBox.Text" xml:space="preserve">
@@ -188,10 +194,10 @@
   <data name="AboutLabel.Text" xml:space="preserve">
     <value>バージョン情報</value>
   </data>
-  <data name="ApplyButton.Text" xml:space="preserve">
+  <data name="SettingButton.Text" xml:space="preserve">
     <value>設定を保存</value>
   </data>
-  <data name="ConvertButton.Text" xml:space="preserve">
+  <data name="ExecButton.Text" xml:space="preserve">
     <value>変換</value>
   </data>
   <data name="ExitButton.Text" xml:space="preserve">
