@@ -21,7 +21,6 @@ using System.Reflection;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
-using Cube.Pdf.Mixin;
 
 namespace Cube.Pdf.Converter.Mixin
 {
@@ -58,14 +57,11 @@ namespace Cube.Pdf.Converter.Mixin
         /* ----------------------------------------------------------------- */
         public static void Normalize(this SettingFolder src)
         {
-            var value = src.Value;
-
-            value.Format            = GetFormat(value);
-            value.Resolution        = GetResolution(value);
-            value.Orientation       = GetOrientation(value);
-            value.Metadata.Creator  = GetCreator(value);
-            value.Metadata.Producer = GetCreator(value);
-            value.Encryption.Deny();
+            src.Value.Format            = GetFormat(src.Value);
+            src.Value.Resolution        = GetResolution(src.Value);
+            src.Value.Orientation       = GetOrientation(src.Value);
+            src.Value.Metadata.Creator  = GetCreator(src.Value);
+            src.Value.Metadata.Producer = GetCreator(src.Value);
         }
 
         /* ----------------------------------------------------------------- */

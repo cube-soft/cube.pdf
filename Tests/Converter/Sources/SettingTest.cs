@@ -164,11 +164,11 @@ namespace Cube.Pdf.Converter.Tests
 
             var pm = dest.Encryption.Permission;
             Assert.That(pm.Accessibility,     Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));
-            Assert.That(pm.CopyContents,      Is.EqualTo(PermissionValue.Deny),  nameof(pm.CopyContents));
-            Assert.That(pm.InputForm,         Is.EqualTo(PermissionValue.Deny),  nameof(pm.InputForm));
-            Assert.That(pm.ModifyAnnotations, Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyAnnotations));
-            Assert.That(pm.ModifyContents,    Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyContents));
-            Assert.That(pm.Print,             Is.EqualTo(PermissionValue.Deny),  nameof(pm.Print));
+            Assert.That(pm.CopyContents,      Is.EqualTo(PermissionValue.Allow), nameof(pm.CopyContents));
+            Assert.That(pm.InputForm,         Is.EqualTo(PermissionValue.Allow), nameof(pm.InputForm));
+            Assert.That(pm.ModifyAnnotations, Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyAnnotations));
+            Assert.That(pm.ModifyContents,    Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyContents));
+            Assert.That(pm.Print,             Is.EqualTo(PermissionValue.Allow), nameof(pm.Print));
         }
 
         /* ----------------------------------------------------------------- */

@@ -145,12 +145,12 @@ namespace Cube.Pdf.Converter.Tests.Presenters
             Assert.That(dest.UserRequired,       Is.False, nameof(dest.UserRequired));
             Assert.That(dest.UserPassword,       Is.Empty, nameof(dest.UserPassword));
             Assert.That(dest.UserConfirm,        Is.Empty, nameof(dest.UserConfirm));
-            Assert.That(dest.AllowPrint,         Is.False, nameof(dest.AllowPrint));
-            Assert.That(dest.AllowCopy,          Is.False, nameof(dest.AllowCopy));
-            Assert.That(dest.AllowModify,        Is.False, nameof(dest.AllowModify));
-            Assert.That(dest.AllowAccessibility, Is.False, nameof(dest.AllowAccessibility));
-            Assert.That(dest.AllowForm,          Is.False, nameof(dest.AllowForm));
-            Assert.That(dest.AllowAnnotation,    Is.False, nameof(dest.AllowAnnotation));
+            Assert.That(dest.AllowPrint,         Is.True,  nameof(dest.AllowPrint));
+            Assert.That(dest.AllowCopy,          Is.True,  nameof(dest.AllowCopy));
+            Assert.That(dest.AllowModify,        Is.True,  nameof(dest.AllowModify));
+            Assert.That(dest.AllowAccessibility, Is.True,  nameof(dest.AllowAccessibility));
+            Assert.That(dest.AllowForm,          Is.True,  nameof(dest.AllowForm));
+            Assert.That(dest.AllowAnnotation,    Is.True,  nameof(dest.AllowAnnotation));
             Assert.That(dest.Permissible,        Is.True,  nameof(dest.Permissible));
 
             dest.Enabled = true;
