@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Cube.FileSystem;
+using Cube.Mixin.Assembly;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
 
@@ -66,6 +67,12 @@ namespace Cube.Pdf.Converter
             dest.Log         = Io.Combine(src.Value.Temp, src.Uid.ToString("N"), "console.log");
             dest.Resolution  = src.Value.Resolution;
             dest.Orientation = src.Value.Orientation;
+
+            static void add(ICollection<string> s, string e) { if (Io.Exists(e)) s.Add(e); }
+            var dir = Assembly.GetExecutingAssembly().GetDirectoryName();
+            add(dest.Resources, Io.Combine(dir, "lib"));
+            add(dest.Resources, Io.Combine(dir, "Resource"));
+            add(dest.Resources, Io.Combine(dir, "iccprofiles"));
 
             return dest;
         }
