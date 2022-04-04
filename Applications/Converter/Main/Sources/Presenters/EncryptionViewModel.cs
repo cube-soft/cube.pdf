@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
-using Cube.Pdf.Converter.Mixin;
 using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter

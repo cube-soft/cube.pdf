@@ -57,8 +57,6 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public static Ghostscript.Converter Create(SettingFolder src)
         {
-            var asm  = Assembly.GetExecutingAssembly();
-            var dir  = Io.Get(asm.Location).DirectoryName;
             var dest = DocumentConverter.SupportedFormats.Contains(src.Value.Format) ?
                        CreateDocumentConverter(src) :
                        CreateImageConverter(src);
@@ -68,7 +66,6 @@ namespace Cube.Pdf.Converter
             dest.Log         = Io.Combine(src.Value.Temp, src.Uid.ToString("N"), "console.log");
             dest.Resolution  = src.Value.Resolution;
             dest.Orientation = src.Value.Orientation;
-            dest.Resources.Add(Io.Combine(dir, "lib"));
 
             return dest;
         }
