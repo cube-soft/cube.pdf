@@ -153,7 +153,7 @@ namespace Cube.Pdf.Tests.Ghostscript
             yield return TestCase(n++, new PdfConverter
             {
                 Linearization = true,
-            }, "Sample.ps", "Linearization");
+            }, "SampleWeb.ps", "Linearization");
 
             /* --------------------------------------------------------- */
             // Orientation

@@ -69,7 +69,7 @@ namespace Cube.Pdf.Converter
         {
             Locale.Set(src.Value.Language);
 
-            General    = new(src, Aggregator, context);
+            Settings   = new(src, Aggregator, context);
             Metadata   = new(src.Value.Metadata, Aggregator, context);
             Encryption = new(src.Value.Encryption, Aggregator, context);
 
@@ -96,7 +96,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// General
+        /// Settings
         ///
         /// <summary>
         /// Gets the ViewModel object that represents General and Others
@@ -104,7 +104,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingViewModel General { get; }
+        public SettingViewModel Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -204,7 +204,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Save() => Metadata.Save(General.Save);
+        public void Save() => Metadata.Save(Settings.Save);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -261,7 +261,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void SelectUserProgram() => Send(
             Message.ForUserProgram(Facade.Settings),
-            e => General.UserProgram = e.First(),
+            e => Settings.UserProgram = e.First(),
             true
         );
 
@@ -310,7 +310,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private bool Confirm() => Encryption.Confirm() && General.Confirm();
+        private bool Confirm() => Encryption.Confirm() && Settings.Confirm();
 
         #endregion
     }

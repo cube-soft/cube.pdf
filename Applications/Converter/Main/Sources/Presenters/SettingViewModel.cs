@@ -74,11 +74,7 @@ namespace Cube.Pdf.Converter
         public Format Format
         {
             get => Facade.Settings.Format;
-            set
-            {
-                Facade.Settings.Format = value;
-                Refresh(nameof(IsPdf));
-            }
+            set => Facade.Settings.Format = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -108,11 +104,7 @@ namespace Cube.Pdf.Converter
         public PostProcess PostProcess
         {
             get => Facade.Settings.PostProcess;
-            set
-            {
-                Facade.Settings.PostProcess = value;
-                Refresh(nameof(UserProgramEditable));
-            }
+            set => Facade.Settings.PostProcess = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -188,14 +180,7 @@ namespace Cube.Pdf.Converter
         public bool IsAutoOrientation
         {
             get => Facade.Settings.Orientation == Orientation.Auto;
-            set
-            {
-                if (value)
-                {
-                    Facade.Settings.Orientation = Orientation.Auto;
-                    Refresh(nameof(IsAutoOrientation));
-                }
-            }
+            set { if (value) Facade.Settings.Orientation = Orientation.Auto; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -211,14 +196,7 @@ namespace Cube.Pdf.Converter
         public bool IsPortrait
         {
             get => Facade.Settings.Orientation == Orientation.Portrait;
-            set
-            {
-                if (value)
-                {
-                    Facade.Settings.Orientation = Orientation.Portrait;
-                    Refresh(nameof(IsPortrait));
-                }
-            }
+            set { if (value) Facade.Settings.Orientation = Orientation.Portrait; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -234,14 +212,7 @@ namespace Cube.Pdf.Converter
         public bool IsLandscape
         {
             get => Facade.Settings.Orientation == Orientation.Landscape;
-            set
-            {
-                if (value)
-                {
-                    Facade.Settings.Orientation = Orientation.Landscape;
-                    Refresh(nameof(IsLandscape));
-                }
-            }
+            set { if (value) Facade.Settings.Orientation = Orientation.Landscape; }
         }
 
         /* ----------------------------------------------------------------- */
@@ -305,11 +276,7 @@ namespace Cube.Pdf.Converter
         public bool CheckUpdate
         {
             get => Facade.Startup.Enabled;
-            set
-            {
-                Facade.Startup.Enabled = value;
-                Refresh(nameof(CheckUpdate));
-            }
+            set => Facade.Startup.Enabled = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -365,7 +332,7 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// UserProgramEditable
+        /// IsUserProgram
         ///
         /// <summary>
         /// Gets or sets a value indicating whether the input form of the
@@ -373,7 +340,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool UserProgramEditable => PostProcess == PostProcess.Others;
+        public bool IsUserProgram => PostProcess == PostProcess.Others;
 
         #endregion
 

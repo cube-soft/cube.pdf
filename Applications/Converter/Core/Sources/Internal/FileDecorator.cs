@@ -134,14 +134,12 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void InvokeLinearization(string src)
         {
-            var value = Settings.Value;
-
-            if (!value.Linearization || value.Encryption.Enabled) return;
-
+            if (!Settings.Value.Linearization || Settings.Value.Encryption.Enabled) return;
             if (GhostscriptFactory.Create(Settings) is PdfConverter gs)
             {
                 var tmp = GetTemp(src);
-                gs.Linearization = value.Linearization;
+                gs.Linearization = true;
+                gs.ColorMode     = ColorMode.SameAsSource;
                 gs.Invoke(src, tmp);
                 FileTransfer.MoveOrCopy(tmp, src, true);
             }
