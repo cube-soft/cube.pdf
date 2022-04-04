@@ -164,9 +164,6 @@
   <data name="MessageInvalidChars" xml:space="preserve">
     <value>Path cannot contain any of the following characters</value>
   </data>
-  <data name="MessageLinearization" xml:space="preserve">
-    <value>Fast web view option is ignored when the password encryption is enabled.</value>
-  </data>
   <data name="MessageMergeHead" xml:space="preserve">
     <value>Do you want to merge at the beginning of the existing file?</value>
   </data>
@@ -184,9 +181,6 @@
   </data>
   <data name="MessageSave" xml:space="preserve">
     <value>Some value is entered in the Title, Author, Subject, or Keywords field. Do you want to save the settings?</value>
-  </data>
-  <data name="MessageSecurity" xml:space="preserve">
-    <value>When you share user password with owner password and open with the password, all permissions are allowed.</value>
   </data>
   <data name="TitleError" xml:space="preserve">
     <value>CubePDF error</value>

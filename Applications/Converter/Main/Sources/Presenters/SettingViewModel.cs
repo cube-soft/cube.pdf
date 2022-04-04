@@ -74,11 +74,7 @@ namespace Cube.Pdf.Converter
         public Format Format
         {
             get => Facade.Settings.Format;
-            set
-            {
-                Facade.Settings.Format = value;
-                Refresh(nameof(IsPdf));
-            }
+            set => Facade.Settings.Format = value;
         }
 
         /* ----------------------------------------------------------------- */

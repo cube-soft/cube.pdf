@@ -155,9 +155,6 @@
   <data name="MessageInvalidChars" xml:space="preserve">
     <value>ファイル名に次の文字を使用する事はできません</value>
   </data>
-  <data name="MessageLinearization" xml:space="preserve">
-    <value>セキュリティ機能が有効の場合、Web 表示用に最適化オプションは無視されます。</value>
-  </data>
   <data name="MessageMergeHead" xml:space="preserve">
     <value>先頭に結合しますか？</value>
   </data>
@@ -166,9 +163,6 @@
   </data>
   <data name="MessageSave" xml:space="preserve">
     <value>タイトル、作成者、サブタイトル、キーワードのいずれかの項目が入力されています。これらの内容は次回以降、CubePDF 起動時の初期設定として利用されます。設定を保存しても良いですか？</value>
-  </data>
-  <data name="MessageSecurity" xml:space="preserve">
-    <value>閲覧用パスワードを管理用パスワードと共有した場合、パスワードを入力して PDF ファイルを開いた時点で全ての操作が許可されます。印刷等の操作を制限したい場合、管理用パスワードとは異なるパスワードを設定して下さい。</value>
   </data>
   <data name="MessageMergeTail" xml:space="preserve">
     <value>末尾に結合しますか？</value>

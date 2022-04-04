@@ -378,15 +378,6 @@ namespace Cube.Pdf.Converter.Properties {
         }
 
         /// <summary>
-        ///   Fast web view option is ignored when the password encryption is enabled. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageLinearization {
-            get {
-                return ResourceManager.GetString("MessageLinearization", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Do you want to merge at the beginning of the existing file? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageMergeHead {
@@ -423,7 +414,7 @@ namespace Cube.Pdf.Converter.Properties {
         }
 
         /// <summary>
-        ///   Your password and confirmation password do not match. に類似しているローカライズされた文字列を検索します。
+        ///   Password is empty or does not match the confirmation. Please check your password and confirmation again. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessagePassword {
             get {
@@ -437,15 +428,6 @@ namespace Cube.Pdf.Converter.Properties {
         internal static string MessageSave {
             get {
                 return ResourceManager.GetString("MessageSave", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   When you share user password with owner password and open with the password, all permissions are allowed. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageSecurity {
-            get {
-                return ResourceManager.GetString("MessageSecurity", resourceCulture);
             }
         }
 

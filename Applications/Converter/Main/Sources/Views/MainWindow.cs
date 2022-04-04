@@ -19,6 +19,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Cube.Forms;
 using Cube.Forms.Behaviors;
 using Cube.Mixin.Forms;
 using Cube.Mixin.Forms.Controls;
@@ -34,7 +35,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainWindow : Cube.Forms.Window
+    public partial class MainWindow : Window
     {
         #region Constructors
 
@@ -47,23 +48,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            _tips = new ToolTip[]
-            {
-                new() { AutoPopDelay = 1000, InitialDelay = 100, ReshowDelay = 100, },
-                new() { AutoPopDelay = 1000, InitialDelay = 100, ReshowDelay = 100, },
-            };
-
-            Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
-            Behaviors.Add(new PathLintBehavior(SourceTextBox, _tips[0]));
-            Behaviors.Add(new PathLintBehavior(DestinationTextBox, _tips[0]));
-            Behaviors.Add(new PathLintBehavior(UserProgramTextBox, _tips[0]));
-            Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
-            Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
-        }
+        public MainWindow() => InitializeComponent();
 
         #endregion
 
@@ -85,10 +70,10 @@ namespace Cube.Pdf.Converter
             get => MainProgressBar.Visible;
             set
             {
-                SettingTabControl.Enabled  = !value;
-                SettingButton.Visible        = !value;
-                ExecButton.Enabled      = !value;
-                MainProgressBar.Visible =  value;
+                SettingTabControl.Enabled = !value;
+                SettingButton.Visible     = !value;
+                ExecButton.Enabled        = !value;
+                MainProgressBar.Visible   =  value;
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
             }
         }
@@ -110,8 +95,12 @@ namespace Cube.Pdf.Converter
         {
             base.OnShown(e);
             Activate();
+
             TopMost = true;
             TopMost = false;
+
+            DestinationTextBox.SelectionStart  = DestinationTextBox.Text?.Length ?? 0;
+            DestinationTextBox.SelectionLength = 0;
         }
 
         /* ----------------------------------------------------------------- */
@@ -136,6 +125,12 @@ namespace Cube.Pdf.Converter
             Behaviors.Add(new ClickEventBehavior(DestinationButton, vm.SelectDestination));
             Behaviors.Add(new ClickEventBehavior(UserProgramButton, vm.SelectUserProgram));
             Behaviors.Add(new ClickEventBehavior(SettingButton, vm.Save));
+            Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
+            Behaviors.Add(new PathLintBehavior(SourceTextBox, PathLintToolTip));
+            Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathLintToolTip));
+            Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathLintToolTip));
+            Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
+            Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
             Behaviors.Add(new EventBehavior(DestinationTextBox, nameof(LostFocus), vm.ChangeExtension));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
@@ -245,15 +240,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void BindText(MainViewModel vm)
         {
-            var lang = vm.Settings.Language;
-            this.UpdateCulture(lang);
-            Resource.UpdateCulture(lang);
+            this.UpdateCulture(vm.Settings.Language);
+            Resource.UpdateCulture(vm.Settings.Language);
 
             Text = vm.Title;
-
-            _tips[0].ToolTipTitle = Properties.Resources.MessageInvalidChars;
-            _tips[1].SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
-            _tips[1].SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));
+            PathLintToolTip.ToolTipTitle = Properties.Resources.MessageInvalidChars;
 
             FormatComboBox.Bind(Resource.Formats);
             PdfVersionComboBox.Bind(Resource.PdfVersions);
@@ -262,10 +253,6 @@ namespace Cube.Pdf.Converter
             PostProcessComboBox.Bind(Resource.PostProcesses);
         }
 
-        #endregion
-
-        #region Fields
-        private readonly ToolTip[] _tips;
         #endregion
     }
 }

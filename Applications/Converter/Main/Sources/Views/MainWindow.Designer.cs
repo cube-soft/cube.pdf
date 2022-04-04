@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
             this.SettingTabControl = new System.Windows.Forms.TabControl();
@@ -114,6 +115,7 @@
             this.ExecButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
             this.HeaderPictureBox = new System.Windows.Forms.PictureBox();
+            this.PathLintToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.RootPanel.SuspendLayout();
             this.SettingTabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
@@ -738,6 +740,12 @@
             this.HeaderPictureBox.Name = "HeaderPictureBox";
             this.HeaderPictureBox.TabStop = false;
             //
+            // PathLintToolTip
+            //
+            this.PathLintToolTip.AutoPopDelay = 1000;
+            this.PathLintToolTip.InitialDelay = 100;
+            this.PathLintToolTip.ReshowDelay = 100;
+            //
             // MainWindow
             //
             this.AcceptButton = this.ExecButton;
@@ -873,6 +881,7 @@
         private System.Windows.Forms.CheckBox AllowAnnotationCheckBox;
         private System.Windows.Forms.CheckBox AllowAccessibilityCheckBox;
         private System.Windows.Forms.ComboBox SaveOptionComboBox;
+        private System.Windows.Forms.ToolTip PathLintToolTip;
     }
 }
 
