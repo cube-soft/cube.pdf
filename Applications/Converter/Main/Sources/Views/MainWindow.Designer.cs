@@ -685,9 +685,9 @@
             // FooterPanel
             //
             resources.ApplyResources(this.FooterPanel, "FooterPanel");
-            this.FooterPanel.Controls.Add(this.ToolPanel, 0, 1);
-            this.FooterPanel.Controls.Add(this.ExecButton, 1, 1);
-            this.FooterPanel.Controls.Add(this.ExitButton, 2, 1);
+            this.FooterPanel.Controls.Add(this.ToolPanel, 1, 1);
+            this.FooterPanel.Controls.Add(this.ExecButton, 2, 1);
+            this.FooterPanel.Controls.Add(this.ExitButton, 3, 1);
             this.FooterPanel.Name = "FooterPanel";
             //
             // ToolPanel
@@ -717,7 +717,7 @@
             this.ExecButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.ExecButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             resources.ApplyResources(this.ExecButton, "ExecButton");
-            this.ExecButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.ExecButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(32)))), ((int)(((byte)(38)))));
             this.ExecButton.ForeColor = System.Drawing.Color.White;
             this.ExecButton.Name = "ExecButton";
             this.ExecButton.UseVisualStyleBackColor = false;
@@ -727,7 +727,7 @@
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.ExitButton, "ExitButton");
-            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.ExitButton.ForeColor = System.Drawing.Color.White;
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.UseVisualStyleBackColor = false;
