@@ -250,7 +250,7 @@ namespace Cube.Pdf.Converter
             Resource.UpdateCulture(vm.Settings.Language);
 
             Text = vm.Title;
-            PathLintToolTip.ToolTipTitle = Properties.Resources.MessageInvalidChars;
+            PathLintToolTip.ToolTipTitle = Properties.Resources.ErrorInvalidChars;
 
             FormatComboBox.Bind(Resource.Formats);
             PdfVersionComboBox.Bind(Resource.PdfVersions);
