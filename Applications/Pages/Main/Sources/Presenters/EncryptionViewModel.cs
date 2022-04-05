@@ -342,8 +342,9 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public bool Apply()
         {
-            if (Enabled && !OwnerCorrect) return Fail(Properties.Resources.ErrorOwnerPassword);
-            if (Enabled && !UserCorrect ) return Fail(Properties.Resources.ErrorUserPassword);
+            bool fail(string s) { Send(Message.ForError(s)); return false; }
+            if (Enabled && !OwnerCorrect) return fail(Properties.Resources.ErrorOwnerPassword);
+            if (Enabled && !UserCorrect ) return fail(Properties.Resources.ErrorUserPassword);
 
             Facade.Enabled          = Enabled;
             Facade.OwnerPassword    = OwnerPassword;
@@ -359,25 +360,6 @@ namespace Cube.Pdf.Pages
             Facade.Permission.ModifyAnnotations = cvt(AllowAnnotation);
 
             return true;
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Fail
-        ///
-        /// <summary>
-        /// Sends the error message.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool Fail(string message)
-        {
-            Send(Message.ForError(message));
-            return false;
         }
 
         #endregion

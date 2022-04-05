@@ -97,11 +97,20 @@ namespace Cube.Pdf.Converter.Properties {
         }
 
         /// <summary>
-        ///   Password is empty or does not match the confirmation. Please check your password and confirmation again. に類似しているローカライズされた文字列を検索します。
+        ///   Owner password is empty or does not match the confirmation. Please check your password and confirmation again. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ErrorOwnerPassword {
             get {
                 return ResourceManager.GetString("ErrorOwnerPassword", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   User password is empty or does not match the confirmation. Please check the user password or enable the &quot;Use owner password&quot; checkbox. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorUserPassword {
+            get {
+                return ResourceManager.GetString("ErrorUserPassword", resourceCulture);
             }
         }
 
