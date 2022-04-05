@@ -61,6 +61,60 @@ namespace Cube.Pdf.Converter.Properties {
         }
 
         /// <summary>
+        ///   Message digest of the source file does not match. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorDigest {
+            get {
+                return ResourceManager.GetString("ErrorDigest", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Ghostscript error ({0:D}) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorGhostscript {
+            get {
+                return ResourceManager.GetString("ErrorGhostscript", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Path cannot contain any of the following characters に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorInvalidChars {
+            get {
+                return ResourceManager.GetString("ErrorInvalidChars", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Set the owner password of the PDF file to be merged in the Security tab. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorMergePassword {
+            get {
+                return ResourceManager.GetString("ErrorMergePassword", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Owner password is empty or does not match the confirmation. Please check your password and confirmation again. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorOwnerPassword {
+            get {
+                return ResourceManager.GetString("ErrorOwnerPassword", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   User password is empty or does not match the confirmation. Please check the user password or enable the &quot;Use owner password&quot; checkbox. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ErrorUserPassword {
+            get {
+                return ResourceManager.GetString("ErrorUserPassword", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   All files に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string FilterAll {
@@ -342,15 +396,6 @@ namespace Cube.Pdf.Converter.Properties {
         }
 
         /// <summary>
-        ///   Message digest of the source file does not match. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageDigest {
-            get {
-                return ResourceManager.GetString("MessageDigest", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   {0} already exists. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageExists {
@@ -360,38 +405,11 @@ namespace Cube.Pdf.Converter.Properties {
         }
 
         /// <summary>
-        ///   Ghostscript error ({0:D}) に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageGhostscript {
-            get {
-                return ResourceManager.GetString("MessageGhostscript", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Path cannot contain any of the following characters に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageInvalidChars {
-            get {
-                return ResourceManager.GetString("MessageInvalidChars", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Do you want to merge at the beginning of the existing file? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageMergeHead {
             get {
                 return ResourceManager.GetString("MessageMergeHead", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Set the owner password of the PDF file to be merged in the Security tab. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessageMergePassword {
-            get {
-                return ResourceManager.GetString("MessageMergePassword", resourceCulture);
             }
         }
 
@@ -410,15 +428,6 @@ namespace Cube.Pdf.Converter.Properties {
         internal static string MessageOverwrite {
             get {
                 return ResourceManager.GetString("MessageOverwrite", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Password is empty or does not match the confirmation. Please check your password and confirmation again. に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MessagePassword {
-            get {
-                return ResourceManager.GetString("MessagePassword", resourceCulture);
             }
         }
 

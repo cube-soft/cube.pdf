@@ -58,6 +58,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrorDigest" xml:space="preserve">
+    <value>入力ファイルのハッシュ値が一致しません。入力ファイルが破損したか、または改ざんされた可能性があります。</value>
+  </data>
+  <data name="ErrorGhostscript" xml:space="preserve">
+    <value>Ghostscript API による変換中にエラーが発生しました。({0:D})</value>
+  </data>
+  <data name="ErrorInvalidChars" xml:space="preserve">
+    <value>ファイル名に次の文字を使用する事はできません</value>
+  </data>
+  <data name="ErrorMergePassword" xml:space="preserve">
+    <value>結合対象として指定された PDF ファイルの管理用パスワードをセキュリティタブに入力して下さい。</value>
+  </data>
+  <data name="ErrorOwnerPassword" xml:space="preserve">
+    <value>パスワードが入力されていないか、または確認欄と一致しません。パスワードおよびパスワード確認欄を再度ご確認下さい。</value>
+  </data>
+  <data name="ErrorUserPassword" xml:space="preserve">
+    <value>閲覧用パスワードが入力されていないか、または確認欄と一致しません。パスワードを再度ご確認するか、「管理用パスワードと共用する」の項目を有効にして下さい。</value>
+  </data>
   <data name="FilterAll" xml:space="preserve">
     <value>すべてのファイル</value>
   </data>
@@ -143,23 +161,11 @@
   <data name="MenuTwoPageRight" xml:space="preserve">
     <value>見開きページ（右綴じ）</value>
   </data>
-  <data name="MessageDigest" xml:space="preserve">
-    <value>入力ファイルのハッシュ値が一致しません。入力ファイルが破損したか、または改ざんされた可能性があります。</value>
-  </data>
   <data name="MessageExists" xml:space="preserve">
     <value>{0} は既に存在します。</value>
   </data>
-  <data name="MessageGhostscript" xml:space="preserve">
-    <value>Ghostscript API による変換中にエラーが発生しました。({0:D})</value>
-  </data>
-  <data name="MessageInvalidChars" xml:space="preserve">
-    <value>ファイル名に次の文字を使用する事はできません</value>
-  </data>
   <data name="MessageMergeHead" xml:space="preserve">
     <value>先頭に結合しますか？</value>
-  </data>
-  <data name="MessageMergePassword" xml:space="preserve">
-    <value>結合対象として指定された PDF ファイルの管理用パスワードをセキュリティタブに入力して下さい。</value>
   </data>
   <data name="MessageSave" xml:space="preserve">
     <value>タイトル、作成者、サブタイトル、キーワードのいずれかの項目が入力されています。これらの内容は次回以降、CubePDF 起動時の初期設定として利用されます。設定を保存しても良いですか？</value>
@@ -169,9 +175,6 @@
   </data>
   <data name="MessageOverwrite" xml:space="preserve">
     <value>上書きしますか？</value>
-  </data>
-  <data name="MessagePassword" xml:space="preserve">
-    <value>パスワードが入力されていないか、または確認用パスワードと一致しません。パスワードおよびパスワード確認欄を再度ご確認下さい。</value>
   </data>
   <data name="TitleSelectDestination" xml:space="preserve">
     <value>名前を付けて保存</value>

@@ -335,9 +335,10 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Confirm()
         {
-            if (!Enabled || OwnerCorrect && UserCorrect) return true;
-            Send(Message.ForError(Properties.Resources.MessagePassword));
-            return false;
+            bool fail(string s) { Send(Message.ForError(s)); return false; }
+            if (Enabled && !OwnerCorrect) return fail(Properties.Resources.ErrorOwnerPassword);
+            if (Enabled && !UserCorrect ) return fail(Properties.Resources.ErrorUserPassword);
+            return true;
         }
 
         #endregion

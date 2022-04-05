@@ -224,9 +224,9 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private static string GetErrorMessage(Exception src)
         {
-            if (src is CryptographicException) return Properties.Resources.MessageDigest;
-            if (src is EncryptionException) return Properties.Resources.MessageMergePassword;
-            if (src is GsApiException gs) return string.Format(Properties.Resources.MessageGhostscript, gs.Status);
+            if (src is CryptographicException) return Properties.Resources.ErrorDigest;
+            if (src is EncryptionException) return Properties.Resources.ErrorMergePassword;
+            if (src is GsApiException gs) return string.Format(Properties.Resources.ErrorGhostscript, gs.Status);
             if (src is ArgumentException e) return e.Message;
             return $"{src.Message} ({src.GetType().Name})";
         }
