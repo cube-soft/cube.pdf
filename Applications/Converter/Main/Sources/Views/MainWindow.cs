@@ -99,8 +99,14 @@ namespace Cube.Pdf.Converter
             TopMost = true;
             TopMost = false;
 
-            DestinationTextBox.SelectionStart  = DestinationTextBox.Text?.Length ?? 0;
-            DestinationTextBox.SelectionLength = 0;
+            static void scroll(TextBox s) {
+                s.SelectionStart  = s.Text?.Length ?? 0;
+                s.SelectionLength = 0;
+            }
+
+            scroll(DestinationTextBox);
+            scroll(SourceTextBox);
+            scroll(UserProgramTextBox);
         }
 
         /* ----------------------------------------------------------------- */
