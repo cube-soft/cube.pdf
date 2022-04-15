@@ -49,8 +49,9 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
-* 2022-04-16 version 2.0.1
+* 2022-04-18 version 2.0.1
     - Update Ghostscript to 9.56.1.
+    - Update iText7 to 7.2.2.
 * 2022-04-06 version 2.0.0
     - Change recommended environment to .NET Framework 4.7 or later.
     - Update Ghostscript to 9.56.0.
