@@ -69,6 +69,8 @@ Dependencies of the CubePDF Page are as follows.
 
 ## History
 
+* 2022-04-18 version 4.0.2
+    - Update iText7 to 7.2.2.
 * 2022-03-30 version 4.0.1
     - Fix an error when specifying a file containing full-width numbers.
 * 2022-03-25 version 4.0.0
