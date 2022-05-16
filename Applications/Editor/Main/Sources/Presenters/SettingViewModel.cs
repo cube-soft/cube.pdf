@@ -54,12 +54,137 @@ namespace Cube.Pdf.Editor
         public SettingViewModel(SettingFolder src, SynchronizationContext context) :
             base(src, new(), context)
         {
-            OK.Command = new DelegateCommand(() => Quit(() => Send(new ApplyMessage()), true));
+            ShrinkResources.Value = Facade.Value.ShrinkResources;
+            KeepOutlines.Value    = Facade.Value.KeepOutlines;
+            BackupEnabled.Value   = Facade.Value.BackupEnabled;
+            Backup.Value          = Facade.Value.Backup;
+            Temp.Value            = Facade.Value.Temp;
+            Language.Value        = Facade.Value.Language;
+            RecentVisible.Value   = Facade.Value.RecentVisible;
+            CheckUpdate.Value     = Facade.Startup.Enabled;
+
+            OK.Command = new DelegateCommand(() => Quit(Apply, true));
         }
 
         #endregion
 
         #region Properties
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ShrinkResources
+        ///
+        /// <summary>
+        /// Gets the menu indicating whether to shrink deduplicated resources
+        /// when saving PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<bool> ShrinkResources => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuShrinkResources,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// KeepOutlines
+        ///
+        /// <summary>
+        /// Gets the menu indicating whether to keep outline information
+        /// when saving PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<bool> KeepOutlines => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuKeepOutlines,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// RecentVisible
+        ///
+        /// <summary>
+        /// Get the menu indicating whether to display the recently used
+        /// files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<bool> RecentVisible => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuRecentVisible,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CheckUpdate
+        ///
+        /// <summary>
+        /// Gets the menu indicating whether to check for software updates
+        /// at startup.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<bool> CheckUpdate => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuCheckUpdate,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BackupEnabled
+        ///
+        /// <summary>
+        /// Gets the menu indicating whether to enable the backup function.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<bool> BackupEnabled => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuBackupEnabled,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Backup
+        ///
+        /// <summary>
+        /// Gets the backup directory menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<string> Backup => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuBackup,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Temp
+        ///
+        /// <summary>
+        /// Gets the temp directory menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<string> Temp => Get(() => new BindableElement<string>(
+            () => Properties.Resources.MenuTemp,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Language
+        ///
+        /// <summary>
+        /// Gets the language menu.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<Language> Language => Get(() => new BindableElement<Language>(
+            () => Properties.Resources.MenuLanguage,
+            GetDispatcher(false)
+        ));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -79,26 +204,10 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Language
-        ///
-        /// <summary>
-        /// Gets the language menu.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IElement<Language> Language => Get(() => new BindableElement<Language>(
-            () => Properties.Resources.MenuLanguage,
-            () => Facade.Value.Language,
-            e  => Facade.Value.Language = e,
-            GetDispatcher(false)
-        ));
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// Version
         ///
         /// <summary>
-        /// Gets the version menu.
+        /// Gets the version tab/menu.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
@@ -120,23 +229,7 @@ namespace Cube.Pdf.Editor
         public IElement<Uri> Link => Get(() => new BindableElement<Uri>(
             () => Assembly.GetExecutingAssembly().GetCopyright(),
             () => Facade.ProductUri,
-            GetDispatcher(false)
-        ) { Command = new DelegateCommand(() => Post(Link.Value)) });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Update
-        ///
-        /// <summary>
-        /// Gets the menu indicating whether checking software update
-        /// at launching process.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IElement<bool> Update => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuUpdate,
-            () => Facade.Startup.Enabled,
-            e  => Facade.Startup.Enabled = e,
+            new DelegateCommand(() => Post(Link.Value)),
             GetDispatcher(false)
         ));
 
@@ -168,6 +261,48 @@ namespace Cube.Pdf.Editor
             GetDispatcher(false)
         ));
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Summary
+        ///
+        /// <summary>
+        /// Gets the summary tab.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement Summary => Get(() => new BindableElement(
+            () => Properties.Resources.MenuSetting,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SaveOptions
+        ///
+        /// <summary>
+        /// Gets the menu of save options.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement SaveOptions => Get(() => new BindableElement(
+            () => Properties.Resources.MenuSaveOptions,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OtherOptions
+        ///
+        /// <summary>
+        /// Gets the menu of other options.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement OtherOptions => Get(() => new BindableElement(
+            () => Properties.Resources.MenuOthers,
+            GetDispatcher(false)
+        ));
+
         #endregion
 
         #region Implementations
@@ -184,6 +319,27 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected override string GetTitle() => Properties.Resources.TitleSetting;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Invoke
+        ///
+        /// <summary>
+        /// Invokes the apply command.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Apply()
+        {
+            Facade.Value.ShrinkResources = ShrinkResources.Value;
+            Facade.Value.KeepOutlines    = KeepOutlines.Value;
+            Facade.Value.BackupEnabled   = BackupEnabled.Value;
+            Facade.Value.Backup          = Backup.Value;
+            Facade.Value.Temp            = Temp.Value;
+            Facade.Value.Language        = Language.Value;
+            Facade.Value.RecentVisible   = RecentVisible.Value;
+            Facade.Startup.Enabled       = CheckUpdate.Value;
+        }
 
         #endregion
     }

@@ -16,8 +16,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System;
 using System.Runtime.Serialization;
 using Cube.DataContract;
+using Cube.FileSystem;
+using Cube.Mixin.Environment;
 
 namespace Cube.Pdf.Editor
 {
@@ -130,6 +133,59 @@ namespace Cube.Pdf.Editor
         public bool ShrinkResources
         {
             get => Get(() => true);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// KeepOutlines
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to keep outline
+        /// information when saving PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool KeepOutlines
+        {
+            get => Get(() => true);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BackupEnabled
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to enable the backup
+        /// function.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool BackupEnabled
+        {
+            get => Get(() => true);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Backup
+        ///
+        /// <summary>
+        /// Gets or sets the path of the backup directory.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public string Backup
+        {
+            get => Get(() => Io.Combine(
+                Environment.SpecialFolder.LocalApplicationData.GetName(),
+                "CubeSoft", "CubePdfUtility2", "Backup"
+            ));
             set => Set(value);
         }
 

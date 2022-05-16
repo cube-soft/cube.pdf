@@ -97,8 +97,17 @@
   <data name="MenuAuthor" xml:space="preserve">
     <value>Author</value>
   </data>
+  <data name="MenuBackup" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="MenuBackupEnabled" xml:space="preserve">
+    <value>Enable backup function</value>
+  </data>
   <data name="MenuCancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="MenuCheckUpdate" xml:space="preserve">
+    <value>Check for updates on startup</value>
   </data>
   <data name="MenuClear" xml:space="preserve">
     <value>Clear</value>
@@ -193,6 +202,9 @@
   <data name="MenuInsertPosition" xml:space="preserve">
     <value>Insert position</value>
   </data>
+  <data name="MenuKeepOutlines" xml:space="preserve">
+    <value>Keep bookmarks of the source PDF file</value>
+  </data>
   <data name="MenuKeywords" xml:space="preserve">
     <value>Keywords</value>
   </data>
@@ -262,6 +274,9 @@
   <data name="MenuRecent" xml:space="preserve">
     <value>Recent files</value>
   </data>
+  <data name="MenuRecentVisible" xml:space="preserve">
+    <value>Show recently used files</value>
+  </data>
   <data name="MenuRedo" xml:space="preserve">
     <value>Redo</value>
   </data>
@@ -286,6 +301,9 @@
   <data name="MenuSaveAs" xml:space="preserve">
     <value>Save as</value>
   </data>
+  <data name="MenuSaveOptions" xml:space="preserve">
+    <value>Save options</value>
+  </data>
   <data name="MenuSelect" xml:space="preserve">
     <value>Select</value>
   </data>
@@ -304,6 +322,9 @@
   <data name="MenuSharePassword" xml:space="preserve">
     <value>Use owner password</value>
   </data>
+  <data name="MenuShrinkResources" xml:space="preserve">
+    <value>Shrink duplicated resources</value>
+  </data>
   <data name="MenuSplit" xml:space="preserve">
     <value>Save as a separate file per page</value>
   </data>
@@ -316,6 +337,9 @@
   <data name="MenuTarget" xml:space="preserve">
     <value>Target pages</value>
   </data>
+  <data name="MenuTemp" xml:space="preserve">
+    <value>Temp</value>
+  </data>
   <data name="MenuTitle" xml:space="preserve">
     <value>Title</value>
   </data>
@@ -324,9 +348,6 @@
   </data>
   <data name="MenuUp" xml:space="preserve">
     <value>Up</value>
-  </data>
-  <data name="MenuUpdate" xml:space="preserve">
-    <value>Check update at launching</value>
   </data>
   <data name="MenuUserPassword" xml:space="preserve">
     <value>Password</value>
@@ -438,8 +459,5 @@
   </data>
   <data name="UnitByte" xml:space="preserve">
     <value>Bytes</value>
-  </data>
-  <data name="VersionSuffix" xml:space="preserve">
-    <value />
   </data>
 </root>

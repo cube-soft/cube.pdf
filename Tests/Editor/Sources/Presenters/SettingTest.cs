@@ -120,7 +120,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(src.Framework.Text,        Does.StartWith("Microsoft .NET Framework"));
             Assert.That(src.Link.Text,             Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
             Assert.That(src.Link.Value.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdfutility/?lang="));
-            Assert.That(src.Update.Text,           Is.Not.Null.And.Not.Empty);
+            Assert.That(src.CheckUpdate.Text,      Is.Not.Null.And.Not.Empty);
             Assert.That(src.Language.Text,         Is.Not.Null.And.Not.Empty);
             Assert.That(src.Language.Value,        Is.EqualTo(Language.English)); // see remarks.
             Assert.That(src.Languages.Count(),     Is.EqualTo(3));

@@ -94,8 +94,17 @@
   <data name="MenuAuthor" xml:space="preserve">
     <value>作成者</value>
   </data>
+  <data name="MenuBackup" xml:space="preserve">
+    <value>バックアップ</value>
+  </data>
+  <data name="MenuBackupEnabled" xml:space="preserve">
+    <value>バックアップ機能を有効にする</value>
+  </data>
   <data name="MenuCancel" xml:space="preserve">
     <value>キャンセル</value>
+  </data>
+  <data name="MenuCheckUpdate" xml:space="preserve">
+    <value>起動時にアップデートを確認する</value>
   </data>
   <data name="MenuClear" xml:space="preserve">
     <value>全て削除</value>
@@ -190,6 +199,9 @@
   <data name="MenuInsertPosition" xml:space="preserve">
     <value>挿入位置</value>
   </data>
+  <data name="MenuKeepOutlines" xml:space="preserve">
+    <value>PDF ファイルのしおり情報を維持する</value>
+  </data>
   <data name="MenuKeywords" xml:space="preserve">
     <value>キーワード</value>
   </data>
@@ -259,6 +271,9 @@
   <data name="MenuRecent" xml:space="preserve">
     <value>最近開いたファイル</value>
   </data>
+  <data name="MenuRecentVisible" xml:space="preserve">
+    <value>最近開いたファイルを表示する</value>
+  </data>
   <data name="MenuRedo" xml:space="preserve">
     <value>やり直し</value>
   </data>
@@ -283,6 +298,9 @@
   <data name="MenuSaveAs" xml:space="preserve">
     <value>名前を付けて保存</value>
   </data>
+  <data name="MenuSaveOptions" xml:space="preserve">
+    <value>保存オプション</value>
+  </data>
   <data name="MenuSelect" xml:space="preserve">
     <value>選択</value>
   </data>
@@ -301,6 +319,9 @@
   <data name="MenuSharePassword" xml:space="preserve">
     <value>管理用パスワードと共用する</value>
   </data>
+  <data name="MenuShrinkResources" xml:space="preserve">
+    <value>重複リソースを削除してファイルサイズを削減する</value>
+  </data>
   <data name="MenuSplit" xml:space="preserve">
     <value>1 ページ毎に個別のファイルとして保存</value>
   </data>
@@ -313,6 +334,9 @@
   <data name="MenuTarget" xml:space="preserve">
     <value>対象ページ</value>
   </data>
+  <data name="MenuTemp" xml:space="preserve">
+    <value>作業フォルダー</value>
+  </data>
   <data name="MenuTitle" xml:space="preserve">
     <value>タイトル</value>
   </data>
@@ -321,9 +345,6 @@
   </data>
   <data name="MenuUp" xml:space="preserve">
     <value>上へ</value>
-  </data>
-  <data name="MenuUpdate" xml:space="preserve">
-    <value>起動時にアップデートを確認する</value>
   </data>
   <data name="MenuUserPassword" xml:space="preserve">
     <value>閲覧用パスワード</value>
@@ -435,8 +456,5 @@
   </data>
   <data name="UnitByte" xml:space="preserve">
     <value>バイト</value>
-  </data>
-  <data name="VersionSuffix" xml:space="preserve">
-    <value />
   </data>
 </root>
