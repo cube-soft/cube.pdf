@@ -172,6 +172,22 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// BackupDays
+        ///
+        /// <summary>
+        /// Gets the days to keep backup files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public int BackupDays
+        {
+            get => Get(() => 5);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Backup
         ///
         /// <summary>

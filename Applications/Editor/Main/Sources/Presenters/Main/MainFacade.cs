@@ -55,6 +55,7 @@ namespace Cube.Pdf.Editor
         public MainFacade(SettingFolder folder, SynchronizationContext context)
         {
             Folder = Setup(folder);
+            Backup = new(Folder);
             Cache  = new(() => Value.Query);
             Value  = new(
                 new(e => Cache?.GetOrAdd(e), new ContextDispatcher(context, true)),
@@ -98,7 +99,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Backup Backup { get; } = new();
+        public Backup Backup { get; }
 
         /* ----------------------------------------------------------------- */
         ///
