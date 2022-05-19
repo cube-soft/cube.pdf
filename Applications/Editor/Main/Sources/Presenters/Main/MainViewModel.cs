@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Threading;
+using System.Windows;
 using System.Windows.Input;
 using Cube.Mixin.Environment;
 using Cube.Mixin.Observing;
@@ -131,16 +132,16 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Open
+        /// OpenOrInsert
         ///
         /// <summary>
-        /// Gets the Drag&amp;Drop command to open a new PDF document.
+        /// Gets the Drag&amp;Drop command to open or insert PDF files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public ICommand Open => Get(() => new DelegateCommand<string[]>(
-            e => Run(() => Facade.Open(e.FirstPdf()), false),
-            e => !Value.Busy && e.FirstPdf().HasValue()
+        public ICommand OpenOrInsert => Get(() => new DelegateCommand<DragEventArgs>(
+            e => Run(() => Facade.OpenOrInsert(e), false),
+            e => !Value.Busy && e.GetFiles().FirstPdf().HasValue()
         ).Hook(Value, nameof(Value.Busy)));
 
         /* ----------------------------------------------------------------- */
