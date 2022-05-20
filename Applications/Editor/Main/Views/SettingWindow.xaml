@@ -39,7 +39,12 @@
       Resources
     *********************************************************************** -->
     <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Themes/GenericDialog.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Themes/GenericDialog.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/TabStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 
     <!-- **********************************************************************
@@ -53,14 +58,13 @@
     <!-- **********************************************************************
       Main
     *********************************************************************** -->
-    <Grid>
+    <Grid Background="{StaticResource LightBackgroundBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
-        <TabControl Margin="12,12,12,12">
+        <TabControl>
             <!-- **************************************************************
               Settings
             *************************************************************** -->
@@ -80,6 +84,7 @@
                         <RowDefinition Height="28" />
                         <RowDefinition Height="26" />
                         <RowDefinition Height="26" />
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <!-- ******************************************************
@@ -207,6 +212,7 @@
                         <RowDefinition Height="24" />
                         <RowDefinition Height="50" />
                         <RowDefinition Height="24" />
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <!-- ******************************************************
@@ -253,7 +259,7 @@
         ******************************************************************* -->
         <StackPanel
             Style="{StaticResource DialogFooterStyle}"
-            Grid.Row="2">
+            Grid.Row="1">
             <Button
                 Content="{Binding Cancel.Text}"
                 Command="{Binding Cancel.Command}"
