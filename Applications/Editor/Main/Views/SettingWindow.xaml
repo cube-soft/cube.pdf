@@ -27,8 +27,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title}"
-    Height="420"
-    Width="450"
+    Height="400"
+    Width="500"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
@@ -64,7 +64,7 @@
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
-        <TabControl>
+        <TabControl Margin="12,12,12,0">
             <!-- **************************************************************
               Settings
             *************************************************************** -->
@@ -130,7 +130,8 @@
                         <Button
                             Content="..."
                             Width="50"
-                            Margin="3,3,0,2"
+                            Height="22"
+                            Margin="3,0,0,0"
                             DockPanel.Dock="Right" />
 
                         <TextBox
@@ -154,7 +155,8 @@
                         <Button
                             Content="..."
                             Width="50"
-                            Margin="3,4,0,3"
+                            Height="22"
+                            Margin="3,0,0,0"
                             DockPanel.Dock="Right" />
 
                         <TextBox

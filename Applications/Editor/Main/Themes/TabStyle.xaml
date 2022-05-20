@@ -21,7 +21,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="{x:Type TabControl}">
-        <Setter Property="Margin" Value="12" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
