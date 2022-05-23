@@ -1123,6 +1123,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Select a backup folder. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleBackup {
+            get {
+                return ResourceManager.GetString("TitleBackup", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Encryption に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TitleEncryption {
@@ -1209,6 +1218,15 @@ namespace Cube.Pdf.Editor.Properties {
         internal static string TitleSetting {
             get {
                 return ResourceManager.GetString("TitleSetting", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Select a temp folder. If you do not specify a temp folder, the same folder as the source files will be used. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleTemp {
+            get {
+                return ResourceManager.GetString("TitleTemp", resourceCulture);
             }
         }
 

@@ -128,6 +128,42 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ForBackup
+        ///
+        /// <summary>
+        /// Creates a message to show an open directory dialog.
+        /// </summary>
+        ///
+        /// <returns>OpenDirectoryMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static OpenDirectoryMessage ForBackup(string src) => new()
+        {
+            Text      = Properties.Resources.TitleBackup,
+            NewButton = true,
+            Value     = src,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ForTemp
+        ///
+        /// <summary>
+        /// Creates a message to show an open directory dialog.
+        /// </summary>
+        ///
+        /// <returns>OpenDirectoryMessage object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static OpenDirectoryMessage ForTemp(string src) => new()
+        {
+            Text      = Properties.Resources.TitleTemp,
+            NewButton = true,
+            Value     = src,
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// ForExtract
         ///
         /// <summary>

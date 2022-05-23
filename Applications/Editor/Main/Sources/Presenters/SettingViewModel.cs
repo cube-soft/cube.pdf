@@ -155,6 +155,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Backup => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuBackup,
+            new DelegateCommand(
+                () => Send(Message.ForBackup(Backup.Value),
+                e => Backup.Value = e, true
+            )),
             GetDispatcher(false)
         ));
 
@@ -169,6 +173,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<string> Temp => Get(() => new BindableElement<string>(
             () => Properties.Resources.MenuTemp,
+            new DelegateCommand(
+                () => Send(Message.ForTemp(Temp.Value),
+                e => Temp.Value = e, true
+            )),
             GetDispatcher(false)
         ));
 

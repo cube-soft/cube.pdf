@@ -412,6 +412,9 @@
   <data name="MessageTotalPage" xml:space="preserve">
     <value>{0} pages</value>
   </data>
+  <data name="TitleBackup" xml:space="preserve">
+    <value>Select a backup folder.</value>
+  </data>
   <data name="TitleEncryption" xml:space="preserve">
     <value>Encryption</value>
   </data>
@@ -441,6 +444,9 @@
   </data>
   <data name="TitleSetting" xml:space="preserve">
     <value>CubePDF Utility settings</value>
+  </data>
+  <data name="TitleTemp" xml:space="preserve">
+    <value>Select a temp folder. If you do not specify a temp folder, the same folder as the source file will be used.</value>
   </data>
   <data name="TooltipExtract" xml:space="preserve">
     <value>Extract the selected pages</value>

@@ -51,6 +51,7 @@
       Interaction
     *********************************************************************** -->
     <i:Interaction.Behaviors>
+        <xb:OpenDirectoryBehavior />
         <xb:UriBehavior />
         <xb:CloseBehavior />
     </i:Interaction.Behaviors>
@@ -129,6 +130,7 @@
 
                         <Button
                             Content="..."
+                            Command="{Binding Backup.Command}"
                             Width="50"
                             Height="22"
                             Margin="3,0,0,0"
@@ -154,6 +156,7 @@
 
                         <Button
                             Content="..."
+                            Command="{Binding Temp.Command}"
                             Width="50"
                             Height="22"
                             Margin="3,0,0,0"

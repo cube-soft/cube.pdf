@@ -409,6 +409,9 @@
   <data name="MessageTotalPage" xml:space="preserve">
     <value>全 {0} ページ</value>
   </data>
+  <data name="TitleBackup" xml:space="preserve">
+    <value>バックアップフォルダーを選択して下さい。</value>
+  </data>
   <data name="TitleEncryption" xml:space="preserve">
     <value>セキュリティ</value>
   </data>
@@ -438,6 +441,9 @@
   </data>
   <data name="TitleSetting" xml:space="preserve">
     <value>CubePDF Utility 設定</value>
+  </data>
+  <data name="TitleTemp" xml:space="preserve">
+    <value>作業フォルダーを選択して下さい。作業フォルダーを明示しない場合、開いた PDF ファイルと同じフォルダーが使用されます。</value>
   </data>
   <data name="TooltipExtract" xml:space="preserve">
     <value>選択ページを抽出</value>
