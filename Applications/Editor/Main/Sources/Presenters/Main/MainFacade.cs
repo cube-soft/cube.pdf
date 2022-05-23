@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Mixin.String;
 
@@ -209,7 +210,7 @@ namespace Cube.Pdf.Editor
         {
             Invoke(() => Value.Images.InsertAt(
                 Math.Min(Math.Max(index, 0), Value.Images.Count),
-                src.SelectMany(e => {
+                src.OrderBy(e => e, new NumericStringComparer()).SelectMany(e => {
                     Value.SetMessage(Properties.Resources.MessageLoading, e);
                     return !this.CanInsert(e) ? Enumerable.Empty<Page>() :
                            e.IsImageFile()    ? new ImagePageCollection(e) :
