@@ -128,7 +128,9 @@ Dependencies of the CubePDF Utility are as follows.
     - Add settings for displaying recently used PDF files.
     - Add settings for the backup folder.
     - Add settings for the temporary folder.
+    - Add function to insert PDF files at the end by Ctrl + Drag&Drop.
     - Change the order of files to be added when the file name contains numbers.
+    - Remove splash window.
 * 2022-05-10 version 1.6.7
     - Update PDFium to Chromium 101 compatible.
 * 2022-04-01 version 1.6.6
