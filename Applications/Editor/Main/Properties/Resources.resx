@@ -101,7 +101,7 @@
     <value>Backup</value>
   </data>
   <data name="MenuBackupEnabled" xml:space="preserve">
-    <value>Enable backup function</value>
+    <value>Enable backup</value>
   </data>
   <data name="MenuCancel" xml:space="preserve">
     <value>Cancel</value>
