@@ -19,6 +19,7 @@
 using System;
 using System.Windows;
 using System.Linq;
+using Cube.Backports;
 
 namespace Cube.Pdf.Editor
 {

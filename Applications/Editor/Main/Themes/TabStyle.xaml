@@ -25,7 +25,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabControl">
-                    <Grid UseLayoutRounding="True">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="24" />
                             <RowDefinition Height="1" />
