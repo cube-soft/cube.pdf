@@ -178,11 +178,38 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Backup に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuBackup {
+            get {
+                return ResourceManager.GetString("MenuBackup", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Enable backup function に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuBackupEnabled {
+            get {
+                return ResourceManager.GetString("MenuBackupEnabled", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Cancel に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuCancel {
             get {
                 return ResourceManager.GetString("MenuCancel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Check for updates on startup に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuCheckUpdate {
+            get {
+                return ResourceManager.GetString("MenuCheckUpdate", resourceCulture);
             }
         }
 
@@ -466,6 +493,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Keep bookmarks of the source PDF file に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuKeepOutlines {
+            get {
+                return ResourceManager.GetString("MenuKeepOutlines", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Keywords に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuKeywords {
@@ -673,6 +709,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Show recently used files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuRecentVisible {
+            get {
+                return ResourceManager.GetString("MenuRecentVisible", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Redo に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuRedo {
@@ -745,6 +790,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Save options に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSaveOptions {
+            get {
+                return ResourceManager.GetString("MenuSaveOptions", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Select に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuSelect {
@@ -799,6 +853,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Shrink duplicated resources に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuShrinkResources {
+            get {
+                return ResourceManager.GetString("MenuShrinkResources", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Save as a separate file per page に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuSplit {
@@ -835,6 +898,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Temp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuTemp {
+            get {
+                return ResourceManager.GetString("MenuTemp", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Title に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuTitle {
@@ -858,15 +930,6 @@ namespace Cube.Pdf.Editor.Properties {
         internal static string MenuUp {
             get {
                 return ResourceManager.GetString("MenuUp", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Check update at launching に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string MenuUpdate {
-            get {
-                return ResourceManager.GetString("MenuUpdate", resourceCulture);
             }
         }
 
@@ -970,7 +1033,7 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
-        ///   File not in PDF format or corrupted. に類似しているローカライズされた文字列を検索します。
+        ///   File is not in PDF format or corrupted. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MessageOpenError {
             get {
@@ -1056,6 +1119,15 @@ namespace Cube.Pdf.Editor.Properties {
         internal static string MessageTotalPage {
             get {
                 return ResourceManager.GetString("MessageTotalPage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Select a backup folder. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleBackup {
+            get {
+                return ResourceManager.GetString("TitleBackup", resourceCulture);
             }
         }
 
@@ -1150,6 +1222,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Select a temp folder. If you do not specify a temp folder, the same folder as the source files will be used. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TitleTemp {
+            get {
+                return ResourceManager.GetString("TitleTemp", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Extract the selected pages に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TooltipExtract {
@@ -1200,15 +1281,6 @@ namespace Cube.Pdf.Editor.Properties {
         internal static string UnitByte {
             get {
                 return ResourceManager.GetString("UnitByte", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///    に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string VersionSuffix {
-            get {
-                return ResourceManager.GetString("VersionSuffix", resourceCulture);
             }
         }
     }

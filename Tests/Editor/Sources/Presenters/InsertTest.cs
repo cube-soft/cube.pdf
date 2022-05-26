@@ -199,8 +199,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             vm.Value.Files[0].Selected = true;
             Assert.That(vm.Down.Command.CanExecute(), Is.True);
             vm.Down.Command.Execute();
-            Assert.That(vm.Value.Files[0].Name, Is.EqualTo("SampleRotation.pdf"));
-            Assert.That(vm.Value.Files[1].Name, Is.EqualTo("SampleAnnotation.pdf"));
+            Assert.That(vm.Value.Files[0].Name, Is.EqualTo("Sample.jpg"));
+            Assert.That(vm.Value.Files[1].Name, Is.EqualTo("Loading.png"));
         });
 
         /* ----------------------------------------------------------------- */
@@ -409,9 +409,9 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
             var file = src.Value.Files[0];
             Assert.That(src.Value.Files.Count,     Is.EqualTo(4));
-            Assert.That(file.Name,                 Is.EqualTo("SampleAnnotation.pdf"));
-            Assert.That(file.FullName,             Does.EndWith("SampleAnnotation.pdf"));
-            Assert.That(file.Length,               Is.AtLeast(60000));
+            Assert.That(file.Name,                 Is.EqualTo("Loading.png"));
+            Assert.That(file.FullName,             Does.EndWith("Loading.png"));
+            Assert.That(file.Length,               Is.AtLeast(1200));
             Assert.That(file.LastWriteTime,        Is.Not.EqualTo(DateTime.MinValue));
             Assert.That(file.Icon,                 Is.Not.Null);
             Assert.That(file.Selected,             Is.False);

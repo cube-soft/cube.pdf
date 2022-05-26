@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Cube.Collections;
 using Cube.Mixin.Collections;
 
 namespace Cube.Pdf.Editor
@@ -100,7 +101,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Add(IEnumerable<string> src)
         {
-            foreach (var e in src) Value.Files.Add(new(e, Value.Selection));
+            var cvt = src.OrderBy(e => e, new NumericStringComparer());
+            foreach (var e in cvt) Value.Files.Add(new(e, Value.Selection));
         }
 
         /* ----------------------------------------------------------------- */

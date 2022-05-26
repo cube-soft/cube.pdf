@@ -175,12 +175,24 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Refresh() => TaskEx.Run(() =>
         {
-            var dest = Io.GetFiles(Directory, Filter)
-                         .Select(e => Io.Get(e))
-                         .OrderByDescending(e => e.LastWriteTime);
+            var dest = Enabled ? Get() : Enumerable.Empty<Entity>();
             _ = Interlocked.Exchange(ref _items, dest);
             OnCollectionChanged(new(NotifyCollectionChangedAction.Reset));
         }).Forget();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Get
+        ///
+        /// <summary>
+        /// Gets the collection of recently used PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private IEnumerable<Entity> Get() =>
+            Io.GetFiles(Directory, Filter)
+              .Select(e => Io.Get(e))
+              .OrderByDescending(e => e.LastWriteTime);
 
         #endregion
 

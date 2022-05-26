@@ -1,6 +1,6 @@
 ﻿/* ------------------------------------------------------------------------- */
 //
-// Copyright (c) 2013 CubeSoft, Inc.
+// Copyright (c) 2010 CubeSoft, Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published
@@ -16,42 +16,56 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Collections.Generic;
-using System.Linq;
-using Cube.Collections;
-using Cube.FileSystem;
-using Cube.Mixin.String;
+using System.Windows;
+using Cube.Xui.Behaviors;
 
-namespace Cube.Pdf.Pages
+namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileSelector
+    /// FileDropBehavior
     ///
     /// <summary>
-    /// Provides functionality to select target files.
+    /// Represents the behavior when files are dropped.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileSelector
+    public class FileDropBehavior : CommandBehavior<Window>
     {
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Get
+        /// OnAttached
         ///
         /// <summary>
-        /// Gets the target files from the specified file collection.
+        /// Called after the action is attached to an AssociatedObject.
         /// </summary>
         ///
-        /// <param name="src">Source file collection.</param>
+        /* ----------------------------------------------------------------- */
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+            AssociatedObject.PreviewDragOver += WhenDragOver;
+            AssociatedObject.PreviewDrop += WhenDrop;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDetaching
+        ///
+        /// <summary>
+        /// Called when the action is being detached from its
+        /// AssociatedObject, but before it has actually occurred.
+        /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<string> Get(IEnumerable<string> src) =>
-            src.GroupBy(e => Io.Get(e).IsDirectory)
-               .OrderByDescending(e => e.Key)
-               .SelectMany(e => GetCore(e));
+        protected override void OnDetaching()
+        {
+            AssociatedObject.PreviewDragOver -= WhenDragOver;
+            AssociatedObject.PreviewDrop -= WhenDrop;
+            base.OnDetaching();
+        }
 
         #endregion
 
@@ -59,44 +73,32 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetCore
+        /// WhenDrop
         ///
         /// <summary>
-        /// Gets the target files from the specified file collection.
+        /// Occurs when the PreviewDrop event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<string> GetCore(IGrouping<bool, string> src) =>
-            src.Key ?
-            src.OrderBy(e => e, new NumericStringComparer()).SelectMany(e => Filter(Io.GetFiles(e))) :
-            Filter(src);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Filter
-        ///
-        /// <summary>
-        /// Applies the filter to the specified files.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<string> Filter(IEnumerable<string> src) =>
-            src.Where(e => IsTarget(e)).OrderBy(e => e, new NumericStringComparer());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsTarget
-        ///
-        /// <summary>
-        /// Determines whether the specified path is the target file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsTarget(string src)
+        private void WhenDrop(object s, DragEventArgs e)
         {
-            var cmp = new[] { ".pdf", ".bmp", ".png", ".jpg", ".jpeg", ".tif", ".tiff" };
-            var cvt = Io.Get(src);
-            return !cvt.IsDirectory && cmp.Any(e => cvt.Extension.FuzzyEquals(e));
+            e.Handled = Command?.CanExecute(e) ?? false;
+            if (e.Handled) Command.Execute(e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenDragOver
+        ///
+        /// <summary>
+        /// Occurs when the PreviewDragOver event is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenDragOver(object s, DragEventArgs e)
+        {
+            e.Handled = Command?.CanExecute(e) ?? false;
+            e.Effects = e.Handled ? DragDropEffects.Copy : DragDropEffects.None;
         }
 
         #endregion

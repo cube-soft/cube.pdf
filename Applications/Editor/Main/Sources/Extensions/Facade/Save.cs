@@ -99,6 +99,7 @@ namespace Cube.Pdf.Editor
                 Target          = SaveTarget.All,
                 Split           = false,
                 ShrinkResources = obj.Settings.ShrinkResources,
+                KeepOutlines    = obj.Settings.KeepOutlines,
                 Destination     = dest,
                 Metadata        = obj.Metadata,
                 Encryption      = obj.Encryption,
@@ -159,6 +160,7 @@ namespace Cube.Pdf.Editor
             Target          = SaveTarget.Selected,
             Split           = false,
             ShrinkResources = src.Folder.Value.ShrinkResources,
+            KeepOutlines    = src.Folder.Value.KeepOutlines,
             Destination     = dest,
         });
 

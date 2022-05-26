@@ -110,7 +110,7 @@
         <xb:ClosedToDispose />
         <xb:ClosingToCommand Command="{Binding Ribbon.Close.Command}" />
         <my:SetupBehavior Command="{Binding Setup}" />
-        <my:MouseOpenBehavior Command="{Binding Open}" />
+        <my:FileDropBehavior Command="{Binding OpenOrInsert}" />
         <my:ShowPasswordWindow />
         <my:ShowPreviewWindow />
         <my:ShowInsertWindow />

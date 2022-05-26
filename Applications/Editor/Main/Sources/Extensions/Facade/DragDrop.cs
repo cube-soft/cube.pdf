@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Windows;
 using System.Linq;
 
 namespace Cube.Pdf.Editor
@@ -33,6 +34,26 @@ namespace Cube.Pdf.Editor
     internal static class DragDropExtension
     {
         #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OpenOrInsert
+        ///
+        /// <summary>
+        /// Opens or inserts the specified files according to the specified
+        /// condition.
+        /// </summary>
+        ///
+        /// <param name="src">Source object.</param>
+        /// <param name="obj">Drag&amp;Drop result.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static void OpenOrInsert(this MainFacade src, DragEventArgs obj)
+        {
+            var ins = obj.KeyStates.HasFlag(DragDropKeyStates.ControlKey) && src.Value.Source != null;
+            if (ins) src.Insert(int.MaxValue, obj.GetFiles());
+            else src.Open(obj.GetFiles().FirstPdf());
+        }
 
         /* ----------------------------------------------------------------- */
         ///
