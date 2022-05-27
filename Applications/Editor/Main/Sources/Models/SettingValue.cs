@@ -182,7 +182,7 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public int BackupDays
         {
-            get => Get(() => 5);
+            get => Get(() => 10);
             set => Set(value);
         }
 
