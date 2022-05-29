@@ -141,7 +141,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public ICommand OpenOrInsert => Get(() => new DelegateCommand<DragEventArgs>(
             e => Run(() => Facade.OpenOrInsert(e), false),
-            e => !Value.Busy
+            e => !Value.Busy && e.GetFiles() is not null
         ).Hook(Value, nameof(Value.Busy)));
 
         /* ----------------------------------------------------------------- */
