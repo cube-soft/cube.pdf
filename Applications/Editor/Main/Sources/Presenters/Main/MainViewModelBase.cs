@@ -295,11 +295,11 @@ namespace Cube.Pdf.Editor
         /// method.
         /// </summary>
         ///
-        /// <param name="action">User action.</param>
+        /// <param name="index">Insertion index.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void SendInsert(Action<IEnumerable<string>> action) =>
-            Send(Message.ForInsert(), action, false);
+        protected void SendInsert(int index) =>
+            Send(Message.ForInsert(), e => Facade.Insert(index, e.Sort()), false);
 
         /* ----------------------------------------------------------------- */
         ///

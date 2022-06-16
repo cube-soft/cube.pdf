@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Icons;
 using Cube.Mixin.Drawing;
@@ -75,6 +76,22 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static string FirstPdf(this IEnumerable<string> src) =>
             src?.FirstOrDefault(e => e.EndsWith(".pdf", StringComparison.InvariantCultureIgnoreCase));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Sort
+        ///
+        /// <summary>
+        /// Sorts the specified string collection.
+        /// </summary>
+        ///
+        /// <param name="src">Source collection.</param>
+        ///
+        /// <returns>Sorted results.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static IEnumerable<string> Sort(this IEnumerable<string> src) =>
+            src?.OrderBy(e => e, new NumericStringComparer());
 
         /* ----------------------------------------------------------------- */
         ///
