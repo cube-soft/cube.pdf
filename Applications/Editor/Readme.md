@@ -119,6 +119,9 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2022-06-23 version 2.0.1
+    - Update PDFium to Chromium 102 compatible.
+    - Fix an issue that files were not inserted in the order specified in the "Insert at other position" dialog.
 * 2022-06-01 version 2.0.0
     - Change recommended environment to .NET Framework 4.7 or later.
     - Update PDFium to Chromium 102 compatible.
