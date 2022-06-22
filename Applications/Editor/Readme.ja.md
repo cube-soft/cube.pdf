@@ -126,6 +126,9 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2022-06-23 version 2.0.1
+    - PDFium を Chromium 103 相当に更新
+    - 詳細を設定して挿入画面で指定した順序で挿入されない不具合を修正
 * 2022-06-01 version 2.0.0
     - 推奨動作環境を .NET Framework 4.7 以降に変更
     - PDFium を Chromium 102 相当に更新

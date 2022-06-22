@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor
         public static void OpenOrInsert(this MainFacade src, DragEventArgs obj)
         {
             var ins = obj.KeyStates.HasFlag(DragDropKeyStates.ControlKey) && src.Value.Source != null;
-            if (ins) src.Insert(int.MaxValue, obj.GetFiles());
+            if (ins) src.Insert(int.MaxValue, obj.GetFiles().Sort());
             else src.Open(obj.GetFiles().FirstPdf());
         }
 

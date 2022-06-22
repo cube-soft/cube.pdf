@@ -92,21 +92,6 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Insert
-        ///
-        /// <summary>
-        /// Inserts the specified file behind the selected index.
-        /// </summary>
-        ///
-        /// <param name="src">Facade object.</param>
-        /// <param name="files">Collection of inserting files.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Insert(this MainFacade src, IEnumerable<string> files) =>
-            src.Insert(src.Value.Images.Selection.Last + 1, files);
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// CanInsert
         ///
         /// <summary>

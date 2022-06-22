@@ -305,7 +305,7 @@ namespace Cube.Pdf.Editor
             () => !Facade.Value.Busy,
             GetDispatcher(false)
         ) {
-            Command = IsSelected(() => SendInsert(Facade.Insert))
+            Command = IsSelected(() => SendInsert(Facade.Value.Images.Selection.Last + 1))
         }.Hook(Facade.Value, nameof(MainBindableValue.Busy), nameof(MainBindableValue.Source)));
 
         /* ----------------------------------------------------------------- */
@@ -321,7 +321,7 @@ namespace Cube.Pdf.Editor
             nameof(Insert),
             () => Properties.Resources.MenuInsertFront,
             GetDispatcher(false)
-        ) { Command = IsOpen(() => SendInsert(e => Facade.Insert(0, e))) });
+        ) { Command = IsOpen(() => SendInsert(0)) });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -336,7 +336,7 @@ namespace Cube.Pdf.Editor
             nameof(Insert),
             () => Properties.Resources.MenuInsertBack,
             GetDispatcher(false)
-        ) { Command = IsOpen(() => SendInsert(e => Facade.Insert(int.MaxValue, e))) });
+        ) { Command = IsOpen(() => SendInsert(int.MaxValue)) });
 
         /* ----------------------------------------------------------------- */
         ///
