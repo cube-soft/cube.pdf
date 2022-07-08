@@ -45,39 +45,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Backup()
-        {
-            var app = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-
-            Directory = Io.Combine(app, "CubeSoft", "CubePdfUtility2", "Backup");
-            KeepDays  = 5;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Directory
-        ///
-        /// <summary>
-        /// Gets or sets the backup directory.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Directory { get; set; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// KeepDays
-        ///
-        /// <summary>
-        /// Gets the days to keep backup files.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int KeepDays { get; set; }
+        public Backup(SettingFolder settings) => _settings = settings;
 
         #endregion
 
@@ -96,10 +64,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Invoke(Entity src)
         {
-            if (!src.Exists) return;
+            if (!_settings.Value.BackupEnabled || !src.Exists) return;
 
             var date = DateTime.Today.ToString("yyyyMMdd");
-            var dest = Io.Combine(Directory, date, src.Name);
+            var dest = Io.Combine(_settings.Value.Backup, date, src.Name);
 
             if (!Io.Exists(dest)) Io.Copy(src.FullName, dest, false);
         }
@@ -120,13 +88,19 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Cleanup()
         {
-            var src = Io.GetDirectories(Directory);
-            var n   = src.Count() - KeepDays;
+            if (!_settings.Value.BackupEnabled) return;
+
+            var src = Io.GetDirectories(_settings.Value.Backup);
+            var n   = src.Count() - _settings.Value.BackupDays;
 
             if (n <= 0) return;
             foreach (var f in src.OrderBy(e => e).Take(n)) GetType().LogWarn(() => Io.Delete(f));
         }
 
+        #endregion
+
+        #region Fields
+        private readonly SettingFolder _settings;
         #endregion
     }
 }

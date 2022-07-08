@@ -49,6 +49,16 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2022-04-18 version 2.0.1
+    - Update Ghostscript to 9.56.1.
+    - Update iText7 to 7.2.2.
+* 2022-04-06 version 2.0.0
+    - Change recommended environment to .NET Framework 4.7 or later.
+    - Update Ghostscript to 9.56.0.
+    - Update iText7 to 7.2.1.
+    - Change the layout of the main window.
+    - Change the GUI initial values for encryption settings.
+    - Fix an issue with PDF linearization settings.
 * 2021-12-27 version 1.6.1
     - Fix the issue in the save file dialog where the current format was not reflected in the initial value of the file extension.
     - Fix the timing of completing the file extension specified for the destination.

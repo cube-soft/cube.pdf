@@ -23,298 +23,228 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.FooterPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.ExitButton = new Cube.Forms.Controls.Button();
-            this.SplitButton = new Cube.Forms.Controls.Button();
-            this.MainBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.MergeButton = new Cube.Forms.Controls.Button();
-            this.ContentsPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ButtonsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.FileButton = new Cube.Forms.Controls.Button();
+            this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.FilePanel = new System.Windows.Forms.TableLayoutPanel();
+            this.MainGridView = new Cube.Pdf.Pages.FileGridView();
+            this.RightPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.AddButton = new Cube.Forms.Controls.Button();
             this.UpButton = new Cube.Forms.Controls.Button();
             this.DownButton = new Cube.Forms.Controls.Button();
             this.RemoveButton = new Cube.Forms.Controls.Button();
             this.ClearButton = new Cube.Forms.Controls.Button();
-            this.FileListView = new Cube.Pdf.Pages.FileListControl();
             this.HeaderPanel = new System.Windows.Forms.Panel();
             this.TitleButton = new System.Windows.Forms.PictureBox();
-            this.LayoutPanel.SuspendLayout();
-            this.FooterPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).BeginInit();
-            this.ContentsPanel.SuspendLayout();
-            this.ButtonsPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.FileListView)).BeginInit();
+            this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.MetadataButton = new Cube.Forms.Controls.Button();
+            this.ExitButton = new Cube.Forms.Controls.Button();
+            this.SplitButton = new Cube.Forms.Controls.Button();
+            this.MergeButton = new Cube.Forms.Controls.Button();
+            this.MainToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.RootPanel.SuspendLayout();
+            this.FilePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MainGridView)).BeginInit();
+            this.RightPanel.SuspendLayout();
             this.HeaderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).BeginInit();
+            this.FooterPanel.SuspendLayout();
             this.SuspendLayout();
             //
-            // LayoutPanel
+            // RootPanel
             //
-            this.LayoutPanel.ColumnCount = 1;
-            this.LayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.Controls.Add(this.FooterPanel, 0, 2);
-            this.LayoutPanel.Controls.Add(this.ContentsPanel, 0, 1);
-            this.LayoutPanel.Controls.Add(this.HeaderPanel, 0, 0);
-            this.LayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.RowCount = 3;
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.LayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.LayoutPanel.Size = new System.Drawing.Size(684, 311);
-            this.LayoutPanel.TabIndex = 0;
+            resources.ApplyResources(this.RootPanel, "RootPanel");
+            this.RootPanel.Controls.Add(this.FilePanel, 0, 1);
+            this.RootPanel.Controls.Add(this.HeaderPanel, 0, 0);
+            this.RootPanel.Controls.Add(this.FooterPanel, 0, 2);
+            this.RootPanel.Name = "RootPanel";
+            //
+            // FilePanel
+            //
+            resources.ApplyResources(this.FilePanel, "FilePanel");
+            this.FilePanel.Controls.Add(this.MainGridView, 0, 0);
+            this.FilePanel.Controls.Add(this.RightPanel, 1, 0);
+            this.FilePanel.Name = "FilePanel";
+            //
+            // MainGridView
+            //
+            this.MainGridView.AllowUserToAddRows = false;
+            this.MainGridView.AllowUserToDeleteRows = false;
+            this.MainGridView.AllowUserToResizeRows = false;
+            this.MainGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MainGridView.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.MainGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.MainGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.MainGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.MainGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            resources.ApplyResources(this.MainGridView, "MainGridView");
+            this.MainGridView.GridColor = System.Drawing.SystemColors.Control;
+            this.MainGridView.Name = "MainGridView";
+            this.MainGridView.ReadOnly = true;
+            this.MainGridView.RowHeadersVisible = false;
+            this.MainGridView.RowTemplate.Height = 21;
+            this.MainGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            //
+            // RightPanel
+            //
+            resources.ApplyResources(this.RightPanel, "RightPanel");
+            this.RightPanel.Controls.Add(this.AddButton, 1, 1);
+            this.RightPanel.Controls.Add(this.UpButton, 1, 2);
+            this.RightPanel.Controls.Add(this.DownButton, 1, 3);
+            this.RightPanel.Controls.Add(this.RemoveButton, 1, 4);
+            this.RightPanel.Controls.Add(this.ClearButton, 1, 5);
+            this.RightPanel.Name = "RightPanel";
+            //
+            // AddButton
+            //
+            this.AddButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.AddButton, "AddButton");
+            this.AddButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.AddButton.ForeColor = System.Drawing.Color.White;
+            this.AddButton.Name = "AddButton";
+            this.AddButton.UseVisualStyleBackColor = false;
+            //
+            // UpButton
+            //
+            this.UpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.UpButton, "UpButton");
+            this.UpButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.UpButton.ForeColor = System.Drawing.Color.White;
+            this.UpButton.Name = "UpButton";
+            this.UpButton.UseVisualStyleBackColor = false;
+            //
+            // DownButton
+            //
+            this.DownButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.DownButton, "DownButton");
+            this.DownButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.DownButton.ForeColor = System.Drawing.Color.White;
+            this.DownButton.Name = "DownButton";
+            this.DownButton.UseVisualStyleBackColor = false;
+            //
+            // RemoveButton
+            //
+            this.RemoveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.RemoveButton, "RemoveButton");
+            this.RemoveButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.RemoveButton.ForeColor = System.Drawing.Color.White;
+            this.RemoveButton.Name = "RemoveButton";
+            this.RemoveButton.UseVisualStyleBackColor = false;
+            //
+            // ClearButton
+            //
+            this.ClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.ClearButton, "ClearButton");
+            this.ClearButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.ClearButton.ForeColor = System.Drawing.Color.White;
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.UseVisualStyleBackColor = false;
+            //
+            // HeaderPanel
+            //
+            this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.HeaderPanel.BackgroundImage = global::Cube.Pdf.Pages.Properties.Resources.Background;
+            this.HeaderPanel.Controls.Add(this.TitleButton);
+            resources.ApplyResources(this.HeaderPanel, "HeaderPanel");
+            this.HeaderPanel.Name = "HeaderPanel";
+            //
+            // TitleButton
+            //
+            this.TitleButton.BackgroundImage = global::Cube.Pdf.Pages.Properties.Resources.Background;
+            this.TitleButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            resources.ApplyResources(this.TitleButton, "TitleButton");
+            this.TitleButton.Image = global::Cube.Pdf.Pages.Properties.Resources.HeaderTitle;
+            this.TitleButton.Name = "TitleButton";
+            this.TitleButton.TabStop = false;
             //
             // FooterPanel
             //
-            this.FooterPanel.AllowDrop = true;
-            this.FooterPanel.Controls.Add(this.ExitButton);
-            this.FooterPanel.Controls.Add(this.SplitButton);
-            this.FooterPanel.Controls.Add(this.MergeButton);
-            this.FooterPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FooterPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.FooterPanel.Location = new System.Drawing.Point(0, 251);
-            this.FooterPanel.Margin = new System.Windows.Forms.Padding(0);
+            resources.ApplyResources(this.FooterPanel, "FooterPanel");
+            this.FooterPanel.Controls.Add(this.MetadataButton, 1, 1);
+            this.FooterPanel.Controls.Add(this.ExitButton, 5, 1);
+            this.FooterPanel.Controls.Add(this.SplitButton, 4, 1);
+            this.FooterPanel.Controls.Add(this.MergeButton, 3, 1);
             this.FooterPanel.Name = "FooterPanel";
-            this.FooterPanel.Padding = new System.Windows.Forms.Padding(0, 9, 9, 0);
-            this.FooterPanel.Size = new System.Drawing.Size(684, 60);
-            this.FooterPanel.TabIndex = 1;
+            //
+            // MetadataButton
+            //
+            this.MetadataButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            resources.ApplyResources(this.MetadataButton, "MetadataButton");
+            this.MetadataButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.MetadataButton.ForeColor = System.Drawing.Color.White;
+            this.MetadataButton.Name = "MetadataButton";
+            this.MetadataButton.UseVisualStyleBackColor = false;
             //
             // ExitButton
             //
-            this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.ExitButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(151)))), ((int)(((byte)(151)))));
-            this.ExitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(72)))), ((int)(((byte)(72)))), ((int)(((byte)(72)))));
+            this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.ExitButton, "ExitButton");
+            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.ExitButton.ForeColor = System.Drawing.Color.White;
-            this.ExitButton.Location = new System.Drawing.Point(572, 12);
             this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(100, 35);
-            this.ExitButton.TabIndex = 0;
-            this.ExitButton.Text = "終了";
             this.ExitButton.UseVisualStyleBackColor = false;
             //
             // SplitButton
             //
             this.SplitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(49)))), ((int)(((byte)(146)))));
-            this.SplitButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.MainBindingSource, "Invokable", true));
-            this.SplitButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.SplitButton.FlatAppearance.BorderSize = 0;
-            this.SplitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            resources.ApplyResources(this.SplitButton, "SplitButton");
+            this.SplitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(39)))), ((int)(((byte)(128)))));
             this.SplitButton.ForeColor = System.Drawing.Color.White;
-            this.SplitButton.Location = new System.Drawing.Point(431, 12);
             this.SplitButton.Name = "SplitButton";
-            this.SplitButton.Size = new System.Drawing.Size(135, 35);
-            this.SplitButton.TabIndex = 2;
-            this.SplitButton.Text = "分割(&S)";
             this.SplitButton.UseVisualStyleBackColor = false;
-            //
-            // MainBindingSource
-            //
-            this.MainBindingSource.DataSource = typeof(Cube.Pdf.Pages.MainViewModel);
             //
             // MergeButton
             //
             this.MergeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.MergeButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.MainBindingSource, "Invokable", true));
-            this.MergeButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.MergeButton.FlatAppearance.BorderSize = 0;
-            this.MergeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            resources.ApplyResources(this.MergeButton, "MergeButton");
+            this.MergeButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.MergeButton.ForeColor = System.Drawing.Color.White;
-            this.MergeButton.Location = new System.Drawing.Point(290, 12);
             this.MergeButton.Name = "MergeButton";
-            this.MergeButton.Size = new System.Drawing.Size(135, 35);
-            this.MergeButton.TabIndex = 1;
-            this.MergeButton.Text = "結合(&M)";
             this.MergeButton.UseVisualStyleBackColor = false;
             //
-            // ContentsPanel
+            // MainToolTip
             //
-            this.ContentsPanel.ColumnCount = 2;
-            this.ContentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ContentsPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124F));
-            this.ContentsPanel.Controls.Add(this.ButtonsPanel, 1, 0);
-            this.ContentsPanel.Controls.Add(this.FileListView, 0, 0);
-            this.ContentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentsPanel.Location = new System.Drawing.Point(0, 36);
-            this.ContentsPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.ContentsPanel.Name = "ContentsPanel";
-            this.ContentsPanel.RowCount = 1;
-            this.ContentsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.ContentsPanel.Size = new System.Drawing.Size(684, 215);
-            this.ContentsPanel.TabIndex = 2;
-            //
-            // ButtonsPanel
-            //
-            this.ButtonsPanel.AllowDrop = true;
-            this.ButtonsPanel.Controls.Add(this.FileButton);
-            this.ButtonsPanel.Controls.Add(this.UpButton);
-            this.ButtonsPanel.Controls.Add(this.DownButton);
-            this.ButtonsPanel.Controls.Add(this.RemoveButton);
-            this.ButtonsPanel.Controls.Add(this.ClearButton);
-            this.ButtonsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ButtonsPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.ButtonsPanel.Location = new System.Drawing.Point(560, 0);
-            this.ButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.ButtonsPanel.Name = "ButtonsPanel";
-            this.ButtonsPanel.Padding = new System.Windows.Forms.Padding(9, 9, 9, 0);
-            this.ButtonsPanel.Size = new System.Drawing.Size(124, 215);
-            this.ButtonsPanel.TabIndex = 2;
-            //
-            // FileButton
-            //
-            this.FileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.FileButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.FileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.FileButton.ForeColor = System.Drawing.Color.White;
-            this.FileButton.Location = new System.Drawing.Point(12, 12);
-            this.FileButton.Name = "FileButton";
-            this.FileButton.Size = new System.Drawing.Size(100, 30);
-            this.FileButton.TabIndex = 0;
-            this.FileButton.Text = "追加(&O) ...";
-            this.FileButton.UseVisualStyleBackColor = false;
-            //
-            // UpButton
-            //
-            this.UpButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.UpButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.UpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.UpButton.ForeColor = System.Drawing.Color.White;
-            this.UpButton.Location = new System.Drawing.Point(12, 48);
-            this.UpButton.Name = "UpButton";
-            this.UpButton.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.UpButton.Size = new System.Drawing.Size(100, 30);
-            this.UpButton.TabIndex = 1;
-            this.UpButton.Text = "上へ";
-            this.UpButton.UseVisualStyleBackColor = false;
-            //
-            // DownButton
-            //
-            this.DownButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.DownButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.DownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.DownButton.ForeColor = System.Drawing.Color.White;
-            this.DownButton.Location = new System.Drawing.Point(12, 84);
-            this.DownButton.Name = "DownButton";
-            this.DownButton.Size = new System.Drawing.Size(100, 30);
-            this.DownButton.TabIndex = 2;
-            this.DownButton.Text = "下へ";
-            this.DownButton.UseVisualStyleBackColor = false;
-            //
-            // RemoveButton
-            //
-            this.RemoveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.RemoveButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.RemoveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RemoveButton.ForeColor = System.Drawing.Color.White;
-            this.RemoveButton.Location = new System.Drawing.Point(12, 120);
-            this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(100, 30);
-            this.RemoveButton.TabIndex = 3;
-            this.RemoveButton.Text = "削除(&D)";
-            this.RemoveButton.UseVisualStyleBackColor = false;
-            //
-            // ClearButton
-            //
-            this.ClearButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.ClearButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(49)))), ((int)(((byte)(49)))), ((int)(((byte)(49)))));
-            this.ClearButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ClearButton.ForeColor = System.Drawing.Color.White;
-            this.ClearButton.Location = new System.Drawing.Point(12, 156);
-            this.ClearButton.Name = "ClearButton";
-            this.ClearButton.Size = new System.Drawing.Size(100, 30);
-            this.ClearButton.TabIndex = 4;
-            this.ClearButton.Text = "すべて削除";
-            this.ClearButton.UseVisualStyleBackColor = false;
-            //
-            // FileListView
-            //
-            this.FileListView.AllowUserToAddRows = false;
-            this.FileListView.AllowUserToDeleteRows = false;
-            this.FileListView.AllowUserToResizeRows = false;
-            this.FileListView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.FileListView.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.FileListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.FileListView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
-            this.FileListView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.FileListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.FileListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FileListView.GridColor = System.Drawing.SystemColors.Control;
-            this.FileListView.Location = new System.Drawing.Point(0, 0);
-            this.FileListView.Margin = new System.Windows.Forms.Padding(0);
-            this.FileListView.Name = "FileListView";
-            this.FileListView.ReadOnly = true;
-            this.FileListView.RowHeadersVisible = false;
-            this.FileListView.RowTemplate.Height = 21;
-            this.FileListView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.FileListView.Size = new System.Drawing.Size(560, 215);
-            this.FileListView.TabIndex = 3;
-            //
-            // HeaderPanel
-            //
-            this.HeaderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(193)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.HeaderPanel.Controls.Add(this.TitleButton);
-            this.HeaderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HeaderPanel.Location = new System.Drawing.Point(0, 0);
-            this.HeaderPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.HeaderPanel.Name = "HeaderPanel";
-            this.HeaderPanel.Size = new System.Drawing.Size(684, 36);
-            this.HeaderPanel.TabIndex = 3;
-            //
-            // TitleButton
-            //
-            this.TitleButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TitleButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.TitleButton.Image = global::Cube.Pdf.Pages.Properties.Resources.HeaderTitle;
-            this.TitleButton.Location = new System.Drawing.Point(0, 0);
-            this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
-            this.TitleButton.Name = "TitleButton";
-            this.TitleButton.Size = new System.Drawing.Size(160, 36);
-            this.TitleButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.TitleButton.TabIndex = 0;
-            this.TitleButton.TabStop = false;
+            this.MainToolTip.AutoPopDelay = 5000;
+            this.MainToolTip.InitialDelay = 200;
+            this.MainToolTip.ReshowDelay = 2000;
             //
             // MainWindow
             //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.ClientSize = new System.Drawing.Size(684, 311);
-            this.Controls.Add(this.LayoutPanel);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.CancelButton = this.ExitButton;
+            resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.RootPanel);
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(300, 280);
             this.Name = "MainWindow";
-            this.Text = "CubePDF Page";
-            this.LayoutPanel.ResumeLayout(false);
-            this.FooterPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.MainBindingSource)).EndInit();
-            this.ContentsPanel.ResumeLayout(false);
-            this.ButtonsPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.FileListView)).EndInit();
+            this.RootPanel.ResumeLayout(false);
+            this.FilePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.MainGridView)).EndInit();
+            this.RightPanel.ResumeLayout(false);
             this.HeaderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TitleButton)).EndInit();
+            this.FooterPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel LayoutPanel;
-        private System.Windows.Forms.TableLayoutPanel ContentsPanel;
-        private System.Windows.Forms.FlowLayoutPanel FooterPanel;
-        private System.Windows.Forms.FlowLayoutPanel ButtonsPanel;
+        private System.Windows.Forms.TableLayoutPanel RootPanel;
+        private System.Windows.Forms.TableLayoutPanel FilePanel;
         private System.Windows.Forms.Panel HeaderPanel;
         private System.Windows.Forms.PictureBox TitleButton;
-        private Cube.Forms.Controls.Button FileButton;
-        private Cube.Forms.Controls.Button UpButton;
-        private Cube.Forms.Controls.Button DownButton;
-        private Cube.Forms.Controls.Button RemoveButton;
-        private Cube.Forms.Controls.Button ClearButton;
-        private Cube.Forms.Controls.Button MergeButton;
-        private Cube.Forms.Controls.Button SplitButton;
-        private Cube.Forms.Controls.Button ExitButton;
-        private FileListControl FileListView;
-        private System.Windows.Forms.BindingSource MainBindingSource;
+        private FileGridView MainGridView;
+        private System.Windows.Forms.TableLayoutPanel FooterPanel;
+        private Forms.Controls.Button ExitButton;
+        private Forms.Controls.Button SplitButton;
+        private Forms.Controls.Button MergeButton;
+        private System.Windows.Forms.TableLayoutPanel RightPanel;
+        private Forms.Controls.Button AddButton;
+        private Forms.Controls.Button UpButton;
+        private Forms.Controls.Button DownButton;
+        private Forms.Controls.Button RemoveButton;
+        private Forms.Controls.Button ClearButton;
+        private Forms.Controls.Button MetadataButton;
+        private System.Windows.Forms.ToolTip MainToolTip;
     }
 }
 

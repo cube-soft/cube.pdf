@@ -33,6 +33,10 @@ However, in principle, you are responsible for your own use. CubeSoft, Inc. prov
 
 Yes, you can save the CubePDF series installer on your internal server and redistribute it freely. However, CubePDF series is constantly being updated. If you want to redistribute it elsewhere, please make sure to check for the latest version as regularly as possible.
 
+### What is your support policy?
+
+The Cube series will remain supported until explicitly notified of the end of development. However, all vulnerabilities and other functionality fixes will be done in the form of version upgrades. Therefore, as a general rule, only the latest version of each product will be supported.
+
 ### Is the source code available to the public?
 
 Yes, you can get the source code of CubePDF series from [Cube.Pdf - GitHub](https://github.com/cube-soft/Cube.Pdf). Note that CubePDF Viewer has not been migrated yet, so please refer to [cubepdfviewer - GitHub](https://github.com/cube-soft/cubepdfviewer) for the source code of CubePDF Viewer.

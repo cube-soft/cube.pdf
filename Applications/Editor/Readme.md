@@ -119,6 +119,25 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2022-06-23 version 2.0.1
+    - Update PDFium to Chromium 102 compatible.
+    - Fix an issue that files were not inserted in the order specified in the "Insert at other position" dialog.
+* 2022-06-01 version 2.0.0
+    - Change recommended environment to .NET Framework 4.7 or later.
+    - Update PDFium to Chromium 102 compatible.
+    - Update iText7 to 7.2.2.
+    - Add settings for deleting duplicate resources.
+    - Add settings for bookmark information in the source PDF files.
+    - Add settings for displaying recently used PDF files.
+    - Add settings for the backup folder.
+    - Add settings for the temporary folder.
+    - Add function to insert PDF files at the end by Ctrl + Drag&Drop.
+    - Change the order of files to be added when the file name contains numbers.
+    - Remove splash window.
+* 2022-05-10 version 1.6.7
+    - Update PDFium to Chromium 101 compatible.
+* 2022-04-01 version 1.6.6
+    - Update PDFium to Chromium 100 compatible.
 * 2022-03-01 version 1.6.5
     - Update PDFium to Chromium 99 compatible.
 * 2022-02-07 version 1.6.4

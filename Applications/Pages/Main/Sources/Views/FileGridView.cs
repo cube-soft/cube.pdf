@@ -26,27 +26,27 @@ namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FileListControl
+    /// FileGridView
     ///
     /// <summary>
     /// Represents the collection view of PDF or image files to be combined.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileListControl : DataGridView
+    public class FileGridView : DataGridView
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// FileListControl
+        /// FileGridView
         ///
         /// <summary>
-        /// Initializes a new instance of the FileListControl class.
+        /// Initializes a new instance of the FileGridView class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public FileListControl()
+        public FileGridView()
         {
             AllowUserToAddRows          = false;
             AllowUserToDeleteRows       = false;
@@ -67,7 +67,23 @@ namespace Cube.Pdf.Pages
 
         #endregion
 
-        #region Implementations
+        #region Methods
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Refresh
+        ///
+        /// <summary>
+        /// Forces the control to invalidate its client area and immediately
+        /// redraw itself and any child controls.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public override void Refresh()
+        {
+            base.Refresh();
+            for (var i = 0; i < Columns.Count; ++i) Columns[i].HeaderText = GetColumnText(i);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -81,7 +97,15 @@ namespace Cube.Pdf.Pages
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
-            if (!DesignMode) InitializeColumns();
+            if (DesignMode) return;
+
+            Columns.Clear();
+
+            _ = Columns.Add(MakeColumn("Name",          GetColumnText(0), 3.00f, false));
+            _ = Columns.Add(MakeColumn("FullName",      GetColumnText(1), 1.50f, false));
+            _ = Columns.Add(MakeColumn("Count",         GetColumnText(2), 1.00f,  true));
+            _ = Columns.Add(MakeColumn("LastWriteTime", GetColumnText(3), 2.00f,  true));
+            _ = Columns.Add(MakeColumn("Length",        GetColumnText(4), 1.25f,  true));
         }
 
         /* ----------------------------------------------------------------- */
@@ -109,29 +133,13 @@ namespace Cube.Pdf.Pages
             finally { base.OnCellFormatting(e); }
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitializeColumns
-        ///
-        /// <summary>
-        /// Initializes the layout of columns.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void InitializeColumns()
-        {
-            Columns.Clear();
+        #endregion
 
-            _ = Columns.Add(CreateColumn("Name",          Properties.Resources.ColumnName,   3.00f, false));
-            _ = Columns.Add(CreateColumn("FullName",      Properties.Resources.ColumnType,   1.50f, false));
-            _ = Columns.Add(CreateColumn("Count",         Properties.Resources.ColumnPages,  1.00f,  true));
-            _ = Columns.Add(CreateColumn("LastWriteTime", Properties.Resources.ColumnDate,   2.00f,  true));
-            _ = Columns.Add(CreateColumn("Length",        Properties.Resources.ColumnLength, 1.25f,  true));
-        }
+        #region Implementations
 
         /* ----------------------------------------------------------------- */
         ///
-        /// CreateColumn
+        /// MakeColumn
         ///
         /// <summary>
         /// Creates a new instance of the DataGridViewColumn with the
@@ -139,7 +147,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DataGridViewColumn CreateColumn(string name, string text, float weight, bool right)
+        private DataGridViewColumn MakeColumn(string name, string text, float weight, bool right)
         {
             var dest = new DataGridViewColumn
             {
@@ -158,6 +166,25 @@ namespace Cube.Pdf.Pages
 
             return dest;
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetColumnText
+        ///
+        /// <summary>
+        /// Gets a header text of the specified column.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private string GetColumnText(int column) => column switch
+        {
+            0 => Properties.Resources.ColumnName,
+            1 => Properties.Resources.ColumnType,
+            2 => Properties.Resources.ColumnPages,
+            3 => Properties.Resources.ColumnDate,
+            4 => Properties.Resources.ColumnLength,
+            _ => "Unknown"
+        };
 
         #endregion
     }

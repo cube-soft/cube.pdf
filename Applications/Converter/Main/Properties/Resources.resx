@@ -58,6 +58,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrorDigest" xml:space="preserve">
+    <value>Message digest of the source file does not match.</value>
+  </data>
+  <data name="ErrorGhostscript" xml:space="preserve">
+    <value>Ghostscript error ({0:D})</value>
+  </data>
+  <data name="ErrorInvalidChars" xml:space="preserve">
+    <value>Path cannot contain any of the following characters</value>
+  </data>
+  <data name="ErrorMergePassword" xml:space="preserve">
+    <value>Set the owner password of the PDF file to be merged in the Security tab.</value>
+  </data>
+  <data name="ErrorOwnerPassword" xml:space="preserve">
+    <value>Owner password is empty or does not match the confirmation. Please check your password and confirmation again.</value>
+  </data>
+  <data name="ErrorUserPassword" xml:space="preserve">
+    <value>User password is empty or does not match the confirmation. Please check the user password or enable the "Use owner password" checkbox.</value>
+  </data>
   <data name="FilterAll" xml:space="preserve">
     <value>All files</value>
   </data>
@@ -152,26 +170,11 @@
   <data name="MenuTwoPageRight" xml:space="preserve">
     <value>Two page (right)</value>
   </data>
-  <data name="MessageDigest" xml:space="preserve">
-    <value>Message digest of the source file does not match.</value>
-  </data>
   <data name="MessageExists" xml:space="preserve">
     <value>{0} already exists.</value>
   </data>
-  <data name="MessageGhostscript" xml:space="preserve">
-    <value>Ghostscript error ({0:D})</value>
-  </data>
-  <data name="MessageInvalidChars" xml:space="preserve">
-    <value>Path cannot contain any of the following characters</value>
-  </data>
-  <data name="MessageLinearization" xml:space="preserve">
-    <value>Fast web view option is ignored when the password encryption is enabled.</value>
-  </data>
   <data name="MessageMergeHead" xml:space="preserve">
     <value>Do you want to merge at the beginning of the existing file?</value>
-  </data>
-  <data name="MessageMergePassword" xml:space="preserve">
-    <value>Set the owner password of the PDF file to be merged in the Security tab.</value>
   </data>
   <data name="MessageMergeTail" xml:space="preserve">
     <value>Do you want to merge at the end of the existing file?</value>
@@ -179,14 +182,8 @@
   <data name="MessageOverwrite" xml:space="preserve">
     <value>Do you want to overwrite the file?</value>
   </data>
-  <data name="MessagePassword" xml:space="preserve">
-    <value>Password is empty or does not match the confirmation. Please check your password and confirmation again.</value>
-  </data>
   <data name="MessageSave" xml:space="preserve">
     <value>Some value is entered in the Title, Author, Subject, or Keywords field. Do you want to save the settings?</value>
-  </data>
-  <data name="MessageSecurity" xml:space="preserve">
-    <value>When you share user password with owner password and open with the password, all permissions are allowed.</value>
   </data>
   <data name="TitleError" xml:space="preserve">
     <value>CubePDF error</value>

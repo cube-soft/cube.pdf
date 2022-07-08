@@ -62,7 +62,7 @@ namespace Cube.Pdf.Tests.Itext
             var src  = GetSource(filename);
             var dest = Path(Args(filename));
 
-            using (var w = new DocumentWriter(new() { Smart = true }))
+            using (var w = new DocumentWriter())
             using (var r = new DocumentReader(src, password))
             {
                 w.Set(r.Metadata);
@@ -91,7 +91,7 @@ namespace Cube.Pdf.Tests.Itext
 
             var op = new OpenOption { SaveMemory = false };
             var r  = new DocumentReader(dest, password, op);
-            using (var w = new DocumentWriter(new() { Smart = true }))
+            using (var w = new DocumentWriter())
             {
                 w.Set(r.Metadata);
                 w.Set(r.Encryption);
@@ -121,7 +121,7 @@ namespace Cube.Pdf.Tests.Itext
             var r1   = new DocumentReader(GetSource(f1), "", op);
             var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
 
-            using (var w = new DocumentWriter(new() { Smart = true }))
+            using (var w = new DocumentWriter())
             {
                 foreach (var p in r0.Pages) w.Add(Rotate(p, degree), r0);
                 w.Add(Rotate(r1.Pages, degree), r1);
@@ -184,7 +184,7 @@ namespace Cube.Pdf.Tests.Itext
             var r1   = new DocumentReader(GetSource("SampleRotation.pdf"), "", op);
             var dest = Path(Args(r0.File.BaseName, r1.File.BaseName));
 
-            using (var w = new DocumentWriter(new() { Smart = true }))
+            using (var w = new DocumentWriter())
             {
                 w.Add(r0.Pages.Take(5), r0);
                 w.Add(r1.Pages.Skip(1).Take(1), r1); // insert

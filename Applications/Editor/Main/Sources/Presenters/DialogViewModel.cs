@@ -96,8 +96,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement Cancel => Get(() => new BindableElement(
             () => Properties.Resources.MenuCancel,
+            new DelegateCommand(() => Send(new CloseMessage())),
             GetDispatcher(false)
-        ) { Command = new DelegateCommand(() => Send(new CloseMessage())) });
+        ));
 
         #endregion
 

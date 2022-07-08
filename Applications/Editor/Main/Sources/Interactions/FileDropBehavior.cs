@@ -16,91 +16,55 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
-using System.Reflection;
-using System.Windows.Forms;
+using System.Windows;
+using Cube.Xui.Behaviors;
 
 namespace Cube.Pdf.Editor
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// MainWindow
+    /// FileDropBehavior
     ///
     /// <summary>
-    /// Represents the splash window of the CubePDF Utility.
+    /// Represents the behavior when files are dropped.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainWindow : Form
+    public class FileDropBehavior : CommandBehavior<Window>
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// MainWindow
-        ///
-        /// <summary>
-        /// Initializes a new instance of the MainWindow class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            var count = 0;
-
-            VersionLabel.Text = GetVersion();
-            RefreshTimer.Tick += (s, e) =>
-            {
-                if (count++ >= 60) Close();
-                else MessageLabel.Text += ".";
-            };
-
-            RefreshTimer.Start();
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateParams
-        ///
-        /// <summary>
-        /// Gets the value of initialzing information.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                var cp = base.CreateParams;
-                cp.ClassStyle |= 0x00020000;
-                return cp;
-            }
-        }
-
-        #endregion
-
         #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Error
+        /// OnAttached
         ///
         /// <summary>
-        /// Shows the error message and close the window.
+        /// Called after the action is attached to an AssociatedObject.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Error(Exception src)
+        protected override void OnAttached()
         {
-            MessageBox.Show($"{src.Message} ({src.GetType().Name})",
-                "CubePDF Utility", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Close();
+            base.OnAttached();
+            AssociatedObject.PreviewDragOver += WhenDragOver;
+            AssociatedObject.PreviewDrop += WhenDrop;
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// OnDetaching
+        ///
+        /// <summary>
+        /// Called when the action is being detached from its
+        /// AssociatedObject, but before it has actually occurred.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        protected override void OnDetaching()
+        {
+            AssociatedObject.PreviewDragOver -= WhenDragOver;
+            AssociatedObject.PreviewDrop -= WhenDrop;
+            base.OnDetaching();
         }
 
         #endregion
@@ -109,19 +73,32 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetVersion
+        /// WhenDrop
         ///
         /// <summary>
-        /// Get the version string.
+        /// Occurs when the PreviewDrop event is fired.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetVersion()
+        private void WhenDrop(object s, DragEventArgs e)
         {
-            var app  = Assembly.GetExecutingAssembly().GetName().Version;
-            var fw   = Environment.Version;
-            var arch = (IntPtr.Size == 4) ? "x86" : "x64";
-            return $"Version {app} ({arch}) Microsoft {fw}";
+            e.Handled = Command?.CanExecute(e) ?? false;
+            if (e.Handled) Command.Execute(e);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenDragOver
+        ///
+        /// <summary>
+        /// Occurs when the PreviewDragOver event is fired.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenDragOver(object s, DragEventArgs e)
+        {
+            e.Handled = Command?.CanExecute(e) ?? false;
+            e.Effects = e.Handled ? DragDropEffects.Copy : DragDropEffects.None;
         }
 
         #endregion

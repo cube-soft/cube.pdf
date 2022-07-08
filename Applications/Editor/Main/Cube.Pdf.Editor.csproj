@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.6.5</Version>
+        <Version>2.0.1</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePdfUtility</Product>
@@ -9,7 +9,7 @@
         <AssemblyName>CubePdfUtility</AssemblyName>
         <AssemblyTitle>CubePDF Utility</AssemblyTitle>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
         <UseWpf>true</UseWpf>
         <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64</Platforms>
@@ -30,10 +30,10 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Cube.Forms" Version="6.0.0" />
-        <PackageReference Include="Cube.Xui" Version="6.0.0" />
-        <PackageReference Include="Fluent.Ribbon" Version="8.0.3" />
-        <PackageReference Include="gong-wpf-dragdrop" Version="2.4.3" />
+        <PackageReference Include="Cube.Forms" Version="7.0.0" />
+        <PackageReference Include="Cube.Xui" Version="7.0.0" />
+        <PackageReference Include="Fluent.Ribbon" Version="9.0.3" />
+        <PackageReference Include="gong-wpf-dragdrop" Version="3.1.1" />
     </ItemGroup>
     <ItemGroup>
         <ApplicationDefinition Update="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />

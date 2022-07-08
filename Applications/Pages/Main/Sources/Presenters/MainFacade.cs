@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Threading;
 using Cube.FileSystem;
 using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
@@ -52,13 +51,12 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /// <param name="src">User settings.</param>
-        /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public MainFacade(SettingFolder src, SynchronizationContext context) :
-            base(new ContextDispatcher(context, false))
+        public MainFacade(SettingFolder src)
         {
             Settings = src;
+            Reset();
             _inner.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
         }
 
@@ -108,12 +106,18 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Metadata Metadata { get; } = new()
-        {
-            Version  = new(1, 7),
-            Creator  = "CubePDF Page",
-            Producer = "CubePDF Page",
-        };
+        public Metadata Metadata { get; private set; }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Encryption
+        ///
+        /// <summary>
+        /// Gets the PDF encryption settings.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public Encryption Encryption { get; private set; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -171,7 +175,7 @@ namespace Cube.Pdf.Pages
             {
                 using (var w = Make(new DocumentWriter(op))) w.Save(tmp);
                 Io.Move(tmp, dest, true);
-                _inner.Clear();
+                Reset();
             }
             finally { GetType().LogWarn(() => Io.Delete(tmp)); }
         });
@@ -191,7 +195,7 @@ namespace Cube.Pdf.Pages
         {
             var op = Settings.ToSaveOption();
             using (var w = Make(new DocumentSplitter(op))) w.Save(directory);
-            _inner.Clear();
+            Reset();
         });
 
         /* ----------------------------------------------------------------- */
@@ -263,14 +267,24 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Clear
+        /// Reset
         ///
         /// <summary>
-        /// Clears the added files.
+        /// Resets the settings of files, metada, and encryption.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear() => Lock(_inner.Clear);
+        public void Reset() => Lock(() =>
+        {
+            _inner.Clear();
+            Encryption = new();
+            Metadata   = new()
+            {
+                Version  = new(1, 7),
+                Creator  = "CubePDF Page",
+                Producer = "CubePDF Page",
+            };
+        });
 
         #endregion
 
@@ -314,7 +328,15 @@ namespace Cube.Pdf.Pages
                 }
                 else dest.Add(new ImagePageCollection(f.FullName));
             }
+
+            var v = Metadata.Version.Minor;
+            Encryption.Method = v >= 7 ? EncryptionMethod.Aes256 :
+                                v >= 6 ? EncryptionMethod.Aes128 :
+                                v >= 4 ? EncryptionMethod.Standard128 :
+                                         EncryptionMethod.Standard40;
             dest.Set(Metadata);
+            dest.Set(Encryption);
+
             return dest;
         }
 

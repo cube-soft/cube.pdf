@@ -19,9 +19,10 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using Cube.Forms;
 using Cube.Forms.Behaviors;
+using Cube.Forms.Binding;
 using Cube.Mixin.Forms;
-using Cube.Mixin.Forms.Controls;
 
 namespace Cube.Pdf.Converter
 {
@@ -34,7 +35,7 @@ namespace Cube.Pdf.Converter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class MainWindow : Cube.Forms.Window
+    public partial class MainWindow : Window
     {
         #region Constructors
 
@@ -47,25 +48,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            _tips = new ToolTip[]
-            {
-                new() { AutoPopDelay = 1000, InitialDelay = 100, ReshowDelay = 100, },
-                new() { AutoPopDelay = 1000, InitialDelay = 100, ReshowDelay = 100, },
-            };
-
-            Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
-            Behaviors.Add(new PathLintBehavior(SourceTextBox, _tips[0]));
-            Behaviors.Add(new PathLintBehavior(DestinationTextBox, _tips[0]));
-            Behaviors.Add(new PathLintBehavior(UserProgramTextBox, _tips[0]));
-            Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
-            Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
-
-            SettingPanel.ApplyButton = ApplyButton;
-        }
+        public MainWindow() => InitializeComponent();
 
         #endregion
 
@@ -84,13 +67,13 @@ namespace Cube.Pdf.Converter
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool Busy
         {
-            get => ConvertProgressBar.Visible;
+            get => MainProgressBar.Visible;
             set
             {
-                SettingTabControl.Enabled  = !value;
-                ApplyButton.Visible        = !value;
-                ConvertButton.Enabled      = !value;
-                ConvertProgressBar.Visible =  value;
+                SettingTabControl.Enabled = !value;
+                SettingButton.Visible     = !value;
+                ExecButton.Enabled        = !value;
+                MainProgressBar.Visible   =  value;
                 Cursor = value ? Cursors.WaitCursor : Cursors.Default;
             }
         }
@@ -112,8 +95,18 @@ namespace Cube.Pdf.Converter
         {
             base.OnShown(e);
             Activate();
+
             TopMost = true;
             TopMost = false;
+
+            static void scroll(TextBox s) {
+                s.SelectionStart  = s.Text?.Length ?? 0;
+                s.SelectionLength = 0;
+            }
+
+            scroll(DestinationTextBox);
+            scroll(SourceTextBox);
+            scroll(UserProgramTextBox);
         }
 
         /* ----------------------------------------------------------------- */
@@ -133,11 +126,17 @@ namespace Cube.Pdf.Converter
 
             BindCore(vm);
 
-            Behaviors.Add(new ClickEventBehavior(ConvertButton, vm.Convert));
+            Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Convert));
             Behaviors.Add(new ClickEventBehavior(SourceButton, vm.SelectSource));
             Behaviors.Add(new ClickEventBehavior(DestinationButton, vm.SelectDestination));
             Behaviors.Add(new ClickEventBehavior(UserProgramButton, vm.SelectUserProgram));
-            Behaviors.Add(new EventBehavior(SettingPanel, nameof(SettingPanel.Apply), vm.Save));
+            Behaviors.Add(new ClickEventBehavior(SettingButton, vm.Save));
+            Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
+            Behaviors.Add(new PathLintBehavior(SourceTextBox, PathLintToolTip));
+            Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathLintToolTip));
+            Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathLintToolTip));
+            Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
+            Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
             Behaviors.Add(new EventBehavior(DestinationTextBox, nameof(LostFocus), vm.ChangeExtension));
             Behaviors.Add(new CloseBehavior(this, vm));
             Behaviors.Add(new DialogBehavior(vm));
@@ -173,31 +172,31 @@ namespace Cube.Pdf.Converter
             b0.Bind(nameof(s0.Version), VersionPanel, nameof(VersionPanel.Version), true);
             b0.Bind(nameof(s0.Uri),     VersionPanel, nameof(VersionPanel.Uri), true);
 
-            // Settings in General tab
-            var s1 = vm.General;
+            // General and Settings tab
+            var s1 = vm.Settings;
             var b1 = Behaviors.Hook(new BindingSource(s1, ""));
-            b1.Bind(nameof(s1.Format),              FormatComboBox,       nameof(ComboBox.SelectedValue));
-            b1.Bind(nameof(s1.IsPdf),               PdfVersionComboBox,   nameof(Enabled), true);
-            b1.Bind(nameof(s1.Resolution),          ResolutionNumeric,    nameof(NumericUpDown.Value));
-            b1.Bind(nameof(s1.IsPortrait),          PortraitRadioButton,  nameof(RadioButton.Checked));
-            b1.Bind(nameof(s1.IsLandscape),         LandscapeRadioButton, nameof(RadioButton.Checked));
-            b1.Bind(nameof(s1.IsAutoOrientation),   AutoRadioButton,      nameof(RadioButton.Checked));
-            b1.Bind(nameof(s1.Destination),         DestinationTextBox,   nameof(TextBox.Text));
-            b1.Bind(nameof(s1.SaveOption),          SaveOptionComboBox,   nameof(ComboBox.SelectedValue));
-            b1.Bind(nameof(s1.PostProcess),         PostProcessComboBox,  nameof(ComboBox.SelectedValue));
-            b1.Bind(nameof(s1.UserProgramEditable), UserProgramPanel,     nameof(Enabled), true);
-            b1.Bind(nameof(s1.UserProgram),         UserProgramTextBox,   nameof(TextBox.Text));
-            b1.Bind(nameof(s1.SourceVisible),       SourceLabel,          nameof(Visible), true);
-            b1.Bind(nameof(s1.SourceVisible),       SourcePanel,          nameof(Visible), true);
-            b1.Bind(nameof(s1.SourceEditable),      SourcePanel,          nameof(Enabled), true);
-            b1.Bind(nameof(s1.Source),              SourceTextBox,        nameof(TextBox.Text));
-
-            // Settings in Others tab
-            b1.Bind(nameof(s1.Grayscale),     GrayscaleCheckBox,     nameof(CheckBox.Checked));
-            b1.Bind(nameof(s1.ImageFilter),   JpegCheckBox,          nameof(CheckBox.Checked));
-            b1.Bind(nameof(s1.Linearization), LinearizationCheckBox, nameof(CheckBox.Checked));
-            b1.Bind(nameof(s1.CheckUpdate),   UpdateCheckBox,        nameof(CheckBox.Checked));
-            b1.Bind(nameof(s1.Language),      LanguageComboBox,      nameof(ComboBox.SelectedValue));
+            b1.Bind(nameof(s1.Destination),         DestinationTextBox,    nameof(TextBox.Text));
+            b1.Bind(nameof(s1.SaveOption),          SaveOptionComboBox,    nameof(ComboBox.SelectedValue));
+            b1.Bind(nameof(s1.Format),              FormatComboBox,        nameof(ComboBox.SelectedValue));
+            b1.Bind(nameof(s1.IsPdf),               PdfVersionComboBox,    nameof(Enabled), true);
+            b1.Bind(nameof(s1.Resolution),          ResolutionNumeric,     nameof(NumericUpDown.Value));
+            b1.Bind(nameof(s1.IsPortrait),          PortraitRadioButton,   nameof(RadioButton.Checked));
+            b1.Bind(nameof(s1.IsLandscape),         LandscapeRadioButton,  nameof(RadioButton.Checked));
+            b1.Bind(nameof(s1.IsAutoOrientation),   AutoRadioButton,       nameof(RadioButton.Checked));
+            b1.Bind(nameof(s1.Grayscale),           GrayscaleCheckBox,     nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.ImageFilter),         JpegCheckBox,          nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.IsPdf),               JpegCheckBox,          nameof(Enabled), true);
+            b1.Bind(nameof(s1.Linearization),       LinearizationCheckBox, nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.IsPdf),               LinearizationCheckBox, nameof(Enabled), true);
+            b1.Bind(nameof(s1.PostProcess),         PostProcessComboBox,   nameof(ComboBox.SelectedValue));
+            b1.Bind(nameof(s1.IsUserProgram),       UserProgramPanel,      nameof(Enabled), true);
+            b1.Bind(nameof(s1.UserProgram),         UserProgramTextBox,    nameof(TextBox.Text));
+            b1.Bind(nameof(s1.SourceVisible),       SourceLabel,           nameof(Visible), true);
+            b1.Bind(nameof(s1.SourceVisible),       SourcePanel,           nameof(Visible), true);
+            b1.Bind(nameof(s1.SourceEditable),      SourcePanel,           nameof(Enabled), true);
+            b1.Bind(nameof(s1.Source),              SourceTextBox,         nameof(TextBox.Text));
+            b1.Bind(nameof(s1.CheckUpdate),         UpdateCheckBox,        nameof(CheckBox.Checked));
+            b1.Bind(nameof(s1.Language),            LanguageComboBox,      nameof(ComboBox.SelectedValue));
 
             // Metadata
             var s2 = vm.Metadata;
@@ -213,21 +212,23 @@ namespace Cube.Pdf.Converter
             // Encryption
             var s3 = vm.Encryption;
             var b3 = Behaviors.Hook(new BindingSource(s3, ""));
-            b3.Bind(nameof(s3.Enabled),            EncryptionCheckBox,    nameof(CheckBox.Checked));
-            b3.Bind(nameof(s3.Enabled),            EncryptionPanel,       nameof(Enabled), true);
-            b3.Bind(nameof(s3.OwnerPassword),      OwnerPasswordTextBox,  nameof(TextBox.Text));
-            b3.Bind(nameof(s3.OwnerConfirm),       OwnerConfirmTextBox,   nameof(TextBox.Text));
-            b3.Bind(nameof(s3.OpenWithPassword),   UserPasswordCheckBox,  nameof(CheckBox.Checked));
-            b3.Bind(nameof(s3.OpenWithPassword),   SharePasswordCheckBox, nameof(Enabled), true);
-            b3.Bind(nameof(s3.UserPassword),       UserPasswordTextBox,   nameof(TextBox.Text));
-            b3.Bind(nameof(s3.UserConfirm),        UserConfirmTextBox,    nameof(TextBox.Text));
-            b3.Bind(nameof(s3.SharePassword),      SharePasswordCheckBox, nameof(CheckBox.Checked));
-            b3.Bind(nameof(s3.DividePassword),     UserPasswordPanel,     nameof(Enabled), true);
-            b3.Bind(nameof(s3.PermissionEditable), PermissionPanel,       nameof(Enabled), true);
-            b3.Bind(nameof(s3.AllowPrint),         AllowPrintCheckBox,    nameof(CheckBox.Checked));
-            b3.Bind(nameof(s3.AllowCopy),          AllowCopyCheckBox,     nameof(CheckBox.Checked));
-            b3.Bind(nameof(s3.AllowForm),          AllowFormCheckBox,     nameof(CheckBox.Checked));
-            b3.Bind(nameof(s3.AllowModify),        AllowModifyCheckBox,   nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.Enabled),            EncryptionCheckBox,         nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.Enabled),            EncryptionPanel,            nameof(Enabled), true);
+            b3.Bind(nameof(s3.OwnerPassword),      OwnerPasswordTextBox,       nameof(TextBox.Text));
+            b3.Bind(nameof(s3.OwnerConfirm),       OwnerConfirmTextBox,        nameof(TextBox.Text));
+            b3.Bind(nameof(s3.OpenWithPassword),   UserPasswordCheckBox,       nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.OpenWithPassword),   SharePasswordCheckBox,      nameof(Enabled), true);
+            b3.Bind(nameof(s3.UserRequired),       UserPasswordPanel,          nameof(Enabled), true);
+            b3.Bind(nameof(s3.UserPassword),       UserPasswordTextBox,        nameof(TextBox.Text));
+            b3.Bind(nameof(s3.UserConfirm),        UserConfirmTextBox,         nameof(TextBox.Text));
+            b3.Bind(nameof(s3.SharePassword),      SharePasswordCheckBox,      nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.Permissible),        PermissionPanel,            nameof(Enabled), true);
+            b3.Bind(nameof(s3.AllowPrint),         AllowPrintCheckBox,         nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.AllowCopy),          AllowCopyCheckBox,          nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.AllowModify),        AllowModifyCheckBox,        nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.AllowAccessibility), AllowAccessibilityCheckBox, nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.AllowForm),          AllowFormCheckBox,          nameof(CheckBox.Checked));
+            b3.Bind(nameof(s3.AllowAnnotation),    AllowAnnotationCheckBox,    nameof(CheckBox.Checked));
 
             // Text (i18n)
             LanguageComboBox.Bind(Resource.Languages);
@@ -245,15 +246,11 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void BindText(MainViewModel vm)
         {
-            var lang = vm.General.Language;
-            this.UpdateCulture(lang);
-            Resource.UpdateCulture(lang);
+            this.UpdateCulture(vm.Settings.Language);
+            Resource.UpdateCulture(vm.Settings.Language);
 
             Text = vm.Title;
-
-            _tips[0].ToolTipTitle = Properties.Resources.MessageInvalidChars;
-            _tips[1].SetToolTip(SharePasswordCheckBox, Properties.Resources.MessageSecurity.WordWrap(40));
-            _tips[1].SetToolTip(LinearizationCheckBox, Properties.Resources.MessageLinearization.WordWrap(40));
+            PathLintToolTip.ToolTipTitle = Properties.Resources.ErrorInvalidChars;
 
             FormatComboBox.Bind(Resource.Formats);
             PdfVersionComboBox.Bind(Resource.PdfVersions);
@@ -262,10 +259,6 @@ namespace Cube.Pdf.Converter
             PostProcessComboBox.Bind(Resource.PostProcesses);
         }
 
-        #endregion
-
-        #region Fields
-        private readonly ToolTip[] _tips;
         #endregion
     }
 }

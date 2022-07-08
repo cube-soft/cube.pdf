@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.RootPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.SettingPanel = new Cube.Forms.Controls.SettingControl();
             this.SettingTabControl = new System.Windows.Forms.TabControl();
             this.GeneralTabPage = new System.Windows.Forms.TabPage();
             this.GeneralPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.SaveOptionComboBox = new System.Windows.Forms.ComboBox();
+            this.LinearizationCheckBox = new System.Windows.Forms.CheckBox();
+            this.JpegCheckBox = new System.Windows.Forms.CheckBox();
+            this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
+            this.OptionLabel = new System.Windows.Forms.Label();
             this.ResolutionNumeric = new System.Windows.Forms.NumericUpDown();
             this.PostProcessComboBox = new System.Windows.Forms.ComboBox();
             this.UserProgramPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -53,7 +58,6 @@
             this.ResolutionLabel = new System.Windows.Forms.Label();
             this.FormatLabel = new System.Windows.Forms.Label();
             this.DestinationPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.SaveOptionComboBox = new System.Windows.Forms.ComboBox();
             this.DestinationButton = new System.Windows.Forms.Button();
             this.DestinationTextBox = new System.Windows.Forms.TextBox();
             this.FormatPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -62,11 +66,11 @@
             this.DocumentPage = new System.Windows.Forms.TabPage();
             this.DocumentPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ViewOptionComboBox = new System.Windows.Forms.ComboBox();
-            this.ViewerPreferencesLabel = new System.Windows.Forms.Label();
+            this.ViewerOptionLabel = new System.Windows.Forms.Label();
             this.CreatorTextBox = new System.Windows.Forms.TextBox();
             this.CreatorLabel = new System.Windows.Forms.Label();
             this.KeywordsTextBox = new System.Windows.Forms.TextBox();
-            this.KeywordsLabel = new System.Windows.Forms.Label();
+            this.KeywordLabel = new System.Windows.Forms.Label();
             this.SubjectTextBox = new System.Windows.Forms.TextBox();
             this.SubjectLabel = new System.Windows.Forms.Label();
             this.AuthorTextBox = new System.Windows.Forms.TextBox();
@@ -91,30 +95,28 @@
             this.UserConfirmLabel = new System.Windows.Forms.Label();
             this.UserPasswordLabel = new System.Windows.Forms.Label();
             this.PermissionPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.AllowAnnotationCheckBox = new System.Windows.Forms.CheckBox();
+            this.AllowAccessibilityCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowModifyCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowFormCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowCopyCheckBox = new System.Windows.Forms.CheckBox();
             this.AllowPrintCheckBox = new System.Windows.Forms.CheckBox();
-            this.OthersTabPage = new System.Windows.Forms.TabPage();
-            this.OthersPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.OtherTabPage = new System.Windows.Forms.TabPage();
+            this.OtherPanel = new System.Windows.Forms.TableLayoutPanel();
             this.LanguageLabel = new System.Windows.Forms.Label();
-            this.GrayscaleCheckBox = new System.Windows.Forms.CheckBox();
-            this.OptionsLabel = new System.Windows.Forms.Label();
-            this.JpegCheckBox = new System.Windows.Forms.CheckBox();
-            this.LinearizationCheckBox = new System.Windows.Forms.CheckBox();
             this.UpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.LanguageComboBox = new System.Windows.Forms.ComboBox();
             this.AboutLabel = new System.Windows.Forms.Label();
             this.VersionPanel = new Cube.Forms.Controls.VersionControl();
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.ToolsPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.ConvertProgressBar = new System.Windows.Forms.ProgressBar();
-            this.ApplyButton = new System.Windows.Forms.Button();
-            this.ConvertButton = new System.Windows.Forms.Button();
+            this.ToolPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.MainProgressBar = new System.Windows.Forms.ProgressBar();
+            this.SettingButton = new System.Windows.Forms.Button();
+            this.ExecButton = new System.Windows.Forms.Button();
             this.ExitButton = new System.Windows.Forms.Button();
             this.HeaderPictureBox = new System.Windows.Forms.PictureBox();
+            this.PathLintToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.RootPanel.SuspendLayout();
-            this.SettingPanel.SuspendLayout();
             this.SettingTabControl.SuspendLayout();
             this.GeneralTabPage.SuspendLayout();
             this.GeneralPanel.SuspendLayout();
@@ -132,33 +134,27 @@
             this.OperationPanel.SuspendLayout();
             this.UserPasswordPanel.SuspendLayout();
             this.PermissionPanel.SuspendLayout();
-            this.OthersTabPage.SuspendLayout();
-            this.OthersPanel.SuspendLayout();
+            this.OtherTabPage.SuspendLayout();
+            this.OtherPanel.SuspendLayout();
             this.FooterPanel.SuspendLayout();
-            this.ToolsPanel.SuspendLayout();
+            this.ToolPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).BeginInit();
             this.SuspendLayout();
             //
             // RootPanel
             //
             resources.ApplyResources(this.RootPanel, "RootPanel");
-            this.RootPanel.Controls.Add(this.SettingPanel, 0, 1);
-            this.RootPanel.Controls.Add(this.FooterPanel, 0, 2);
+            this.RootPanel.Controls.Add(this.SettingTabControl, 1, 2);
+            this.RootPanel.Controls.Add(this.FooterPanel, 1, 3);
             this.RootPanel.Controls.Add(this.HeaderPictureBox, 0, 0);
             this.RootPanel.Name = "RootPanel";
-            //
-            // SettingPanel
-            //
-            this.SettingPanel.Controls.Add(this.SettingTabControl);
-            resources.ApplyResources(this.SettingPanel, "SettingPanel");
-            this.SettingPanel.Name = "SettingPanel";
             //
             // SettingTabControl
             //
             this.SettingTabControl.Controls.Add(this.GeneralTabPage);
             this.SettingTabControl.Controls.Add(this.DocumentPage);
             this.SettingTabControl.Controls.Add(this.EncryptionTabPage);
-            this.SettingTabControl.Controls.Add(this.OthersTabPage);
+            this.SettingTabControl.Controls.Add(this.OtherTabPage);
             resources.ApplyResources(this.SettingTabControl, "SettingTabControl");
             this.SettingTabControl.Name = "SettingTabControl";
             this.SettingTabControl.SelectedIndex = 0;
@@ -174,20 +170,55 @@
             // GeneralPanel
             //
             resources.ApplyResources(this.GeneralPanel, "GeneralPanel");
-            this.GeneralPanel.Controls.Add(this.ResolutionNumeric, 1, 1);
-            this.GeneralPanel.Controls.Add(this.PostProcessComboBox, 1, 4);
-            this.GeneralPanel.Controls.Add(this.UserProgramPanel, 1, 5);
-            this.GeneralPanel.Controls.Add(this.OrientationPanel, 1, 2);
-            this.GeneralPanel.Controls.Add(this.OrientationLabel, 0, 2);
-            this.GeneralPanel.Controls.Add(this.SourcePanel, 1, 6);
-            this.GeneralPanel.Controls.Add(this.SourceLabel, 0, 6);
-            this.GeneralPanel.Controls.Add(this.PostProcessLabel, 0, 4);
-            this.GeneralPanel.Controls.Add(this.DestinationLabel, 0, 3);
-            this.GeneralPanel.Controls.Add(this.ResolutionLabel, 0, 1);
-            this.GeneralPanel.Controls.Add(this.FormatLabel, 0, 0);
-            this.GeneralPanel.Controls.Add(this.DestinationPanel, 1, 3);
-            this.GeneralPanel.Controls.Add(this.FormatPanel, 1, 0);
+            this.GeneralPanel.Controls.Add(this.SaveOptionComboBox, 2, 2);
+            this.GeneralPanel.Controls.Add(this.LinearizationCheckBox, 2, 8);
+            this.GeneralPanel.Controls.Add(this.JpegCheckBox, 2, 7);
+            this.GeneralPanel.Controls.Add(this.GrayscaleCheckBox, 2, 6);
+            this.GeneralPanel.Controls.Add(this.OptionLabel, 1, 6);
+            this.GeneralPanel.Controls.Add(this.ResolutionNumeric, 2, 4);
+            this.GeneralPanel.Controls.Add(this.PostProcessComboBox, 2, 9);
+            this.GeneralPanel.Controls.Add(this.UserProgramPanel, 2, 10);
+            this.GeneralPanel.Controls.Add(this.OrientationPanel, 2, 5);
+            this.GeneralPanel.Controls.Add(this.OrientationLabel, 1, 5);
+            this.GeneralPanel.Controls.Add(this.SourcePanel, 2, 11);
+            this.GeneralPanel.Controls.Add(this.SourceLabel, 1, 11);
+            this.GeneralPanel.Controls.Add(this.PostProcessLabel, 1, 9);
+            this.GeneralPanel.Controls.Add(this.DestinationLabel, 1, 1);
+            this.GeneralPanel.Controls.Add(this.ResolutionLabel, 1, 4);
+            this.GeneralPanel.Controls.Add(this.FormatLabel, 1, 3);
+            this.GeneralPanel.Controls.Add(this.DestinationPanel, 2, 1);
+            this.GeneralPanel.Controls.Add(this.FormatPanel, 2, 3);
             this.GeneralPanel.Name = "GeneralPanel";
+            //
+            // SaveOptionComboBox
+            //
+            resources.ApplyResources(this.SaveOptionComboBox, "SaveOptionComboBox");
+            this.SaveOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SaveOptionComboBox.FormattingEnabled = true;
+            this.SaveOptionComboBox.Name = "SaveOptionComboBox";
+            //
+            // LinearizationCheckBox
+            //
+            resources.ApplyResources(this.LinearizationCheckBox, "LinearizationCheckBox");
+            this.LinearizationCheckBox.Name = "LinearizationCheckBox";
+            this.LinearizationCheckBox.UseVisualStyleBackColor = true;
+            //
+            // JpegCheckBox
+            //
+            resources.ApplyResources(this.JpegCheckBox, "JpegCheckBox");
+            this.JpegCheckBox.Name = "JpegCheckBox";
+            this.JpegCheckBox.UseVisualStyleBackColor = true;
+            //
+            // GrayscaleCheckBox
+            //
+            resources.ApplyResources(this.GrayscaleCheckBox, "GrayscaleCheckBox");
+            this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
+            this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
+            //
+            // OptionLabel
+            //
+            resources.ApplyResources(this.OptionLabel, "OptionLabel");
+            this.OptionLabel.Name = "OptionLabel";
             //
             // ResolutionNumeric
             //
@@ -319,17 +350,9 @@
             // DestinationPanel
             //
             resources.ApplyResources(this.DestinationPanel, "DestinationPanel");
-            this.DestinationPanel.Controls.Add(this.SaveOptionComboBox, 2, 0);
             this.DestinationPanel.Controls.Add(this.DestinationButton, 1, 0);
             this.DestinationPanel.Controls.Add(this.DestinationTextBox, 0, 0);
             this.DestinationPanel.Name = "DestinationPanel";
-            //
-            // SaveOptionComboBox
-            //
-            resources.ApplyResources(this.SaveOptionComboBox, "SaveOptionComboBox");
-            this.SaveOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SaveOptionComboBox.FormattingEnabled = true;
-            this.SaveOptionComboBox.Name = "SaveOptionComboBox";
             //
             // DestinationButton
             //
@@ -373,18 +396,18 @@
             // DocumentPanel
             //
             resources.ApplyResources(this.DocumentPanel, "DocumentPanel");
-            this.DocumentPanel.Controls.Add(this.ViewOptionComboBox, 1, 5);
-            this.DocumentPanel.Controls.Add(this.ViewerPreferencesLabel, 0, 5);
-            this.DocumentPanel.Controls.Add(this.CreatorTextBox, 1, 4);
-            this.DocumentPanel.Controls.Add(this.CreatorLabel, 0, 4);
-            this.DocumentPanel.Controls.Add(this.KeywordsTextBox, 1, 3);
-            this.DocumentPanel.Controls.Add(this.KeywordsLabel, 0, 3);
-            this.DocumentPanel.Controls.Add(this.SubjectTextBox, 1, 2);
-            this.DocumentPanel.Controls.Add(this.SubjectLabel, 0, 2);
-            this.DocumentPanel.Controls.Add(this.AuthorTextBox, 1, 1);
-            this.DocumentPanel.Controls.Add(this.AuthorLabel, 0, 1);
-            this.DocumentPanel.Controls.Add(this.TitleTextBox, 1, 0);
-            this.DocumentPanel.Controls.Add(this.TitleLabel, 0, 0);
+            this.DocumentPanel.Controls.Add(this.ViewOptionComboBox, 2, 6);
+            this.DocumentPanel.Controls.Add(this.ViewerOptionLabel, 1, 6);
+            this.DocumentPanel.Controls.Add(this.CreatorTextBox, 2, 5);
+            this.DocumentPanel.Controls.Add(this.CreatorLabel, 1, 5);
+            this.DocumentPanel.Controls.Add(this.KeywordsTextBox, 2, 4);
+            this.DocumentPanel.Controls.Add(this.KeywordLabel, 1, 4);
+            this.DocumentPanel.Controls.Add(this.SubjectTextBox, 2, 3);
+            this.DocumentPanel.Controls.Add(this.SubjectLabel, 1, 3);
+            this.DocumentPanel.Controls.Add(this.AuthorTextBox, 2, 2);
+            this.DocumentPanel.Controls.Add(this.AuthorLabel, 1, 2);
+            this.DocumentPanel.Controls.Add(this.TitleTextBox, 2, 1);
+            this.DocumentPanel.Controls.Add(this.TitleLabel, 1, 1);
             this.DocumentPanel.Name = "DocumentPanel";
             //
             // ViewOptionComboBox
@@ -394,10 +417,10 @@
             this.ViewOptionComboBox.FormattingEnabled = true;
             this.ViewOptionComboBox.Name = "ViewOptionComboBox";
             //
-            // ViewerPreferencesLabel
+            // ViewerOptionLabel
             //
-            resources.ApplyResources(this.ViewerPreferencesLabel, "ViewerPreferencesLabel");
-            this.ViewerPreferencesLabel.Name = "ViewerPreferencesLabel";
+            resources.ApplyResources(this.ViewerOptionLabel, "ViewerOptionLabel");
+            this.ViewerOptionLabel.Name = "ViewerOptionLabel";
             //
             // CreatorTextBox
             //
@@ -414,10 +437,10 @@
             resources.ApplyResources(this.KeywordsTextBox, "KeywordsTextBox");
             this.KeywordsTextBox.Name = "KeywordsTextBox";
             //
-            // KeywordsLabel
+            // KeywordLabel
             //
-            resources.ApplyResources(this.KeywordsLabel, "KeywordsLabel");
-            this.KeywordsLabel.Name = "KeywordsLabel";
+            resources.ApplyResources(this.KeywordLabel, "KeywordLabel");
+            this.KeywordLabel.Name = "KeywordLabel";
             //
             // SubjectTextBox
             //
@@ -459,8 +482,8 @@
             // EncryptionOuterPanel
             //
             resources.ApplyResources(this.EncryptionOuterPanel, "EncryptionOuterPanel");
-            this.EncryptionOuterPanel.Controls.Add(this.EncryptionCheckBox, 0, 0);
-            this.EncryptionOuterPanel.Controls.Add(this.EncryptionPanel, 0, 1);
+            this.EncryptionOuterPanel.Controls.Add(this.EncryptionCheckBox, 1, 1);
+            this.EncryptionOuterPanel.Controls.Add(this.EncryptionPanel, 1, 2);
             this.EncryptionOuterPanel.Name = "EncryptionOuterPanel";
             //
             // EncryptionCheckBox
@@ -491,7 +514,6 @@
             //
             resources.ApplyResources(this.OperationLabel, "OperationLabel");
             this.OperationLabel.Name = "OperationLabel";
-            this.EncryptionPanel.SetRowSpan(this.OperationLabel, 2);
             //
             // OwnerConfirmTextBox
             //
@@ -563,11 +585,25 @@
             // PermissionPanel
             //
             resources.ApplyResources(this.PermissionPanel, "PermissionPanel");
-            this.PermissionPanel.Controls.Add(this.AllowModifyCheckBox, 0, 3);
-            this.PermissionPanel.Controls.Add(this.AllowFormCheckBox, 0, 2);
+            this.PermissionPanel.Controls.Add(this.AllowAnnotationCheckBox, 0, 5);
+            this.PermissionPanel.Controls.Add(this.AllowAccessibilityCheckBox, 0, 3);
+            this.PermissionPanel.Controls.Add(this.AllowModifyCheckBox, 0, 2);
+            this.PermissionPanel.Controls.Add(this.AllowFormCheckBox, 0, 4);
             this.PermissionPanel.Controls.Add(this.AllowCopyCheckBox, 0, 1);
             this.PermissionPanel.Controls.Add(this.AllowPrintCheckBox, 0, 0);
             this.PermissionPanel.Name = "PermissionPanel";
+            //
+            // AllowAnnotationCheckBox
+            //
+            resources.ApplyResources(this.AllowAnnotationCheckBox, "AllowAnnotationCheckBox");
+            this.AllowAnnotationCheckBox.Name = "AllowAnnotationCheckBox";
+            this.AllowAnnotationCheckBox.UseVisualStyleBackColor = true;
+            //
+            // AllowAccessibilityCheckBox
+            //
+            resources.ApplyResources(this.AllowAccessibilityCheckBox, "AllowAccessibilityCheckBox");
+            this.AllowAccessibilityCheckBox.Name = "AllowAccessibilityCheckBox";
+            this.AllowAccessibilityCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowModifyCheckBox
             //
@@ -593,54 +629,27 @@
             this.AllowPrintCheckBox.Name = "AllowPrintCheckBox";
             this.AllowPrintCheckBox.UseVisualStyleBackColor = true;
             //
-            // OthersTabPage
+            // OtherTabPage
             //
-            resources.ApplyResources(this.OthersTabPage, "OthersTabPage");
-            this.OthersTabPage.Controls.Add(this.OthersPanel);
-            this.OthersTabPage.Name = "OthersTabPage";
-            this.OthersTabPage.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.OtherTabPage, "OtherTabPage");
+            this.OtherTabPage.Controls.Add(this.OtherPanel);
+            this.OtherTabPage.Name = "OtherTabPage";
+            this.OtherTabPage.UseVisualStyleBackColor = true;
             //
-            // OthersPanel
+            // OtherPanel
             //
-            resources.ApplyResources(this.OthersPanel, "OthersPanel");
-            this.OthersPanel.Controls.Add(this.LanguageLabel, 0, 6);
-            this.OthersPanel.Controls.Add(this.GrayscaleCheckBox, 1, 0);
-            this.OthersPanel.Controls.Add(this.OptionsLabel, 0, 0);
-            this.OthersPanel.Controls.Add(this.JpegCheckBox, 1, 1);
-            this.OthersPanel.Controls.Add(this.LinearizationCheckBox, 1, 2);
-            this.OthersPanel.Controls.Add(this.UpdateCheckBox, 1, 5);
-            this.OthersPanel.Controls.Add(this.LanguageComboBox, 1, 6);
-            this.OthersPanel.Controls.Add(this.AboutLabel, 0, 4);
-            this.OthersPanel.Controls.Add(this.VersionPanel, 1, 4);
-            this.OthersPanel.Name = "OthersPanel";
+            resources.ApplyResources(this.OtherPanel, "OtherPanel");
+            this.OtherPanel.Controls.Add(this.LanguageLabel, 1, 3);
+            this.OtherPanel.Controls.Add(this.UpdateCheckBox, 2, 2);
+            this.OtherPanel.Controls.Add(this.LanguageComboBox, 2, 3);
+            this.OtherPanel.Controls.Add(this.AboutLabel, 1, 1);
+            this.OtherPanel.Controls.Add(this.VersionPanel, 2, 1);
+            this.OtherPanel.Name = "OtherPanel";
             //
             // LanguageLabel
             //
             resources.ApplyResources(this.LanguageLabel, "LanguageLabel");
             this.LanguageLabel.Name = "LanguageLabel";
-            //
-            // GrayscaleCheckBox
-            //
-            resources.ApplyResources(this.GrayscaleCheckBox, "GrayscaleCheckBox");
-            this.GrayscaleCheckBox.Name = "GrayscaleCheckBox";
-            this.GrayscaleCheckBox.UseVisualStyleBackColor = true;
-            //
-            // OptionsLabel
-            //
-            resources.ApplyResources(this.OptionsLabel, "OptionsLabel");
-            this.OptionsLabel.Name = "OptionsLabel";
-            //
-            // JpegCheckBox
-            //
-            resources.ApplyResources(this.JpegCheckBox, "JpegCheckBox");
-            this.JpegCheckBox.Name = "JpegCheckBox";
-            this.JpegCheckBox.UseVisualStyleBackColor = true;
-            //
-            // LinearizationCheckBox
-            //
-            resources.ApplyResources(this.LinearizationCheckBox, "LinearizationCheckBox");
-            this.LinearizationCheckBox.Name = "LinearizationCheckBox";
-            this.LinearizationCheckBox.UseVisualStyleBackColor = true;
             //
             // UpdateCheckBox
             //
@@ -659,7 +668,6 @@
             //
             resources.ApplyResources(this.AboutLabel, "AboutLabel");
             this.AboutLabel.Name = "AboutLabel";
-            this.OthersPanel.SetRowSpan(this.AboutLabel, 2);
             //
             // VersionPanel
             //
@@ -677,65 +685,70 @@
             // FooterPanel
             //
             resources.ApplyResources(this.FooterPanel, "FooterPanel");
-            this.FooterPanel.Controls.Add(this.ToolsPanel, 0, 0);
-            this.FooterPanel.Controls.Add(this.ConvertButton, 1, 0);
-            this.FooterPanel.Controls.Add(this.ExitButton, 2, 0);
+            this.FooterPanel.Controls.Add(this.ToolPanel, 1, 1);
+            this.FooterPanel.Controls.Add(this.ExecButton, 2, 1);
+            this.FooterPanel.Controls.Add(this.ExitButton, 3, 1);
             this.FooterPanel.Name = "FooterPanel";
             //
-            // ToolsPanel
+            // ToolPanel
             //
-            this.ToolsPanel.Controls.Add(this.ConvertProgressBar);
-            this.ToolsPanel.Controls.Add(this.ApplyButton);
-            resources.ApplyResources(this.ToolsPanel, "ToolsPanel");
-            this.ToolsPanel.Name = "ToolsPanel";
+            this.ToolPanel.Controls.Add(this.MainProgressBar);
+            this.ToolPanel.Controls.Add(this.SettingButton);
+            resources.ApplyResources(this.ToolPanel, "ToolPanel");
+            this.ToolPanel.Name = "ToolPanel";
             //
-            // ConvertProgressBar
+            // MainProgressBar
             //
-            resources.ApplyResources(this.ConvertProgressBar, "ConvertProgressBar");
-            this.ConvertProgressBar.Name = "ConvertProgressBar";
-            this.ConvertProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            resources.ApplyResources(this.MainProgressBar, "MainProgressBar");
+            this.MainProgressBar.Name = "MainProgressBar";
+            this.MainProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             //
-            // ApplyButton
+            // SettingButton
             //
-            this.ApplyButton.BackColor = System.Drawing.Color.White;
-            this.ApplyButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            resources.ApplyResources(this.ApplyButton, "ApplyButton");
-            this.ApplyButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.ApplyButton.Name = "ApplyButton";
-            this.ApplyButton.UseVisualStyleBackColor = false;
+            this.SettingButton.BackColor = System.Drawing.Color.White;
+            this.SettingButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            resources.ApplyResources(this.SettingButton, "SettingButton");
+            this.SettingButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.SettingButton.Name = "SettingButton";
+            this.SettingButton.UseVisualStyleBackColor = false;
             //
-            // ConvertButton
+            // ExecButton
             //
-            this.ConvertButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
-            this.ConvertButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ConvertButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            resources.ApplyResources(this.ConvertButton, "ConvertButton");
-            this.ConvertButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.ConvertButton.ForeColor = System.Drawing.Color.White;
-            this.ConvertButton.Name = "ConvertButton";
-            this.ConvertButton.UseVisualStyleBackColor = false;
+            this.ExecButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
+            this.ExecButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            resources.ApplyResources(this.ExecButton, "ExecButton");
+            this.ExecButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(32)))), ((int)(((byte)(38)))));
+            this.ExecButton.ForeColor = System.Drawing.Color.White;
+            this.ExecButton.Name = "ExecButton";
+            this.ExecButton.UseVisualStyleBackColor = false;
             //
             // ExitButton
             //
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.ExitButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.ExitButton, "ExitButton");
-            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.ExitButton.ForeColor = System.Drawing.Color.White;
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.UseVisualStyleBackColor = false;
             //
             // HeaderPictureBox
             //
+            this.RootPanel.SetColumnSpan(this.HeaderPictureBox, 3);
             resources.ApplyResources(this.HeaderPictureBox, "HeaderPictureBox");
             this.HeaderPictureBox.Image = global::Cube.Pdf.Converter.Properties.Resources.Header;
             this.HeaderPictureBox.Name = "HeaderPictureBox";
             this.HeaderPictureBox.TabStop = false;
             //
+            // PathLintToolTip
+            //
+            this.PathLintToolTip.AutoPopDelay = 1000;
+            this.PathLintToolTip.InitialDelay = 100;
+            this.PathLintToolTip.ReshowDelay = 100;
+            //
             // MainWindow
             //
-            this.AcceptButton = this.ConvertButton;
+            this.AcceptButton = this.ExecButton;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.ExitButton;
             resources.ApplyResources(this, "$this");
@@ -743,7 +756,6 @@
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.RootPanel.ResumeLayout(false);
-            this.SettingPanel.ResumeLayout(false);
             this.SettingTabControl.ResumeLayout(false);
             this.GeneralTabPage.ResumeLayout(false);
             this.GeneralPanel.ResumeLayout(false);
@@ -772,11 +784,11 @@
             this.UserPasswordPanel.PerformLayout();
             this.PermissionPanel.ResumeLayout(false);
             this.PermissionPanel.PerformLayout();
-            this.OthersTabPage.ResumeLayout(false);
-            this.OthersPanel.ResumeLayout(false);
-            this.OthersPanel.PerformLayout();
+            this.OtherTabPage.ResumeLayout(false);
+            this.OtherPanel.ResumeLayout(false);
+            this.OtherPanel.PerformLayout();
             this.FooterPanel.ResumeLayout(false);
-            this.ToolsPanel.ResumeLayout(false);
+            this.ToolPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.HeaderPictureBox)).EndInit();
             this.ResumeLayout(false);
 
@@ -787,48 +799,64 @@
         private System.Windows.Forms.TableLayoutPanel RootPanel;
         private System.Windows.Forms.PictureBox HeaderPictureBox;
         private System.Windows.Forms.TableLayoutPanel FooterPanel;
+        private System.Windows.Forms.Button ExecButton;
+        private System.Windows.Forms.Button ExitButton;
+        private System.Windows.Forms.FlowLayoutPanel ToolPanel;
+        private System.Windows.Forms.Button SettingButton;
         private System.Windows.Forms.TabControl SettingTabControl;
         private System.Windows.Forms.TabPage GeneralTabPage;
-        private System.Windows.Forms.TabPage DocumentPage;
-        private System.Windows.Forms.TabPage EncryptionTabPage;
-        private System.Windows.Forms.TabPage OthersTabPage;
         private System.Windows.Forms.TableLayoutPanel GeneralPanel;
-        private System.Windows.Forms.Label FormatLabel;
-        private System.Windows.Forms.Label ResolutionLabel;
-        private System.Windows.Forms.Label DestinationLabel;
-        private System.Windows.Forms.TableLayoutPanel DestinationPanel;
-        private System.Windows.Forms.Label PostProcessLabel;
+        private System.Windows.Forms.NumericUpDown ResolutionNumeric;
+        private System.Windows.Forms.ComboBox PostProcessComboBox;
+        private System.Windows.Forms.TableLayoutPanel UserProgramPanel;
+        private System.Windows.Forms.Button UserProgramButton;
+        private System.Windows.Forms.TextBox UserProgramTextBox;
+        private System.Windows.Forms.FlowLayoutPanel OrientationPanel;
+        private System.Windows.Forms.RadioButton PortraitRadioButton;
+        private System.Windows.Forms.RadioButton LandscapeRadioButton;
+        private System.Windows.Forms.RadioButton AutoRadioButton;
+        private System.Windows.Forms.Label OrientationLabel;
         private System.Windows.Forms.TableLayoutPanel SourcePanel;
-        private System.Windows.Forms.Label SourceLabel;
         private System.Windows.Forms.Button SourceButton;
         private System.Windows.Forms.TextBox SourceTextBox;
+        private System.Windows.Forms.Label SourceLabel;
+        private System.Windows.Forms.Label PostProcessLabel;
+        private System.Windows.Forms.Label DestinationLabel;
+        private System.Windows.Forms.Label ResolutionLabel;
+        private System.Windows.Forms.Label FormatLabel;
+        private System.Windows.Forms.TableLayoutPanel DestinationPanel;
         private System.Windows.Forms.Button DestinationButton;
         private System.Windows.Forms.TextBox DestinationTextBox;
+        private System.Windows.Forms.TableLayoutPanel FormatPanel;
+        private System.Windows.Forms.ComboBox PdfVersionComboBox;
+        private System.Windows.Forms.ComboBox FormatComboBox;
+        private System.Windows.Forms.TabPage DocumentPage;
         private System.Windows.Forms.TableLayoutPanel DocumentPanel;
-        private System.Windows.Forms.Label TitleLabel;
-        private System.Windows.Forms.TextBox TitleTextBox;
-        private System.Windows.Forms.Label AuthorLabel;
-        private System.Windows.Forms.TextBox AuthorTextBox;
-        private System.Windows.Forms.Label SubjectLabel;
-        private System.Windows.Forms.Label KeywordsLabel;
-        private System.Windows.Forms.TextBox SubjectTextBox;
+        private System.Windows.Forms.ComboBox ViewOptionComboBox;
+        private System.Windows.Forms.Label ViewerOptionLabel;
+        private System.Windows.Forms.TextBox CreatorTextBox;
         private System.Windows.Forms.Label CreatorLabel;
         private System.Windows.Forms.TextBox KeywordsTextBox;
-        private System.Windows.Forms.TextBox CreatorTextBox;
-        private System.Windows.Forms.Label ViewerPreferencesLabel;
-        private System.Windows.Forms.ComboBox ViewOptionComboBox;
+        private System.Windows.Forms.Label KeywordLabel;
+        private System.Windows.Forms.TextBox SubjectTextBox;
+        private System.Windows.Forms.Label SubjectLabel;
+        private System.Windows.Forms.TextBox AuthorTextBox;
+        private System.Windows.Forms.Label AuthorLabel;
+        private System.Windows.Forms.TextBox TitleTextBox;
+        private System.Windows.Forms.Label TitleLabel;
+        private System.Windows.Forms.TabPage EncryptionTabPage;
         private System.Windows.Forms.TableLayoutPanel EncryptionOuterPanel;
         private System.Windows.Forms.CheckBox EncryptionCheckBox;
         private System.Windows.Forms.TableLayoutPanel EncryptionPanel;
-        private System.Windows.Forms.Label OwnerPasswordLabel;
-        private System.Windows.Forms.TextBox OwnerPasswordTextBox;
+        private System.Windows.Forms.CheckBox UserPasswordCheckBox;
+        private System.Windows.Forms.Label OperationLabel;
         private System.Windows.Forms.TextBox OwnerConfirmTextBox;
         private System.Windows.Forms.Label OwnerConfirmLabel;
-        private System.Windows.Forms.Label OperationLabel;
-        private System.Windows.Forms.CheckBox UserPasswordCheckBox;
+        private System.Windows.Forms.TextBox OwnerPasswordTextBox;
+        private System.Windows.Forms.Label OwnerPasswordLabel;
         private System.Windows.Forms.TableLayoutPanel OperationPanel;
-        private System.Windows.Forms.TableLayoutPanel UserPasswordPanel;
         private System.Windows.Forms.CheckBox SharePasswordCheckBox;
+        private System.Windows.Forms.TableLayoutPanel UserPasswordPanel;
         private System.Windows.Forms.TextBox UserConfirmTextBox;
         private System.Windows.Forms.TextBox UserPasswordTextBox;
         private System.Windows.Forms.Label UserConfirmLabel;
@@ -838,36 +866,22 @@
         private System.Windows.Forms.CheckBox AllowFormCheckBox;
         private System.Windows.Forms.CheckBox AllowCopyCheckBox;
         private System.Windows.Forms.CheckBox AllowPrintCheckBox;
-        private System.Windows.Forms.TableLayoutPanel OthersPanel;
+        private System.Windows.Forms.TabPage OtherTabPage;
+        private System.Windows.Forms.TableLayoutPanel OtherPanel;
+        private System.Windows.Forms.Label LanguageLabel;
+        private System.Windows.Forms.CheckBox UpdateCheckBox;
         private System.Windows.Forms.ComboBox LanguageComboBox;
         private System.Windows.Forms.Label AboutLabel;
-        private System.Windows.Forms.Label OrientationLabel;
-        private System.Windows.Forms.FlowLayoutPanel OrientationPanel;
-        private System.Windows.Forms.RadioButton PortraitRadioButton;
-        private System.Windows.Forms.RadioButton LandscapeRadioButton;
-        private System.Windows.Forms.RadioButton AutoRadioButton;
-        private System.Windows.Forms.CheckBox UpdateCheckBox;
-        private System.Windows.Forms.CheckBox JpegCheckBox;
+        private Forms.Controls.VersionControl VersionPanel;
+        private System.Windows.Forms.ProgressBar MainProgressBar;
         private System.Windows.Forms.CheckBox LinearizationCheckBox;
-        private System.Windows.Forms.TableLayoutPanel FormatPanel;
-        private System.Windows.Forms.ComboBox PdfVersionComboBox;
-        private System.Windows.Forms.ComboBox FormatComboBox;
-        private System.Windows.Forms.Label OptionsLabel;
-        private System.Windows.Forms.ComboBox SaveOptionComboBox;
-        private System.Windows.Forms.ComboBox PostProcessComboBox;
-        private System.Windows.Forms.TableLayoutPanel UserProgramPanel;
-        private System.Windows.Forms.Button UserProgramButton;
-        private System.Windows.Forms.TextBox UserProgramTextBox;
+        private System.Windows.Forms.CheckBox JpegCheckBox;
         private System.Windows.Forms.CheckBox GrayscaleCheckBox;
-        private System.Windows.Forms.NumericUpDown ResolutionNumeric;
-        private System.Windows.Forms.Button ConvertButton;
-        private System.Windows.Forms.Button ExitButton;
-        private System.Windows.Forms.FlowLayoutPanel ToolsPanel;
-        private System.Windows.Forms.ProgressBar ConvertProgressBar;
-        private System.Windows.Forms.Button ApplyButton;
-        private Cube.Forms.Controls.VersionControl VersionPanel;
-        private Cube.Forms.Controls.SettingControl SettingPanel;
-        private System.Windows.Forms.Label LanguageLabel;
+        private System.Windows.Forms.Label OptionLabel;
+        private System.Windows.Forms.CheckBox AllowAnnotationCheckBox;
+        private System.Windows.Forms.CheckBox AllowAccessibilityCheckBox;
+        private System.Windows.Forms.ComboBox SaveOptionComboBox;
+        private System.Windows.Forms.ToolTip PathLintToolTip;
     }
 }
 

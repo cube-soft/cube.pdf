@@ -95,14 +95,15 @@ namespace Cube.Pdf.Editor
 
             src.Save(itext, new SaveOption
             {
-                Temp        = src.Folder.Value.Temp,
-                Target      = SaveTarget.All,
-                Split       = false,
-                Smart       = obj.Settings.Smart,
-                Destination = dest,
-                Metadata    = obj.Metadata,
-                Encryption  = obj.Encryption,
-                Attachments = itext.Attachments,
+                Temp            = src.Folder.Value.Temp,
+                Target          = SaveTarget.All,
+                Split           = false,
+                ShrinkResources = obj.Settings.ShrinkResources,
+                KeepOutlines    = obj.Settings.KeepOutlines,
+                Destination     = dest,
+                Metadata        = obj.Metadata,
+                Encryption      = obj.Encryption,
+                Attachments     = itext.Attachments,
             }, prev, next);
         }
 
@@ -155,11 +156,12 @@ namespace Cube.Pdf.Editor
         public static void Extract(this MainFacade src, string dest) =>
             src.Extract(new SaveOption
         {
-            Temp        = src.Folder.Value.Temp,
-            Target      = SaveTarget.Selected,
-            Split       = false,
-            Smart       = src.Folder.Value.Smart,
-            Destination = dest,
+            Temp            = src.Folder.Value.Temp,
+            Target          = SaveTarget.Selected,
+            Split           = false,
+            ShrinkResources = src.Folder.Value.ShrinkResources,
+            KeepOutlines    = src.Folder.Value.KeepOutlines,
+            Destination     = dest,
         });
 
         #endregion

@@ -60,7 +60,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.AutoSave,            Is.False);
             Assert.That(dest.DocumentName.Source, Is.Empty);
             Assert.That(dest.DocumentName.Value,  Is.EqualTo("CubePDF"));
-            Assert.That(dest.Version.ToString(),  Is.EqualTo("1.6.1"));
+            Assert.That(dest.Version.ToString(),  Is.EqualTo("2.0.1"));
             Assert.That(dest.Value,               Is.Not.Null);
             Assert.That(dest.Digest,              Is.Null);
         }
@@ -164,11 +164,11 @@ namespace Cube.Pdf.Converter.Tests
 
             var pm = dest.Encryption.Permission;
             Assert.That(pm.Accessibility,     Is.EqualTo(PermissionValue.Allow), nameof(pm.Accessibility));
-            Assert.That(pm.CopyContents,      Is.EqualTo(PermissionValue.Deny),  nameof(pm.CopyContents));
-            Assert.That(pm.InputForm,         Is.EqualTo(PermissionValue.Deny),  nameof(pm.InputForm));
-            Assert.That(pm.ModifyAnnotations, Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyAnnotations));
-            Assert.That(pm.ModifyContents,    Is.EqualTo(PermissionValue.Deny),  nameof(pm.ModifyContents));
-            Assert.That(pm.Print,             Is.EqualTo(PermissionValue.Deny),  nameof(pm.Print));
+            Assert.That(pm.CopyContents,      Is.EqualTo(PermissionValue.Allow), nameof(pm.CopyContents));
+            Assert.That(pm.InputForm,         Is.EqualTo(PermissionValue.Allow), nameof(pm.InputForm));
+            Assert.That(pm.ModifyAnnotations, Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyAnnotations));
+            Assert.That(pm.ModifyContents,    Is.EqualTo(PermissionValue.Allow), nameof(pm.ModifyContents));
+            Assert.That(pm.Print,             Is.EqualTo(PermissionValue.Allow), nameof(pm.Print));
         }
 
         /* ----------------------------------------------------------------- */

@@ -6,52 +6,54 @@ GNU Affero General Public License version 3 (AGPLv3)
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfpage/
 
-## はじめに
+## Overview
 
-CubePDF Page は、PDF ファイルおよび画像ファイル（BMP, JPEG, PNG, GIF, TIFF) を
-結合、または分割するためのソフトウェアです。
+CubePDF Page is a software for merging and splitting PDF files and image files (BMP, JPEG, PNG, GIF, TIFF).
 
-CubePDF Page を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.5.2 以降を推奨）。
-.NET Framework は、以下の URL からダウンロードして下さい。
+CubePDF Page requires .NET Framework 3.5 or later (4.5.2 or later recommended).  
+The download links are as follows:
 
 * Download .NET Framework  
   https://dotnet.microsoft.com/download/dotnet-framework
 
-## 使用方法
 
-結合、または分割したいファイルを「ファイルを追加」ボタンやドラッグ&ドロップを通じて、
-ファイルリストに登録します。その後、「結合」または「分割」ボタンを押すとファイルの
-保存場所を指定するダイアログが表示されるので、保存場所を入力します。
+## How to use
 
-PDF ファイルの結合を行う場合、ファイルリストの上から順に結合されます。ファイルリストに
-登録されている順序については、登録後、「上へ/下へ」ボタンやマウスのドラッグ操作で
-変更する事ができます。
+Add files to be merged or split to the file list by using the Add button or drag&drop.
+Then press the Merge or Split button and a dialog box will appear to specify where to save the file.
 
-PDF ファイルを分割については、CubePDF Page は登録された PDF ファイルの全ページを
-1 ページずつ別ファイルとして分割する、と言う処理を行います。ある特定のページ群のみを
-抽出したい場合は、いったん全ページを分割した後に必要なページのみを再結合する、と言う
-操作を行って下さい。
+When merging PDF files, they are merged from the top of the file list.
+The order in which files are displayed in the file list can be changed by clicking the Up or Down button after the file is added.
 
-## ショートカットキー一覧
+When the Split button is pressed, CubePDF Page will split all pages of the added PDF file into separate files, one page at a time.
+If you want to extract only a specific group of pages, split all pages once and then re-merge only the pages you need.
 
-CubePDF Page で有効なキーボードのショートカットキーは、以下の通りです。
+## Keyboard shortcuts
 
-* Ctrl + A : 全て選択
-* Ctrl + D : 選択中のファイルをファイルリストから削除（Ctrl + Shift + D ですべて削除）
-* Ctrl + H : 「CubePDF Page について」を表示
-* Ctrl + M : 結合操作を実行
-* Ctrl + O : ファイルをファイルリストに追加
-* Ctrl + R : 選択中のファイルを関連付けられているアプリケーションで開く（プレビュー）
-* Ctrl + S : 分割操作を実行
-* Ctrl + 下矢印 : 選択中のファイルを下に移動
-* Ctrl + 上矢印 : 選択中のファイルを上に移動
+* Ctrl + M ... Merge PDF files
+* Ctrl + S ... Split PDF files
+* Ctrl + E ... Display PDF metadata and encryption settings window
+* Ctrl + H ... Display CubePDF Page settings window
+* Ctrl + Q ... Exit the application
+* Ctrl + O ... Display dialog to add PDF, PNG, JPEG, BMP files
+* Ctrl + A ... Select all items in the file list
+* Ctrl + R ... Open the selected file in the associated application
+* Ctrl + K or Ctrl + Up ... Move selected files down up level
+* Ctrl + J or Ctrl + Down ... Move selected files down one level
+* Ctrl + D or Delete ... Delete selected files from the list
+* Ctrl + Shift + D ... Delete all files from the list
 
-## 利用ライブラリ
+## Support
 
-CubePDF Page は、以下のライブラリを利用しています。
-それぞれのライブラリについては、記載した URL から取得することができます。
+CubePDF Page outputs the log to the following directory.  
+```C:\Users\%UserName%\AppData\Local\CubeSoft\CubePdfPage\Log```  
+When you have some troubles, please contact support@cube-soft.jp along with these log files.
 
-* iText7 (net45) or iTextSharp (net35)
+## Dependencies
+
+Dependencies of the CubePDF Page are as follows.
+
+* iText7 (net47) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
     - https://www.nuget.org/packages/itext7/
@@ -65,33 +67,45 @@ CubePDF Page は、以下のライブラリを利用しています。
     - https://omermor.github.io/AsyncBridge/
     - https://www.nuget.org/packages/AsyncBridge.Net35/
 
-## バージョン履歴
+## History
 
+* 2022-04-18 version 4.0.2
+    - Update iText7 to 7.2.2.
+* 2022-03-30 version 4.0.1
+    - Fix an error when specifying a file containing full-width numbers.
+* 2022-03-25 version 4.0.0
+    - Change recommended environment to .NET Framework 4.7 or later.
+    - Update iText7 to 7.2.1.
+    - Add window for PDF metadata and encryption settings.
+    - Add settings for deleting duplicate resources.
+    - Add settings for bookmark information in the source PDF files.
+    - Add settings for the temporary folder.
+    - Add settings for display language on main window.
+    - Change the order of files to be added when the file name contains numbers.
 * 2022-01-07 version 3.6.1
-    - 画像ファイル結合時にファイルサイズが必要以上に増大する不具合を修正
-    - itext7 を 7.1.17 に更新
+    - Fix an issue that increases the file size unnecessarily when merging image files.
+    - Update iText7 to 7.1.17.
 * 2021-10-26 version 3.6.0
-    - PDF 結合時にしおりの階層構造が崩れる不具合を修正
-    - 更新通知機能を改善
+    - Fix to preserve nested outlines when merging PDFs.
+    - Fix the update notification program.
 * 2021-07-09 version 3.5.0
-    - iText7 への移行を含む内部処理の修正
+    - Migrate to iText7 and refactor the implementation.
 * 2021-05-21 version 3.1.1
-    - 複数項目を選択して上へ・下へボタンを押した時の不具合を修正
-    - iTextSharp 5.5.13.2 に更新
+    - Fix an issue when multiple items were selected and the Up/Down buttons were pressed.
+    - Update iTextSharp to 5.5.13.2.
 * 2021-01-22 version 3.1.0
-    - 複数ファイルおよびフォルダー選択時の追加順序を修正
-    - プログラム引数に追加ファイルを指定できるように修正
+    - Fix the order when multiple files and folders are selected and added.
+    - Fix to allow additional files to be specified as program arguments.
 * 2020-11-13 version 3.0.0
-    - 結合・分割処理の実装を CubePDF Utility に追随
-    - 処理完了後のメッセージを削除
-    - ログ出力用ライブラリを log4net から NLog に変更
+    - Follow CubePDF Utility in implementation of merging and splitting process.
+    - Fix not to display a message after processing is completed.
+    - Change log4net to NLog.
 * 2016-04-05 version 2.0.1
-    - しおり（ブックマーク）の位置がずれる不具合を修正
-    - 上書き保存が失敗する不具合を修正
-    - マウスのドラッグ&ドロップによる項目の移動を実装
+    - Fix an issue that caused the bookmarks to shift position.
+    - Fix an issue that caused overwrite save to fail.
 * 2015-12-28 version 2.0.0
-    - 画像ファイルの結合に対応
-    - 結合・分割処理の実装を CubePDF Utility と統一するように修正
-    - GUI の修正
+    - Support for merging image files
+    - Follow CubePDF Utility in implementation of merging and splitting process.
+    - Fix GUI features.
 * 2013-02-25 version 1.0.0
-    - 最初の公開バージョン
+    - First release version.

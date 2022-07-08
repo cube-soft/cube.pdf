@@ -44,6 +44,10 @@ CubePDF シリーズは全て [GNU Affero General Public License version 3 (AGPL
 
 AGPLv3 と GPLv3 の違いについては、[GNU Affero GPL の理由](https://www.gnu.org/licenses/why-affero-gpl.html) 等を参照下さい。
 
+### サポート期限はありますか？
+
+キューブ・ソフトで無償提供している各種製品に関しては、明示的に開発終了の告知を行うまではサポート期間中としています。ただし、脆弱性への対応やその他の機能修正に関しては、全てバージョンアップと言う形で行われます。そのため、原則として、サポート対象となるものは各製品の最新バージョンのみとなります。
+
 ### ソースコードは公開されていますか？
 
 はい。CubePDF シリーズのソースコードは [Cube.Pdf - GitHub](https://github.com/cube-soft/Cube.Pdf) から取得できます。尚、現在 CubePDF Viewer のみソースコードの移行が完了していません。そのため、CubePDF Viewer のソースコードは [cubepdfviewer - GitHub](https://github.com/cube-soft/cubepdfviewer) を参照下さい。

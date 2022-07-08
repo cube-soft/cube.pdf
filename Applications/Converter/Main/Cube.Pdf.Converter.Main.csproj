@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>1.6.1</Version>
+        <Version>2.0.1</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF</Product>
@@ -10,7 +10,7 @@
         <AssemblyTitle>CubePDF</AssemblyTitle>
         <RootNamespace>Cube.Pdf.Converter</RootNamespace>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64</Platforms>
         <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
@@ -30,7 +30,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Converter.csproj" />
-        <PackageReference Include="Cube.Forms" Version="6.0.0" />
+        <PackageReference Include="Cube.Forms" Version="7.0.0" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />

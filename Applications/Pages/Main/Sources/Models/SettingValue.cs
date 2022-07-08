@@ -37,6 +37,22 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Language
+        ///
+        /// <summary>
+        /// Gets or sets the displayed language.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public Language Language
+        {
+            get => Get(() => Language.Auto);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Temp
         ///
         /// <summary>
@@ -55,16 +71,33 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Smart
+        /// ShrinkResources
         ///
         /// <summary>
-        /// Gets or sets a value indicating whether to use the smart mode
-        /// when saving PDF files.
+        /// Gets or sets a value indicating whether to shrink deduplicated
+        /// resources when saving PDF files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [DataMember]
-        public bool Smart
+        public bool ShrinkResources
+        {
+            get => Get(() => true);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// KeepOutlines
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to keep outline
+        /// information when saving PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool KeepOutlines
         {
             get => Get(() => true);
             set => Set(value);

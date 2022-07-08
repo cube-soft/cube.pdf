@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Version>1.5.0</Version>
         <Authors>clown;cube-soft</Authors>
@@ -6,7 +6,7 @@
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <StartupObject>Cube.Pdf.Clip.Tests.Program</StartupObject>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net6.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64</Platforms>
         <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
@@ -22,7 +22,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Clip\Main\Cube.Pdf.Clip.csproj" />
-        <PackageReference Include="Cube.Tests" Version="6.0.0" />
+        <PackageReference Include="Cube.Tests" Version="7.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
         <PackageReference Include="NUnit3TestAdapter" Version="*" />
         <PackageReference Include="Appveyor.TestLogger" Version="*" />

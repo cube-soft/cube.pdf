@@ -54,8 +54,8 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         public void Main() => Invoke(vm =>
         {
             Assert.That(vm.Title,   Does.StartWith(nameof(Main)));
-            Assert.That(vm.Title,   Does.Contain("CubePDF 1.6.1"));
-            Assert.That(vm.Version, Does.StartWith("1.6.1 (").And.EndsWith(")"));
+            Assert.That(vm.Title,   Does.Contain("CubePDF 2.0.1"));
+            Assert.That(vm.Version, Does.StartWith("2.0.1 (").And.EndsWith(")"));
             Assert.That(vm.Uri.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
         });
 
@@ -71,7 +71,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         [Test]
         public void General() => Invoke(vm =>
         {
-            var dest = vm.General;
+            var dest = vm.Settings;
             GetType().LogDebug($"CheckUpdate:{dest.CheckUpdate}");
             Assert.That(dest.Resolution,           Is.EqualTo(600));
             Assert.That(dest.Language,             Is.EqualTo(Language.Auto));
@@ -82,7 +82,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
             Assert.That(dest.ImageFilter,          Is.True,  nameof(dest.ImageFilter));
             Assert.That(dest.Linearization,        Is.False, nameof(dest.Linearization));
             Assert.That(dest.IsPdf,                Is.True,  nameof(dest.IsPdf));
-            Assert.That(dest.UserProgramEditable,  Is.False, nameof(dest.UserProgramEditable));
+            Assert.That(dest.IsUserProgram,  Is.False, nameof(dest.IsUserProgram));
             Assert.That(dest.SourceEditable,       Is.False, nameof(dest.SourceEditable));
             Assert.That(dest.SourceVisible,        Is.False, nameof(dest.SourceVisible));
 
@@ -90,7 +90,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
             Assert.That(dest.IsPdf, Is.False, nameof(dest.IsPdf));
 
             dest.PostProcess = PostProcess.Others;
-            Assert.That(dest.UserProgramEditable,  Is.True,  nameof(dest.UserProgramEditable));
+            Assert.That(dest.IsUserProgram,  Is.True,  nameof(dest.IsUserProgram));
 
             dest.IsPortrait = true;
             Assert.That(dest.IsAutoOrientation,  Is.False, nameof(dest.IsAutoOrientation));
@@ -142,14 +142,16 @@ namespace Cube.Pdf.Converter.Tests.Presenters
             Assert.That(dest.OwnerConfirm,       Is.Empty, nameof(dest.OwnerConfirm));
             Assert.That(dest.OpenWithPassword,   Is.False, nameof(dest.OpenWithPassword));
             Assert.That(dest.SharePassword,      Is.False, nameof(dest.SharePassword));
-            Assert.That(dest.DividePassword,     Is.False, nameof(dest.DividePassword));
+            Assert.That(dest.UserRequired,       Is.False, nameof(dest.UserRequired));
             Assert.That(dest.UserPassword,       Is.Empty, nameof(dest.UserPassword));
             Assert.That(dest.UserConfirm,        Is.Empty, nameof(dest.UserConfirm));
-            Assert.That(dest.AllowCopy,          Is.False, nameof(dest.AllowCopy));
-            Assert.That(dest.AllowForm,          Is.False, nameof(dest.AllowForm));
-            Assert.That(dest.AllowModify,        Is.False, nameof(dest.AllowModify));
-            Assert.That(dest.AllowPrint,         Is.False, nameof(dest.AllowPrint));
-            Assert.That(dest.PermissionEditable, Is.True,  nameof(dest.PermissionEditable));
+            Assert.That(dest.AllowPrint,         Is.True,  nameof(dest.AllowPrint));
+            Assert.That(dest.AllowCopy,          Is.True,  nameof(dest.AllowCopy));
+            Assert.That(dest.AllowModify,        Is.True,  nameof(dest.AllowModify));
+            Assert.That(dest.AllowAccessibility, Is.True,  nameof(dest.AllowAccessibility));
+            Assert.That(dest.AllowForm,          Is.True,  nameof(dest.AllowForm));
+            Assert.That(dest.AllowAnnotation,    Is.True,  nameof(dest.AllowAnnotation));
+            Assert.That(dest.Permissible,        Is.True,  nameof(dest.Permissible));
 
             dest.Enabled = true;
             Assert.That(dest.OwnerCorrect, Is.False);
@@ -169,14 +171,14 @@ namespace Cube.Pdf.Converter.Tests.Presenters
             Assert.That(dest.Enabled,            Is.True,  nameof(dest.Enabled));
             Assert.That(dest.OpenWithPassword,   Is.True,  nameof(dest.OpenWithPassword));
             Assert.That(dest.SharePassword,      Is.False, nameof(dest.SharePassword));
-            Assert.That(dest.DividePassword,     Is.True,  nameof(dest.DividePassword));
-            Assert.That(dest.PermissionEditable, Is.True,  nameof(dest.PermissionEditable));
+            Assert.That(dest.UserRequired,       Is.True,  nameof(dest.UserRequired));
+            Assert.That(dest.Permissible,        Is.True,  nameof(dest.Permissible));
 
             dest.SharePassword = true;
 
             Assert.That(dest.SharePassword,      Is.True,  nameof(dest.SharePassword));
-            Assert.That(dest.DividePassword,     Is.False, nameof(dest.DividePassword));
-            Assert.That(dest.PermissionEditable, Is.False, nameof(dest.PermissionEditable));
+            Assert.That(dest.UserRequired,       Is.False, nameof(dest.UserRequired));
+            Assert.That(dest.Permissible,        Is.False, nameof(dest.Permissible));
         });
 
         /* ----------------------------------------------------------------- */
@@ -206,9 +208,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 e.Cancel = false;
             });
 
-            vm.General.Language = Language.Japanese;
+            vm.Settings.Language = Language.Japanese;
             vm.SelectSource();
-            Assert.That(Wait.For(() => vm.General.Source.FuzzyEquals(done)), "Timeout");
+            Assert.That(Wait.For(() => vm.Settings.Source.FuzzyEquals(done)), "Timeout");
         });
 
         /* ----------------------------------------------------------------- */
@@ -239,9 +241,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 e.Cancel = false;
             });
 
-            vm.General.Language = Language.Japanese;
+            vm.Settings.Language = Language.Japanese;
             vm.SelectDestination();
-            Assert.That(Wait.For(() => vm.General.Destination.FuzzyEquals(done)), "Timeout");
+            Assert.That(Wait.For(() => vm.Settings.Destination.FuzzyEquals(done)), "Timeout");
         });
 
         /* ----------------------------------------------------------------- */
@@ -271,9 +273,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 e.Cancel = false;
             });
 
-            vm.General.Language = Language.Japanese;
+            vm.Settings.Language = Language.Japanese;
             vm.SelectUserProgram();
-            Assert.That(Wait.For(() => vm.General.UserProgram.FuzzyEquals(done)), "Timeout");
+            Assert.That(Wait.For(() => vm.Settings.UserProgram.FuzzyEquals(done)), "Timeout");
         });
 
         /* ----------------------------------------------------------------- */
@@ -288,7 +290,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         [Test]
         public void Validate_OwnerPassword() => Invoke(vm =>
         {
-            vm.General.Language         = Language.English;
+            vm.Settings.Language         = Language.English;
             vm.Encryption.Enabled       = true;
             vm.Encryption.OwnerPassword = nameof(Validate_OwnerPassword);
 
@@ -309,7 +311,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         [Test]
         public void Validate_UserPassword() => Invoke(vm =>
         {
-            vm.General.Language            = Language.English;
+            vm.Settings.Language            = Language.English;
             vm.Encryption.Enabled          = true;
             vm.Encryption.OwnerPassword    = nameof(Validate_OwnerPassword);
             vm.Encryption.OwnerConfirm     = nameof(Validate_OwnerPassword);

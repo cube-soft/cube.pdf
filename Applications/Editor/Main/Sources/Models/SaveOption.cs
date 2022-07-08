@@ -179,17 +179,33 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Smart
+        /// ShrinkResources
         ///
         /// <summary>
-        /// Gets or sets a value indicating whether to use the smart mode
-        /// when saving PDF files.
+        /// Gets or sets a value indicating whether to shrink deduplicated
+        /// resources when saving PDF files.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Smart
+        public bool ShrinkResources
         {
             get => Get(() => false);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// KeepOutlines
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to keep outline
+        /// information when saving PDF files.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool KeepOutlines
+        {
+            get => Get(() => true);
             set => Set(value);
         }
 
@@ -256,8 +272,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public Itext.SaveOption ToItext() => new()
         {
-            Temp  = Temp,
-            Smart = Smart,
+            Temp            = Temp,
+            ShrinkResources = ShrinkResources,
+            KeepOutlines    = KeepOutlines,
         };
 
         #endregion

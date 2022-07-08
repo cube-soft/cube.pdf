@@ -16,41 +16,40 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Windows.Forms;
 using Cube.Forms;
+using Cube.Forms.Behaviors;
+using Cube.Forms.Binding;
 
 namespace Cube.Pdf.Pages
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// VersionWindow
+    /// SettingWindow
     ///
     /// <summary>
-    /// Represents the version window.
+    /// Represents the setting window.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class VersionWindow : Window
+    public partial class SettingWindow : Window
     {
         #region Constructors
 
         /* ----------------------------------------------------------------- */
         ///
-        /// VersionWindow
+        /// SettingWindow
         ///
         /// <summary>
-        /// Initializes a new instance of the MainWindow class.
+        /// Initializes a new instance of the SettingWindow class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public VersionWindow()
-        {
-            InitializeComponent();
-            ExecButton.Click += (s, e) => Close();
-        }
+        public SettingWindow() => InitializeComponent();
 
         #endregion
 
-        #region Implementations
+        #region Methods
 
         /* ----------------------------------------------------------------- */
         ///
@@ -64,10 +63,23 @@ namespace Cube.Pdf.Pages
         protected override void OnBind(IBindable src)
         {
             base.OnBind(src);
-            if (src is not VersionViewModel vm) return;
+            if (src is not SettingViewModel vm) return;
 
-            VersionBindingSource.DataSource = vm;
-            ExecButton.Click += (s, e) => vm.Apply();
+            var bs = Behaviors.Hook(new BindingSource(vm, ""));
+            bs.Bind(nameof(vm.Language),        LanguageComboBox,       nameof(ComboBox.SelectedValue));
+            bs.Bind(nameof(vm.Temp),            TempTextBox,            nameof(TextBox.Text));
+            bs.Bind(nameof(vm.ShrinkResources), ShrinkResourceCheckBox, nameof(CheckBox.Checked));
+            bs.Bind(nameof(vm.KeepOutlines),    KeepOutlineCheckBox,    nameof(CheckBox.Checked));
+            bs.Bind(nameof(vm.CheckUpdate),     UpdateCheckBox,         nameof(CheckBox.Checked));
+            bs.Bind(nameof(vm.Version),         VersionControl,         nameof(VersionControl.Version), true);
+            bs.Bind(nameof(vm.Uri),             VersionControl,         nameof(VersionControl.Uri), true);
+
+            Behaviors.Add(new CloseBehavior(this, vm));
+            Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
+            Behaviors.Add(new ClickEventBehavior(TempButton, vm.SelectTemp));
+            Behaviors.Add(new OpenDirectoryBehavior(vm));
+
+            LanguageComboBox.Bind(Resource.Languages);
         }
 
         #endregion

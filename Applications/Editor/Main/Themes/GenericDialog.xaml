@@ -57,6 +57,13 @@
         <Setter Property="Margin" Value="3,0,9,0" />
     </Style>
 
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource LightButtonBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource LightButtonForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource LightButtonBorderBrush}" />
+    </Style>
+
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Padding" Value="8,4" />
@@ -83,13 +90,9 @@
       Button
     *********************************************************************** -->
     <Style x:Key="DialogButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="3" />
         <Setter Property="Width" Value="120" />
         <Setter Property="Height" Value="30" />
-        <Setter Property="Margin" Value="3" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Background" Value="{StaticResource LightButtonBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource LightButtonForegroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource LightButtonBorderBrush}" />
     </Style>
 
     <!-- **********************************************************************

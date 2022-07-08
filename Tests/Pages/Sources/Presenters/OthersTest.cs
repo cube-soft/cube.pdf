@@ -224,15 +224,15 @@ namespace Cube.Pdf.Pages.Tests.Presenters
         public void About()
         {
             using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
-            using (vm.Subscribe<VersionViewModel>(e =>
+            using (vm.Subscribe<SettingViewModel>(e =>
             {
                 var prev = e.CheckUpdate;
                 e.CheckUpdate = false;
                 Assert.That(e.CheckUpdate, Is.False);
-                Assert.That(e.Version, Does.StartWith("Version 3.6.1 ("));
+                Assert.That(e.Version, Does.StartWith("4.0.2 ("));
                 e.CheckUpdate = prev;
                 e.Apply();
-            })) vm.About();
+            })) vm.Setting();
         }
 
         /* ----------------------------------------------------------------- */

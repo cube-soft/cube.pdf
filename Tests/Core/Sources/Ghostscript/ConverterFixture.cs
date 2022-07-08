@@ -16,8 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Reflection;
-using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using NUnit.Framework;
@@ -74,15 +72,12 @@ namespace Cube.Pdf.Tests.Ghostscript
         /* ----------------------------------------------------------------- */
         protected string Run(Converter obj, string src, string dest, string log)
         {
-            var asm = Assembly.GetExecutingAssembly();
             var sp  = GetSource(src);
             var dp  = Get($"{dest}{obj.Format.GetExtension()}");
-            var dir = Io.Get(asm.Location).DirectoryName;
 
             obj.Quiet = false;
             obj.Log   = Get($"{log}.log");
             obj.Temp  = Get("Tmp");
-            obj.Resources.Add(Io.Combine(dir, "lib"));
             obj.Invoke(sp, dp);
 
             return dp;
