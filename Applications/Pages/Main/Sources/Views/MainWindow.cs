@@ -23,8 +23,8 @@ using System.Linq;
 using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
+using Cube.Forms.Binding;
 using Cube.Mixin.Forms;
-using Cube.Mixin.Forms.Controls;
 using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Pages

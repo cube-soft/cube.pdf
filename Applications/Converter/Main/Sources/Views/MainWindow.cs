@@ -21,8 +21,8 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
+using Cube.Forms.Binding;
 using Cube.Mixin.Forms;
-using Cube.Mixin.Forms.Controls;
 
 namespace Cube.Pdf.Converter
 {

@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Cube.Forms;
 using Cube.Mixin.Uri;
 using Cube.Pdf.Ghostscript;
 
@@ -70,15 +71,15 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, Format>> Formats { get; } = new[]
+        public static ComboListSource<Format> Formats { get; } = new()
         {
-            Make("PDF",  Format.Pdf),
-            Make("PS",   Format.Ps),
-            Make("EPS",  Format.Eps),
-            Make("PNG",  Format.Png),
-            Make("JPEG", Format.Jpeg),
-            Make("BMP",  Format.Bmp),
-            Make("TIFF", Format.Tiff),
+            { "PDF",  Format.Pdf },
+            { "PS",   Format.Ps },
+            { "EPS",  Format.Eps },
+            { "PNG",  Format.Png },
+            { "JPEG", Format.Jpeg },
+            { "BMP",  Format.Bmp },
+            { "TIFF", Format.Tiff },
         };
 
         /* ----------------------------------------------------------------- */
@@ -91,7 +92,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Dictionary<string, Format> Extensions { get; } = new()
+        public static ComboListSource<Format> Extensions { get; } = new()
         {
             { ".pdf",  Format.Pdf  },
             { ".ps",   Format.Ps   },
@@ -114,14 +115,14 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, int>> PdfVersions { get; } = new[]
+        public static ComboListSource<int> PdfVersions { get; } = new()
         {
-            Make("PDF 1.7", 7),
-            Make("PDF 1.6", 6),
-            Make("PDF 1.5", 5),
-            Make("PDF 1.4", 4),
-            Make("PDF 1.3", 3),
-            Make("PDF 1.2", 2),
+            { "PDF 1.7", 7 },
+            { "PDF 1.6", 6 },
+            { "PDF 1.5", 5 },
+            { "PDF 1.4", 4 },
+            { "PDF 1.3", 3 },
+            { "PDF 1.2", 2 },
         };
 
         /* ----------------------------------------------------------------- */
@@ -134,12 +135,12 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, SaveOption>> SaveOptions => new[]
+        public static ComboListSource<SaveOption> SaveOptions => new()
         {
-            Make(Properties.Resources.MenuOverwrite, SaveOption.Overwrite),
-            Make(Properties.Resources.MenuMergeHead, SaveOption.MergeHead),
-            Make(Properties.Resources.MenuMergeTail, SaveOption.MergeTail),
-            Make(Properties.Resources.MenuRename,    SaveOption.Rename),
+            { Properties.Resources.MenuOverwrite, SaveOption.Overwrite },
+            { Properties.Resources.MenuMergeHead, SaveOption.MergeHead },
+            { Properties.Resources.MenuMergeTail, SaveOption.MergeTail },
+            { Properties.Resources.MenuRename,    SaveOption.Rename },
         };
 
         /* ----------------------------------------------------------------- */
@@ -152,14 +153,14 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, ViewerOption>> ViewerOptions => new[]
+        public static ComboListSource<ViewerOption> ViewerOptions => new()
         {
-            Make(Properties.Resources.MenuSinglePage,     ViewerOption.SinglePage),
-            Make(Properties.Resources.MenuOneColumn,      ViewerOption.OneColumn),
-            Make(Properties.Resources.MenuTwoPageLeft,    ViewerOption.TwoPageLeft),
-            Make(Properties.Resources.MenuTwoPageRight,   ViewerOption.TwoPageRight),
-            Make(Properties.Resources.MenuTwoColumnLeft,  ViewerOption.TwoColumnLeft),
-            Make(Properties.Resources.MenuTwoColumnRight, ViewerOption.TwoColumnRight),
+            { Properties.Resources.MenuSinglePage,     ViewerOption.SinglePage },
+            { Properties.Resources.MenuOneColumn,      ViewerOption.OneColumn },
+            { Properties.Resources.MenuTwoPageLeft,    ViewerOption.TwoPageLeft },
+            { Properties.Resources.MenuTwoPageRight,   ViewerOption.TwoPageRight },
+            { Properties.Resources.MenuTwoColumnLeft,  ViewerOption.TwoColumnLeft },
+            { Properties.Resources.MenuTwoColumnRight, ViewerOption.TwoColumnRight },
         };
 
         /* ----------------------------------------------------------------- */
@@ -172,12 +173,12 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, PostProcess>> PostProcesses => new []
+        public static ComboListSource<PostProcess> PostProcesses => new()
         {
-            Make(Properties.Resources.MenuOpen,          PostProcess.Open),
-            Make(Properties.Resources.MenuOpenDirectory, PostProcess.OpenDirectory),
-            Make(Properties.Resources.MenuNone,          PostProcess.None),
-            Make(Properties.Resources.MenuOthers,        PostProcess.Others),
+            { Properties.Resources.MenuOpen,          PostProcess.Open },
+            { Properties.Resources.MenuOpenDirectory, PostProcess.OpenDirectory },
+            { Properties.Resources.MenuNone,          PostProcess.None },
+            { Properties.Resources.MenuOthers,        PostProcess.Others },
         };
 
         /* ----------------------------------------------------------------- */
@@ -190,11 +191,11 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, Orientation>> Orientations => new []
+        public static ComboListSource<Orientation> Orientations => new()
         {
-            Make(Properties.Resources.MenuPortrait,  Orientation.Portrait),
-            Make(Properties.Resources.MenuLandscape, Orientation.Landscape),
-            Make(Properties.Resources.MenuAuto,      Orientation.Auto),
+            { Properties.Resources.MenuPortrait,  Orientation.Portrait },
+            { Properties.Resources.MenuLandscape, Orientation.Landscape },
+            { Properties.Resources.MenuAuto,      Orientation.Auto },
         };
 
         /* ----------------------------------------------------------------- */
@@ -207,11 +208,11 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static IList<KeyValuePair<string, Language>> Languages => new[]
+        public static ComboListSource<Language> Languages => new()
         {
-            Make(Properties.Resources.GlobalMenuAuto,     Language.Auto),
-            Make(Properties.Resources.GlobalMenuEnglish,  Language.English),
-            Make(Properties.Resources.GlobalMenuJapanese, Language.Japanese),
+            { Properties.Resources.GlobalMenuAuto,     Language.Auto },
+            { Properties.Resources.GlobalMenuEnglish,  Language.English },
+            { Properties.Resources.GlobalMenuJapanese, Language.Japanese },
         };
 
         /* ----------------------------------------------------------------- */
@@ -301,17 +302,6 @@ namespace Cube.Pdf.Converter
         #endregion
 
         #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Make(T, U)
-        ///
-        /// <summary>
-        /// Creates a new instance of the KeyValuePair(T, U) class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static KeyValuePair<K, V> Make<K, V>(K key, V value) => new(key, value);
 
         /* ----------------------------------------------------------------- */
         ///

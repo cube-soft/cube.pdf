@@ -140,13 +140,25 @@ On the **Others** tab of the main window, you can change the view settings of th
 
 **Frame only** button hides the thumbnail image and instead displays a border for the number of pages. This feature is mainly used to reduce memory consumption.
 
-### Version information
+### Application settings
 
-![Version dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/version.png)
+![Settings dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/settings.png)
 
-Click the **Settings** button on the **Others** tab of the main window to display the version information and related settings. In **Version** section, the version information of CubePDF Utility will be displayed. If you enable the **Check for updates on startup** item below it, you will be notified in the lower right corner of your computer when the new version of the CubePDF Utility has been released. Checking for updates will be performed when your computer starts up. The information sent to confirm the update is the version number of CubePDF, Windows, and .NET Framework.
+Click the **Settings** button on the **Others** tab of the main window to display the version information and related settings. The setting items are as follows.
+
+If the **Shrink duplicate resources** item is enabled, CubePDF Utility will attempt to reduce file size by removing duplicated portions of font information and other resources as much as possible when saving. Currently, there are reports that some annotations look different when this feature is enabled than they did before being merged. If you encounter such a phenomenon, please consider disabling this item.
+
+If the **Keep bookmarks of source PDF files** item is enabled, the resulting saved PDF file will include the bookmark information of each of the merging sources. Currently, there are several reports of PDF file merging failures in CubePDF Utility and CubePDF Page, most of which seem to be caused by the bookmark information. If you encounter such a phenomenon, please consider disabling this item.
+
+If the **Enable backup** item is enabled, CubePDF Utility will keep a backup of the original PDF file for a certain period of time before overwriting. The text box below that specifies the folder where the backup files will be stored.
+
+In **Temporary folder** section, you can specify the folder where temporary files etc. are created when CubePDF Utility performs some operations. If the section is empty, CubePDF Utility will also use the destination folder as a temporary folder.
 
 In **Language** section, you can select the display language for the menu of the CubePDF Utility. There are two supported languages, English and Japanese. If you select **Auto** for the display language, one of the languages will be automatically selected according to the language setting of Windows.
+
+If the **Show recently used files** item is enabled, CubePDF Utility will display a list of the recently opened PDF files at startup.
+
+If the **Check for updates on startup** item is enabled, you will be notified in the lower right corner of your computer when the new version of the CubePDF Utility has been released. Checking for updates will be performed when your computer starts up. The information sent to confirm the update is the version number of CubePDF, Windows, and .NET Framework.
 
 ## List of keyboard shortcuts
 

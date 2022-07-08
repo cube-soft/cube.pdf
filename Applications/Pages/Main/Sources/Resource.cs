@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Cube.Forms;
 using Cube.Mixin.Uri;
 
 namespace Cube.Pdf.Pages
@@ -57,11 +58,11 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static List<KeyValuePair<string, Language>> Languages => new()
+        public static ComboListSource<Language> Languages => new()
         {
-            new("Auto",     Language.Auto),
-            new("English",  Language.English),
-            new("Japanese", Language.Japanese),
+            { "Auto",     Language.Auto },
+            { "English",  Language.English },
+            { "Japanese", Language.Japanese },
         };
 
         /* ----------------------------------------------------------------- */
@@ -74,14 +75,14 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static List<KeyValuePair<string, int>> PdfVersions => new()
+        public static ComboListSource<int> PdfVersions => new()
         {
-            new("PDF 1.7", 7),
-            new("PDF 1.6", 6),
-            new("PDF 1.5", 5),
-            new("PDF 1.4", 4),
-            new("PDF 1.3", 3),
-            new("PDF 1.2", 2),
+            { "PDF 1.7", 7 },
+            { "PDF 1.6", 6 },
+            { "PDF 1.5", 5 },
+            { "PDF 1.4", 4 },
+            { "PDF 1.3", 3 },
+            { "PDF 1.2", 2 },
         };
 
         /* ----------------------------------------------------------------- */
@@ -94,14 +95,14 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static List<KeyValuePair<string, ViewerOption>> ViewerOptions => new()
+        public static ComboListSource<ViewerOption> ViewerOptions => new()
         {
-            new(Properties.Resources.MenuSinglePage,     ViewerOption.SinglePage),
-            new(Properties.Resources.MenuOneColumn,      ViewerOption.OneColumn),
-            new(Properties.Resources.MenuTwoPageLeft,    ViewerOption.TwoPageLeft),
-            new(Properties.Resources.MenuTwoPageRight,   ViewerOption.TwoPageRight),
-            new(Properties.Resources.MenuTwoColumnLeft,  ViewerOption.TwoColumnLeft),
-            new(Properties.Resources.MenuTwoColumnRight, ViewerOption.TwoColumnRight),
+            { Properties.Resources.MenuSinglePage,     ViewerOption.SinglePage },
+            { Properties.Resources.MenuOneColumn,      ViewerOption.OneColumn },
+            { Properties.Resources.MenuTwoPageLeft,    ViewerOption.TwoPageLeft },
+            { Properties.Resources.MenuTwoPageRight,   ViewerOption.TwoPageRight },
+            { Properties.Resources.MenuTwoColumnLeft,  ViewerOption.TwoColumnLeft },
+            { Properties.Resources.MenuTwoColumnRight, ViewerOption.TwoColumnRight },
         };
 
         #endregion
