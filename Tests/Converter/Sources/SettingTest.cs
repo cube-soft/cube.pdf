@@ -60,7 +60,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.AutoSave,            Is.False);
             Assert.That(dest.DocumentName.Source, Is.Empty);
             Assert.That(dest.DocumentName.Value,  Is.EqualTo("CubePDF"));
-            Assert.That(dest.Version.ToString(),  Is.EqualTo("2.0.1"));
+            Assert.That(dest.Version.ToString(),  Is.EqualTo("2.0.2"));
             Assert.That(dest.Value,               Is.Not.Null);
             Assert.That(dest.Digest,              Is.Null);
         }

@@ -49,6 +49,9 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2022-04-12 version 2.0.2
+    - Update iText to 7.2.3.
+    - Fix to download and install the Visual C++ Redistributable package when vcruntime140.dll or msvcp140.dll is missing.
 * 2022-04-18 version 2.0.1
     - Update Ghostscript to 9.56.1.
     - Update iText7 to 7.2.2.
