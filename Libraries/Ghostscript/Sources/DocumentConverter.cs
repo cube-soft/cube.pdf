@@ -153,7 +153,7 @@ namespace Cube.Pdf.Ghostscript
         protected override IEnumerable<Code> OnCreateCodes() =>
             base.OnCreateCodes()
             .Concat(CreateEmbedFontsCodes())
-            .Compact();
+            .OfType<Code>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -199,7 +199,7 @@ namespace Cube.Pdf.Ghostscript
             Downsampling.GetArgument("ColorImageDownsampleType"),
             Downsampling.GetArgument("GrayImageDownsampleType"),
             Downsampling.GetArgument("MonoImageDownsampleType"),
-        }.Compact();
+        }.OfType<Argument>();
 
         /* ----------------------------------------------------------------- */
         ///

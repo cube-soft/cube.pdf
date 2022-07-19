@@ -300,7 +300,7 @@ namespace Cube.Pdf.Ghostscript
             Orientation.GetArgument(),
         }
         .Concat(Options)
-        .Compact();
+        .OfType<Argument>();
 
         /* ----------------------------------------------------------------- */
         ///
@@ -315,7 +315,7 @@ namespace Cube.Pdf.Ghostscript
         ///
         /* ----------------------------------------------------------------- */
         protected virtual IEnumerable<Code> OnCreateCodes() =>
-            new[] { Orientation.GetCode() }.Compact();
+            new[] { Orientation.GetCode() }.OfType<Code>();
 
         #endregion
 

@@ -123,7 +123,7 @@ namespace Cube.Pdf.Pages
             {
                 switch (e.ColumnIndex)
                 {
-                    case 1: e.Value = IoEx.GetTypeName((string)e.Value); break;
+                    case 1: e.Value = Shell.GetTypeName((string)e.Value); break;
                     case 4: e.Value = ((long)e.Value).ToRoughBytes(); break;
                     default: return;
                 }

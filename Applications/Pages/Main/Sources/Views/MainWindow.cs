@@ -24,7 +24,7 @@ using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
 using Cube.Forms.Binding;
-using Cube.Mixin.Forms;
+using Cube.Forms.Globalization;
 using Cube.Mixin.Syntax;
 
 namespace Cube.Pdf.Pages
@@ -202,7 +202,7 @@ namespace Cube.Pdf.Pages
         private void BindText(MainViewModel vm)
         {
             var lang = vm.Language;
-            this.UpdateCulture(lang);
+            this.Update(lang);
             Resource.UpdateCulture(lang);
             MainToolTip.SetToolTip(TitleButton, Properties.Resources.MessageSettings);
             MainGridView.Refresh();

@@ -22,7 +22,7 @@ using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
 using Cube.Forms.Binding;
-using Cube.Mixin.Forms;
+using Cube.Forms.Globalization;
 
 namespace Cube.Pdf.Converter
 {
@@ -246,7 +246,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         private void BindText(MainViewModel vm)
         {
-            this.UpdateCulture(vm.Settings.Language);
+            this.Update(vm.Settings.Language);
             Resource.UpdateCulture(vm.Settings.Language);
 
             Text = vm.Title;

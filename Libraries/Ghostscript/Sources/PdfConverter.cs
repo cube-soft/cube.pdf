@@ -152,7 +152,7 @@ namespace Cube.Pdf.Ghostscript
             .Concat(CreateImageArguments("Gray",  Compression))
             .Concat(CreateImageArguments("Mono",  MonoCompression))
             .Concat(new[] { CreateVersion(), CreateFastWebView() })
-            .Compact();
+            .OfType<Argument>();
 
         /* ----------------------------------------------------------------- */
         ///

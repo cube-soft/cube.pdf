@@ -258,7 +258,7 @@ namespace Cube.Pdf.Editor
         {
             var n    = Value.Files.Count;
             var dest = Value.Selection.Select(e => Value.Files.IndexOf(e)).Within(n);
-            return delta > 0 ? dest.OrderByDescending() : dest.OrderBy();
+            return delta > 0 ? dest.OrderByDescending(i => i) : dest.OrderBy(i => i);
         }
 
         #endregion

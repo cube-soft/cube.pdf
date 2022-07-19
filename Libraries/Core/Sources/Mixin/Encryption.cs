@@ -45,7 +45,6 @@ namespace Cube.Pdf.Mixin
         /* ----------------------------------------------------------------- */
         public static Encryption Copy(this Encryption src) => new()
         {
-            Dispatcher       = src.Dispatcher,
             Enabled          = src.Enabled,
             Method           = src.Method,
             OwnerPassword    = src.OwnerPassword,

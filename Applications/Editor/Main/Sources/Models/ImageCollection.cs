@@ -205,7 +205,7 @@ namespace Cube.Pdf.Editor
         public void Move(IEnumerable<int> indices, int delta) => SetIndex(() =>
         {
             var tmp = indices.Within(Count);
-            var src = delta < 0 ? tmp.OrderBy() : tmp.OrderByDescending();
+            var src = delta < 0 ? tmp.OrderBy(i => i) : tmp.OrderByDescending(i => i);
             var min = int.MaxValue;
             var max = 0;
 
@@ -235,7 +235,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Remove(IEnumerable<int> indices) => SetIndex(() =>
         {
-            var src = indices.Within(Count).OrderByDescending().ToList();
+            var src = indices.Within(Count).OrderByDescending(i => i).ToList();
             foreach (var item in src.Select(i => _inner[i]))
             {
                 _ = _cache.Remove(item);
