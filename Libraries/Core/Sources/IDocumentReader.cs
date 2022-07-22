@@ -15,75 +15,74 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System;
 using System.Collections.Generic;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// IDocumentReader
+///
+/// <summary>
+/// Represents properties and methods to read a document.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public interface IDocumentReader : IDisposable
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IDocumentReader
+    /// File
     ///
     /// <summary>
-    /// Represents properties and methods to read a document.
+    /// Gets a file information of the document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IDocumentReader : IDisposable
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// File
-        ///
-        /// <summary>
-        /// Gets a file information of the document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        File File { get; }
+    File File { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Metadata
-        ///
-        /// <summary>
-        /// Gets a PDF metadata of the document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        Metadata Metadata { get; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Metadata
+    ///
+    /// <summary>
+    /// Gets a PDF metadata of the document.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    Metadata Metadata { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Encryption
-        ///
-        /// <summary>
-        /// Gets an encryption settings of the document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        Encryption Encryption { get; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Encryption
+    ///
+    /// <summary>
+    /// Gets an encryption settings of the document.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    Encryption Encryption { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Pages
-        ///
-        /// <summary>
-        /// Gets a collection of pages in the document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerable<Page> Pages { get; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Pages
+    ///
+    /// <summary>
+    /// Gets a collection of pages in the document.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    IEnumerable<Page> Pages { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attachments
-        ///
-        /// <summary>
-        /// Gets a collection of attached files to the document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        IEnumerable<Attachment> Attachments { get; }
-    }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Attachments
+    ///
+    /// <summary>
+    /// Gets a collection of attached files to the document.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    IEnumerable<Attachment> Attachments { get; }
 }

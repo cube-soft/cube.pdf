@@ -15,54 +15,53 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Mixin;
+
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cube.Pdf.Mixin
+/* ------------------------------------------------------------------------- */
+///
+/// DocumentReaderExtension
+///
+/// <summary>
+/// Provides extended methods of the IDocumentReader class.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public static class DocumentReaderExtension
 {
+    #region Methods
+
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentReaderExtension
+    /// GetPage
     ///
     /// <summary>
-    /// Provides extended methods of the IDocumentReader class.
+    /// Gets information corresponding to the specified page number.
     /// </summary>
     ///
+    /// <param name="src">IDocumentReader object.</param>
+    /// <param name="pagenum">
+    /// Page number; 1 for the first page.
+    /// </param>
+    ///
+    /// <returns>Page object.</returns>
+    ///
+    /// <remarks>
+    /// If IDocumentReader.Pages implements IList(Page) or
+    /// IReadOnlyList(Page), get page object in O(1) time; otherwise
+    /// it takes O(n) time to get.
+    /// </remarks>
+    ///
     /* --------------------------------------------------------------------- */
-    public static class DocumentReaderExtension
+    public static Page GetPage(this IDocumentReader src, int pagenum)
     {
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetPage
-        ///
-        /// <summary>
-        /// Gets information corresponding to the specified page number.
-        /// </summary>
-        ///
-        /// <param name="src">IDocumentReader object.</param>
-        /// <param name="pagenum">
-        /// Page number; 1 for the first page.
-        /// </param>
-        ///
-        /// <returns>Page object.</returns>
-        ///
-        /// <remarks>
-        /// If IDocumentReader.Pages implements IList(Page) or
-        /// IReadOnlyList(Page), get page object in O(1) time; otherwise
-        /// it takes O(n) time to get.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Page GetPage(this IDocumentReader src, int pagenum)
-        {
-            var index = pagenum - 1;
-            if (src.Pages is IReadOnlyList<Page> l0) return l0[index];
-            if (src.Pages is IList<Page> l1) return l1[index];
-            return src.Pages.Skip(index).First();
-        }
-
-        #endregion
+        var index = pagenum - 1;
+        if (src.Pages is IReadOnlyList<Page> l0) return l0[index];
+        if (src.Pages is IList<Page> l1) return l1[index];
+        return src.Pages.Skip(index).First();
     }
+
+    #endregion
 }

@@ -15,46 +15,45 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Mixin
+namespace Cube.Pdf.Mixin;
+
+/* ------------------------------------------------------------------------- */
+///
+/// MetadataExtension
+///
+/// <summary>
+/// Describes extended methods for the Metadata class.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public static class MetadataExtension
 {
+    #region Methods
+
     /* --------------------------------------------------------------------- */
     ///
-    /// MetadataExtension
+    /// Copy
     ///
     /// <summary>
-    /// Describes extended methods for the Metadata class.
+    /// Gets the copied Metadata object.
     /// </summary>
     ///
+    /// <param name="src">Original object.</param>
+    ///
+    /// <returns>Copied object.</returns>
+    ///
     /* --------------------------------------------------------------------- */
-    public static class MetadataExtension
+    public static Metadata Copy(this Metadata src) => new()
     {
-        #region Methods
+        Title          = src.Title,
+        Author         = src.Author,
+        Subject        = src.Subject,
+        Keywords       = src.Keywords,
+        Version        = src.Version,
+        Creator        = src.Creator,
+        Producer       = src.Producer,
+        Options        = src.Options,
+    };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Copy
-        ///
-        /// <summary>
-        /// Gets the copied Metadata object.
-        /// </summary>
-        ///
-        /// <param name="src">Original object.</param>
-        ///
-        /// <returns>Copied object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Metadata Copy(this Metadata src) => new()
-        {
-            Title          = src.Title,
-            Author         = src.Author,
-            Subject        = src.Subject,
-            Keywords       = src.Keywords,
-            Version        = src.Version,
-            Creator        = src.Creator,
-            Producer       = src.Producer,
-            Options        = src.Options,
-        };
-
-        #endregion
-    }
+    #endregion
 }

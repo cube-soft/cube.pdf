@@ -15,85 +15,84 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Mixin
+namespace Cube.Pdf.Mixin;
+
+/* ------------------------------------------------------------------------- */
+///
+/// DocumentWriterExtension
+///
+/// <summary>
+/// Provides extended methods of the IDocumentWriter class.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public static class DocumentWriterExtension
 {
+    #region Methods
+
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentWriterExtension
+    /// Add
     ///
     /// <summary>
-    /// Provides extended methods of the IDocumentWriter class.
+    /// Adds a new page.
     /// </summary>
     ///
+    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="page">Page information.</param>
+    ///
     /* --------------------------------------------------------------------- */
-    public static class DocumentWriterExtension
-    {
-        #region Methods
+    public static void Add(this IDocumentWriter src, Page page) =>
+        src.Add(new[] { page });
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds a new page.
-        /// </summary>
-        ///
-        /// <param name="src">IDocumentWriter object.</param>
-        /// <param name="page">Page information.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Add(this IDocumentWriter src, Page page) =>
-            src.Add(new[] { page });
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Add
+    ///
+    /// <summary>
+    /// Adds a new page.
+    /// </summary>
+    ///
+    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="page">Page information.</param>
+    /// <param name="hint">
+    /// Document reader object to get more detailed information about
+    /// the specified pages.
+    /// </param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static void Add(this IDocumentWriter src, Page page, IDocumentReader hint) =>
+        src.Add(new[] { page }, hint);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds a new page.
-        /// </summary>
-        ///
-        /// <param name="src">IDocumentWriter object.</param>
-        /// <param name="page">Page information.</param>
-        /// <param name="hint">
-        /// Document reader object to get more detailed information about
-        /// the specified pages.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Add(this IDocumentWriter src, Page page, IDocumentReader hint) =>
-            src.Add(new[] { page }, hint);
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Add
+    ///
+    /// <summary>
+    /// Adds all pages of the specified document.
+    /// </summary>
+    ///
+    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="reader">IDocumentReader object.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static void Add(this IDocumentWriter src, IDocumentReader reader) =>
+        src.Add(reader.Pages, reader);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds all pages of the specified document.
-        /// </summary>
-        ///
-        /// <param name="src">IDocumentWriter object.</param>
-        /// <param name="reader">IDocumentReader object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Add(this IDocumentWriter src, IDocumentReader reader) =>
-            src.Add(reader.Pages, reader);
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Attach
+    ///
+    /// <summary>
+    /// Adds a new attached file.
+    /// </summary>
+    ///
+    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="file">Attached file.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static void Attach(this IDocumentWriter src, Attachment file) =>
+        src.Add(new[] { file });
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Attach
-        ///
-        /// <summary>
-        /// Adds a new attached file.
-        /// </summary>
-        ///
-        /// <param name="src">IDocumentWriter object.</param>
-        /// <param name="file">Attached file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Attach(this IDocumentWriter src, Attachment file) =>
-            src.Add(new[] { file });
-
-        #endregion
-    }
+    #endregion
 }

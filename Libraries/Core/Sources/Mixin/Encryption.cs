@@ -15,93 +15,92 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Mixin
+namespace Cube.Pdf.Mixin;
+
+/* ------------------------------------------------------------------------- */
+///
+/// EncryptionExtension
+///
+/// <summary>
+/// Describes extended methods for the Encryption class.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public static class EncryptionExtension
 {
+    #region Methods
+
     /* --------------------------------------------------------------------- */
     ///
-    /// EncryptionExtension
+    /// Copy
     ///
     /// <summary>
-    /// Describes extended methods for the Encryption class.
+    /// Gets the copied Encryption.
+    /// </summary>
+    ///
+    /// <param name="src">Original object.</param>
+    ///
+    /// <returns>Copied object.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static Encryption Copy(this Encryption src) => new()
+    {
+        Enabled          = src.Enabled,
+        Method           = src.Method,
+        OwnerPassword    = src.OwnerPassword,
+        UserPassword     = src.UserPassword,
+        OpenWithPassword = src.OpenWithPassword,
+        Permission       = new(src.Permission.Value),
+    };
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Deny
+    ///
+    /// <summary>
+    /// Denies all operations.
+    /// </summary>
+    ///
+    /// <param name="src">Encryption object.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static void Deny(this Encryption src) => src.Set(PermissionValue.Deny);
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Allow
+    ///
+    /// <summary>
+    /// Allows all operations.
+    /// </summary>
+    ///
+    /// <param name="src">Encryption object.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static void Allow(this Encryption src) => src.Set(PermissionValue.Allow);
+
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Set
+    ///
+    /// <summary>
+    /// Sets all of the methods to the same permission.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static class EncryptionExtension
+    private static void Set(this Encryption src, PermissionValue value)
     {
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Copy
-        ///
-        /// <summary>
-        /// Gets the copied Encryption.
-        /// </summary>
-        ///
-        /// <param name="src">Original object.</param>
-        ///
-        /// <returns>Copied object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Encryption Copy(this Encryption src) => new()
-        {
-            Enabled          = src.Enabled,
-            Method           = src.Method,
-            OwnerPassword    = src.OwnerPassword,
-            UserPassword     = src.UserPassword,
-            OpenWithPassword = src.OpenWithPassword,
-            Permission       = new Permission(src.Permission.Value),
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Deny
-        ///
-        /// <summary>
-        /// Denies all operations.
-        /// </summary>
-        ///
-        /// <param name="src">Encryption object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Deny(this Encryption src) => src.Set(PermissionValue.Deny);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Allow
-        ///
-        /// <summary>
-        /// Allows all operations.
-        /// </summary>
-        ///
-        /// <param name="src">Encryption object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Allow(this Encryption src) => src.Set(PermissionValue.Allow);
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Set
-        ///
-        /// <summary>
-        /// Sets all of the methods to the same permission.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Set(this Encryption src, PermissionValue value)
-        {
-            src.Permission.Accessibility     = value;
-            src.Permission.CopyContents      = value;
-            src.Permission.InputForm         = value;
-            src.Permission.ModifyAnnotations = value;
-            src.Permission.ModifyContents    = value;
-            src.Permission.Print             = value;
-        }
-
-        #endregion
+        src.Permission.Accessibility     = value;
+        src.Permission.CopyContents      = value;
+        src.Permission.InputForm         = value;
+        src.Permission.ModifyAnnotations = value;
+        src.Permission.ModifyContents    = value;
+        src.Permission.Print             = value;
     }
+
+    #endregion
 }

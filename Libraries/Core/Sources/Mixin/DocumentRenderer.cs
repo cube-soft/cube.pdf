@@ -15,74 +15,73 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Mixin;
+
 using System.Drawing;
 
-namespace Cube.Pdf.Mixin
+/* ------------------------------------------------------------------------- */
+///
+/// DocumentRendererExtension
+///
+/// <summary>
+/// Describes extended methods for the IDocumentRenderer interface.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public static class DocumentRendererExtension
 {
+    #region Methods
+
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentRendererExtension
+    /// Render
     ///
     /// <summary>
-    /// Describes extended methods for the IDocumentRenderer interface.
+    /// Renders the Page content to the Graphics object.
     /// </summary>
     ///
+    /// <param name="src">Renderer object.</param>
+    /// <param name="dest">Graphics object.</param>
+    /// <param name="page">Page object.</param>
+    ///
     /* --------------------------------------------------------------------- */
-    public static class DocumentRendererExtension
-    {
-        #region Methods
+    public static void Render(this IDocumentRenderer src, Graphics dest, Page page) =>
+        src.Render(dest, page, new PointF(0, 0), dest.VisibleClipBounds.Size);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Renders the Page content to the Graphics object.
-        /// </summary>
-        ///
-        /// <param name="src">Renderer object.</param>
-        /// <param name="dest">Graphics object.</param>
-        /// <param name="page">Page object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static void Render(this IDocumentRenderer src, Graphics dest, Page page) =>
-            src.Render(dest, page, new PointF(0, 0), dest.VisibleClipBounds.Size);
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Render
+    ///
+    /// <summary>
+    /// Gets an Image object in which the Page content is rendered.
+    /// </summary>
+    ///
+    /// <param name="src">Renderer object.</param>
+    /// <param name="page">Page object.</param>
+    ///
+    /// <returns>Image object</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static Image Render(this IDocumentRenderer src, Page page) =>
+        src.Render(page, 1.0);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Gets an Image object in which the Page content is rendered.
-        /// </summary>
-        ///
-        /// <param name="src">Renderer object.</param>
-        /// <param name="page">Page object.</param>
-        ///
-        /// <returns>Image object</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Image Render(this IDocumentRenderer src, Page page) =>
-            src.Render(page, 1.0);
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Render
+    ///
+    /// <summary>
+    /// Gets an Image object in which the Page content is rendered.
+    /// </summary>
+    ///
+    /// <param name="src">Renderer object.</param>
+    /// <param name="page">Page object.</param>
+    /// <param name="scale">Scale factor.</param>
+    ///
+    /// <returns>Image object</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static Image Render(this IDocumentRenderer src, Page page, double scale) =>
+        src.Render(page, page.GetViewSize(scale));
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImage
-        ///
-        /// <summary>
-        /// Gets an Image object in which the Page content is rendered.
-        /// </summary>
-        ///
-        /// <param name="src">Renderer object.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="scale">Scale factor.</param>
-        ///
-        /// <returns>Image object</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Image Render(this IDocumentRenderer src, Page page, double scale) =>
-            src.Render(page, page.GetViewSize(scale));
-
-        #endregion
-    }
+    #endregion
 }
