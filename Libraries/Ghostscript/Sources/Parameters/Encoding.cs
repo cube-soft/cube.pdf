@@ -16,99 +16,98 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Ghostscript;
+
 using System.Collections.Generic;
 
-namespace Cube.Pdf.Ghostscript
+/* ------------------------------------------------------------------------- */
+///
+/// Encoding
+///
+/// <summary>
+/// Specifies encoding methods.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public enum Encoding
 {
+    /// <summary>None</summary>
+    None,
+    /// <summary>Flate encoding</summary>
+    Flate,
+    /// <summary>LZW encoding</summary>
+    Lzw,
+    /// <summary>DCT encoding that is used in JPEG compression</summary>
+    Jpeg,
+    /// <summary>CCITT Fax encoding</summary>
+    Fax,
+    /// <summary>JBIG2 encoding</summary>
+    Jbig2,
+    /// <summary>Run Length Encoding (RLE)</summary>
+    Rle,
+    /// <summary>PackBits RLE</summary>
+    PackBits,
+    /// <summary>Base64 encoding</summary>
+    Base64,
+    /// <summary>Base85 encoding</summary>
+    Base85,
+}
+
+/* ------------------------------------------------------------------------- */
+///
+/// EncodingExtension
+///
+/// <summary>
+/// Provides extended methods of the Encoding enum.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+internal static class EncodingExtension
+{
+    #region Methods
+
     /* --------------------------------------------------------------------- */
     ///
-    /// Encoding
+    /// GetArgument
     ///
     /// <summary>
-    /// Specifies encoding methods.
+    /// Gets a new instance of the Argument class from the specified
+    /// parameters.
+    /// </summary>
+    ///
+    /// <param name="src">Encoding value.</param>
+    /// <param name="name">Name of the argument.</param>
+    ///
+    /// <returns>Argument object.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static Argument GetArgument(this Encoding src, string name) =>
+        Map.TryGetValue(src, out var value) ?
+        new Argument(name, value) :
+        null;
+
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Map
+    ///
+    /// <summary>
+    /// Gets the collection of Encoding values and related information.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public enum Encoding
+    private static Dictionary<Encoding, string> Map { get; } = new Dictionary<Encoding, string>
     {
-        /// <summary>None</summary>
-        None,
-        /// <summary>Flate encoding</summary>
-        Flate,
-        /// <summary>LZW encoding</summary>
-        Lzw,
-        /// <summary>DCT encoding that is used in JPEG compression</summary>
-        Jpeg,
-        /// <summary>CCITT Fax encoding</summary>
-        Fax,
-        /// <summary>JBIG2 encoding</summary>
-        Jbig2,
-        /// <summary>Run Length Encoding (RLE)</summary>
-        Rle,
-        /// <summary>PackBits RLE</summary>
-        PackBits,
-        /// <summary>Base64 encoding</summary>
-        Base64,
-        /// <summary>Base85 encoding</summary>
-        Base85,
-    }
+        { Encoding.Flate,  "FlateEncode"    },
+        { Encoding.Jpeg,   "DCTEncode"      },
+        { Encoding.Fax,    "CCITTFaxEncode" },
+        { Encoding.Lzw,    "LZWEncode"      },
+        { Encoding.Base85, "ASCII85Encode"  },
+    };
 
-    /* --------------------------------------------------------------------- */
-    ///
-    /// EncodingExtension
-    ///
-    /// <summary>
-    /// Provides extended methods of the Encoding enum.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    internal static class EncodingExtension
-    {
-        #region Methods
+    #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetArgument
-        ///
-        /// <summary>
-        /// Gets a new instance of the Argument class from the specified
-        /// parameters.
-        /// </summary>
-        ///
-        /// <param name="src">Encoding value.</param>
-        /// <param name="name">Name of the argument.</param>
-        ///
-        /// <returns>Argument object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Argument GetArgument(this Encoding src, string name) =>
-            Map.TryGetValue(src, out var value) ?
-            new Argument(name, value) :
-            null;
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Map
-        ///
-        /// <summary>
-        /// Gets the collection of Encoding values and related information.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static Dictionary<Encoding, string> Map { get; } = new Dictionary<Encoding, string>
-        {
-            { Encoding.Flate,  "FlateEncode"    },
-            { Encoding.Jpeg,   "DCTEncode"      },
-            { Encoding.Fax,    "CCITTFaxEncode" },
-            { Encoding.Lzw,    "LZWEncode"      },
-            { Encoding.Base85, "ASCII85Encode"  },
-        };
-
-        #endregion
-
-    }
 }

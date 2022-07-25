@@ -16,86 +16,83 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Ghostscript;
+
 using System;
 
-namespace Cube.Pdf.Ghostscript
+/* ------------------------------------------------------------------------- */
+///
+/// GsApiException
+///
+/// <summary>
+/// Represents the Ghostscript API error.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[Serializable]
+public class GsApiException : Exception
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// GsApiException
     ///
     /// <summary>
-    /// Represents the Ghostscript API error.
+    /// Initializes a new instance of the GsApiException class with
+    /// the specified status.
+    /// </summary>
+    ///
+    /// <param name="status">Status code.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public GsApiException(int status) :
+        this((GsApiStatus)Enum.ToObject(typeof(GsApiStatus), status)) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GsApiException
+    ///
+    /// <summary>
+    /// Initializes a new instance of the GsApiException class with
+    /// the specified status.
+    /// </summary>
+    ///
+    /// <param name="status">Status code.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public GsApiException(GsApiStatus status) : this(status, $"{status} ({status:D})") { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GsApiException
+    ///
+    /// <summary>
+    /// Initializes a new instance of the GsApiException class with
+    /// the specified status and message.
+    /// </summary>
+    ///
+    /// <param name="status">Status code.</param>
+    /// <param name="message">Message.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public GsApiException(GsApiStatus status, string message) :
+        base(message) => Status = status;
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Status
+    ///
+    /// <summary>
+    /// Gets the status code.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class GsApiException : Exception
-    {
-        #region Constructors
+    public GsApiStatus Status { get; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GsApiException
-        ///
-        /// <summary>
-        /// Initializes a new instance of the GsApiException class with
-        /// the specified status.
-        /// </summary>
-        ///
-        /// <param name="status">Status code.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public GsApiException(int status) :
-            this((GsApiStatus)Enum.ToObject(typeof(GsApiStatus), status)) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GsApiException
-        ///
-        /// <summary>
-        /// Initializes a new instance of the GsApiException class with
-        /// the specified status.
-        /// </summary>
-        ///
-        /// <param name="status">Status code.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public GsApiException(GsApiStatus status) : this(status, $"{status} ({status.ToString("D")})") { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GsApiException
-        ///
-        /// <summary>
-        /// Initializes a new instance of the GsApiException class with
-        /// the specified status and message.
-        /// </summary>
-        ///
-        /// <param name="status">Status code.</param>
-        /// <param name="message">Message.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public GsApiException(GsApiStatus status, string message) : base(message)
-        {
-            Status = status;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Status
-        ///
-        /// <summary>
-        /// Gets the status code.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public GsApiStatus Status { get; }
-
-        #endregion
-    }
+    #endregion
 }
