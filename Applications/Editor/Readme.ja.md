@@ -97,7 +97,7 @@ CubePDF Utility は、以下のフォルダに実行ログを出力していま�
 CubePDF Utility は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
-* iText7 (net45) or iTextSharp (net35)
+* iText7 (net47) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
     - https://www.nuget.org/packages/itext7/
@@ -126,13 +126,16 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2022-08-04 version 2.0.2
+    - PDFium を Chromium 104 相当に更新
+    - iText を 7.2.3 に更新
 * 2022-06-23 version 2.0.1
     - PDFium を Chromium 103 相当に更新
     - 詳細を設定して挿入画面で指定した順序で挿入されない不具合を修正
 * 2022-06-01 version 2.0.0
     - 推奨動作環境を .NET Framework 4.7 以降に変更
     - PDFium を Chromium 102 相当に更新
-    - iText7 を 7.2.2 に更新
+    - iText を 7.2.2 に更新
     - 重複リソースの削除に関する設定を追加
     - 編集元 PDF ファイルのしおり情報に関する設定を追加
     - 最近使用した PDF ファイルの表示設定を追加
@@ -152,7 +155,7 @@ CubePDF Utility は、以下のライブラリを利用しています。
 * 2022-01-07 version 1.6.3
     - 画像ファイル結合時にファイルサイズが必要以上に増大する不具合を修正
     - PDFium を Chromium 97 相当に更新
-    - itext7 を 7.1.17 に更新
+    - iText を 7.1.17 に更新
 * 2021-11-19 version 1.6.2
     - 画像ファイル追加時にサムネイル表示されない不都合を修正
     - PDFium を Chromium 96 相当に更新
