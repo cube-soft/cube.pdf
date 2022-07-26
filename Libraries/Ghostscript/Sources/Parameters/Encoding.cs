@@ -39,8 +39,10 @@ public enum Encoding
     Lzw,
     /// <summary>DCT encoding that is used in JPEG compression</summary>
     Jpeg,
-    /// <summary>CCITT Fax encoding</summary>
-    Fax,
+    /// <summary>G3 Fax encoding</summary>
+    G3Fax,
+    /// <summary>G4 Fax encoding</summary>
+    G4Fax,
     /// <summary>JBIG2 encoding</summary>
     Jbig2,
     /// <summary>Run Length Encoding (RLE)</summary>
@@ -103,7 +105,8 @@ internal static class EncodingExtension
     {
         { Encoding.Flate,  "FlateEncode"    },
         { Encoding.Jpeg,   "DCTEncode"      },
-        { Encoding.Fax,    "CCITTFaxEncode" },
+        { Encoding.G3Fax,  "CCITTFaxEncode" },
+        { Encoding.G4Fax,  "CCITTFaxEncode" },
         { Encoding.Lzw,    "LZWEncode"      },
         { Encoding.Base85, "ASCII85Encode"  },
     };
