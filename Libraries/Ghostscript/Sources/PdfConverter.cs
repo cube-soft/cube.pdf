@@ -117,7 +117,7 @@ public class PdfConverter : DocumentConverter
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public Encoding MonoCompression { get; set; } = Encoding.Fax;
+    public Encoding MonoCompression { get; set; } = Encoding.G4Fax;
 
     /* --------------------------------------------------------------------- */
     ///

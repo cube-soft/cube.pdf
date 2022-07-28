@@ -214,7 +214,7 @@ public static class FormatExtension
         { Format.Tiff32bppCmyk,      new FormatInfo("tiff32nc",  ".tiff") },
         { Format.Tiff64bppCmyk,      new FormatInfo("tiff64nc",  ".tiff") },
         { Format.Tiff8bppGrayscale,  new FormatInfo("tiffgray",  ".tiff") },
-        { Format.Tiff1bppMonochrome, new FormatInfo("tifflzw",   ".tiff") },
+        { Format.Tiff1bppMonochrome, new FormatInfo("tiffg4",    ".tiff") },
     };
 
     /* --------------------------------------------------------------------- */

@@ -96,8 +96,8 @@ namespace Cube.Pdf.Tests.Ghostscript
         /* ----------------------------------------------------------------- */
         [TestCase(Encoding.Flate,  Encoding.Jpeg)]
         [TestCase(Encoding.Flate,  Encoding.Base85)]
-        [TestCase(Encoding.Fax,    Encoding.Fax)]
-        [TestCase(Encoding.Base85, Encoding.Fax)]
+        [TestCase(Encoding.G4Fax,  Encoding.G4Fax)]
+        [TestCase(Encoding.Base85, Encoding.G4Fax)]
         public void Invoke_Throws(Encoding color, Encoding mono)
         {
             if (Converter.Revision < 927) Assert.Ignore("Only for Ghostscript 9.27 or later.");
@@ -254,7 +254,7 @@ namespace Cube.Pdf.Tests.Ghostscript
             yield return TestCase(n++, new PdfConverter
             {
                 Compression     = Encoding.Jpeg,
-                MonoCompression = Encoding.Fax,
+                MonoCompression = Encoding.G4Fax,
             }, "SampleMix.ps", Encoding.Jpeg);
 
             yield return TestCase(n++, new PdfConverter
