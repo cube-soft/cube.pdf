@@ -23,38 +23,37 @@ using System.Linq;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// ImageConverter
+/// TiffConverter
 ///
 /// <summary>
-/// Provides functionality to convert to raster image format such as
-/// PNG.
+/// Provides functionality to convert to TIFF image.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public class ImageConverter : Converter
+public class TiffConverter : ImageConverter
 {
     #region Constructors
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageConverter
+    /// TiffConverter
     ///
     /// <summary>
-    /// Initializes a new instance of the ImageConverter class with the
+    /// Initializes a new instance of the TiffConverter class with the
     /// specified format.
     /// </summary>
     ///
     /// <param name="format">Target format.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public ImageConverter(Format format) : this(format, SupportedFormats) { }
+    public TiffConverter(Format format) : this(format, SupportedFormats) { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ImageConverter
+    /// TiffConverter
     ///
     /// <summary>
-    /// Initializes a new instance of the ImageConverter class with the
+    /// Initializes a new instance of the TiffConverter class with the
     /// specified arguments.
     /// </summary>
     ///
@@ -62,7 +61,7 @@ public class ImageConverter : Converter
     /// <param name="supported">Collection of supported formats.</param>
     ///
     /* --------------------------------------------------------------------- */
-    protected ImageConverter(Format format, IEnumerable<Format> supported) :
+    protected TiffConverter(Format format, IEnumerable<Format> supported) :
         base(format, supported) { }
 
     #endregion
@@ -80,28 +79,6 @@ public class ImageConverter : Converter
     /* --------------------------------------------------------------------- */
     public static new IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
     {
-        Format.Psd,
-        Format.PsdRgb,
-        Format.PsdCmyk,
-        Format.PsdCmykog,
-        Format.Jpeg,
-        Format.Jpeg24bppRgb,
-        Format.Jpeg32bppCmyk,
-        Format.Jpeg8bppGrayscale,
-        Format.Png,
-        Format.Png24bppRgb,
-        Format.Png32bppArgb,
-        Format.Png4bppIndexed,
-        Format.Png8bppIndexed,
-        Format.Png8bppGrayscale,
-        Format.Png1bppMonochrome,
-        Format.Bmp,
-        Format.Bmp24bppRgb,
-        Format.Bmp32bppArgb,
-        Format.Bmp4bppIndexed,
-        Format.Bmp8bppIndexed,
-        Format.Bmp8bppGrayscale,
-        Format.Bmp1bppMonochrome,
         Format.Tiff,
         Format.Tiff12bppRgb,
         Format.Tiff24bppRgb,
@@ -114,19 +91,18 @@ public class ImageConverter : Converter
 
     /* --------------------------------------------------------------------- */
     ///
-    /// AntiAlias
+    /// Encoding
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether anti-aliasing is
-    /// enabled.
+    /// Gets or sets the compression encoding.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public bool AntiAlias { get; set; } = true;
+    public Encoding Encoding { get; set; }
 
     #endregion
 
-    #region Implementations
+    #region Methods
 
     /* --------------------------------------------------------------------- */
     ///
@@ -141,25 +117,29 @@ public class ImageConverter : Converter
     /* --------------------------------------------------------------------- */
     protected override IEnumerable<Argument> OnCreateArguments() =>
         base.OnCreateArguments()
-            .Concat(CreateAntiAlias());
+            .Concat(CreateCompression());
+
+    #endregion
+
+    #region Implementations
 
     /* --------------------------------------------------------------------- */
     ///
-    /// CreateAntiAlias
+    /// CreateCompression
     ///
     /// <summary>
-    /// Creates the collection of arguments representing anti-aliasing.
+    /// Creates the argument sequence for compression.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<Argument> CreateAntiAlias() =>
-        AntiAlias ?
-        new[]
-        {
-            new Argument("GraphicsAlphaBits", 4),
-            new Argument("TextAlphaBits", 4),
-        } :
-        Enumerable.Empty<Argument>();
+    private IEnumerable<Argument> CreateCompression() => Encoding switch
+    {
+        Encoding.G3Fax    => new[] { new Argument('s', "Compression", "g3"  ) },
+        Encoding.G4Fax    => new[] { new Argument('s', "Compression", "g4"  ) },
+        Encoding.Lzw      => new[] { new Argument('s', "Compression", "lzw" ) },
+        Encoding.PackBits => new[] { new Argument('s', "Compression", "pack") },
+        _ => Enumerable.Empty<Argument>(),
+    };
 
     #endregion
 }

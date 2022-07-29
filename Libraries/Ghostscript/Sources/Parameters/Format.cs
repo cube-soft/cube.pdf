@@ -19,7 +19,6 @@
 namespace Cube.Pdf.Ghostscript;
 
 using System.Collections.Generic;
-using System.Diagnostics;
 
 #region Format
 
@@ -141,8 +140,8 @@ public static class FormatExtension
     /* --------------------------------------------------------------------- */
     internal static Argument GetArgument(this Format src)
     {
-        var status = Map.TryGetValue(src, out var value);
-        Debug.Assert(status);
+        var ok = Map.TryGetValue(src, out var value);
+        System.Diagnostics.Debug.Assert(ok);
         return new Argument('s', "DEVICE", value.Device);
     }
 
@@ -161,8 +160,8 @@ public static class FormatExtension
     /* --------------------------------------------------------------------- */
     public static string GetExtension(this Format src)
     {
-        var status = Map.TryGetValue(src, out var value);
-        Debug.Assert(status);
+        var ok = Map.TryGetValue(src, out var value);
+        System.Diagnostics.Debug.Assert(ok);
         return value.Extension;
     }
 
@@ -181,40 +180,40 @@ public static class FormatExtension
     /* --------------------------------------------------------------------- */
     private static Dictionary<Format, FormatInfo> Map { get; } = new()
     {
-        { Format.Text,               new FormatInfo("txtwrite",  ".txt")  },
-        { Format.Ps,                 new FormatInfo("ps2write",  ".ps")   },
-        { Format.Eps,                new FormatInfo("eps2write", ".eps")  },
-        { Format.Pdf,                new FormatInfo("pdfwrite",  ".pdf")  },
-        { Format.Psd,                new FormatInfo("psdrgb",    ".psd")  },
-        { Format.PsdRgb,             new FormatInfo("psdrgb",    ".psd")  },
-        { Format.PsdCmyk,            new FormatInfo("psdcmyk",   ".psd")  },
-        { Format.PsdCmykog,          new FormatInfo("psdcmykog", ".psd")  },
-        { Format.Jpeg,               new FormatInfo("jpeg",      ".jpg")  },
-        { Format.Jpeg24bppRgb,       new FormatInfo("jpeg",      ".jpg")  },
-        { Format.Jpeg32bppCmyk,      new FormatInfo("jpegcmyk",  ".jpg")  },
-        { Format.Jpeg8bppGrayscale,  new FormatInfo("jpeggray",  ".jpg")  },
-        { Format.Png,                new FormatInfo("png16m",    ".png")  },
-        { Format.Png24bppRgb,        new FormatInfo("png16m",    ".png")  },
-        { Format.Png32bppArgb,       new FormatInfo("pngalpha",  ".png")  },
-        { Format.Png4bppIndexed,     new FormatInfo("png16",     ".png")  },
-        { Format.Png8bppIndexed,     new FormatInfo("png256",    ".png")  },
-        { Format.Png8bppGrayscale,   new FormatInfo("pnggray",   ".png")  },
-        { Format.Png1bppMonochrome,  new FormatInfo("pngmonod",  ".png")  },
-        { Format.Bmp,                new FormatInfo("bmp16m",    ".bmp")  },
-        { Format.Bmp24bppRgb,        new FormatInfo("bmp16m",    ".bmp")  },
-        { Format.Bmp32bppArgb,       new FormatInfo("bmp32b",    ".bmp")  },
-        { Format.Bmp4bppIndexed,     new FormatInfo("bmp16",     ".bmp")  },
-        { Format.Bmp8bppIndexed,     new FormatInfo("bmp256",    ".bmp")  },
-        { Format.Bmp8bppGrayscale,   new FormatInfo("bmpgray",   ".bmp")  },
-        { Format.Bmp1bppMonochrome,  new FormatInfo("bmpmono",   ".bmp")  },
-        { Format.Tiff,               new FormatInfo("tiff24nc",  ".tiff") },
-        { Format.Tiff12bppRgb,       new FormatInfo("tiff12nc",  ".tiff") },
-        { Format.Tiff24bppRgb,       new FormatInfo("tiff24nc",  ".tiff") },
-        { Format.Tiff48bppRgb,       new FormatInfo("tiff48nc",  ".tiff") },
-        { Format.Tiff32bppCmyk,      new FormatInfo("tiff32nc",  ".tiff") },
-        { Format.Tiff64bppCmyk,      new FormatInfo("tiff64nc",  ".tiff") },
-        { Format.Tiff8bppGrayscale,  new FormatInfo("tiffgray",  ".tiff") },
-        { Format.Tiff1bppMonochrome, new FormatInfo("tiffg4",    ".tiff") },
+        { Format.Text,               new("txtwrite",  ".txt")  },
+        { Format.Ps,                 new("ps2write",  ".ps")   },
+        { Format.Eps,                new("eps2write", ".eps")  },
+        { Format.Pdf,                new("pdfwrite",  ".pdf")  },
+        { Format.Psd,                new("psdrgb",    ".psd")  },
+        { Format.PsdRgb,             new("psdrgb",    ".psd")  },
+        { Format.PsdCmyk,            new("psdcmyk",   ".psd")  },
+        { Format.PsdCmykog,          new("psdcmykog", ".psd")  },
+        { Format.Jpeg,               new("jpeg",      ".jpg")  },
+        { Format.Jpeg24bppRgb,       new("jpeg",      ".jpg")  },
+        { Format.Jpeg32bppCmyk,      new("jpegcmyk",  ".jpg")  },
+        { Format.Jpeg8bppGrayscale,  new("jpeggray",  ".jpg")  },
+        { Format.Png,                new("png16m",    ".png")  },
+        { Format.Png24bppRgb,        new("png16m",    ".png")  },
+        { Format.Png32bppArgb,       new("pngalpha",  ".png")  },
+        { Format.Png4bppIndexed,     new("png16",     ".png")  },
+        { Format.Png8bppIndexed,     new("png256",    ".png")  },
+        { Format.Png8bppGrayscale,   new("pnggray",   ".png")  },
+        { Format.Png1bppMonochrome,  new("pngmonod",  ".png")  },
+        { Format.Bmp,                new("bmp16m",    ".bmp")  },
+        { Format.Bmp24bppRgb,        new("bmp16m",    ".bmp")  },
+        { Format.Bmp32bppArgb,       new("bmp32b",    ".bmp")  },
+        { Format.Bmp4bppIndexed,     new("bmp16",     ".bmp")  },
+        { Format.Bmp8bppIndexed,     new("bmp256",    ".bmp")  },
+        { Format.Bmp8bppGrayscale,   new("bmpgray",   ".bmp")  },
+        { Format.Bmp1bppMonochrome,  new("bmpmono",   ".bmp")  },
+        { Format.Tiff,               new("tiff24nc",  ".tiff") },
+        { Format.Tiff12bppRgb,       new("tiff12nc",  ".tiff") },
+        { Format.Tiff24bppRgb,       new("tiff24nc",  ".tiff") },
+        { Format.Tiff48bppRgb,       new("tiff48nc",  ".tiff") },
+        { Format.Tiff32bppCmyk,      new("tiff32nc",  ".tiff") },
+        { Format.Tiff64bppCmyk,      new("tiff64nc",  ".tiff") },
+        { Format.Tiff8bppGrayscale,  new("tiffgray",  ".tiff") },
+        { Format.Tiff1bppMonochrome, new("tiffg4",    ".tiff") },
     };
 
     /* --------------------------------------------------------------------- */

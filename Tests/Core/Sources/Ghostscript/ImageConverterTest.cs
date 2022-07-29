@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Tests.Ghostscript;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,149 +25,137 @@ using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Tests.Ghostscript
+/* ------------------------------------------------------------------------- */
+///
+/// ImageConverterTest
+///
+/// <summary>
+/// Represents tests of the ImageConverter class.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[TestFixture]
+class ImageConverterTest : ConverterFixture
 {
-    /* --------------------------------------------------------------------- */
-    ///
-    /// ImageConverterTest
-    ///
-    /// <summary>
-    /// Represents tests of the ImageConverter class.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class ImageConverterTest : ConverterFixture
+    private static IEnumerable<TestCaseData> TestCases
     {
-        #region Tests
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SupportedFormats
-        ///
-        /// <summary>
-        /// Confirms the number of supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void SupportedFormats()
-        {
-            Assert.That(ImageConverter.SupportedFormats.Count(), Is.EqualTo(30));
-            Assert.That(JpegConverter.SupportedFormats.Count(),  Is.EqualTo(4));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create_NotSupportedException
-        ///
-        /// <summary>
-        /// Confirms the behavior when an unsupported format is set.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Create_NotSupportedException()
-        {
-            Assert.That(() => new ImageConverter(Format.Pdf), Throws.TypeOf<NotSupportedException>());
-            Assert.That(() => new JpegConverter(Format.Png),  Throws.TypeOf<NotSupportedException>());
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Tests the converter object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCaseSource(nameof(TestCases))]
-        public void Invoke(int id, Converter cv, string srcname, string destname)
-        {
-            var dest = Run(cv, srcname, destname);
-            Assert.That(Io.Exists(dest), Is.True, $"No.{id}");
-        }
-
-        #endregion
-
-        #region TestCases
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TestCases
-        ///
-        /// <summary>
-        /// Gets test cases.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases { get
+        get
         {
             var n = 0;
 
-            /* --------------------------------------------------------- */
+            /* ------------------------------------------------------------- */
             // AntiAlias
-            /* --------------------------------------------------------- */
-            yield return TestCase(n++, new ImageConverter(Format.Png)
-            {
-                AntiAlias  = true,
+            /* ------------------------------------------------------------- */
+            yield return TestCase(n++, new ImageConverter(Format.Png) {
+                AntiAlias = true,
                 Resolution = 72,
             }, "Sample.ps", "AntiAlias_True");
 
-            yield return TestCase(n++, new ImageConverter(Format.Png)
-            {
-                AntiAlias  = false,
+            yield return TestCase(n++, new ImageConverter(Format.Png) {
+                AntiAlias = false,
                 Resolution = 72,
             }, "Sample.ps", "AntiAlias_False");
 
-            /* --------------------------------------------------------- */
+            /* ------------------------------------------------------------- */
             // ColorMode
-            /* --------------------------------------------------------- */
-            yield return TestCase(n++, new ImageConverter(Format.Jpeg24bppRgb)
-            {
+            /* ------------------------------------------------------------- */
+            yield return TestCase(n++, new ImageConverter(Format.Jpeg24bppRgb) {
                 Resolution = 300,
             }, "SampleMix.ps", Format.Jpeg24bppRgb);
 
-            yield return TestCase(n++, new ImageConverter(Format.Jpeg32bppCmyk)
-            {
+            yield return TestCase(n++, new ImageConverter(Format.Jpeg32bppCmyk) {
                 Resolution = 300,
             }, "SampleMix.ps", Format.Jpeg32bppCmyk);
 
-            yield return TestCase(n++, new ImageConverter(Format.Jpeg8bppGrayscale)
-            {
+            yield return TestCase(n++, new ImageConverter(Format.Jpeg8bppGrayscale) {
                 Resolution = 300,
             }, "SampleMix.ps", Format.Jpeg8bppGrayscale);
 
-            /* --------------------------------------------------------- */
-            // Quality
-            /* --------------------------------------------------------- */
-            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-            {
+            /* ------------------------------------------------------------- */
+            // JPEG Quality
+            /* ------------------------------------------------------------- */
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg) {
                 Quality = 1,
             }, "Sample600dpi.ps", "Quality_1");
 
-            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-            {
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg) {
                 Quality = 25,
             }, "Sample600dpi.ps", "Quality_25");
 
-            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-            {
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg) {
                 Quality = 50,
             }, "Sample600dpi.ps", "Quality_50");
 
-            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-            {
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg) {
                 Quality = 75,
             }, "Sample600dpi.ps", "Quality_75");
 
-            yield return TestCase(n++, new JpegConverter(Format.Jpeg)
-            {
+            yield return TestCase(n++, new JpegConverter(Format.Jpeg) {
                 Quality = 100,
             }, "Sample600dpi.ps", "Quality_100");
-        }}
 
-        #endregion
+            /* ------------------------------------------------------------- */
+            // TIFF encoding
+            /* ------------------------------------------------------------- */
+            yield return TestCase(n++, new TiffConverter(Format.Tiff1bppMonochrome) {
+                Encoding = Encoding.G3Fax,
+            }, "SampleMix.ps", Encoding.G3Fax);
+
+            yield return TestCase(n++, new TiffConverter(Format.Tiff1bppMonochrome) {
+                Encoding = Encoding.G4Fax,
+            }, "SampleMix.ps", Encoding.G4Fax);
+
+            yield return TestCase(n++, new TiffConverter(Format.Tiff1bppMonochrome) {
+                Encoding = Encoding.Lzw,
+            }, "SampleMix.ps", Encoding.Lzw);
+
+            yield return TestCase(n++, new TiffConverter(Format.Tiff1bppMonochrome) {
+                Encoding = Encoding.PackBits,
+            }, "SampleMix.ps", Encoding.PackBits);
+
+            yield return TestCase(n++, new TiffConverter(Format.Tiff1bppMonochrome) {
+                Encoding = Encoding.None,
+            }, "SampleMix.ps", Encoding.None);
+        }
     }
+
+    #region Tests
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Test
+    ///
+    /// <summary>
+    /// Tests the ImageConverter and its inherited classes.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [TestCaseSource(nameof(TestCases))]
+    public void Test(int id, Converter cv, string srcname, string destname)
+    {
+        var dest = Run(cv, srcname, destname);
+        Assert.That(Io.Exists(dest), Is.True, $"No.{id}");
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Check
+    ///
+    /// <summary>
+    /// Confirms the basic behaviors.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [Test]
+    public void Check()
+    {
+        Assert.That(ImageConverter.SupportedFormats.Count(), Is.EqualTo(30));
+        Assert.That(JpegConverter.SupportedFormats.Count(),  Is.EqualTo(4));
+
+        Assert.That(() => new ImageConverter(Format.Pdf), Throws.TypeOf<NotSupportedException>());
+        Assert.That(() => new JpegConverter(Format.Png),  Throws.TypeOf<NotSupportedException>());
+        Assert.That(() => new TiffConverter(Format.Png),  Throws.TypeOf<NotSupportedException>());
+    }
+
+    #endregion
 }
