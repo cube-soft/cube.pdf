@@ -41,6 +41,17 @@ public class JpegConverter : ImageConverter
     /// JpegConverter
     ///
     /// <summary>
+    /// Initializes a new instance of the JpegConverter class.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public JpegConverter() : this(Format.Jpeg) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// JpegConverter
+    ///
+    /// <summary>
     /// Initializes a new instance of the JpegConverter class with the
     /// specified format.
     /// </summary>
@@ -96,7 +107,7 @@ public class JpegConverter : ImageConverter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public int Quality { get; set; } = 75;
+    public int Quality { get; set; } = 85;
 
     #endregion
 

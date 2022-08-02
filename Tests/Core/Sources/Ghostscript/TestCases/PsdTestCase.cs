@@ -19,80 +19,65 @@
 namespace Cube.Pdf.Tests.Ghostscript;
 
 using System.Collections.Generic;
-using System.Linq;
-using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
-using Cube.Tests;
 using NUnit.Framework;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// ConverterTest
+/// PsdTestCase
 ///
 /// <summary>
-/// Tests the Converter and its inherited classes.
+/// Represents test cases for PostScript to PSD conversion.
+/// These test cases are invoked via ConverterTest class.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-[TestFixture]
-class ConverterTest : FileFixture
+class PsdTestCase
 {
+    #region TestCases
+
     /* --------------------------------------------------------------------- */
     ///
-    /// Test
+    /// Get
     ///
     /// <summary>
-    /// Tests the conversion using Ghostscript.
+    /// Gets the collection of test cases.
     /// </summary>
     ///
-    /// <param name="category">
-    /// Category name. Test results are saved to a directory with the
-    /// specified name.
-    /// </param>
+    /* --------------------------------------------------------------------- */
+    public static IEnumerable<TestCaseData> Get()
+    {
+        yield return Make("_Default",    new(Format.Psd));
+        yield return Make("Rgb",         new(Format.PsdRgb));
+        yield return Make("Cmyk",        new(Format.PsdCmyk));
+        yield return Make("Cmykog",      new(Format.PsdCmykog));
+        yield return Make("NoAntiAlias", new(Format.Psd) { AntiAlias = false });
+    }
+
+    #endregion
+
+    #region Others
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Make
+    ///
+    /// <summary>
+    /// Creates a new TestCaseData object.
+    /// </summary>
     ///
     /// <param name="name">
     /// Test name, which is used for a part of the destination path.
     /// </param>
     ///
-    /// <param name="src">
-    /// Name of the source file, which must be stored in the Examples
-    /// directory.
-    /// </param>
-    ///
     /// <param name="converter">Converter object.</param>
     ///
     /* --------------------------------------------------------------------- */
-    [TestCaseSource(nameof(TestCases))]
-    public void Test(string category, string name, string src, Converter converter)
+    private static TestCaseData Make(string name, ImageConverter converter)
     {
-        var sp = GetSource(src);
-        var dp = Get(category, $"{name}{converter.Format.GetExtension()}");
-
-        converter.Quiet = false;
-        converter.Log   = Get(category, $"{name}.log");
-        converter.Temp  = Get("Tmp");
-        converter.Invoke(sp, dp);
-
-        Assert.That(Io.Get(dp).Length, Is.AtLeast(1));
+        converter.Resolution = 96; // Reduce test time.
+        return new("Psd", name, "SampleMix.ps", converter);
     }
 
-    /* --------------------------------------------------------------------- */
-    ///
-    /// TestCases
-    ///
-    /// <summary>
-    /// Gets test cases of the Test method.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    static IEnumerable<TestCaseData> TestCases => Enumerable.Empty<TestCaseData>()
-        .Concat(PdfTestCase.Get())
-        .Concat(PsTestCase.Get())
-        .Concat(EpsTestCase.Get())
-        .Concat(TextTestCase.Get())
-        .Concat(BmpTestCase.Get())
-        .Concat(PngTestCase.Get())
-        .Concat(JpegTestCase.Get())
-        .Concat(TiffTestCase.Get())
-        .Concat(PsdTestCase.Get());
+    #endregion
 }

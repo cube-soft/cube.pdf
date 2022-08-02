@@ -44,6 +44,7 @@ namespace Cube.Pdf.Tests
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
+            Logger.Configure(new Logging.NLog.LoggerSource());
             _ = Logger.ObserveTaskException();
             typeof(GlobalSetup).LogInfo(Assembly.GetExecutingAssembly());
         }

@@ -39,6 +39,17 @@ public class TiffConverter : ImageConverter
     /// TiffConverter
     ///
     /// <summary>
+    /// Initializes a new instance of the TiffConverter class.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public TiffConverter() : this(Format.Tiff) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// TiffConverter
+    ///
+    /// <summary>
     /// Initializes a new instance of the TiffConverter class with the
     /// specified format.
     /// </summary>
