@@ -93,7 +93,7 @@ public class PdfConverter : DocumentConverter
     /// Compression
     ///
     /// <summary>
-    /// Gets or sets the compression method of embedded color or gray
+    /// Gets or sets the compression encoding of embedded color or gray
     /// images.
     /// </summary>
     ///
@@ -106,10 +106,10 @@ public class PdfConverter : DocumentConverter
 
     /* --------------------------------------------------------------------- */
     ///
-    /// MonoCompression
+    /// CompressionForMonochrome
     ///
     /// <summary>
-    /// Gets or sets the compression method of embedded mono images.
+    /// Gets or sets the compression encoding of embedded monochrome images.
     /// </summary>
     ///
     /// <remarks>
@@ -117,7 +117,7 @@ public class PdfConverter : DocumentConverter
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public Encoding MonoCompression { get; set; } = Encoding.G4Fax;
+    public Encoding CompressionForMonochrome { get; set; } = Encoding.G4Fax;
 
     /* --------------------------------------------------------------------- */
     ///
@@ -150,7 +150,7 @@ public class PdfConverter : DocumentConverter
         base.OnCreateArguments()
         .Concat(CreateImageArguments("Color", Compression))
         .Concat(CreateImageArguments("Gray",  Compression))
-        .Concat(CreateImageArguments("Mono",  MonoCompression))
+        .Concat(CreateImageArguments("Mono",  CompressionForMonochrome))
         .Concat(new[] { CreateVersion(), CreateFastWebView() })
         .OfType<Argument>();
 

@@ -102,14 +102,15 @@ public class TiffConverter : ImageConverter
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Encoding
+    /// Compression
     ///
     /// <summary>
-    /// Gets or sets the compression encoding.
+    /// Gets or sets the compression encoding. The value is valid only if
+    /// Format.Tiff1bppMohochrome is specified in the constructor.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public Encoding Encoding { get; set; }
+    public Encoding Compression { get; set; }
 
     #endregion
 
@@ -143,7 +144,7 @@ public class TiffConverter : ImageConverter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<Argument> CreateCompression() => Encoding switch
+    private IEnumerable<Argument> CreateCompression() => Compression switch
     {
         Encoding.G3Fax    => new[] { new Argument('s', "Compression", "g3"  ) },
         Encoding.G4Fax    => new[] { new Argument('s', "Compression", "g4"  ) },

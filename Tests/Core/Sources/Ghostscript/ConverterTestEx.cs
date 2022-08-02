@@ -146,11 +146,11 @@ class ConverterTestEx : FileFixture
     public void Test_PdfEncoding_Throws(Encoding color, Encoding mono) => Assert.That(
         () => new PdfConverter
         {
-            Compression     = color,
-            MonoCompression = mono,
-            Quiet           = false,
-            Log             = Get($"{color}_{mono}.log"),
-            Temp            = Get("Tmp"),
+            Compression              = color,
+            CompressionForMonochrome = mono,
+            Quiet                    = false,
+            Log                      = Get($"{color}_{mono}.log"),
+            Temp                     = Get("Tmp"),
         }.Invoke(GetSource("Sample.ps"), Get("Pdf", $"{color}_{mono}.pdf"))
     ,Throws.TypeOf<GsApiException>());
 

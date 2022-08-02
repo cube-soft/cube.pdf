@@ -76,7 +76,7 @@ static class TiffTestCase
             Encoding.G4Fax,
             Encoding.Lzw,
             Encoding.PackBits,
-        }) yield return Make($"Mono_{e}", new(Format.Tiff1bppMonochrome) { Encoding = e });
+        }) yield return Make($"Mono_{e}", new(Format.Tiff1bppMonochrome) { Compression = e });
     }
 
     /* --------------------------------------------------------------------- */
