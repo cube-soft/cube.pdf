@@ -90,7 +90,7 @@ When you lost files in some unexpected errors, please recover them from the back
 
 Dependencies of the CubePDF Utility are as follows.
 
-* iText7 (net45) or iTextSharp (net35)
+* iText7 (net47) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
     - https://www.nuget.org/packages/itext7/
@@ -119,13 +119,16 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2022-08-04 version 2.0.2
+    - Update PDFium to Chromium 104 compatible.
+    - Update iText to 7.2.3.
 * 2022-06-23 version 2.0.1
-    - Update PDFium to Chromium 102 compatible.
+    - Update PDFium to Chromium 103 compatible.
     - Fix an issue that files were not inserted in the order specified in the "Insert at other position" dialog.
 * 2022-06-01 version 2.0.0
     - Change recommended environment to .NET Framework 4.7 or later.
     - Update PDFium to Chromium 102 compatible.
-    - Update iText7 to 7.2.2.
+    - Update iText to 7.2.2.
     - Add settings for deleting duplicate resources.
     - Add settings for bookmark information in the source PDF files.
     - Add settings for displaying recently used PDF files.
@@ -145,7 +148,7 @@ Dependencies of the CubePDF Utility are as follows.
 * 2022-01-07 version 1.6.3
     - Fix an issue that increases the file size unnecessarily when merging image files.
     - Update PDFium to Chromium 97 compatible.
-    - Update itext7 7.1.17.
+    - Update iText 7.1.17.
 * 2021-11-19 version 1.6.2
     - Fix problems with thumbnails not being displayed when adding image files.
     - Update PDFium to Chromium 96 compatible.
