@@ -106,7 +106,7 @@ public class PdfConverter : DocumentConverter
 
     /* --------------------------------------------------------------------- */
     ///
-    /// CompressionForMonochrome
+    /// MonoCompression
     ///
     /// <summary>
     /// Gets or sets the compression encoding of embedded monochrome images.
@@ -117,7 +117,7 @@ public class PdfConverter : DocumentConverter
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public Encoding CompressionForMonochrome { get; set; } = Encoding.G4Fax;
+    public Encoding MonoCompression { get; set; } = Encoding.G4Fax;
 
     /* --------------------------------------------------------------------- */
     ///
@@ -133,7 +133,7 @@ public class PdfConverter : DocumentConverter
 
     #endregion
 
-    #region Implementations
+    #region Methods
 
     /* --------------------------------------------------------------------- */
     ///
@@ -143,59 +143,60 @@ public class PdfConverter : DocumentConverter
     /// Occurs when creating Ghostscript API arguments.
     /// </summary>
     ///
-    /// <returns>Collection of arguments.</returns>
+    /// <returns>Collection of Argument objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    protected override IEnumerable<Argument> OnCreateArguments() =>
-        base.OnCreateArguments()
-        .Concat(CreateImageArguments("Color", Compression))
-        .Concat(CreateImageArguments("Gray",  Compression))
-        .Concat(CreateImageArguments("Mono",  CompressionForMonochrome))
-        .Concat(new[] { CreateVersion(), CreateFastWebView() })
-        .OfType<Argument>();
+    protected override IEnumerable<Argument> OnCreateArguments() => base.OnCreateArguments()
+        .Concat(CreateImages("Color", Compression))
+        .Concat(CreateImages("Gray",  Compression))
+        .Concat(CreateImages("Mono",  MonoCompression))
+        .Concat(new Argument('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}"))
+        .Concat(Linearization ? new Argument('d', "FastWebView") : default);
+
+    #endregion
+
+    #region Implementations
 
     /* --------------------------------------------------------------------- */
     ///
-    /// CreateImageArguments
+    /// CreateImages
     ///
     /// <summary>
-    /// Creates the collection of arguments representing information
-    /// related to the images.
+    /// Creates a collection of Argument objects for embedded images.
     /// </summary>
     ///
+    /// <param name="kind">Color, Gray, or Mono.</param>
+    /// <param name="value">Compression encoding.</param>
+    /// 
+    /// <returns>Collection of Argument objects.</returns>
+    ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<Argument> CreateImageArguments(string key, Encoding value) => new[]
+    private IEnumerable<Argument> CreateImages(string kind, Encoding value) => new[]
     {
-        new Argument($"Encode{key}Images", value != Encoding.None),
-        new Argument($"AutoFilter{key}Images", false),
-        value.GetArgument($"{key}ImageFilter"),
+        new($"Encode{kind}Images", value != Encoding.None),
+        new($"AutoFilter{kind}Images", false),
+        CreateCompression($"{kind}ImageFilter", value),
     };
 
     /* --------------------------------------------------------------------- */
     ///
-    /// CreateVersion
+    /// CreateCompression
     ///
     /// <summary>
-    /// Creates a new instance of the Argument class representing
-    /// version number.
+    /// Creates an Argument object for the compression settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private Argument CreateVersion() =>
-        new('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}");
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// CreateFastWebView
-    ///
-    /// <summary>
-    /// Creates a new instance of the Argument class representing
-    /// the Linearized option.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private Argument CreateFastWebView() =>
-        Linearization ? new('d', "FastWebView") : default;
+    private Argument CreateCompression(string name, Encoding value) => value switch
+    {
+        Encoding.Flate  => new(name, "FlateEncode"),
+        Encoding.Lzw    => new(name, "LZWEncode"),
+        Encoding.Jpeg   => new(name, "DCTEncode"),
+        Encoding.G3Fax  => new(name, "CCITTFaxEncode"),
+        Encoding.G4Fax  => new(name, "CCITTFaxEncode"),
+        Encoding.Base85 => new(name, "ASCII85Encode"),
+        _ => default,
+    };
 
     #endregion
 }

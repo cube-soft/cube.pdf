@@ -171,12 +171,12 @@ internal class PdfTestCase
             Downsampling.None,
             Downsampling.Bicubic,
             Downsampling.Subsample,
-        }) yield return Make($"Encoding_{kv.Key}_{kv.Value}_{e}_{n}", "Sample600dpi.ps", new()
+        }) yield return Make($"Encoding_{kv.Key}_{kv.Value}_{e}_{n}", "SamplePhoto.ps", new()
         {
-            Resolution               = n,
-            Downsampling             = e,
-            Compression              = kv.Key,
-            CompressionForMonochrome = kv.Value,
+            Resolution      = n,
+            Downsampling    = e,
+            Compression     = kv.Key,
+            MonoCompression = kv.Value,
         });
     }
 

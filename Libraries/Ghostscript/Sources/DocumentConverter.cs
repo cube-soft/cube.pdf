@@ -30,8 +30,6 @@ using Cube.Mixin.Collections;
 /// Provides functionality to convert to document format such as PDF.
 /// </summary>
 ///
-/// <see href="https://www.ghostscript.com/doc/9.25/VectorDevices.htm" />
-///
 /* ------------------------------------------------------------------------- */
 public class DocumentConverter : Converter
 {
@@ -119,7 +117,7 @@ public class DocumentConverter : Converter
 
     #endregion
 
-    #region Implementations
+    #region Methods
 
     /* --------------------------------------------------------------------- */
     ///
@@ -129,56 +127,86 @@ public class DocumentConverter : Converter
     /// Occurs when creating Ghostscript API arguments.
     /// </summary>
     ///
-    /// <returns>Collection of arguments.</returns>
+    /// <returns>Collection of Argument objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    protected override IEnumerable<Argument> OnCreateArguments() =>
-        base.OnCreateArguments()
-        .Concat(ColorMode.GetArgument())
-        .Concat(CreateFontArguments())
-        .Concat(CreateImageArguments());
+    protected override IEnumerable<Argument> OnCreateArguments() => base.OnCreateArguments()
+        .Concat(CreateColorMode("ColorConversionStrategy"))
+        .Concat(CreateFonts())
+        .Concat(CreateImages());
 
     /* --------------------------------------------------------------------- */
     ///
     /// OnCreateCodes
     ///
     /// <summary>
-    /// Occurs when creating code to be executed with the Ghostscript
+    /// Occurs when creating a collection of Code objects via Ghostscript
     /// API.
     /// </summary>
     ///
-    /// <returns>Collection of arguments.</returns>
+    /// <returns>Collection of Code objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
     protected override IEnumerable<Code> OnCreateCodes() =>
-        base.OnCreateCodes()
-        .Concat(CreateEmbedFontsCodes())
-        .OfType<Code>();
+        base.OnCreateCodes().Concat(CreateFontCodes());
+
+    #endregion
+
+    #region Implementations
 
     /* --------------------------------------------------------------------- */
     ///
-    /// CreateFontArguments
+    /// CreateColorMode
     ///
     /// <summary>
-    /// Creates a new instance of the Argument class representing
-    /// information related to the fonts.
+    /// Creates an Argument object for color mode.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<Argument> CreateFontArguments()
+    private Argument CreateColorMode(string key) => ColorMode switch
     {
-        var dest = new List<Argument> { new Argument("EmbedAllFonts", EmbedFonts) };
-        if (EmbedFonts) dest.Add(new Argument("SubsetFonts", true));
-        return dest;
+        ColorMode.Rgb               => new(key, "RGB"),
+        ColorMode.Cmyk              => new(key, "CMYK"),
+        ColorMode.Grayscale         => new(key, "Gray"),
+        ColorMode.SameAsSource      => new(key, "LeaveColorUnchanged"),
+        ColorMode.DeviceIndependent => new(key, "UseDeviceIndependentColor"),
+        _ => default,
+    };
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// CreateDownsampling
+    ///
+    /// <summary>
+    /// Creates an Argument object for downsampling.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private Argument CreateDownsampling(string key) =>
+        Downsampling != Downsampling.None ? new(key, Downsampling.ToString()) : default;
+
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// CreateFonts
+    ///
+    /// <summary>
+    /// Creates a collection of Argument objects for fonts.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private IEnumerable<Argument> CreateFonts()
+    {
+        yield return new("EmbedAllFonts", EmbedFonts);
+        if (EmbedFonts) yield return new("SubsetFonts", true);
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// CreateImageArguments
+    /// CreateImages
     ///
     /// <summary>
-    /// Creates the collection of arguments representing information
-    /// related to the images.
+    /// Creates a collection of Argument objects for embedded images.
     /// </summary>
     ///
     /// <remarks>
@@ -188,25 +216,25 @@ public class DocumentConverter : Converter
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<Argument> CreateImageArguments() => new[]
+    private IEnumerable<Argument> CreateImages() => new[]
     {
-        new Argument("ColorImageResolution",  Resolution),
-        new Argument("GrayImageResolution",   Resolution),
-        new Argument("MonoImageResolution",   GetMonoResolution()),
-        new Argument("DownsampleColorImages", true),
-        new Argument("DownsampleGrayImages",  true),
-        new Argument("DownsampleMonoImages",  true),
-        Downsampling.GetArgument("ColorImageDownsampleType"),
-        Downsampling.GetArgument("GrayImageDownsampleType"),
-        Downsampling.GetArgument("MonoImageDownsampleType"),
-    }.OfType<Argument>();
+        new("ColorImageResolution",  Resolution),
+        new("GrayImageResolution",   Resolution),
+        new("MonoImageResolution",   Resolution),
+        new("DownsampleColorImages", true),
+        new("DownsampleGrayImages",  true),
+        new("DownsampleMonoImages",  true),
+        CreateDownsampling("ColorImageDownsampleType"),
+        CreateDownsampling("GrayImageDownsampleType"),
+        CreateDownsampling("MonoImageDownsampleType"),
+    };
 
     /* --------------------------------------------------------------------- */
     ///
-    /// CreateEmbedFontsCodes
+    /// CreateFontCodes
     ///
     /// <summary>
-    /// Creates the code representing related to the fonts.
+    /// Creates a collection of Code objects for embedded fonts.
     /// </summary>
     ///
     /// <remarks>
@@ -216,27 +244,14 @@ public class DocumentConverter : Converter
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<Code> CreateEmbedFontsCodes() =>
-        EmbedFonts ?
-        new[] {
-            new Code("3000000 setvmthreshold"),
-            new Code("<</NeverEmbed [ ]>> setdistillerparams"),
-        } :
-        Enumerable.Empty<Code>();
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// GetMonoResolution
-    ///
-    /// <summary>
-    /// Gets the resolution of monochrome images.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private int GetMonoResolution() =>
-        Resolution <  300 ?  300 :
-        Resolution < 1200 ? 1200 :
-        Resolution;
+    private IEnumerable<Code> CreateFontCodes()
+    {
+        if (EmbedFonts)
+        {
+            yield return new("3000000 setvmthreshold");
+            yield return new("<</NeverEmbed [ ]>> setdistillerparams");
+        }
+    }
 
     #endregion
 }

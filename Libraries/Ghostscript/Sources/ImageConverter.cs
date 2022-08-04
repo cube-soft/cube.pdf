@@ -26,8 +26,7 @@ using System.Linq;
 /// ImageConverter
 ///
 /// <summary>
-/// Provides functionality to convert to raster image format such as
-/// PNG.
+/// Provides functionality to convert to raster image format.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
@@ -126,7 +125,7 @@ public class ImageConverter : Converter
 
     #endregion
 
-    #region Implementations
+    #region Methods
 
     /* --------------------------------------------------------------------- */
     ///
@@ -136,30 +135,33 @@ public class ImageConverter : Converter
     /// Occurs when creating Ghostscript API arguments.
     /// </summary>
     ///
-    /// <returns>Collection of arguments.</returns>
+    /// <returns>Collection of Argument objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
     protected override IEnumerable<Argument> OnCreateArguments() =>
-        base.OnCreateArguments()
-            .Concat(CreateAntiAlias());
+        base.OnCreateArguments().Concat(CreateAntiAlias());
+
+    #endregion
+
+    #region Implementations
 
     /* --------------------------------------------------------------------- */
     ///
     /// CreateAntiAlias
     ///
     /// <summary>
-    /// Creates the collection of arguments representing anti-aliasing.
+    /// Creates a collection of Argument objects for anti-aliasing.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<Argument> CreateAntiAlias() =>
-        AntiAlias ?
-        new[]
+    private IEnumerable<Argument> CreateAntiAlias()
+    {
+        if (AntiAlias)
         {
-            new Argument("GraphicsAlphaBits", 4),
-            new Argument("TextAlphaBits", 4),
-        } :
-        Enumerable.Empty<Argument>();
+            yield return new("GraphicsAlphaBits", 4);
+            yield return new("TextAlphaBits", 4);
+        }
+    }
 
     #endregion
 }

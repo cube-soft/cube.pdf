@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cube.FileSystem;
 using Cube.Mixin.Collections;
+using Cube.Mixin.Generic;
 using Cube.Mixin.String;
 
 /* ------------------------------------------------------------------------- */
@@ -30,7 +31,7 @@ using Cube.Mixin.String;
 /// Converter
 ///
 /// <summary>
-/// Represents the base class that communicates with the Ghostscript API.
+/// Provides functionality to convert files via Ghostscript API.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
@@ -241,38 +242,43 @@ public class Converter
     /// Invoke
     ///
     /// <summary>
-    /// Executes to convert.
+    /// Invokes the conversion.
     /// </summary>
     ///
     /// <param name="src">Source file.</param>
     /// <param name="dest">Path to save the conversion result.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public void Invoke(string src, string dest) => Invoke(new[] { src }, dest);
+    public void Invoke(string src, string dest) => Invoke(src.ToEnumerable(), dest);
 
     /* --------------------------------------------------------------------- */
     ///
     /// Invoke
     ///
     /// <summary>
-    /// Executes to convert.
+    /// Invokes the conversion.
     /// </summary>
     ///
     /// <param name="sources">Collection of source files.</param>
     /// <param name="dest">Path to save the conversion result.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public void Invoke(IEnumerable<string> sources, string dest) =>
-        Invoke(() => GsApi.Invoke(Create()
+    public void Invoke(IEnumerable<string> sources, string dest)
+    {
+        // OfType<T> methods are used to remove null objects.
+        var args = Argument.Dummy.ToEnumerable()
             .Concat(new Argument('s', "OutputFile", dest))
-            .Concat(OnCreateArguments())
-            .Concat(CreateCodes())
+            .Concat(OnCreateArguments().OfType<Argument>())
+            .Concat(Adjust(OnCreateCodes().OfType<Code>()))
             .Concat(new Argument('f'))
             .Select(e => e.ToString())
             .Concat(sources)
-            .Where(e => { GetType().LogDebug(e); return true; }) // for debug
-            .ToArray()
-        , Temp), dest);
+            .ToArray();
+
+        GetType().LogDebug(args);
+        Io.CreateDirectory(Io.Get(dest).DirectoryName);
+        GsApi.Invoke(args, Temp);
+    }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -282,40 +288,26 @@ public class Converter
     /// Occurs when creating Ghostscript API arguments.
     /// </summary>
     ///
-    /// <returns>Collection of arguments.</returns>
+    /// <returns>Collection of Argument objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    protected virtual IEnumerable<Argument> OnCreateArguments() => new []
-    {
-        Format.GetArgument(),
-        new Argument('d', "SAFER"),
-        new Argument('d', "BATCH"),
-        new Argument('d', "NOPAUSE"),
-        CreateQuiet(),
-        CreateLog(),
-        CreateResources(),
-        CreateFonts(),
-        CreateResolution(),
-        Paper.GetArgument(),
-        Orientation.GetArgument(),
-    }
-    .Concat(Options)
-    .OfType<Argument>();
+    protected virtual IEnumerable<Argument> OnCreateArguments() =>
+        CreateBasicArgumetns().Concat(Options);
 
     /* --------------------------------------------------------------------- */
     ///
     /// OnCreateCodes
     ///
     /// <summary>
-    /// Occurs when creating code to be executed with the Ghostscript
+    /// Occurs when creating a collection of Code objects via Ghostscript
     /// API.
     /// </summary>
     ///
-    /// <returns>Collection of arguments.</returns>
+    /// <returns>Collection of Code objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
     protected virtual IEnumerable<Code> OnCreateCodes() =>
-        new[] { Orientation.GetCode() }.OfType<Code>();
+        CreateBasicCodes().Concat(Codes);
 
     #endregion
 
@@ -323,114 +315,57 @@ public class Converter
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Create
+    /// CreateBasicArgumetns
     ///
     /// <summary>
-    /// Creates the collection of Ghostscript arguments.
-    /// </summary>
-    ///
-    /// <remarks>
-    /// The Ghostscript API ignores the first argument, so it places
-    /// a dummy object at the beginning of the argument.
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    private IEnumerable<Argument> Create() { yield return Argument.Dummy; }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// CreateCodes
-    ///
-    /// <summary>
-    /// Creates the collection of code to be executed with the
-    /// Ghostscript API.
+    /// Creates a collection of Argument objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<Argument> CreateCodes()
+    private IEnumerable<Argument> CreateBasicArgumetns()
     {
-        var dest = OnCreateCodes();
-        return dest.Count() > 0 || Codes.Count > 0 ?
-               new[] { new Argument('c') }.Concat(dest).Concat(Codes) :
-               dest;
+        yield return Format.GetArgument();
+        yield return new('d', "SAFER");
+        yield return new('d', "BATCH");
+        yield return new('d', "NOPAUSE");
+        if (Quiet) yield return new('d', "QUIET");
+        if (Log.HasValue()) yield return new('s', "stdout", Log);
+        if (Resources.Count > 0) yield return new('I', "", Resources.Join(";"));
+        if (Fonts.Count > 0) yield return new('s', "FONTPATH", Fonts.Join(";"));
+        yield return new('r', Resolution);
+        if (Paper != Paper.Auto) yield return new('s', "PAPERSIZE", Paper.ToString().ToLowerInvariant());
+        yield return new("AutoRotatePages", Orientation == Orientation.Auto ? "PageByPage" : "None");
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// CreateResources
+    /// CreateBasicCodes
     ///
     /// <summary>
-    /// Creates a new instance of the Argument class representing
-    /// the resource directories.
+    /// Creates a collection of Code objects.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private Argument CreateResources() =>
-        Resources.Count > 0 ? new('I', string.Empty, string.Join(";", Resources)) : null;
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// CreateFonts
-    ///
-    /// <summary>
-    /// Creates a new instance of the Argument class representing
-    /// the font directories.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private Argument CreateFonts() =>
-        Fonts.Count > 0 ? new('s', "FONTPATH", string.Join(";", Fonts)) : default;
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// CreateLog
-    ///
-    /// <summary>
-    /// Creates a new instance of the Argument class representing
-    /// the path of the log file.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private Argument CreateLog() => Log.HasValue() ? new('s', "stdout", Log) : default;
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// CreateQuiet
-    ///
-    /// <summary>
-    /// Creates a new instance of the Argument class representing
-    /// the quiet mode.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private Argument CreateQuiet() => Quiet ? new('d', "QUIET") : default;
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// CreateResolution
-    ///
-    /// <summary>
-    /// Creates a new instance of the Argument class representing the
-    /// resolution.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private Argument CreateResolution() => new('r', Resolution);
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Invoke
-    ///
-    /// <summary>
-    /// Sets the working directory and invokes the specified action.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private void Invoke(Action action, string dest)
+    private IEnumerable<Code> CreateBasicCodes()
     {
-        Io.CreateDirectory(Io.Get(dest).DirectoryName);
-        action();
+        if (Orientation != Orientation.Auto)
+        {
+            yield return new($"<</Orientation {Orientation:d}>> setpagedevice");
+        }
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Adjust
+    ///
+    /// <summary>
+    /// Adjusts the specified Code collection so that it can be concatenated
+    /// as Ghostscript arguments.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private IEnumerable<Argument> Adjust(IEnumerable<Code> src) =>
+        src.Count() > 0 ? new Argument('c').ToEnumerable().Concat(src) : src;
 
     #endregion
 }

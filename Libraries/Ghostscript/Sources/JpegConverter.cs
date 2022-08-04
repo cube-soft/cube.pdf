@@ -111,7 +111,7 @@ public class JpegConverter : ImageConverter
 
     #endregion
 
-    #region Implementations
+    #region Methods
 
     /* --------------------------------------------------------------------- */
     ///
@@ -121,11 +121,10 @@ public class JpegConverter : ImageConverter
     /// Occurs when creating Ghostscript API arguments.
     /// </summary>
     ///
-    /// <returns>Collection of arguments.</returns>
+    /// <returns>Collection of Argument objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    protected override IEnumerable<Argument> OnCreateArguments() =>
-        base.OnCreateArguments()
+    protected override IEnumerable<Argument> OnCreateArguments() => base.OnCreateArguments()
         .Concat(new Argument("JPEGQ", Math.Min(Math.Max(Quality, 1), 100)));
 
     #endregion

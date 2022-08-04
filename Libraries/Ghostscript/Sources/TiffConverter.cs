@@ -20,6 +20,7 @@ namespace Cube.Pdf.Ghostscript;
 
 using System.Collections.Generic;
 using System.Linq;
+using Cube.Mixin.Collections;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -124,12 +125,11 @@ public class TiffConverter : ImageConverter
     /// Occurs when creating Ghostscript API arguments.
     /// </summary>
     ///
-    /// <returns>Collection of arguments.</returns>
+    /// <returns>Collection of Argument objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
     protected override IEnumerable<Argument> OnCreateArguments() =>
-        base.OnCreateArguments()
-            .Concat(CreateCompression());
+        base.OnCreateArguments().Concat(CreateCompression());
 
     #endregion
 
@@ -144,13 +144,13 @@ public class TiffConverter : ImageConverter
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<Argument> CreateCompression() => Compression switch
+    private Argument CreateCompression() => Compression switch
     {
-        Encoding.G3Fax    => new[] { new Argument('s', "Compression", "g3"  ) },
-        Encoding.G4Fax    => new[] { new Argument('s', "Compression", "g4"  ) },
-        Encoding.Lzw      => new[] { new Argument('s', "Compression", "lzw" ) },
-        Encoding.PackBits => new[] { new Argument('s', "Compression", "pack") },
-        _ => Enumerable.Empty<Argument>(),
+        Encoding.G3Fax    => new('s', "Compression", "g3"  ),
+        Encoding.G4Fax    => new('s', "Compression", "g4"  ),
+        Encoding.Lzw      => new('s', "Compression", "lzw" ),
+        Encoding.PackBits => new('s', "Compression", "pack"),
+        _ => default,
     };
 
     #endregion

@@ -18,9 +18,6 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Ghostscript;
 
-using System.Collections.Generic;
-using System.Diagnostics;
-
 /* ------------------------------------------------------------------------- */
 ///
 /// ColorMode
@@ -42,62 +39,4 @@ public enum ColorMode
     SameAsSource,
     /// <summary>Device independent color mode</summary>
     DeviceIndependent,
-}
-
-/* ------------------------------------------------------------------------- */
-///
-/// ColorModeExtension
-///
-/// <summary>
-/// Provides extended methods of the ColorMode enum.
-/// </summary>
-///
-/* ------------------------------------------------------------------------- */
-internal static class ColorModeExtension
-{
-    #region Methods
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// GetArgument
-    ///
-    /// <summary>
-    /// Gets the argument representing the color mode.
-    /// </summary>
-    ///
-    /// <param name="src">Color mode value.</param>
-    ///
-    /// <returns>Argument object.</returns>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static Argument GetArgument(this ColorMode src)
-    {
-        var status = Map.TryGetValue(src, out var value);
-        Debug.Assert(status);
-        return new Argument("ColorConversionStrategy", value);
-    }
-
-    #endregion
-
-    #region Implementations
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Map
-    ///
-    /// <summary>
-    /// Gets the collection of the color mode and related information.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private static Dictionary<ColorMode, string> Map { get; } = new Dictionary<ColorMode, string>
-    {
-        { ColorMode.Rgb,               "RGB"                       },
-        { ColorMode.Cmyk,              "CMYK"                      },
-        { ColorMode.Grayscale,         "Gray"                      },
-        { ColorMode.SameAsSource,      "LeaveColorUnchanged"       },
-        { ColorMode.DeviceIndependent, "UseDeviceIndependentColor" },
-    };
-
-    #endregion
 }

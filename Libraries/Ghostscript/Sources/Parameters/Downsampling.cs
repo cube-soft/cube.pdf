@@ -38,39 +38,3 @@ public enum Downsampling
     /// <summary>Subsample</summary>
     Subsample,
 }
-
-/* ------------------------------------------------------------------------- */
-///
-/// DownsamplingExtension
-///
-/// <summary>
-/// Provides extended methods of the Downsampling enum.
-/// </summary>
-///
-/* ------------------------------------------------------------------------- */
-internal static class DownsamplingExtension
-{
-    #region Methods
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// GetArgument
-    ///
-    /// <summary>
-    /// Gets a new instance of the Argument class from the specified
-    /// parameters.
-    /// </summary>
-    ///
-    /// <param name="src">Downsampling value.</param>
-    /// <param name="name">Name of the argument.</param>
-    ///
-    /// <returns>Argument object.</returns>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static Argument GetArgument(this Downsampling src, string name) =>
-        src != Downsampling.None ?
-        new Argument(name, src.ToString()) :
-        null;
-
-    #endregion
-}

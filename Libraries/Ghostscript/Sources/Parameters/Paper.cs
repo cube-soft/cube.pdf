@@ -96,38 +96,3 @@ public enum Paper
     /// <summary>Hagaki, the Japanese postcard (100x148 mm)</summary>
     Hagaki,
 }
-
-/* ------------------------------------------------------------------------- */
-///
-/// PaperExtension
-///
-/// <summary>
-/// Provides extended methods of the Paper enum.
-/// </summary>
-///
-/* ------------------------------------------------------------------------- */
-internal static class PaperExtension
-{
-    #region Methods
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// GetArgument
-    ///
-    /// <summary>
-    /// Gets a new instance of the Argument class from the specified
-    /// paper size.
-    /// </summary>
-    ///
-    /// <param name="src">Paper value.</param>
-    ///
-    /// <returns>Argument object.</returns>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static Argument GetArgument(this Paper src) =>
-        src != Paper.Auto ?
-        new Argument('s', "PAPERSIZE", src.ToString().ToLowerInvariant()) :
-        null;
-
-    #endregion
-}
