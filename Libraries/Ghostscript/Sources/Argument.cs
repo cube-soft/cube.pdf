@@ -226,15 +226,10 @@ public class Argument
     /// specified description.
     /// </summary>
     ///
-    /// <param name="description">Code description.</param>
-    ///
-    /// <remarks>
-    /// This is mainly used to hold PostScript code.
-    /// </remarks>
+    /// <param name="value">Argument value.</param>
     ///
     /* --------------------------------------------------------------------- */
-    protected Argument(string description) :
-        this(default, string.Empty, description, false) { }
+    protected Argument(string value) : this(default, string.Empty, value, false) { }
 
     #endregion
 
