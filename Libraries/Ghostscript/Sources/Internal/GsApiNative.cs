@@ -100,21 +100,3 @@ internal static class NativeMethods
     private const string LibName = "gsdll32";
     #endregion
 }
-
-/* ------------------------------------------------------------------------- */
-///
-/// GsInformation
-///
-/// <summary>
-/// Represents product information of the Ghostscript.
-/// </summary>
-///
-/* ------------------------------------------------------------------------- */
-[StructLayout(LayoutKind.Sequential)]
-internal struct GsInformation
-{
-    public IntPtr Product;
-    public IntPtr Copyright;
-    public int Revision;
-    public int RevisionDate;
-}

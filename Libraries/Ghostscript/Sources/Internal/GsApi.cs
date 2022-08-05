@@ -19,8 +19,6 @@
 namespace Cube.Pdf.Ghostscript;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using Cube.FileSystem;
 using Cube.Mixin.String;
@@ -73,33 +71,30 @@ internal static class GsApi
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Invoke(IEnumerable<string> args, string tmp)
+    public static void Invoke(string[] args, string tmp) => SetTemp(tmp, () =>
     {
-        lock (_lock)
-        {
-            SetTemp(tmp, () =>
-            {
-                _ = NativeMethods.NewInstance(out var core, IntPtr.Zero);
-                if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
+        _ = NativeMethods.NewInstance(out var core, IntPtr.Zero);
+        if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
 
-                try
-                {
-                    var array = args.ToArray();
-                    var code = NativeMethods.InitWithArgs(core, array.Length, array);
-                    if (IsError(code)) throw new GsApiException(code);
-                }
-                finally
-                {
-                    _ = NativeMethods.Exit(core);
-                    NativeMethods.DeleteInstance(core);
-                }
-            });
+        try
+        {
+            var code = NativeMethods.InitWithArgs(core, args.Length, args);
+            if (code < 0 && code != (int)GsApiStatus.Quit && code != (int)GsApiStatus.Info) throw new GsApiException(code);
         }
-    }
+        finally
+        {
+            _ = NativeMethods.Exit(core);
+            NativeMethods.DeleteInstance(core);
+        }
+    });
+
+    #endregion
+
+    #region Implementations
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Invoke
+    /// SetTemp
     ///
     /// <summary>
     /// Sets the working directory and invokes the specified action.
@@ -154,26 +149,7 @@ internal static class GsApi
 
     #endregion
 
-    #region Implementations
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// IsError
-    ///
-    /// <summary>
-    /// Determines whether the specified value represents an error code.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private static bool IsError(int code) =>
-        code < 0 &&
-        code != (int)GsApiStatus.Quit &&
-        code != (int)GsApiStatus.Info;
-
-    #endregion
-
     #region Fields
-    private static readonly object _lock = new();
     private static GsInformation _info = new();
     #endregion
 }
