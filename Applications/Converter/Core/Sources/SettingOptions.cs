@@ -16,47 +16,46 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Converter
-{
-    /* --------------------------------------------------------------------- */
-    ///
-    /// SaveOption
-    ///
-    /// <summary>
-    /// Specifies how to save when the specified path exists.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public enum SaveOption
-    {
-        /// <summary>Overwrite</summary>
-        Overwrite = 0,
-        /// <summary>Merge at the beginning</summary>
-        MergeHead = 1,
-        /// <summary>Merge at the end</summary>
-        MergeTail = 2,
-        /// <summary>Rename</summary>
-        Rename = 3,
-    }
+namespace Cube.Pdf.Converter;
 
-    /* --------------------------------------------------------------------- */
-    ///
-    /// PostProcess
-    ///
-    /// <summary>
-    /// Specifies the post process.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public enum PostProcess
-    {
-        /// <summary>Open</summary>
-        Open = 0,
-        /// <summary>Open the directory that the saved file exists</summary>
-        OpenDirectory = 3,
-        /// <summary>Nothing</summary>
-        None = 1,
-        /// <summary>Executes the user specified program</summary>
-        Others = 2,
-    }
+/* ------------------------------------------------------------------------- */
+///
+/// SaveOption
+///
+/// <summary>
+/// Specifies how to save when the specified path exists.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public enum SaveOption
+{
+    /// <summary>Overwrite</summary>
+    Overwrite = 0,
+    /// <summary>Merge at the beginning</summary>
+    MergeHead = 1,
+    /// <summary>Merge at the end</summary>
+    MergeTail = 2,
+    /// <summary>Rename</summary>
+    Rename = 3,
+}
+
+/* ------------------------------------------------------------------------- */
+///
+/// PostProcess
+///
+/// <summary>
+/// Specifies the post process.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public enum PostProcess
+{
+    /// <summary>Open</summary>
+    Open = 0,
+    /// <summary>Open the directory that the saved file exists</summary>
+    OpenDirectory = 3,
+    /// <summary>Nothing</summary>
+    None = 1,
+    /// <summary>Executes the user specified program</summary>
+    Others = 2,
 }
