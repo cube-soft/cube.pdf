@@ -119,7 +119,7 @@ internal static class GhostscriptFactory
                    CreatePdfConverter(src) :
                    new DocumentConverter(src.Value.Format);
 
-        dest.ColorMode    = src.Value.Grayscale ? ColorMode.Grayscale : ColorMode.SameAsSource;
+        dest.ColorMode    = src.Value.ColorMode;
         dest.Downsampling = src.Value.Downsampling;
         dest.EmbedFonts   = src.Value.EmbedFonts;
 
@@ -139,7 +139,7 @@ internal static class GhostscriptFactory
     private static PdfConverter CreatePdfConverter(SettingFolder src) => new()
     {
         Version     = src.Value.Metadata.Version,
-        Compression = src.Value.ImageFilter ? Encoding.Jpeg : Encoding.Flate,
+        Compression = src.Value.Encoding == Encoding.Jpeg ? Encoding.Jpeg : Encoding.Flate,
     };
 
     /* --------------------------------------------------------------------- */
@@ -154,7 +154,7 @@ internal static class GhostscriptFactory
     /* --------------------------------------------------------------------- */
     private static Converter CreateImageConverter(SettingFolder src)
     {
-        var key = new KeyValuePair<Format, bool>(src.Value.Format, src.Value.Grayscale);
+        var key = new KeyValuePair<Format, bool>(src.Value.Format, src.Value.ColorMode == ColorMode.Grayscale);
         var cvt = FormatMap.ContainsKey(key) ? FormatMap[key] : src.Value.Format;
         return new ImageConverter(cvt) { AntiAlias = true };
     }

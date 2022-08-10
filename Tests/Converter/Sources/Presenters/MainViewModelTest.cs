@@ -140,9 +140,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format          = Format.Pdf,
-                    Grayscale       = true,
+                    ColorMode       = ColorMode.Grayscale,
                     Resolution      = 72,
-                    ImageFilter     = false,
+                    Encoding        = Encoding.Flate,
                 },
                 GetArgs("PDF テスト")
             );
@@ -151,9 +151,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format          = Format.Pdf,
-                    Grayscale       = false,
+                    ColorMode       = ColorMode.SameAsSource,
                     Resolution      = 72,
-                    ImageFilter     = true,
+                    Encoding        = Encoding.Jpeg,
                 },
                 GetArgs("PDF テスト (Jpeg)")
             );
@@ -162,9 +162,9 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format          = Format.Pdf,
-                    Grayscale       = true,
+                    ColorMode       = ColorMode.Grayscale,
                     Resolution      = 72,
-                    ImageFilter     = false,
+                    Encoding        = Encoding.Flate,
                     Downsampling    = Downsampling.Bicubic,
                 },
                 GetArgs("PDF テスト (Bicubic)")
@@ -174,7 +174,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Pdf,
-                    Grayscale        = true,
+                    ColorMode        = ColorMode.Grayscale,
                     Resolution       = 72,
                     PostProcess      = PostProcess.Others,
                 },
@@ -185,7 +185,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Pdf,
-                    Grayscale        = true,
+                    ColorMode        = ColorMode.Grayscale,
                     Resolution       = 72,
                     EmbedFonts       = false,
                 },
@@ -196,7 +196,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Pdf,
-                    Grayscale        = false,
+                    ColorMode        = ColorMode.SameAsSource,
                     Resolution       = 72,
                     SaveOption       = SaveOption.MergeHead,
                 },
@@ -208,7 +208,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Pdf,
-                    Grayscale        = false,
+                    ColorMode        = ColorMode.SameAsSource,
                     Resolution       = 72,
                     SaveOption       = SaveOption.MergeTail,
                 },
@@ -220,7 +220,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Pdf,
-                    Grayscale        = false,
+                    ColorMode        = ColorMode.SameAsSource,
                     Resolution       = 72,
                     SaveOption       = SaveOption.Rename,
                 },
@@ -232,7 +232,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Pdf,
-                    Grayscale        = false,
+                    ColorMode        = ColorMode.SameAsSource,
                     Resolution       = 72,
                     Linearization    = true,
                     Metadata         = new Metadata
@@ -252,7 +252,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Pdf,
-                    Grayscale        = false,
+                    ColorMode        = ColorMode.SameAsSource,
                     Resolution       = 72,
                     Linearization    = true, // ignore
                     Encryption       = new Encryption
@@ -288,7 +288,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Ps,
-                    Grayscale        = false,
+                    ColorMode        = ColorMode.SameAsSource,
                     Resolution       = 72,
                 },
                 GetArgs("PS テスト")
@@ -298,7 +298,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Ps,
-                    Grayscale        = true,
+                    ColorMode        = ColorMode.Grayscale,
                     Resolution       = 72,
                 },
                 GetArgs("PS テスト (Gray)")
@@ -328,7 +328,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Png,
-                    Grayscale        = false,
+                    ColorMode        = ColorMode.SameAsSource,
                     Resolution       = 72,
                 },
                 GetArgs("PNG テスト")
@@ -338,7 +338,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Png,
-                    Grayscale        = false,
+                    ColorMode        = ColorMode.SameAsSource,
                     Resolution       = 144,
                 },
                 GetArgs("PNG テスト (144 dpi)")
@@ -348,7 +348,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Png,
-                    Grayscale        = true,
+                    ColorMode        = ColorMode.Grayscale,
                     Resolution       = 72,
                 },
                 GetArgs("PNG テスト (Gray)")
@@ -358,7 +358,7 @@ namespace Cube.Pdf.Converter.Tests.Presenters
                 new SettingValue
                 {
                     Format           = Format.Png,
-                    Grayscale        = true,
+                    ColorMode        = ColorMode.Grayscale,
                     Resolution       = 72,
                 },
                 GetArgs("PNG テスト (複数ファイル)"),

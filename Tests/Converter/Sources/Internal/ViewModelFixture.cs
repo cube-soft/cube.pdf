@@ -341,12 +341,12 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         private void Set(SettingViewModel vm, SettingValue src)
         {
-            vm.Language          = src.Language;
+            vm.Language          = src.View.Language;
             vm.Format            = src.Format;
             vm.SaveOption        = src.SaveOption;
             vm.Resolution        = src.Resolution;
-            vm.Grayscale         = src.Grayscale;
-            vm.ImageFilter       = src.ImageFilter;
+            vm.Grayscale         = src.ColorMode == ColorMode.Grayscale;
+            vm.ImageFilter       = src.Encoding == Encoding.Jpeg;
             vm.IsAutoOrientation = src.Orientation == Orientation.Auto;
             vm.IsLandscape       = src.Orientation == Orientation.Landscape;
             vm.IsPortrait        = src.Orientation == Orientation.Portrait;

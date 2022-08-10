@@ -90,23 +90,25 @@ namespace Cube.Pdf.Converter.Tests
             var dest = src.Value;
             Assert.That(dest.Format,             Is.EqualTo(Format.Pdf));
             Assert.That(dest.SaveOption,         Is.EqualTo(SaveOption.Overwrite));
-            Assert.That(dest.Grayscale,          Is.False);
+            Assert.That(dest.ColorMode,          Is.EqualTo(ColorMode.SameAsSource));
             Assert.That(dest.EmbedFonts,         Is.True);
-            Assert.That(dest.ImageFilter,        Is.True);
-            Assert.That(dest.Downsampling,       Is.EqualTo(Downsampling.None));
+            Assert.That(dest.Encoding,           Is.EqualTo(Encoding.Jpeg));
+            Assert.That(dest.Downsampling,       Is.EqualTo(Downsampling.Bicubic));
             Assert.That(dest.Resolution,         Is.AtLeast(72));
             Assert.That(dest.Orientation,        Is.EqualTo(Orientation.Auto));
             Assert.That(dest.Linearization,      Is.False);
-            Assert.That(dest.Language,           Is.EqualTo(Language.Auto));
             Assert.That(dest.PostProcess,        Is.EqualTo(PostProcess.None));
             Assert.That(dest.UserProgram,        Is.Empty);
-            Assert.That(dest.ExplicitDirectory,  Is.False);
             Assert.That(dest.PlatformCompatible, Is.True);
             Assert.That(dest.DeleteSource,       Is.False);
-            Assert.That(dest.SourceVisible,      Is.False);
             Assert.That(dest.Source,             Is.Empty);
             Assert.That(dest.Destination,        Is.EqualTo(desktop));
             Assert.That(dest.Temp,               Is.EqualTo(temp));
+
+            var view = dest.View;
+            Assert.That(view.Language,           Is.EqualTo(Language.Auto));
+            Assert.That(view.ExplicitDirectory,  Is.False);
+            Assert.That(view.SourceVisible,      Is.False);
 
             var md = dest.Metadata;
             Assert.That(md.Title,                Is.Empty);

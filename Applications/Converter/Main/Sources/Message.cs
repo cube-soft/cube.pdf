@@ -147,7 +147,7 @@ namespace Cube.Pdf.Converter
                 Filters     = Resource.SourceFilters,
             };
 
-            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
+            if (src.Value.View.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
             return dest;
         }
 
@@ -176,7 +176,7 @@ namespace Cube.Pdf.Converter
                 Filters         = Resource.DestinationFilters,
             };
 
-            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
+            if (src.Value.View.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
             return dest;
         }
 
@@ -205,7 +205,7 @@ namespace Cube.Pdf.Converter
                 Filters     = Resource.UserProgramFilters,
             };
 
-            if (src.Value.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
+            if (src.Value.View.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
             return dest;
         }
 

@@ -67,14 +67,13 @@ namespace Cube.Pdf.Converter
         public MainViewModel(SettingFolder src, SynchronizationContext context) :
             base(new(src), new(12), context)
         {
-            Locale.Set(src.Value.Language);
+            Locale.Set(src.Value.View.Language);
 
             Settings   = new(src, Aggregator, context);
             Metadata   = new(src.Value.Metadata, Aggregator, context);
             Encryption = new(src.Value.Encryption, Aggregator, context);
 
-            Assets.Add(new ObservableProxy(Facade, this));
-            Assets.Add(src.Subscribe(e => {
+            Assets.Add(src.Value.Subscribe(e => {
                 switch (e)
                 {
                     case nameof(src.Value.Format):
@@ -83,8 +82,20 @@ namespace Cube.Pdf.Converter
                     case nameof(src.Value.PostProcess):
                         if (src.Value.PostProcess == PostProcess.Others) SelectUserProgram();
                         break;
-                    case nameof(src.Value.Language):
-                        Locale.Set(src.Value.Language);
+                    default:
+                        Refresh(e);
+                        break;
+                }
+            }));
+
+            Assets.Add(src.Value.View.Subscribe(e => {
+                switch (e)
+                {
+                    case nameof(src.Value.View.Language):
+                        Locale.Set(src.Value.View.Language);
+                        break;
+                    default:
+                        Refresh(e);
                         break;
                 }
             }));

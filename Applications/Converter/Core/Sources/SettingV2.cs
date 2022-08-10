@@ -25,15 +25,16 @@ using Cube.Pdf.Ghostscript;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// SettingValue
+/// SettingV2
 ///
 /// <summary>
-/// Represents the user settings.
+/// Represents the user settings. This format is version 2 and is currently
+/// used only for migration purposes.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
 [DataContract]
-public class SettingValue : DataContract.SerializableBase
+class SettingV2 : DataContract.SerializableBase
 {
     #region DataMember
 
@@ -42,11 +43,11 @@ public class SettingValue : DataContract.SerializableBase
     /// Format
     ///
     /// <summary>
-    /// Gets or sets the format of the conversion result.
+    /// Gets or sets the converting format.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [DataMember]
+    [DataMember(Name = "FileType")]
     public Format Format
     {
         get => Get(() => Format.Pdf);
@@ -58,30 +59,14 @@ public class SettingValue : DataContract.SerializableBase
     /// SaveOption
     ///
     /// <summary>
-    /// Gets or sets a value representing save options.
+    /// Gets or sets a value that represents save options.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [DataMember]
+    [DataMember(Name = "ExistedFile")]
     public SaveOption SaveOption
     {
         get => Get(() => SaveOption.Overwrite);
-        set => Set(value);
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// ColorMode
-    ///
-    /// <summary>
-    /// Gets or sets the color mode.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [DataMember]
-    public ColorMode ColorMode
-    {
-        get => Get(() => ColorMode.SameAsSource);
         set => Set(value);
     }
 
@@ -103,33 +88,22 @@ public class SettingValue : DataContract.SerializableBase
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Encoding
-    ///
-    /// <summary>
-    /// Gets or sets the compression encoding.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [DataMember]
-    public Encoding Encoding
-    {
-        get => Get(() => Encoding.Jpeg);
-        set => Set(value);
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// Downsampling
     ///
     /// <summary>
-    /// Gets or sets a value representing the method for downsampling.
+    /// Gets or sets a value that represents the method of downsampling.
     /// </summary>
+    ///
+    /// <remarks>
+    /// Since it is not expected to have a significant effect, it is
+    /// fixed at None and cannot be selected by the user.
+    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     [DataMember]
     public Downsampling Downsampling
     {
-        get => Get(() => Downsampling.Bicubic);
+        get => Get(() => Downsampling.None);
         set => Set(value);
     }
 
@@ -146,6 +120,22 @@ public class SettingValue : DataContract.SerializableBase
     public int Resolution
     {
         get => Get(() => 600);
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Grayscale
+    ///
+    /// <summary>
+    /// Gets or sets a value indicating whether to convert in grayscale.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public bool Grayscale
+    {
+        get => Get(() => false);
         set => Set(value);
     }
 
@@ -172,6 +162,23 @@ public class SettingValue : DataContract.SerializableBase
 
     /* --------------------------------------------------------------------- */
     ///
+    /// ImageFilter
+    ///
+    /// <summary>
+    /// Gets or sets a value indicating whether to compress embedded
+    /// images as JPEG format.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public bool ImageFilter
+    {
+        get => Get(() => true);
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// Linearization
     ///
     /// <summary>
@@ -180,8 +187,43 @@ public class SettingValue : DataContract.SerializableBase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [DataMember]
+    [DataMember(Name = "WebOptimize")]
     public bool Linearization
+    {
+        get => Get(() => false);
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SourceVisible
+    ///
+    /// <summary>
+    /// Gets or sets a value indicating whether to display the
+    /// path of the source file.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public bool SourceVisible
+    {
+        get => Get(() => false);
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ExplicitDirectory
+    ///
+    /// <summary>
+    /// Gets or sets a value indicating whether to set a value to the
+    /// InitialDirectory property explicitly when showing a dialog
+    /// that selects the file or directory name.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public bool ExplicitDirectory
     {
         get => Get(() => false);
         set => Set(value);
@@ -201,6 +243,22 @@ public class SettingValue : DataContract.SerializableBase
     public bool PlatformCompatible
     {
         get => Get(() => true);
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Language
+    ///
+    /// <summary>
+    /// Gets or sets the displayed language.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public Language Language
+    {
+        get => Get(() => Language.Auto);
         set => Set(value);
     }
 
@@ -242,11 +300,11 @@ public class SettingValue : DataContract.SerializableBase
     /// Destination
     ///
     /// <summary>
-    /// Gets or sets the path to save the conversion result.
+    /// Gets or sets the path to save the converted file.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [DataMember]
+    [DataMember(Name = "LastAccess")]
     public string Destination
     {
         get => Get(() => Environment.SpecialFolder.Desktop.GetName());
@@ -288,73 +346,6 @@ public class SettingValue : DataContract.SerializableBase
     public Metadata Metadata
     {
         get => Get(() => new Metadata());
-        set => Set(value);
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Metadata
-    ///
-    /// <summary>
-    /// Gets or sets the user settings related to the view of the CubePDF
-    /// main window.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [DataMember]
-    public ViewSettingValue View
-    {
-        get => Get(() => new ViewSettingValue());
-        set => Set(value);
-    }
-
-    #endregion
-
-    #region Non-DataMember
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Encryption
-    ///
-    /// <summary>
-    /// Gets or sets the encryption information.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public Encryption Encryption
-    {
-        get => Get(() => new Encryption());
-        set => Set(value);
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Source
-    ///
-    /// <summary>
-    /// Gets or sets the path of the source file.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public string Source
-    {
-        get => Get(() => string.Empty);
-        set => Set(value);
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// DeleteSource
-    ///
-    /// <summary>
-    /// Gets or sets a value indicating whether to delete the source
-    /// file after converting.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public bool DeleteSource
-    {
-        get => Get(() => false);
         set => Set(value);
     }
 

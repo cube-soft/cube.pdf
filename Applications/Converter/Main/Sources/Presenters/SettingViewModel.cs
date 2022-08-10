@@ -227,8 +227,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool Grayscale
         {
-            get => Facade.Settings.Grayscale;
-            set => Facade.Settings.Grayscale = value;
+            get => Facade.Settings.ColorMode == ColorMode.Grayscale;
+            set => Facade.Settings.ColorMode = value ? ColorMode.Grayscale : ColorMode.SameAsSource;
         }
 
         /* ----------------------------------------------------------------- */
@@ -243,8 +243,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public bool ImageFilter
         {
-            get => Facade.Settings.ImageFilter;
-            set => Facade.Settings.ImageFilter = value;
+            get => Facade.Settings.Encoding == Encoding.Jpeg;
+            set => Facade.Settings.Encoding = value ? Encoding.Jpeg : Encoding.Flate;
         }
 
         /* ----------------------------------------------------------------- */
@@ -290,8 +290,8 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public Language Language
         {
-            get => Facade.Settings.Language;
-            set => Facade.Settings.Language = value;
+            get => Facade.Settings.View.Language;
+            set => Facade.Settings.View.Language = value;
         }
 
         /* ----------------------------------------------------------------- */
@@ -304,7 +304,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool SourceVisible => Facade.Settings.SourceVisible;
+        public bool SourceVisible => Facade.Settings.View.SourceVisible;
 
         /* ----------------------------------------------------------------- */
         ///
