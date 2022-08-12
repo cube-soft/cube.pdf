@@ -44,6 +44,21 @@ public static class SettingMigration
     /// </summary>
     ///
     /// <param name="src">Object for version 3 user settings.</param>
+    /// <param name="location">Serialized path for version 2.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static void Migrate(this SettingFolder src, string location) =>
+        Migrate(src, src.Format, location);
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Migrate
+    ///
+    /// <summary>
+    /// Migrates user settings from version 2 to version 3.
+    /// </summary>
+    ///
+    /// <param name="src">Object for version 3 user settings.</param>
     /// <param name="format">Serialized format for version 2.</param>
     /// <param name="location">Serialized path for version 2.</param>
     ///

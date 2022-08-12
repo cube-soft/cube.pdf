@@ -61,7 +61,7 @@ namespace Cube.Pdf.Converter
 
             var args = new ArgumentCollection(raw, Argument.Windows, true);
             using var src = Create(args);
-            src.Load();
+            src.Migrate(@"CubeSoft\CubePDF\v2");
             src.Normalize();
             src.Set(args);
 
