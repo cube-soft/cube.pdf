@@ -64,7 +64,7 @@ public class SettingFolder : SettingFolder<SettingValue>
     /// <param name="assembly">Assembly object.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public SettingFolder(Assembly assembly) : this(assembly, Format.Registry, @"CubeSoft\CubePDF\v2") { }
+    public SettingFolder(Assembly assembly) : this(assembly, Format.Registry, @"CubeSoft\CubePDF\v3") { }
 
     /* --------------------------------------------------------------------- */
     ///
