@@ -73,6 +73,7 @@ namespace Cube.Pdf.Converter
             Metadata   = new(src.Value.Metadata, Aggregator, context);
             Encryption = new(src.Value.Encryption, Aggregator, context);
 
+            Assets.Add(new ObservableProxy(Facade, this));
             Assets.Add(src.Value.Subscribe(e => {
                 switch (e)
                 {
