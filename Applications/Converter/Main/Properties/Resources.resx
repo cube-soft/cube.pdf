@@ -122,6 +122,9 @@
   <data name="MenuAuto" xml:space="preserve">
     <value>Auto</value>
   </data>
+  <data name="MenuGrayscale" xml:space="preserve">
+    <value>Grayscale</value>
+  </data>
   <data name="MenuLandscape" xml:space="preserve">
     <value>Landscape</value>
   </data>
@@ -130,6 +133,9 @@
   </data>
   <data name="MenuMergeTail" xml:space="preserve">
     <value>Merge tail</value>
+  </data>
+  <data name="MenuMonochrome" xml:space="preserve">
+    <value>Monochrome</value>
   </data>
   <data name="MenuNone" xml:space="preserve">
     <value>None</value>
@@ -154,6 +160,9 @@
   </data>
   <data name="MenuRename" xml:space="preserve">
     <value>Rename</value>
+  </data>
+  <data name="MenuRgb" xml:space="preserve">
+    <value>RGB</value>
   </data>
   <data name="MenuSinglePage" xml:space="preserve">
     <value>Single page</value>

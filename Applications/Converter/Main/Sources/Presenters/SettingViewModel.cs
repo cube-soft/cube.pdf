@@ -217,23 +217,22 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Grayscale
+        /// ColorMode
         ///
         /// <summary>
-        /// Gets or sets a value indicating whether to enable the
-        /// grayscale option.
+        /// Gets or sets the color mode.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool Grayscale
+        public ColorMode ColorMode
         {
-            get => Facade.Settings.ColorMode == ColorMode.Grayscale;
-            set => Facade.Settings.ColorMode = value ? ColorMode.Grayscale : ColorMode.SameAsSource;
+            get => Facade.Settings.ColorMode;
+            set => Facade.Settings.ColorMode = value;
         }
 
         /* ----------------------------------------------------------------- */
         ///
-        /// ImageFilter
+        /// JpegCompression
         ///
         /// <summary>
         /// Gets or sets a value indicating whether to compress images
@@ -241,7 +240,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public bool ImageFilter
+        public bool JpegCompression
         {
             get => Facade.Settings.Encoding == Encoding.Jpeg;
             set => Facade.Settings.Encoding = value ? Encoding.Jpeg : Encoding.Flate;

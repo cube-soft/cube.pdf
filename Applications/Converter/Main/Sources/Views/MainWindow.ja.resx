@@ -61,6 +61,18 @@
   <data name="GeneralTabPage.Text" xml:space="preserve">
     <value>一般</value>
   </data>
+  <data name="ColorModeLabel.Text" xml:space="preserve">
+    <value>カラーモード</value>
+  </data>
+  <data name="LinearizationCheckBox.Text" xml:space="preserve">
+    <value>PDF ファイルを Web 表示用に最適化する</value>
+  </data>
+  <data name="JpegCheckBox.Text" xml:space="preserve">
+    <value>PDF ファイル中の画像を JPEG 形式で圧縮する</value>
+  </data>
+  <data name="OptionLabel.Text" xml:space="preserve">
+    <value>オプション</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="PortraitRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 19</value>
@@ -69,7 +81,7 @@
     <value>縦</value>
   </data>
   <data name="LandscapeRadioButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>55, 5</value>
+    <value>55, 3</value>
   </data>
   <data name="LandscapeRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 19</value>
@@ -78,7 +90,7 @@
     <value>横</value>
   </data>
   <data name="AutoRadioButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 5</value>
+    <value>107, 3</value>
   </data>
   <data name="AutoRadioButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>49, 19</value>
@@ -155,14 +167,14 @@
   <data name="AllowAnnotationCheckBox.Text" xml:space="preserve">
     <value>注釈の追加、編集を許可する</value>
   </data>
-  <data name="AllowFormCheckBox.Text" xml:space="preserve">
-    <value>フォームへの入力を許可する</value>
-  </data>
   <data name="AllowAccessibilityCheckBox.Text" xml:space="preserve">
     <value>アクセシビリティのための内容の抽出を許可する</value>
   </data>
   <data name="AllowModifyCheckBox.Text" xml:space="preserve">
     <value>ページの挿入、回転、削除を許可する</value>
+  </data>
+  <data name="AllowFormCheckBox.Text" xml:space="preserve">
+    <value>フォームへの入力を許可する</value>
   </data>
   <data name="AllowCopyCheckBox.Text" xml:space="preserve">
     <value>テキストや画像のコピーを許可する</value>
@@ -175,18 +187,6 @@
   </data>
   <data name="LanguageLabel.Text" xml:space="preserve">
     <value>表示言語</value>
-  </data>
-  <data name="GrayscaleCheckBox.Text" xml:space="preserve">
-    <value>グレースケール</value>
-  </data>
-  <data name="OptionLabel.Text" xml:space="preserve">
-    <value>オプション</value>
-  </data>
-  <data name="JpegCheckBox.Text" xml:space="preserve">
-    <value>PDF ファイル中の画像を JPEG 形式で圧縮する</value>
-  </data>
-  <data name="LinearizationCheckBox.Text" xml:space="preserve">
-    <value>PDF ファイルを Web 表示用に最適化する</value>
   </data>
   <data name="UpdateCheckBox.Text" xml:space="preserve">
     <value>起動時にアップデートを確認する</value>

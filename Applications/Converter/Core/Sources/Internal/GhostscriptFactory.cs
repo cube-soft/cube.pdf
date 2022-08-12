@@ -154,7 +154,7 @@ internal static class GhostscriptFactory
     /* --------------------------------------------------------------------- */
     private static Converter CreateImageConverter(SettingFolder src)
     {
-        var key = new KeyValuePair<Format, bool>(src.Value.Format, src.Value.ColorMode == ColorMode.Grayscale);
+        var key = new KeyValuePair<Format, ColorMode>(src.Value.Format, src.Value.ColorMode);
         var cvt = FormatMap.ContainsKey(key) ? FormatMap[key] : src.Value.Format;
         return new ImageConverter(cvt) { AntiAlias = true };
     }
@@ -191,16 +191,16 @@ internal static class GhostscriptFactory
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    private static readonly Dictionary<KeyValuePair<Format, bool>, Format> FormatMap = new()
+    private static readonly Dictionary<KeyValuePair<Format, ColorMode>, Format> FormatMap = new()
     {
-        { new(Format.Jpeg, false), Format.Jpeg24bppRgb      },
-        { new(Format.Jpeg, true ), Format.Jpeg8bppGrayscale },
-        { new(Format.Png,  false), Format.Png24bppRgb       },
-        { new(Format.Png,  true ), Format.Png8bppGrayscale  },
-        { new(Format.Bmp,  false), Format.Bmp24bppRgb       },
-        { new(Format.Bmp,  true ), Format.Bmp8bppGrayscale  },
-        { new(Format.Tiff, false), Format.Tiff24bppRgb      },
-        { new(Format.Tiff, true ), Format.Tiff8bppGrayscale },
+        { new(Format.Jpeg, ColorMode.Grayscale),  Format.Jpeg8bppGrayscale  },
+        { new(Format.Jpeg, ColorMode.Monochrome), Format.Jpeg8bppGrayscale  },
+        { new(Format.Png,  ColorMode.Grayscale),  Format.Png8bppGrayscale   },
+        { new(Format.Png,  ColorMode.Monochrome), Format.Png1bppMonochrome  },
+        { new(Format.Bmp,  ColorMode.Grayscale),  Format.Bmp8bppGrayscale   },
+        { new(Format.Bmp,  ColorMode.Monochrome), Format.Bmp1bppMonochrome  },
+        { new(Format.Tiff, ColorMode.Grayscale),  Format.Tiff8bppGrayscale  },
+        { new(Format.Tiff, ColorMode.Monochrome), Format.Tiff1bppMonochrome },
     };
 
     #endregion

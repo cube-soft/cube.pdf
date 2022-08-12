@@ -200,6 +200,24 @@ namespace Cube.Pdf.Converter
 
         /* ----------------------------------------------------------------- */
         ///
+        /// ColorModes
+        ///
+        /// <summary>
+        /// Gets a collection in which each item consists of a display
+        /// string and a ColorMode pair.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static ComboListSource<ColorMode> ColorModes => new()
+        {
+            { Properties.Resources.MenuAuto,       ColorMode.SameAsSource },
+            { Properties.Resources.MenuRgb,        ColorMode.Rgb },
+            { Properties.Resources.MenuGrayscale,  ColorMode.Grayscale },
+            { Properties.Resources.MenuMonochrome, ColorMode.Monochrome },
+        };
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Languages
         ///
         /// <summary>

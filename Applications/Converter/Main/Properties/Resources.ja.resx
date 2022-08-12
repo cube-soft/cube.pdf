@@ -113,6 +113,9 @@
   <data name="MenuAuto" xml:space="preserve">
     <value>自動</value>
   </data>
+  <data name="MenuGrayscale" xml:space="preserve">
+    <value>グレースケール</value>
+  </data>
   <data name="MenuLandscape" xml:space="preserve">
     <value>横</value>
   </data>
@@ -121,6 +124,9 @@
   </data>
   <data name="MenuMergeTail" xml:space="preserve">
     <value>末尾に結合</value>
+  </data>
+  <data name="MenuMonochrome" xml:space="preserve">
+    <value>白黒</value>
   </data>
   <data name="MenuNone" xml:space="preserve">
     <value>何もしない</value>

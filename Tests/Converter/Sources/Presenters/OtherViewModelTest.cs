@@ -78,11 +78,11 @@ namespace Cube.Pdf.Converter.Tests.Presenters
             Assert.That(dest.IsAutoOrientation,    Is.True,  nameof(dest.IsAutoOrientation));
             Assert.That(dest.IsPortrait,           Is.False, nameof(dest.IsPortrait));
             Assert.That(dest.IsLandscape,          Is.False, nameof(dest.IsLandscape));
-            Assert.That(dest.Grayscale,            Is.False, nameof(dest.Grayscale));
-            Assert.That(dest.ImageFilter,          Is.True,  nameof(dest.ImageFilter));
+            Assert.That(dest.ColorMode,            Is.EqualTo(ColorMode.SameAsSource));
+            Assert.That(dest.JpegCompression,      Is.True,  nameof(dest.JpegCompression));
             Assert.That(dest.Linearization,        Is.False, nameof(dest.Linearization));
             Assert.That(dest.IsPdf,                Is.True,  nameof(dest.IsPdf));
-            Assert.That(dest.IsUserProgram,  Is.False, nameof(dest.IsUserProgram));
+            Assert.That(dest.IsUserProgram,        Is.False, nameof(dest.IsUserProgram));
             Assert.That(dest.SourceEditable,       Is.False, nameof(dest.SourceEditable));
             Assert.That(dest.SourceVisible,        Is.False, nameof(dest.SourceVisible));
 

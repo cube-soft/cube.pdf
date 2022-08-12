@@ -139,7 +139,7 @@ internal sealed class FileDecorator
         {
             var tmp = GetTemp(src);
             gs.Linearization = true;
-            gs.ColorMode     = ColorMode.SameAsSource;
+            gs.ColorMode = ColorMode.SameAsSource;
             gs.Invoke(src, tmp);
             FileTransfer.MoveOrCopy(tmp, src, true);
         }
