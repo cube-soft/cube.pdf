@@ -35,6 +35,8 @@ public enum ColorMode
     Cmyk,
     /// <summary>Grayscale</summary>
     Grayscale,
+    /// <summary>Monochrome</summary>
+    Monochrome,
     /// <summary>Same as the source file</summary>
     SameAsSource,
     /// <summary>Device independent color mode</summary>

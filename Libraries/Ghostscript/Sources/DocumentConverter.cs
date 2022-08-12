@@ -168,6 +168,7 @@ public class DocumentConverter : Converter
         ColorMode.Rgb               => new(key, "RGB"),
         ColorMode.Cmyk              => new(key, "CMYK"),
         ColorMode.Grayscale         => new(key, "Gray"),
+        ColorMode.Monochrome        => new(key, "Gray"), // Monochrome currently not supported
         ColorMode.SameAsSource      => new(key, "LeaveColorUnchanged"),
         ColorMode.DeviceIndependent => new(key, "UseDeviceIndependentColor"),
         _ => default,
