@@ -16,112 +16,111 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Converter;
+
 using Cube.FileSystem;
 using Cube.Mixin.Assembly;
 
-namespace Cube.Pdf.Converter
+/* ------------------------------------------------------------------------- */
+///
+/// SettingFacade
+///
+/// <summary>
+/// Provides functionality to communicate with the SettingViewModel
+/// class.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public class SettingFacade : DisposableBase
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// SettingFacade
     ///
     /// <summary>
-    /// Provides functionality to communicate with the SettingViewModel
-    /// class.
+    /// Initializes a new instance of the SettingFacade class with the
+    /// specified settings.
+    /// </summary>
+    ///
+    /// <param name="src">User settings.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public SettingFacade(SettingFolder src)
+    {
+        var exe = Io.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe");
+
+        Settings = src;
+        Startup  = new("cubepdf-checker") { Source = exe };
+        Startup.Arguments.Add("cubepdf");
+    }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Settings
+    ///
+    /// <summary>
+    /// Gets the user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class SettingFacade : DisposableBase
+    public SettingFolder Settings { get; }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Startup
+    ///
+    /// <summary>
+    /// Gets the object to register or remove startup settings.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public Startup Startup { get; }
+
+    #endregion
+
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Save
+    ///
+    /// <summary>
+    /// Saves the settings.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public void Save()
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingFacade
-        ///
-        /// <summary>
-        /// Initializes a new instance of the SettingFacade class with the
-        /// specified settings.
-        /// </summary>
-        ///
-        /// <param name="src">User settings.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingFacade(SettingFolder src)
-        {
-            var exe = Io.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe");
-
-            Settings = src;
-            Startup  = new("cubepdf-checker") { Source = exe };
-            Startup.Arguments.Add("cubepdf");
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Settings
-        ///
-        /// <summary>
-        /// Gets the user settings.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingFolder Settings { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Startup
-        ///
-        /// <summary>
-        /// Gets the object to register or remove startup settings.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Startup Startup { get; }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Save
-        ///
-        /// <summary>
-        /// Saves the settings.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Save()
-        {
-            Settings.Save();
-            Startup.Save(true);
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the DocumentReader
-        /// and optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { }
-
-        #endregion
+        Settings.Save();
+        Startup.Save(true);
     }
+
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Dispose
+    ///
+    /// <summary>
+    /// Releases the unmanaged resources used by the DocumentReader
+    /// and optionally releases the managed resources.
+    /// </summary>
+    ///
+    /// <param name="disposing">
+    /// true to release both managed and unmanaged resources;
+    /// false to release only unmanaged resources.
+    /// </param>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected override void Dispose(bool disposing) { }
+
+    #endregion
 }

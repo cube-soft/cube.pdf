@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Converter;
+
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -24,125 +26,123 @@ using Cube.DataContract;
 using Cube.Mixin.Collections;
 using Cube.Pdf.Converter.Mixin;
 
-namespace Cube.Pdf.Converter
+/* ------------------------------------------------------------------------- */
+///
+/// Program
+///
+/// <summary>
+/// Represents the main program.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+static class Program
 {
+    #region Methods
+
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
+    /// Main
     ///
     /// <summary>
-    /// Represents the main program.
+    /// Executes the main program of the application.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    [STAThread]
+    static void Main(string[] raw) => Source.LogError(() =>
     {
-        #region Methods
+        Logger.Configure(new Logging.NLog.LoggerSource());
+        _ = Logger.ObserveTaskException();
+        Source.LogInfo(Assembly.GetExecutingAssembly());
+        Source.LogInfo($"Ghostscript {GetGsVersion()}");
+        Source.LogInfo($"[ {raw.Join(" ")} ]");
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Main
-        ///
-        /// <summary>
-        /// Executes the main program of the application.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] raw) => Source.LogError(() =>
-        {
-            _ = Logger.ObserveTaskException();
-            Source.LogInfo(Assembly.GetExecutingAssembly());
-            Source.LogInfo($"Ghostscript {GetGsVersion()}");
-            Source.LogInfo($"[ {raw.Join(" ")} ]");
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+        var args = new ArgumentCollection(raw, Argument.Windows, true);
+        using var src = Create(args);
+        src.Migrate(@"CubeSoft\CubePDF\v2");
+        src.Normalize();
+        src.Set(args);
 
-            var args = new ArgumentCollection(raw, Argument.Windows, true);
-            using var src = Create(args);
-            src.Migrate(@"CubeSoft\CubePDF\v2");
-            src.Normalize();
-            src.Set(args);
+        if (args.Options.ContainsKey("SkipUI")) Execute(src);
+        else Show(src);
+    });
 
-            if (args.Options.ContainsKey("SkipUI")) Execute(src);
-            else Show(src);
-        });
+    #endregion
 
-        #endregion
+    #region Implementations
 
-        #region Implementations
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Create
+    ///
+    /// <summary>
+    /// Creates a new instance of the SettingFolder class with the
+    /// specified arguments.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private static SettingFolder Create(ArgumentCollection src) =>
+        src.Options.TryGetValue("Setting", out var subkey) ?
+        new(Format.Registry, subkey) :
+        new();
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new instance of the SettingFolder class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static SettingFolder Create(ArgumentCollection src) =>
-            src.Options.TryGetValue("Setting", out var subkey) ?
-            new(Format.Registry, subkey) :
-            new();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Show
-        ///
-        /// <summary>
-        /// Shows the main window.
-        /// </summary>
-        ///
-        /// <param name="src">User settings.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Show(SettingFolder src)
-        {
-            var view = new MainWindow();
-            view.Bind(new MainViewModel(src));
-            Application.Run(view);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Execute
-        ///
-        /// <summary>
-        /// Executes the conversion directly.
-        /// </summary>
-        ///
-        /// <param name="src">User settings.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static void Execute(SettingFolder src)
-        {
-            using var facade = new Facade(src);
-            facade.Invoke();
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetGsVersion
-        ///
-        /// <summary>
-        /// Gets a version number of the Ghostscript.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private static int GetGsVersion()
-        {
-            try { return Ghostscript.Converter.Revision; }
-            catch (Exception err) { Source.LogWarn(err); }
-            return -1;
-        }
-
-        #endregion
-
-        #region Fields
-        private static readonly Type Source = typeof(Program);
-        #endregion
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Show
+    ///
+    /// <summary>
+    /// Shows the main window.
+    /// </summary>
+    ///
+    /// <param name="src">User settings.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    private static void Show(SettingFolder src)
+    {
+        var view = new MainWindow();
+        view.Bind(new MainViewModel(src));
+        Application.Run(view);
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Execute
+    ///
+    /// <summary>
+    /// Executes the conversion directly.
+    /// </summary>
+    ///
+    /// <param name="src">User settings.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    private static void Execute(SettingFolder src)
+    {
+        using var facade = new Facade(src);
+        facade.Invoke();
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GetGsVersion
+    ///
+    /// <summary>
+    /// Gets a version number of the Ghostscript.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private static int GetGsVersion()
+    {
+        try { return Ghostscript.Converter.Revision; }
+        catch (Exception err) { Source.LogWarn(err); }
+        return -1;
+    }
+
+    #endregion
+
+    #region Fields
+    private static readonly Type Source = typeof(Program);
+    #endregion
 }
