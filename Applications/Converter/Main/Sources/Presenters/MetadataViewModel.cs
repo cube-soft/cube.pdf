@@ -19,6 +19,7 @@
 using System;
 using System.Linq;
 using System.Threading;
+using Cube.Mixin.Observable;
 using Cube.Mixin.String;
 
 namespace Cube.Pdf.Converter
@@ -55,7 +56,7 @@ namespace Cube.Pdf.Converter
             SynchronizationContext context
         ) : base(src, aggregator, context)
         {
-            Assets.Add(new ObservableProxy(Facade, this));
+            Assets.Add(Facade.Forward(this));
         }
 
         #endregion

@@ -43,24 +43,6 @@ namespace Cube.Pdf.Converter.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// Main
-        ///
-        /// <summary>
-        /// Confirms the properties of the MainViewModel class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Main() => Invoke(vm =>
-        {
-            Assert.That(vm.Title,   Does.StartWith(nameof(Main)));
-            Assert.That(vm.Title,   Does.Contain("CubePDF 3.0.0"));
-            Assert.That(vm.Version, Does.StartWith("3.0.0 (").And.EndsWith(")"));
-            Assert.That(vm.Uri.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
-        });
-
-        /* ----------------------------------------------------------------- */
-        ///
         /// General
         ///
         /// <summary>
@@ -73,18 +55,23 @@ namespace Cube.Pdf.Converter.Tests.Presenters
         {
             var dest = vm.Settings;
             GetType().LogDebug($"CheckUpdate:{dest.CheckUpdate}");
-            Assert.That(dest.Resolution,           Is.EqualTo(600));
-            Assert.That(dest.Language,             Is.EqualTo(Language.Auto));
-            Assert.That(dest.IsAutoOrientation,    Is.True,  nameof(dest.IsAutoOrientation));
-            Assert.That(dest.IsPortrait,           Is.False, nameof(dest.IsPortrait));
-            Assert.That(dest.IsLandscape,          Is.False, nameof(dest.IsLandscape));
-            Assert.That(dest.ColorMode,            Is.EqualTo(ColorMode.SameAsSource));
-            Assert.That(dest.JpegCompression,      Is.True,  nameof(dest.JpegCompression));
-            Assert.That(dest.Linearization,        Is.False, nameof(dest.Linearization));
-            Assert.That(dest.IsPdf,                Is.True,  nameof(dest.IsPdf));
-            Assert.That(dest.IsUserProgram,        Is.False, nameof(dest.IsUserProgram));
-            Assert.That(dest.SourceEditable,       Is.False, nameof(dest.SourceEditable));
-            Assert.That(dest.SourceVisible,        Is.False, nameof(dest.SourceVisible));
+            Assert.That(dest.Resolution,        Is.EqualTo(600));
+            Assert.That(dest.Language,          Is.EqualTo(Language.Auto));
+            Assert.That(dest.IsAutoOrientation, Is.True,  nameof(dest.IsAutoOrientation));
+            Assert.That(dest.IsPortrait,        Is.False, nameof(dest.IsPortrait));
+            Assert.That(dest.IsLandscape,       Is.False, nameof(dest.IsLandscape));
+            Assert.That(dest.ColorMode,         Is.EqualTo(ColorMode.SameAsSource));
+            Assert.That(dest.IsJpegEncoding,    Is.True,  nameof(dest.IsJpegEncoding));
+            Assert.That(dest.Linearization,     Is.False, nameof(dest.Linearization));
+            Assert.That(dest.IsPdf,             Is.True,  nameof(dest.IsPdf));
+            Assert.That(dest.IsUserProgram,     Is.False, nameof(dest.IsUserProgram));
+            Assert.That(dest.SourceEditable,    Is.False, nameof(dest.SourceEditable));
+            Assert.That(dest.SourceVisible,     Is.False, nameof(dest.SourceVisible));
+
+            Assert.That(dest.Title,   Does.StartWith(nameof(General)));
+            Assert.That(dest.Title,   Does.Contain("CubePDF 3.0.0"));
+            Assert.That(dest.Version, Does.StartWith("3.0.0 (").And.EndsWith(")"));
+            Assert.That(dest.Uri.ToString(), Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
 
             dest.Format = Format.Png;
             Assert.That(dest.IsPdf, Is.False, nameof(dest.IsPdf));

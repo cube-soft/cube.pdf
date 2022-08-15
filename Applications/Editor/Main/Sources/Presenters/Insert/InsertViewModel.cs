@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Input;
-using Cube.Mixin.Observing;
+using Cube.Mixin.Observable;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cube.FileSystem;
-using Cube.Mixin.Observing;
+using Cube.Mixin.Observable;
 using Cube.Mixin.String;
 using Cube.Mixin.Syntax;
 using Cube.Xui;

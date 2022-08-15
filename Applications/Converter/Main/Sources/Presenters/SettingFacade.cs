@@ -51,25 +51,14 @@ namespace Cube.Pdf.Converter
         {
             var exe = Io.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe");
 
-            Source  = src;
-            Startup = new("cubepdf-checker") { Source = exe };
+            Settings = src;
+            Startup  = new("cubepdf-checker") { Source = exe };
             Startup.Arguments.Add("cubepdf");
         }
 
         #endregion
 
         #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Source
-        ///
-        /// <summary>
-        /// Gets the provided source.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected SettingFolder Source { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -80,7 +69,7 @@ namespace Cube.Pdf.Converter
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public SettingValue Settings => Source.Value;
+        public SettingFolder Settings { get; }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -108,7 +97,7 @@ namespace Cube.Pdf.Converter
         /* ----------------------------------------------------------------- */
         public void Save()
         {
-            Source.Save();
+            Settings.Save();
             Startup.Save(true);
         }
 

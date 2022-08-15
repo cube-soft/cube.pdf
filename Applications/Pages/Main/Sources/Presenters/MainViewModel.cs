@@ -22,7 +22,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Cube.Mixin.Observing;
+using Cube.Mixin.Observable;
 
 namespace Cube.Pdf.Pages
 {
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Pages
             Files = new() { DataSource = Facade.Files };
             Facade.Query = new Query<string>(e => Send(new PasswordViewModel(e, context)));
 
-            Assets.Add(new ObservableProxy(Facade, this));
+            Assets.Add(Facade.Forward(this));
             Assets.Add(ObserveCollection());
             Assets.Add(src.Subscribe(e => {
                 if (e == nameof(src.Value.Language)) Locale.Set(src.Value.Language);

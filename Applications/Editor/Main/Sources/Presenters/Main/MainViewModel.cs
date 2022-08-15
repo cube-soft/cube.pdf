@@ -21,8 +21,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using Cube.Mixin.Environment;
-using Cube.Mixin.Observing;
-using Cube.Mixin.String;
+using Cube.Mixin.Observable;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

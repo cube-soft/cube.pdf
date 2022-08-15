@@ -168,35 +168,35 @@ namespace Cube.Pdf.Converter
             // General
             var s0 = vm;
             var b0 = Behaviors.Hook(new BindingSource(s0, ""));
-            b0.Bind(nameof(s0.Busy),    this,         nameof(Busy), true);
-            b0.Bind(nameof(s0.Version), VersionPanel, nameof(VersionPanel.Version), true);
-            b0.Bind(nameof(s0.Uri),     VersionPanel, nameof(VersionPanel.Uri), true);
+            b0.Bind(nameof(s0.Busy), this, nameof(Busy), true);
 
             // General and Settings tab
             var s1 = vm.Settings;
             var b1 = Behaviors.Hook(new BindingSource(s1, ""));
-            b1.Bind(nameof(s1.Destination),         DestinationTextBox,    nameof(DestinationTextBox.Text));
-            b1.Bind(nameof(s1.SaveOption),          SaveOptionComboBox,    nameof(SaveOptionComboBox.SelectedValue));
-            b1.Bind(nameof(s1.Format),              FormatComboBox,        nameof(FormatComboBox.SelectedValue));
-            b1.Bind(nameof(s1.IsPdf),               PdfVersionComboBox,    nameof(PdfVersionComboBox.Enabled), true);
-            b1.Bind(nameof(s1.ColorMode),           ColorModeComboBox,     nameof(ColorModeComboBox.SelectedValue));
-            b1.Bind(nameof(s1.Resolution),          ResolutionNumeric,     nameof(ResolutionNumeric.Value));
-            b1.Bind(nameof(s1.IsPortrait),          PortraitRadioButton,   nameof(PortraitRadioButton.Checked));
-            b1.Bind(nameof(s1.IsLandscape),         LandscapeRadioButton,  nameof(LandscapeRadioButton.Checked));
-            b1.Bind(nameof(s1.IsAutoOrientation),   AutoRadioButton,       nameof(AutoRadioButton.Checked));
-            b1.Bind(nameof(s1.JpegCompression),     JpegCheckBox,          nameof(JpegCheckBox.Checked));
-            b1.Bind(nameof(s1.IsPdf),               JpegCheckBox,          nameof(JpegCheckBox.Enabled), true);
-            b1.Bind(nameof(s1.Linearization),       LinearizationCheckBox, nameof(LinearizationCheckBox.Checked));
-            b1.Bind(nameof(s1.IsPdf),               LinearizationCheckBox, nameof(LinearizationCheckBox.Enabled), true);
-            b1.Bind(nameof(s1.PostProcess),         PostProcessComboBox,   nameof(PostProcessComboBox.SelectedValue));
-            b1.Bind(nameof(s1.IsUserProgram),       UserProgramPanel,      nameof(UserProgramPanel.Enabled), true);
-            b1.Bind(nameof(s1.UserProgram),         UserProgramTextBox,    nameof(UserProgramTextBox.Text));
-            b1.Bind(nameof(s1.SourceVisible),       SourceLabel,           nameof(SourceLabel.Visible), true);
-            b1.Bind(nameof(s1.SourceVisible),       SourcePanel,           nameof(SourcePanel.Visible), true);
-            b1.Bind(nameof(s1.SourceEditable),      SourcePanel,           nameof(SourcePanel.Enabled), true);
-            b1.Bind(nameof(s1.Source),              SourceTextBox,         nameof(SourceTextBox.Text));
-            b1.Bind(nameof(s1.CheckUpdate),         UpdateCheckBox,        nameof(UpdateCheckBox.Checked));
-            b1.Bind(nameof(s1.Language),            LanguageComboBox,      nameof(LanguageComboBox.SelectedValue));
+            b1.Bind(nameof(s1.Destination),         DestinationTextBox,     nameof(DestinationTextBox.Text));
+            b1.Bind(nameof(s1.SaveOption),          SaveOptionComboBox,     nameof(SaveOptionComboBox.SelectedValue));
+            b1.Bind(nameof(s1.Format),              FormatComboBox,         nameof(FormatComboBox.SelectedValue));
+            b1.Bind(nameof(s1.IsPdf),               PdfVersionComboBox,     nameof(PdfVersionComboBox.Enabled), true);
+            b1.Bind(nameof(s1.ColorMode),           ColorModeComboBox,      nameof(ColorModeComboBox.SelectedValue));
+            b1.Bind(nameof(s1.Resolution),          ResolutionNumeric,      nameof(ResolutionNumeric.Value));
+            b1.Bind(nameof(s1.IsPortrait),          PortraitRadioButton,    nameof(PortraitRadioButton.Checked));
+            b1.Bind(nameof(s1.IsLandscape),         LandscapeRadioButton,   nameof(LandscapeRadioButton.Checked));
+            b1.Bind(nameof(s1.IsAutoOrientation),   AutoRadioButton,        nameof(AutoRadioButton.Checked));
+            b1.Bind(nameof(s1.IsJpegEncoding),      JpegCheckBox,           nameof(JpegCheckBox.Checked));
+            b1.Bind(nameof(s1.IsPdf),               JpegCheckBox,           nameof(JpegCheckBox.Enabled), true);
+            b1.Bind(nameof(s1.Linearization),       LinearizationCheckBox,  nameof(LinearizationCheckBox.Checked));
+            b1.Bind(nameof(s1.IsPdf),               LinearizationCheckBox,  nameof(LinearizationCheckBox.Enabled), true);
+            b1.Bind(nameof(s1.PostProcess),         PostProcessComboBox,    nameof(PostProcessComboBox.SelectedValue));
+            b1.Bind(nameof(s1.IsUserProgram),       UserProgramPanel,       nameof(UserProgramPanel.Enabled), true);
+            b1.Bind(nameof(s1.UserProgram),         UserProgramTextBox,     nameof(UserProgramTextBox.Text));
+            b1.Bind(nameof(s1.SourceVisible),       SourceLabel,            nameof(SourceLabel.Visible), true);
+            b1.Bind(nameof(s1.SourceVisible),       SourcePanel,            nameof(SourcePanel.Visible), true);
+            b1.Bind(nameof(s1.SourceEditable),      SourcePanel,            nameof(SourcePanel.Enabled), true);
+            b1.Bind(nameof(s1.Source),              SourceTextBox,          nameof(SourceTextBox.Text));
+            b1.Bind(nameof(s1.CheckUpdate),         UpdateCheckBox,         nameof(UpdateCheckBox.Checked));
+            b1.Bind(nameof(s1.Language),            LanguageComboBox,       nameof(LanguageComboBox.SelectedValue));
+            b1.Bind(nameof(s1.Version),             VersionPanel,           nameof(VersionPanel.Version), true);
+            b1.Bind(nameof(s1.Uri),                 VersionPanel,           nameof(VersionPanel.Uri), true);
 
             // Metadata
             var s2 = vm.Metadata;
@@ -249,7 +249,7 @@ namespace Cube.Pdf.Converter
             this.Update(vm.Settings.Language);
             Resource.UpdateCulture(vm.Settings.Language);
 
-            Text = vm.Title;
+            Text = vm.Settings.Title;
             PathLintToolTip.ToolTipTitle = Properties.Resources.ErrorInvalidChars;
 
             FormatComboBox.Bind(Resource.Formats);

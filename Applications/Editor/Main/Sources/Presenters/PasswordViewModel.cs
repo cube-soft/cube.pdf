@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
-using Cube.Mixin.Observing;
+using Cube.Mixin.Observable;
 using Cube.Mixin.String;
 using Cube.Xui;
 

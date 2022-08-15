@@ -17,14 +17,12 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Input;
 using Cube.FileSystem;
-using Cube.Mixin.Generic;
-using Cube.Mixin.Observing;
+using Cube.Mixin.Observable;
 using Cube.Pdf.Mixin;
 using Cube.Xui;
 

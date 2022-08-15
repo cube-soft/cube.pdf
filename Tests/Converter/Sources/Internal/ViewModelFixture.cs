@@ -346,7 +346,7 @@ namespace Cube.Pdf.Converter.Tests
             vm.SaveOption        = src.SaveOption;
             vm.Resolution        = src.Resolution;
             vm.ColorMode         = src.ColorMode;
-            vm.JpegCompression   = src.Encoding == Encoding.Jpeg;
+            vm.IsJpegEncoding   = src.Encoding == Encoding.Jpeg;
             vm.IsAutoOrientation = src.Orientation == Orientation.Auto;
             vm.IsLandscape       = src.Orientation == Orientation.Landscape;
             vm.IsPortrait        = src.Orientation == Orientation.Portrait;

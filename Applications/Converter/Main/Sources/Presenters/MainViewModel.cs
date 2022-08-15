@@ -19,7 +19,7 @@
 using System;
 using System.Linq;
 using System.Threading;
-using Cube.Mixin.Observing;
+using Cube.Mixin.Observable;
 using Cube.Pdf.Converter.Mixin;
 
 namespace Cube.Pdf.Converter
@@ -73,33 +73,13 @@ namespace Cube.Pdf.Converter
             Metadata   = new(src.Value.Metadata, Aggregator, context);
             Encryption = new(src.Value.Encryption, Aggregator, context);
 
-            Assets.Add(new ObservableProxy(Facade, this));
-            Assets.Add(src.Value.Subscribe(e => {
-                switch (e)
-                {
-                    case nameof(src.Value.Format):
-                        ChangeExtension();
-                        break;
-                    case nameof(src.Value.PostProcess):
-                        if (src.Value.PostProcess == PostProcess.Others) SelectUserProgram();
-                        break;
-                    default:
-                        Refresh(e);
-                        break;
-                }
-            }));
+            void select_if() { if (src.Value.PostProcess == PostProcess.Others) SelectUserProgram(); }
 
-            Assets.Add(src.Value.View.Subscribe(e => {
-                switch (e)
-                {
-                    case nameof(src.Value.View.Language):
-                        Locale.Set(src.Value.View.Language);
-                        break;
-                    default:
-                        Refresh(e);
-                        break;
-                }
-            }));
+            Assets.Add(Facade.Forward(this));
+            Assets.Add(src.Subscribe(new() {
+                { nameof(src.Value.Format),      _ => ChangeExtension() },
+                { nameof(src.Value.PostProcess), _ => select_if() },
+            }, default));
         }
 
         #endregion
@@ -139,39 +119,6 @@ namespace Cube.Pdf.Converter
         ///
         /* ----------------------------------------------------------------- */
         public EncryptionViewModel Encryption { get; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Title
-        ///
-        /// <summary>
-        /// Gets the view title of the main window.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Title => Facade.Settings.GetTitle();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Version
-        ///
-        /// <summary>
-        /// Gets the version of the application.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Version => Facade.Settings.Version.ToString(3, true);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Uri
-        ///
-        /// <summary>
-        /// Gets the URL of the application.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Uri Uri => Resource.ProductUri;
 
         /* ----------------------------------------------------------------- */
         ///

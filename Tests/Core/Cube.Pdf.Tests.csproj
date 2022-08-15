@@ -25,8 +25,7 @@
         <ProjectReference Include="..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
         <ProjectReference Include="..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Cube.Logging.NLog" Version="8.0.0" />
-        <PackageReference Include="Cube.Tests" Version="8.0.0" />
+        <PackageReference Include="Cube.Private.Tests" Version="8.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
         <PackageReference Include="NUnit3TestAdapter" Version="*" />
         <PackageReference Include="Appveyor.TestLogger" Version="*" />
