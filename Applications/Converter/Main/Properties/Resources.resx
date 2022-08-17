@@ -103,15 +103,6 @@
   <data name="FilterTiff" xml:space="preserve">
     <value>TIFF files</value>
   </data>
-  <data name="GlobalMenuAuto" xml:space="preserve">
-    <value>Auto</value>
-  </data>
-  <data name="GlobalMenuEnglish" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="GlobalMenuJapanese" xml:space="preserve">
-    <value>Japanese</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Header" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -129,10 +120,10 @@
     <value>Landscape</value>
   </data>
   <data name="MenuMergeHead" xml:space="preserve">
-    <value>Merge head</value>
+    <value>Merge at the beginning</value>
   </data>
   <data name="MenuMergeTail" xml:space="preserve">
-    <value>Merge tail</value>
+    <value>Merge at the end</value>
   </data>
   <data name="MenuMonochrome" xml:space="preserve">
     <value>Monochrome</value>
@@ -179,24 +170,6 @@
   <data name="MenuTwoPageRight" xml:space="preserve">
     <value>Two page (right)</value>
   </data>
-  <data name="MessageExists" xml:space="preserve">
-    <value>{0} already exists.</value>
-  </data>
-  <data name="MessageMergeHead" xml:space="preserve">
-    <value>Do you want to merge at the beginning of the existing file?</value>
-  </data>
-  <data name="MessageMergeTail" xml:space="preserve">
-    <value>Do you want to merge at the end of the existing file?</value>
-  </data>
-  <data name="MessageOverwrite" xml:space="preserve">
-    <value>Do you want to overwrite the file?</value>
-  </data>
-  <data name="MessageSave" xml:space="preserve">
-    <value>Some value is entered in the Title, Author, Subject, or Keywords field. Do you want to save the settings?</value>
-  </data>
-  <data name="TitleError" xml:space="preserve">
-    <value>CubePDF error</value>
-  </data>
   <data name="TitleSelectDestination" xml:space="preserve">
     <value>Save as</value>
   </data>
@@ -206,7 +179,19 @@
   <data name="TitleSelectUserProgram" xml:space="preserve">
     <value>Select user program</value>
   </data>
-  <data name="TitleWarning" xml:space="preserve">
-    <value>CubePDF warning</value>
+  <data name="WarnExists" xml:space="preserve">
+    <value>{0} already exists.</value>
+  </data>
+  <data name="WarnMergeHead" xml:space="preserve">
+    <value>Do you want to merge at the beginning of the existing file?</value>
+  </data>
+  <data name="WarnMergeTail" xml:space="preserve">
+    <value>Do you want to merge at the end of the existing file?</value>
+  </data>
+  <data name="WarnOverwrite" xml:space="preserve">
+    <value>Do you want to overwrite the file?</value>
+  </data>
+  <data name="WarnSaveSettings" xml:space="preserve">
+    <value>Some value is entered in the Title, Author, Subject, or Keywords field. Do you want to save the settings?</value>
   </data>
 </root>

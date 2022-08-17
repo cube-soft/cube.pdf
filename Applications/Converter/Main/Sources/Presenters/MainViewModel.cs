@@ -61,17 +61,17 @@ public sealed class MainViewModel : PresentableBase<Facade>
     /// </summary>
     ///
     /// <param name="src">User settings.</param>
-    /// <param name="context">Synchronization context.</param>
+    /// <param name="ctx">Synchronization context.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public MainViewModel(SettingFolder src, SynchronizationContext context) :
-        base(new(src), new(12), context)
+    public MainViewModel(SettingFolder src, SynchronizationContext ctx) :
+        base(new(src), new(12), ctx)
     {
         Locale.Set(src.Value.View.Language);
 
-        Settings   = new(src, Aggregator, context);
-        Metadata   = new(src.Value.Metadata, Aggregator, context);
-        Encryption = new(src.Value.Encryption, Aggregator, context);
+        Settings   = new(src, Aggregator, ctx);
+        Metadata   = new(src.Value.Metadata, Aggregator, ctx);
+        Encryption = new(src.Value.Encryption, Aggregator, ctx);
 
         void select_if() { if (src.Value.PostProcess == PostProcess.Others) SelectUserProgram(); }
 
@@ -137,10 +137,10 @@ public sealed class MainViewModel : PresentableBase<Facade>
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Convert
+    /// Invoke
     ///
     /// <summary>
-    /// Executes the conversion.
+    /// Invokes the main operation.
     /// </summary>
     ///
     /// <remarks>
@@ -149,9 +149,10 @@ public sealed class MainViewModel : PresentableBase<Facade>
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public void Convert()
+    public void Invoke()
     {
-        if (Confirm()) Quit(Facade.InvokeEx, false);
+        var ready = Encryption.Confirm() && Settings.Confirm();
+        if (ready) Quit(Facade.InvokeEx, false);
     }
 
     /* --------------------------------------------------------------------- */
@@ -159,11 +160,11 @@ public sealed class MainViewModel : PresentableBase<Facade>
     /// Save
     ///
     /// <summary>
-    /// Saves the current settings.
+    /// Saves the current user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public void Save() => Metadata.Save(Settings.Save);
+    public void Save() { if (Metadata.Confirm()) Settings.Save(); }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -235,10 +236,6 @@ public sealed class MainViewModel : PresentableBase<Facade>
     /* --------------------------------------------------------------------- */
     public void ChangeExtension() => Facade.ChangeExtension();
 
-    #endregion
-
-    #region Implementations
-
     /* --------------------------------------------------------------------- */
     ///
     /// OnMessage
@@ -259,17 +256,6 @@ public sealed class MainViewModel : PresentableBase<Facade>
     /* --------------------------------------------------------------------- */
     protected override DialogMessage OnMessage(Exception src) =>
         src is OperationCanceledException ? null : Message.From(src);
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Confirm
-    ///
-    /// <summary>
-    /// Invokes the confirmation.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private bool Confirm() => Encryption.Confirm() && Settings.Confirm();
 
     #endregion
 }

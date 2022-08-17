@@ -126,18 +126,18 @@ public partial class MainWindow : Window
 
         BindCore(vm);
 
-        Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Convert));
+        Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Invoke));
         Behaviors.Add(new ClickEventBehavior(SourceButton, vm.SelectSource));
         Behaviors.Add(new ClickEventBehavior(DestinationButton, vm.SelectDestination));
         Behaviors.Add(new ClickEventBehavior(UserProgramButton, vm.SelectUserProgram));
         Behaviors.Add(new ClickEventBehavior(SettingButton, vm.Save));
         Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
+        Behaviors.Add(new EventBehavior(DestinationTextBox, nameof(LostFocus), vm.ChangeExtension));
         Behaviors.Add(new PathLintBehavior(SourceTextBox, PathLintToolTip));
         Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathLintToolTip));
         Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathLintToolTip));
         Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
         Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
-        Behaviors.Add(new EventBehavior(DestinationTextBox, nameof(LostFocus), vm.ChangeExtension));
         Behaviors.Add(new CloseBehavior(this, vm));
         Behaviors.Add(new DialogBehavior(vm));
         Behaviors.Add(new OpenFileBehavior(vm));
@@ -229,9 +229,10 @@ public partial class MainWindow : Window
         b3.Bind(nameof(s3.AllowForm),          AllowFormCheckBox,          nameof(AllowFormCheckBox.Checked));
         b3.Bind(nameof(s3.AllowAnnotation),    AllowAnnotationCheckBox,    nameof(AllowAnnotationCheckBox.Checked));
 
-        // Text (i18n)
+        FormatComboBox.Bind(Resource.Formats);
+        PdfVersionComboBox.Bind(Resource.PdfVersions);
         LanguageComboBox.Bind(Resource.Languages);
-        BindText(vm);
+        BindText(vm); // Text (i18n)
     }
 
     /* --------------------------------------------------------------------- */
@@ -246,13 +247,11 @@ public partial class MainWindow : Window
     private void BindText(MainViewModel vm)
     {
         this.Update(vm.Settings.Language);
-        Resource.UpdateCulture(vm.Settings.Language);
+        Properties.Resources.Culture = vm.Settings.Language.ToCultureInfo();
 
         Text = vm.Settings.Title;
         PathLintToolTip.ToolTipTitle = Properties.Resources.ErrorInvalidChars;
 
-        FormatComboBox.Bind(Resource.Formats);
-        PdfVersionComboBox.Bind(Resource.PdfVersions);
         SaveOptionComboBox.Bind(Resource.SaveOptions);
         ViewOptionComboBox.Bind(Resource.ViewerOptions);
         PostProcessComboBox.Bind(Resource.PostProcesses);

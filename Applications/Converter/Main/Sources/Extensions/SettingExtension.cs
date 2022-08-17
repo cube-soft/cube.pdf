@@ -19,7 +19,6 @@
 namespace Cube.Pdf.Converter.Mixin;
 
 using System.Linq;
-using System.Reflection;
 using Cube.Mixin.Assembly;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
@@ -138,7 +137,7 @@ public static class SettingExtension
     private static string GetCreator(SettingValue src) =>
         src.Metadata.Creator.HasValue() ?
         src.Metadata.Creator :
-        Assembly.GetExecutingAssembly().GetProduct();
+        typeof(Program).Assembly.GetProduct();
 
     #endregion
 }

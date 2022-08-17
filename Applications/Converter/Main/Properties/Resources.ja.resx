@@ -167,21 +167,6 @@
   <data name="MenuTwoPageRight" xml:space="preserve">
     <value>見開きページ（右綴じ）</value>
   </data>
-  <data name="MessageExists" xml:space="preserve">
-    <value>{0} は既に存在します。</value>
-  </data>
-  <data name="MessageMergeHead" xml:space="preserve">
-    <value>先頭に結合しますか？</value>
-  </data>
-  <data name="MessageSave" xml:space="preserve">
-    <value>タイトル、作成者、サブタイトル、キーワードのいずれかの項目が入力されています。これらの内容は次回以降、CubePDF 起動時の初期設定として利用されます。設定を保存しても良いですか？</value>
-  </data>
-  <data name="MessageMergeTail" xml:space="preserve">
-    <value>末尾に結合しますか？</value>
-  </data>
-  <data name="MessageOverwrite" xml:space="preserve">
-    <value>上書きしますか？</value>
-  </data>
   <data name="TitleSelectDestination" xml:space="preserve">
     <value>名前を付けて保存</value>
   </data>
@@ -191,10 +176,19 @@
   <data name="TitleSelectSource" xml:space="preserve">
     <value>入力ファイルを選択</value>
   </data>
-  <data name="TitleError" xml:space="preserve">
-    <value>CubePDF エラー</value>
+  <data name="WarnExists" xml:space="preserve">
+    <value>{0} は既に存在します。</value>
   </data>
-  <data name="TitleWarning" xml:space="preserve">
-    <value>CubePDF 確認</value>
+  <data name="WarnMergeHead" xml:space="preserve">
+    <value>先頭に結合しますか？</value>
+  </data>
+  <data name="WarnSave" xml:space="preserve">
+    <value>タイトル、作成者、サブタイトル、キーワードのいずれかの項目が入力されています。これらの内容は次回以降、CubePDF 起動時の初期設定として利用されます。設定を保存しても良いですか？</value>
+  </data>
+  <data name="WarnMergeTail" xml:space="preserve">
+    <value>末尾に結合しますか？</value>
+  </data>
+  <data name="WarnOverwrite" xml:space="preserve">
+    <value>上書きしますか？</value>
   </data>
 </root>

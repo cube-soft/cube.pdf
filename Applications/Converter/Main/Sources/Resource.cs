@@ -21,7 +21,6 @@ namespace Cube.Pdf.Converter;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using Cube.Forms;
 using Cube.Mixin.Uri;
 using Cube.Pdf.Ghostscript;
@@ -37,29 +36,7 @@ using Cube.Pdf.Ghostscript;
 /* ------------------------------------------------------------------------- */
 public static class Resource
 {
-    #region Properties
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// ProductUri
-    ///
-    /// <summary>
-    /// Gets the URL of the product Web page.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static Uri ProductUri => GetUri("https://www.cube-soft.jp/cubepdf/");
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// DocumentUri
-    ///
-    /// <summary>
-    /// Gets the URL of the document Web page.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static Uri DocumentUri => GetUri("https://docs.cube-soft.jp/entry/cubepdf");
+    #region ComboListSource
 
     /* --------------------------------------------------------------------- */
     ///
@@ -73,12 +50,12 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static ComboListSource<Format> Formats { get; } = new()
     {
-        { "PDF",  Format.Pdf },
-        { "PS",   Format.Ps },
-        { "EPS",  Format.Eps },
-        { "PNG",  Format.Png },
+        { "PDF",  Format.Pdf  },
+        { "PS",   Format.Ps   },
+        { "EPS",  Format.Eps  },
+        { "PNG",  Format.Png  },
         { "JPEG", Format.Jpeg },
-        { "BMP",  Format.Bmp },
+        { "BMP",  Format.Bmp  },
         { "TIFF", Format.Tiff },
     };
 
@@ -127,6 +104,23 @@ public static class Resource
 
     /* --------------------------------------------------------------------- */
     ///
+    /// Languages
+    ///
+    /// <summary>
+    /// Gets a collection in which each item consists of a display
+    /// string and a Language pair.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static ComboListSource<Language> Languages => new()
+    {
+        { nameof(Language.Auto),     Language.Auto     },
+        { nameof(Language.English),  Language.English  },
+        { nameof(Language.Japanese), Language.Japanese },
+    };
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// SaveOptions
     ///
     /// <summary>
@@ -140,7 +134,7 @@ public static class Resource
         { Properties.Resources.MenuOverwrite, SaveOption.Overwrite },
         { Properties.Resources.MenuMergeHead, SaveOption.MergeHead },
         { Properties.Resources.MenuMergeTail, SaveOption.MergeTail },
-        { Properties.Resources.MenuRename,    SaveOption.Rename },
+        { Properties.Resources.MenuRename,    SaveOption.Rename    },
     };
 
     /* --------------------------------------------------------------------- */
@@ -155,11 +149,11 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static ComboListSource<ViewerOption> ViewerOptions => new()
     {
-        { Properties.Resources.MenuSinglePage,     ViewerOption.SinglePage },
-        { Properties.Resources.MenuOneColumn,      ViewerOption.OneColumn },
-        { Properties.Resources.MenuTwoPageLeft,    ViewerOption.TwoPageLeft },
-        { Properties.Resources.MenuTwoPageRight,   ViewerOption.TwoPageRight },
-        { Properties.Resources.MenuTwoColumnLeft,  ViewerOption.TwoColumnLeft },
+        { Properties.Resources.MenuSinglePage,     ViewerOption.SinglePage     },
+        { Properties.Resources.MenuOneColumn,      ViewerOption.OneColumn      },
+        { Properties.Resources.MenuTwoPageLeft,    ViewerOption.TwoPageLeft    },
+        { Properties.Resources.MenuTwoPageRight,   ViewerOption.TwoPageRight   },
+        { Properties.Resources.MenuTwoColumnLeft,  ViewerOption.TwoColumnLeft  },
         { Properties.Resources.MenuTwoColumnRight, ViewerOption.TwoColumnRight },
     };
 
@@ -175,10 +169,10 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static ComboListSource<PostProcess> PostProcesses => new()
     {
-        { Properties.Resources.MenuOpen,          PostProcess.Open },
+        { Properties.Resources.MenuOpen,          PostProcess.Open          },
         { Properties.Resources.MenuOpenDirectory, PostProcess.OpenDirectory },
-        { Properties.Resources.MenuNone,          PostProcess.None },
-        { Properties.Resources.MenuOthers,        PostProcess.Others },
+        { Properties.Resources.MenuNone,          PostProcess.None          },
+        { Properties.Resources.MenuOthers,        PostProcess.Others        },
     };
 
     /* --------------------------------------------------------------------- */
@@ -193,9 +187,9 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static ComboListSource<Orientation> Orientations => new()
     {
-        { Properties.Resources.MenuPortrait,  Orientation.Portrait },
+        { Properties.Resources.MenuPortrait,  Orientation.Portrait  },
         { Properties.Resources.MenuLandscape, Orientation.Landscape },
-        { Properties.Resources.MenuAuto,      Orientation.Auto },
+        { Properties.Resources.MenuAuto,      Orientation.Auto      },
     };
 
     /* --------------------------------------------------------------------- */
@@ -211,27 +205,14 @@ public static class Resource
     public static ComboListSource<ColorMode> ColorModes => new()
     {
         { Properties.Resources.MenuAuto,       ColorMode.SameAsSource },
-        { Properties.Resources.MenuRgb,        ColorMode.Rgb },
-        { Properties.Resources.MenuGrayscale,  ColorMode.Grayscale },
-        { Properties.Resources.MenuMonochrome, ColorMode.Monochrome },
+        { Properties.Resources.MenuRgb,        ColorMode.Rgb          },
+        { Properties.Resources.MenuGrayscale,  ColorMode.Grayscale    },
+        { Properties.Resources.MenuMonochrome, ColorMode.Monochrome   },
     };
 
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Languages
-    ///
-    /// <summary>
-    /// Gets a collection in which each item consists of a display
-    /// string and a Language pair.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static ComboListSource<Language> Languages => new()
-    {
-        { Properties.Resources.GlobalMenuAuto,     Language.Auto },
-        { Properties.Resources.GlobalMenuEnglish,  Language.English },
-        { Properties.Resources.GlobalMenuJapanese, Language.Japanese },
-    };
+    #endregion
+
+    #region FileDialogFilter
 
     /* --------------------------------------------------------------------- */
     ///
@@ -287,51 +268,41 @@ public static class Resource
 
     #endregion
 
-    #region Methods
+    #region Uri
 
     /* --------------------------------------------------------------------- */
     ///
-    /// UpdateCulture
+    /// ProductUri
     ///
     /// <summary>
-    /// Updates the culture information of resource objects.
+    /// Gets the URL of the product Web page.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static void UpdateCulture(Language src) => Properties.Resources.Culture = src.ToCultureInfo();
+    public static Uri ProductUri => MakeUri("https://www.cube-soft.jp/cubepdf/");
 
     /* --------------------------------------------------------------------- */
     ///
-    /// WordWrap
+    /// DocumentUri
     ///
     /// <summary>
-    /// Inserts a new line and splits words.
+    /// Gets the URL of the document Web page.
     /// </summary>
     ///
-    /// <param name="src">Source string.</param>
-    /// <param name="n">Number of characters to split words.</param>
-    ///
-    /// <returns>Converted string.</returns>
-    ///
     /* --------------------------------------------------------------------- */
-    public static string WordWrap(this string src, int n) =>
-        Regex.Replace(src, $@"(?<=\G.{{{n}}})(?!$)", Environment.NewLine);
-
-    #endregion
-
-    #region Implementations
+    public static Uri DocumentUri => MakeUri("https://docs.cube-soft.jp/entry/cubepdf");
 
     /* --------------------------------------------------------------------- */
     ///
-    /// GetUri
+    /// MakeUri
     ///
     /// <summary>
     /// Gets the Uri object from the specified URL string.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static Uri GetUri(string url) =>
-        new Uri(url).With("lang", CultureInfo.CurrentCulture.Name.ToLowerInvariant());
+    private static Uri MakeUri(string src) =>
+        new Uri(src).With("lang", CultureInfo.CurrentCulture.Name.ToLowerInvariant());
 
     #endregion
 }

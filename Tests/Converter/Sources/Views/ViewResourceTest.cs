@@ -142,8 +142,8 @@ namespace Cube.Pdf.Converter.Tests.Views
             vm.Settings.Language = Language.English;
             var en = Resource.SaveOptions.ToArray();
             Assert.That(en[0].Key, Is.EqualTo("Overwrite"));
-            Assert.That(en[1].Key, Is.EqualTo("Merge head"));
-            Assert.That(en[2].Key, Is.EqualTo("Merge tail"));
+            Assert.That(en[1].Key, Is.EqualTo("Merge at the beginning"));
+            Assert.That(en[2].Key, Is.EqualTo("Merge at the end"));
             Assert.That(en[3].Key, Is.EqualTo("Rename"));
 
             vm.Settings.Language = Language.Japanese;
@@ -383,24 +383,6 @@ namespace Cube.Pdf.Converter.Tests.Views
             Assert.That(ja[0].ToString(), Does.StartWith("実行可能なファイル"));
             Assert.That(ja[1].ToString(), Does.StartWith("すべてのファイル"));
         });
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// WordWrap
-        ///
-        /// <summary>
-        /// Tests the WordWrap extended method.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCase("a",       5, ExpectedResult = 1)]
-        [TestCase("abcde",   5, ExpectedResult = 1)]
-        [TestCase("abcdefg", 5, ExpectedResult = 2)]
-        [TestCase("",        5, ExpectedResult = 1)]
-        public int WordWrap(string src, int n) =>
-            src.WordWrap(n)
-               .Split(new[] { Environment.NewLine }, StringSplitOptions.None)
-               .Length;
 
         #endregion
 

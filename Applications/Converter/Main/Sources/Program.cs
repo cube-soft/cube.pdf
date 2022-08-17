@@ -19,7 +19,6 @@
 namespace Cube.Pdf.Converter;
 
 using System;
-using System.Reflection;
 using System.Windows.Forms;
 using Cube.Collections;
 using Cube.DataContract;
@@ -53,7 +52,7 @@ static class Program
     {
         Logger.Configure(new Logging.NLog.LoggerSource());
         _ = Logger.ObserveTaskException();
-        Source.LogInfo(Assembly.GetExecutingAssembly());
+        Source.LogInfo(Source.Assembly);
         Source.LogInfo($"Ghostscript {GetGsVersion()}");
         Source.LogInfo($"[ {raw.Join(" ")} ]");
 
@@ -66,7 +65,7 @@ static class Program
         src.Normalize();
         src.Set(args);
 
-        if (args.Options.ContainsKey("SkipUI")) Execute(src);
+        if (args.Options.ContainsKey("SkipUI")) Invoke(src);
         else Show(src);
     });
 
@@ -109,16 +108,16 @@ static class Program
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Execute
+    /// Invoke
     ///
     /// <summary>
-    /// Executes the conversion directly.
+    /// Invokes the conversion directly.
     /// </summary>
     ///
     /// <param name="src">User settings.</param>
     ///
     /* --------------------------------------------------------------------- */
-    private static void Execute(SettingFolder src)
+    private static void Invoke(SettingFolder src)
     {
         using var facade = new Facade(src);
         facade.Invoke();

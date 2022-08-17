@@ -20,7 +20,6 @@ namespace Cube.Pdf.Converter;
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security.Cryptography;
 using Cube.FileSystem;
 using Cube.Mixin.String;
@@ -53,7 +52,7 @@ static class Message
     /// <returns>DialogMessage object.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static DialogMessage From(Exception src) => ForError(GetErrorMessage(src));
+    public static DialogMessage From(Exception src) => Error(GetMessage(src));
 
     /* --------------------------------------------------------------------- */
     ///
@@ -71,11 +70,11 @@ static class Message
     ///
     /* --------------------------------------------------------------------- */
     public static DialogMessage From(string src, SaveOption option) =>
-        ForWarning(GetWarningMessage(src, option));
+        Warn(GetMessage(src, option));
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ForError
+    /// Error
     ///
     /// <summary>
     /// Create a message to show a DialogBox with an error icon
@@ -87,17 +86,17 @@ static class Message
     /// <returns>DialogMessage object.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static DialogMessage ForError(string src) => new()
+    public static DialogMessage Error(string src) => new()
     {
         Text    = src,
-        Title   = Properties.Resources.TitleError,
+        Title   = "CubePDF",
         Icon    = DialogIcon.Error,
         Buttons = DialogButtons.Ok,
     };
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ForWarning
+    /// Warn
     ///
     /// <summary>
     /// Create a message to show a DialogBox with a warning icon
@@ -109,12 +108,12 @@ static class Message
     /// <returns>DialogMessage object.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static DialogMessage ForWarning(string src) => new()
+    public static DialogMessage Warn(string src) => new()
     {
-        Text             = src,
-        Title            = Properties.Resources.TitleWarning,
-        Icon             = DialogIcon.Warning,
-        Buttons          = DialogButtons.YesNo,
+        Text    = src,
+        Title   = "CubePDF",
+        Icon    = DialogIcon.Warning,
+        Buttons = DialogButtons.YesNo,
         CancelCandidates = new[] { DialogStatus.No, DialogStatus.Cancel },
     };
 
@@ -215,44 +214,53 @@ static class Message
 
     /* --------------------------------------------------------------------- */
     ///
-    /// GetErrorMessage
+    /// GetMessage
     ///
     /// <summary>
     /// Gets an error message from the specified exception.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static string GetErrorMessage(Exception src)
+    private static string GetMessage(Exception src) => src switch
     {
-        if (src is CryptographicException) return Properties.Resources.ErrorDigest;
-        if (src is EncryptionException) return Properties.Resources.ErrorMergePassword;
-        if (src is GsApiException gs) return string.Format(Properties.Resources.ErrorGhostscript, gs.Status);
-        if (src is ArgumentException e) return e.Message;
-        return $"{src.Message} ({src.GetType().Name})";
-    }
+        CryptographicException => Properties.Resources.ErrorDigest,
+        EncryptionException    => Properties.Resources.ErrorMergePassword,
+        GsApiException e       => string.Format(Properties.Resources.ErrorGhostscript, e.Status),
+        ArgumentException      => src.Message,
+        _                      => $"{src.Message} ({src.GetType().Name})",
+    };
 
     /* --------------------------------------------------------------------- */
     ///
-    /// GetWarningMessage
+    /// GetMessage
     ///
     /// <summary>
     /// Gets an warning message from the specified arguments.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static string GetWarningMessage(string src, SaveOption option)
+    private static string GetMessage(string src, SaveOption option)
     {
-        var s0 = string.Format(Properties.Resources.MessageExists, src);
-        var ok = new Dictionary<SaveOption, string>
-        {
-            { SaveOption.Overwrite, Properties.Resources.MessageOverwrite },
-            { SaveOption.MergeHead, Properties.Resources.MessageMergeHead },
-            { SaveOption.MergeTail, Properties.Resources.MessageMergeTail },
-        }.TryGetValue(option, out var s1);
-
-        Debug.Assert(ok);
-        return $"{s0} {s1}";
+        var s0 = string.Format(Properties.Resources.WarnExists, src);
+        return $"{s0} {GetMessage(option)}";
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GetMessage
+    ///
+    /// <summary>
+    /// Gets the message from the specified save option.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private static string GetMessage(SaveOption src) => src switch
+    {
+        SaveOption.Overwrite => Properties.Resources.WarnOverwrite,
+        SaveOption.MergeHead => Properties.Resources.WarnMergeHead,
+        SaveOption.MergeTail => Properties.Resources.WarnMergeTail,
+        _                    => string.Empty,
+    };
 
     /* --------------------------------------------------------------------- */
     ///

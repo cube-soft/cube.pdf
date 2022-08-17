@@ -49,12 +49,12 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
     /// </summary>
     ///
     /// <param name="src">User settings.</param>
-    /// <param name="aggregator">Message aggregator.</param>
-    /// <param name="context">Synchronization context.</param>
+    /// <param name="proxy">Message aggregator.</param>
+    /// <param name="ctx">Synchronization context.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public SettingViewModel(SettingFolder src, Aggregator aggregator, SynchronizationContext context) :
-        base(new(src), aggregator, context)
+    public SettingViewModel(SettingFolder src, Aggregator proxy, SynchronizationContext ctx) :
+        base(new(src), proxy, ctx)
     {
         Assets.Add(src.Forward(this));
         Assets.Add(src.Value.View.Subscribe(new() {
@@ -387,7 +387,7 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
     /// Save
     ///
     /// <summary>
-    /// Saves the settings.
+    /// Saves the current user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -405,12 +405,10 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
     public bool Confirm()
     {
         if (!Io.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
-        else
-        {
-            var m = Message.From(Destination, SaveOption);
-            Send(m);
-            return !m.Cancel;
-        }
+
+        var msg = Message.From(Destination, SaveOption);
+        Send(msg);
+        return !msg.Cancel;
     }
 
     #endregion

@@ -278,7 +278,7 @@ namespace Cube.Pdf.Converter.Tests
             var closed = false;
             using (vm.Subscribe<CloseMessage>(e => closed = true))
             {
-                vm.Convert();
+                vm.Invoke();
                 return Wait.For(() => closed, TimeSpan.FromSeconds(10));
             }
         }
@@ -302,7 +302,7 @@ namespace Cube.Pdf.Converter.Tests
         protected bool TestError(MainViewModel vm)
         {
             Message = string.Empty;
-            vm.Convert();
+            vm.Invoke();
             return Wait.For(() => Message.HasValue());
         }
 

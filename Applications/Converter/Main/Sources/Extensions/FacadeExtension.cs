@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter.Mixin;
 
+using System.Linq;
 using Cube.FileSystem;
 using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
@@ -87,12 +88,8 @@ static class FacadeExtension
     {
         src.Settings.Value.Destination = path;
         var cmp = path.ToLowerInvariant();
-        foreach (var e in Resource.Extensions)
-        {
-            if (!cmp.EndsWith(e.Key)) continue;
-            src.Settings.Value.Format = e.Value;
-            break;
-        }
+        var ext = Resource.Extensions.Where(e => cmp.EndsWith(e.Key));
+        if (ext.Any()) src.Settings.Value.Format = ext.First().Value;
     }
 
     #endregion

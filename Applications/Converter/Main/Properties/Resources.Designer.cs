@@ -10,8 +10,8 @@
 
 namespace Cube.Pdf.Converter.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace Cube.Pdf.Converter.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +59,7 @@ namespace Cube.Pdf.Converter.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Message digest of the source file does not match..
         /// </summary>
@@ -68,7 +68,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("ErrorDigest", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Ghostscript error ({0:D}).
         /// </summary>
@@ -77,7 +77,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("ErrorGhostscript", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Path cannot contain any of the following characters.
         /// </summary>
@@ -86,7 +86,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("ErrorInvalidChars", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Set the owner password of the PDF file to be merged in the Security tab..
         /// </summary>
@@ -95,7 +95,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("ErrorMergePassword", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Owner password is empty or does not match the confirmation. Please check your password and confirmation again..
         /// </summary>
@@ -104,7 +104,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("ErrorOwnerPassword", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to User password is empty or does not match the confirmation. Please check the user password or enable the &quot;Use owner password&quot; checkbox..
         /// </summary>
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("ErrorUserPassword", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to All files.
         /// </summary>
@@ -122,7 +122,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("FilterAll", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to BMP files.
         /// </summary>
@@ -131,7 +131,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("FilterBmp", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to EPS files.
         /// </summary>
@@ -140,7 +140,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("FilterEps", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Executable files.
         /// </summary>
@@ -149,7 +149,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("FilterExecutable", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to JPEG files.
         /// </summary>
@@ -158,7 +158,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("FilterJpeg", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to PDF files.
         /// </summary>
@@ -167,7 +167,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("FilterPdf", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to PNG files.
         /// </summary>
@@ -176,7 +176,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("FilterPng", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to PS files.
         /// </summary>
@@ -185,7 +185,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("FilterPs", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TIFF files.
         /// </summary>
@@ -194,34 +194,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("FilterTiff", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Auto.
-        /// </summary>
-        internal static string GlobalMenuAuto {
-            get {
-                return ResourceManager.GetString("GlobalMenuAuto", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to English.
-        /// </summary>
-        internal static string GlobalMenuEnglish {
-            get {
-                return ResourceManager.GetString("GlobalMenuEnglish", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Japanese.
-        /// </summary>
-        internal static string GlobalMenuJapanese {
-            get {
-                return ResourceManager.GetString("GlobalMenuJapanese", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -231,7 +204,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -241,7 +214,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Auto.
         /// </summary>
@@ -250,7 +223,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuAuto", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Grayscale.
         /// </summary>
@@ -259,7 +232,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuGrayscale", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Landscape.
         /// </summary>
@@ -268,25 +241,25 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuLandscape", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Merge head.
+        ///   Looks up a localized string similar to Merge at the beginning.
         /// </summary>
         internal static string MenuMergeHead {
             get {
                 return ResourceManager.GetString("MenuMergeHead", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Merge tail.
+        ///   Looks up a localized string similar to Merge at the end.
         /// </summary>
         internal static string MenuMergeTail {
             get {
                 return ResourceManager.GetString("MenuMergeTail", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Monochrome.
         /// </summary>
@@ -295,7 +268,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuMonochrome", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
@@ -304,7 +277,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuNone", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to One column.
         /// </summary>
@@ -313,7 +286,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuOneColumn", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
@@ -322,7 +295,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuOpen", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Open directory.
         /// </summary>
@@ -331,7 +304,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuOpenDirectory", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Others.
         /// </summary>
@@ -340,7 +313,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuOthers", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Overwrite.
         /// </summary>
@@ -349,7 +322,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuOverwrite", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Portrait.
         /// </summary>
@@ -358,7 +331,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuPortrait", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Rename.
         /// </summary>
@@ -367,7 +340,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuRename", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to RGB.
         /// </summary>
@@ -376,7 +349,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuRgb", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Single page.
         /// </summary>
@@ -385,7 +358,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuSinglePage", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Two column (left).
         /// </summary>
@@ -394,7 +367,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuTwoColumnLeft", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Two column (right).
         /// </summary>
@@ -403,7 +376,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuTwoColumnRight", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Two page (left).
         /// </summary>
@@ -412,7 +385,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuTwoPageLeft", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Two page (right).
         /// </summary>
@@ -421,61 +394,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("MenuTwoPageRight", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} already exists..
-        /// </summary>
-        internal static string MessageExists {
-            get {
-                return ResourceManager.GetString("MessageExists", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to merge at the beginning of the existing file?.
-        /// </summary>
-        internal static string MessageMergeHead {
-            get {
-                return ResourceManager.GetString("MessageMergeHead", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to merge at the end of the existing file?.
-        /// </summary>
-        internal static string MessageMergeTail {
-            get {
-                return ResourceManager.GetString("MessageMergeTail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Do you want to overwrite the file?.
-        /// </summary>
-        internal static string MessageOverwrite {
-            get {
-                return ResourceManager.GetString("MessageOverwrite", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Some value is entered in the Title, Author, Subject, or Keywords field. Do you want to save the settings?.
-        /// </summary>
-        internal static string MessageSave {
-            get {
-                return ResourceManager.GetString("MessageSave", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to CubePDF error.
-        /// </summary>
-        internal static string TitleError {
-            get {
-                return ResourceManager.GetString("TitleError", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Save as.
         /// </summary>
@@ -484,7 +403,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("TitleSelectDestination", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select source file.
         /// </summary>
@@ -493,7 +412,7 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("TitleSelectSource", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Select user program.
         /// </summary>
@@ -502,13 +421,49 @@ namespace Cube.Pdf.Converter.Properties {
                 return ResourceManager.GetString("TitleSelectUserProgram", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to CubePDF warning.
+        ///   Looks up a localized string similar to {0} already exists..
         /// </summary>
-        internal static string TitleWarning {
+        internal static string WarnExists {
             get {
-                return ResourceManager.GetString("TitleWarning", resourceCulture);
+                return ResourceManager.GetString("WarnExists", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to merge at the beginning of the existing file?.
+        /// </summary>
+        internal static string WarnMergeHead {
+            get {
+                return ResourceManager.GetString("WarnMergeHead", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to merge at the end of the existing file?.
+        /// </summary>
+        internal static string WarnMergeTail {
+            get {
+                return ResourceManager.GetString("WarnMergeTail", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to overwrite the file?.
+        /// </summary>
+        internal static string WarnOverwrite {
+            get {
+                return ResourceManager.GetString("WarnOverwrite", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Some value is entered in the Title, Author, Subject, or Keywords field. Do you want to save the settings?.
+        /// </summary>
+        internal static string WarnSaveSettings {
+            get {
+                return ResourceManager.GetString("WarnSaveSettings", resourceCulture);
             }
         }
     }

@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter;
 
-using System;
 using System.Linq;
 using System.Threading;
 using Cube.Mixin.Observable;
@@ -47,12 +46,12 @@ public sealed class MetadataViewModel : PresentableBase<Metadata>
     /// </summary>
     ///
     /// <param name="src">PDF metadata.</param>
-    /// <param name="aggregator">Event aggregator.</param>
-    /// <param name="context">Synchronization context.</param>
+    /// <param name="proxy">Message aggregator.</param>
+    /// <param name="ctx">Synchronization context.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public MetadataViewModel(Metadata src, Aggregator aggregator, SynchronizationContext context) :
-        base(src, aggregator, context) => Assets.Add(src.Forward(this));
+    public MetadataViewModel(Metadata src, Aggregator proxy, SynchronizationContext ctx) :
+        base(src, proxy, ctx) => Assets.Add(src.Forward(this));
 
     #endregion
 
@@ -169,23 +168,23 @@ public sealed class MetadataViewModel : PresentableBase<Metadata>
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Save
+    /// Confirm
     ///
     /// <summary>
-    /// Saves the current settings. When some fields have value,
-    /// confirms if the current settings are acceptable.
+    /// Confirms if it is OK to save the current settings.
     /// </summary>
     ///
-    /// <param name="callback">
-    /// Callback action to be invoked when the operation is successful.
-    /// </param>
+    /// <returns>true for OK.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public void Save(Action callback)
+    public bool Confirm()
     {
         var src = new[] { Title, Author, Subject, Keywords };
-        if (src.All(e => !e.HasValue())) callback();
-        else Send(Message.ForWarning(Properties.Resources.MessageSave), _ => callback(), true);
+        if (src.All(e => !e.HasValue())) return true;
+
+        var msg = Message.Warn(Properties.Resources.WarnSaveSettings);
+        Send(msg);
+        return !msg.Cancel;
     }
 
     #endregion

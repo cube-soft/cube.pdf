@@ -45,12 +45,12 @@ public sealed class EncryptionViewModel : PresentableBase<Encryption>
     /// </summary>
     ///
     /// <param name="src">PDF encryption information.</param>
-    /// <param name="aggregator">Event aggregator.</param>
-    /// <param name="context">Synchronization context.</param>
+    /// <param name="proxy">Message aggregator.</param>
+    /// <param name="ctx">Synchronization context.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public EncryptionViewModel(Encryption src, Aggregator aggregator, SynchronizationContext context) :
-        base(src, aggregator, context) => Assets.Add(src.Forward(this));
+    public EncryptionViewModel(Encryption src, Aggregator proxy, SynchronizationContext ctx) :
+        base(src, proxy, ctx) => Assets.Add(src.Forward(this));
 
     #endregion
 
@@ -331,7 +331,7 @@ public sealed class EncryptionViewModel : PresentableBase<Encryption>
     /* --------------------------------------------------------------------- */
     public bool Confirm()
     {
-        bool fail(string s) { Send(Message.ForError(s)); return false; }
+        bool fail(string s) { Send(Message.Error(s)); return false; }
         if (Enabled && !OwnerCorrect) return fail(Properties.Resources.ErrorOwnerPassword);
         if (Enabled && !UserCorrect ) return fail(Properties.Resources.ErrorUserPassword);
         return true;
