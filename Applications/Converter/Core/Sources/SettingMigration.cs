@@ -96,9 +96,9 @@ public static class SettingMigration
         v3.Metadata.Options   = v2.Metadata.Options;
 
         // View
-        v3.View.SourceVisible     = v2.SourceVisible;
-        v3.View.ExplicitDirectory = v2.ExplicitDirectory;
-        v3.View.Language          = v2.Language;
+        v3.Appendix.SourceVisible     = v2.SourceVisible;
+        v3.Appendix.ExplicitDirectory = v2.ExplicitDirectory;
+        v3.Appendix.Language          = v2.Language;
 
         src.Save();
         format.Delete(location);

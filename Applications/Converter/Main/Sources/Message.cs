@@ -146,7 +146,7 @@ static class Message
             Filters     = Resource.SourceFilters,
         };
 
-        if (src.Value.View.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
+        if (src.Value.Appendix.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
         return dest;
     }
 
@@ -175,7 +175,7 @@ static class Message
             Filters         = Resource.DestinationFilters,
         };
 
-        if (src.Value.View.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
+        if (src.Value.Appendix.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
         return dest;
     }
 
@@ -204,7 +204,7 @@ static class Message
             Filters     = Resource.UserProgramFilters,
         };
 
-        if (src.Value.View.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
+        if (src.Value.Appendix.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
         return dest;
     }
 

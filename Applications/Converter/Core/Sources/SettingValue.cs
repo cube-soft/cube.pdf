@@ -293,18 +293,18 @@ public class SettingValue : DataContract.SerializableBase
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Metadata
+    /// Appendix
     ///
     /// <summary>
-    /// Gets or sets the user settings related to the view of the CubePDF
-    /// main window.
+    /// Gets or sets the user settings not directly related to the main
+    /// conversion process.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [DataMember]
-    public ViewSettingValue View
+    public SettingValueEx Appendix
     {
-        get => Get(() => new ViewSettingValue());
+        get => Get(() => new SettingValueEx());
         set => Set(value);
     }
 

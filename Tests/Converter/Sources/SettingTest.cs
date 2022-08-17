@@ -105,7 +105,7 @@ namespace Cube.Pdf.Converter.Tests
             Assert.That(dest.Destination,        Is.EqualTo(desktop));
             Assert.That(dest.Temp,               Is.EqualTo(temp));
 
-            var view = dest.View;
+            var view = dest.Appendix;
             Assert.That(view.Language,           Is.EqualTo(Language.Auto));
             Assert.That(view.ExplicitDirectory,  Is.False);
             Assert.That(view.SourceVisible,      Is.False);

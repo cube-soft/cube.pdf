@@ -22,16 +22,16 @@ using System.Runtime.Serialization;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// ViewSettingValue
+/// SettingValueEx
 ///
 /// <summary>
-/// Represents the user settings related to the view of the CubePDF main
-/// window.
+/// Represents user settings not directly related to the main conversion
+/// process.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
 [DataContract]
-public class ViewSettingValue : DataContract.SerializableBase
+public class SettingValueEx : DataContract.SerializableBase
 {
     #region Properties
 

@@ -341,7 +341,7 @@ namespace Cube.Pdf.Converter.Tests
         /* ----------------------------------------------------------------- */
         private void Set(SettingViewModel vm, SettingValue src)
         {
-            vm.Language          = src.View.Language;
+            vm.Language          = src.Appendix.Language;
             vm.Format            = src.Format;
             vm.SaveOption        = src.SaveOption;
             vm.Resolution        = src.Resolution;

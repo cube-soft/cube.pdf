@@ -67,7 +67,7 @@ public sealed class MainViewModel : PresentableBase<Facade>
     public MainViewModel(SettingFolder src, SynchronizationContext ctx) :
         base(new(src), new(12), ctx)
     {
-        Locale.Set(src.Value.View.Language);
+        Locale.Set(src.Value.Appendix.Language);
 
         Settings   = new(src, Aggregator, ctx);
         Metadata   = new(src.Value.Metadata, Aggregator, ctx);

@@ -57,8 +57,8 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
         base(new(src), proxy, ctx)
     {
         Assets.Add(src.Forward(this));
-        Assets.Add(src.Value.View.Subscribe(new() {
-            { nameof(ViewSettingValue.Language), _ => Locale.Set(src.Value.View.Language) },
+        Assets.Add(src.Value.Appendix.Subscribe(new() {
+            { nameof(SettingValueEx.Language), _ => Locale.Set(src.Value.Appendix.Language) },
         }, Refresh));
     }
 
@@ -137,8 +137,8 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
     /* --------------------------------------------------------------------- */
     public Language Language
     {
-        get => Facade.Settings.Value.View.Language;
-        set => Facade.Settings.Value.View.Language = value;
+        get => Facade.Settings.Value.Appendix.Language;
+        set => Facade.Settings.Value.Appendix.Language = value;
     }
 
     /* --------------------------------------------------------------------- */
@@ -364,7 +364,7 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public bool SourceVisible => Facade.Settings.Value.View.SourceVisible;
+    public bool SourceVisible => Facade.Settings.Value.Appendix.SourceVisible;
 
     /* --------------------------------------------------------------------- */
     ///
