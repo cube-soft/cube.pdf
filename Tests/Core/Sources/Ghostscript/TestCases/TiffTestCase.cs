@@ -33,7 +33,7 @@ using NUnit.Framework;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-static class TiffTestCase
+sealed class TiffTestCase : TestCaseBase<TiffConverter>
 {
     #region TestCases
 
@@ -46,7 +46,7 @@ static class TiffTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetBasicTestCases()
+    private IEnumerable<TestCaseData> GetBasicTestCases()
     {
         yield return Make("_Default",    new());
         yield return Make("48bppRgb",    new(Format.Tiff48bppRgb));
@@ -67,7 +67,7 @@ static class TiffTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetMonoTestCases()
+    private IEnumerable<TestCaseData> GetMonoTestCases()
     {
         foreach (var e in new[]
         {
@@ -88,7 +88,7 @@ static class TiffTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static IEnumerable<TestCaseData> Get() => GetBasicTestCases()
+    protected override IEnumerable<TestCaseData> Get() => GetBasicTestCases()
         .Concat(GetMonoTestCases());
 
     #endregion
@@ -97,23 +97,19 @@ static class TiffTestCase
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Make
+    /// OnMake
     ///
     /// <summary>
-    /// Creates a new TestCaseData object.
+    /// Sets up additional settings for the specified converter before
+    /// creating a new TestCaseData object.
     /// </summary>
     ///
-    /// <param name="name">
-    /// Test name, which is used for a part of the destination path.
-    /// </param>
-    ///
-    /// <param name="converter">Converter object.</param>
+    /// <param name="converter">Ghostscript converter.</param>
     ///
     /* --------------------------------------------------------------------- */
-    private static TestCaseData Make(string name, TiffConverter converter)
+    protected override void OnMake(TiffConverter converter)
     {
         converter.Resolution = 96; // Reduce test time.
-        return new("Tiff", name, "SampleMix.ps", converter);
     }
 
     #endregion

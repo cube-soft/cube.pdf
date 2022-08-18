@@ -32,7 +32,7 @@ using NUnit.Framework;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-class TextTestCase
+sealed class TextTestCase : TestCaseBase<Converter>
 {
     #region TestCases
 
@@ -45,32 +45,10 @@ class TextTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static IEnumerable<TestCaseData> Get()
+    protected override IEnumerable<TestCaseData> Get()
     {
-        yield return Make("_Default", new(Format.Text));
+        yield return Make("_Default", "Sample.ps", new(Format.Text));
     }
-
-    #endregion
-
-    #region Others
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Make
-    ///
-    /// <summary>
-    /// Creates a new TestCaseData object.
-    /// </summary>
-    ///
-    /// <param name="name">
-    /// Test name, which is used for a part of the destination path.
-    /// </param>
-    ///
-    /// <param name="converter">Converter object.</param>
-    ///
-    /* --------------------------------------------------------------------- */
-    private static TestCaseData Make(string name, Converter converter) =>
-        new("Text", name, "Sample.ps", converter);
 
     #endregion
 }

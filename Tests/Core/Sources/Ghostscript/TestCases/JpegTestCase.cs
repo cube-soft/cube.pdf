@@ -33,7 +33,7 @@ using NUnit.Framework;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-class JpegTestCase
+sealed class JpegTestCase : TestCaseBase<JpegConverter>
 {
     #region TestCases
 
@@ -46,7 +46,7 @@ class JpegTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetBasicTestCases()
+    private IEnumerable<TestCaseData> GetBasicTestCases()
     {
         yield return Make("_Default",    new());
         yield return Make("24bppRgb",    new(Format.Jpeg24bppRgb));
@@ -64,7 +64,7 @@ class JpegTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetQualityTestCases()
+    private IEnumerable<TestCaseData> GetQualityTestCases()
     {
         foreach (var n in new[] {
             1, 25, 50, 60, 70, 80, 90, 100,
@@ -80,7 +80,7 @@ class JpegTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static IEnumerable<TestCaseData> Get() => GetBasicTestCases()
+    protected override IEnumerable<TestCaseData> Get() => GetBasicTestCases()
         .Concat(GetQualityTestCases());
 
     #endregion
@@ -89,23 +89,19 @@ class JpegTestCase
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Make
+    /// OnMake
     ///
     /// <summary>
-    /// Creates a new TestCaseData object.
+    /// Sets up additional settings for the specified converter before
+    /// creating a new TestCaseData object.
     /// </summary>
     ///
-    /// <param name="name">
-    /// Test name, which is used for a part of the destination path.
-    /// </param>
-    ///
-    /// <param name="converter">Converter object.</param>
+    /// <param name="converter">Ghostscript converter.</param>
     ///
     /* --------------------------------------------------------------------- */
-    private static TestCaseData Make(string name, JpegConverter converter)
+    protected override void OnMake(JpegConverter converter)
     {
         converter.Resolution = 96; // Reduce test time.
-        return new("Jpeg", name, "SampleMix.ps", converter);
     }
 
     #endregion

@@ -32,7 +32,7 @@ using NUnit.Framework;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-class PsTestCase
+sealed class PsTestCase : TestCaseBase<DocumentConverter>
 {
     #region TestCases
 
@@ -45,32 +45,10 @@ class PsTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static IEnumerable<TestCaseData> Get()
+    protected override IEnumerable<TestCaseData> Get()
     {
-        yield return Make("_Default", new(Format.Ps));
+        yield return Make("_Default", "Sample.ps", new(Format.Ps));
     }
-
-    #endregion
-
-    #region Others
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Make
-    ///
-    /// <summary>
-    /// Creates a new TestCaseData object.
-    /// </summary>
-    ///
-    /// <param name="name">
-    /// Test name, which is used for a part of the destination path.
-    /// </param>
-    ///
-    /// <param name="converter">Converter object.</param>
-    ///
-    /* --------------------------------------------------------------------- */
-    private static TestCaseData Make(string name, DocumentConverter converter) =>
-        new("Ps", name, "Sample.ps", converter);
 
     #endregion
 }

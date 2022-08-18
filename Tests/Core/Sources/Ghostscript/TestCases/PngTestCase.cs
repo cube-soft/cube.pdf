@@ -32,7 +32,7 @@ using NUnit.Framework;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-static class PngTestCase
+sealed class PngTestCase : TestCaseBase<ImageConverter>
 {
     #region TestCases
 
@@ -45,7 +45,7 @@ static class PngTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static IEnumerable<TestCaseData> Get()
+    protected override IEnumerable<TestCaseData> Get()
     {
         yield return Make("_Default",    new(Format.Png));
         yield return Make("32bppArgb",   new(Format.Png32bppArgb));
@@ -63,23 +63,19 @@ static class PngTestCase
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Make
+    /// OnMake
     ///
     /// <summary>
-    /// Creates a new TestCaseData object.
+    /// Sets up additional settings for the specified converter before
+    /// creating a new TestCaseData object.
     /// </summary>
     ///
-    /// <param name="name">
-    /// Test name, which is used for a part of the destination path.
-    /// </param>
-    ///
-    /// <param name="converter">Converter object.</param>
+    /// <param name="converter">Ghostscript converter.</param>
     ///
     /* --------------------------------------------------------------------- */
-    private static TestCaseData Make(string name, ImageConverter converter)
+    protected override void OnMake(ImageConverter converter)
     {
         converter.Resolution = 96; // Reduce test time.
-        return new("Png", name, "SampleMix.ps", converter);
     }
 
     #endregion

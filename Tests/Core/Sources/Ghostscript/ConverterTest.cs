@@ -70,7 +70,7 @@ class ConverterTest : FileFixture
 
         converter.Quiet = false;
         converter.Log   = Get(category, $"{name}.log");
-        converter.Temp  = Get("Tmp");
+        converter.Temp  = Get(".tmp");
         converter.Invoke(sp, dp);
 
         Assert.That(Io.Get(dp).Length, Is.AtLeast(1));
@@ -86,13 +86,13 @@ class ConverterTest : FileFixture
     ///
     /* --------------------------------------------------------------------- */
     static IEnumerable<TestCaseData> TestCases => Enumerable.Empty<TestCaseData>()
-        .Concat(PdfTestCase.Get())
-        .Concat(PsTestCase.Get())
-        .Concat(EpsTestCase.Get())
-        .Concat(TextTestCase.Get())
-        .Concat(BmpTestCase.Get())
-        .Concat(PngTestCase.Get())
-        .Concat(JpegTestCase.Get())
-        .Concat(TiffTestCase.Get())
-        .Concat(PsdTestCase.Get());
+        .Concat(new TextTestCase())
+        .Concat(new PsTestCase())
+        .Concat(new EpsTestCase())
+        .Concat(new PdfTestCase())
+        .Concat(new BmpTestCase())
+        .Concat(new PngTestCase())
+        .Concat(new PsdTestCase())
+        .Concat(new JpegTestCase())
+        .Concat(new TiffTestCase());
 }

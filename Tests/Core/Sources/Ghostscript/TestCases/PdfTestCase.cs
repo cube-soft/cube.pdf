@@ -34,7 +34,7 @@ using NUnit.Framework;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-internal class PdfTestCase
+sealed class PdfTestCase : TestCaseBase<PdfConverter>
 {
     #region TestCases
 
@@ -47,7 +47,7 @@ internal class PdfTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetBasicTestCases()
+    private IEnumerable<TestCaseData> GetBasicTestCases()
     {
         yield return Make("_Default", new());
         yield return Make("Web", "SampleWeb.ps", new() { Linearization = true });
@@ -70,7 +70,7 @@ internal class PdfTestCase
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetPaperTestCases()
+    private IEnumerable<TestCaseData> GetPaperTestCases()
     {
         foreach (var e in new[]
         {
@@ -89,7 +89,7 @@ internal class PdfTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetOrientationTestCases()
+    private IEnumerable<TestCaseData> GetOrientationTestCases()
     {
         foreach (var e in new[] {
             Orientation.Portrait,
@@ -114,7 +114,7 @@ internal class PdfTestCase
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetColorModeTestCases()
+    private IEnumerable<TestCaseData> GetColorModeTestCases()
     {
         foreach (ColorMode e in Enum.GetValues(typeof(ColorMode)))
         {
@@ -137,7 +137,7 @@ internal class PdfTestCase
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetEmbedFontsTestCases()
+    private IEnumerable<TestCaseData> GetEmbedFontsTestCases()
     {
         yield return Make("_NoEmbedFonts", "Sample.ps", new() { EmbedFonts = false });
         yield return Make("_NoEmbedFonts_Cjk", "SampleCjk.ps", new() { EmbedFonts = false });
@@ -153,7 +153,7 @@ internal class PdfTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static IEnumerable<TestCaseData> GetEncodingTestCases()
+    private IEnumerable<TestCaseData> GetEncodingTestCases()
     {
         var resolutions = new[] { 72, 96 };
         var encodings   = new KeyValuePair<Encoding, Encoding>[]
@@ -189,53 +189,12 @@ internal class PdfTestCase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static IEnumerable<TestCaseData> Get() => GetBasicTestCases()
+    protected override IEnumerable<TestCaseData> Get() => GetBasicTestCases()
         .Concat(GetPaperTestCases())
         .Concat(GetOrientationTestCases())
         .Concat(GetColorModeTestCases())
         .Concat(GetEmbedFontsTestCases())
         .Concat(GetEncodingTestCases());
-
-    #endregion
-
-    #region Others
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Make
-    ///
-    /// <summary>
-    /// Creates a new TestCaseData object.
-    /// </summary>
-    ///
-    /// <param name="name">
-    /// Test name, which is used for a part of the destination path.
-    /// </param>
-    ///
-    /// <param name="converter">Converter object.</param>
-    ///
-    /* --------------------------------------------------------------------- */
-    private static TestCaseData Make(string name, PdfConverter converter) =>
-        Make(name, "SampleMix.ps", converter);
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Make
-    ///
-    /// <summary>
-    /// Creates a new TestCaseData object.
-    /// </summary>
-    ///
-    /// <param name="name">
-    /// Test name, which is used for a part of the destination path.
-    /// </param>
-    ///
-    /// <param name="src">Source filename.</param>
-    /// <param name="converter">Converter object.</param>
-    ///
-    /* --------------------------------------------------------------------- */
-    private static TestCaseData Make(string name, string src, PdfConverter converter) =>
-        new("Pdf", name, src, converter);
 
     #endregion
 }
