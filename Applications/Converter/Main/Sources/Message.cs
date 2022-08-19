@@ -86,9 +86,8 @@ static class Message
     /// <returns>DialogMessage object.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static DialogMessage Error(string src) => new()
+    public static DialogMessage Error(string src) => new(src)
     {
-        Text    = src,
         Title   = "CubePDF",
         Icon    = DialogIcon.Error,
         Buttons = DialogButtons.Ok,
@@ -108,9 +107,8 @@ static class Message
     /// <returns>DialogMessage object.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static DialogMessage Warn(string src) => new()
+    public static DialogMessage Warn(string src) => new(src)
     {
-        Text    = src,
         Title   = "CubePDF",
         Icon    = DialogIcon.Warning,
         Buttons = DialogButtons.YesNo,
@@ -138,9 +136,8 @@ static class Message
     public static OpenFileMessage ForSource(SettingFolder src)
     {
         var path = src.Value.Source;
-        var dest = new OpenFileMessage
+        var dest = new OpenFileMessage(Properties.Resources.TitleSelectSource)
         {
-            Text        = Properties.Resources.TitleSelectSource,
             Value       = GetFileNames(path),
             Multiselect = false,
             Filters     = Resource.SourceFilters,
@@ -167,9 +164,8 @@ static class Message
     public static SaveFileMessage ForDestination(SettingFolder src)
     {
         var path = src.Value.Destination;
-        var dest = new SaveFileMessage
+        var dest = new SaveFileMessage(Properties.Resources.TitleSelectDestination)
         {
-            Text            = Properties.Resources.TitleSelectDestination,
             Value           = GetFileName(path),
             OverwritePrompt = false,
             Filters         = Resource.DestinationFilters,
@@ -196,9 +192,8 @@ static class Message
     public static OpenFileMessage ForUserProgram(SettingFolder src)
     {
         var path = src.Value.UserProgram;
-        var dest = new OpenFileMessage
+        var dest = new OpenFileMessage(Properties.Resources.TitleSelectUserProgram)
         {
-            Text        = Properties.Resources.TitleSelectUserProgram,
             Value       = GetFileNames(path),
             Multiselect = false,
             Filters     = Resource.UserProgramFilters,

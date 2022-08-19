@@ -50,9 +50,8 @@ namespace Cube.Pdf.Pages
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage ForError(string src) => new()
+        public static DialogMessage ForError(string src) => new(src)
         {
-            Text    = src,
             Title   = typeof(Message).Assembly.GetTitle(),
             Icon    = DialogIcon.Error,
             Buttons = DialogButtons.Ok,
@@ -73,9 +72,8 @@ namespace Cube.Pdf.Pages
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage ForAdd() => new()
+        public static OpenFileMessage ForAdd() => new(Properties.Resources.TitleAdd)
         {
-            Text            = Properties.Resources.TitleAdd,
             CheckPathExists = true,
             Multiselect     = true,
             Filters         = new FileDialogFilter[]
@@ -97,9 +95,8 @@ namespace Cube.Pdf.Pages
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage ForMerge() => new()
+        public static SaveFileMessage ForMerge() => new(Properties.Resources.TitleMerge)
         {
-            Text            = Properties.Resources.TitleMerge,
             OverwritePrompt = true,
             CheckPathExists = false,
             Filters         = new FileDialogFilter[]
@@ -120,9 +117,8 @@ namespace Cube.Pdf.Pages
         /// <returns>OpenDirectoryMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage ForSplit() => new()
+        public static OpenDirectoryMessage ForSplit() => new(Properties.Resources.TitleSplit)
         {
-            Text      = Properties.Resources.TitleSplit,
             NewButton = true,
         };
 
@@ -137,9 +133,8 @@ namespace Cube.Pdf.Pages
         /// <returns>OpenDirectoryMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage ForTemp() => new()
+        public static OpenDirectoryMessage ForTemp() => new(Properties.Resources.TitleTemp)
         {
-            Text      = Properties.Resources.TitleTemp,
             NewButton = true,
         };
 
@@ -160,7 +155,6 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public static SelectMessage ForSelect(IEnumerable<int> indices, int offset, int count) => new()
         {
-            Text  = string.Empty,
             Value = indices.Select(e => Math.Max(Math.Min(e + offset, count - 1), 0)),
         };
 

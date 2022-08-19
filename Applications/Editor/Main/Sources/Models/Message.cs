@@ -49,12 +49,11 @@ namespace Cube.Pdf.Editor
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage From(Exception src)
-        {
-            var dest = DialogMessage.From(src);
-            if (src is PdfiumException e) dest.Text = $"{Properties.Resources.MessageOpenError} ({(int)e.Status})";
-            return dest;
-        }
+        public static DialogMessage From(Exception src) => DialogMessage.From(
+            src is PdfiumException ?
+            new ArgumentException(Properties.Resources.MessageOpenError) :
+            src
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -68,9 +67,8 @@ namespace Cube.Pdf.Editor
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage ForOverwrite() => new()
+        public static DialogMessage ForOverwrite() => new(Properties.Resources.MessageOverwrite)
         {
-            Text    = Properties.Resources.MessageOverwrite,
             Title   = typeof(App).Assembly.GetTitle(),
             Buttons = DialogButtons.YesNoCancel,
             Icon    = DialogIcon.Warning,
@@ -91,9 +89,8 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage ForOpen() => new()
+        public static OpenFileMessage ForOpen() => new(Properties.Resources.TitleOpen)
         {
-            Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = false,
             Filters         = new FileDialogFilter[]
@@ -114,9 +111,8 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage ForInsert() => new()
+        public static OpenFileMessage ForInsert() => new(Properties.Resources.TitleOpen)
         {
-            Text            = Properties.Resources.TitleOpen,
             CheckPathExists = true,
             Multiselect     = true,
             Filters         = new FileDialogFilter[]
@@ -137,9 +133,8 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenDirectoryMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage ForBackup(string src) => new()
+        public static OpenDirectoryMessage ForBackup(string src) => new(Properties.Resources.TitleBackup)
         {
-            Text      = Properties.Resources.TitleBackup,
             NewButton = true,
             Value     = src,
         };
@@ -155,9 +150,8 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenDirectoryMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage ForTemp(string src) => new()
+        public static OpenDirectoryMessage ForTemp(string src) => new(Properties.Resources.TitleTemp)
         {
-            Text      = Properties.Resources.TitleTemp,
             NewButton = true,
             Value     = src,
         };
@@ -173,9 +167,8 @@ namespace Cube.Pdf.Editor
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage ForExtract() => new()
+        public static SaveFileMessage ForExtract() => new(Properties.Resources.MenuSaveAs)
         {
-            Text            = Properties.Resources.MenuSaveAs,
             OverwritePrompt = true,
             CheckPathExists = false,
             Filters         = new FileDialogFilter[]
@@ -196,9 +189,8 @@ namespace Cube.Pdf.Editor
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage ForSave() => new()
+        public static SaveFileMessage ForSave() => new(Properties.Resources.TitleSaveAs)
         {
-            Text            = Properties.Resources.TitleSaveAs,
             OverwritePrompt = true,
             CheckPathExists = false,
             Filters         = new FileDialogFilter[]
