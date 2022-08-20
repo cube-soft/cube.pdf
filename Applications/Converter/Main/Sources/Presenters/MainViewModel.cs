@@ -19,6 +19,7 @@
 namespace Cube.Pdf.Converter;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cube.Mixin.Observable;
@@ -122,6 +123,17 @@ public sealed class MainViewModel : PresentableBase<Facade>
 
     /* --------------------------------------------------------------------- */
     ///
+    /// Results
+    ///
+    /// <summary>
+    /// Gets the collection of created files.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public IEnumerable<string> Results => Facade.Results;
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// Busy
     ///
     /// <summary>
@@ -175,7 +187,7 @@ public sealed class MainViewModel : PresentableBase<Facade>
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public void Help() => Send(Resource.DocumentUri);
+    public void Help() => Send(new ProcessMessage(Resource.DocumentUri.ToString()));
 
     /* --------------------------------------------------------------------- */
     ///

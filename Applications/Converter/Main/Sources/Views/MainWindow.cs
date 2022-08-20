@@ -142,7 +142,7 @@ public partial class MainWindow : Window
         Behaviors.Add(new DialogBehavior(vm));
         Behaviors.Add(new OpenFileBehavior(vm));
         Behaviors.Add(new SaveFileBehavior(vm));
-        Behaviors.Add(new UriBehavior(vm));
+        Behaviors.Add(new ProcessBehavior(vm));
         Behaviors.Add(Locale.Subscribe(_ => BindText(vm)));
 
         ShortcutKeys.Add(Keys.F1, vm.Help);
