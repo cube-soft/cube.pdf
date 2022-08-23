@@ -44,10 +44,9 @@ static class Program
     [OneTimeSetUp]
     public static void OneTimeSetup()
     {
-        var src = typeof(Program);
         Logger.Configure(new Logging.NLog.LoggerSource());
-        _ = Logger.ObserveTaskException();
-        src.LogInfo(src.Assembly);
+        Logger.ObserveTaskException();
+        Logger.Info(typeof(Program).Assembly);
     }
 
     /* --------------------------------------------------------------------- */
