@@ -249,7 +249,7 @@ namespace Cube.Pdf.Converter.Proxy
 
                     if (info.State == WTS_CONNECTSTATE_CLASS.WTSActive) sessions.Add(info);
 
-                    typeof(Process).LogDebug($"SessionID:{info.SessionID}", $"State:{info.State}", $"Name:{info.pWinStationName}");
+                    Logger.Debug($"SessionID:{info.SessionID} State:{info.State} Name:{info.pWinStationName}");
                 }
 
                 if (sessions.Count <= 0) throw new ArgumentException("Session not found");

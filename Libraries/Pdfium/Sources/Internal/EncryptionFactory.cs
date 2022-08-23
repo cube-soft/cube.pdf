@@ -61,7 +61,7 @@ namespace Cube.Pdf.Pdfium
             var value   = (uint)NativeMethods.FPDF_GetDocPermissions(e);
             var mask    = 0xfffffffc;
             var limited = (value & mask) != mask;
-            core.GetType().LogDebug($"Permission:0x{value:X}", $"Revision:{method}");
+            Logger.Debug($"Permission:0x{value:X} Revision:{method}");
 
             return method == -1 ?
                    new Encryption() :

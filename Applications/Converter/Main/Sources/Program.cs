@@ -48,13 +48,13 @@ static class Program
     ///
     /* --------------------------------------------------------------------- */
     [STAThread]
-    static void Main(string[] raw) => Source.LogError(() =>
+    static void Main(string[] raw) => Logger.Error(() =>
     {
         Logger.Configure(new Logging.NLog.LoggerSource());
-        _ = Logger.ObserveTaskException();
-        Source.LogInfo(Source.Assembly);
-        Source.LogInfo($"Ghostscript {GetGsVersion()}");
-        Source.LogInfo($"[ {raw.Join(" ")} ]");
+        Logger.ObserveTaskException();
+        Logger.Info(typeof(Program).Assembly);
+        Logger.Info($"Ghostscript {GetGsVersion()}");
+        Logger.Info($"[ {raw.Join(" ")} ]");
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
@@ -135,13 +135,9 @@ static class Program
     private static int GetGsVersion()
     {
         try { return Ghostscript.Converter.Revision; }
-        catch (Exception err) { Source.LogWarn(err); }
+        catch (Exception err) { Logger.Warn(err); }
         return -1;
     }
 
-    #endregion
-
-    #region Fields
-    private static readonly Type Source = typeof(Program);
     #endregion
 }

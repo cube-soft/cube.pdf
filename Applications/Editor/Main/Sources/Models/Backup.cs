@@ -94,7 +94,7 @@ namespace Cube.Pdf.Editor
             var n   = src.Count() - _settings.Value.BackupDays;
 
             if (n <= 0) return;
-            foreach (var f in src.OrderBy(e => e).Take(n)) GetType().LogWarn(() => Io.Delete(f));
+            foreach (var f in src.OrderBy(e => e).Take(n)) Logger.Warn(() => Io.Delete(f));
         }
 
         #endregion

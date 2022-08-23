@@ -183,7 +183,7 @@ namespace Cube.Pdf.Editor
                 Io.Copy(tmp, fi.FullName, true);
                 next(fi);
             }
-            finally { GetType().LogWarn(() => Io.Delete(tmp)); }
+            finally { Logger.Warn(() => Io.Delete(tmp)); }
         }
 
         /* ----------------------------------------------------------------- */

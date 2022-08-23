@@ -43,7 +43,7 @@ sealed class PdfTestCase : TestCaseBase<PdfConverter>
     /// GetBasicTestCases
     ///
     /// <summary>
-    /// Gets the test cases for basic PostScript to TIFF conversion.
+    /// Gets test cases for basic PostScript to PDF conversion.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

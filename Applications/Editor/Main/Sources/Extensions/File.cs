@@ -155,7 +155,7 @@ namespace Cube.Pdf.Editor
         public static Pdfium.DocumentRenderer GetPdfium(this IDocumentRenderer src)
         {
             if (src is Pdfium.DocumentRenderer dest) return dest;
-            typeof(OpenExtension).LogWarn("IDocumentRenderer to PDFium failed");
+            Logger.Warn("IDocumentRenderer to PDFium failed");
             return default;
         }
 

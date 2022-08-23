@@ -138,7 +138,7 @@
     <value>開く</value>
   </data>
   <data name="MenuOpenDirectory" xml:space="preserve">
-    <value>フォルダを開く</value>
+    <value>フォルダーを開く</value>
   </data>
   <data name="MenuOthers" xml:space="preserve">
     <value>その他</value>
@@ -182,13 +182,13 @@
   <data name="WarnMergeHead" xml:space="preserve">
     <value>先頭に結合しますか？</value>
   </data>
-  <data name="WarnSave" xml:space="preserve">
-    <value>タイトル、作成者、サブタイトル、キーワードのいずれかの項目が入力されています。これらの内容は次回以降、CubePDF 起動時の初期設定として利用されます。設定を保存しても良いですか？</value>
-  </data>
   <data name="WarnMergeTail" xml:space="preserve">
     <value>末尾に結合しますか？</value>
   </data>
   <data name="WarnOverwrite" xml:space="preserve">
     <value>上書きしますか？</value>
+  </data>
+  <data name="WarnSaveSettings" xml:space="preserve">
+    <value>タイトル、作成者、サブタイトル、キーワードのいずれかの項目が入力されています。これらの内容は次回以降、CubePDF 起動時の初期設定として利用されます。設定を保存しても良いですか？</value>
   </data>
 </root>

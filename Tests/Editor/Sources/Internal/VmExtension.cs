@@ -91,7 +91,7 @@ namespace Cube.Pdf.Editor.Tests
         ///
         /* ----------------------------------------------------------------- */
         public static IDisposable Hook(this IBindable vm, VmParam vp) => new DisposableContainer(
-            vm.Subscribe<DialogMessage>(e => typeof(VmExtension).LogDebug($"{e.Icon}", e.Text)),
+            vm.Subscribe<DialogMessage>(e => Logger.Debug($"{e.Icon} {e.Text}")),
             vm.Subscribe<OpenFileMessage>(e => e.Value = new[] { vp.Source }),
             vm.Subscribe<SaveFileMessage>(e => e.Value = vp.Save),
             vm.Subscribe<PasswordViewModel>(e => {

@@ -34,7 +34,7 @@ using Cube.Pdf.Ghostscript;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-static class Message
+public static class Message
 {
     #region DialogMessage
 

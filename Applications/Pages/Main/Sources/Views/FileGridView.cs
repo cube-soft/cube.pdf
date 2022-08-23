@@ -129,7 +129,7 @@ namespace Cube.Pdf.Pages
                 }
                 e.FormattingApplied = true;
             }
-            catch (Exception err) { GetType().LogWarn(err); }
+            catch (Exception err) { Logger.Warn(err); }
             finally { base.OnCellFormatting(e); }
         }
 

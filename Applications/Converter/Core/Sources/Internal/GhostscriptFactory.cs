@@ -94,9 +94,9 @@ internal static class GhostscriptFactory
         {
             if (!src.Log.HasValue() || !Io.Exists(src.Log)) return;
             using var ss = new StreamReader(Io.Open(src.Log));
-            while (!ss.EndOfStream) src.GetType().LogDebug(ss.ReadLine());
+            while (!ss.EndOfStream) Logger.Debug(ss.ReadLine());
         }
-        catch (Exception err) { src.GetType().LogDebug(err.Message); }
+        catch (Exception err) { Logger.Debug(err.Message); }
     }
 
     #endregion

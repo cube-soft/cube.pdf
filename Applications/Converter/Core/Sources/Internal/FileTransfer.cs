@@ -148,7 +148,7 @@ internal sealed class FileTransfer : DisposableBase
             var path = GetDestination(i + 1, n);
             MoveOrCopy(e, path, true);
             dest.Add(path);
-            GetType().LogDebug($"Save:{path}");
+            Logger.Debug(path);
             ++i;
         }
     }
@@ -173,7 +173,11 @@ internal sealed class FileTransfer : DisposableBase
     public static void MoveOrCopy(string src, string dest, bool overwrite)
     {
         try { Io.Move(src, dest, overwrite); }
-        catch { Io.Copy(src, dest, overwrite); }
+        catch (Exception e)
+        {
+            Logger.Debug($"{e.Message} ({src} -> {dest})");
+            Io.Copy(src, dest, overwrite);
+        }
     }
 
     #endregion
@@ -196,7 +200,7 @@ internal sealed class FileTransfer : DisposableBase
     /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    protected override void Dispose(bool disposing) => GetType().LogWarn(() => Io.Delete(Temp));
+    protected override void Dispose(bool disposing) => Logger.Warn(() => Io.Delete(Temp));
 
     /* --------------------------------------------------------------------- */
     ///
