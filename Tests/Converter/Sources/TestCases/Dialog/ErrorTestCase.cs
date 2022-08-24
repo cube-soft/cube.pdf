@@ -21,7 +21,9 @@ namespace Cube.Pdf.Converter.Tests;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cube.FileSystem;
 using Cube.Pdf.Converter;
+using Cube.Tests;
 using NUnit.Framework;
 
 /* ------------------------------------------------------------------------- */
@@ -37,6 +39,88 @@ using NUnit.Framework;
 sealed class ErrorTestCase : TestCaseBase<Func<MainViewModel, Task>>
 {
     #region TestCases
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GhostscriptError
+    ///
+    /// <summary>
+    /// Tests the error handling when a Ghostscript API error occurs.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private async Task GhostscriptError(MainViewModel vm)
+    {
+        var name = nameof(GhostscriptError);
+        var msg  = default(DialogMessage);
+
+        using var dc = vm.Subscribe<DialogMessage>(e => msg = e);
+
+        vm.Invoke();
+
+        Assert.That(await Wait.ForAsync(() => msg is not null), "Timeout");
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
+        Logger.Debug($"[{name}] {msg.Text} ({vm.Settings.Language})");
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// MergeError
+    ///
+    /// <summary>
+    /// Tests the error handling when merging into an existing file fails.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private async Task MergeError(MainViewModel vm)
+    {
+        var name = nameof(MergeError);
+        var msg  = default(DialogMessage);
+
+        using var dc = vm.Subscribe<DialogMessage>(e => {
+            if (e.Icon == DialogIcon.Warning)
+            {   // Confirmation of merging into an existing file.
+                e.Value  = DialogStatus.Ok;
+                e.Cancel = false;
+            }
+            else msg = e;
+        });
+
+        Io.Copy(GetSource("SampleAes256.pdf"), vm.Settings.Destination, true);
+        vm.Settings.SaveOption = SaveOption.MergeTail;
+        vm.Invoke();
+
+        Assert.That(await Wait.ForAsync(() => msg is not null), "Timeout");
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
+        Logger.Debug($"[{name}] {msg.Text} ({vm.Settings.Language})");
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// DigestNotMatch
+    ///
+    /// <summary>
+    /// Tests the error handling when the SHA-256 digest of the source file
+    /// does not match.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private async Task DigestNotMatch(MainViewModel vm)
+    {
+        var name = nameof(DigestNotMatch);
+        var src  = Io.Combine(Io.Get(vm.Settings.Destination).DirectoryName, $"{name}.ps");
+        var msg  = default(DialogMessage);
+
+        using var dc = vm.Subscribe<DialogMessage>(e => msg = e);
+
+        Io.Copy(GetSource("Sample.ps"), src, true);
+        vm.Settings.Source = src;
+        vm.Invoke();
+
+        Assert.That(await Wait.ForAsync(() => msg is not null), "Timeout");
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
+        Logger.Debug($"[{name}] {msg.Text} ({vm.Settings.Language})");
+    }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -57,16 +141,17 @@ sealed class ErrorTestCase : TestCaseBase<Func<MainViewModel, Task>>
 
         vm.Encryption.Enabled       = true;
         vm.Encryption.OwnerPassword = name;
-
         vm.Invoke();
+
         Assert.That(msg, Is.Not.Null);
-        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error));
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
 
         msg = default;
         vm.Encryption.OwnerConfirm = "dummy";
         vm.Invoke();
+
         Assert.That(msg, Is.Not.Null);
-        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error));
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
         Logger.Debug($"[{name}] {msg.Text} ({vm.Settings.Language})");
 
         return Task.FromResult(0);
@@ -95,16 +180,17 @@ sealed class ErrorTestCase : TestCaseBase<Func<MainViewModel, Task>>
         vm.Encryption.OpenWithPassword = true;
         vm.Encryption.SharePassword    = false;
         vm.Encryption.UserPassword     = name;
-
         vm.Invoke();
+
         Assert.That(msg, Is.Not.Null);
-        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error));
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
 
         msg = default;
         vm.Encryption.UserConfirm = "dummy";
         vm.Invoke();
+
         Assert.That(msg, Is.Not.Null);
-        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error));
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
         Logger.Debug($"[{name}] {msg.Text} ({vm.Settings.Language})");
 
         return Task.FromResult(0);
@@ -121,6 +207,9 @@ sealed class ErrorTestCase : TestCaseBase<Func<MainViewModel, Task>>
     /* --------------------------------------------------------------------- */
     protected override IEnumerable<TestCaseData> Get()
     {
+        yield return Make(nameof(GhostscriptError), "Sample.txt", GhostscriptError);
+        yield return Make(nameof(MergeError), MergeError);
+        yield return Make(nameof(DigestNotMatch), DigestNotMatch);
         yield return Make(nameof(OwnerConfirmNotMatch), OwnerConfirmNotMatch);
         yield return Make(nameof(UserConfirmNotMatch), UserConfirmNotMatch);
     }

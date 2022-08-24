@@ -20,6 +20,7 @@ namespace Cube.Pdf.Converter.Tests;
 
 using System.Collections;
 using System.Collections.Generic;
+using Cube.Tests;
 using NUnit.Framework;
 
 /* ------------------------------------------------------------------------- */
@@ -31,7 +32,7 @@ using NUnit.Framework;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-abstract class TestCaseBase<T> : IEnumerable<TestCaseData>
+abstract class TestCaseBase<T> : SourceFileFixture, IEnumerable<TestCaseData>
 {
     #region Constructors
 
