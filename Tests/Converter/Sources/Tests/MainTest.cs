@@ -20,9 +20,9 @@ namespace Cube.Pdf.Converter.Tests;
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Cube.FileSystem;
+using Cube.Pdf.Converter.Mixin;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using Cube.Tests.Forms;
@@ -38,7 +38,7 @@ using NUnit.Framework;
 ///
 /* ------------------------------------------------------------------------- */
 [TestFixture]
-class MainTest : FileFixture
+class MainTest : MockFixture
 {
     #region Tests
 
@@ -67,8 +67,10 @@ class MainTest : FileFixture
     public async Task Test(string category, string name, string src, SettingValue value)
     {
         var dest = Get(category, $"{name}{value.Format.GetExtension()}");
-        var ss   = new SettingFolder();
+        var ss   = new SettingFolder(DataContract.Format.Registry, GetKeyName());
 
+        ss.Load();
+        ss.Normalize();
         ss.Value.Temp = Get(".tmp");
         ss.Set(new MockArguments(name, GetSource(src), ss.Value.Temp));
 
@@ -113,22 +115,6 @@ class MainTest : FileFixture
     #endregion
 
     #region Others
-
-    /* ----------------------------------------------------------------- */
-    ///
-    /// Setup
-    ///
-    /// <summary>
-    /// Executes in each test.
-    /// </summary>
-    ///
-    /* ----------------------------------------------------------------- */
-    [SetUp]
-    protected void Setup()
-    {
-        SynchronizationContext.SetSynchronizationContext(new());
-        Locale.Set(Language.Auto);
-    }
 
     /* --------------------------------------------------------------------- */
     ///

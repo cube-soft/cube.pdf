@@ -19,9 +19,8 @@
 namespace Cube.Pdf.Converter.Tests;
 
 using System.Linq;
-using System.Threading;
 using Cube.Pdf.Ghostscript;
-using Cube.Tests;
+using Cube.Tests.Forms;
 using NUnit.Framework;
 
 /* ------------------------------------------------------------------------- */
@@ -35,13 +34,11 @@ using NUnit.Framework;
 ///
 /* ------------------------------------------------------------------------- */
 [TestFixture]
-class SettingTest : FileFixture
+class SettingTest : MockFixture
 {
-    #region Tests
-
     /* --------------------------------------------------------------------- */
     ///
-    /// Test
+    /// Check
     ///
     /// <summary>
     /// Checks the default settings.
@@ -49,7 +46,7 @@ class SettingTest : FileFixture
     ///
     /* --------------------------------------------------------------------- */
     [Test]
-    public void Test()
+    public void Check()
     {
         var ss = new SettingFolder();
         Assert.That(ss.Format,             Is.EqualTo(DataContract.Format.Registry));
@@ -57,6 +54,13 @@ class SettingTest : FileFixture
         Assert.That(ss.AutoSave,           Is.False, nameof(ss.AutoSave));
         Assert.That(ss.DocumentName,       Is.Not.Null, nameof(ss.DocumentName));
         Assert.That(ss.Digest,             Is.Null, nameof(ss.Digest));
+        Assert.That(ss.Value.Downsampling, Is.EqualTo(Downsampling.Bicubic));
+        Assert.That(ss.Value.EmbedFonts,   Is.True, nameof(ss.Value.EmbedFonts));
+
+        var ac = ss.Value.Appendix;
+        Assert.That(ac.Language,           Is.EqualTo(Language.Auto));
+        Assert.That(ac.SourceVisible,      Is.False, nameof(ac.SourceVisible));
+        Assert.That(ac.ExplicitDirectory,  Is.False, nameof(ac.ExplicitDirectory));
 
         using var vm = new MainViewModel(ss);
         Assert.That(vm.Busy,               Is.False, nameof(vm.Busy));
@@ -115,25 +119,30 @@ class SettingTest : FileFixture
         Assert.That(s2.AllowAnnotation,    Is.True,  nameof(s2.AllowAnnotation));
     }
 
-    #endregion
-
-    #region Others
-
-    /* ----------------------------------------------------------------- */
+    /* --------------------------------------------------------------------- */
     ///
-    /// Setup
+    /// Save
     ///
     /// <summary>
-    /// Executes in each test.
+    /// Tests the Save method.
     /// </summary>
     ///
-    /* ----------------------------------------------------------------- */
-    [SetUp]
-    protected void Setup()
+    /* --------------------------------------------------------------------- */
+    [Test]
+    public void Save()
     {
-        SynchronizationContext.SetSynchronizationContext(new());
-        Locale.Set(Language.Auto);
-    }
+        var fmt  = DataContract.Format.Registry;
+        var name = GetKeyName(nameof(Save));
+        Assert.That(DataContract.Proxy.Exists(fmt, name), Is.False);
 
-    #endregion
+        var ss = new SettingFolder(fmt, name);
+        using var vm = new MainViewModel(ss);
+        using var dc = new MockDialogBehavior(vm);
+
+        vm.Metadata.Title = nameof(Save);
+        vm.Save();
+
+        var dest = DataContract.Proxy.Deserialize<SettingValue>(fmt, name);
+        Assert.That(dest.Metadata.Title, Is.EqualTo(nameof(Save)));
+    }
 }

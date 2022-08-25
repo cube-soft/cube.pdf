@@ -21,9 +21,7 @@ namespace Cube.Pdf.Converter.Tests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Cube.Tests;
 using NUnit.Framework;
 
 /* ------------------------------------------------------------------------- */
@@ -36,10 +34,8 @@ using NUnit.Framework;
 ///
 /* ------------------------------------------------------------------------- */
 [TestFixture]
-class DialogTest : FileFixture
+class DialogTest : MockFixture
 {
-    #region Tests
-
     /* --------------------------------------------------------------------- */
     ///
     /// Test
@@ -88,26 +84,4 @@ class DialogTest : FileFixture
         .Concat(new ErrorTestCase())
         .Concat(new WarnTestCase())
         .Concat(new FileTestCase());
-
-    #endregion
-
-    #region Others
-
-    /* ----------------------------------------------------------------- */
-    ///
-    /// Setup
-    ///
-    /// <summary>
-    /// Executes in each test.
-    /// </summary>
-    ///
-    /* ----------------------------------------------------------------- */
-    [SetUp]
-    protected void Setup()
-    {
-        SynchronizationContext.SetSynchronizationContext(new());
-        Locale.Set(Language.Auto);
-    }
-
-    #endregion
 }
