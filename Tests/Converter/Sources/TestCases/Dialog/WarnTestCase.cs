@@ -21,8 +21,8 @@ namespace Cube.Pdf.Converter.Tests;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cube.FileSystem;
 using Cube.Pdf.Converter;
-using Cube.Tests;
 using NUnit.Framework;
 
 /* ------------------------------------------------------------------------- */
@@ -41,6 +41,36 @@ class WarnTestCase : TestCaseBase<Func<MainViewModel, Task>>
 
     /* --------------------------------------------------------------------- */
     ///
+    /// FileExists
+    ///
+    /// <summary>
+    /// Tests the confirmation when the specified file exists.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private Task FileExists(MainViewModel vm)
+    {
+        var name = nameof(FileExists);
+        var msg  = default(DialogMessage);
+
+        using var dc = vm.Subscribe<DialogMessage>(e => {
+            e.Value  = DialogStatus.No;
+            e.Cancel = true;
+            msg = e;
+        });
+
+        Io.Copy(GetSource("Sample.pdf"), vm.Settings.Destination, true);
+        vm.Invoke();
+
+        Assert.That(msg, Is.Not.Null);
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Warning), msg.Text);
+        Logger.Debug($"[{name}] {msg.Text} ({vm.Settings.Language})");
+
+        return Task.FromResult(0);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// MetadataHasValue
     ///
     /// <summary>
@@ -48,7 +78,7 @@ class WarnTestCase : TestCaseBase<Func<MainViewModel, Task>>
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private async Task MetadataHasValue(MainViewModel vm)
+    private Task MetadataHasValue(MainViewModel vm)
     {
         var name = nameof(MetadataHasValue);
         var msg  = default(DialogMessage);
@@ -61,9 +91,12 @@ class WarnTestCase : TestCaseBase<Func<MainViewModel, Task>>
 
         vm.Metadata.Title = name;
         vm.Save();
-        Assert.That(await Wait.ForAsync(() => msg is not null), "Timeout");
-        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Warning));
+
+        Assert.That(msg, Is.Not.Null);
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Warning), msg.Text);
         Logger.Debug($"[{name}] {msg.Text} ({vm.Settings.Language})");
+
+        return Task.FromResult(0);
     }
 
     /* --------------------------------------------------------------------- */
@@ -77,6 +110,7 @@ class WarnTestCase : TestCaseBase<Func<MainViewModel, Task>>
     /* --------------------------------------------------------------------- */
     protected override IEnumerable<TestCaseData> Get()
     {
+        yield return Make(nameof(FileExists), FileExists);
         yield return Make(nameof(MetadataHasValue), MetadataHasValue);
     }
 
