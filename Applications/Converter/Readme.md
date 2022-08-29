@@ -49,7 +49,7 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
-* 2022-04-12 version 2.0.2
+* 2022-07-12 version 2.0.2
     - Update iText to 7.2.3.
     - Fix to download and install the Visual C++ redistributable package as needed.
 * 2022-04-18 version 2.0.1
