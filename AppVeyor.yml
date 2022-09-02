@@ -6,7 +6,7 @@ environment:
     TEST_COVERAGE: 'Coverage.xml'
     TEST_RESULTS:  'Results'
 clone_folder: 'C:\Cube\%PROJECT_NAME%'
-image: Visual Studio 2019
+image: Visual Studio 2022
 platform: Any CPU
 configuration: Release
 skip_tags: true
