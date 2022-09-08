@@ -189,23 +189,6 @@ public class SettingValue : DataContract.SerializableBase
 
     /* --------------------------------------------------------------------- */
     ///
-    /// PlatformCompatible
-    ///
-    /// <summary>
-    /// Gets or sets a value indicating whether to ignore
-    /// PlatformNotSupportedException exceptions as possible.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [DataMember]
-    public bool PlatformCompatible
-    {
-        get => Get(() => true);
-        set => Set(value);
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// PostProcess
     ///
     /// <summary>

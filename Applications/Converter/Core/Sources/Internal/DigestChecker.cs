@@ -92,15 +92,8 @@ sealed class DigestChecker
         var src = Settings.Digest;
         if (!src.HasValue()) return;
 
-        try
-        {
-            var cmp = Compute(Settings.Value.Source);
-            if (!src.FuzzyEquals(cmp)) throw new CryptographicException();
-        }
-        catch (PlatformNotSupportedException)
-        {
-            if (!Settings.Value.PlatformCompatible) throw;
-        }
+        var cmp = Compute(Settings.Value.Source);
+        if (!src.FuzzyEquals(cmp)) throw new CryptographicException();
     }
 
     #endregion
