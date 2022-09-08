@@ -22,7 +22,7 @@ using System.Runtime.Serialization;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// SettingValueEx
+/// AppendixSettingValue
 ///
 /// <summary>
 /// Represents user settings not directly related to the main conversion
@@ -31,7 +31,7 @@ using System.Runtime.Serialization;
 ///
 /* ------------------------------------------------------------------------- */
 [DataContract]
-public class SettingValueEx : DataContract.SerializableBase
+public class AppendixSettingValue : DataContract.SerializableBase
 {
     #region Properties
 

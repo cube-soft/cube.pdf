@@ -302,9 +302,9 @@ public class SettingValue : DataContract.SerializableBase
     ///
     /* --------------------------------------------------------------------- */
     [DataMember]
-    public SettingValueEx Appendix
+    public AppendixSettingValue Appendix
     {
-        get => Get(() => new SettingValueEx());
+        get => Get(() => new AppendixSettingValue());
         set => Set(value);
     }
 

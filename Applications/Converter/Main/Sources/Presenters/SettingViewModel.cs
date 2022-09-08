@@ -58,7 +58,7 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
     {
         Assets.Add(src.Forward(this));
         Assets.Add(src.Value.Appendix.Subscribe(new() {
-            { nameof(SettingValueEx.Language), _ => Locale.Set(src.Value.Appendix.Language) },
+            { nameof(AppendixSettingValue.Language), _ => Locale.Set(src.Value.Appendix.Language) },
         }, Refresh));
     }
 
