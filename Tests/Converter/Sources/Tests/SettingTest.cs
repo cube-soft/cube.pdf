@@ -57,11 +57,6 @@ class SettingTest : MockFixture
         Assert.That(ss.Value.Downsampling, Is.EqualTo(Downsampling.Bicubic));
         Assert.That(ss.Value.EmbedFonts,   Is.True, nameof(ss.Value.EmbedFonts));
 
-        var ax = ss.Value.Appendix;
-        Assert.That(ax.Language,           Is.EqualTo(Language.Auto));
-        Assert.That(ax.SourceVisible,      Is.False, nameof(ax.SourceVisible));
-        Assert.That(ax.ExplicitDirectory,  Is.False, nameof(ax.ExplicitDirectory));
-
         using var vm = new MainViewModel(ss);
         Assert.That(vm.Busy,               Is.False, nameof(vm.Busy));
         Assert.That(vm.Results.Any(),      Is.False, nameof(vm.Results));
@@ -117,6 +112,19 @@ class SettingTest : MockFixture
         Assert.That(s2.AllowAccessibility, Is.True,  nameof(s2.AllowAccessibility));
         Assert.That(s2.AllowForm,          Is.True,  nameof(s2.AllowForm));
         Assert.That(s2.AllowAnnotation,    Is.True,  nameof(s2.AllowAnnotation));
+
+        var s3 = ss.Value.Appendix;
+        Assert.That(s3.Language,           Is.EqualTo(Language.Auto));
+        Assert.That(s3.SourceVisible,      Is.False, nameof(s3.SourceVisible));
+        Assert.That(s3.ExplicitDirectory,  Is.False, nameof(s3.ExplicitDirectory));
+        Assert.That(s3.Extensions.Pdf,     Is.EqualTo(".pdf"));
+        Assert.That(s3.Extensions.Ps,      Is.EqualTo(".ps"));
+        Assert.That(s3.Extensions.Eps,     Is.EqualTo(".eps"));
+        Assert.That(s3.Extensions.Png,     Is.EqualTo(".png"));
+        Assert.That(s3.Extensions.Jpeg,    Is.EqualTo(".jpg"));
+        Assert.That(s3.Extensions.Bmp,     Is.EqualTo(".bmp"));
+        Assert.That(s3.Extensions.Tiff,    Is.EqualTo(".tiff"));
+
     }
 
     /* --------------------------------------------------------------------- */

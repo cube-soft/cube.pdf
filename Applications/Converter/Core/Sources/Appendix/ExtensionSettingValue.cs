@@ -23,86 +23,125 @@ using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// AppendixSettingValue
+/// ExtensionSettingValue
 ///
 /// <summary>
-/// Represents user settings not directly related to the main conversion
-/// process.
+/// Represents user settings for the default extension for each file format.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
 [DataContract]
-public class AppendixSettingValue : SerializableBase
+public class ExtensionSettingValue : SerializableBase
 {
-    #region Properties
-
     /* --------------------------------------------------------------------- */
     ///
-    /// SourceVisible
+    /// Pdf
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether to display the
-    /// path of the source file.
+    /// Gets or sets the default extension for the PDF format.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [DataMember]
-    public bool SourceVisible
+    public string Pdf
     {
-        get => Get(() => false);
+        get => Get(() => ".pdf");
         set => Set(value);
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ExplicitDirectory
+    /// Ps
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether to set a value to the
-    /// InitialDirectory property explicitly when showing a dialog
-    /// that selects the file or directory name.
+    /// Gets or sets the default extension for the PostScript format.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [DataMember]
-    public bool ExplicitDirectory
+    public string Ps
     {
-        get => Get(() => false);
+        get => Get(() => ".ps");
         set => Set(value);
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Language
+    /// Eps
     ///
     /// <summary>
-    /// Gets or sets the displayed language.
+    /// Gets or sets the default extension for the EPS format.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [DataMember]
-    public Language Language
+    public string Eps
     {
-        get => Get(() => Language.Auto);
+        get => Get(() => ".eps");
         set => Set(value);
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Extensions
+    /// Png
     ///
     /// <summary>
-    /// Gets or sets the user settings for the default extension for each
-    /// file format.
+    /// Gets or sets the default extension for the PNG format.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
     [DataMember]
-    public ExtensionSettingValue Extensions
+    public string Png
     {
-        get => Get(() => new ExtensionSettingValue());
+        get => Get(() => ".png");
         set => Set(value);
     }
 
-    #endregion
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Jpeg
+    ///
+    /// <summary>
+    /// Gets or sets the default extension for the JPEG format.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public string Jpeg
+    {
+        get => Get(() => ".jpg");
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Bmp
+    ///
+    /// <summary>
+    /// Gets or sets the default extension for the BMP format.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public string Bmp
+    {
+        get => Get(() => ".bmp");
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Tiff
+    ///
+    /// <summary>
+    /// Gets or sets the default extension for the TIFF format.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public string Tiff
+    {
+        get => Get(() => ".tiff");
+        set => Set(value);
+    }
 }
