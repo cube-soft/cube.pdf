@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Converter.Tests;
+namespace Cube.Pdf.Converter.Tests.Settings;
 
 using System.Linq;
 using Cube.Pdf.Ghostscript;
