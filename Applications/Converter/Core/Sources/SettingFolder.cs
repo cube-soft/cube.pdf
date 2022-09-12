@@ -180,7 +180,7 @@ public class SettingFolder : SettingFolder<SettingValue>
 
         var dest = Io.Get(Io.Combine(GetDirectoryName(Value.Destination), DocumentName.Value));
         var name = dest.BaseName;
-        var ext  = Ghostscript.FormatExtension.GetExtension(Value.Format);
+        var ext  = Value.Appendix.Extensions.Get(Value.Format);
 
         Value.Destination  = Io.Combine(dest.DirectoryName, $"{name}{ext}");
         Value.DeleteSource = op.ContainsKey("DeleteOnClose");

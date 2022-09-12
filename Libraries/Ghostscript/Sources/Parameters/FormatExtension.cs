@@ -23,14 +23,14 @@ using System.Collections.Generic;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// FormatExtension
+/// FormatMethods
 ///
 /// <summary>
 /// Provides extended methods of the Format enum.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public static class FormatExtension
+public static class FormatMethods
 {
     #region Methods
 

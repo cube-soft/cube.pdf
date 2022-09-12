@@ -33,6 +33,8 @@ using Cube.DataContract;
 [DataContract]
 public class ExtensionSettingValue : SerializableBase
 {
+    #region Properties
+
     /* --------------------------------------------------------------------- */
     ///
     /// Pdf
@@ -144,4 +146,53 @@ public class ExtensionSettingValue : SerializableBase
         get => Get(() => ".tiff");
         set => Set(value);
     }
+
+    #endregion
+
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Get
+    ///
+    /// <summary>
+    /// Gets the extension corresponding to the specified file format.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public string Get(Ghostscript.Format src) => src switch
+    {
+        Ghostscript.Format.Pdf                  => Pdf,
+        Ghostscript.Format.Ps                   => Ps,
+        Ghostscript.Format.Eps                  => Eps,
+        Ghostscript.Format.Png                  => Png,
+        Ghostscript.Format.Png1bppMonochrome    => Png,
+        Ghostscript.Format.Png24bppRgb          => Png,
+        Ghostscript.Format.Png32bppArgb         => Png,
+        Ghostscript.Format.Png4bppIndexed       => Png,
+        Ghostscript.Format.Png8bppGrayscale     => Png,
+        Ghostscript.Format.Png8bppIndexed       => Png,
+        Ghostscript.Format.Jpeg                 => Jpeg,
+        Ghostscript.Format.Jpeg24bppRgb         => Jpeg,
+        Ghostscript.Format.Jpeg32bppCmyk        => Jpeg,
+        Ghostscript.Format.Jpeg8bppGrayscale    => Jpeg,
+        Ghostscript.Format.Bmp                  => Bmp,
+        Ghostscript.Format.Bmp1bppMonochrome    => Bmp,
+        Ghostscript.Format.Bmp24bppRgb          => Bmp,
+        Ghostscript.Format.Bmp32bppArgb         => Bmp,
+        Ghostscript.Format.Bmp4bppIndexed       => Bmp,
+        Ghostscript.Format.Bmp8bppGrayscale     => Bmp,
+        Ghostscript.Format.Bmp8bppIndexed       => Bmp,
+        Ghostscript.Format.Tiff                 => Tiff,
+        Ghostscript.Format.Tiff12bppRgb         => Tiff,
+        Ghostscript.Format.Tiff1bppMonochrome   => Tiff,
+        Ghostscript.Format.Tiff24bppRgb         => Tiff,
+        Ghostscript.Format.Tiff32bppCmyk        => Tiff,
+        Ghostscript.Format.Tiff48bppRgb         => Tiff,
+        Ghostscript.Format.Tiff64bppCmyk        => Tiff,
+        Ghostscript.Format.Tiff8bppGrayscale    => Tiff,
+        _ => Ghostscript.FormatMethods.GetExtension(src),
+    };
+
+    #endregion
 }
