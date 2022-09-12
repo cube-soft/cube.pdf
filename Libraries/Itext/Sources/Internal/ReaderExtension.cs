@@ -19,7 +19,7 @@
 using System;
 using System.Drawing;
 using System.Text;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 using iText.Kernel.Exceptions;
 using iText.Kernel.Pdf;
 

@@ -22,9 +22,9 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Mixin.String;
-using Cube.Mixin.Syntax;
 using Cube.Pdf.Itext;
+using Cube.Syntax.Extensions;
+using Cube.Text.Extensions;
 
 namespace Cube.Pdf.Pages
 {

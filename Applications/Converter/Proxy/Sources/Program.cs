@@ -17,7 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using Cube.Collections;
-using Cube.Mixin.Collections;
+using Cube.Collections.Extensions;
 
 namespace Cube.Pdf.Converter.Proxy
 {

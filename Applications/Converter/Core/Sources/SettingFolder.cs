@@ -24,9 +24,8 @@ using System.Reflection;
 using Cube.Collections;
 using Cube.DataContract;
 using Cube.FileSystem;
-using Cube.Mixin.Assembly;
-using Cube.Mixin.Environment;
-using Cube.Mixin.String;
+using Cube.Reflection.Extensions;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -202,7 +201,7 @@ public class SettingFolder : SettingFolder<SettingValue>
     /* --------------------------------------------------------------------- */
     private string GetDirectoryName(string src)
     {
-        var desktop = Environment.SpecialFolder.Desktop.GetName();
+        var desktop = GetDesktopDirectoryName();
 
         try
         {
@@ -211,6 +210,25 @@ public class SettingFolder : SettingFolder<SettingValue>
             return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
         }
         catch { return desktop; }
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GetDirectoryName
+    ///
+    /// <summary>
+    /// Gets the directory name of the desktop.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private string GetDesktopDirectoryName()
+    {
+        try { return Environment.GetFolderPath(Environment.SpecialFolder.Desktop); }
+        catch (Exception e)
+        {
+            Logger.Warn(e.Message);
+            return string.Empty;
+        }
     }
 
     #endregion

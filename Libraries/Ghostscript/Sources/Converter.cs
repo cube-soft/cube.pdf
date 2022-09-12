@@ -21,10 +21,9 @@ namespace Cube.Pdf.Ghostscript;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cube.Collections.Extensions;
 using Cube.FileSystem;
-using Cube.Mixin.Collections;
-using Cube.Mixin.Generic;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -249,7 +248,7 @@ public class Converter
     /// <param name="dest">Path to save the conversion result.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public void Invoke(string src, string dest) => Invoke(src.ToEnumerable(), dest);
+    public void Invoke(string src, string dest) => Invoke(new[] { src }, dest);
 
     /* --------------------------------------------------------------------- */
     ///
@@ -266,7 +265,7 @@ public class Converter
     public void Invoke(IEnumerable<string> sources, string dest)
     {
         // OfType<T> methods are used to remove null objects.
-        var args = Argument.Dummy.ToEnumerable()
+        var args = new[] { Argument.Dummy }
             .Concat(new Argument('s', "OutputFile", dest))
             .Concat(OnCreateArguments().OfType<Argument>())
             .Concat(Adjust(OnCreateCodes().OfType<Code>()))
@@ -365,7 +364,7 @@ public class Converter
     ///
     /* --------------------------------------------------------------------- */
     private IEnumerable<Argument> Adjust(IEnumerable<Code> src) =>
-        src.Count() > 0 ? new Argument('c').ToEnumerable().Concat(src) : src;
+        src.Count() > 0 ? new[] { new Argument('c') }.Concat(src) : src;
 
     #endregion
 }

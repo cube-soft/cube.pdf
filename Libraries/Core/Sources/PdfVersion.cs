@@ -21,7 +21,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Text;
 using Cube.DataContract;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

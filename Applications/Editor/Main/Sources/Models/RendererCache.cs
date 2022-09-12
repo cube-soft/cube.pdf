@@ -19,8 +19,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Drawing;
-using Cube.Mixin.String;
 using Cube.Pdf.Pdfium;
+using Cube.Text.Extensions;
 
 namespace Cube.Pdf.Editor
 {

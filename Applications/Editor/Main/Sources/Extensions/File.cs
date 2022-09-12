@@ -23,10 +23,10 @@ using System.Windows;
 using System.Windows.Media;
 using Cube.Collections;
 using Cube.FileSystem;
+using Cube.Generics.Extensions;
 using Cube.Icons;
-using Cube.Mixin.Drawing;
-using Cube.Mixin.Generic;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
+using Cube.Xui.Drawing.Extensions;
 
 namespace Cube.Pdf.Editor
 {

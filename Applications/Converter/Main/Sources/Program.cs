@@ -21,8 +21,8 @@ namespace Cube.Pdf.Converter;
 using System;
 using System.Windows.Forms;
 using Cube.Collections;
+using Cube.Collections.Extensions;
 using Cube.DataContract;
-using Cube.Mixin.Collections;
 using Cube.Pdf.Converter.Mixin;
 
 /* ------------------------------------------------------------------------- */

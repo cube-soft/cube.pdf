@@ -21,7 +21,7 @@ namespace Cube.Pdf.Ghostscript;
 using System;
 using System.Runtime.InteropServices;
 using Cube.FileSystem;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

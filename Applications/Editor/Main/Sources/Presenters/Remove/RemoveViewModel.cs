@@ -19,8 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Cube.Mixin.Observable;
-using Cube.Mixin.String;
+using Cube.Observable.Extensions;
+using Cube.Text.Extensions;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

@@ -19,9 +19,9 @@
 namespace Cube.Pdf.Converter.Mixin;
 
 using System.Linq;
-using Cube.Mixin.Assembly;
-using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
+using Cube.Reflection.Extensions;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

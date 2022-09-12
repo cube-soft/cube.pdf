@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class FileCollection : ObservableBase<FileItem>, IReadOnlyList<FileItem>
+    public sealed class FileCollection : ObservableCollectionBase<FileItem>, IReadOnlyList<FileItem>
     {
         #region Constructors
 

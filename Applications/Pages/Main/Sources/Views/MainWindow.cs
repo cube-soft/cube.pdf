@@ -25,7 +25,7 @@ using Cube.Forms;
 using Cube.Forms.Behaviors;
 using Cube.Forms.Binding;
 using Cube.Forms.Globalization;
-using Cube.Mixin.Syntax;
+using Cube.Syntax.Extensions;
 
 namespace Cube.Pdf.Pages
 {

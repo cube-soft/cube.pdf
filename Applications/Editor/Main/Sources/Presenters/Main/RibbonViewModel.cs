@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
-using Cube.Mixin.Observable;
+using Cube.Observable.Extensions;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

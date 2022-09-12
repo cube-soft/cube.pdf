@@ -20,7 +20,7 @@ namespace Cube.Pdf.Ghostscript;
 
 using System.Collections.Generic;
 using System.Linq;
-using Cube.Mixin.Collections;
+using Cube.Collections.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

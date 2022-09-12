@@ -17,10 +17,9 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using Cube.Forms;
-using Cube.Mixin.Uri;
+using Cube.Web.Extensions;
 
 namespace Cube.Pdf.Pages
 {

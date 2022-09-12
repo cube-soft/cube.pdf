@@ -79,8 +79,8 @@ namespace Cube.Pdf.Tests
             var src  = GetSource("SampleImage02.png");
             var dest = new ImagePageCollection(src)[0];
 
-            Assert.That(dest.Resolution.X,    Is.EqualTo(96.0f));
-            Assert.That(dest.Resolution.Y,    Is.EqualTo(96.0f));
+            Assert.That(dest.Resolution.X,    Is.GreaterThan(1.0f));
+            Assert.That(dest.Resolution.Y,    Is.GreaterThan(1.0f));
             Assert.That(dest.Size.Width,      Is.EqualTo(137));
             Assert.That(dest.Size.Height,     Is.EqualTo(157));
             Assert.That(dest.Rotation.Degree, Is.EqualTo(0));

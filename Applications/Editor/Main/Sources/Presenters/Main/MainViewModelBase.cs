@@ -22,7 +22,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Input;
 using Cube.FileSystem;
-using Cube.Mixin.Observable;
+using Cube.Observable.Extensions;
 using Cube.Pdf.Mixin;
 using Cube.Xui;
 

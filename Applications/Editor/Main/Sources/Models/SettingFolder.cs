@@ -24,8 +24,8 @@ using System.Globalization;
 using System.Reflection;
 using Cube.DataContract;
 using Cube.FileSystem;
-using Cube.Mixin.Assembly;
-using Cube.Mixin.Uri;
+using Cube.Reflection.Extensions;
+using Cube.Web.Extensions;
 
 namespace Cube.Pdf.Editor
 {

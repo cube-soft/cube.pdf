@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

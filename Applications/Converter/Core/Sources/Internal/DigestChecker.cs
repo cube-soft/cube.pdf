@@ -18,12 +18,11 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter;
 
-using System;
 using System.Linq;
 using System.Security.Cryptography;
+using Cube.Collections.Extensions;
 using Cube.FileSystem;
-using Cube.Mixin.Collections;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

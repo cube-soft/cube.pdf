@@ -20,8 +20,8 @@ namespace Cube.Pdf.Converter.Mixin;
 
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

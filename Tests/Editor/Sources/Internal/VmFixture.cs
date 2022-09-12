@@ -20,8 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
+using Cube.Collections.Extensions;
 using Cube.DataContract;
-using Cube.Mixin.Collections;
 using Cube.Tests;
 
 namespace Cube.Pdf.Editor.Tests

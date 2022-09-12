@@ -22,7 +22,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Cube.Mixin.Observable;
+using Cube.Observable.Extensions;
 
 namespace Cube.Pdf.Pages
 {

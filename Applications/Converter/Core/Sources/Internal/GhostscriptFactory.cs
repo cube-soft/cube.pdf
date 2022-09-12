@@ -24,9 +24,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Cube.FileSystem;
-using Cube.Mixin.Assembly;
-using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
+using Cube.Reflection.Extensions;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

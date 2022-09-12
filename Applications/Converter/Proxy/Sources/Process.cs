@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 namespace Cube.Pdf.Converter.Proxy
 {

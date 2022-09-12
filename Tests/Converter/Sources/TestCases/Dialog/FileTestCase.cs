@@ -21,7 +21,6 @@ namespace Cube.Pdf.Converter.Tests;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cube.Mixin.Generic;
 using Cube.Pdf.Converter;
 using NUnit.Framework;
 
@@ -54,7 +53,7 @@ class FileTestCase : TestCaseBase<Func<MainViewModel, Task>>
         var msg  = default(OpenFileMessage);
 
         using var dc = vm.Subscribe<OpenFileMessage>(e => {
-            e.Value  = name.ToEnumerable();
+            e.Value  = new[] { name };
             e.Cancel = false;
             msg = e;
         });
@@ -110,7 +109,7 @@ class FileTestCase : TestCaseBase<Func<MainViewModel, Task>>
         var msg  = default(OpenFileMessage);
 
         using var dc = vm.Subscribe<OpenFileMessage>(e => {
-            e.Value  = name.ToEnumerable();
+            e.Value  = new[] { name };
             e.Cancel = false;
             msg = e;
         });

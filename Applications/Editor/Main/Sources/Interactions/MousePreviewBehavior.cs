@@ -18,8 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using System.Windows.Controls;
 using System.Windows.Input;
-using Cube.Mixin.Commands;
 using Cube.Xui.Behaviors;
+using Cube.Xui.Commands.Extensions;
 
 namespace Cube.Pdf.Editor
 {

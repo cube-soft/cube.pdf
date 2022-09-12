@@ -22,7 +22,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
 using Cube.FileSystem;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 using iText.IO.Image;
 using iText.IO.Source;
 using iText.IO.Util;

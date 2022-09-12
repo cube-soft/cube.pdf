@@ -20,7 +20,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cube.Collections;
-using Cube.Mixin.Tasks;
+using Cube.Tasks.Extensions;
 
 namespace Cube.Pdf.Editor
 {

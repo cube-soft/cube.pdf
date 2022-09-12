@@ -22,8 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Cube.Forms;
-using Cube.Mixin.Uri;
 using Cube.Pdf.Ghostscript;
+using Cube.Web.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

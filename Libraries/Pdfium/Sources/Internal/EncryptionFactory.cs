@@ -16,7 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 namespace Cube.Pdf.Pdfium
 {

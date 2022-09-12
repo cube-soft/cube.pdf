@@ -18,8 +18,8 @@
 /* ------------------------------------------------------------------------- */
 using System.Threading.Tasks;
 using Cube.FileSystem;
-using Cube.Mixin.Drawing;
-using Cube.Mixin.Tasks;
+using Cube.Tasks.Extensions;
+using Cube.Xui.Drawing.Extensions;
 
 namespace Cube.Pdf.Editor
 {

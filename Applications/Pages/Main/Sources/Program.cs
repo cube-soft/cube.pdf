@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Windows.Forms;
-using Cube.Mixin.Collections;
+using Cube.Collections.Extensions;
 
 namespace Cube.Pdf.Pages
 {

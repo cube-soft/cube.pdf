@@ -21,9 +21,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cube.FileSystem;
-using Cube.Mixin.Observable;
-using Cube.Mixin.String;
-using Cube.Mixin.Syntax;
+using Cube.Observable.Extensions;
+using Cube.Syntax.Extensions;
+using Cube.Text.Extensions;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

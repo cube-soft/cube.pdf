@@ -21,10 +21,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Input;
-using Cube.Mixin.Commands;
-using Cube.Mixin.String;
 using Cube.Tests;
+using Cube.Text.Extensions;
 using Cube.Xui;
+using Cube.Xui.Commands.Extensions;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests

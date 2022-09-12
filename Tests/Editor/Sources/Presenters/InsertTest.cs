@@ -22,9 +22,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Cube.FileSystem;
-using Cube.Mixin.Commands;
 using Cube.Pdf.Pdfium;
 using Cube.Tests;
+using Cube.Xui.Commands.Extensions;
 using GongSolutions.Wpf.DragDrop;
 using NUnit.Framework;
 

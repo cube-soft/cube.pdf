@@ -21,7 +21,7 @@ namespace Cube.Pdf.Converter;
 using System;
 using System.Threading;
 using Cube.FileSystem;
-using Cube.Mixin.Observable;
+using Cube.Observable.Extensions;
 using Cube.Pdf.Converter.Mixin;
 using Cube.Pdf.Ghostscript;
 

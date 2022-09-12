@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cube.FileSystem;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Filespec;
 using iText.Kernel.Utils;

@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Cube.Collections;
-using Cube.Mixin.Collections;
+using Cube.Collections.Extensions;
 
 namespace Cube.Pdf.Editor
 {

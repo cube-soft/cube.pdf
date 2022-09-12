@@ -20,7 +20,6 @@ namespace Cube.Pdf.Converter;
 
 using System;
 using System.Runtime.Serialization;
-using Cube.Mixin.Environment;
 using Cube.Pdf.Ghostscript;
 
 /* ------------------------------------------------------------------------- */
@@ -307,7 +306,7 @@ class SettingV2 : DataContract.SerializableBase
     [DataMember(Name = "LastAccess")]
     public string Destination
     {
-        get => Get(() => Environment.SpecialFolder.Desktop.GetName());
+        get => Get(() => Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
         set => Set(value);
     }
 
@@ -329,7 +328,7 @@ class SettingV2 : DataContract.SerializableBase
     [DataMember]
     public string Temp
     {
-        get => Get(() => $@"{Environment.SpecialFolder.CommonApplicationData.GetName()}\CubeSoft\CubePDF");
+        get => Get(() => $@"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\CubeSoft\CubePDF");
         set => Set(value);
     }
 

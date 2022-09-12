@@ -22,8 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Cube.FileSystem;
-using Cube.Mixin.String;
 using Cube.Pdf.Ghostscript;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

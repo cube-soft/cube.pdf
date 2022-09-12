@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cube.Mixin.Commands;
+using Cube.Xui.Commands.Extensions;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters

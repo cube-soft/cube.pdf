@@ -19,8 +19,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.ByteFormat;
 using Cube.FileSystem;
-using Cube.Mixin.ByteFormat;
 
 namespace Cube.Pdf.Pages
 {

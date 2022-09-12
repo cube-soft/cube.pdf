@@ -24,11 +24,11 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
+using Cube.ByteFormat;
 using Cube.FileSystem;
+using Cube.Generics.Extensions;
 using Cube.Icons;
-using Cube.Mixin.Assembly;
-using Cube.Mixin.ByteFormat;
-using Cube.Mixin.Generic;
+using Cube.Reflection.Extensions;
 using Cube.Xui.Converters;
 
 namespace Cube.Pdf.Editor

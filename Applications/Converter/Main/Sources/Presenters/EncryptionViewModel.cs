@@ -19,8 +19,8 @@
 namespace Cube.Pdf.Converter;
 
 using System.Threading;
-using Cube.Mixin.Observable;
-using Cube.Mixin.String;
+using Cube.Observable.Extensions;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

@@ -57,10 +57,10 @@ class SettingTest : MockFixture
         Assert.That(ss.Value.Downsampling, Is.EqualTo(Downsampling.Bicubic));
         Assert.That(ss.Value.EmbedFonts,   Is.True, nameof(ss.Value.EmbedFonts));
 
-        var ac = ss.Value.Appendix;
-        Assert.That(ac.Language,           Is.EqualTo(Language.Auto));
-        Assert.That(ac.SourceVisible,      Is.False, nameof(ac.SourceVisible));
-        Assert.That(ac.ExplicitDirectory,  Is.False, nameof(ac.ExplicitDirectory));
+        var ax = ss.Value.Appendix;
+        Assert.That(ax.Language,           Is.EqualTo(Language.Auto));
+        Assert.That(ax.SourceVisible,      Is.False, nameof(ax.SourceVisible));
+        Assert.That(ax.ExplicitDirectory,  Is.False, nameof(ax.ExplicitDirectory));
 
         using var vm = new MainViewModel(ss);
         Assert.That(vm.Busy,               Is.False, nameof(vm.Busy));

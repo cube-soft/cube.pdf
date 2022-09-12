@@ -20,8 +20,7 @@ using System;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
-using Cube.Mixin.Environment;
-using Cube.Mixin.Observable;
+using Cube.Observable.Extensions;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor
@@ -63,7 +62,7 @@ namespace Cube.Pdf.Editor
         public MainViewModel(SettingFolder src, SynchronizationContext context) :
             base(new(src, context), new(), context)
         {
-            var recent = Environment.SpecialFolder.Recent.GetName();
+            var recent = Environment.GetFolderPath(Environment.SpecialFolder.Recent);
             var mon    = new DirectoryMonitor(recent, "*.pdf.lnk", GetDispatcher(false))
             {
                 Enabled = src.Value.RecentVisible,

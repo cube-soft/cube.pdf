@@ -26,11 +26,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Cube.Collections;
-using Cube.Mixin.Collections;
-using Cube.Mixin.Drawing;
-using Cube.Mixin.Syntax;
-using Cube.Mixin.Tasks;
+using Cube.Collections.Extensions;
 using Cube.Pdf.Mixin;
+using Cube.Syntax.Extensions;
+using Cube.Tasks.Extensions;
+using Cube.Xui.Drawing.Extensions;
 
 namespace Cube.Pdf.Editor
 {
@@ -44,7 +44,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class ImageCollection : ObservableBase<ImageItem>, IReadOnlyList<ImageItem>
+    public sealed class ImageCollection : ObservableCollectionBase<ImageItem>, IReadOnlyList<ImageItem>
     {
         #region Constructors
 

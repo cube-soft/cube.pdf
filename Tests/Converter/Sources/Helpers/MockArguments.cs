@@ -23,9 +23,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using Cube.Collections.Extensions;
 using Cube.FileSystem;
-using Cube.Mixin.Collections;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

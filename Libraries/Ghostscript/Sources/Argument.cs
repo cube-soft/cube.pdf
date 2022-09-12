@@ -19,7 +19,7 @@
 namespace Cube.Pdf.Ghostscript;
 
 using System.Text;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
