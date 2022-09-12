@@ -97,6 +97,30 @@ sealed class ErrorTestCase : TestCaseBase<Func<MainViewModel, Task>>
 
     /* --------------------------------------------------------------------- */
     ///
+    /// SourceEmpty
+    ///
+    /// <summary>
+    /// Tests the error handling when source file not specified.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private async Task SourceEmpty(MainViewModel vm)
+    {
+        var name = nameof(MergeError);
+        var msg  = default(DialogMessage);
+
+        using var dc = vm.Subscribe<DialogMessage>(e => msg = e);
+
+        vm.Settings.Source = "";
+        vm.Invoke();
+
+        Assert.That(await Wait.ForAsync(() => msg is not null), "Timeout");
+        Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
+        Logger.Debug($"[{name}] {msg.Text} ({vm.Settings.Language})");
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// DigestNotMatch
     ///
     /// <summary>
@@ -209,6 +233,7 @@ sealed class ErrorTestCase : TestCaseBase<Func<MainViewModel, Task>>
     {
         yield return Make(nameof(GhostscriptError), "Sample.txt", GhostscriptError);
         yield return Make(nameof(MergeError), MergeError);
+        yield return Make(nameof(SourceEmpty), SourceEmpty);
         yield return Make(nameof(DigestNotMatch), DigestNotMatch);
         yield return Make(nameof(OwnerConfirmNotMatch), OwnerConfirmNotMatch);
         yield return Make(nameof(UserConfirmNotMatch), UserConfirmNotMatch);
