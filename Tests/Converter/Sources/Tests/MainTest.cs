@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cube.FileSystem;
-using Cube.Pdf.Converter.Mixin;
+using Cube.Pdf.Converter.Extensions;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using Cube.Tests.Forms;

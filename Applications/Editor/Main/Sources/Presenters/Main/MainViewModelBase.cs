@@ -23,7 +23,7 @@ using System.Threading;
 using System.Windows.Input;
 using Cube.FileSystem;
 using Cube.Observable.Extensions;
-using Cube.Pdf.Mixin;
+using Cube.Pdf.Extensions;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

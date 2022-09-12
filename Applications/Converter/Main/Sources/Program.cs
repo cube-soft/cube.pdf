@@ -23,7 +23,7 @@ using System.Windows.Forms;
 using Cube.Collections;
 using Cube.Collections.Extensions;
 using Cube.DataContract;
-using Cube.Pdf.Converter.Mixin;
+using Cube.Pdf.Converter.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///

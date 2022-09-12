@@ -15,92 +15,84 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Mixin;
+namespace Cube.Pdf.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// EncryptionExtension
+/// DocumentWriterExtension
 ///
 /// <summary>
-/// Describes extended methods for the Encryption class.
+/// Provides extended methods of the IDocumentWriter class.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public static class EncryptionExtension
+public static class DocumentWriterExtension
 {
     #region Methods
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Copy
+    /// Add
     ///
     /// <summary>
-    /// Gets the copied Encryption.
+    /// Adds a new page.
     /// </summary>
     ///
-    /// <param name="src">Original object.</param>
-    ///
-    /// <returns>Copied object.</returns>
+    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="page">Page information.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public static Encryption Copy(this Encryption src) => new()
-    {
-        Enabled          = src.Enabled,
-        Method           = src.Method,
-        OwnerPassword    = src.OwnerPassword,
-        UserPassword     = src.UserPassword,
-        OpenWithPassword = src.OpenWithPassword,
-        Permission       = new(src.Permission.Value),
-    };
+    public static void Add(this IDocumentWriter src, Page page) =>
+        src.Add(new[] { page });
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Deny
+    /// Add
     ///
     /// <summary>
-    /// Denies all operations.
+    /// Adds a new page.
     /// </summary>
     ///
-    /// <param name="src">Encryption object.</param>
+    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="page">Page information.</param>
+    /// <param name="hint">
+    /// Document reader object to get more detailed information about
+    /// the specified pages.
+    /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Deny(this Encryption src) => src.Set(PermissionValue.Deny);
+    public static void Add(this IDocumentWriter src, Page page, IDocumentReader hint) =>
+        src.Add(new[] { page }, hint);
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Allow
+    /// Add
     ///
     /// <summary>
-    /// Allows all operations.
+    /// Adds all pages of the specified document.
     /// </summary>
     ///
-    /// <param name="src">Encryption object.</param>
+    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="reader">IDocumentReader object.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Allow(this Encryption src) => src.Set(PermissionValue.Allow);
-
-    #endregion
-
-    #region Implementations
+    public static void Add(this IDocumentWriter src, IDocumentReader reader) =>
+        src.Add(reader.Pages, reader);
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Set
+    /// Attach
     ///
     /// <summary>
-    /// Sets all of the methods to the same permission.
+    /// Adds a new attached file.
     /// </summary>
     ///
+    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="file">Attached file.</param>
+    ///
     /* --------------------------------------------------------------------- */
-    private static void Set(this Encryption src, PermissionValue value)
-    {
-        src.Permission.Accessibility     = value;
-        src.Permission.CopyContents      = value;
-        src.Permission.InputForm         = value;
-        src.Permission.ModifyAnnotations = value;
-        src.Permission.ModifyContents    = value;
-        src.Permission.Print             = value;
-    }
+    public static void Attach(this IDocumentWriter src, Attachment file) =>
+        src.Add(new[] { file });
 
     #endregion
 }

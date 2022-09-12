@@ -16,7 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Converter.Mixin;
+namespace Cube.Pdf.Converter;
 
 using System.Linq;
 using Cube.FileSystem;

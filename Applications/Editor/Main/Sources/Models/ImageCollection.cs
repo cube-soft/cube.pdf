@@ -27,7 +27,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using Cube.Collections;
 using Cube.Collections.Extensions;
-using Cube.Pdf.Mixin;
+using Cube.Pdf.Extensions;
 using Cube.Syntax.Extensions;
 using Cube.Tasks.Extensions;
 using Cube.Xui.Drawing.Extensions;

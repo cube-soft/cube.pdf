@@ -22,7 +22,7 @@ using System;
 using System.Threading;
 using Cube.FileSystem;
 using Cube.Observable.Extensions;
-using Cube.Pdf.Converter.Mixin;
+using Cube.Pdf.Converter.Extensions;
 using Cube.Pdf.Ghostscript;
 
 /* ------------------------------------------------------------------------- */

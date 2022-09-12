@@ -20,9 +20,9 @@ namespace Cube.Pdf.Converter;
 
 using System;
 using Cube.FileSystem;
+using Cube.Pdf.Extensions;
 using Cube.Pdf.Ghostscript;
 using Cube.Pdf.Itext;
-using Cube.Pdf.Mixin;
 
 /* ------------------------------------------------------------------------- */
 ///

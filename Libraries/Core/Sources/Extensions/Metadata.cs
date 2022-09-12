@@ -15,53 +15,45 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Mixin;
-
-using System.Collections.Generic;
-using System.Linq;
+namespace Cube.Pdf.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// DocumentReaderExtension
+/// MetadataExtension
 ///
 /// <summary>
-/// Provides extended methods of the IDocumentReader class.
+/// Describes extended methods for the Metadata class.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public static class DocumentReaderExtension
+public static class MetadataExtension
 {
     #region Methods
 
     /* --------------------------------------------------------------------- */
     ///
-    /// GetPage
+    /// Copy
     ///
     /// <summary>
-    /// Gets information corresponding to the specified page number.
+    /// Gets the copied Metadata object.
     /// </summary>
     ///
-    /// <param name="src">IDocumentReader object.</param>
-    /// <param name="pagenum">
-    /// Page number; 1 for the first page.
-    /// </param>
+    /// <param name="src">Original object.</param>
     ///
-    /// <returns>Page object.</returns>
-    ///
-    /// <remarks>
-    /// If IDocumentReader.Pages implements IList(Page) or
-    /// IReadOnlyList(Page), get page object in O(1) time; otherwise
-    /// it takes O(n) time to get.
-    /// </remarks>
+    /// <returns>Copied object.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static Page GetPage(this IDocumentReader src, int pagenum)
+    public static Metadata Copy(this Metadata src) => new()
     {
-        var index = pagenum - 1;
-        if (src.Pages is IReadOnlyList<Page> l0) return l0[index];
-        if (src.Pages is IList<Page> l1) return l1[index];
-        return src.Pages.Skip(index).First();
-    }
+        Title          = src.Title,
+        Author         = src.Author,
+        Subject        = src.Subject,
+        Keywords       = src.Keywords,
+        Version        = src.Version,
+        Creator        = src.Creator,
+        Producer       = src.Producer,
+        Options        = src.Options,
+    };
 
     #endregion
 }

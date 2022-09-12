@@ -17,8 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using Cube.Pdf.Mixin;
+using Cube.Pdf.Extensions;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Tests
