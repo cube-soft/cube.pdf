@@ -178,57 +178,12 @@ public class SettingFolder : SettingFolder<SettingValue>
         if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
         if (op.TryGetValue("Digest", out var digest)) Digest = digest;
 
-        var dest = Io.Get(Io.Combine(GetDirectoryName(Value.Destination), DocumentName.Value));
+        var dest = Io.Get(Io.Combine(PathHelper.GetDirectoryName(Value.Destination), DocumentName.Value));
         var name = dest.BaseName;
         var ext  = Value.Appendix.Extensions.Get(Value.Format);
 
         Value.Destination  = Io.Combine(dest.DirectoryName, $"{name}{ext}");
         Value.DeleteSource = op.ContainsKey("DeleteOnClose");
-    }
-
-    #endregion
-
-    #region Implementations
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// GetDirectoryName
-    ///
-    /// <summary>
-    /// Gets the directory name of the specified path.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private string GetDirectoryName(string src)
-    {
-        var desktop = GetDesktopDirectoryName();
-
-        try
-        {
-            if (!src.HasValue()) return desktop;
-            var dest = Io.Get(src);
-            return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
-        }
-        catch { return desktop; }
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// GetDirectoryName
-    ///
-    /// <summary>
-    /// Gets the directory name of the desktop.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private string GetDesktopDirectoryName()
-    {
-        try { return Environment.GetFolderPath(Environment.SpecialFolder.Desktop); }
-        catch (Exception e)
-        {
-            Logger.Warn(e.Message);
-            return string.Empty;
-        }
     }
 
     #endregion

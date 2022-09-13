@@ -231,7 +231,7 @@ public class SettingValue : DataContract.SerializableBase
     [DataMember]
     public string Destination
     {
-        get => Get(() => Environment.GetFolderPath(Environment.SpecialFolder.Desktop));
+        get => Get(PathHelper.GetDesktopDirectoryName);
         set => Set(value);
     }
 
@@ -253,7 +253,7 @@ public class SettingValue : DataContract.SerializableBase
     [DataMember]
     public string Temp
     {
-        get => Get(() => $@"{Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)}\CubeSoft\CubePDF");
+        get => Get(PathHelper.GetDeaultDirectoryName);
         set => Set(value);
     }
 

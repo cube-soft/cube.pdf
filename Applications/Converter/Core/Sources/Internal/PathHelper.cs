@@ -18,98 +18,83 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter;
 
-using System.Linq;
-using System.Security.Cryptography;
-using Cube.Collections.Extensions;
+using System;
 using Cube.FileSystem;
 using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// DigestChecker
+/// PathHelper
 ///
 /// <summary>
-/// Provides functionality to check the provided digest.
+/// Provides functionality to determine the path.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-internal sealed class DigestChecker
+internal static class PathHelper
 {
-    #region Constructors
-
     /* --------------------------------------------------------------------- */
     ///
-    /// DigestChecker
+    /// GetDirectoryName
     ///
     /// <summary>
-    /// Initializes a new instance of the DigestChecker class with the
-    /// specified settings.
+    /// Gets the directory part of the specified path. If the specified value
+    /// is empty or an exception occurs, the method returns the value of
+    /// GetDesktopDirectoryName method instead.
     /// </summary>
     ///
-    /// <param name="src">User settings.</param>
+    /// <returns>Path of the directory part.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public DigestChecker(SettingFolder src) { Settings = src; }
-
-    #endregion
-
-    #region Properties
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Setting
-    ///
-    /// <summary>
-    /// Gets the user settings.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public SettingFolder Settings { get; }
-
-    #endregion
-
-    #region Methods
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Invoke
-    ///
-    /// <summary>
-    /// Invokes the checking.
-    /// </summary>
-    ///
-    /// <remarks>
-    /// This check is only performed when the SHA-256 hash value for the
-    /// input file is specified from the command line. Note that this check
-    /// is also ignored if PlatformCompatible is enabled and
-    /// SHA256CryptoServiceProvider raises PlatformNotSupportedException.
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    public void Invoke()
+    public static string GetDirectoryName(string src)
     {
-        var src = Settings.Digest;
-        if (!src.HasValue()) return;
+        var desktop = GetDesktopDirectoryName();
 
-        var cmp = Compute(Settings.Value.Source);
-        if (!src.FuzzyEquals(cmp)) throw new CryptographicException();
+        try
+        {
+            if (!src.HasValue()) return desktop;
+            var dest = Io.Get(src);
+            return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
+        }
+        catch (Exception e) { Logger.Warn(e); }
+
+        return desktop;
     }
 
-    #endregion
-
-    #region Implementations
-
     /* --------------------------------------------------------------------- */
     ///
-    /// Compute
+    /// GetDesktopDirectoryName
     ///
     /// <summary>
-    /// Computes the SHA-256 hash of the specified file.
+    /// Gets the path of the user desktop directory. If an exception occurs,
+    /// the method returns the value of GetDefaultDirectoryName method
+    /// instead.
     /// </summary>
     ///
+    /// <returns>Path of the user desktop.</returns>
+    ///
     /* --------------------------------------------------------------------- */
-    private string Compute(string src) => IoEx.Load(src, e =>
-        new SHA256CryptoServiceProvider().ComputeHash(e).Join("", b => $"{b:x2}"));
+    public static string GetDesktopDirectoryName()
+    {
+        try { return Environment.GetFolderPath(Environment.SpecialFolder.Desktop); }
+        catch (Exception e) { Logger.Warn(e); }
+        return GetDeaultDirectoryName();
+    }
 
-    #endregion
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GetDeaultDirectoryName
+    ///
+    /// <summary>
+    /// Gets the path of the default directory.
+    /// </summary>
+    ///
+    /// <returns>Path of the default directory.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static string GetDeaultDirectoryName() => Io.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+        "CubeSoft",
+        "CubePDF"
+    );
 }
