@@ -18,12 +18,16 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter;
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
+using Cube.Collections.Extensions;
 using Cube.DataContract;
+using GsFormat = Ghostscript.Format;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// ExtensionTable
+/// ExtensionList
 ///
 /// <summary>
 /// Represents user settings of the default extension for each file format.
@@ -160,39 +164,55 @@ public class ExtensionList : SerializableBase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public string Get(Ghostscript.Format src) => src switch
+    public string Get(GsFormat src) => GetCandidates(src).First();
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GetCandidates
+    ///
+    /// <summary>
+    /// Gets the collection of file extension candidates corresponding to
+    /// the specified format.
+    /// </summary>
+    ///
+    /// <param name="src">File format.</param>
+    ///
+    /// <returns>Collection of file extension candidates.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public IEnumerable<string> GetCandidates(GsFormat src) => FormatGroup.Represent(src) switch
     {
-        Ghostscript.Format.Pdf                  => Pdf,
-        Ghostscript.Format.Ps                   => Ps,
-        Ghostscript.Format.Eps                  => Eps,
-        Ghostscript.Format.Png                  => Png,
-        Ghostscript.Format.Png1bppMonochrome    => Png,
-        Ghostscript.Format.Png24bppRgb          => Png,
-        Ghostscript.Format.Png32bppArgb         => Png,
-        Ghostscript.Format.Png4bppIndexed       => Png,
-        Ghostscript.Format.Png8bppGrayscale     => Png,
-        Ghostscript.Format.Png8bppIndexed       => Png,
-        Ghostscript.Format.Jpeg                 => Jpeg,
-        Ghostscript.Format.Jpeg24bppRgb         => Jpeg,
-        Ghostscript.Format.Jpeg32bppCmyk        => Jpeg,
-        Ghostscript.Format.Jpeg8bppGrayscale    => Jpeg,
-        Ghostscript.Format.Bmp                  => Bmp,
-        Ghostscript.Format.Bmp1bppMonochrome    => Bmp,
-        Ghostscript.Format.Bmp24bppRgb          => Bmp,
-        Ghostscript.Format.Bmp32bppArgb         => Bmp,
-        Ghostscript.Format.Bmp4bppIndexed       => Bmp,
-        Ghostscript.Format.Bmp8bppGrayscale     => Bmp,
-        Ghostscript.Format.Bmp8bppIndexed       => Bmp,
-        Ghostscript.Format.Tiff                 => Tiff,
-        Ghostscript.Format.Tiff12bppRgb         => Tiff,
-        Ghostscript.Format.Tiff1bppMonochrome   => Tiff,
-        Ghostscript.Format.Tiff24bppRgb         => Tiff,
-        Ghostscript.Format.Tiff32bppCmyk        => Tiff,
-        Ghostscript.Format.Tiff48bppRgb         => Tiff,
-        Ghostscript.Format.Tiff64bppCmyk        => Tiff,
-        Ghostscript.Format.Tiff8bppGrayscale    => Tiff,
-        _ => Ghostscript.FormatMethods.GetExtension(src),
+        GsFormat.Pdf  => Combine(Pdf, ".pdf"),
+        GsFormat.Ps   => Combine(Ps, ".ps"),
+        GsFormat.Eps  => Combine(Eps, ".eps"),
+        GsFormat.Png  => Combine(Png, ".png"),
+        GsFormat.Jpeg => Combine(Jpeg, ".jpg", ".jpeg"),
+        GsFormat.Bmp  => Combine(Bmp, ".bmp"),
+        GsFormat.Tiff => Combine(Tiff, ".tiff", ".tif"),
+        GsFormat.Text => new[] { ".txt" },
+        _ => new[] { $".{src.ToString().ToLowerInvariant()}" },
     };
+
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Combine
+    ///
+    /// <summary>
+    /// Combines the specified elements while removing duplicates.
+    /// </summary>
+    ///
+    /// <param name="src">Primary file extension.</param>
+    /// <param name="latter">Other file extension candidates.</param>
+    ///
+    /// <returns>Collection of file extension candidates.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    private IEnumerable<string> Combine(string src, params string[] latter) =>
+        new[] { src }.Concat(latter.Where(e => e != src));
 
     #endregion
 }

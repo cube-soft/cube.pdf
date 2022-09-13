@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using Cube.Reflection.Extensions;
@@ -69,7 +68,7 @@ internal static class GhostscriptFactory
         dest.Orientation = src.Value.Orientation;
 
         static void add(ICollection<string> s, string e) { if (Io.Exists(e)) s.Add(e); }
-        var dir = Assembly.GetExecutingAssembly().GetDirectoryName();
+        var dir = typeof(GhostscriptFactory).Assembly.GetDirectoryName();
         add(dest.Resources, Io.Combine(dir, "lib"));
         add(dest.Resources, Io.Combine(dir, "Resource"));
         add(dest.Resources, Io.Combine(dir, "iccprofiles"));
@@ -152,12 +151,8 @@ internal static class GhostscriptFactory
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static Converter CreateImageConverter(SettingFolder src)
-    {
-        var key = new KeyValuePair<Format, ColorMode>(src.Value.Format, src.Value.ColorMode);
-        var cvt = FormatMap.ContainsKey(key) ? FormatMap[key] : src.Value.Format;
-        return new ImageConverter(cvt) { AntiAlias = true };
-    }
+    private static Converter CreateImageConverter(SettingFolder src) =>
+        new ImageConverter(FormatGroup.Lookup(src.Value.Format, src.Value.ColorMode)) { AntiAlias = true };
 
     /* --------------------------------------------------------------------- */
     ///
@@ -177,31 +172,6 @@ internal static class GhostscriptFactory
                e1.Length != System.Text.Encoding.UTF8.GetByteCount(e1) ?
                src.Temp : string.Empty;
     }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// FormatMap
-    ///
-    /// <summary>
-    /// Gets the Format collection.
-    /// </summary>
-    ///
-    /// <remarks>
-    /// Key is a (Format, Grayscale) pair.
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    private static readonly Dictionary<KeyValuePair<Format, ColorMode>, Format> FormatMap = new()
-    {
-        { new(Format.Jpeg, ColorMode.Grayscale),  Format.Jpeg8bppGrayscale  },
-        { new(Format.Jpeg, ColorMode.Monochrome), Format.Jpeg8bppGrayscale  },
-        { new(Format.Png,  ColorMode.Grayscale),  Format.Png8bppGrayscale   },
-        { new(Format.Png,  ColorMode.Monochrome), Format.Png1bppMonochrome  },
-        { new(Format.Bmp,  ColorMode.Grayscale),  Format.Bmp8bppGrayscale   },
-        { new(Format.Bmp,  ColorMode.Monochrome), Format.Bmp1bppMonochrome  },
-        { new(Format.Tiff, ColorMode.Grayscale),  Format.Tiff8bppGrayscale  },
-        { new(Format.Tiff, ColorMode.Monochrome), Format.Tiff1bppMonochrome },
-    };
 
     #endregion
 }
