@@ -66,7 +66,7 @@ class MainTest : MockFixture
     [TestCaseSource(nameof(TestCases))]
     public async Task Test(string category, string name, string src, SettingValue value)
     {
-        var dest = Get(category, $"{name}{value.Format.GetExtension()}");
+        var dest = Get(category, $"{name}{value.Extensions.Get(value.Format)}");
         var ss   = new SettingFolder(DataContract.Format.Registry, GetKeyName());
 
         ss.Load();

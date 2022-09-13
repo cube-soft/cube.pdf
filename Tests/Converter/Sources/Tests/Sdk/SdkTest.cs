@@ -65,7 +65,7 @@ class SdkTest : FileFixture
         var ss = new SettingFolder();
         ss.Value.Temp = Get(".tmp");
         ss.Set(new MockArguments(name, GetSource(src), ss.Value.Temp));
-        ss.Value.Destination = Get(category, $"{name}{value.Format.GetExtension()}");
+        ss.Value.Destination = Get(category, $"{name}{value.Extensions.Get(value.Format)}");
         ss.Value.Format      = value.Format;
         ss.Value.ColorMode   = value.ColorMode;
         ss.Value.Encoding    = value.Encoding;

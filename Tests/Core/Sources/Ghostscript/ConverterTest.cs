@@ -66,7 +66,7 @@ class ConverterTest : FileFixture
     public void Test(string category, string name, string src, Converter converter)
     {
         var sp = GetSource(src);
-        var dp = Get(category, $"{name}{converter.Format.GetExtension()}");
+        var dp = Get(category, $"{name}.{category.ToLowerInvariant()}");
 
         converter.Quiet = false;
         converter.Log   = Get(category, $"{name}.log");

@@ -323,7 +323,7 @@ public class Converter
     /* --------------------------------------------------------------------- */
     private IEnumerable<Argument> CreateBasicArgumetns()
     {
-        yield return Format.GetArgument();
+        yield return new('s', "DEVICE", GsDevice.From(Format));
         yield return new('d', "SAFER");
         yield return new('d', "BATCH");
         yield return new('d', "NOPAUSE");
