@@ -39,23 +39,6 @@ static class FacadeExtension
 
     /* --------------------------------------------------------------------- */
     ///
-    /// InvokeEx
-    ///
-    /// <summary>
-    /// Invokes main and some additional operations.
-    /// </summary>
-    ///
-    /// <param name="src">Source facade.</param>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static void InvokeEx(this Facade src)
-    {
-        src.ChangeExtension();
-        src.Invoke();
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// ChangeExtension
     ///
     /// <summary>

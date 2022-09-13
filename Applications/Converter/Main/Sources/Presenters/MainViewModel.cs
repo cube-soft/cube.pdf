@@ -163,7 +163,7 @@ public sealed class MainViewModel : PresentableBase<Facade>
     public void Invoke()
     {
         var ready = Encryption.Confirm() && Settings.Confirm();
-        if (ready) Quit(Facade.InvokeEx, false);
+        if (ready) Quit(Facade.Invoke, false);
     }
 
     /* --------------------------------------------------------------------- */
