@@ -16,14 +16,14 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Converter.Appendix;
+namespace Cube.Pdf.Converter;
 
 using System.Runtime.Serialization;
 using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// AppendixSettingValue
+/// SettingValueEx
 ///
 /// <summary>
 /// Represents user settings not directly related to the main conversion
@@ -32,7 +32,7 @@ using Cube.DataContract;
 ///
 /* ------------------------------------------------------------------------- */
 [DataContract]
-public class AppendixSettingValue : SerializableBase
+public class SettingValueEx : SerializableBase
 {
     #region Properties
 
@@ -84,23 +84,6 @@ public class AppendixSettingValue : SerializableBase
     public Language Language
     {
         get => Get(() => Language.Auto);
-        set => Set(value);
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Extensions
-    ///
-    /// <summary>
-    /// Gets or sets the user settings for the default extension for each
-    /// file format.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [DataMember]
-    public ExtensionSettingValue Extensions
-    {
-        get => Get(() => new ExtensionSettingValue());
         set => Set(value);
     }
 

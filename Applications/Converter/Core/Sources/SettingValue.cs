@@ -275,6 +275,23 @@ public class SettingValue : DataContract.SerializableBase
 
     /* --------------------------------------------------------------------- */
     ///
+    /// Extensions
+    ///
+    /// <summary>
+    /// Gets or sets the user settings of the default extension for each
+    /// file format.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public ExtensionList Extensions
+    {
+        get => Get(() => new ExtensionList());
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// Appendix
     ///
     /// <summary>
@@ -284,9 +301,9 @@ public class SettingValue : DataContract.SerializableBase
     ///
     /* --------------------------------------------------------------------- */
     [DataMember]
-    public Appendix.AppendixSettingValue Appendix
+    public SettingValueEx Appendix
     {
-        get => Get(() => new Appendix.AppendixSettingValue());
+        get => Get(() => new SettingValueEx());
         set => Set(value);
     }
 

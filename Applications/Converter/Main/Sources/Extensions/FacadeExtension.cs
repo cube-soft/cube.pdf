@@ -66,7 +66,7 @@ static class FacadeExtension
     public static void ChangeExtension(this Facade src)
     {
         var prev = Io.Get(src.Settings.Value.Destination);
-        var ext  = src.Settings.Value.Appendix.Extensions.Get(src.Settings.Value.Format);
+        var ext  = src.Settings.Value.Extensions.Get(src.Settings.Value.Format);
         if (prev.Extension.FuzzyEquals(ext)) return;
         src.Settings.Value.Destination = Io.Combine(prev.DirectoryName, $"{prev.BaseName}{ext}");
     }

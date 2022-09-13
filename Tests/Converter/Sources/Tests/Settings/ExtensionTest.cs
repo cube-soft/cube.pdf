@@ -50,13 +50,13 @@ class ExtensionTest : MockFixture
         ss.Load();
         ss.Normalize();
         ss.Value.Temp = Get(".tmp");
-        ss.Value.Appendix.Extensions.Pdf  = ".test_pdf";
-        ss.Value.Appendix.Extensions.Ps   = ".test_ps";
-        ss.Value.Appendix.Extensions.Eps  = ".test_eps";
-        ss.Value.Appendix.Extensions.Png  = ".test_png";
-        ss.Value.Appendix.Extensions.Jpeg = ".test_jpeg";
-        ss.Value.Appendix.Extensions.Bmp  = ".test_bmp";
-        ss.Value.Appendix.Extensions.Tiff = ".test_tiff";
+        ss.Value.Extensions.Pdf  = ".test_pdf";
+        ss.Value.Extensions.Ps   = ".test_ps";
+        ss.Value.Extensions.Eps  = ".test_eps";
+        ss.Value.Extensions.Png  = ".test_png";
+        ss.Value.Extensions.Jpeg = ".test_jpeg";
+        ss.Value.Extensions.Bmp  = ".test_bmp";
+        ss.Value.Extensions.Tiff = ".test_tiff";
         ss.Set(new MockArguments(nameof(Change), GetSource("Sample.ps"), ss.Value.Temp));
 
         using var vm = new MainViewModel(ss);

@@ -16,22 +16,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Converter.Appendix;
+namespace Cube.Pdf.Converter;
 
 using System.Runtime.Serialization;
 using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// ExtensionSettingValue
+/// ExtensionTable
 ///
 /// <summary>
-/// Represents user settings for the default extension for each file format.
+/// Represents user settings of the default extension for each file format.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
 [DataContract]
-public class ExtensionSettingValue : SerializableBase
+public class ExtensionList : SerializableBase
 {
     #region Properties
 

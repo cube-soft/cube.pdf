@@ -25,7 +25,6 @@ using Cube.Collections;
 using Cube.DataContract;
 using Cube.FileSystem;
 using Cube.Reflection.Extensions;
-using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -180,7 +179,7 @@ public class SettingFolder : SettingFolder<SettingValue>
 
         var dest = Io.Get(Io.Combine(PathHelper.GetDirectoryName(Value.Destination), DocumentName.Value));
         var name = dest.BaseName;
-        var ext  = Value.Appendix.Extensions.Get(Value.Format);
+        var ext  = Value.Extensions.Get(Value.Format);
 
         Value.Destination  = Io.Combine(dest.DirectoryName, $"{name}{ext}");
         Value.DeleteSource = op.ContainsKey("DeleteOnClose");
