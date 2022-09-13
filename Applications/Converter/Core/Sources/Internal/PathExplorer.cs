@@ -24,14 +24,14 @@ using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// PathHelper
+/// PathExplorer
 ///
 /// <summary>
 /// Provides functionality to determine the path.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-internal static class PathHelper
+internal static class PathExplorer
 {
     /* --------------------------------------------------------------------- */
     ///

@@ -177,7 +177,7 @@ public class SettingFolder : SettingFolder<SettingValue>
         if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
         if (op.TryGetValue("Digest", out var digest)) Digest = digest;
 
-        var dest = Io.Get(Io.Combine(PathHelper.GetDirectoryName(Value.Destination), DocumentName.Value));
+        var dest = Io.Get(Io.Combine(PathExplorer.GetDirectoryName(Value.Destination), DocumentName.Value));
         var name = dest.BaseName;
         var ext  = Value.Extensions.Get(Value.Format);
 

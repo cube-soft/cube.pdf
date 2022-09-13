@@ -305,7 +305,7 @@ class SettingV2 : DataContract.SerializableBase
     [DataMember(Name = "LastAccess")]
     public string Destination
     {
-        get => Get(PathHelper.GetDesktopDirectoryName);
+        get => Get(PathExplorer.GetDesktopDirectoryName);
         set => Set(value);
     }
 
@@ -327,7 +327,7 @@ class SettingV2 : DataContract.SerializableBase
     [DataMember]
     public string Temp
     {
-        get => Get(PathHelper.GetDeaultDirectoryName);
+        get => Get(PathExplorer.GetDeaultDirectoryName);
         set => Set(value);
     }
 

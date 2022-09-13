@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter;
 
+using System;
 using System.Linq;
 using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
@@ -65,10 +66,12 @@ static class FacadeExtension
     /* --------------------------------------------------------------------- */
     public static void ChangeExtension(this Facade src)
     {
-        var prev = Io.Get(src.Settings.Value.Destination);
-        var ext  = src.Settings.Value.Extensions.Get(src.Settings.Value.Format);
-        if (prev.Extension.FuzzyEquals(ext)) return;
-        src.Settings.Value.Destination = Io.Combine(prev.DirectoryName, $"{prev.BaseName}{ext}");
+        var ss    = src.Settings.Value;
+        var prev  = Io.Get(ss.Destination);
+        var items = ss.Extensions.GetCandidates(ss.Format);
+
+        if (items.Any(e => prev.Extension.FuzzyEquals(e))) return;
+        ss.Destination = Io.Combine(prev.DirectoryName, $"{prev.BaseName}{items.First()}");
     }
 
     /* --------------------------------------------------------------------- */
@@ -86,10 +89,19 @@ static class FacadeExtension
     /* --------------------------------------------------------------------- */
     public static void SetDestination(this Facade src, string path)
     {
-        src.Settings.Value.Destination = path;
+        var ss  = src.Settings.Value;
         var cmp = path.ToLowerInvariant();
-        var ext = Resource.Extensions.Where(e => cmp.EndsWith(e.Key));
-        if (ext.Any()) src.Settings.Value.Format = ext.First().Value;
+
+        ss.Destination = path;
+
+        foreach (Format fmt in Enum.GetValues(typeof(Format)))
+        {
+            if (ss.Extensions.GetCandidates(fmt).Any(e => cmp.EndsWith(e)))
+            {
+                ss.Format = fmt;
+                break;
+            }
+        }
     }
 
     #endregion

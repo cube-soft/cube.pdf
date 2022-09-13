@@ -231,7 +231,7 @@ public class SettingValue : DataContract.SerializableBase
     [DataMember]
     public string Destination
     {
-        get => Get(PathHelper.GetDesktopDirectoryName);
+        get => Get(PathExplorer.GetDesktopDirectoryName);
         set => Set(value);
     }
 
@@ -253,7 +253,7 @@ public class SettingValue : DataContract.SerializableBase
     [DataMember]
     public string Temp
     {
-        get => Get(PathHelper.GetDeaultDirectoryName);
+        get => Get(PathExplorer.GetDeaultDirectoryName);
         set => Set(value);
     }
 

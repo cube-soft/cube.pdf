@@ -29,7 +29,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Link="Sources\Helpers\SettingV2.cs" Include="..\..\Applications\Converter\Core\Sources\SettingV2.cs" />
-        <Compile Link="Sources\Helpers\PathHelper.cs" Include="..\..\Applications\Converter\Core\Sources\Internal\PathHelper.cs" />
+        <Compile Link="Sources\Helpers\PathExplorer.cs" Include="..\..\Applications\Converter\Core\Sources\Internal\PathExplorer.cs" />
         <None Include="App.*" />
         <None Include="Examples\**\*" CopyToOutputDirectory="Always" />
     </ItemGroup>

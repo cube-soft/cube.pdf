@@ -61,29 +61,6 @@ public static class Resource
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Extensions
-    ///
-    /// <summary>
-    /// Gets a collection in which each item consists of an extension
-    /// and a Format pair.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static ComboListSource<Format> Extensions { get; } = new()
-    {
-        { ".pdf",  Format.Pdf  },
-        { ".ps",   Format.Ps   },
-        { ".eps",  Format.Eps  },
-        { ".png",  Format.Png  },
-        { ".jpg",  Format.Jpeg },
-        { ".jpeg", Format.Jpeg },
-        { ".bmp",  Format.Bmp  },
-        { ".tiff", Format.Tiff },
-        { ".tif",  Format.Tiff },
-    };
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// PdfVersions
     ///
     /// <summary>
