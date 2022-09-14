@@ -50,7 +50,8 @@ class ResourceTest
     public void English()
     {
         using var view = new MainWindow();
-        var vm = new MainViewModel(new());
+        var ss = new SettingFolder();
+        var vm = new MainViewModel(ss);
         view.Bind(vm);
         vm.Settings.Language = Language.English;
 
@@ -115,15 +116,15 @@ class ResourceTest
         Assert.That(c7[2].Key,  Is.EqualTo("Grayscale"));
         Assert.That(c7[3].Key,  Is.EqualTo("Monochrome"));
 
-        var f0 = Resource.SourceFilters.ToArray();
-        Assert.That(f0.Length,  Is.EqualTo(4), nameof(Resource.SourceFilters));
+        var f0 = ss.Value.Extensions.GetSourceFilters().ToArray();
+        Assert.That(f0.Length,  Is.EqualTo(4), nameof(Resource.GetSourceFilters));
         Assert.That(f0[0].Text, Is.EqualTo("PS files"));
         Assert.That(f0[1].Text, Is.EqualTo("EPS files"));
         Assert.That(f0[2].Text, Is.EqualTo("PDF files"));
         Assert.That(f0[3].Text, Is.EqualTo("All files"));
 
-        var f1 = Resource.DestinationFilters.ToArray();
-        Assert.That(f1.Length,  Is.EqualTo(7), nameof(Resource.DestinationFilters));
+        var f1 = ss.Value.Extensions.GetDestinationFilters().ToArray();
+        Assert.That(f1.Length,  Is.EqualTo(7), nameof(Resource.GetDestinationFilters));
         Assert.That(f1[0].Text, Is.EqualTo("PDF files"));
         Assert.That(f1[1].Text, Is.EqualTo("PS files"));
         Assert.That(f1[2].Text, Is.EqualTo("EPS files"));
@@ -132,8 +133,8 @@ class ResourceTest
         Assert.That(f1[5].Text, Is.EqualTo("BMP files"));
         Assert.That(f1[6].Text, Is.EqualTo("TIFF files"));
 
-        var f2 = Resource.UserProgramFilters.ToArray();
-        Assert.That(f2.Length,  Is.EqualTo(2), nameof(Resource.UserProgramFilters));
+        var f2 = ss.Value.Extensions.GetProgramFilters().ToArray();
+        Assert.That(f2.Length,  Is.EqualTo(2), nameof(Resource.GetProgramFilters));
         Assert.That(f2[0].Text, Is.EqualTo("Executable files"));
         Assert.That(f2[1].Text, Is.EqualTo("All files"));
     }
@@ -151,7 +152,8 @@ class ResourceTest
     public void Japanese()
     {
         using var view = new MainWindow();
-        var vm = new MainViewModel(new());
+        var ss = new SettingFolder();
+        var vm = new MainViewModel(ss);
         view.Bind(vm);
         vm.Settings.Language = Language.Japanese;
 
@@ -216,15 +218,15 @@ class ResourceTest
         Assert.That(c7[2].Key,  Is.EqualTo("グレースケール"));
         Assert.That(c7[3].Key,  Is.EqualTo("白黒"));
 
-        var f0 = Resource.SourceFilters.ToArray();
-        Assert.That(f0.Length,  Is.EqualTo(4), nameof(Resource.SourceFilters));
+        var f0 = ss.Value.Extensions.GetSourceFilters().ToArray();
+        Assert.That(f0.Length,  Is.EqualTo(4), nameof(Resource.GetSourceFilters));
         Assert.That(f0[0].Text, Is.EqualTo("PS ファイル"));
         Assert.That(f0[1].Text, Is.EqualTo("EPS ファイル"));
         Assert.That(f0[2].Text, Is.EqualTo("PDF ファイル"));
         Assert.That(f0[3].Text, Is.EqualTo("すべてのファイル"));
 
-        var f1 = Resource.DestinationFilters.ToArray();
-        Assert.That(f1.Length,  Is.EqualTo(7), nameof(Resource.DestinationFilters));
+        var f1 = ss.Value.Extensions.GetDestinationFilters().ToArray();
+        Assert.That(f1.Length,  Is.EqualTo(7), nameof(Resource.GetDestinationFilters));
         Assert.That(f1[0].Text, Is.EqualTo("PDF ファイル"));
         Assert.That(f1[1].Text, Is.EqualTo("PS ファイル"));
         Assert.That(f1[2].Text, Is.EqualTo("EPS ファイル"));
@@ -233,8 +235,8 @@ class ResourceTest
         Assert.That(f1[5].Text, Is.EqualTo("BMP ファイル"));
         Assert.That(f1[6].Text, Is.EqualTo("TIFF ファイル"));
 
-        var f2 = Resource.UserProgramFilters.ToArray();
-        Assert.That(f2.Length,  Is.EqualTo(2), nameof(Resource.UserProgramFilters));
+        var f2 = ss.Value.Extensions.GetProgramFilters().ToArray();
+        Assert.That(f2.Length,  Is.EqualTo(2), nameof(Resource.GetProgramFilters));
         Assert.That(f2[0].Text, Is.EqualTo("実行可能なファイル"));
         Assert.That(f2[1].Text, Is.EqualTo("すべてのファイル"));
     }

@@ -43,8 +43,8 @@ public static class Message
     /// From
     ///
     /// <summary>
-    /// Create a message to show a DialogBox with an error icon
-    /// and OK button.
+    /// Create a message to show a DialogBox with an error icon and OK
+    /// button.
     /// </summary>
     ///
     /// <param name="src">Occurred exception.</param>
@@ -124,8 +124,8 @@ public static class Message
     /// ForSource
     ///
     /// <summary>
-    /// Creates a message to show an OpenFileDialog dialog for
-    /// selecting the source path.
+    /// Creates a message to show an OpenFileDialog dialog for selecting
+    /// the source path.
     /// </summary>
     ///
     /// <param name="src">User settings.</param>
@@ -138,9 +138,9 @@ public static class Message
         var path = src.Value.Source;
         var dest = new OpenFileMessage(Properties.Resources.TitleSelectSource)
         {
-            Value       = GetFileNames(path),
+            Value   = GetFileNames(path),
+            Filters = src.Value.Extensions.GetSourceFilters(),
             Multiselect = false,
-            Filters     = Resource.SourceFilters,
         };
 
         if (src.Value.Appendix.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
@@ -152,8 +152,8 @@ public static class Message
     /// ForDestination
     ///
     /// <summary>
-    /// Creates a message to show an OpenFileDialog dialog for
-    /// selecting the destination path.
+    /// Creates a message to show an OpenFileDialog dialog for selecting
+    /// the destination path.
     /// </summary>
     ///
     /// <param name="src">User settings.</param>
@@ -166,9 +166,9 @@ public static class Message
         var path = src.Value.Destination;
         var dest = new SaveFileMessage(Properties.Resources.TitleSelectDestination)
         {
-            Value           = GetFileName(path),
+            Value   = GetFileName(path),
+            Filters = src.Value.Extensions.GetDestinationFilters(),
             OverwritePrompt = false,
-            Filters         = Resource.DestinationFilters,
         };
 
         if (src.Value.Appendix.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);
@@ -180,8 +180,8 @@ public static class Message
     /// ForUserProgram
     ///
     /// <summary>
-    /// Creates a message to show an OpenFileDialog dialog for
-    /// selecting the user program.
+    /// Creates a message to show an OpenFileDialog dialog for selecting
+    /// the user program.
     /// </summary>
     ///
     /// <param name="src">User settings.</param>
@@ -194,9 +194,9 @@ public static class Message
         var path = src.Value.UserProgram;
         var dest = new OpenFileMessage(Properties.Resources.TitleSelectUserProgram)
         {
-            Value       = GetFileNames(path),
+            Value   = GetFileNames(path),
+            Filters = src.Value.Extensions.GetProgramFilters(),
             Multiselect = false,
-            Filters     = Resource.UserProgramFilters,
         };
 
         if (src.Value.Appendix.ExplicitDirectory) dest.InitialDirectory = GetDirectoryName(path);

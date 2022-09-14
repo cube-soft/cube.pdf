@@ -21,6 +21,7 @@ namespace Cube.Pdf.Converter;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Cube.Forms;
 using Cube.Pdf.Ghostscript;
 using Cube.Web.Extensions;
@@ -193,51 +194,63 @@ public static class Resource
 
     /* --------------------------------------------------------------------- */
     ///
-    /// SourceFilters
+    /// GetSourceFilters
     ///
     /// <summary>
     /// Gets a collection of OpenFileDialog filters.
     /// </summary>
     ///
+    /// <param name="src">Extension list.</param>
+    /// 
+    /// <returns>Collection of dialog filter objects.</returns>
+    ///
     /* --------------------------------------------------------------------- */
-    public static IList<FileDialogFilter> SourceFilters => new FileDialogFilter[]
+    public static IList<FileDialogFilter> GetSourceFilters(this ExtensionList src) => new FileDialogFilter[]
     {
-        new(Properties.Resources.FilterPs,  ".ps"),
-        new(Properties.Resources.FilterEps, ".eps"),
-        new(Properties.Resources.FilterPdf, ".pdf"),
+        new(Properties.Resources.FilterPs,  src.GetCandidates(Format.Ps ).ToArray()),
+        new(Properties.Resources.FilterEps, src.GetCandidates(Format.Eps).ToArray()),
+        new(Properties.Resources.FilterPdf, src.GetCandidates(Format.Pdf).ToArray()),
         new(Properties.Resources.FilterAll, ".*"),
     };
 
     /* --------------------------------------------------------------------- */
     ///
-    /// DestinationFilters
+    /// GetDestinationFilters
     ///
     /// <summary>
     /// Gets a collection of SaveFileDialog filters.
     /// </summary>
+    /// 
+    /// <param name="src">Extension list.</param>
+    /// 
+    /// <returns>Collection of dialog filter objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static IList<FileDialogFilter> DestinationFilters => new FileDialogFilter[]
+    public static IList<FileDialogFilter> GetDestinationFilters(this ExtensionList src) => new FileDialogFilter[]
     {
-        new(Properties.Resources.FilterPdf,  ".pdf"),
-        new(Properties.Resources.FilterPs,   ".ps"),
-        new(Properties.Resources.FilterEps,  ".eps"),
-        new(Properties.Resources.FilterPng,  ".png"),
-        new(Properties.Resources.FilterJpeg, ".jpg", ".jpeg"),
-        new(Properties.Resources.FilterBmp,  ".bmp"),
-        new(Properties.Resources.FilterTiff, ".tiff", ".tif"),
+        new(Properties.Resources.FilterPdf,  src.GetCandidates(Format.Pdf ).ToArray()),
+        new(Properties.Resources.FilterPs,   src.GetCandidates(Format.Ps  ).ToArray()),
+        new(Properties.Resources.FilterEps,  src.GetCandidates(Format.Eps ).ToArray()),
+        new(Properties.Resources.FilterPng,  src.GetCandidates(Format.Png ).ToArray()),
+        new(Properties.Resources.FilterJpeg, src.GetCandidates(Format.Jpeg).ToArray()),
+        new(Properties.Resources.FilterBmp,  src.GetCandidates(Format.Bmp ).ToArray()),
+        new(Properties.Resources.FilterTiff, src.GetCandidates(Format.Tiff).ToArray()),
     };
 
     /* --------------------------------------------------------------------- */
     ///
-    /// UserProgramFilters
+    /// GetProgramFilters
     ///
     /// <summary>
     /// Gets a collection of OpenFileDialog filters.
     /// </summary>
     ///
+    /// <param name="src">Extension list.</param>
+    /// 
+    /// <returns>Collection of dialog filter objects.</returns>
+    /// 
     /* --------------------------------------------------------------------- */
-    public static IList<FileDialogFilter> UserProgramFilters => new FileDialogFilter[]
+    public static IList<FileDialogFilter> GetProgramFilters(this ExtensionList src) => new FileDialogFilter[]
     {
         new(Properties.Resources.FilterExecutable, ".exe", ".bat"),
         new(Properties.Resources.FilterAll, ".*"),
