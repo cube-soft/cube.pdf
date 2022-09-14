@@ -36,15 +36,23 @@ class ExtensionTest : MockFixture
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Change
+    /// Test
     ///
     /// <summary>
     /// Tests the ChangeExtension method with customized file extensions.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Test]
-    public void Change()
+    [TestCase(Format.Pdf,            ".test_pdf")]
+    [TestCase(Format.Ps,             ".test_ps" )]
+    [TestCase(Format.Eps,            ".test_eps")]
+    [TestCase(Format.Png,            ".test_png")]
+    [TestCase(Format.Jpeg,           ".test_jpg")]
+    [TestCase(Format.Bmp,            ".test_bmp")]
+    [TestCase(Format.Tiff,           ".test_tif")]
+    [TestCase(Format.Png8bppIndexed, ".test_png")]
+    [TestCase(Format.Psd,            ".psd"     )]
+    public void Test(Format src, string expected)
     {
         var ss = new SettingFolder(DataContract.Format.Registry, GetKeyName());
         ss.Load();
@@ -54,37 +62,16 @@ class ExtensionTest : MockFixture
         ss.Value.Extensions.Ps   = ".test_ps";
         ss.Value.Extensions.Eps  = ".test_eps";
         ss.Value.Extensions.Png  = ".test_png";
-        ss.Value.Extensions.Jpeg = ".test_jpeg";
+        ss.Value.Extensions.Jpeg = ".test_jpg";
         ss.Value.Extensions.Bmp  = ".test_bmp";
-        ss.Value.Extensions.Tiff = ".test_tiff";
-        ss.Set(new MockArguments(nameof(Change), GetSource("Sample.ps"), ss.Value.Temp));
+        ss.Value.Extensions.Tiff = ".test_tif";
+        ss.Set(new MockArguments(nameof(Test), GetSource("Sample.ps"), ss.Value.Temp));
 
         using var vm = new MainViewModel(ss);
         Assert.That(vm.Settings.Format, Is.EqualTo(Format.Pdf));
         Assert.That(vm.Settings.Destination, Does.EndWith(".test_pdf"));
 
-        vm.Settings.Format = Format.Ps;
-        Assert.That(vm.Settings.Destination, Does.EndWith(".test_ps"));
-
-        vm.Settings.Format = Format.Eps;
-        Assert.That(vm.Settings.Destination, Does.EndWith(".test_eps"));
-
-        vm.Settings.Format = Format.Png;
-        Assert.That(vm.Settings.Destination, Does.EndWith(".test_png"));
-
-        vm.Settings.Format = Format.Jpeg;
-        Assert.That(vm.Settings.Destination, Does.EndWith(".test_jpeg"));
-
-        vm.Settings.Format = Format.Bmp;
-        Assert.That(vm.Settings.Destination, Does.EndWith(".test_bmp"));
-
-        vm.Settings.Format = Format.Tiff;
-        Assert.That(vm.Settings.Destination, Does.EndWith(".test_tiff"));
-
-        vm.Settings.Format = Format.Psd;
-        Assert.That(vm.Settings.Destination, Does.EndWith(".psd"));
-
-        vm.Settings.Format = Format.Pdf;
-        Assert.That(vm.Settings.Destination, Does.EndWith(".test_pdf"));
+        vm.Settings.Format = src;
+        Assert.That(vm.Settings.Destination, Does.EndWith(expected));
     }
 }
