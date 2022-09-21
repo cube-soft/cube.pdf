@@ -109,7 +109,7 @@ internal sealed class DigestChecker
     ///
     /* --------------------------------------------------------------------- */
     private string Compute(string src) => IoEx.Load(src, e =>
-        new SHA256CryptoServiceProvider().ComputeHash(e).Join("", b => $"{b:x2}"));
+        SHA256.Create().ComputeHash(e).Join("", b => $"{b:x2}"));
 
     #endregion
 }

@@ -193,13 +193,10 @@ class MockArguments : IEnumerable<string>
     /// <returns>SHA-256 hash value.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    private string GetDigest()
-    {
-        if (Digest.HasValue()) return Digest;
-        var sp = new SHA256CryptoServiceProvider();
-        var dest = IoEx.Load(Source, e => sp.ComputeHash(e).Join("", b => $"{b:X2}"));
-        return dest;
-    }
+    private string GetDigest() =>
+        Digest.HasValue() ?
+        Digest :
+        IoEx.Load(Source, e => SHA256.Create().ComputeHash(e).Join("", b => $"{b:X2}"));
 
     #endregion
 }
