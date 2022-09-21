@@ -17,7 +17,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using Cube.Collections;
-using Cube.Mixin.Collections;
+using Cube.Collections.Extensions;
 
 namespace Cube.Pdf.Converter.Proxy
 {
@@ -32,8 +32,6 @@ namespace Cube.Pdf.Converter.Proxy
     /* --------------------------------------------------------------------- */
     static class Program
     {
-        #region Methods
-
         /* ----------------------------------------------------------------- */
         ///
         /// Main
@@ -44,10 +42,10 @@ namespace Cube.Pdf.Converter.Proxy
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args) => Source.LogError(() =>
+        static void Main(string[] args) => Logger.Error(() =>
         {
-            Source.LogInfo(System.Reflection.Assembly.GetExecutingAssembly());
-            Source.LogInfo($"[ {args.Join(" ")} ]");
+            Logger.Info(typeof(Program).Assembly);
+            Logger.Info($"[ {args.Join(" ")} ]");
 
             var proc = StartAs(args);
             proc.EnableRaisingEvents = true;
@@ -55,7 +53,7 @@ namespace Cube.Pdf.Converter.Proxy
             {
                 if (s is System.Diagnostics.Process p)
                 {
-                    Source.LogInfo($"ExitCode:{(uint)p.ExitCode}");
+                    Logger.Info($"ExitCode:{(uint)p.ExitCode}");
                 }
             };
             proc.WaitForExit();
@@ -88,16 +86,10 @@ namespace Cube.Pdf.Converter.Proxy
             catch (Exception err)
             {
                 if (!src.Options.TryGetValue("ThreadID", out var id)) throw;
-                Source.LogWarn(err);
-                Source.LogInfo($"Use ThreadID ({id})");
+                Logger.Warn(err);
+                Logger.Info($"Use ThreadID ({id})");
                 return Process.StartAs(uint.Parse(id), exec, args);
             }
         }
-
-        #endregion
-
-        #region Fields
-        private static readonly Type Source = typeof(Program);
-        #endregion
     }
 }

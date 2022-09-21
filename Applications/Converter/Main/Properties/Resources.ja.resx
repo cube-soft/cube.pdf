@@ -71,7 +71,10 @@
     <value>結合対象として指定された PDF ファイルの管理用パスワードをセキュリティタブに入力して下さい。</value>
   </data>
   <data name="ErrorOwnerPassword" xml:space="preserve">
-    <value>パスワードが入力されていないか、または確認欄と一致しません。パスワードおよびパスワード確認欄を再度ご確認下さい。</value>
+    <value>パスワードが入力されていないか、または確認欄と一致しません。パスワードおよびパスワード確認欄を確認して下さい。</value>
+  </data>
+  <data name="ErrorSource" xml:space="preserve">
+    <value>入力ファイルが指定されていません。正常な手順で CubePDF が実行されたかどうか確認して下さい。</value>
   </data>
   <data name="ErrorUserPassword" xml:space="preserve">
     <value>閲覧用パスワードが入力されていないか、または確認欄と一致しません。パスワードを再度ご確認するか、「管理用パスワードと共用する」の項目を有効にして下さい。</value>
@@ -113,6 +116,9 @@
   <data name="MenuAuto" xml:space="preserve">
     <value>自動</value>
   </data>
+  <data name="MenuGrayscale" xml:space="preserve">
+    <value>グレースケール</value>
+  </data>
   <data name="MenuLandscape" xml:space="preserve">
     <value>横</value>
   </data>
@@ -121,6 +127,9 @@
   </data>
   <data name="MenuMergeTail" xml:space="preserve">
     <value>末尾に結合</value>
+  </data>
+  <data name="MenuMonochrome" xml:space="preserve">
+    <value>白黒</value>
   </data>
   <data name="MenuNone" xml:space="preserve">
     <value>何もしない</value>
@@ -132,7 +141,7 @@
     <value>開く</value>
   </data>
   <data name="MenuOpenDirectory" xml:space="preserve">
-    <value>フォルダを開く</value>
+    <value>フォルダーを開く</value>
   </data>
   <data name="MenuOthers" xml:space="preserve">
     <value>その他</value>
@@ -161,21 +170,6 @@
   <data name="MenuTwoPageRight" xml:space="preserve">
     <value>見開きページ（右綴じ）</value>
   </data>
-  <data name="MessageExists" xml:space="preserve">
-    <value>{0} は既に存在します。</value>
-  </data>
-  <data name="MessageMergeHead" xml:space="preserve">
-    <value>先頭に結合しますか？</value>
-  </data>
-  <data name="MessageSave" xml:space="preserve">
-    <value>タイトル、作成者、サブタイトル、キーワードのいずれかの項目が入力されています。これらの内容は次回以降、CubePDF 起動時の初期設定として利用されます。設定を保存しても良いですか？</value>
-  </data>
-  <data name="MessageMergeTail" xml:space="preserve">
-    <value>末尾に結合しますか？</value>
-  </data>
-  <data name="MessageOverwrite" xml:space="preserve">
-    <value>上書きしますか？</value>
-  </data>
   <data name="TitleSelectDestination" xml:space="preserve">
     <value>名前を付けて保存</value>
   </data>
@@ -185,10 +179,19 @@
   <data name="TitleSelectSource" xml:space="preserve">
     <value>入力ファイルを選択</value>
   </data>
-  <data name="TitleError" xml:space="preserve">
-    <value>CubePDF エラー</value>
+  <data name="WarnExists" xml:space="preserve">
+    <value>{0} は既に存在します。</value>
   </data>
-  <data name="TitleWarning" xml:space="preserve">
-    <value>CubePDF 確認</value>
+  <data name="WarnMergeHead" xml:space="preserve">
+    <value>先頭に結合しますか？</value>
+  </data>
+  <data name="WarnMergeTail" xml:space="preserve">
+    <value>末尾に結合しますか？</value>
+  </data>
+  <data name="WarnOverwrite" xml:space="preserve">
+    <value>上書きしますか？</value>
+  </data>
+  <data name="WarnSaveSettings" xml:space="preserve">
+    <value>タイトル、作成者、サブタイトル、キーワードのいずれかの項目が入力されています。これらの内容は次回以降、CubePDF 起動時の初期設定として利用されます。設定を保存しても良いですか？</value>
   </data>
 </root>

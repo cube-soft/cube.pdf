@@ -16,91 +16,53 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Tests.Ghostscript;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
-using Cube.Tests;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Tests.Ghostscript
+/* ------------------------------------------------------------------------- */
+///
+/// FormatTest
+///
+/// <summary>
+/// Tests the Format enum.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[TestFixture]
+class FormatTest
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// FormatTest
+    /// Count
     ///
     /// <summary>
-    /// Tests for the Format and Converter classes.
+    /// Checks the number of formats belonging to the specified category.
     /// </summary>
     ///
+    /// <param name="category">Format category.</param>
+    /// <param name="expected">
+    /// Number of formats belonging to the specified category.
+    /// </param>
+    ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class FormatTest : FileFixture
+    [TestCase("Pdf",  1)]
+    [TestCase("Eps",  1)]
+    [TestCase("Png",  7)]
+    [TestCase("Jpeg", 4)]
+    [TestCase("Bmp",  7)]
+    [TestCase("Tiff", 8)]
+    public void Count(string category, int expected)
     {
-        #region Tests
+        var n = 0;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Convert
-        ///
-        /// <summary>
-        /// Executes tests of the Invoke method with the specified format.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCaseSource(nameof(TestCases))]
-        public void Convert(Format fmt)
+        foreach (Format e in Enum.GetValues(typeof(Format)))
         {
-            var name = $"{nameof(Convert)}_{fmt}";
-            var dest = Get($"{name}{fmt.GetExtension()}");
-            var src  = GetSource("Sample.eps");
-            var conv = new Converter(fmt) { Resolution = 72 };
-
-            conv.Invoke(src, dest);
-            Assert.That(Io.Get(dest).Length, Is.AtLeast(1));
+            if (e.ToString().StartsWith(category)) ++n;
         }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ConvertToText
-        ///
-        /// <summary>
-        /// Executes tests to convert from PostScript to Text format.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void ConvertToText()
-        {
-            var fmt  = Format.Text;
-            var dest = Get($"{nameof(ConvertToText)}{fmt.GetExtension()}");
-            var src  = GetSource("Sample.ps");
-            var conv = new Converter(fmt);
-
-            conv.Invoke(src, dest);
-            Assert.That(Io.Get(dest).Length, Is.AtLeast(1));
-        }
-
-        #endregion
-
-        #region TestCases
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TestCases
-        ///
-        /// <summary>
-        /// Gets test cases.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases { get
-        {
-            var v = Enum.GetValues(typeof(Format)).Cast<Format>().Where(e => e != Format.Text);
-            foreach (var src in v) yield return new(src);
-        }}
-
-        #endregion
+        Assert.That(n, Is.EqualTo(expected));
     }
 }

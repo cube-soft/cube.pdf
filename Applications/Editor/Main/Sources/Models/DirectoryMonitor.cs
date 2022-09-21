@@ -23,7 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Cube.Collections;
 using Cube.FileSystem;
-using Cube.Mixin.Tasks;
+using Cube.Tasks.Extensions;
 
 namespace Cube.Pdf.Editor
 {
@@ -37,7 +37,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class DirectoryMonitor : ObservableBase<Entity>
+    public sealed class DirectoryMonitor : ObservableCollectionBase<Entity>
     {
         #region Constructors
 

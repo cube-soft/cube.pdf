@@ -15,107 +15,106 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// Page
+///
+/// <summary>
+/// Represents information of a document page, and some more user
+/// extended values.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[Serializable]
+public class Page : PageBase
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// Page
     ///
     /// <summary>
-    /// Represents information of a document page, and some more user
-    /// extended values.
+    /// Initializes a new instance of the Page class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class Page : PageBase
+    public Page() { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Page
+    ///
+    /// <summary>
+    /// Initializes a new instance of the Page class with the specified
+    /// source.
+    /// </summary>
+    ///
+    /// <param name="src">Source page information.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public Page(PageBase src)
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Page
-        ///
-        /// <summary>
-        /// Initializes a new instance of the Page class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Page() { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Page
-        ///
-        /// <summary>
-        /// Initializes a new instance of the Page class with the specified
-        /// source.
-        /// </summary>
-        ///
-        /// <param name="src">Source page information.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Page(PageBase src)
-        {
-            File       = src.File;
-            Number     = src.Number;
-            Resolution = src.Resolution;
-            Rotation   = src.Rotation;
-            Size       = src.Size;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Delta
-        ///
-        /// <summary>
-        /// Gets or sets the angle you rotate this Page.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// The rotation result of this Page is calculated by
-        /// Rotation + Delta.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Angle Delta
-        {
-            get => Get(() => new Angle());
-            set => Set(value);
-        }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        ///
-        /// <summary>
-        /// Reset the values of editable properties.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Reset() => OnReset();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnReset
-        ///
-        /// <summary>
-        /// Reset the values of editable properties.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected virtual void OnReset() => Delta = new();
-
-        #endregion
+        File       = src.File;
+        Number     = src.Number;
+        Resolution = src.Resolution;
+        Rotation   = src.Rotation;
+        Size       = src.Size;
     }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Delta
+    ///
+    /// <summary>
+    /// Gets or sets the angle you rotate this Page.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// The rotation result of this Page is calculated by
+    /// Rotation + Delta.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public Angle Delta
+    {
+        get => Get(() => new Angle());
+        set => Set(value);
+    }
+
+    #endregion
+
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Reset
+    ///
+    /// <summary>
+    /// Reset the values of editable properties.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public void Reset() => OnReset();
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OnReset
+    ///
+    /// <summary>
+    /// Reset the values of editable properties.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected virtual void OnReset() => Delta = new();
+
+    #endregion
 }

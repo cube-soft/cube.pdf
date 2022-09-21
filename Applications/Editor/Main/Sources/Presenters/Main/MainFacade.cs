@@ -20,9 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Cube.Collections;
 using Cube.FileSystem;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
 namespace Cube.Pdf.Editor
 {

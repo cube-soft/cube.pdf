@@ -16,111 +16,100 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+namespace Cube.Pdf.Converter;
+
 using System.Linq;
 using System.Security.Cryptography;
+using Cube.Collections.Extensions;
 using Cube.FileSystem;
-using Cube.Mixin.Collections;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
-namespace Cube.Pdf.Converter
+/* ------------------------------------------------------------------------- */
+///
+/// DigestChecker
+///
+/// <summary>
+/// Provides functionality to check the provided digest.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+internal sealed class DigestChecker
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// DigestChecker
     ///
     /// <summary>
-    /// Provides functionality to check the provided digest.
+    /// Initializes a new instance of the DigestChecker class with the
+    /// specified settings.
+    /// </summary>
+    ///
+    /// <param name="src">User settings.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public DigestChecker(SettingFolder src) { Settings = src; }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Setting
+    ///
+    /// <summary>
+    /// Gets the user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class DigestChecker
+    public SettingFolder Settings { get; }
+
+    #endregion
+
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Invoke
+    ///
+    /// <summary>
+    /// Invokes the checking.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// This check is only performed when the SHA-256 hash value for the
+    /// input file is specified from the command line. Note that this check
+    /// is also ignored if PlatformCompatible is enabled and
+    /// SHA256CryptoServiceProvider raises PlatformNotSupportedException.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public void Invoke()
     {
-        #region Constructors
+        var src = Settings.Digest;
+        if (!src.HasValue()) return;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DigestChecker
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DigestChecker class with the
-        /// specified settings.
-        /// </summary>
-        ///
-        /// <param name="src">User settings.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DigestChecker(SettingFolder src) { Settings = src; }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Setting
-        ///
-        /// <summary>
-        /// Gets the user settings.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingFolder Settings { get; }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the checking.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// コマンドラインから入力ファイルに対する SHA-256 の値を指定された時のみ
-        /// チェックし、それ以外の場合は何もせずに終了します。
-        /// また、SHA256CryptoServiceProvider が PlatformNotSupportedException
-        /// を送出した際、PlatformCompatible が有効な場合もこのチェックは無視
-        /// されます。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Invoke()
-        {
-            var src = Settings.Digest;
-            if (!src.HasValue()) return;
-
-            try
-            {
-                var cmp = Compute(Settings.Value.Source);
-                if (!src.FuzzyEquals(cmp)) throw new CryptographicException();
-            }
-            catch (PlatformNotSupportedException)
-            {
-                if (!Settings.Value.PlatformCompatible) throw;
-            }
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Compute
-        ///
-        /// <summary>
-        /// Computes the SHA-256 hash of the specified file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string Compute(string src) => IoEx.Load(src, e =>
-            new SHA256CryptoServiceProvider().ComputeHash(e).Join("", b => $"{b:x2}"));
-
-
-        #endregion
+        var cmp = Compute(Settings.Value.Source);
+        if (!src.FuzzyEquals(cmp)) throw new CryptographicException();
     }
+
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Compute
+    ///
+    /// <summary>
+    /// Computes the SHA-256 hash of the specified file.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private string Compute(string src) => IoEx.Load(src, e =>
+        new SHA256CryptoServiceProvider().ComputeHash(e).Join("", b => $"{b:x2}"));
+
+    #endregion
 }

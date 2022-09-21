@@ -103,7 +103,7 @@
         <xb:DialogBehavior />
         <xb:OpenFileBehavior />
         <xb:SaveFileBehavior />
-        <xb:UriBehavior />
+        <xb:ProcessBehavior />
         <xb:CloseBehavior />
         <xb:ClosedToDispose />
         <xb:ClosingToCommand Command="{Binding Ribbon.Close.Command}" />

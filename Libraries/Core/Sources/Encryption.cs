@@ -15,134 +15,133 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System;
 using Cube.DataContract;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// Encryption
+///
+/// <summary>
+/// Represents an encryption information of the PDF document.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[Serializable]
+public class Encryption : SerializableBase
 {
+    #region Properties
+
     /* --------------------------------------------------------------------- */
     ///
-    /// Encryption
+    /// Enabled
     ///
     /// <summary>
-    /// Represents an encryption information of the PDF document.
+    /// Gets or sets a value indicating whether the PDF document is
+    /// encrypted with password.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class Encryption : SerializableBase
+    public bool Enabled
     {
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Enabled
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether the PDF document is
-        /// encrypted with password.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool Enabled
-        {
-            get => Get(() => false);
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OpenWithPassword
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether the password is
-        /// requested when opening the PDF document.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// If OpenWithPassword is true, you will need to enter the
-        /// OwnerPassword or UserPassword when opening the PDF file.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool OpenWithPassword
-        {
-            get => Get(() => false);
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OwnerPassword
-        ///
-        /// <summary>
-        /// Gets or sets an owner password.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// The owner password is the master password that is set for the
-        /// PDF file, and it enables all operations such as re-encryption
-        /// and changing various permissions.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string OwnerPassword
-        {
-            get => Get(() => string.Empty);
-            set => Set(value ?? string.Empty);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// UserPassword
-        ///
-        /// <summary>
-        /// Gets or sets a user password.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// The user password represents the password required to open the
-        /// PDF file.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string UserPassword
-        {
-            get => Get(() => string.Empty);
-            set => Set(value ?? string.Empty);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Method
-        ///
-        /// <summary>
-        /// Gets or sets an encryption method.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EncryptionMethod Method
-        {
-            get => Get(() => EncryptionMethod.Unknown);
-            set => Set(value);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Permission
-        ///
-        /// <summary>
-        /// Gets or sets permissions of various operations with the
-        /// encrypted PDF document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Permission Permission
-        {
-            get => Get(() => new Permission());
-            set => Set(value);
-        }
-
-        #endregion
+        get => Get(() => false);
+        set => Set(value);
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OpenWithPassword
+    ///
+    /// <summary>
+    /// Gets or sets a value indicating whether the password is
+    /// requested when opening the PDF document.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// If OpenWithPassword is true, you will need to enter the
+    /// OwnerPassword or UserPassword when opening the PDF file.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public bool OpenWithPassword
+    {
+        get => Get(() => false);
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OwnerPassword
+    ///
+    /// <summary>
+    /// Gets or sets an owner password.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// The owner password is the master password that is set for the
+    /// PDF file, and it enables all operations such as re-encryption
+    /// and changing various permissions.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public string OwnerPassword
+    {
+        get => Get(() => string.Empty);
+        set => Set(value ?? string.Empty);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// UserPassword
+    ///
+    /// <summary>
+    /// Gets or sets a user password.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// The user password represents the password required to open the
+    /// PDF file.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public string UserPassword
+    {
+        get => Get(() => string.Empty);
+        set => Set(value ?? string.Empty);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Method
+    ///
+    /// <summary>
+    /// Gets or sets an encryption method.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public EncryptionMethod Method
+    {
+        get => Get(() => EncryptionMethod.Unknown);
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Permission
+    ///
+    /// <summary>
+    /// Gets or sets permissions of various operations with the
+    /// encrypted PDF document.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public Permission Permission
+    {
+        get => Get(() => new Permission());
+        set => Set(value);
+    }
+
+    #endregion
 }

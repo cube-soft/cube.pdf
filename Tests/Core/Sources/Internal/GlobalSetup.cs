@@ -15,7 +15,6 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System.Reflection;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Tests
@@ -44,8 +43,9 @@ namespace Cube.Pdf.Tests
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            _ = Logger.ObserveTaskException();
-            typeof(GlobalSetup).LogInfo(Assembly.GetExecutingAssembly());
+            Logger.Configure(new Logging.NLog.LoggerSource());
+            Logger.ObserveTaskException();
+            Logger.Info(typeof(Program).Assembly);
         }
     }
 }

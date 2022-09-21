@@ -17,9 +17,8 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Reflection;
 using System.Windows.Forms;
-using Cube.Mixin.Collections;
+using Cube.Collections.Extensions;
 
 namespace Cube.Pdf.Pages
 {
@@ -34,8 +33,6 @@ namespace Cube.Pdf.Pages
     /* --------------------------------------------------------------------- */
     static class Program
     {
-        #region Methods
-
         /* ----------------------------------------------------------------- */
         ///
         /// Main
@@ -46,11 +43,11 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         [STAThread]
-        static void Main(string[] args) => Source.LogError(() =>
+        static void Main(string[] args) => Logger.Error(() =>
         {
-            _ = Logger.ObserveTaskException();
-            Source.LogInfo(Assembly.GetExecutingAssembly());
-            Source.LogInfo($"[ {args.Join(" ")} ]");
+            Logger.ObserveTaskException();
+            Logger.Info(typeof(Program).Assembly);
+            Logger.Info($"[ {args.Join(" ")} ]");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -62,11 +59,5 @@ namespace Cube.Pdf.Pages
             view.Bind(new MainViewModel(src, args));
             Application.Run(view);
         });
-
-        #endregion
-
-        #region Fields
-        private static readonly Type Source = typeof(Program);
-        #endregion
     }
 }

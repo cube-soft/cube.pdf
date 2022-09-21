@@ -52,7 +52,7 @@
     *********************************************************************** -->
     <i:Interaction.Behaviors>
         <xb:OpenDirectoryBehavior />
-        <xb:UriBehavior />
+        <xb:ProcessBehavior />
         <xb:CloseBehavior />
     </i:Interaction.Behaviors>
 

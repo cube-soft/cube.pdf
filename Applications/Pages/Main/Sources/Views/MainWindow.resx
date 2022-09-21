@@ -295,18 +295,6 @@
   <data name="MainGridView.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;MainGridView.Name" xml:space="preserve">
-    <value>MainGridView</value>
-  </data>
-  <data name="&gt;&gt;MainGridView.Type" xml:space="preserve">
-    <value>Cube.Pdf.Pages.FileGridView, CubePdfPage, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;MainGridView.Parent" xml:space="preserve">
-    <value>FilePanel</value>
-  </data>
-  <data name="&gt;&gt;MainGridView.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="RightPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
@@ -388,21 +376,6 @@
   <data name="RightPanel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;RightPanel.Name" xml:space="preserve">
-    <value>RightPanel</value>
-  </data>
-  <data name="&gt;&gt;RightPanel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;RightPanel.Parent" xml:space="preserve">
-    <value>FilePanel</value>
-  </data>
-  <data name="&gt;&gt;RightPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="RightPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="AddButton" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpButton" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DownButton" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="RemoveButton" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ClearButton" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,9,Absolute,36,Absolute,36,Absolute,36,Absolute,36,Absolute,36,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
   <data name="AddButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -423,18 +396,6 @@
   </data>
   <data name="AddButton.Text" xml:space="preserve">
     <value>Add...</value>
-  </data>
-  <data name="&gt;&gt;AddButton.Name" xml:space="preserve">
-    <value>AddButton</value>
-  </data>
-  <data name="&gt;&gt;AddButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;AddButton.Parent" xml:space="preserve">
-    <value>RightPanel</value>
-  </data>
-  <data name="&gt;&gt;AddButton.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="UpButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -460,18 +421,6 @@
   <data name="UpButton.Text" xml:space="preserve">
     <value>Up</value>
   </data>
-  <data name="&gt;&gt;UpButton.Name" xml:space="preserve">
-    <value>UpButton</value>
-  </data>
-  <data name="&gt;&gt;UpButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;UpButton.Parent" xml:space="preserve">
-    <value>RightPanel</value>
-  </data>
-  <data name="&gt;&gt;UpButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="DownButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -492,18 +441,6 @@
   </data>
   <data name="DownButton.Text" xml:space="preserve">
     <value>Down</value>
-  </data>
-  <data name="&gt;&gt;DownButton.Name" xml:space="preserve">
-    <value>DownButton</value>
-  </data>
-  <data name="&gt;&gt;DownButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;DownButton.Parent" xml:space="preserve">
-    <value>RightPanel</value>
-  </data>
-  <data name="&gt;&gt;DownButton.ZOrder" xml:space="preserve">
-    <value>2</value>
   </data>
   <data name="RemoveButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -526,18 +463,6 @@
   <data name="RemoveButton.Text" xml:space="preserve">
     <value>Remove</value>
   </data>
-  <data name="&gt;&gt;RemoveButton.Name" xml:space="preserve">
-    <value>RemoveButton</value>
-  </data>
-  <data name="&gt;&gt;RemoveButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;RemoveButton.Parent" xml:space="preserve">
-    <value>RightPanel</value>
-  </data>
-  <data name="&gt;&gt;RemoveButton.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
   <data name="ClearButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -559,18 +484,6 @@
   <data name="ClearButton.Text" xml:space="preserve">
     <value>Clear</value>
   </data>
-  <data name="&gt;&gt;ClearButton.Name" xml:space="preserve">
-    <value>ClearButton</value>
-  </data>
-  <data name="&gt;&gt;ClearButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;ClearButton.Parent" xml:space="preserve">
-    <value>RightPanel</value>
-  </data>
-  <data name="&gt;&gt;ClearButton.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
   <data name="TitleButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Left</value>
   </data>
@@ -590,18 +503,6 @@
     <value>CenterImage</value>
   </data>
   <data name="TitleButton.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;TitleButton.Name" xml:space="preserve">
-    <value>TitleButton</value>
-  </data>
-  <data name="&gt;&gt;TitleButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;TitleButton.Parent" xml:space="preserve">
-    <value>HeaderPanel</value>
-  </data>
-  <data name="&gt;&gt;TitleButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="MetadataButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -625,18 +526,6 @@
   <data name="MetadataButton.Text" xml:space="preserve">
     <value>Metadata</value>
   </data>
-  <data name="&gt;&gt;MetadataButton.Name" xml:space="preserve">
-    <value>MetadataButton</value>
-  </data>
-  <data name="&gt;&gt;MetadataButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;MetadataButton.Parent" xml:space="preserve">
-    <value>FooterPanel</value>
-  </data>
-  <data name="&gt;&gt;MetadataButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="ExitButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -657,18 +546,6 @@
   </data>
   <data name="ExitButton.Text" xml:space="preserve">
     <value>Exit</value>
-  </data>
-  <data name="&gt;&gt;ExitButton.Name" xml:space="preserve">
-    <value>ExitButton</value>
-  </data>
-  <data name="&gt;&gt;ExitButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;ExitButton.Parent" xml:space="preserve">
-    <value>FooterPanel</value>
-  </data>
-  <data name="&gt;&gt;ExitButton.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="SplitButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -691,18 +568,6 @@
   <data name="SplitButton.Text" xml:space="preserve">
     <value>Split</value>
   </data>
-  <data name="&gt;&gt;SplitButton.Name" xml:space="preserve">
-    <value>SplitButton</value>
-  </data>
-  <data name="&gt;&gt;SplitButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;SplitButton.Parent" xml:space="preserve">
-    <value>FooterPanel</value>
-  </data>
-  <data name="&gt;&gt;SplitButton.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="MergeButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -723,18 +588,6 @@
   </data>
   <data name="MergeButton.Text" xml:space="preserve">
     <value>Merge</value>
-  </data>
-  <data name="&gt;&gt;MergeButton.Name" xml:space="preserve">
-    <value>MergeButton</value>
-  </data>
-  <data name="&gt;&gt;MergeButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
-  </data>
-  <data name="&gt;&gt;MergeButton.Parent" xml:space="preserve">
-    <value>FooterPanel</value>
-  </data>
-  <data name="&gt;&gt;MergeButton.ZOrder" xml:space="preserve">
-    <value>3</value>
   </data>
   <metadata name="MainToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>

@@ -23,10 +23,10 @@ using System.Windows;
 using System.Windows.Media;
 using Cube.Collections;
 using Cube.FileSystem;
+using Cube.Generics.Extensions;
 using Cube.Icons;
-using Cube.Mixin.Drawing;
-using Cube.Mixin.Generic;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
+using Cube.Xui.Drawing.Extensions;
 
 namespace Cube.Pdf.Editor
 {
@@ -155,7 +155,7 @@ namespace Cube.Pdf.Editor
         public static Pdfium.DocumentRenderer GetPdfium(this IDocumentRenderer src)
         {
             if (src is Pdfium.DocumentRenderer dest) return dest;
-            typeof(OpenExtension).LogWarn("IDocumentRenderer to PDFium failed");
+            Logger.Warn("IDocumentRenderer to PDFium failed");
             return default;
         }
 

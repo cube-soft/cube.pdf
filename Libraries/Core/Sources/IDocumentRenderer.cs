@@ -15,52 +15,51 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System.Drawing;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// IDocumentRenderer
+///
+/// <summary>
+/// Provides functionality to render the document contents.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public interface IDocumentRenderer
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IDocumentRenderer
+    /// Render
     ///
     /// <summary>
-    /// Provides functionality to render the document contents.
+    /// Gets an Image object in which the Page content is rendered.
     /// </summary>
     ///
+    /// <param name="page">Page object.</param>
+    /// <param name="size">Rendering size.</param>
+    ///
+    /// <returns>Image object</returns>
+    ///
     /* --------------------------------------------------------------------- */
-    public interface IDocumentRenderer
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Render the Page content to the Graphics object with the
-        /// specified parameters
-        /// </summary>
-        ///
-        /// <param name="dest">Graphics object.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="point">Start point to render.</param>
-        /// <param name="size">Rendering size.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Render(Graphics dest, Page page, PointF point, SizeF size);
+    Image Render(Page page, SizeF size);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Gets an Image object in which the Page content is rendered.
-        /// </summary>
-        ///
-        /// <param name="page">Page object.</param>
-        /// <param name="size">Rendering size.</param>
-        ///
-        /// <returns>Image object</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        Image Render(Page page, SizeF size);
-    }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Render
+    ///
+    /// <summary>
+    /// Render the Page content to the Graphics object with the
+    /// specified parameters
+    /// </summary>
+    ///
+    /// <param name="dest">Graphics object.</param>
+    /// <param name="page">Page object.</param>
+    /// <param name="point">Start point to render.</param>
+    /// <param name="size">Rendering size.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    void Render(Graphics dest, Page page, PointF point, SizeF size);
 }

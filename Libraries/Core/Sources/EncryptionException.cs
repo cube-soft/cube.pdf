@@ -15,35 +15,34 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// EncryptionException
+///
+/// <summary>
+/// Represents an exception about the encrypted operations.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[Serializable]
+public class EncryptionException : Exception
 {
     /* --------------------------------------------------------------------- */
     ///
     /// EncryptionException
     ///
     /// <summary>
-    /// Represents an exception about the encrypted operations.
+    /// Initializes a new instance of the EncryptionException class
+    /// with the specified parameters.
     /// </summary>
     ///
+    /// <param name="message">Message.</param>
+    /// <param name="inner">Inner exception object.</param>
+    ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class EncryptionException : Exception
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// EncryptionException
-        ///
-        /// <summary>
-        /// Initializes a new instance of the EncryptionException class
-        /// with the specified parameters.
-        /// </summary>
-        ///
-        /// <param name="message">Message.</param>
-        /// <param name="inner">Inner exception object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public EncryptionException(string message, Exception inner) : base(message, inner) { }
-    }
+    public EncryptionException(string message, Exception inner) : base(message, inner) { }
 }

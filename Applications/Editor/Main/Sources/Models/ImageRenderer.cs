@@ -20,7 +20,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Cube.FileSystem;
-using Cube.Pdf.Mixin;
+using Cube.Pdf.Extensions;
 
 namespace Cube.Pdf.Editor
 {

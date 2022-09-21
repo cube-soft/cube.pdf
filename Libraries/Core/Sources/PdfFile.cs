@@ -15,85 +15,84 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System;
 using Cube.FileSystem;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// PdfFile
+///
+/// <summary>
+/// Represents information of a PDF file.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[Serializable]
+public class PdfFile : File
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// PdfFile
     ///
     /// <summary>
-    /// Represents information of a PDF file.
+    /// Initializes a new instance of the PdfFile class with the
+    /// specified arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Path of the PDF file.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public PdfFile(string src) : base(IoEx.GetEntitySource(src), true)
+    {
+        Resolution = new(Point, Point);
+    }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Point
+    ///
+    /// <summary>
+    /// Gets the DPI value of the "Point" unit.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class PdfFile : File
-    {
-        #region Constructors
+    public static float Point => 72.0F;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfFile
-        ///
-        /// <summary>
-        /// Initializes a new instance of the PdfFile class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PdfFile(string src) : base(IoEx.GetEntitySource(src), true)
-        {
-            Resolution = new(Point, Point);
-        }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Password
+    ///
+    /// <summary>
+    /// Gets or sets the owner or user password.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public string Password { get; init; } = string.Empty;
 
-        #endregion
+    /* --------------------------------------------------------------------- */
+    ///
+    /// FullAccess
+    ///
+    /// <summary>
+    /// Gets or sets the value indicating whether you can access
+    /// all contents of the PDF document.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// This property will be set to false if the PDF file is encrypted
+    /// with a password and the file is opened with the user password.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public bool FullAccess { get; init; } = true;
 
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Point
-        ///
-        /// <summary>
-        /// Gets the DPI value of the "Point" unit.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static float Point => 72.0F;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Password
-        ///
-        /// <summary>
-        /// Gets or sets the owner or user password.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public string Password { get; init; } = string.Empty;
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// FullAccess
-        ///
-        /// <summary>
-        /// Gets or sets the value indicating whether you can access
-        /// all contents of the PDF document.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// This property will be set to false if the PDF file is encrypted
-        /// with a password and the file is opened with the user password.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool FullAccess { get; init; } = true;
-
-        #endregion
-    }
+    #endregion
 }

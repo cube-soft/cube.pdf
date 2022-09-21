@@ -16,151 +16,152 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Ghostscript;
+
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cube.Pdf.Ghostscript
+/* ------------------------------------------------------------------------- */
+///
+/// ImageConverter
+///
+/// <summary>
+/// Provides functionality to convert to raster image format.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public class ImageConverter : Converter
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// ImageConverter
     ///
     /// <summary>
-    /// Provides functionality to convert to raster image format such as
-    /// PNG.
+    /// Initializes a new instance of the ImageConverter class with the
+    /// specified format.
+    /// </summary>
+    ///
+    /// <param name="format">Target format.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public ImageConverter(Format format) : this(format, SupportedFormats) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ImageConverter
+    ///
+    /// <summary>
+    /// Initializes a new instance of the ImageConverter class with the
+    /// specified arguments.
+    /// </summary>
+    ///
+    /// <param name="format">Target format.</param>
+    /// <param name="supported">Collection of supported formats.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected ImageConverter(Format format, IEnumerable<Format> supported) :
+        base(format, supported) { }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SupportedFormats
+    ///
+    /// <summary>
+    /// Gets the collection of supported formats.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class ImageConverter : Converter
+    public static new IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
     {
-        #region Constructors
+        Format.Psd,
+        Format.PsdRgb,
+        Format.PsdCmyk,
+        Format.PsdCmykog,
+        Format.Jpeg,
+        Format.Jpeg24bppRgb,
+        Format.Jpeg32bppCmyk,
+        Format.Jpeg8bppGrayscale,
+        Format.Png,
+        Format.Png24bppRgb,
+        Format.Png32bppArgb,
+        Format.Png4bppIndexed,
+        Format.Png8bppIndexed,
+        Format.Png8bppGrayscale,
+        Format.Png1bppMonochrome,
+        Format.Bmp,
+        Format.Bmp24bppRgb,
+        Format.Bmp32bppArgb,
+        Format.Bmp4bppIndexed,
+        Format.Bmp8bppIndexed,
+        Format.Bmp8bppGrayscale,
+        Format.Bmp1bppMonochrome,
+        Format.Tiff,
+        Format.Tiff12bppRgb,
+        Format.Tiff24bppRgb,
+        Format.Tiff48bppRgb,
+        Format.Tiff32bppCmyk,
+        Format.Tiff64bppCmyk,
+        Format.Tiff8bppGrayscale,
+        Format.Tiff1bppMonochrome,
+    };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ImageConverter class with the
-        /// specified format.
-        /// </summary>
-        ///
-        /// <param name="format">Target format.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageConverter(Format format) : this(format, SupportedFormats) { }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// AntiAlias
+    ///
+    /// <summary>
+    /// Gets or sets a value indicating whether anti-aliasing is
+    /// enabled.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public bool AntiAlias { get; set; } = true;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ImageConverter class with the
-        /// specified format.
-        /// </summary>
-        ///
-        /// <param name="format">Target format.</param>
-        /// <param name="supported">Collection of supported formats.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected ImageConverter(Format format, IEnumerable<Format> supported) :
-            base(format, supported) { }
+    #endregion
 
-        #endregion
+    #region Methods
 
-        #region Properties
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OnCreateArguments
+    ///
+    /// <summary>
+    /// Occurs when creating Ghostscript API arguments.
+    /// </summary>
+    ///
+    /// <returns>Collection of Argument objects.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected override IEnumerable<Argument> OnCreateArguments() =>
+        base.OnCreateArguments().Concat(CreateAntiAlias());
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SupportedFormats
-        ///
-        /// <summary>
-        /// Gets the collection of supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static new IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// CreateAntiAlias
+    ///
+    /// <summary>
+    /// Creates a collection of Argument objects for anti-aliasing.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private IEnumerable<Argument> CreateAntiAlias()
+    {
+        if (AntiAlias)
         {
-            Format.Psd,
-            Format.PsdRgb,
-            Format.PsdCmyk,
-            Format.PsdCmykog,
-            Format.Jpeg,
-            Format.Jpeg24bppRgb,
-            Format.Jpeg32bppCmyk,
-            Format.Jpeg8bppGrayscale,
-            Format.Png,
-            Format.Png24bppRgb,
-            Format.Png32bppArgb,
-            Format.Png4bppIndexed,
-            Format.Png8bppIndexed,
-            Format.Png8bppGrayscale,
-            Format.Png1bppMonochrome,
-            Format.Bmp,
-            Format.Bmp24bppRgb,
-            Format.Bmp32bppArgb,
-            Format.Bmp4bppIndexed,
-            Format.Bmp8bppIndexed,
-            Format.Bmp8bppGrayscale,
-            Format.Bmp1bppMonochrome,
-            Format.Tiff,
-            Format.Tiff12bppRgb,
-            Format.Tiff24bppRgb,
-            Format.Tiff48bppRgb,
-            Format.Tiff32bppCmyk,
-            Format.Tiff64bppCmyk,
-            Format.Tiff8bppGrayscale,
-            Format.Tiff1bppMonochrome,
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// AntiAlias
-        ///
-        /// <summary>
-        /// Gets or sets a value indicating whether anti-aliasing is
-        /// enabled.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public bool AntiAlias { get; set; } = true;
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCreateArguments
-        ///
-        /// <summary>
-        /// Occurs when creating Ghostscript API arguments.
-        /// </summary>
-        ///
-        /// <returns>Collection of arguments.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override IEnumerable<Argument> OnCreateArguments() =>
-            base.OnCreateArguments()
-            .Concat(CreateAntiAlias());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// CreateAntiAlias
-        ///
-        /// <summary>
-        /// Creates the collection of arguments representing anti-aliasing.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<Argument> CreateAntiAlias() =>
-            AntiAlias ?
-            new[]
-            {
-                new Argument("GraphicsAlphaBits", 4),
-                new Argument("TextAlphaBits", 4),
-            } :
-            Enumerable.Empty<Argument>();
-
-        #endregion
+            yield return new("GraphicsAlphaBits", 4);
+            yield return new("TextAlphaBits", 4);
+        }
     }
+
+    #endregion
 }

@@ -16,90 +16,85 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Tests.Ghostscript;
+
 using System.Collections.Generic;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Tests.Ghostscript
+/* ------------------------------------------------------------------------- */
+///
+/// ArgumentTest
+///
+/// <summary>
+/// Tests the Argument class.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[TestFixture]
+class ArgumentTest
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ArgumentTest
+    /// Test
     ///
     /// <summary>
-    /// Tests the Argument class.
+    /// Tests to create an argument for the Ghostscript API.
+    /// </summary>
+    ///
+    /// <param name="src">Source Argument object.</param>
+    ///
+    /// <returns>An argument for the Ghostscript API.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    [TestCaseSource(nameof(TestCases))]
+    public string Test(Argument src) => src.ToString();
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// TestCases
+    ///
+    /// <summary>
+    /// Gets test cases for the Test method.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class ArgumentTest
+    static IEnumerable<TestCaseData> TestCases()
     {
-        #region Tests
+        yield return new TestCaseData(
+            new Argument('s', "DEVICE", "pdfwrite")
+        ).Returns("-sDEVICE=pdfwrite");
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ToString
-        ///
-        /// <summary>
-        /// Tests the ToString method.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCaseSource(nameof(TestCases))]
-        public string ToString(Argument src) => src.ToString();
+        yield return new TestCaseData(
+            new Argument('I', string.Empty, @"Path\To\Resources")
+        ).Returns(@"-IPath\To\Resources");
 
-        #endregion
+        yield return new TestCaseData(
+            new Argument("ColorConversionStrategy", "RGB")
+        ).Returns("-dColorConversionStrategy=/RGB");
 
-        #region TestCases
+        yield return new TestCaseData(
+            new Argument("DownsampleColorImages", true)
+        ).Returns("-dDownsampleColorImages=true");
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TestCases
-        ///
-        /// <summary>
-        /// Gets the test cases.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases { get
-        {
-            yield return new TestCaseData(
-                new Argument('s', "DEVICE", "pdfwrite")
-            ).Returns("-sDEVICE=pdfwrite");
+        yield return new TestCaseData(
+            new Argument("ColorImageResolution", 300)
+        ).Returns("-dColorImageResolution=300");
 
-            yield return new TestCaseData(
-                new Argument('I', string.Empty, @"Path\To\Resources")
-            ).Returns(@"-IPath\To\Resources");
+        yield return new TestCaseData(
+            new Argument('r', 600)
+        ).Returns("-r600");
 
-            yield return new TestCaseData(
-                new Argument("ColorConversionStrategy", "RGB")
-            ).Returns("-dColorConversionStrategy=/RGB");
+        yield return new TestCaseData(
+            new Argument('d', "BATCH")
+        ).Returns("-dBATCH");
 
-            yield return new TestCaseData(
-                new Argument("DownsampleColorImages", true)
-            ).Returns("-dDownsampleColorImages=true");
+        yield return new TestCaseData(
+            new Argument('f')
+        ).Returns("-f");
 
-            yield return new TestCaseData(
-                new Argument("ColorImageResolution", 300)
-            ).Returns("-dColorImageResolution=300");
-
-            yield return new TestCaseData(
-                new Argument('r', 600)
-            ).Returns("-r600");
-
-            yield return new TestCaseData(
-                new Argument('d', "BATCH")
-            ).Returns("-dBATCH");
-
-            yield return new TestCaseData(
-                new Argument('f')
-            ).Returns("-f");
-
-            yield return new TestCaseData(
-                new Code("<</Orientation 1}>> setpagedevice")
-            ).Returns("<</Orientation 1}>> setpagedevice");
-        }}
-
-        #endregion
+        yield return new TestCaseData(
+            new Code("<</Orientation 1}>> setpagedevice")
+        ).Returns("<</Orientation 1}>> setpagedevice");
     }
 }

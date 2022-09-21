@@ -19,7 +19,7 @@
 using System.Reflection;
 using Cube.DataContract;
 using Cube.FileSystem;
-using Cube.Mixin.Assembly;
+using Cube.Reflection.Extensions;
 
 namespace Cube.Pdf.Pages
 {

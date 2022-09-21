@@ -15,113 +15,112 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Cube.FileSystem;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// ImageFile
+///
+/// <summary>
+/// Represents information of an image file.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[Serializable]
+public class ImageFile : File
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// ImageFile
     ///
     /// <summary>
-    /// Represents information of an image file.
+    /// Initializes a new instance of the ImageFile class with the
+    /// specified arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Path of the image file.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public ImageFile(string src) : this(new InitSource(src)) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ImageFile
+    ///
+    /// <summary>
+    /// Initializes a new instance of the ImageFile class with the
+    /// specified arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Path of the image file.</param>
+    /// <param name="image">Image object.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public ImageFile(string src, Image image) : this(new InitSource(src, image)) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ImageFile
+    ///
+    /// <summary>
+    /// Initializes a new instance of the ImageFile class with the
+    /// specified source object.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class ImageFile : File
+    private ImageFile(InitSource src) : base(IoEx.GetEntitySource(src.Path), true)
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageFile
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ImageFile class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the image file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageFile(string src) : this(new InitSource(src)) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageFile
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ImageFile class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the image file.</param>
-        /// <param name="image">Image object.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageFile(string src, Image image) : this(new InitSource(src, image)) { }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ImageFile
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ImageFile class with the
-        /// specified source object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ImageFile(InitSource src) : base(IoEx.GetEntitySource(src.Path), true)
+        try
         {
-            try
-            {
-                var guid = src.Image.FrameDimensionsList[0];
-                var dim  = new FrameDimension(guid);
-                var x    = src.Image.HorizontalResolution;
-                var y    = src.Image.VerticalResolution;
+            var guid = src.Image.FrameDimensionsList[0];
+            var dim  = new FrameDimension(guid);
+            var x    = src.Image.HorizontalResolution;
+            var y    = src.Image.VerticalResolution;
 
-                Count      = src.Image.GetFrameCount(dim);
-                Resolution = new(x, y);
-            }
-            finally { src.Disposable?.Dispose(); }
+            Count      = src.Image.GetFrameCount(dim);
+            Resolution = new(x, y);
         }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// InitSource
-        ///
-        /// <summary>
-        /// Represents the resources when initialized.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private class InitSource
-        {
-            public InitSource(string src)
-            {
-                var ss = Io.Open(src);
-                Path       = src;
-                Image      = Image.FromStream(ss);
-                Disposable = new(Image, ss);
-            }
-            public InitSource(string src, Image image)
-            {
-                Path  = src;
-                Image = image;
-            }
-            public string Path { get; }
-            public Image Image { get; }
-            public DisposableContainer Disposable { get; }
-        }
-
-        #endregion
+        finally { src.Disposable?.Dispose(); }
     }
+
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// InitSource
+    ///
+    /// <summary>
+    /// Represents the resources when initialized.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private class InitSource
+    {
+        public InitSource(string src)
+        {
+            var ss = Io.Open(src);
+            Path       = src;
+            Image      = Image.FromStream(ss);
+            Disposable = new(Image, ss);
+        }
+        public InitSource(string src, Image image)
+        {
+            Path  = src;
+            Image = image;
+        }
+        public string Path { get; }
+        public Image Image { get; }
+        public DisposableContainer Disposable { get; }
+    }
+
+    #endregion
 }

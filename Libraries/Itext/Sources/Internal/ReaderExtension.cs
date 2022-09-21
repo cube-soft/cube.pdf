@@ -19,7 +19,7 @@
 using System;
 using System.Drawing;
 using System.Text;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 using iText.Kernel.Exceptions;
 using iText.Kernel.Pdf;
 
@@ -133,7 +133,7 @@ namespace Cube.Pdf.Itext
 
             var user  = GetUserPassword(src, file);
             var value = (uint)src.GetReader().GetPermissions();
-            typeof(ReaderExtension).LogDebug($"Permission:0x{value:X}", $"Mode:{src.GetReader().GetCryptoMode()}");
+            Logger.Debug($"Permission:0x{value:X} Mode:{src.GetReader().GetCryptoMode()}");
 
             return new()
             {

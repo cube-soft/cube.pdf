@@ -15,70 +15,69 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System;
 using System.Drawing;
 using Cube.FileSystem;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// File
+///
+/// <summary>
+/// Represents information of PDF and image files.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[Serializable]
+public abstract class File : Entity
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// File
     ///
     /// <summary>
-    /// Represents information of PDF and image files.
+    /// Initializes a new instance of the File class with the specified
+    /// arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Source file information.</param>
+    /// <param name="dispose">
+    /// Value indicating whether to dispose the specified src object
+    /// after initialization.
+    /// </param>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected File(EntitySource src, bool dispose) : base(src, dispose) { }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Count
+    ///
+    /// <summary>
+    /// Gets the number of pages.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public abstract class File : Entity
-    {
-        #region Constructors
+    public int Count { get; init; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// File
-        ///
-        /// <summary>
-        /// Initializes a new instance of the File class with the specified
-        /// arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Source file information.</param>
-        /// <param name="dispose">
-        /// Value indicating whether to dispose the specified src object
-        /// after initialization.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected File(EntitySource src, bool dispose) : base(src, dispose) { }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Resolution
+    ///
+    /// <summary>
+    /// Gets the resolution of the PDF or image object.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public PointF Resolution { get; init; }
 
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Count
-        ///
-        /// <summary>
-        /// Gets the number of pages.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Count { get; init; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Resolution
-        ///
-        /// <summary>
-        /// Gets the resolution of the PDF or image object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PointF Resolution { get; init; }
-
-        #endregion
-    }
+    #endregion
 }

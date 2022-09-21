@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Reflection;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests
@@ -47,8 +46,8 @@ namespace Cube.Pdf.Editor.Tests
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            _ = Logger.ObserveTaskException();
-            typeof(GlobalSetup).LogInfo(Assembly.GetExecutingAssembly());
+            Logger.ObserveTaskException();
+            Logger.Info(typeof(Program).Assembly);
             ApplicationSetting.Configure();
         }
 

@@ -26,11 +26,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using Cube.Collections;
-using Cube.Mixin.Collections;
-using Cube.Mixin.Drawing;
-using Cube.Mixin.Syntax;
-using Cube.Mixin.Tasks;
-using Cube.Pdf.Mixin;
+using Cube.Collections.Extensions;
+using Cube.Pdf.Extensions;
+using Cube.Syntax.Extensions;
+using Cube.Tasks.Extensions;
+using Cube.Xui.Drawing.Extensions;
 
 namespace Cube.Pdf.Editor
 {
@@ -44,7 +44,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class ImageCollection : ObservableBase<ImageItem>, IReadOnlyList<ImageItem>
+    public sealed class ImageCollection : ObservableCollectionBase<ImageItem>, IReadOnlyList<ImageItem>
     {
         #region Constructors
 
@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editor
                 ?.ToBitmapImage(true)
             );
             _cache.Created += (s, e) => e.Key.Refresh();
-            _cache.Failed  += (s, e) => GetType().LogDebug($"[{e.Key.Index}] {e.Value.GetType().Name}");
+            _cache.Failed  += (s, e) => Logger.Debug($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
             Dispatcher  = dispatcher;
             Selection   = new ImageSelection(dispatcher);
@@ -205,7 +205,7 @@ namespace Cube.Pdf.Editor
         public void Move(IEnumerable<int> indices, int delta) => SetIndex(() =>
         {
             var tmp = indices.Within(Count);
-            var src = delta < 0 ? tmp.OrderBy() : tmp.OrderByDescending();
+            var src = delta < 0 ? tmp.OrderBy(i => i) : tmp.OrderByDescending(i => i);
             var min = int.MaxValue;
             var max = 0;
 
@@ -235,7 +235,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Remove(IEnumerable<int> indices) => SetIndex(() =>
         {
-            var src = indices.Within(Count).OrderByDescending().ToList();
+            var src = indices.Within(Count).OrderByDescending(i => i).ToList();
             foreach (var item in src.Select(i => _inner[i]))
             {
                 _ = _cache.Remove(item);
