@@ -31,7 +31,7 @@
         <PackageReference Include="Appveyor.TestLogger" Version="*" />
     </ItemGroup>
     <ItemGroup>
+        <None Include="NLog.config" CopyToOutputDirectory="Always" />
         <None Include="Examples\**\*" CopyToOutputDirectory="Always" />
-        <None Include="App.*" />
     </ItemGroup>
 </Project>

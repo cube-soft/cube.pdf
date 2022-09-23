@@ -19,6 +19,7 @@ nuget:
 before_build:
     - nuget sources add -name Cube.Core -source https://ci.appveyor.com/nuget/cube.core
     - nuget restore "%PROJECT_NAME%.sln"
+    - nuget install OpenCover
 build:
     project: '%PROJECT_NAME%.sln'
     parallel: true
