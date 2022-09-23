@@ -4,7 +4,6 @@
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
-        <StartupObject>Cube.Pdf.Tests.Program</StartupObject>
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <Platforms>AnyCPU;x86;x64</Platforms>
@@ -31,7 +30,7 @@
         <PackageReference Include="Appveyor.TestLogger" Version="*" />
     </ItemGroup>
     <ItemGroup>
+        <None Include="NLog.config" CopyToOutputDirectory="Always" />
         <None Include="Examples\**\*" CopyToOutputDirectory="Always" />
-        <None Include="App.*" />
     </ItemGroup>
 </Project>

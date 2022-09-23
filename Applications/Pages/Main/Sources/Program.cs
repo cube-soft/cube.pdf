@@ -45,6 +45,7 @@ namespace Cube.Pdf.Pages
         [STAThread]
         static void Main(string[] args) => Logger.Error(() =>
         {
+            Logger.Configure(new Logging.NLog.LoggerSource());
             Logger.ObserveTaskException();
             Logger.Info(typeof(Program).Assembly);
             Logger.Info($"[ {args.Join(" ")} ]");

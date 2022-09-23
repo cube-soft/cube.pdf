@@ -47,5 +47,6 @@
         <Resource Include="App.ico" />
         <None Include="App.config" />
         <None Include="App.manifest" />
+        <None Include="NLog.config" CopyToOutputDirectory="Always" />
     </ItemGroup>
 </Project>

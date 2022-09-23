@@ -4,7 +4,6 @@
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
-        <StartupObject>Cube.Pdf.Converter.Tests.Program</StartupObject>
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
@@ -30,7 +29,7 @@
     <ItemGroup>
         <Compile Link="Sources\Helpers\SettingV2.cs" Include="..\..\Applications\Converter\Core\Sources\SettingV2.cs" />
         <Compile Link="Sources\Helpers\PathExplorer.cs" Include="..\..\Applications\Converter\Core\Sources\Internal\PathExplorer.cs" />
-        <None Include="App.*" />
+        <None Include="NLog.config" CopyToOutputDirectory="Always" />
         <None Include="Examples\**\*" CopyToOutputDirectory="Always" />
     </ItemGroup>
 </Project>

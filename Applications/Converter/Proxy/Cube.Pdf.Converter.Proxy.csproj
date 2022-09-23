@@ -30,5 +30,6 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="App.*" />
+        <None Include="NLog.config" CopyToOutputDirectory="Always" />
     </ItemGroup>
 </Project>

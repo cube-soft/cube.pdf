@@ -42,5 +42,6 @@
         <None Include="Properties\DataSources\*" />
         <None Include="Assets\**\*" />
         <None Include="App.*" />
+        <None Include="NLog.config" CopyToOutputDirectory="Always" />
     </ItemGroup>
 </Project>

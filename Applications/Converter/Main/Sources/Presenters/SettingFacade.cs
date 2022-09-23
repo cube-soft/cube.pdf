@@ -49,7 +49,7 @@ public class SettingFacade : DisposableBase
     /* --------------------------------------------------------------------- */
     public SettingFacade(SettingFolder src)
     {
-        var exe = Io.Combine(GetType().Assembly.GetDirectoryName(), "CubeChecker.exe");
+        var exe = Io.Combine(typeof(Program).Assembly.GetDirectoryName(), "CubeChecker.exe");
 
         Settings = src;
         Startup  = new("cubepdf-checker") { Source = exe };
