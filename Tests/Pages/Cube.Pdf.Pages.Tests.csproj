@@ -4,6 +4,7 @@
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Copyright>Copyright © 2013 CubeSoft, Inc.</Copyright>
+        <StartupObject>Cube.Pdf.Pages.Tests.Program</StartupObject>
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
