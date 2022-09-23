@@ -41,5 +41,6 @@
         <EmbeddedResource Update="Sources\Views\*Window.ja.resx" DependentUpon="$([System.String]::Copy('%(Filename)').Replace('ja','cs'))" />
         <None Include="Assets\**\*" />
         <None Include="App.*" />
+        <None Include="NLog.config" CopyToOutputDirectory="Always" />
     </ItemGroup>
 </Project>
