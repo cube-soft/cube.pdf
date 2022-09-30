@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
-using Cube.Mixin.Assembly;
+using Cube.Reflection.Extensions;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor
@@ -237,7 +237,7 @@ namespace Cube.Pdf.Editor
         public IElement<Uri> Link => Get(() => new BindableElement<Uri>(
             () => Assembly.GetExecutingAssembly().GetCopyright(),
             () => Facade.ProductUri,
-            new DelegateCommand(() => Post(Link.Value)),
+            new DelegateCommand(() => Post(new ProcessMessage(Link.Value.ToString()))),
             GetDispatcher(false)
         ));
 

@@ -15,31 +15,50 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-using System;
+namespace Cube.Pdf.Editor.Tests;
 
-namespace Cube.Pdf.Editor.Tests
+using System;
+using NUnit.Framework;
+
+/* ------------------------------------------------------------------------- */
+///
+/// Program
+///
+/// <summary>
+/// Represents the main program.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[SetUpFixture]
+static class Program
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Program
+    /// OneTimeSetup
     ///
     /// <summary>
-    /// Represetns the main program.
+    /// Invokes the setup method only once.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static class Program
+    [OneTimeSetUp]
+    public static void OneTimeSetup()
     {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Main
-        ///
-        /// <summary>
-        /// Represents the main method.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [STAThread]
-        static void Main(string[] args) { }
+        Logger.Configure(new Logging.NLog.LoggerSource());
+        Logger.ObserveTaskException();
+        Logger.Info(typeof(Program).Assembly);
+        ApplicationSetting.Configure();
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Main
+    ///
+    /// <summary>
+    /// Represents the main method.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [STAThread]
+    static void Main() { }
 }

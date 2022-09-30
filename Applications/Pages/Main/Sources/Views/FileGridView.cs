@@ -19,8 +19,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Cube.ByteFormat;
 using Cube.FileSystem;
-using Cube.Mixin.ByteFormat;
 
 namespace Cube.Pdf.Pages
 {
@@ -123,13 +123,13 @@ namespace Cube.Pdf.Pages
             {
                 switch (e.ColumnIndex)
                 {
-                    case 1: e.Value = IoEx.GetTypeName((string)e.Value); break;
+                    case 1: e.Value = Shell.GetTypeName((string)e.Value); break;
                     case 4: e.Value = ((long)e.Value).ToRoughBytes(); break;
                     default: return;
                 }
                 e.FormattingApplied = true;
             }
-            catch (Exception err) { GetType().LogWarn(err); }
+            catch (Exception err) { Logger.Warn(err); }
             finally { base.OnCellFormatting(e); }
         }
 

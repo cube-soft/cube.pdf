@@ -18,7 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using Cube.FileSystem;
-using Cube.Mixin.Syntax;
+using Cube.Syntax.Extensions;
 
 namespace Cube.Pdf.Editor
 {

@@ -23,7 +23,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using Cube.FileSystem;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 

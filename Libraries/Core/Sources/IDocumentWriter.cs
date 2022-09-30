@@ -15,113 +15,112 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System;
 using System.Collections.Generic;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// IDocumentWriter
+///
+/// <summary>
+/// Represents properties and methods to create or modify a document.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public interface IDocumentWriter : IDisposable
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// IDocumentWriter
+    /// Reset
     ///
     /// <summary>
-    /// Represents properties and methods to create or modify a document.
+    /// Resets values.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public interface IDocumentWriter : IDisposable
-    {
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Reset
-        ///
-        /// <summary>
-        /// Resets values.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Reset();
+    void Reset();
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Save
-        ///
-        /// <summary>
-        /// Saves the document to the specified path.
-        /// </summary>
-        ///
-        /// <param name="path">Path to save.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Save(string path);
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Save
+    ///
+    /// <summary>
+    /// Saves the document to the specified path.
+    /// </summary>
+    ///
+    /// <param name="path">Path to save.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    void Save(string path);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds pages to the document.
-        /// </summary>
-        ///
-        /// <param name="pages">Collection of pages.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Add(IEnumerable<Page> pages);
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Add
+    ///
+    /// <summary>
+    /// Adds pages to the document.
+    /// </summary>
+    ///
+    /// <param name="pages">Collection of pages.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    void Add(IEnumerable<Page> pages);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds pages to the document.
-        /// </summary>
-        ///
-        /// <param name="pages">Collection of pages.</param>
-        /// <param name="hint">
-        /// Document reader object to get more detailed information about
-        /// the specified pages.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Add(IEnumerable<Page> pages, IDocumentReader hint);
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Add
+    ///
+    /// <summary>
+    /// Adds pages to the document.
+    /// </summary>
+    ///
+    /// <param name="pages">Collection of pages.</param>
+    /// <param name="hint">
+    /// Document reader object to get more detailed information about
+    /// the specified pages.
+    /// </param>
+    ///
+    /* --------------------------------------------------------------------- */
+    void Add(IEnumerable<Page> pages, IDocumentReader hint);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Add
-        ///
-        /// <summary>
-        /// Adds attached objects to the document.
-        /// </summary>
-        ///
-        /// <param name="files">Collection of attached files.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Add(IEnumerable<Attachment> files);
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Add
+    ///
+    /// <summary>
+    /// Adds attached objects to the document.
+    /// </summary>
+    ///
+    /// <param name="files">Collection of attached files.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    void Add(IEnumerable<Attachment> files);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Set
-        ///
-        /// <summary>
-        /// Sets the PDF metadata.
-        /// </summary>
-        ///
-        /// <param name="metadata">PDF metadata.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Set(Metadata metadata);
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Set
+    ///
+    /// <summary>
+    /// Sets the PDF metadata.
+    /// </summary>
+    ///
+    /// <param name="metadata">PDF metadata.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    void Set(Metadata metadata);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Set
-        ///
-        /// <summary>
-        /// Sets the encryption settings.
-        /// </summary>
-        ///
-        /// <param name="encryption">Encryption settings.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        void Set(Encryption encryption);
-    }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Set
+    ///
+    /// <summary>
+    /// Sets the encryption settings.
+    /// </summary>
+    ///
+    /// <param name="encryption">Encryption settings.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    void Set(Encryption encryption);
 }

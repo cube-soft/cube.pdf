@@ -15,85 +15,84 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf;
+
 using System;
 using System.Drawing;
 using Cube.DataContract;
 
-namespace Cube.Pdf
+/* ------------------------------------------------------------------------- */
+///
+/// PageBase
+///
+/// <summary>
+/// Represents information of a document page.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[Serializable]
+public class PageBase : SerializableBase
 {
+    #region Properties
+
     /* --------------------------------------------------------------------- */
     ///
-    /// PageBase
+    /// File
     ///
     /// <summary>
-    /// Represents information of a document page.
+    /// Get the file information that owns this Page.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class PageBase : SerializableBase
-    {
-        #region Properties
+    public File File { get; init; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// File
-        ///
-        /// <summary>
-        /// Get the file information that owns this Page.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public File File { get; init; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Number
+    ///
+    /// <summary>
+    /// Get the page number.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// 1 for first page.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public int Number { get; init; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Number
-        ///
-        /// <summary>
-        /// Get the page number.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// 1 for first page.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Number { get; init; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Rotation
+    ///
+    /// <summary>
+    /// Get the rotation of this Page.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public Angle Rotation { get; init; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Rotation
-        ///
-        /// <summary>
-        /// Get the rotation of this Page.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Angle Rotation { get; init; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Resolution
+    ///
+    /// <summary>
+    /// Get the horizontal and vertical resolution (dpi) of this Page.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public PointF Resolution { get; init; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Resolution
-        ///
-        /// <summary>
-        /// Get the horizontal and vertical resolution (dpi) of this Page.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PointF Resolution { get; init; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Size
+    ///
+    /// <summary>
+    /// Get the page size.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public SizeF Size { get; init; }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Size
-        ///
-        /// <summary>
-        /// Get the page size.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SizeF Size { get; init; }
-
-        #endregion
-    }
+    #endregion
 }

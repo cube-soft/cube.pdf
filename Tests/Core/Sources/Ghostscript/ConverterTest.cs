@@ -16,169 +16,83 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Tests.Ghostscript;
+
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
+using Cube.Tests;
 using NUnit.Framework;
 
-namespace Cube.Pdf.Tests.Ghostscript
+/* ------------------------------------------------------------------------- */
+///
+/// ConverterTest
+///
+/// <summary>
+/// Tests the Converter and its inherited classes.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[TestFixture]
+class ConverterTest : FileFixture
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// ConverterTest
+    /// Test
     ///
     /// <summary>
-    /// Tests the Converter class.
+    /// Tests the conversion using Ghostscript.
+    /// </summary>
+    ///
+    /// <param name="category">
+    /// Category name. Test results are saved to a directory with the
+    /// specified name.
+    /// </param>
+    ///
+    /// <param name="name">
+    /// Test name, which is used for a part of the destination path.
+    /// </param>
+    ///
+    /// <param name="src">
+    /// Name of the source file, which must be stored in the Examples
+    /// directory.
+    /// </param>
+    ///
+    /// <param name="converter">Converter object.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    [TestCaseSource(nameof(TestCases))]
+    public void Test(string category, string name, string src, Converter converter)
+    {
+        var sp = GetSource(src);
+        var dp = Get(category, $"{name}.{category.ToLowerInvariant()}");
+
+        converter.Quiet = false;
+        converter.Log   = Get(category, $"{name}.log");
+        converter.Temp  = Get(".tmp");
+        converter.Invoke(sp, dp);
+
+        Assert.That(Io.Get(dp).Length, Is.AtLeast(1));
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// TestCases
+    ///
+    /// <summary>
+    /// Gets test cases of the Test method.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestFixture]
-    class ConverterTest : ConverterFixture
-    {
-        #region Tests
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Revision
-        ///
-        /// <summary>
-        /// Confirms the revision number of Ghostscript.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void Revision()
-        {
-            Assert.That(Converter.Revision, Is.EqualTo(9561));
-            Assert.That(Converter.Revision, Is.EqualTo(9561));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SupportedFormats
-        ///
-        /// <summary>
-        /// Confirms the number of supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        public void SupportedFormats()
-        {
-            Assert.That(Converter.SupportedFormats.Count(), Is.EqualTo(34));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Executes the test to convert.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        [TestCaseSource(nameof(TestCases))]
-        public void Invoke(int id, Converter cv, string srcname, string destname)
-        {
-            Assert.That(Io.Exists(Run(cv, srcname, destname)), Is.True, $"No.{id}");
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke_Cjk_Failed
-        ///
-        /// <summary>
-        /// Confirm the behavior when CJK characters are set as output
-        /// path.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Ghostscript API はマルチバイト文字を含むパスを指定した場合、
-        /// 変換処理に失敗します。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        [Test]
-        [Ignore("COMException in .NET Framework 3.5")]
-        public void Invoke_Cjk_Failed()
-        {
-            Assert.That(() =>
-            {
-                var dest = Run(new Converter(Format.Pdf),
-                    "Sample.eps",
-                    "日本語のファイル",
-                    "Invoke_Cjk_Failed");
-                if (!Io.Exists(dest)) throw new FileNotFoundException("ErrorTest");
-            }, Throws.TypeOf<FileNotFoundException>().Or.TypeOf<GsApiException>());
-        }
-
-        #endregion
-
-        #region TestCases
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// TestCases
-        ///
-        /// <summary>
-        /// Gets test cases.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Paper の設定は入力ファイルによっては反映されない場合がある。
-        /// 例えば、SampleCjk.ps を変換すると Paper の設定に関わらず常に
-        /// A4 サイズで変換される。原因を要調査。
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static IEnumerable<TestCaseData> TestCases { get
-        {
-            var n = 0;
-
-            /* --------------------------------------------------------- */
-            // Orientation
-            /* --------------------------------------------------------- */
-            yield return TestCase(n++, new Converter(Format.Pdf)
-            {
-                Orientation = Orientation.Portrait,
-            }, "Sample.ps", Orientation.Portrait);
-
-            yield return TestCase(n++, new Converter(Format.Pdf)
-            {
-                Orientation = Orientation.UpsideDown,
-            }, "Sample.ps", Orientation.UpsideDown);
-
-            yield return TestCase(n++, new Converter(Format.Pdf)
-            {
-                Orientation = Orientation.Landscape,
-            }, "Sample.ps", Orientation.Landscape);
-
-            yield return TestCase(n++, new Converter(Format.Pdf)
-            {
-                Orientation = Orientation.Seascape,
-            }, "Sample.ps", Orientation.Seascape);
-
-            /* --------------------------------------------------------- */
-            // Paper
-            /* --------------------------------------------------------- */
-            yield return TestCase(n++, new Converter(Format.Pdf)
-            {
-                Paper = Paper.IsoB4,
-            }, "Sample.ps", Paper.IsoB4);
-
-            yield return TestCase(n++, new Converter(Format.Pdf)
-            {
-                Paper = Paper.JisB4,
-            }, "Sample.ps", Paper.JisB4);
-
-            yield return TestCase(n++, new Converter(Format.Pdf)
-            {
-                Paper = Paper.Letter,
-            }, "Sample.ps", Paper.Letter);
-        }}
-
-        #endregion
-    }
+    static IEnumerable<TestCaseData> TestCases => Enumerable.Empty<TestCaseData>()
+        .Concat(new TextTestCase())
+        .Concat(new PsTestCase())
+        .Concat(new EpsTestCase())
+        .Concat(new PdfTestCase())
+        .Concat(new BmpTestCase())
+        .Concat(new PngTestCase())
+        .Concat(new PsdTestCase())
+        .Concat(new JpegTestCase())
+        .Concat(new TiffTestCase());
 }

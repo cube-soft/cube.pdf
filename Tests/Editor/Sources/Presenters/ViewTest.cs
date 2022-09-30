@@ -16,9 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Linq;
-using Cube.Mixin.Commands;
 using Cube.Tests;
+using Cube.Xui.Commands.Extensions;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters

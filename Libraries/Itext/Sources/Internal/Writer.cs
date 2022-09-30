@@ -20,7 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 
@@ -184,7 +184,7 @@ namespace Cube.Pdf.Itext
             _writer.Close();
 
             Stamp();
-            GetType().LogWarn(() => Io.Delete(_tmp));
+            Logger.Warn(() => Io.Delete(_tmp));
         }
 
         /* ----------------------------------------------------------------- */

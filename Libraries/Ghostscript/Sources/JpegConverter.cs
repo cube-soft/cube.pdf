@@ -16,107 +16,116 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Ghostscript;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Cube.Mixin.Collections;
+using Cube.Collections.Extensions;
 
-namespace Cube.Pdf.Ghostscript
+/* ------------------------------------------------------------------------- */
+///
+/// JpegConverter
+///
+/// <summary>
+/// Provides functionality to convert to JPEG format.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public class JpegConverter : ImageConverter
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// JpegConverter
     ///
     /// <summary>
-    /// Provides functionality to convert to JPEG format.
+    /// Initializes a new instance of the JpegConverter class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class JpegConverter : ImageConverter
+    public JpegConverter() : this(Format.Jpeg) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// JpegConverter
+    ///
+    /// <summary>
+    /// Initializes a new instance of the JpegConverter class with the
+    /// specified format.
+    /// </summary>
+    ///
+    /// <param name="format">Target format.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public JpegConverter(Format format) : this(format, SupportedFormats) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// JpegConverter
+    ///
+    /// <summary>
+    /// Initializes a new instance of the JpegConverter class with the
+    /// specified format.
+    /// </summary>
+    ///
+    /// <param name="format">Target format.</param>
+    /// <param name="supported">Collection of supported formats.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected JpegConverter(Format format, IEnumerable<Format> supported) :
+        base(format, supported) { }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SupportedFormats
+    ///
+    /// <summary>
+    /// Gets the collection of supported formats.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static new IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
     {
-        #region Constructors
+        Format.Jpeg,
+        Format.Jpeg24bppRgb,
+        Format.Jpeg32bppCmyk,
+        Format.Jpeg8bppGrayscale,
+    };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// JpegConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the JpegConverter class with the
-        /// specified format.
-        /// </summary>
-        ///
-        /// <param name="format">Target format.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public JpegConverter(Format format) : this(format, SupportedFormats) { }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Quality
+    ///
+    /// <summary>
+    /// Gets or sets the value of JPEG quality level.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public int Quality { get; set; } = 85;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// JpegConverter
-        ///
-        /// <summary>
-        /// Initializes a new instance of the JpegConverter class with the
-        /// specified format.
-        /// </summary>
-        ///
-        /// <param name="format">Target format.</param>
-        /// <param name="supported">Collection of supported formats.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected JpegConverter(Format format, IEnumerable<Format> supported) :
-            base(format, supported) { }
+    #endregion
 
-        #endregion
+    #region Methods
 
-        #region Properties
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OnCreateArguments
+    ///
+    /// <summary>
+    /// Occurs when creating Ghostscript API arguments.
+    /// </summary>
+    ///
+    /// <returns>Collection of Argument objects.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected override IEnumerable<Argument> OnCreateArguments() => base.OnCreateArguments()
+        .Concat(new Argument("JPEGQ", Math.Min(Math.Max(Quality, 1), 100)));
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SupportedFormats
-        ///
-        /// <summary>
-        /// Gets the collection of supported formats.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static new IEnumerable<Format> SupportedFormats { get; } = new HashSet<Format>
-        {
-            Format.Jpeg,
-            Format.Jpeg24bppRgb,
-            Format.Jpeg32bppCmyk,
-            Format.Jpeg8bppGrayscale,
-        };
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Quality
-        ///
-        /// <summary>
-        /// Gets or sets the value of JPEG quality level.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public int Quality { get; set; } = 75;
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnCreateArguments
-        ///
-        /// <summary>
-        /// Occurs when creating Ghostscript API arguments.
-        /// </summary>
-        ///
-        /// <returns>Collection of arguments.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override IEnumerable<Argument> OnCreateArguments() =>
-            base.OnCreateArguments()
-            .Concat(new Argument("JPEGQ", Math.Min(Math.Max(Quality, 1), 100)));
-
-        #endregion
-    }
+    #endregion
 }

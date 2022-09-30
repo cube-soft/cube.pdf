@@ -42,10 +42,6 @@ namespace Cube.Pdf.Itext
         /// <param name="value">Initial password value.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public Password(IQuery<string> query, string value)
-        {
-            Source = query;
-            Value  = value;
-        }
+        public Password(IQuery<string> query, string value) : base(query) => Value  = value;
     }
 }

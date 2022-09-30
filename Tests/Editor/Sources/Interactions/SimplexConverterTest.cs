@@ -22,8 +22,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Cube.FileSystem;
-using Cube.Mixin.String;
 using Cube.Tests;
+using Cube.Text.Extensions;
 using Cube.Xui.Converters;
 using NUnit.Framework;
 

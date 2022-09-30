@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>2.0.3</Version>
+        <Version>3.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
@@ -22,13 +22,15 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Converter\Main\Cube.Pdf.Converter.Main.csproj" />
-        <PackageReference Include="Cube.Tests" Version="7.0.0" />
+        <PackageReference Include="Cube.Private.Tests" Version="8.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
         <PackageReference Include="NUnit3TestAdapter" Version="*" />
         <PackageReference Include="Appveyor.TestLogger" Version="*" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.*" />
+        <Compile Link="Sources\Helpers\SettingV2.cs" Include="..\..\Applications\Converter\Core\Sources\SettingV2.cs" />
+        <Compile Link="Sources\Helpers\PathExplorer.cs" Include="..\..\Applications\Converter\Core\Sources\Internal\PathExplorer.cs" />
+        <None Include="NLog.config" CopyToOutputDirectory="Always" />
         <None Include="Examples\**\*" CopyToOutputDirectory="Always" />
     </ItemGroup>
 </Project>

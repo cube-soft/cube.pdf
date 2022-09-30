@@ -28,7 +28,9 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
-        <PackageReference Include="Cube.Forms" Version="7.0.0" />
+        <PackageReference Include="Cube.Forms.Controls" Version="8.0.0" />
+        <PackageReference Include="Cube.Logging.NLog" Version="8.0.0" />
+        <PackageReference Include="Cube.Trick" Version="8.0.0" />
         <Reference Include="WindowsBase" />
     </ItemGroup>
     <ItemGroup>
@@ -39,5 +41,6 @@
         <EmbeddedResource Update="Sources\Views\*Window.ja.resx" DependentUpon="$([System.String]::Copy('%(Filename)').Replace('ja','cs'))" />
         <None Include="Assets\**\*" />
         <None Include="App.*" />
+        <None Include="NLog.config" CopyToOutputDirectory="Always" />
     </ItemGroup>
 </Project>

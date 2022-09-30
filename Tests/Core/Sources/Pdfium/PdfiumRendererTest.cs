@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Cube.FileSystem;
-using Cube.Pdf.Mixin;
+using Cube.Pdf.Extensions;
 using Cube.Pdf.Pdfium;
 using NUnit.Framework;
 

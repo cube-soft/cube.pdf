@@ -16,165 +16,164 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Converter;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 
-namespace Cube.Pdf.Converter
+/* ------------------------------------------------------------------------- */
+///
+/// ProcessLauncher
+///
+/// <summary>
+/// Provides functionality to execute the provided post process.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+internal sealed class ProcessLauncher
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// ProcessLauncher
     ///
     /// <summary>
-    /// Provides functionality to execute the provided post process.
+    /// Initializes a new instance of the ProcessLauncher class with
+    /// the specified settings.
+    /// </summary>
+    ///
+    /// <param name="src">User settings.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public ProcessLauncher(SettingFolder src)
+    {
+        Settings  = src;
+        _handlers = new()
+        {
+            { PostProcess.Open,          Open           },
+            { PostProcess.OpenDirectory, OpenDirectory  },
+            { PostProcess.Others,        RunUserProgram },
+        };
+    }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Settings
+    ///
+    /// <summary>
+    /// Gets the user settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class ProcessLauncher
+    public SettingFolder Settings { get; }
+
+    #endregion
+
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Invoke
+    ///
+    /// <summary>
+    /// Executes the post process with the specified files.
+    /// </summary>
+    ///
+    /// <param name="src">Source files.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public void Invoke(IEnumerable<string> src)
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ProcessLauncher
-        ///
-        /// <summary>
-        /// Initializes a new instance of the ProcessLauncher class with
-        /// the specified settings.
-        /// </summary>
-        ///
-        /// <param name="src">User settings.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ProcessLauncher(SettingFolder src)
-        {
-            Settings  = src;
-            _handlers = new()
-            {
-                { PostProcess.Open,          Open           },
-                { PostProcess.OpenDirectory, OpenDirectory  },
-                { PostProcess.Others,        RunUserProgram },
-            };
-        }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Settings
-        ///
-        /// <summary>
-        /// Gets the user settings.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingFolder Settings { get; }
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Executes the post process with the specified files.
-        /// </summary>
-        ///
-        /// <param name="src">Source files.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Invoke(IEnumerable<string> src)
-        {
-            if (_handlers.TryGetValue(Settings.Value.PostProcess, out var dest)) dest(src);
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Open
-        ///
-        /// <summary>
-        /// Opens the specified files with the associated program.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Open(IEnumerable<string> src) => Start(Create(src.First(), string.Empty));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OpenDirectory
-        ///
-        /// <summary>
-        /// Opens the directory at which the specified files are located.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void OpenDirectory(IEnumerable<string> src) => Start(Create(
-            "explorer.exe",
-            Io.Get(src.First()).DirectoryName.Quote()
-        ));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RunUserProgram
-        ///
-        /// <summary>
-        /// Executes the specified program.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void RunUserProgram(IEnumerable<string> src)
-        {
-            if (!Settings.Value.UserProgram.HasValue()) return;
-            Start(Create(Settings.Value.UserProgram, src.First().Quote()));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Start
-        ///
-        /// <summary>
-        /// Executes the process.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void Start(ProcessStartInfo src) => new Process { StartInfo = src }.Start();
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Create
-        ///
-        /// <summary>
-        /// Creates a new instance of the ProcessStartInfo class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private ProcessStartInfo Create(string exec, string args) => new()
-        {
-            FileName        = exec,
-            Arguments       = args,
-            CreateNoWindow  = false,
-            UseShellExecute = true,
-            LoadUserProfile = false,
-            WindowStyle     = ProcessWindowStyle.Normal,
-        };
-
-        #endregion
-
-        #region Fields
-        private readonly Dictionary<PostProcess, Action<IEnumerable<string>>> _handlers;
-        #endregion
+        if (_handlers.TryGetValue(Settings.Value.PostProcess, out var dest)) dest(src);
     }
+
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Open
+    ///
+    /// <summary>
+    /// Opens the specified files with the associated program.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void Open(IEnumerable<string> src) => Start(Create(src.First(), string.Empty));
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OpenDirectory
+    ///
+    /// <summary>
+    /// Opens the directory at which the specified files are located.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void OpenDirectory(IEnumerable<string> src) => Start(Create(
+        "explorer.exe",
+        Io.Get(src.First()).DirectoryName.Quote()
+    ));
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// RunUserProgram
+    ///
+    /// <summary>
+    /// Executes the specified program.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void RunUserProgram(IEnumerable<string> src)
+    {
+        if (!Settings.Value.UserProgram.HasValue()) return;
+        Start(Create(Settings.Value.UserProgram, src.First().Quote()));
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Start
+    ///
+    /// <summary>
+    /// Executes the process.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void Start(ProcessStartInfo src) => new Process { StartInfo = src }.Start();
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Create
+    ///
+    /// <summary>
+    /// Creates a new instance of the ProcessStartInfo class with the
+    /// specified arguments.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private ProcessStartInfo Create(string exec, string args) => new()
+    {
+        FileName        = exec,
+        Arguments       = args,
+        CreateNoWindow  = false,
+        UseShellExecute = true,
+        LoadUserProfile = false,
+        WindowStyle     = ProcessWindowStyle.Normal,
+    };
+
+    #endregion
+
+    #region Fields
+    private readonly Dictionary<PostProcess, Action<IEnumerable<string>>> _handlers;
+    #endregion
 }

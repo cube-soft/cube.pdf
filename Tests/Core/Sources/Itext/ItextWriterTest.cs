@@ -20,10 +20,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Cube.FileSystem;
-using Cube.Mixin.String;
+using Cube.Pdf.Extensions;
 using Cube.Pdf.Itext;
-using Cube.Pdf.Mixin;
 using Cube.Tests;
+using Cube.Text.Extensions;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Tests.Itext

@@ -19,8 +19,8 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
-using Cube.Mixin.Commands;
 using Cube.Xui;
+using Cube.Xui.Commands.Extensions;
 
 namespace Cube.Pdf.Editor
 {

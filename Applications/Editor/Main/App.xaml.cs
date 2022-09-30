@@ -19,11 +19,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
-using Cube.Logging;
-using Cube.Mixin.Collections;
+using Cube.Collections.Extensions;
 using Cube.Xui;
+using Cube.Xui.Logging.Extensions;
 
 namespace Cube.Pdf.Editor
 {
@@ -111,14 +110,13 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnStartup(StartupEventArgs e)
         {
-            BindingLogger.Setup();
-            GetType().LogInfo(Assembly.GetExecutingAssembly());
-
-            _disposable.Add(Logger.ObserveTaskException());
-            _disposable.Add(this.ObserveUiException());
-
             Arguments = e.Args ?? Enumerable.Empty<string>();
-            GetType().LogInfo($"[ {Arguments.Join(" ")} ]");
+
+            BindingLogger.Setup();
+            Logger.Info(typeof(App).Assembly);
+            Logger.Info($"[ {Arguments.Join(" ")} ]");
+            Logger.ObserveTaskException();
+            this.ObserveUiException();
 
             ApplicationSetting.Configure();
             base.OnStartup(e);

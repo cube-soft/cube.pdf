@@ -20,7 +20,6 @@ using System;
 using System.Runtime.Serialization;
 using Cube.DataContract;
 using Cube.FileSystem;
-using Cube.Mixin.Environment;
 
 namespace Cube.Pdf.Editor
 {
@@ -199,7 +198,7 @@ namespace Cube.Pdf.Editor
         public string Backup
         {
             get => Get(() => Io.Combine(
-                Environment.SpecialFolder.LocalApplicationData.GetName(),
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "CubeSoft", "CubePdfUtility2", "Backup"
             ));
             set => Set(value);

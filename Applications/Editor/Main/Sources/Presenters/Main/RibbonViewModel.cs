@@ -17,7 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
-using Cube.Mixin.Observing;
+using Cube.Observable.Extensions;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor
@@ -570,7 +570,7 @@ namespace Cube.Pdf.Editor
             nameof(Help),
             () => Properties.Resources.MenuHelp,
             GetDispatcher(false)
-        ) { Command = GetCommand(() => Send(Facade.Folder.DocumentUri)) });
+        ) { Command = GetCommand(() => Send(new ProcessMessage(Facade.Folder.DocumentUri.ToString()))) });
 
         /* ----------------------------------------------------------------- */
         ///

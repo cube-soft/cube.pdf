@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
-using Cube.Mixin.String;
+using Cube.Text.Extensions;
 using iTextSharp.text.exceptions;
 using iTextSharp.text.pdf;
 
@@ -131,7 +131,7 @@ namespace Cube.Pdf.Itext
 
             var user  = src.GetUserPassword(file);
             var value = (uint)src.Permissions;
-            typeof(ReaderExtension).LogDebug($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
+            Logger.Debug($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
 
             return new()
             {

@@ -16,62 +16,25 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Ghostscript
+namespace Cube.Pdf.Ghostscript;
+
+/* ------------------------------------------------------------------------- */
+///
+/// Downsampling
+///
+/// <summary>
+/// Specifies methods of the downsampling.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public enum Downsampling
 {
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Downsampling
-    ///
-    /// <summary>
-    /// Specifies methods of the downsampling.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public enum Downsampling
-    {
-        /// <summary>None</summary>
-        None,
-        /// <summary>Average</summary>
-        Average,
-        /// <summary>Bicubic</summary>
-        Bicubic,
-        /// <summary>Subsample</summary>
-        Subsample,
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// DownsamplingExtension
-    ///
-    /// <summary>
-    /// Provides extended methods of the Downsampling enum.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    internal static class DownsamplingExtension
-    {
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetArgument
-        ///
-        /// <summary>
-        /// Gets a new instance of the Argument class from the specified
-        /// parameters.
-        /// </summary>
-        ///
-        /// <param name="src">Downsampling value.</param>
-        /// <param name="name">Name of the argument.</param>
-        ///
-        /// <returns>Argument object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static Argument GetArgument(this Downsampling src, string name) =>
-            src != Downsampling.None ?
-            new Argument(name, src.ToString()) :
-            null;
-
-        #endregion
-    }
+    /// <summary>None</summary>
+    None,
+    /// <summary>Average</summary>
+    Average,
+    /// <summary>Bicubic</summary>
+    Bicubic,
+    /// <summary>Subsample</summary>
+    Subsample,
 }
