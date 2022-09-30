@@ -73,8 +73,14 @@ end
 # build_all
 # --------------------------------------------------------------------------- #
 desc "Build projects in pre-defined branches and platforms."
-task :build_all do
-    BRANCHES.product(PLATFORMS).each do |bp|
+task :build_all, [:version] do |_, e|
+    e.with_defaults(:version => '')
+
+    src = e.version.empty? ?
+          BRANCHES :
+          [ "#{e.version}/net47", "#{e.version}/net60", "#{e.version}/net35" ]
+
+    src.product(PLATFORMS).each do |bp|
         checkout(bp[0]) do
             Rake::Task[:build].reenable
             Rake::Task[:build].invoke(bp[1])
