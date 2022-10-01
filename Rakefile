@@ -22,6 +22,7 @@ require 'rake/clean'
 # configuration
 # --------------------------------------------------------------------------- #
 PROJECT     = "Cube.Pdf"
+LATEST      = "v8"
 BRANCHES    = ["net47", "net60", "net35"]
 CONFIGS     = ["Release", "Debug"]
 PLATFORMS   = ["Any CPU", "x86", "x64"]
@@ -40,10 +41,9 @@ CLOBBER.include("../packages/cube.*")
 # --------------------------------------------------------------------------- #
 # default
 # --------------------------------------------------------------------------- #
-desc "Clean, build, test, and create NuGet packages."
-task :default => [:clean] do
-    Rake::Task[:build_all].invoke(false)
-    checkout("net35") { Rake::Task[:pack].execute }
+desc "Clean, build, and create NuGet packages."
+task :default => [:clean, :build_all] do
+    checkout("#{LATEST}/net35") { Rake::Task[:pack].execute }
 end
 
 # --------------------------------------------------------------------------- #
@@ -63,7 +63,7 @@ task :build, [:platform] do |_, e|
 
     Rake::Task[:restore].execute
     branch = %x(git rev-parse --abbrev-ref HEAD).chomp
-    build  = branch.include?("net50") ?
+    build  = branch.include?("net60") ?
              "dotnet build -c Release" :
              "msbuild -v:m -p:Configuration=Release"
     cmd(%(#{build} -p:Platform="#{e.platform}" #{PROJECT}.sln))
@@ -74,14 +74,10 @@ end
 # --------------------------------------------------------------------------- #
 desc "Build projects in pre-defined branches and platforms."
 task :build_all, [:version] do |_, e|
-    e.with_defaults(:version => '')
+    e.with_defaults(:version => LATEST)
 
-    src = e.version.empty? ?
-          BRANCHES :
-          [ "#{e.version}/net47", "#{e.version}/net60", "#{e.version}/net35" ]
-
-    src.product(PLATFORMS).each do |bp|
-        checkout(bp[0]) do
+    BRANCHES.product(PLATFORMS).each do |bp|
+        checkout("#{e.version}/#{bp[0]}") do
             Rake::Task[:build].reenable
             Rake::Task[:build].invoke(bp[1])
         end
