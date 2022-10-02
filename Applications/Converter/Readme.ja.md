@@ -16,11 +16,15 @@ PDF 形式などの文書を作成する事のできる、とても便利なソ�
 * CubePDF ユーザーマニュアル  
   https://docs.cube-soft.jp/entry/cubepdf
 
-CubePDF を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.5.2 以降を推奨）。
-.NET Framework は、以下の URL からダウンロードして下さい。
+x86/x64 版 CubePDF を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.5.2 以降を推奨）。
+また、ARM64 版 CubePDF では .NET 6.0 がインストールされている必要があります。
+尚、ARM64 版 CubePDF では、x86/ARM64 両方の .NET 6.0 デスクトップランタイムを必要とします。
+各種 .NET ランタイムは、以下の URL からダウンロードして下さい。
 
 * Download .NET Framework  
   https://dotnet.microsoft.com/download/dotnet-framework
+* Download .NET 6.0 Runtime  
+  https://dotnet.microsoft.com/download/dotnet/6.0/runtime
 
 ## 問題が発生した場合
 
@@ -52,6 +56,14 @@ CubePDF は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2022-10-05 version 3.0.0
+    - ARM64 版 Windows に対応
+    - 白黒画像への変換機能を追加 (PNG, BMP, TIFF)
+    - 拡張子のカスタマイズ機能を追加
+    - JPEG 形式変換時の品質を 75 から 85 に変更
+    - ダウンサンプリング方式を None から Bicubic に変更
+    - 入力ファイル未指定状態で変換ボタンをクリックした時のエラーメッセージを修正
+    - Ghostscript を 10.0.0 に更新
 * 2022-07-12 version 2.0.2
     - iText7 を 7.2.3 に更新
     - 必要に応じて Visual C++ 再頒布可能パッケージをダウンロードしてインストールするように修正
