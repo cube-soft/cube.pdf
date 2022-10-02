@@ -13,12 +13,19 @@ CubePDF is a PDF converter which allows you to convert files from any applicatio
 PowerPoint, and more), whenever you need it.
 The converter allows you to convert the files as easy as you can print the files;
 as a matter of fact, you can do it in the same manner as you print files. 
+For more information on how to use the system, see the following URL.
 
-CubePDF requires .NET Framework 3.5 or later (4.5.2 or later recommended).  
+* CubePDF Documents  
+  https://docs.cube-soft.jp/entry/cubepdf
+
+CubePDF for x86/x64 requires .NET Framework 3.5 or later (4.7 or later recommended), and CubePDF for ARM64 requires .NET 6.0.
+Note that the CubePDF for ARM64 requires both the x86 and ARM64 versions of the NET 6.0 desktop runtime.
 The download links are as follows:
 
 * Download .NET Framework  
   https://dotnet.microsoft.com/download/dotnet-framework
+* Download .NET 6.0 Runtime  
+  https://dotnet.microsoft.com/download/dotnet/6.0/runtime
 
 ## Support
 
@@ -49,6 +56,14 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2022-10-05 version 3.0.0
+    - Support Windows for ARM64.
+    - Add function to convert to black and white images. (PNG, BMP, TIFF)
+    - Add function to customize file extensions.
+    - Change JPEG quality from 75 to 85.
+    - Change downsampling method from None to Bicubic.
+    - Fix an error message when clicking the convert button with no input file specified.
+    - Update Ghostscript to 10.0.0.
 * 2022-07-12 version 2.0.2
     - Update iText to 7.2.3.
     - Fix to download and install the Visual C++ redistributable package as needed.
