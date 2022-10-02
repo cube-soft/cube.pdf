@@ -24,7 +24,6 @@ require 'rake/clean'
 PROJECT     = "Cube.Pdf"
 LATEST      = "v8"
 BRANCHES    = ["net47", "net60", "net35"]
-CONFIGS     = ["Release", "Debug"]
 PLATFORMS   = ["Any CPU", "x86", "x64"]
 PACKAGES    = ["Libraries/Core/Cube.Pdf.Core",
                "Libraries/Ghostscript/Cube.Pdf.Ghostscript",
@@ -52,6 +51,21 @@ end
 desc "Resote NuGet packages in the current branch."
 task :restore do
     cmd("nuget restore #{PROJECT}.sln")
+end
+
+# --------------------------------------------------------------------------- #
+# pack
+# --------------------------------------------------------------------------- #
+desc "Create NuGet packages."
+task :pack do
+    PACKAGES.each do |e|
+        spec = File.exists?("#{e}.nuspec")
+        pack = spec ?
+               %(nuget pack -Properties "Configuration=Release;Platform=AnyCPU") :
+               "dotnet pack -c Release --no-restore --no-build -o ."
+        ext  = spec ? "nuspec" : "csproj"
+        cmd("#{pack} #{e}.#{ext}")
+    end
 end
 
 # --------------------------------------------------------------------------- #
@@ -88,23 +102,8 @@ end
 # test
 # --------------------------------------------------------------------------- #
 desc "Test projects in the current branch."
-task :test  => [:build] do
+task :test => [:build] do
     cmd("dotnet test -c Release --no-restore --no-build #{PROJECT}.sln")
-end
-
-# --------------------------------------------------------------------------- #
-# pack
-# --------------------------------------------------------------------------- #
-desc "Create NuGet packages."
-task :pack do
-    PACKAGES.each do |e|
-        spec = File.exists?("#{e}.nuspec")
-        pack = spec ?
-               %(nuget pack -Properties "Configuration=Release;Platform=AnyCPU") :
-               "dotnet pack -c Release --no-restore --no-build -o ."
-        ext  = spec ? "nuspec" : "csproj"
-        cmd("#{pack} #{e}.#{ext}")
-    end
 end
 
 # --------------------------------------------------------------------------- #
