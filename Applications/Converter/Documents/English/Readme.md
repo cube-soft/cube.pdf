@@ -8,7 +8,7 @@ https://www.cube-soft.jp/cubepdf/
 
 ## Overview
 
-![How to convert to PDF](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v2/en/overview.png)
+![How to convert to PDF](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/overview.png)
 
 CubePDF is installed as a **Virtual Printer**. Therefore, any application that has a **Print** button, such as Microsoft Edge, Google Chrome, Microsoft Word, Excel, PowerPoint, etc., can be converted to PDF in the following 3 steps.
 
@@ -47,6 +47,19 @@ Note that for file formats that cannot hold multiple pages, such as PNG, a file 
 
 If the selected format is PDF, you can select the PDF version, which can be found to the right of the **Format** selection.
 
+The **ColorMode** item allows you to specify the color of the converted fonts, shapes, and embedded images. The items that can be set are as follows:
+
+* **Auto**  
+  Preserves the colors of the print data as they are.
+* **RGB**  
+  Converts to RGB. This setting is similar to **Auto** in most cases.
+* **Grayscale**  
+  Converts to grayscale.
+* **Monochrome**  
+  Converts to monochrome (black and white).
+  Note that the monochrome conversion is supported only for PNG, BMP, and TIFF bitmap image formats.
+  For other file formats, you can select the monochrome item, but it will actually be converted as **Grayscale**.
+
 The **Resolution** item is mainly used for file size compression (down-sampling). Therefore, even if you set a higher resolution than the original data, the quality and file size may not change. Also, if the selected format is PDF, PS, or EPS, only embedded images are affected by the settings.
 
 The **Orientation** item allows you to set the orientation of the converted file. The items that can be set are as follows:
@@ -58,8 +71,6 @@ The **Orientation** item allows you to set the orientation of the converted file
 
 Other options for conversion are as follows:
 
-* **Grayscale**  
-  Converts all fonts, shapes, and embedded images to grayscale.
 * **Compress PDF images as JPEG**  
   Compress the embedded images into JPEG format when the conversion process is executed.
 * **Optimize PDF for fast Web view**  
