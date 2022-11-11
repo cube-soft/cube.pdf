@@ -36,6 +36,8 @@ using NUnit.Framework;
 [TestFixture]
 class SettingTest : MockFixture
 {
+    #region Check
+
     /* --------------------------------------------------------------------- */
     ///
     /// Check
@@ -48,86 +50,167 @@ class SettingTest : MockFixture
     [Test]
     public void Check()
     {
-        var ss = new SettingFolder();
-        Assert.That(ss.Format,              Is.EqualTo(DataContract.Format.Registry));
-        Assert.That(ss.Location,            Is.EqualTo(@"CubeSoft\CubePDF\v3"));
-        Assert.That(ss.AutoSave,            Is.False, nameof(ss.AutoSave));
-        Assert.That(ss.DocumentName,        Is.Not.Null, nameof(ss.DocumentName));
-        Assert.That(ss.Digest,              Is.Null, nameof(ss.Digest));
+        var src = new SettingFolder();
+        Check(src);
+        Check(src.Value);
 
-        using var vm = new MainViewModel(ss);
-        Assert.That(vm.Busy,                Is.False, nameof(vm.Busy));
-        Assert.That(vm.Results.Any(),       Is.False, nameof(vm.Results));
-
-        var s0 = vm.Settings;
-        Assert.That(s0.Title,               Does.StartWith("CubePDF 3.0.0 ("));
-        Assert.That(s0.Version,             Does.StartWith("3.0.0 ("));
-        Assert.That(s0.Uri.ToString(),      Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
-        Assert.That(s0.Format,              Is.EqualTo(Format.Pdf));
-        Assert.That(s0.SaveOption,          Is.EqualTo(SaveOption.Overwrite));
-        Assert.That(s0.ColorMode,           Is.EqualTo(ColorMode.SameAsSource));
-        Assert.That(s0.PostProcess,         Is.EqualTo(PostProcess.None));
-        Assert.That(s0.Language,            Is.EqualTo(Language.Auto));
-        Assert.That(s0.Source,              Is.Empty, nameof(s0.Source));
-        Assert.That(s0.Destination,         Does.EndWith("Desktop"));
-        Assert.That(s0.UserProgram,         Is.Empty, nameof(s0.UserProgram));
-        Assert.That(s0.Resolution,          Is.EqualTo(600));
-        Assert.That(s0.IsPdf,               Is.True,  nameof(s0.IsPdf));
-        Assert.That(s0.IsJpegEncoding,      Is.True,  nameof(s0.IsJpegEncoding));
-        Assert.That(s0.IsAutoOrientation,   Is.True,  nameof(s0.IsAutoOrientation));
-        Assert.That(s0.IsPortrait,          Is.False, nameof(s0.IsPortrait));
-        Assert.That(s0.IsLandscape,         Is.False, nameof(s0.IsLandscape));
-        Assert.That(s0.IsUserProgram,       Is.False, nameof(s0.IsUserProgram));
-        Assert.That(s0.Linearization,       Is.False, nameof(s0.Linearization));
-        Assert.That(s0.SourceVisible,       Is.False, nameof(s0.SourceVisible));
-        Assert.That(s0.SourceEditable,      Is.True,  nameof(s0.SourceEditable));
-        Assert.That(s0.CheckUpdate,         Is.False, nameof(s0.CheckUpdate));
-
-        var s1 = vm.Metadata;
-        Assert.That(s1.Title,               Is.Empty, nameof(s1.Title));
-        Assert.That(s1.Author,              Is.Empty, nameof(s1.Author));
-        Assert.That(s1.Subject,             Is.Empty, nameof(s1.Subject));
-        Assert.That(s1.Keywords,            Is.Empty, nameof(s1.Keywords));
-        Assert.That(s1.Creator,             Is.Empty, nameof(s1.Creator));
-        Assert.That(s1.Version,             Is.EqualTo(7), nameof(s1.Version));
-        Assert.That(s1.Options,             Is.EqualTo(ViewerOption.OneColumn));
-
-        var s2 = vm.Encryption;
-        Assert.That(s2.Enabled,             Is.False, nameof(s2.Enabled));
-        Assert.That(s2.OwnerPassword,       Is.Empty, nameof(s2.OwnerPassword));
-        Assert.That(s2.OwnerConfirm,        Is.Empty, nameof(s2.OwnerConfirm));
-        Assert.That(s2.OwnerCorrect,        Is.False, nameof(s2.OwnerCorrect));
-        Assert.That(s2.OpenWithPassword,    Is.False, nameof(s2.OpenWithPassword));
-        Assert.That(s2.SharePassword,       Is.False, nameof(s2.SharePassword));
-        Assert.That(s2.UserPassword,        Is.Empty, nameof(s2.UserPassword));
-        Assert.That(s2.UserConfirm,         Is.Empty, nameof(s2.UserConfirm));
-        Assert.That(s2.UserCorrect,         Is.True,  nameof(s2.UserCorrect));
-        Assert.That(s2.UserRequired,        Is.False, nameof(s2.UserRequired));
-        Assert.That(s2.Permissible,         Is.True,  nameof(s2.Permissible));
-        Assert.That(s2.AllowPrint,          Is.True,  nameof(s2.AllowPrint));
-        Assert.That(s2.AllowCopy,           Is.True,  nameof(s2.AllowCopy));
-        Assert.That(s2.AllowModify,         Is.True,  nameof(s2.AllowModify));
-        Assert.That(s2.AllowAccessibility,  Is.True,  nameof(s2.AllowAccessibility));
-        Assert.That(s2.AllowForm,           Is.True,  nameof(s2.AllowForm));
-        Assert.That(s2.AllowAnnotation,     Is.True,  nameof(s2.AllowAnnotation));
-
-        // Others
-        var s3 = ss.Value;
-        Assert.That(s3.Extensions.Pdf,      Is.EqualTo(".pdf"));
-        Assert.That(s3.Extensions.Ps,       Is.EqualTo(".ps"));
-        Assert.That(s3.Extensions.Eps,      Is.EqualTo(".eps"));
-        Assert.That(s3.Extensions.Png,      Is.EqualTo(".png"));
-        Assert.That(s3.Extensions.Jpeg,     Is.EqualTo(".jpg"));
-        Assert.That(s3.Extensions.Bmp,      Is.EqualTo(".bmp"));
-        Assert.That(s3.Extensions.Tiff,     Is.EqualTo(".tiff"));
-        Assert.That(s3.Downsampling,        Is.EqualTo(Downsampling.Bicubic));
-        Assert.That(s3.EmbedFonts,          Is.True, nameof(ss.Value.EmbedFonts));
-
-        var s4 = ss.Value.Appendix;
-        Assert.That(s4.Language,            Is.EqualTo(Language.Auto));
-        Assert.That(s4.SourceVisible,       Is.False, nameof(s4.SourceVisible));
-        Assert.That(s4.ExplicitDirectory,   Is.False, nameof(s4.ExplicitDirectory));
+        using var vm = new MainViewModel(src);
+        Check(vm);
+        Check(vm.Settings);
+        Check(vm.Metadata);
+        Check(vm.Encryption);
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Check
+    ///
+    /// <summary>
+    /// Checks the default settings of the MainViewModel object.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void Check(MainViewModel src)
+    {
+        Assert.That(src.Busy,          Is.False, nameof(src.Busy));
+        Assert.That(src.Results.Any(), Is.False, nameof(src.Results));
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Check
+    ///
+    /// <summary>
+    /// Checks the default settings of the SettingViewModel object.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void Check(SettingViewModel src)
+    {
+        Assert.That(src.Title,             Does.StartWith("CubePDF 3.0.0 ("));
+        Assert.That(src.Version,           Does.StartWith("3.0.0 ("));
+        Assert.That(src.Uri.ToString(),    Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
+        Assert.That(src.Format,            Is.EqualTo(Format.Pdf));
+        Assert.That(src.SaveOption,        Is.EqualTo(SaveOption.Overwrite));
+        Assert.That(src.ColorMode,         Is.EqualTo(ColorMode.SameAsSource));
+        Assert.That(src.PostProcess,       Is.EqualTo(PostProcess.None));
+        Assert.That(src.Language,          Is.EqualTo(Language.Auto));
+        Assert.That(src.Source,            Is.Empty, nameof(src.Source));
+        Assert.That(src.Destination,       Does.EndWith("Desktop"));
+        Assert.That(src.UserProgram,       Is.Empty, nameof(src.UserProgram));
+        Assert.That(src.Resolution,        Is.EqualTo(600));
+        Assert.That(src.IsPdf,             Is.True,  nameof(src.IsPdf));
+        Assert.That(src.IsJpegEncoding,    Is.True,  nameof(src.IsJpegEncoding));
+        Assert.That(src.IsAutoOrientation, Is.True,  nameof(src.IsAutoOrientation));
+        Assert.That(src.IsPortrait,        Is.False, nameof(src.IsPortrait));
+        Assert.That(src.IsLandscape,       Is.False, nameof(src.IsLandscape));
+        Assert.That(src.IsUserProgram,     Is.False, nameof(src.IsUserProgram));
+        Assert.That(src.Linearization,     Is.False, nameof(src.Linearization));
+        Assert.That(src.SourceVisible,     Is.False, nameof(src.SourceVisible));
+        Assert.That(src.SourceEditable,    Is.True,  nameof(src.SourceEditable));
+        Assert.That(src.CheckUpdate,       Is.False, nameof(src.CheckUpdate));
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Check
+    ///
+    /// <summary>
+    /// Checks the default settings of the MetadataViewModel object.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void Check(MetadataViewModel src)
+    {
+        Assert.That(src.Title,    Is.Empty, nameof(src.Title));
+        Assert.That(src.Author,   Is.Empty, nameof(src.Author));
+        Assert.That(src.Subject,  Is.Empty, nameof(src.Subject));
+        Assert.That(src.Keywords, Is.Empty, nameof(src.Keywords));
+        Assert.That(src.Creator,  Is.Empty, nameof(src.Creator));
+        Assert.That(src.Version,  Is.EqualTo(7), nameof(src.Version));
+        Assert.That(src.Options,  Is.EqualTo(ViewerOption.OneColumn));
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Check
+    ///
+    /// <summary>
+    /// Checks the default settings of the EncryptionViewModel object.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void Check(EncryptionViewModel s2)
+    {
+        Assert.That(s2.Enabled,            Is.False, nameof(s2.Enabled));
+        Assert.That(s2.OwnerPassword,      Is.Empty, nameof(s2.OwnerPassword));
+        Assert.That(s2.OwnerConfirm,       Is.Empty, nameof(s2.OwnerConfirm));
+        Assert.That(s2.OwnerCorrect,       Is.False, nameof(s2.OwnerCorrect));
+        Assert.That(s2.OpenWithPassword,   Is.False, nameof(s2.OpenWithPassword));
+        Assert.That(s2.SharePassword,      Is.False, nameof(s2.SharePassword));
+        Assert.That(s2.UserPassword,       Is.Empty, nameof(s2.UserPassword));
+        Assert.That(s2.UserConfirm,        Is.Empty, nameof(s2.UserConfirm));
+        Assert.That(s2.UserCorrect,        Is.True,  nameof(s2.UserCorrect));
+        Assert.That(s2.UserRequired,       Is.False, nameof(s2.UserRequired));
+        Assert.That(s2.Permissible,        Is.True,  nameof(s2.Permissible));
+        Assert.That(s2.AllowPrint,         Is.True,  nameof(s2.AllowPrint));
+        Assert.That(s2.AllowCopy,          Is.True,  nameof(s2.AllowCopy));
+        Assert.That(s2.AllowModify,        Is.True,  nameof(s2.AllowModify));
+        Assert.That(s2.AllowAccessibility, Is.True,  nameof(s2.AllowAccessibility));
+        Assert.That(s2.AllowForm,          Is.True,  nameof(s2.AllowForm));
+        Assert.That(s2.AllowAnnotation,    Is.True,  nameof(s2.AllowAnnotation));
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Check
+    ///
+    /// <summary>
+    /// Checks the default settings of the SettingFolder object. The method
+    /// only checks values that are not accessible from the various ViewModel
+    /// objects.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void Check(SettingFolder src)
+    {
+        Assert.That(src.Format,       Is.EqualTo(DataContract.Format.Registry));
+        Assert.That(src.Location,     Is.EqualTo(@"CubeSoft\CubePDF\v3"));
+        Assert.That(src.AutoSave,     Is.False, nameof(src.AutoSave));
+        Assert.That(src.DocumentName, Is.Not.Null, nameof(src.DocumentName));
+        Assert.That(src.Digest,       Is.Null, nameof(src.Digest));
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Check
+    ///
+    /// <summary>
+    /// Checks the default settings of the SettingValue object. The method
+    /// only checks values that are not accessible from the various ViewModel
+    /// objects.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void Check(SettingValue src)
+    {
+        Assert.That(src.Downsampling,    Is.EqualTo(Downsampling.Bicubic));
+        Assert.That(src.EmbedFonts,      Is.True, nameof(src.EmbedFonts));
+
+        Assert.That(src.Extensions.Pdf,  Is.EqualTo(".pdf"));
+        Assert.That(src.Extensions.Ps,   Is.EqualTo(".ps"));
+        Assert.That(src.Extensions.Eps,  Is.EqualTo(".eps"));
+        Assert.That(src.Extensions.Png,  Is.EqualTo(".png"));
+        Assert.That(src.Extensions.Jpeg, Is.EqualTo(".jpg"));
+        Assert.That(src.Extensions.Bmp,  Is.EqualTo(".bmp"));
+        Assert.That(src.Extensions.Tiff, Is.EqualTo(".tiff"));
+
+        Assert.That(src.Appendix.Language,          Is.EqualTo(Language.Auto));
+        Assert.That(src.Appendix.SourceVisible,     Is.False, nameof(src.Appendix.SourceVisible));
+        Assert.That(src.Appendix.ExplicitDirectory, Is.False, nameof(src.Appendix.ExplicitDirectory));
+    }
+
+    #endregion
 
     /* --------------------------------------------------------------------- */
     ///
