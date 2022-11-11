@@ -20,7 +20,7 @@ namespace Cube.Pdf.Converter.Tests.Settings;
 
 using System.Linq;
 using Cube.Pdf.Ghostscript;
-using Cube.Tests.Forms;
+using Cube.Tests.Mocks;
 using NUnit.Framework;
 
 /* ------------------------------------------------------------------------- */
