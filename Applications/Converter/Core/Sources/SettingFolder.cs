@@ -177,11 +177,11 @@ public class SettingFolder : SettingFolder<SettingValue>
         if (op.TryGetValue("InputFile", out var input)) Value.Source = input;
         if (op.TryGetValue("Digest", out var digest)) Digest = digest;
 
-        var dest = Io.Get(Io.Combine(PathExplorer.GetDirectoryName(Value.Destination), DocumentName.Value));
-        var name = dest.BaseName;
+        var dest = Io.Combine(PathExplorer.GetDirectoryName(Value.Destination), DocumentName.Value);
+        var name = Io.GetBaseName(dest);
         var ext  = Value.Extensions.Get(Value.Format);
 
-        Value.Destination  = Io.Combine(dest.DirectoryName, $"{name}{ext}");
+        Value.Destination  = Io.Combine(Io.GetDirectoryName(dest), $"{name}{ext}");
         Value.DeleteSource = op.ContainsKey("DeleteOnClose");
     }
 
