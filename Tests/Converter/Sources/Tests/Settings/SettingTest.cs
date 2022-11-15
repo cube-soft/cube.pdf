@@ -140,25 +140,25 @@ class SettingTest : MockFixture
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private void Check(EncryptionViewModel s2)
+    private void Check(EncryptionViewModel src)
     {
-        Assert.That(s2.Enabled,            Is.False, nameof(s2.Enabled));
-        Assert.That(s2.OwnerPassword,      Is.Empty, nameof(s2.OwnerPassword));
-        Assert.That(s2.OwnerConfirm,       Is.Empty, nameof(s2.OwnerConfirm));
-        Assert.That(s2.OwnerCorrect,       Is.False, nameof(s2.OwnerCorrect));
-        Assert.That(s2.OpenWithPassword,   Is.False, nameof(s2.OpenWithPassword));
-        Assert.That(s2.SharePassword,      Is.False, nameof(s2.SharePassword));
-        Assert.That(s2.UserPassword,       Is.Empty, nameof(s2.UserPassword));
-        Assert.That(s2.UserConfirm,        Is.Empty, nameof(s2.UserConfirm));
-        Assert.That(s2.UserCorrect,        Is.True,  nameof(s2.UserCorrect));
-        Assert.That(s2.UserRequired,       Is.False, nameof(s2.UserRequired));
-        Assert.That(s2.Permissible,        Is.True,  nameof(s2.Permissible));
-        Assert.That(s2.AllowPrint,         Is.True,  nameof(s2.AllowPrint));
-        Assert.That(s2.AllowCopy,          Is.True,  nameof(s2.AllowCopy));
-        Assert.That(s2.AllowModify,        Is.True,  nameof(s2.AllowModify));
-        Assert.That(s2.AllowAccessibility, Is.True,  nameof(s2.AllowAccessibility));
-        Assert.That(s2.AllowForm,          Is.True,  nameof(s2.AllowForm));
-        Assert.That(s2.AllowAnnotation,    Is.True,  nameof(s2.AllowAnnotation));
+        Assert.That(src.Enabled,            Is.False, nameof(src.Enabled));
+        Assert.That(src.OwnerPassword,      Is.Empty, nameof(src.OwnerPassword));
+        Assert.That(src.OwnerConfirm,       Is.Empty, nameof(src.OwnerConfirm));
+        Assert.That(src.OwnerCorrect,       Is.False, nameof(src.OwnerCorrect));
+        Assert.That(src.OpenWithPassword,   Is.False, nameof(src.OpenWithPassword));
+        Assert.That(src.SharePassword,      Is.False, nameof(src.SharePassword));
+        Assert.That(src.UserPassword,       Is.Empty, nameof(src.UserPassword));
+        Assert.That(src.UserConfirm,        Is.Empty, nameof(src.UserConfirm));
+        Assert.That(src.UserCorrect,        Is.True,  nameof(src.UserCorrect));
+        Assert.That(src.UserRequired,       Is.False, nameof(src.UserRequired));
+        Assert.That(src.Permissible,        Is.True,  nameof(src.Permissible));
+        Assert.That(src.AllowPrint,         Is.True,  nameof(src.AllowPrint));
+        Assert.That(src.AllowCopy,          Is.True,  nameof(src.AllowCopy));
+        Assert.That(src.AllowModify,        Is.True,  nameof(src.AllowModify));
+        Assert.That(src.AllowAccessibility, Is.True,  nameof(src.AllowAccessibility));
+        Assert.That(src.AllowForm,          Is.True,  nameof(src.AllowForm));
+        Assert.That(src.AllowAnnotation,    Is.True,  nameof(src.AllowAnnotation));
     }
 
     /* --------------------------------------------------------------------- */
