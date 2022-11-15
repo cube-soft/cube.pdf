@@ -38,7 +38,7 @@ namespace Cube.Pdf.Pdfium
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    internal sealed class PageCollection : EnumerableBase<Page>, IReadOnlyList<Page>
+    internal sealed class PageCollection : EnumerableBase<Page2>, IReadOnlyList<Page2>
     {
         #region Constructors
 
@@ -99,7 +99,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page this[int index]
+        public Page2 this[int index]
         {
             get
             {
@@ -110,7 +110,7 @@ namespace Cube.Pdf.Pdfium
                         _cache[index] = GetPage(index);
                     }
                 }
-                return new((PageBase)_cache[index]);
+                return new((Page)_cache[index]);
             }
         }
 
@@ -131,7 +131,7 @@ namespace Cube.Pdf.Pdfium
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public override IEnumerator<Page> GetEnumerator()
+        public override IEnumerator<Page2> GetEnumerator()
         {
             for (var i = 0; i < Count; ++i) yield return this[i];
         }
@@ -151,7 +151,7 @@ namespace Cube.Pdf.Pdfium
         /// <param name="index">Zero for the first page.</param>
         ///
         /* ----------------------------------------------------------------- */
-        private PageBase GetPage(int index) => _core.Invoke(e =>
+        private Page GetPage(int index) => _core.Invoke(e =>
         {
             var page = NativeMethods.FPDF_LoadPage(e, index);
             if (page == IntPtr.Zero) throw _core.GetLastError();
@@ -161,7 +161,7 @@ namespace Cube.Pdf.Pdfium
                 var degree = GetPageRotation(page);
                 var size   = GetPageSize(page, degree);
 
-                return new PageBase
+                return new Page
                 {
                     File       = File,
                     Number     = index + 1,

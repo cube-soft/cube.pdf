@@ -33,7 +33,7 @@ using Cube.FileSystem;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public class ImagePageCollection : EnumerableBase<Page>, IReadOnlyList<Page>
+public class ImagePageCollection : EnumerableBase<Page2>, IReadOnlyList<Page2>
 {
     #region Constructors
 
@@ -106,7 +106,7 @@ public class ImagePageCollection : EnumerableBase<Page>, IReadOnlyList<Page>
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public Page this[int index] => _inner[index];
+    public Page2 this[int index] => _inner[index];
 
     #endregion
 
@@ -125,7 +125,7 @@ public class ImagePageCollection : EnumerableBase<Page>, IReadOnlyList<Page>
     /// </returns>
     ///
     /* --------------------------------------------------------------------- */
-    public override IEnumerator<Page> GetEnumerator()
+    public override IEnumerator<Page2> GetEnumerator()
     {
         for (var i = 0; i < Count; ++i) yield return this[i];
     }
@@ -190,6 +190,6 @@ public class ImagePageCollection : EnumerableBase<Page>, IReadOnlyList<Page>
     #endregion
 
     #region Fields
-    private readonly List<Page> _inner = new();
+    private readonly List<Page2> _inner = new();
     #endregion
 }

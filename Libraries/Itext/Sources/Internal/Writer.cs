@@ -88,7 +88,7 @@ namespace Cube.Pdf.Itext
         /// <param name="page">Page information.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IDisposable src, Page page) => Add(src, new[] { page });
+        public void Add(IDisposable src, Page2 page) => Add(src, new[] { page });
 
         /* ----------------------------------------------------------------- */
         ///
@@ -102,7 +102,7 @@ namespace Cube.Pdf.Itext
         /// <param name="pages">Page collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IDisposable src, IEnumerable<Page> pages)
+        public void Add(IDisposable src, IEnumerable<Page2> pages)
         {
             var obj = Reader.From(src);
 

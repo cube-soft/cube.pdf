@@ -130,7 +130,7 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private IEnumerable<Page> Rotate(IEnumerable<Page> src, int degree) =>
+        private IEnumerable<Page2> Rotate(IEnumerable<Page2> src, int degree) =>
             src.Select(e => Rotate(e, degree));
 
         /* ----------------------------------------------------------------- */
@@ -144,7 +144,7 @@ namespace Cube.Pdf.Tests.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Page Rotate(Page src, int degree)
+        private Page2 Rotate(Page2 src, int degree)
         {
             src.Delta = new Angle(degree - src.Rotation.Degree);
             return src;
@@ -166,7 +166,7 @@ namespace Cube.Pdf.Tests.Itext
             Assert.That(
                 reader.Pages.Select(e => e.Rotation.Degree),
                 Is.EquivalentTo(Enumerable.Repeat(degree, reader.File.Count)),
-                nameof(Page.Rotation)
+                nameof(Page2.Rotation)
             );
             return reader.File.Count;
         }

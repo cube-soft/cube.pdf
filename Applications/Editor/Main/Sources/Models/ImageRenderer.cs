@@ -56,7 +56,7 @@ namespace Cube.Pdf.Editor
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public void Render(Graphics dest, Page page, PointF point, SizeF size) =>
+        public void Render(Graphics dest, Page2 page, PointF point, SizeF size) =>
             throw new NotImplementedException();
 
         /* ----------------------------------------------------------------- */
@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editor
         /// <returns>Image object</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public Image Render(Page page, SizeF size)
+        public Image Render(Page2 page, SizeF size)
         {
             using var ss  = Io.Open(page.File.FullName);
             using var src = Image.FromStream(ss);
@@ -102,7 +102,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private double GetRatio(Page page, SizeF size)
+        private double GetRatio(Page2 page, SizeF size)
         {
             var src = page.GetViewSize();
             var rw  = size.Width  / src.Width;
@@ -119,7 +119,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Select(Image src, Page page)
+        private void Select(Image src, Page2 page)
         {
             if (page.Number <= 1) return;
 

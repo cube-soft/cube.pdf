@@ -98,7 +98,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var vm = NewVM();
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
-            var pages = new List<Page>();
+            var pages = new List<Page2>();
             var f = GetSource("SampleAnnotation.pdf");
             using (var r = new DocumentReader(f)) pages.AddRange(r.Pages);
 

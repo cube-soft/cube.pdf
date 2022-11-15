@@ -66,7 +66,7 @@ public interface IDocumentWriter : IDisposable
     /// <param name="pages">Collection of pages.</param>
     ///
     /* --------------------------------------------------------------------- */
-    void Add(IEnumerable<Page> pages);
+    void Add(IEnumerable<Page2> pages);
 
     /* --------------------------------------------------------------------- */
     ///
@@ -83,7 +83,7 @@ public interface IDocumentWriter : IDisposable
     /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    void Add(IEnumerable<Page> pages, IDocumentReader hint);
+    void Add(IEnumerable<Page2> pages, IDocumentReader hint);
 
     /* --------------------------------------------------------------------- */
     ///

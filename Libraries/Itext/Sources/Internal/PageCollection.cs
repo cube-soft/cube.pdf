@@ -37,7 +37,7 @@ namespace Cube.Pdf.Itext
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    internal class PageCollection : EnumerableBase<Page>, IReadOnlyList<Page>
+    internal class PageCollection : EnumerableBase<Page2>, IReadOnlyList<Page2>
     {
         #region Constructors
 
@@ -96,7 +96,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page this[int index]
+        public Page2 this[int index]
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Cube.Pdf.Itext
                         _cache[index] = _core.GetPage(File, index + 1);
                     }
                 }
-                return new((PageBase)_cache[index]);
+                return new((Page)_cache[index]);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Cube.Pdf.Itext
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public override IEnumerator<Page> GetEnumerator()
+        public override IEnumerator<Page2> GetEnumerator()
         {
             for (var i = 0; i < Count; ++i) yield return this[i];
         }

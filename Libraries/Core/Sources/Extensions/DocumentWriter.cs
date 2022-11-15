@@ -42,7 +42,7 @@ public static class DocumentWriterExtension
     /// <param name="page">Page information.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Add(this IDocumentWriter src, Page page) =>
+    public static void Add(this IDocumentWriter src, Page2 page) =>
         src.Add(new[] { page });
 
     /* --------------------------------------------------------------------- */
@@ -61,7 +61,7 @@ public static class DocumentWriterExtension
     /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Add(this IDocumentWriter src, Page page, IDocumentReader hint) =>
+    public static void Add(this IDocumentWriter src, Page2 page, IDocumentReader hint) =>
         src.Add(new[] { page }, hint);
 
     /* --------------------------------------------------------------------- */

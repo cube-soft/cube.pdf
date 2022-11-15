@@ -73,7 +73,7 @@ public interface IDocumentReader : IDisposable
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    IEnumerable<Page> Pages { get; }
+    IEnumerable<Page2> Pages { get; }
 
     /* --------------------------------------------------------------------- */
     ///

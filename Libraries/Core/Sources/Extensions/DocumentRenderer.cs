@@ -45,7 +45,7 @@ public static class DocumentRendererExtension
     /// <param name="page">Page object.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Render(this IDocumentRenderer src, Graphics dest, Page page) =>
+    public static void Render(this IDocumentRenderer src, Graphics dest, Page2 page) =>
         src.Render(dest, page, new PointF(0, 0), dest.VisibleClipBounds.Size);
 
     /* --------------------------------------------------------------------- */
@@ -62,7 +62,7 @@ public static class DocumentRendererExtension
     /// <returns>Image object</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static Image Render(this IDocumentRenderer src, Page page) =>
+    public static Image Render(this IDocumentRenderer src, Page2 page) =>
         src.Render(page, 1.0);
 
     /* --------------------------------------------------------------------- */
@@ -80,7 +80,7 @@ public static class DocumentRendererExtension
     /// <returns>Image object</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static Image Render(this IDocumentRenderer src, Page page, double scale) =>
+    public static Image Render(this IDocumentRenderer src, Page2 page, double scale) =>
         src.Render(page, page.GetViewSize(scale));
 
     #endregion

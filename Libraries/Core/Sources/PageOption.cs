@@ -17,49 +17,42 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf;
 
-using System.Drawing;
+using System;
+using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// IDocumentRenderer
+/// PageBase
 ///
 /// <summary>
-/// Provides functionality to render the document contents.
+/// Represents information of a document page.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public interface IDocumentRenderer
+[Serializable]
+public class PageOption : SerializableBase
 {
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Render
-    ///
-    /// <summary>
-    /// Gets an Image object in which the Page content is rendered.
-    /// </summary>
-    ///
-    /// <param name="page">Page object.</param>
-    /// <param name="size">Rendering size.</param>
-    ///
-    /// <returns>Image object</returns>
-    ///
-    /* --------------------------------------------------------------------- */
-    Image Render(Page2 page, SizeF size);
+    #region Properties
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Render
+    /// Rotation
     ///
     /// <summary>
-    /// Render the Page content to the Graphics object with the
-    /// specified parameters
+    /// Gets or sets the angle you rotate a source page.
     /// </summary>
-    ///
-    /// <param name="dest">Graphics object.</param>
-    /// <param name="page">Page object.</param>
-    /// <param name="point">Start point to render.</param>
-    /// <param name="size">Rendering size.</param>
+    /// 
+    /// <remarks>
+    /// The rotation result of the source page is calculated by
+    /// Page.Rotation + PageOption.Rotation.
+    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    void Render(Graphics dest, Page2 page, PointF point, SizeF size);
+    public Angle Rotation
+    {
+        get => Get(() => new Angle());
+        set => Set(value);
+    }
+
+    #endregion
 }

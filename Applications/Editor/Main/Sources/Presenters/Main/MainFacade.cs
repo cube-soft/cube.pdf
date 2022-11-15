@@ -211,7 +211,7 @@ namespace Cube.Pdf.Editor
                 Math.Min(Math.Max(index, 0), Value.Images.Count),
                 src.SelectMany(e => {
                     Value.SetMessage(Properties.Resources.MessageLoading, e);
-                    return !this.CanInsert(e) ? Enumerable.Empty<Page>() :
+                    return !this.CanInsert(e) ? Enumerable.Empty<Page2>() :
                            e.IsImageFile()    ? new ImagePageCollection(e) :
                            Cache.GetOrAdd(e).GetPdfium().Pages;
                 })
@@ -231,7 +231,7 @@ namespace Cube.Pdf.Editor
         /// <param name="src">Collection of pages.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, IEnumerable<Page> src) =>
+        public void Insert(int index, IEnumerable<Page2> src) =>
             Invoke(() => Value.Images.InsertAt(index, src));
 
         /* ----------------------------------------------------------------- */

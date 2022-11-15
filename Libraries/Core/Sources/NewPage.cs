@@ -18,81 +18,47 @@
 namespace Cube.Pdf;
 
 using System;
-using System.Drawing;
 using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// PageBase
+/// NewPage
 ///
 /// <summary>
-/// Represents information of a document page.
+/// Represents information for an editing page.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
 [Serializable]
-public class PageBase : SerializableBase
+public class NewPage : SerializableBase
 {
     #region Properties
 
     /* --------------------------------------------------------------------- */
     ///
-    /// File
+    /// Source
     ///
     /// <summary>
-    /// Get the file information that owns this Page.
+    /// Gets the information of the original PDF page.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public File File { get; init; }
+    public Page Source { get; init; }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Number
+    /// Option
     ///
     /// <summary>
-    /// Get the page number.
-    /// </summary>
-    ///
-    /// <remarks>
-    /// 1 for first page.
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    public int Number { get; init; }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Rotation
-    ///
-    /// <summary>
-    /// Get the rotation of this Page.
+    /// Gets or sets the editing settings to the source page.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public Angle Rotation { get; init; }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Resolution
-    ///
-    /// <summary>
-    /// Get the horizontal and vertical resolution (dpi) of this Page.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public PointF Resolution { get; init; }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Size
-    ///
-    /// <summary>
-    /// Get the page size.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public SizeF Size { get; init; }
+    public PageOption Option
+    {
+        get => Get(() => new PageOption());
+        set => Set(value);
+    }
 
     #endregion
 }

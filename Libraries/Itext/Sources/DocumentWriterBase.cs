@@ -62,7 +62,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected IEnumerable<Page> Pages => _pages;
+        protected IEnumerable<Page2> Pages => _pages;
 
         /* ----------------------------------------------------------------- */
         ///
@@ -151,10 +151,10 @@ namespace Cube.Pdf.Itext
         /// the DocumentReader.Pages object.
         /// </remarks>
         ///
-        /// <see cref="Add(IEnumerable{Page}, IDocumentReader)"/>
+        /// <see cref="Add(IEnumerable{Page2}, IDocumentReader)"/>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IEnumerable<Page> pages) => _pages.AddRange(pages);
+        public void Add(IEnumerable<Page2> pages) => _pages.AddRange(pages);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -176,7 +176,7 @@ namespace Cube.Pdf.Itext
         /// </remarks>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IEnumerable<Page> pages, IDocumentReader hint)
+        public void Add(IEnumerable<Page2> pages, IDocumentReader hint)
         {
             Add(pages);
             Bind(hint);
@@ -341,7 +341,7 @@ namespace Cube.Pdf.Itext
         #endregion
 
         #region Fields
-        private readonly List<Page> _pages = new();
+        private readonly List<Page2> _pages = new();
         private readonly List<Attachment> _attachments = new();
         private readonly List<IDisposable> _disposable = new();
         private readonly Dictionary<string, IDisposable> _hints = new();

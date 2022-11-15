@@ -18,103 +18,81 @@
 namespace Cube.Pdf;
 
 using System;
+using System.Drawing;
+using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// Page
+/// PageBase
 ///
 /// <summary>
-/// Represents information of a document page, and some more user
-/// extended values.
+/// Represents information of a document page.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
 [Serializable]
-public class Page : PageBase
+public class Page : SerializableBase
 {
-    #region Constructors
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Page
-    ///
-    /// <summary>
-    /// Initializes a new instance of the Page class.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public Page() { }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Page
-    ///
-    /// <summary>
-    /// Initializes a new instance of the Page class with the specified
-    /// source.
-    /// </summary>
-    ///
-    /// <param name="src">Source page information.</param>
-    ///
-    /* --------------------------------------------------------------------- */
-    public Page(PageBase src)
-    {
-        File       = src.File;
-        Number     = src.Number;
-        Resolution = src.Resolution;
-        Rotation   = src.Rotation;
-        Size       = src.Size;
-    }
-
-    #endregion
-
     #region Properties
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Delta
+    /// File
     ///
     /// <summary>
-    /// Gets or sets the angle you rotate this Page.
+    /// Get the file information that owns this Page.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public File File { get; init; }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Number
+    ///
+    /// <summary>
+    /// Get the page number.
     /// </summary>
     ///
     /// <remarks>
-    /// The rotation result of this Page is calculated by
-    /// Rotation + Delta.
+    /// 1 for first page.
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public Angle Delta
-    {
-        get => Get(() => new Angle());
-        set => Set(value);
-    }
-
-    #endregion
-
-    #region Methods
+    public int Number { get; init; }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Reset
+    /// Rotation
     ///
     /// <summary>
-    /// Reset the values of editable properties.
+    /// Get the rotation of this Page.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public void Reset() => OnReset();
+    public Angle Rotation { get; init; }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// OnReset
+    /// Resolution
     ///
     /// <summary>
-    /// Reset the values of editable properties.
+    /// Get the horizontal and vertical resolution (dpi) of this Page.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    protected virtual void OnReset() => Delta = new();
+    public PointF Resolution { get; init; }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Size
+    ///
+    /// <summary>
+    /// Get the page size.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public SizeF Size { get; init; }
 
     #endregion
 }
