@@ -46,7 +46,7 @@ public static class PageExtension
     /// <remarks>Display size.</remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public static SizeF GetViewSize(this Page2 src) => src.GetViewSize(1.0);
+    public static SizeF GetViewSize(this Page src) => src.GetViewSize(1.0);
 
     /* --------------------------------------------------------------------- */
     ///
@@ -62,7 +62,7 @@ public static class PageExtension
     /// <remarks>Display size.</remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public static SizeF GetViewSize(this Page2 src, double scale)
+    public static SizeF GetViewSize(this Page src, double scale)
     {
         var angle  = src.Rotation + src.Delta;
         var sin    = Math.Abs(Math.Sin(angle.Radian));

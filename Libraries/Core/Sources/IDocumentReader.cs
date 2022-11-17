@@ -25,7 +25,7 @@ using System.Collections.Generic;
 /// IDocumentReader
 ///
 /// <summary>
-/// Represents properties and methods to read a document.
+/// Represents properties and methods to read a PDF document.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
@@ -73,7 +73,7 @@ public interface IDocumentReader : IDisposable
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    IEnumerable<Page2> Pages { get; }
+    IEnumerable<Page> Pages { get; }
 
     /* --------------------------------------------------------------------- */
     ///

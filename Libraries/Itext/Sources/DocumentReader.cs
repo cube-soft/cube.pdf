@@ -186,7 +186,7 @@ namespace Cube.Pdf.Itext
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page2> Pages { get; }
+        public IEnumerable<Page> Pages { get; }
 
         /* ----------------------------------------------------------------- */
         ///

@@ -55,11 +55,11 @@ public static class DocumentReaderExtension
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public static Page2 GetPage(this IDocumentReader src, int pagenum)
+    public static Page GetPage(this IDocumentReader src, int pagenum)
     {
         var index = pagenum - 1;
-        if (src.Pages is IReadOnlyList<Page2> l0) return l0[index];
-        if (src.Pages is IList<Page2> l1) return l1[index];
+        if (src.Pages is IReadOnlyList<Page> l0) return l0[index];
+        if (src.Pages is IList<Page> l1) return l1[index];
         return src.Pages.Skip(index).First();
     }
 

@@ -22,10 +22,10 @@ using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// PageBase
+/// PageOption
 ///
 /// <summary>
-/// Represents information of a document page.
+/// Represents editing options for an existing PDF page.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
@@ -39,12 +39,12 @@ public class PageOption : SerializableBase
     /// Rotation
     ///
     /// <summary>
-    /// Gets or sets the angle you rotate a source page.
+    /// Gets or sets the angle to rotate a an existing PDF page.
     /// </summary>
     /// 
     /// <remarks>
-    /// The rotation result of the source page is calculated by
-    /// Page.Rotation + PageOption.Rotation.
+    /// The final angle may be calculated by adding the value of the
+    /// Page.Rotation property to this value.
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */

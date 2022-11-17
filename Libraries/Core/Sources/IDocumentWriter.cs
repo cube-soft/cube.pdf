@@ -25,7 +25,7 @@ using System.Collections.Generic;
 /// IDocumentWriter
 ///
 /// <summary>
-/// Represents properties and methods to create or modify a document.
+/// Represents properties and methods to create or modify a PDF document.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
@@ -50,10 +50,10 @@ public interface IDocumentWriter : IDisposable
     /// Saves the document to the specified path.
     /// </summary>
     ///
-    /// <param name="path">Path to save.</param>
+    /// <param name="dest">Path to save.</param>
     ///
     /* --------------------------------------------------------------------- */
-    void Save(string path);
+    void Save(string dest);
 
     /* --------------------------------------------------------------------- */
     ///
@@ -66,7 +66,7 @@ public interface IDocumentWriter : IDisposable
     /// <param name="pages">Collection of pages.</param>
     ///
     /* --------------------------------------------------------------------- */
-    void Add(IEnumerable<Page2> pages);
+    void Add(IEnumerable<NewPage> pages);
 
     /* --------------------------------------------------------------------- */
     ///
@@ -83,7 +83,7 @@ public interface IDocumentWriter : IDisposable
     /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    void Add(IEnumerable<Page2> pages, IDocumentReader hint);
+    void Add(IEnumerable<NewPage> pages, IDocumentReader hint);
 
     /* --------------------------------------------------------------------- */
     ///

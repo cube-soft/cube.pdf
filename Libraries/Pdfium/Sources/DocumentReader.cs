@@ -177,7 +177,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page2> Pages => Core.Pages;
+        public IEnumerable<Page> Pages => Core.Pages;
 
         /* ----------------------------------------------------------------- */
         ///
