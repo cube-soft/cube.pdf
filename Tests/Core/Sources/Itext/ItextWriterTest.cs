@@ -221,8 +221,8 @@ namespace Cube.Pdf.Tests.Itext
             {
                 w.Add(r0);
                 w.Add(r0.Attachments);
-                w.Attach(new Attachment(r1));
-                w.Attach(new Attachment(r1)); // Skip duplicated object.
+                w.Add(new Attachment(r1));
+                w.Add(new Attachment(r1)); // Skip duplicated object.
                 w.Save(dest);
             }
 

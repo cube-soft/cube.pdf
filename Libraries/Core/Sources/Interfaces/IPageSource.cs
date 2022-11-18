@@ -15,62 +15,78 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Extensions;
+namespace Cube.Pdf;
 
-using System;
 using System.Drawing;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// PageExtension
+/// IPageSource
 ///
 /// <summary>
-/// Provides extended methods for the Page class.
+/// Represents information of a document page.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public static class PageExtension
+public interface IPageSource
 {
-    #region Methods
+    #region Properties
 
     /* --------------------------------------------------------------------- */
     ///
-    /// GetViewSize
+    /// File
     ///
     /// <summary>
-    /// Gets the display size of this Page.
+    /// Gets the file information that owns this Page.
     /// </summary>
     ///
-    /// <param name="src">Page object.</param>
-    ///
-    /// <remarks>Display size.</remarks>
-    ///
     /* --------------------------------------------------------------------- */
-    public static SizeF GetViewSize(this Page src) => src.GetViewSize(1.0);
+    public File File { get; }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// GetViewSize
+    /// Number
     ///
     /// <summary>
-    /// Gets the display size of this Page from the specified values.
+    /// Gets the page number.
+    /// Note that the first page of a document is 1 (not 0).
     /// </summary>
     ///
-    /// <param name="src">Page object.</param>
-    /// <param name="scale">Scale factor.</param>
+    /* --------------------------------------------------------------------- */
+    public int Number { get; }
+
+    /* --------------------------------------------------------------------- */
     ///
-    /// <remarks>Display size.</remarks>
+    /// Rotation
+    ///
+    /// <summary>
+    /// Gets the rotation of the page.
+    /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static SizeF GetViewSize(this Page src, double scale)
-    {
-        var angle  = src.Rotation + src.Delta;
-        var sin    = Math.Abs(Math.Sin(angle.Radian));
-        var cos    = Math.Abs(Math.Cos(angle.Radian));
-        var width  = src.Size.Width * cos + src.Size.Height * sin;
-        var height = src.Size.Width * sin + src.Size.Height * cos;
-        return new((float)(width * scale), (float)(height * scale));
-    }
+    public Angle Rotation { get; }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Resolution
+    ///
+    /// <summary>
+    /// Gets the horizontal and vertical resolution (dpi) of the page.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public PointF Resolution { get; }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Size
+    ///
+    /// <summary>
+    /// Gets the page size.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public SizeF Size { get; }
 
     #endregion
 }

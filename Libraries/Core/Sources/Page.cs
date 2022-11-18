@@ -23,7 +23,7 @@ using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// PageBase
+/// Page
 ///
 /// <summary>
 /// Represents information of a document page.

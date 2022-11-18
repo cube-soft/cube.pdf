@@ -73,23 +73,6 @@ public interface IDocumentWriter : IDisposable
     /// Add
     ///
     /// <summary>
-    /// Adds pages to the document.
-    /// </summary>
-    ///
-    /// <param name="pages">Collection of pages.</param>
-    /// <param name="hint">
-    /// Document reader object to get more detailed information about
-    /// the specified pages.
-    /// </param>
-    ///
-    /* --------------------------------------------------------------------- */
-    void Add(IEnumerable<NewPage> pages, IDocumentReader hint);
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Add
-    ///
-    /// <summary>
     /// Adds attached objects to the document.
     /// </summary>
     ///
