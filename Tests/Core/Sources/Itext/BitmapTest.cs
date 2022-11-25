@@ -81,7 +81,7 @@ namespace Cube.Pdf.Tests.Itext
         {
             var op = new OpenOption { SaveMemory = false };
             var r0 = new DocumentReader(GetSource("SampleBookmark.pdf"), "", op);
-            var dest = Path(Args(r0.File.BaseName, Io.Get(filename).BaseName));
+            var dest = Path(Args(r0.File.BaseName, Io.GetBaseName(filename)));
 
             using (var w = new DocumentWriter())
             {

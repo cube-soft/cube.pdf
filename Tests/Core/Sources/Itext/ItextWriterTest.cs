@@ -144,9 +144,8 @@ namespace Cube.Pdf.Tests.Itext
         public int Split(string filename, string password)
         {
             var src  = GetSource(filename);
-            var info = Io.Get(src);
-            var name = info.BaseName;
-            var ext  = info.Extension;
+            var name = Io.GetBaseName(src);
+            var ext  = Io.GetExtension(src);
             var dest = Path(Args(name));
 
             Io.Copy(src, Io.Combine(dest, $"{name}-01{ext}"), true);
@@ -215,15 +214,15 @@ namespace Cube.Pdf.Tests.Itext
             var op   = new OpenOption { SaveMemory = false };
             var src  = GetSource(doc);
             var r0   = new DocumentReader(src, "", op);
-            var r1   = Io.Get(GetSource(file));
-            var dest = Path(Args(r0.File.BaseName, r1.BaseName));
+            var r1   = GetSource(file);
+            var dest = Path(Args(r0.File.BaseName, Io.GetBaseName(r1)));
 
             using (var w = new DocumentWriter())
             {
                 w.Add(r0);
                 w.Add(r0.Attachments);
-                w.Attach(new Attachment(r1.FullName));
-                w.Attach(new Attachment(r1.FullName)); // Skip duplicated object.
+                w.Attach(new Attachment(r1));
+                w.Attach(new Attachment(r1)); // Skip duplicated object.
                 w.Save(dest);
             }
 

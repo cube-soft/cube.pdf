@@ -275,7 +275,7 @@ public class Converter
             .ToArray();
 
         Logger.Debug(args.Join(" "));
-        Io.CreateDirectory(Io.Get(dest).DirectoryName);
+        Io.CreateDirectory(Io.GetDirectoryName(dest));
         GsApi.Invoke(args, Temp);
     }
 

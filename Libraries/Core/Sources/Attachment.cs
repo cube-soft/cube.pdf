@@ -46,7 +46,7 @@ public class Attachment
     /// <param name="path">Path of the attached file.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public Attachment(string path) : this(Io.Get(path).Name, path) { }
+    public Attachment(string path) : this(Io.GetFileName(path), path) { }
 
     /* --------------------------------------------------------------------- */
     ///

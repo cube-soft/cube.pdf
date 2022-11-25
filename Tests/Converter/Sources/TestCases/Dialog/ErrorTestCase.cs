@@ -132,7 +132,7 @@ sealed class ErrorTestCase : TestCaseBase<Func<MainViewModel, Task>>
     private async Task DigestNotMatch(MainViewModel vm)
     {
         var name = nameof(DigestNotMatch);
-        var src  = Io.Combine(Io.Get(vm.Settings.Destination).DirectoryName, $"{name}.ps");
+        var src  = Io.Combine(Io.GetDirectoryName(vm.Settings.Destination), $"{name}.ps");
         var msg  = default(DialogMessage);
 
         using var dc = vm.Subscribe<DialogMessage>(e => msg = e);

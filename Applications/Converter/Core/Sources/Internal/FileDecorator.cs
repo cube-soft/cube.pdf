@@ -194,7 +194,7 @@ internal sealed class FileDecorator
     /* --------------------------------------------------------------------- */
     private string GetTemp(string src)
     {
-        var dir = Io.Combine(Io.Get(src).DirectoryName, "decorator");
+        var dir = Io.Combine(Io.GetDirectoryName(src), "decorator");
         Io.CreateDirectory(dir);
         return Io.Combine(dir, Guid.NewGuid().ToString("N"));
     }
