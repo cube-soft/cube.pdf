@@ -56,6 +56,9 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2022-12-01 version 3.0.1
+    - Update iText to 7.2.4.
+    - Fix conditions for execution of configuration migration function.
 * 2022-10-05 version 3.0.0
     - Support Windows for ARM64.
     - Add function to convert to black and white images. (PNG, BMP, TIFF)
