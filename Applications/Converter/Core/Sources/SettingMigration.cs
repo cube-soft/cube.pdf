@@ -65,7 +65,8 @@ public static class SettingMigration
     /* --------------------------------------------------------------------- */
     public static void Migrate(this SettingFolder src, DataContract.Format format, string location)
     {
-        if (!format.Exists(location)) { src.Load(); return; }
+        if (src.Format.Exists(src.Location)) { src.Load(); return; }
+        if (!format.Exists(location)) return;
 
         var v3 = src.Value;
         var v2 = format.Deserialize<SettingV2>(location);

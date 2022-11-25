@@ -122,7 +122,7 @@ internal sealed class ProcessLauncher
     /* --------------------------------------------------------------------- */
     private void OpenDirectory(IEnumerable<string> src) => Start(Create(
         "explorer.exe",
-        Io.Get(src.First()).DirectoryName.Quote()
+        Io.GetDirectoryName(src.First()).Quote()
     ));
 
     /* --------------------------------------------------------------------- */

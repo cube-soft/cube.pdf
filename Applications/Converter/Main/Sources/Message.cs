@@ -267,7 +267,7 @@ public static class Message
     ///
     /* --------------------------------------------------------------------- */
     private static string GetFileName(string src) =>
-        src.HasValue() ? Io.Get(src).Name : string.Empty;
+        src.HasValue() ? Io.GetFileName(src) : string.Empty;
 
     /* --------------------------------------------------------------------- */
     ///
@@ -280,7 +280,7 @@ public static class Message
     /* --------------------------------------------------------------------- */
     private static IEnumerable<string> GetFileNames(string src)
     {
-        if (src.HasValue()) yield return Io.Get(src).Name;
+        if (src.HasValue()) yield return Io.GetFileName(src);
     }
 
     /* --------------------------------------------------------------------- */
@@ -293,7 +293,7 @@ public static class Message
     ///
     /* --------------------------------------------------------------------- */
     private static string GetDirectoryName(string src) =>
-        src.HasValue() ? Io.Get(src).DirectoryName : string.Empty;
+        src.HasValue() ? Io.GetDirectoryName(src) : string.Empty;
 
     #endregion
 }

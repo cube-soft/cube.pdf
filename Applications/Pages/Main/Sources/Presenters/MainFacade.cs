@@ -168,7 +168,7 @@ namespace Cube.Pdf.Pages
         public void Merge(string dest) => Lock(() =>
         {
             var op  = Settings.ToSaveOption();
-            var dir = op.Temp.HasValue() ? op.Temp : Io.Get(dest).DirectoryName;
+            var dir = op.Temp.HasValue() ? op.Temp : Io.GetDirectoryName(dest);
             var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
 
             try
@@ -214,7 +214,7 @@ namespace Cube.Pdf.Pages
             foreach (var f in new FileSelector().Get(src))
             {
                 if (_inner.Any(e => e.FullName == f)) continue;
-                if (Io.Get(f).Extension.ToLower() == ".pdf")
+                if (Io.GetExtension(f).ToLower() == ".pdf")
                 {
                     var op = Settings.ToOpenOption();
                     using var e = new DocumentReader(f, Query, op);

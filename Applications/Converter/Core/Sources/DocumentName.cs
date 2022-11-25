@@ -120,7 +120,7 @@ public sealed class DocumentName
     {
         if (!Source.HasValue()) return alternate;
 
-        var dest = Io.Get(src.Value).Name;
+        var dest = Io.GetFileName(src.Value);
         var key  = " - ";
         var pos  = dest.LastIndexOf(key);
         if (pos == -1) return dest;
