@@ -27,6 +27,7 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Cube.Core" Version="8.0.0" />
+        <PackageReference Include="Cube.Logging.NLog" Version="8.0.0" />
     </ItemGroup>
     <ItemGroup>
         <None Include="App.*" />

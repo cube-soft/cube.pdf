@@ -113,6 +113,7 @@ namespace Cube.Pdf.Editor
             Arguments = e.Args ?? Enumerable.Empty<string>();
 
             BindingLogger.Setup();
+            Logger.Configure(new Logging.NLog.LoggerSource());
             Logger.Info(typeof(App).Assembly);
             Logger.Info($"[ {Arguments.Join(" ")} ]");
             Logger.ObserveTaskException();
