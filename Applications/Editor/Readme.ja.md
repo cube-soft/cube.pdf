@@ -111,7 +111,7 @@ CubePDF Utility は、以下のライブラリを利用しています。
     - 3-clause BSD License
     - https://nlog-project.org/
     - https://www.nuget.org/packages/NLog/
-* Fluent.Ribbon (net45)
+* Fluent.Ribbon (net47)
     - MIT License
     - https://fluentribbon.github.io/
     - https://www.nuget.org/packages/Fluent.Ribbon/
@@ -126,6 +126,8 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2023-01-11 version 2.1.1
+    - PDFium を Chromium 109 相当に更新
 * 2022-12-01 version 2.1.0
     - PDFium を Chromium 108 相当に更新
     - iText を 7.2.4 に更新
