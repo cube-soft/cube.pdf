@@ -95,6 +95,7 @@ public static class Resource
         { nameof(Language.Auto),     Language.Auto     },
         { nameof(Language.English),  Language.English  },
         { nameof(Language.Japanese), Language.Japanese },
+        { nameof(Language.German),   Language.German   },
     };
 
     /* --------------------------------------------------------------------- */
@@ -201,7 +202,7 @@ public static class Resource
     /// </summary>
     ///
     /// <param name="src">Extension list.</param>
-    /// 
+    ///
     /// <returns>Collection of dialog filter objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
@@ -220,9 +221,9 @@ public static class Resource
     /// <summary>
     /// Gets a collection of SaveFileDialog filters.
     /// </summary>
-    /// 
+    ///
     /// <param name="src">Extension list.</param>
-    /// 
+    ///
     /// <returns>Collection of dialog filter objects.</returns>
     ///
     /* --------------------------------------------------------------------- */
@@ -246,9 +247,9 @@ public static class Resource
     /// </summary>
     ///
     /// <param name="src">Extension list.</param>
-    /// 
+    ///
     /// <returns>Collection of dialog filter objects.</returns>
-    /// 
+    ///
     /* --------------------------------------------------------------------- */
     public static IList<FileDialogFilter> GetProgramFilters(this ExtensionList src) => new FileDialogFilter[]
     {
