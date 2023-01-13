@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColumnDate" xml:space="preserve">
+    <value>Zuletzt aktualisiert</value>
+  </data>
+  <data name="ColumnLength" xml:space="preserve">
+    <value>Dateigröße</value>
+  </data>
+  <data name="ColumnName" xml:space="preserve">
+    <value>Dateiname</value>
+  </data>
+  <data name="ColumnPages" xml:space="preserve">
+    <value>Seiten</value>
+  </data>
+  <data name="ColumnType" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="ErrorOwnerPassword" xml:space="preserve">
+    <value>Das Eigentümer-Passwort ist leer oder stimmt nicht mit der Bestätigung überein. Bitte überprüfen Sie Ihr Passwort und die Bestätigung noch einmal.</value>
+  </data>
+  <data name="ErrorUserPassword" xml:space="preserve">
+    <value>Das Benutzer-Passwort ist leer oder stimmt nicht mit der Bestätigung überein. Bitte überprüfen Sie das Benutzer-Passwort oder aktivieren Sie das Kontrollkästchen "Eigentümer-Passwort verwenden".</value>
+  </data>
+  <data name="FilterAll" xml:space="preserve">
+    <value>Alle Dateien</value>
+  </data>
+  <data name="FilterPdf" xml:space="preserve">
+    <value>PDF-Dateien</value>
+  </data>
+  <data name="FilterSupported" xml:space="preserve">
+    <value>Alle unterstützten Dateien</value>
+  </data>
+  <data name="HeaderTitle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\HeaderTitle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Assets\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MenuDown" xml:space="preserve">
+    <value>Nach unten</value>
+  </data>
+  <data name="MenuOneColumn" xml:space="preserve">
+    <value>Eine Spalte</value>
+  </data>
+  <data name="MenuPreview" xml:space="preserve">
+    <value>Vorschau</value>
+  </data>
+  <data name="MenuRemove" xml:space="preserve">
+    <value>Aus Dateiliste entfernen</value>
+  </data>
+  <data name="MenuSinglePage" xml:space="preserve">
+    <value>Einzelne Seite</value>
+  </data>
+  <data name="MenuTwoColumnLeft" xml:space="preserve">
+    <value>Zwei Spalten (links)</value>
+  </data>
+  <data name="MenuTwoColumnRight" xml:space="preserve">
+    <value>Zwei Spalten (rechts)</value>
+  </data>
+  <data name="MenuTwoPageLeft" xml:space="preserve">
+    <value>Zwei Seiten (links)</value>
+  </data>
+  <data name="MenuTwoPageRight" xml:space="preserve">
+    <value>Zwei Seiten (rechts)</value>
+  </data>
+  <data name="MenuUp" xml:space="preserve">
+    <value>Nach oben</value>
+  </data>
+  <data name="MessagePassword" xml:space="preserve">
+    <value>{0} ist geschützt. Geben Sie das Eigentümer-Passwort zum Bearbeiten ein.</value>
+  </data>
+  <data name="MessageSettings" xml:space="preserve">
+    <value>CubePDF Page-Einstellungen</value>
+  </data>
+  <data name="TitleAdd" xml:space="preserve">
+    <value>Dateien hinzufügen</value>
+  </data>
+  <data name="TitleBusy" xml:space="preserve">
+    <value>Verarbeitung ... - {0}</value>
+  </data>
+  <data name="TitleMerge" xml:space="preserve">
+    <value>Zusammengeführte Datei speichern als</value>
+  </data>
+  <data name="TitleSplit" xml:space="preserve">
+    <value>Wählen Sie einen Ordner aus, um die Split-Dateien zu speichern.</value>
+  </data>
+  <data name="TitleTemp" xml:space="preserve">
+    <value>Wählen Sie einen temporären Ordner aus. Wenn Sie keinen Temp-Ordner spezifizieren, wird derselbe Ordner wie für die Quelldateien verwendet.</value>
+  </data>
+</root>
