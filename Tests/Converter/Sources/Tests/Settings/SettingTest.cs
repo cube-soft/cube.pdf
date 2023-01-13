@@ -87,8 +87,8 @@ class SettingTest : MockFixture
     /* --------------------------------------------------------------------- */
     private void Check(SettingViewModel src)
     {
-        Assert.That(src.Title,             Does.StartWith("CubePDF 3.0.1 ("));
-        Assert.That(src.Version,           Does.StartWith("3.0.1 ("));
+        Assert.That(src.Title,             Does.StartWith("CubePDF 3.0.2 ("));
+        Assert.That(src.Version,           Does.StartWith("3.0.2 ("));
         Assert.That(src.Uri.ToString(),    Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
         Assert.That(src.Format,            Is.EqualTo(Format.Pdf));
         Assert.That(src.SaveOption,        Is.EqualTo(SaveOption.Overwrite));

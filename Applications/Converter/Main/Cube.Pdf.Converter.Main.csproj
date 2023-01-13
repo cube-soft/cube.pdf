@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>3.0.1</Version>
+        <Version>3.0.2</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF</Product>
@@ -38,8 +38,7 @@
         <Compile Update="Sources\Views\*Window.cs" SubType="Form" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
         <EmbeddedResource Update="Sources\Views\*Window.resx" DependentUpon="%(FIlename).cs" />
-        <EmbeddedResource Update="Sources\Views\MainWindow.ja.resx" DependentUpon="MainWindow.cs" />
-        <None Include="Properties\DataSources\*" />
+        <EmbeddedResource Update="Sources\Views\MainWindow.*.resx" DependentUpon="MainWindow.cs" />
         <None Include="Assets\**\*" />
         <None Include="App.*" />
         <None Include="NLog.config" CopyToOutputDirectory="Always" />
