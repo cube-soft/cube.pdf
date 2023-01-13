@@ -311,7 +311,7 @@
     <value>Alle auswählen</value>
   </data>
   <data name="MenuSelectClear" xml:space="preserve">
-    <value>Auswahl aufheben</value>
+    <value>Alle abwählen</value>
   </data>
   <data name="MenuSelectFlip" xml:space="preserve">
     <value>Auswahl umkehren</value>

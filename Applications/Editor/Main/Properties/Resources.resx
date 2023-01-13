@@ -311,7 +311,7 @@
     <value>Select all</value>
   </data>
   <data name="MenuSelectClear" xml:space="preserve">
-    <value>Cancel selection</value>
+    <value>Deselect all</value>
   </data>
   <data name="MenuSelectFlip" xml:space="preserve">
     <value>Flip selection</value>
@@ -401,10 +401,10 @@
     <value>e.g. 1,2,4-7,9</value>
   </data>
   <data name="MessageSaved" xml:space="preserve">
-    <value>Saved at {0}</value>
+    <value>Saved as {0}</value>
   </data>
   <data name="MessageSaving" xml:space="preserve">
-    <value>Saving to {0} ...</value>
+    <value>Saving as {0} ...</value>
   </data>
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} pages selected</value>
