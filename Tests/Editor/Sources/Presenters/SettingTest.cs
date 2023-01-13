@@ -123,7 +123,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(src.CheckUpdate.Text,      Is.Not.Null.And.Not.Empty);
             Assert.That(src.Language.Text,         Is.Not.Null.And.Not.Empty);
             Assert.That(src.Language.Value,        Is.EqualTo(Language.English)); // see remarks.
-            Assert.That(src.Languages.Count(),     Is.EqualTo(3));
+            Assert.That(src.Languages.Count(),     Is.EqualTo(4));
         }
 
         #endregion
