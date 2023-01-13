@@ -56,10 +56,11 @@ class ResourceTest
         vm.Settings.Language = Language.English;
 
         var c0 = Resource.Languages.ToArray();
-        Assert.That(c0.Length,  Is.EqualTo(3), nameof(Resource.Languages));
+        Assert.That(c0.Length,  Is.EqualTo(4), nameof(Resource.Languages));
         Assert.That(c0[0].Key,  Is.EqualTo("Auto"));
         Assert.That(c0[1].Key,  Is.EqualTo("English"));
         Assert.That(c0[2].Key,  Is.EqualTo("Japanese"));
+        Assert.That(c0[3].Key,  Is.EqualTo("German"));
 
         var c1 = Resource.Formats.ToArray();
         Assert.That(c1.Length,  Is.EqualTo(7), nameof(Resource.Formats));
@@ -158,10 +159,11 @@ class ResourceTest
         vm.Settings.Language = Language.Japanese;
 
         var c0 = Resource.Languages.ToArray();
-        Assert.That(c0.Length,  Is.EqualTo(3), nameof(Resource.Languages));
+        Assert.That(c0.Length,  Is.EqualTo(4), nameof(Resource.Languages));
         Assert.That(c0[0].Key,  Is.EqualTo("Auto"));
         Assert.That(c0[1].Key,  Is.EqualTo("English"));
         Assert.That(c0[2].Key,  Is.EqualTo("Japanese"));
+        Assert.That(c0[3].Key,  Is.EqualTo("German"));
 
         var c1 = Resource.Formats.ToArray();
         Assert.That(c1.Length,  Is.EqualTo(7), nameof(Resource.Formats));

@@ -59,9 +59,10 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public static ComboListSource<Language> Languages => new()
         {
-            { "Auto",     Language.Auto },
-            { "English",  Language.English },
-            { "Japanese", Language.Japanese },
+            { nameof(Language.Auto),     Language.Auto     },
+            { nameof(Language.English),  Language.English  },
+            { nameof(Language.Japanese), Language.Japanese },
+            { nameof(Language.German),   Language.German   },
         };
 
         /* ----------------------------------------------------------------- */

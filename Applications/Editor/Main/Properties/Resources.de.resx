@@ -59,409 +59,409 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FilterAll" xml:space="preserve">
-    <value>All files</value>
+    <value>Alle Dateien</value>
   </data>
   <data name="FilterExtract" xml:space="preserve">
-    <value>Supported files</value>
+    <value>Unterstützte Dateien</value>
   </data>
   <data name="FilterInsertable" xml:space="preserve">
-    <value>Insertable files</value>
+    <value>Einfügbare Dateien</value>
   </data>
   <data name="FilterPdf" xml:space="preserve">
-    <value>PDF files</value>
+    <value>PDF-Dateien</value>
   </data>
   <data name="MenuAdd" xml:space="preserve">
-    <value>Add ...</value>
+    <value>Hinzufügen ...</value>
   </data>
   <data name="MenuAllowAccessibility" xml:space="preserve">
-    <value>Allow using contents for accessibility</value>
+    <value>Verwendung von Inhalten für Barrierefreiheit erlauben</value>
   </data>
   <data name="MenuAllowAnnotation" xml:space="preserve">
-    <value>Allow creating and editing annotations</value>
+    <value>Erstellen und Editieren von Annotationen erlauben</value>
   </data>
   <data name="MenuAllowAssemble" xml:space="preserve">
-    <value>Allow inserting and removing pages</value>
+    <value>Einfügen und Entfernen von Seiten erlauben</value>
   </data>
   <data name="MenuAllowCopy" xml:space="preserve">
-    <value>Allow copying text and images</value>
+    <value>Kopieren von Text und Bildern erlauben</value>
   </data>
   <data name="MenuAllowExtract" xml:space="preserve">
-    <value>Allow extracting pages</value>
+    <value>Extrahieren von Seiten erlauben</value>
   </data>
   <data name="MenuAllowForm" xml:space="preserve">
-    <value>Allow filling in form fields</value>
+    <value>Ausfüllen von Formularfeldern erlauben</value>
   </data>
   <data name="MenuAllowPrint" xml:space="preserve">
-    <value>Allow printing</value>
+    <value>Drucken erlauben</value>
   </data>
   <data name="MenuAuthor" xml:space="preserve">
-    <value>Author</value>
+    <value>Autor</value>
   </data>
   <data name="MenuBackup" xml:space="preserve">
     <value>Backup</value>
   </data>
   <data name="MenuBackupEnabled" xml:space="preserve">
-    <value>Enable backup</value>
+    <value>Backup aktivieren</value>
   </data>
   <data name="MenuCancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="MenuCheckUpdate" xml:space="preserve">
-    <value>Check for updates on startup</value>
+    <value>Beim Start nach Updates suchen</value>
   </data>
   <data name="MenuClear" xml:space="preserve">
-    <value>Clear</value>
+    <value>Löschen</value>
   </data>
   <data name="MenuClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="MenuConfirmPassword" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Bestätigen</value>
   </data>
   <data name="MenuCreationTime" xml:space="preserve">
-    <value>Creation</value>
+    <value>Erstellung</value>
   </data>
   <data name="MenuCreator" xml:space="preserve">
     <value>Creator</value>
   </data>
   <data name="MenuDestination" xml:space="preserve">
-    <value>Save path</value>
+    <value>Speicherpfad</value>
   </data>
   <data name="MenuDetails" xml:space="preserve">
     <value>Details</value>
   </data>
   <data name="MenuDown" xml:space="preserve">
-    <value>Down</value>
+    <value>Nach unten</value>
   </data>
   <data name="MenuDpi" xml:space="preserve">
     <value>dpi</value>
   </data>
   <data name="MenuEdit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="MenuEncryption" xml:space="preserve">
-    <value>Security</value>
+    <value>Sicherheit</value>
   </data>
   <data name="MenuEncryptionEnabled" xml:space="preserve">
-    <value>Encrypt the PDF with password</value>
+    <value>Das PDF mit Passwort verschlüsseln</value>
   </data>
   <data name="MenuEncryptionMethod" xml:space="preserve">
-    <value>Method</value>
+    <value>Methode</value>
   </data>
   <data name="MenuExit" xml:space="preserve">
-    <value>Exit</value>
+    <value>Beenden</value>
   </data>
   <data name="MenuExtract" xml:space="preserve">
-    <value>Extract</value>
+    <value>Extrahieren</value>
   </data>
   <data name="MenuExtractAll" xml:space="preserve">
-    <value>All pages</value>
+    <value>Alle Seiten</value>
   </data>
   <data name="MenuExtractOthers" xml:space="preserve">
-    <value>Extract with other settings</value>
+    <value>Mit anderen Einstellungen extrahieren</value>
   </data>
   <data name="MenuExtractRange" xml:space="preserve">
-    <value>Specified range</value>
+    <value>Spezifizierter Bereich</value>
   </data>
   <data name="MenuExtractSelected" xml:space="preserve">
-    <value>Selected pages</value>
+    <value>Ausgewählte Seiten</value>
   </data>
   <data name="MenuFile" xml:space="preserve">
-    <value>File</value>
+    <value>Datei</value>
   </data>
   <data name="MenuFilename" xml:space="preserve">
-    <value>Filename</value>
+    <value>Dateiname</value>
   </data>
   <data name="MenuFilesize" xml:space="preserve">
-    <value>Filesize</value>
+    <value>Dateigröße</value>
   </data>
   <data name="MenuFiletype" xml:space="preserve">
-    <value>Type</value>
+    <value>Typ</value>
   </data>
   <data name="MenuFormat" xml:space="preserve">
     <value>Format</value>
   </data>
   <data name="MenuFrameOnly" xml:space="preserve">
-    <value>Frame only</value>
+    <value>Nur Frame</value>
   </data>
   <data name="MenuHelp" xml:space="preserve">
-    <value>Help</value>
+    <value>Hilfe</value>
   </data>
   <data name="MenuInsert" xml:space="preserve">
-    <value>Insert</value>
+    <value>Einfügen</value>
   </data>
   <data name="MenuInsertBack" xml:space="preserve">
-    <value>Insert at the end</value>
+    <value>Am Ende einfügen</value>
   </data>
   <data name="MenuInsertFront" xml:space="preserve">
-    <value>Insert at the beginning</value>
+    <value>Am Anfang einfügen</value>
   </data>
   <data name="MenuInsertOthers" xml:space="preserve">
-    <value>Insert at other position</value>
+    <value>An anderer Position einfügen</value>
   </data>
   <data name="MenuInsertPosition" xml:space="preserve">
-    <value>Insert position</value>
+    <value>Einfügeposition</value>
   </data>
   <data name="MenuKeepOutlines" xml:space="preserve">
-    <value>Keep bookmarks of the source PDF file</value>
+    <value>Bookmarks der Quell-PDF-Datei behalten</value>
   </data>
   <data name="MenuKeywords" xml:space="preserve">
-    <value>Keywords</value>
+    <value>Schlagwörter</value>
   </data>
   <data name="MenuLanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>Sprache</value>
   </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
-    <value>Last updated</value>
+    <value>Zuletzt aktualisiert</value>
   </data>
   <data name="MenuLayout" xml:space="preserve">
     <value>Layout</value>
   </data>
   <data name="MenuMetadata" xml:space="preserve">
-    <value>Metadata</value>
+    <value>Metadaten</value>
   </data>
   <data name="MenuMoveNext" xml:space="preserve">
-    <value>Next</value>
+    <value>Weiter</value>
   </data>
   <data name="MenuMovePrevious" xml:space="preserve">
-    <value>Prev</value>
+    <value>Zurück</value>
   </data>
   <data name="MenuOk" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="MenuOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>Öffnen</value>
   </data>
   <data name="MenuOpenWithPassword" xml:space="preserve">
-    <value>Open with password</value>
+    <value>Mit Passwort öffnen</value>
   </data>
   <data name="MenuOperations" xml:space="preserve">
-    <value>Operations</value>
+    <value>Operationen</value>
   </data>
   <data name="MenuOptions" xml:space="preserve">
-    <value>Options</value>
+    <value>Optionen</value>
   </data>
   <data name="MenuOthers" xml:space="preserve">
-    <value>Others</value>
+    <value>Sonstiges</value>
   </data>
   <data name="MenuOwnerPassword" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="MenuPageCount" xml:space="preserve">
-    <value>Page count</value>
+    <value>Seitenzahl</value>
   </data>
   <data name="MenuPdfVersion" xml:space="preserve">
-    <value>PDF version</value>
+    <value>PDF-Version</value>
   </data>
   <data name="MenuPositionFirst" xml:space="preserve">
-    <value>Beginning</value>
+    <value>Anfang</value>
   </data>
   <data name="MenuPositionLast" xml:space="preserve">
-    <value>End</value>
+    <value>Ende</value>
   </data>
   <data name="MenuPositionSelected" xml:space="preserve">
-    <value>Selected position</value>
+    <value>Ausgewählte Position</value>
   </data>
   <data name="MenuPositionSpecified" xml:space="preserve">
-    <value>Behind the number of</value>
+    <value>Hinter der Anzahl von</value>
   </data>
   <data name="MenuPreview" xml:space="preserve">
-    <value>Preview</value>
+    <value>Vorschau</value>
   </data>
   <data name="MenuProducer" xml:space="preserve">
     <value>Producer</value>
   </data>
   <data name="MenuRecent" xml:space="preserve">
-    <value>Recent files</value>
+    <value>Zuletzt verwendete Dateien</value>
   </data>
   <data name="MenuRecentVisible" xml:space="preserve">
-    <value>Show recently used files</value>
+    <value>Kürzlich verwendete Dateien zeigen</value>
   </data>
   <data name="MenuRedo" xml:space="preserve">
-    <value>Redo</value>
+    <value>Wiederherstellen (Redo)</value>
   </data>
   <data name="MenuRedraw" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="MenuRemove" xml:space="preserve">
-    <value>Remove</value>
+    <value>Entfernen</value>
   </data>
   <data name="MenuRemoveOthers" xml:space="preserve">
-    <value>Remove other pages</value>
+    <value>Andere Seiten entfernen</value>
   </data>
   <data name="MenuRotateLeft" xml:space="preserve">
-    <value>Left</value>
+    <value>Links</value>
   </data>
   <data name="MenuRotateRight" xml:space="preserve">
-    <value>Right</value>
+    <value>Rechts</value>
   </data>
   <data name="MenuSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="MenuSaveAs" xml:space="preserve">
-    <value>Save as</value>
+    <value>Speichern unter</value>
   </data>
   <data name="MenuSaveOptions" xml:space="preserve">
-    <value>Save options</value>
+    <value>Speicheroptionen</value>
   </data>
   <data name="MenuSelect" xml:space="preserve">
-    <value>Select</value>
+    <value>Auswählen</value>
   </data>
   <data name="MenuSelectAll" xml:space="preserve">
-    <value>Select all</value>
+    <value>Alle auswählen</value>
   </data>
   <data name="MenuSelectClear" xml:space="preserve">
-    <value>Deselect all</value>
+    <value>Alle abwählen</value>
   </data>
   <data name="MenuSelectFlip" xml:space="preserve">
-    <value>Flip selection</value>
+    <value>Auswahl umkehren</value>
   </data>
   <data name="MenuSetting" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="MenuSharePassword" xml:space="preserve">
-    <value>Use owner password</value>
+    <value>Eigentümer-Passwort verwenden</value>
   </data>
   <data name="MenuShrinkResources" xml:space="preserve">
-    <value>Shrink duplicated resources</value>
+    <value>Duplizierte Ressourcen schrumpfen</value>
   </data>
   <data name="MenuSplit" xml:space="preserve">
-    <value>Save as a separate file per page</value>
+    <value>Als separate Datei pro Seite speichern</value>
   </data>
   <data name="MenuSubject" xml:space="preserve">
-    <value>Subject</value>
+    <value>Betreff</value>
   </data>
   <data name="MenuSummary" xml:space="preserve">
-    <value>Summary</value>
+    <value>Zusammenfassung</value>
   </data>
   <data name="MenuTarget" xml:space="preserve">
-    <value>Target pages</value>
+    <value>Zielseiten</value>
   </data>
   <data name="MenuTemp" xml:space="preserve">
     <value>Temp</value>
   </data>
   <data name="MenuTitle" xml:space="preserve">
-    <value>Title</value>
+    <value>Titel</value>
   </data>
   <data name="MenuUndo" xml:space="preserve">
-    <value>Undo</value>
+    <value>Rückgängig (Undo)</value>
   </data>
   <data name="MenuUp" xml:space="preserve">
-    <value>Up</value>
+    <value>Nach oben</value>
   </data>
   <data name="MenuUserPassword" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="MenuVersion" xml:space="preserve">
     <value>Version</value>
   </data>
   <data name="MenuViewOneColumn" xml:space="preserve">
-    <value>One column</value>
+    <value>Eine Spalte</value>
   </data>
   <data name="MenuViewSinglePage" xml:space="preserve">
-    <value>Single page</value>
+    <value>Einzelne Seite</value>
   </data>
   <data name="MenuViewTwoColumnLeft" xml:space="preserve">
-    <value>Two column (left)</value>
+    <value>Zwei Spalten (links)</value>
   </data>
   <data name="MenuViewTwoColumnRight" xml:space="preserve">
-    <value>Two column (right)</value>
+    <value>Zwei Spalten (rechts)</value>
   </data>
   <data name="MenuViewTwoPageLeft" xml:space="preserve">
-    <value>Two page (left)</value>
+    <value>Zwei Seiten (links)</value>
   </data>
   <data name="MenuViewTwoPageRight" xml:space="preserve">
-    <value>Two page (right)</value>
+    <value>Zwei Seiten (rechts)</value>
   </data>
   <data name="MenuZoomIn" xml:space="preserve">
-    <value>ZoomIn</value>
+    <value>Heranzoomen</value>
   </data>
   <data name="MenuZoomOut" xml:space="preserve">
-    <value>ZoomOut</value>
+    <value>Herauszoomen</value>
   </data>
   <data name="MessageLoading" xml:space="preserve">
-    <value>Loading {0} ...</value>
+    <value>Geladen wird {0} ...</value>
   </data>
   <data name="MessageOpenError" xml:space="preserve">
-    <value>File is not in PDF format or corrupted.</value>
+    <value>Datei ist nicht im PDF-Format oder ist beschädigt.</value>
   </data>
   <data name="MessageOverwrite" xml:space="preserve">
-    <value>PDF is modified. Do you want to overwrite?</value>
+    <value>PDF wird modifiziert. Möchten Sie überschreiben?</value>
   </data>
   <data name="MessagePage" xml:space="preserve">
-    <value>{0} pages</value>
+    <value>{0} Seite(n)</value>
   </data>
   <data name="MessagePassword" xml:space="preserve">
-    <value>Please enter the owner password for opening and editing {0}.</value>
+    <value>Bitte geben Sie das Eigentümer-Passwort zum Öffnen und Editieren ein {0}.</value>
   </data>
   <data name="MessageRangeError" xml:space="preserve">
-    <value>Failed to parse the removal range.</value>
+    <value>Der Entfernungsbereich konnte nicht geparst werden.</value>
   </data>
   <data name="MessageRangeExample" xml:space="preserve">
-    <value>e.g. 1,2,4-7,9</value>
+    <value>Zum Beispiel: 1,2,4-7,9</value>
   </data>
   <data name="MessageSaved" xml:space="preserve">
-    <value>Saved as {0}</value>
+    <value>Gespeichert bei {0}</value>
   </data>
   <data name="MessageSaving" xml:space="preserve">
-    <value>Saving as {0} ...</value>
+    <value>Speichern in {0} ...</value>
   </data>
   <data name="MessageSelection" xml:space="preserve">
-    <value>{0} pages selected</value>
+    <value>{0} Seite(n) ausgewählt</value>
   </data>
   <data name="MessageTotalPage" xml:space="preserve">
-    <value>{0} pages</value>
+    <value>{0} Seite(n)</value>
   </data>
   <data name="TitleBackup" xml:space="preserve">
-    <value>Select a backup folder.</value>
+    <value>Wählen Sie einen Backup-Ordner aus.</value>
   </data>
   <data name="TitleEncryption" xml:space="preserve">
-    <value>Encryption</value>
+    <value>Verschlüsselung</value>
   </data>
   <data name="TitleExtract" xml:space="preserve">
-    <value>Extraction details</value>
+    <value>Details zur Extraktion</value>
   </data>
   <data name="TitleInsert" xml:space="preserve">
-    <value>Insertion details</value>
+    <value>Details zur Einfügung</value>
   </data>
   <data name="TitleMetadata" xml:space="preserve">
-    <value>PDF Metadata</value>
+    <value>PDF-Metadaten</value>
   </data>
   <data name="TitleOpen" xml:space="preserve">
-    <value>Open file</value>
+    <value>Datei öffnen</value>
   </data>
   <data name="TitlePassword" xml:space="preserve">
-    <value>Input password</value>
+    <value>Passwort eingeben</value>
   </data>
   <data name="TitlePreview" xml:space="preserve">
-    <value>{0} ({1}/{2} page)</value>
+    <value>{0} ({1}/{2} Seite)</value>
   </data>
   <data name="TitleRemove" xml:space="preserve">
-    <value>Removal details</value>
+    <value>Details zur Entfernung</value>
   </data>
   <data name="TitleSaveAs" xml:space="preserve">
-    <value>Save as</value>
+    <value>Speichern unter</value>
   </data>
   <data name="TitleSetting" xml:space="preserve">
-    <value>CubePDF Utility settings</value>
+    <value>CubePDF Utility-Einstellungen</value>
   </data>
   <data name="TitleTemp" xml:space="preserve">
-    <value>Select a temp folder. If you do not specify a temp folder, the same folder as the source file will be used.</value>
+    <value>Wählen Sie einen temporären Ordner aus. Wenn Sie keinen Temp-Ordner spezifizieren, wird derselbe Ordner wie für die Quelldatei verwendet.</value>
   </data>
   <data name="TooltipExtract" xml:space="preserve">
-    <value>Extract the selected pages</value>
+    <value>Die ausgewählten Seiten extrahieren</value>
   </data>
   <data name="TooltipInsert" xml:space="preserve">
-    <value>Insert behind selected position</value>
+    <value>Hinter ausgewählter Position einfügen</value>
   </data>
   <data name="TooltipMetadata" xml:space="preserve">
-    <value>PDF document metadata</value>
+    <value>PDF-Dokument-Metadaten</value>
   </data>
   <data name="TooltipRemove" xml:space="preserve">
-    <value>Remove the selected pages</value>
+    <value>Die ausgewählten Seiten entfernen</value>
   </data>
   <data name="TooltipSave" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="UnitByte" xml:space="preserve">
     <value>Bytes</value>

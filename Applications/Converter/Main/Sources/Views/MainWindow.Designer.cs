@@ -149,26 +149,23 @@
             this.RootPanel.Controls.Add(this.FooterPanel, 1, 3);
             this.RootPanel.Controls.Add(this.HeaderPictureBox, 0, 0);
             this.RootPanel.Name = "RootPanel";
-            this.PathLintToolTip.SetToolTip(this.RootPanel, resources.GetString("RootPanel.ToolTip"));
             //
             // SettingTabControl
             //
-            resources.ApplyResources(this.SettingTabControl, "SettingTabControl");
             this.SettingTabControl.Controls.Add(this.GeneralTabPage);
             this.SettingTabControl.Controls.Add(this.DocumentPage);
             this.SettingTabControl.Controls.Add(this.EncryptionTabPage);
             this.SettingTabControl.Controls.Add(this.OtherTabPage);
+            resources.ApplyResources(this.SettingTabControl, "SettingTabControl");
             this.SettingTabControl.Name = "SettingTabControl";
             this.SettingTabControl.SelectedIndex = 0;
             this.SettingTabControl.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.PathLintToolTip.SetToolTip(this.SettingTabControl, resources.GetString("SettingTabControl.ToolTip"));
             //
             // GeneralTabPage
             //
             resources.ApplyResources(this.GeneralTabPage, "GeneralTabPage");
             this.GeneralTabPage.Controls.Add(this.GeneralPanel);
             this.GeneralTabPage.Name = "GeneralTabPage";
-            this.PathLintToolTip.SetToolTip(this.GeneralTabPage, resources.GetString("GeneralTabPage.ToolTip"));
             this.GeneralTabPage.UseVisualStyleBackColor = true;
             //
             // GeneralPanel
@@ -194,7 +191,6 @@
             this.GeneralPanel.Controls.Add(this.DestinationPanel, 2, 1);
             this.GeneralPanel.Controls.Add(this.FormatPanel, 2, 3);
             this.GeneralPanel.Name = "GeneralPanel";
-            this.PathLintToolTip.SetToolTip(this.GeneralPanel, resources.GetString("GeneralPanel.ToolTip"));
             //
             // ColorModeComboBox
             //
@@ -202,13 +198,11 @@
             this.ColorModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ColorModeComboBox.FormattingEnabled = true;
             this.ColorModeComboBox.Name = "ColorModeComboBox";
-            this.PathLintToolTip.SetToolTip(this.ColorModeComboBox, resources.GetString("ColorModeComboBox.ToolTip"));
             //
             // ColorModeLabel
             //
             resources.ApplyResources(this.ColorModeLabel, "ColorModeLabel");
             this.ColorModeLabel.Name = "ColorModeLabel";
-            this.PathLintToolTip.SetToolTip(this.ColorModeLabel, resources.GetString("ColorModeLabel.ToolTip"));
             //
             // SaveOptionComboBox
             //
@@ -216,27 +210,23 @@
             this.SaveOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SaveOptionComboBox.FormattingEnabled = true;
             this.SaveOptionComboBox.Name = "SaveOptionComboBox";
-            this.PathLintToolTip.SetToolTip(this.SaveOptionComboBox, resources.GetString("SaveOptionComboBox.ToolTip"));
             //
             // LinearizationCheckBox
             //
             resources.ApplyResources(this.LinearizationCheckBox, "LinearizationCheckBox");
             this.LinearizationCheckBox.Name = "LinearizationCheckBox";
-            this.PathLintToolTip.SetToolTip(this.LinearizationCheckBox, resources.GetString("LinearizationCheckBox.ToolTip"));
             this.LinearizationCheckBox.UseVisualStyleBackColor = true;
             //
             // JpegCheckBox
             //
             resources.ApplyResources(this.JpegCheckBox, "JpegCheckBox");
             this.JpegCheckBox.Name = "JpegCheckBox";
-            this.PathLintToolTip.SetToolTip(this.JpegCheckBox, resources.GetString("JpegCheckBox.ToolTip"));
             this.JpegCheckBox.UseVisualStyleBackColor = true;
             //
             // OptionLabel
             //
             resources.ApplyResources(this.OptionLabel, "OptionLabel");
             this.OptionLabel.Name = "OptionLabel";
-            this.PathLintToolTip.SetToolTip(this.OptionLabel, resources.GetString("OptionLabel.ToolTip"));
             //
             // ResolutionNumeric
             //
@@ -257,7 +247,6 @@
             0,
             0});
             this.ResolutionNumeric.Name = "ResolutionNumeric";
-            this.PathLintToolTip.SetToolTip(this.ResolutionNumeric, resources.GetString("ResolutionNumeric.ToolTip"));
             this.ResolutionNumeric.Value = new decimal(new int[] {
             600,
             0,
@@ -270,7 +259,6 @@
             this.PostProcessComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PostProcessComboBox.FormattingEnabled = true;
             this.PostProcessComboBox.Name = "PostProcessComboBox";
-            this.PathLintToolTip.SetToolTip(this.PostProcessComboBox, resources.GetString("PostProcessComboBox.ToolTip"));
             //
             // UserProgramPanel
             //
@@ -278,36 +266,31 @@
             this.UserProgramPanel.Controls.Add(this.UserProgramButton, 0, 0);
             this.UserProgramPanel.Controls.Add(this.UserProgramTextBox, 0, 0);
             this.UserProgramPanel.Name = "UserProgramPanel";
-            this.PathLintToolTip.SetToolTip(this.UserProgramPanel, resources.GetString("UserProgramPanel.ToolTip"));
             //
             // UserProgramButton
             //
             resources.ApplyResources(this.UserProgramButton, "UserProgramButton");
             this.UserProgramButton.Name = "UserProgramButton";
-            this.PathLintToolTip.SetToolTip(this.UserProgramButton, resources.GetString("UserProgramButton.ToolTip"));
             this.UserProgramButton.UseVisualStyleBackColor = true;
             //
             // UserProgramTextBox
             //
             resources.ApplyResources(this.UserProgramTextBox, "UserProgramTextBox");
             this.UserProgramTextBox.Name = "UserProgramTextBox";
-            this.PathLintToolTip.SetToolTip(this.UserProgramTextBox, resources.GetString("UserProgramTextBox.ToolTip"));
             //
             // OrientationPanel
             //
-            resources.ApplyResources(this.OrientationPanel, "OrientationPanel");
             this.OrientationPanel.Controls.Add(this.PortraitRadioButton);
             this.OrientationPanel.Controls.Add(this.LandscapeRadioButton);
             this.OrientationPanel.Controls.Add(this.AutoRadioButton);
+            resources.ApplyResources(this.OrientationPanel, "OrientationPanel");
             this.OrientationPanel.Name = "OrientationPanel";
-            this.PathLintToolTip.SetToolTip(this.OrientationPanel, resources.GetString("OrientationPanel.ToolTip"));
             //
             // PortraitRadioButton
             //
             resources.ApplyResources(this.PortraitRadioButton, "PortraitRadioButton");
             this.PortraitRadioButton.Name = "PortraitRadioButton";
             this.PortraitRadioButton.TabStop = true;
-            this.PathLintToolTip.SetToolTip(this.PortraitRadioButton, resources.GetString("PortraitRadioButton.ToolTip"));
             this.PortraitRadioButton.UseVisualStyleBackColor = true;
             //
             // LandscapeRadioButton
@@ -315,7 +298,6 @@
             resources.ApplyResources(this.LandscapeRadioButton, "LandscapeRadioButton");
             this.LandscapeRadioButton.Name = "LandscapeRadioButton";
             this.LandscapeRadioButton.TabStop = true;
-            this.PathLintToolTip.SetToolTip(this.LandscapeRadioButton, resources.GetString("LandscapeRadioButton.ToolTip"));
             this.LandscapeRadioButton.UseVisualStyleBackColor = true;
             //
             // AutoRadioButton
@@ -323,14 +305,12 @@
             resources.ApplyResources(this.AutoRadioButton, "AutoRadioButton");
             this.AutoRadioButton.Name = "AutoRadioButton";
             this.AutoRadioButton.TabStop = true;
-            this.PathLintToolTip.SetToolTip(this.AutoRadioButton, resources.GetString("AutoRadioButton.ToolTip"));
             this.AutoRadioButton.UseVisualStyleBackColor = true;
             //
             // OrientationLabel
             //
             resources.ApplyResources(this.OrientationLabel, "OrientationLabel");
             this.OrientationLabel.Name = "OrientationLabel";
-            this.PathLintToolTip.SetToolTip(this.OrientationLabel, resources.GetString("OrientationLabel.ToolTip"));
             //
             // SourcePanel
             //
@@ -338,50 +318,42 @@
             this.SourcePanel.Controls.Add(this.SourceButton, 0, 0);
             this.SourcePanel.Controls.Add(this.SourceTextBox, 0, 0);
             this.SourcePanel.Name = "SourcePanel";
-            this.PathLintToolTip.SetToolTip(this.SourcePanel, resources.GetString("SourcePanel.ToolTip"));
             //
             // SourceButton
             //
             resources.ApplyResources(this.SourceButton, "SourceButton");
             this.SourceButton.Name = "SourceButton";
-            this.PathLintToolTip.SetToolTip(this.SourceButton, resources.GetString("SourceButton.ToolTip"));
             this.SourceButton.UseVisualStyleBackColor = true;
             //
             // SourceTextBox
             //
             resources.ApplyResources(this.SourceTextBox, "SourceTextBox");
             this.SourceTextBox.Name = "SourceTextBox";
-            this.PathLintToolTip.SetToolTip(this.SourceTextBox, resources.GetString("SourceTextBox.ToolTip"));
             //
             // SourceLabel
             //
             resources.ApplyResources(this.SourceLabel, "SourceLabel");
             this.SourceLabel.Name = "SourceLabel";
-            this.PathLintToolTip.SetToolTip(this.SourceLabel, resources.GetString("SourceLabel.ToolTip"));
             //
             // PostProcessLabel
             //
             resources.ApplyResources(this.PostProcessLabel, "PostProcessLabel");
             this.PostProcessLabel.Name = "PostProcessLabel";
-            this.PathLintToolTip.SetToolTip(this.PostProcessLabel, resources.GetString("PostProcessLabel.ToolTip"));
             //
             // DestinationLabel
             //
             resources.ApplyResources(this.DestinationLabel, "DestinationLabel");
             this.DestinationLabel.Name = "DestinationLabel";
-            this.PathLintToolTip.SetToolTip(this.DestinationLabel, resources.GetString("DestinationLabel.ToolTip"));
             //
             // ResolutionLabel
             //
             resources.ApplyResources(this.ResolutionLabel, "ResolutionLabel");
             this.ResolutionLabel.Name = "ResolutionLabel";
-            this.PathLintToolTip.SetToolTip(this.ResolutionLabel, resources.GetString("ResolutionLabel.ToolTip"));
             //
             // FormatLabel
             //
             resources.ApplyResources(this.FormatLabel, "FormatLabel");
             this.FormatLabel.Name = "FormatLabel";
-            this.PathLintToolTip.SetToolTip(this.FormatLabel, resources.GetString("FormatLabel.ToolTip"));
             //
             // DestinationPanel
             //
@@ -389,20 +361,17 @@
             this.DestinationPanel.Controls.Add(this.DestinationButton, 1, 0);
             this.DestinationPanel.Controls.Add(this.DestinationTextBox, 0, 0);
             this.DestinationPanel.Name = "DestinationPanel";
-            this.PathLintToolTip.SetToolTip(this.DestinationPanel, resources.GetString("DestinationPanel.ToolTip"));
             //
             // DestinationButton
             //
             resources.ApplyResources(this.DestinationButton, "DestinationButton");
             this.DestinationButton.Name = "DestinationButton";
-            this.PathLintToolTip.SetToolTip(this.DestinationButton, resources.GetString("DestinationButton.ToolTip"));
             this.DestinationButton.UseVisualStyleBackColor = true;
             //
             // DestinationTextBox
             //
             resources.ApplyResources(this.DestinationTextBox, "DestinationTextBox");
             this.DestinationTextBox.Name = "DestinationTextBox";
-            this.PathLintToolTip.SetToolTip(this.DestinationTextBox, resources.GetString("DestinationTextBox.ToolTip"));
             //
             // FormatPanel
             //
@@ -410,7 +379,6 @@
             this.FormatPanel.Controls.Add(this.PdfVersionComboBox, 0, 0);
             this.FormatPanel.Controls.Add(this.FormatComboBox, 0, 0);
             this.FormatPanel.Name = "FormatPanel";
-            this.PathLintToolTip.SetToolTip(this.FormatPanel, resources.GetString("FormatPanel.ToolTip"));
             //
             // PdfVersionComboBox
             //
@@ -418,7 +386,6 @@
             this.PdfVersionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PdfVersionComboBox.FormattingEnabled = true;
             this.PdfVersionComboBox.Name = "PdfVersionComboBox";
-            this.PathLintToolTip.SetToolTip(this.PdfVersionComboBox, resources.GetString("PdfVersionComboBox.ToolTip"));
             //
             // FormatComboBox
             //
@@ -426,14 +393,12 @@
             this.FormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.FormatComboBox.FormattingEnabled = true;
             this.FormatComboBox.Name = "FormatComboBox";
-            this.PathLintToolTip.SetToolTip(this.FormatComboBox, resources.GetString("FormatComboBox.ToolTip"));
             //
             // DocumentPage
             //
             resources.ApplyResources(this.DocumentPage, "DocumentPage");
             this.DocumentPage.Controls.Add(this.DocumentPanel);
             this.DocumentPage.Name = "DocumentPage";
-            this.PathLintToolTip.SetToolTip(this.DocumentPage, resources.GetString("DocumentPage.ToolTip"));
             this.DocumentPage.UseVisualStyleBackColor = true;
             //
             // DocumentPanel
@@ -452,7 +417,6 @@
             this.DocumentPanel.Controls.Add(this.TitleTextBox, 2, 1);
             this.DocumentPanel.Controls.Add(this.TitleLabel, 1, 1);
             this.DocumentPanel.Name = "DocumentPanel";
-            this.PathLintToolTip.SetToolTip(this.DocumentPanel, resources.GetString("DocumentPanel.ToolTip"));
             //
             // ViewOptionComboBox
             //
@@ -460,80 +424,67 @@
             this.ViewOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ViewOptionComboBox.FormattingEnabled = true;
             this.ViewOptionComboBox.Name = "ViewOptionComboBox";
-            this.PathLintToolTip.SetToolTip(this.ViewOptionComboBox, resources.GetString("ViewOptionComboBox.ToolTip"));
             //
             // ViewerOptionLabel
             //
             resources.ApplyResources(this.ViewerOptionLabel, "ViewerOptionLabel");
             this.ViewerOptionLabel.Name = "ViewerOptionLabel";
-            this.PathLintToolTip.SetToolTip(this.ViewerOptionLabel, resources.GetString("ViewerOptionLabel.ToolTip"));
             //
             // CreatorTextBox
             //
             resources.ApplyResources(this.CreatorTextBox, "CreatorTextBox");
             this.CreatorTextBox.Name = "CreatorTextBox";
-            this.PathLintToolTip.SetToolTip(this.CreatorTextBox, resources.GetString("CreatorTextBox.ToolTip"));
             //
             // CreatorLabel
             //
             resources.ApplyResources(this.CreatorLabel, "CreatorLabel");
             this.CreatorLabel.Name = "CreatorLabel";
-            this.PathLintToolTip.SetToolTip(this.CreatorLabel, resources.GetString("CreatorLabel.ToolTip"));
             //
             // KeywordsTextBox
             //
             resources.ApplyResources(this.KeywordsTextBox, "KeywordsTextBox");
             this.KeywordsTextBox.Name = "KeywordsTextBox";
-            this.PathLintToolTip.SetToolTip(this.KeywordsTextBox, resources.GetString("KeywordsTextBox.ToolTip"));
             //
             // KeywordLabel
             //
             resources.ApplyResources(this.KeywordLabel, "KeywordLabel");
             this.KeywordLabel.Name = "KeywordLabel";
-            this.PathLintToolTip.SetToolTip(this.KeywordLabel, resources.GetString("KeywordLabel.ToolTip"));
             //
             // SubjectTextBox
             //
             resources.ApplyResources(this.SubjectTextBox, "SubjectTextBox");
             this.SubjectTextBox.Name = "SubjectTextBox";
-            this.PathLintToolTip.SetToolTip(this.SubjectTextBox, resources.GetString("SubjectTextBox.ToolTip"));
             //
             // SubjectLabel
             //
             resources.ApplyResources(this.SubjectLabel, "SubjectLabel");
             this.SubjectLabel.Name = "SubjectLabel";
-            this.PathLintToolTip.SetToolTip(this.SubjectLabel, resources.GetString("SubjectLabel.ToolTip"));
             //
             // AuthorTextBox
             //
             resources.ApplyResources(this.AuthorTextBox, "AuthorTextBox");
             this.AuthorTextBox.Name = "AuthorTextBox";
-            this.PathLintToolTip.SetToolTip(this.AuthorTextBox, resources.GetString("AuthorTextBox.ToolTip"));
             //
             // AuthorLabel
             //
             resources.ApplyResources(this.AuthorLabel, "AuthorLabel");
             this.AuthorLabel.Name = "AuthorLabel";
-            this.PathLintToolTip.SetToolTip(this.AuthorLabel, resources.GetString("AuthorLabel.ToolTip"));
             //
             // TitleTextBox
             //
             resources.ApplyResources(this.TitleTextBox, "TitleTextBox");
             this.TitleTextBox.Name = "TitleTextBox";
-            this.PathLintToolTip.SetToolTip(this.TitleTextBox, resources.GetString("TitleTextBox.ToolTip"));
             //
             // TitleLabel
             //
             resources.ApplyResources(this.TitleLabel, "TitleLabel");
             this.TitleLabel.Name = "TitleLabel";
-            this.PathLintToolTip.SetToolTip(this.TitleLabel, resources.GetString("TitleLabel.ToolTip"));
             //
             // EncryptionTabPage
             //
             resources.ApplyResources(this.EncryptionTabPage, "EncryptionTabPage");
             this.EncryptionTabPage.Controls.Add(this.EncryptionOuterPanel);
             this.EncryptionTabPage.Name = "EncryptionTabPage";
-            this.PathLintToolTip.SetToolTip(this.EncryptionTabPage, resources.GetString("EncryptionTabPage.ToolTip"));
             this.EncryptionTabPage.UseVisualStyleBackColor = true;
             //
             // EncryptionOuterPanel
@@ -542,13 +493,11 @@
             this.EncryptionOuterPanel.Controls.Add(this.EncryptionCheckBox, 1, 1);
             this.EncryptionOuterPanel.Controls.Add(this.EncryptionPanel, 1, 2);
             this.EncryptionOuterPanel.Name = "EncryptionOuterPanel";
-            this.PathLintToolTip.SetToolTip(this.EncryptionOuterPanel, resources.GetString("EncryptionOuterPanel.ToolTip"));
             //
             // EncryptionCheckBox
             //
             resources.ApplyResources(this.EncryptionCheckBox, "EncryptionCheckBox");
             this.EncryptionCheckBox.Name = "EncryptionCheckBox";
-            this.PathLintToolTip.SetToolTip(this.EncryptionCheckBox, resources.GetString("EncryptionCheckBox.ToolTip"));
             this.EncryptionCheckBox.UseVisualStyleBackColor = true;
             //
             // EncryptionPanel
@@ -562,46 +511,39 @@
             this.EncryptionPanel.Controls.Add(this.OwnerPasswordLabel, 0, 0);
             this.EncryptionPanel.Controls.Add(this.OperationPanel, 1, 3);
             this.EncryptionPanel.Name = "EncryptionPanel";
-            this.PathLintToolTip.SetToolTip(this.EncryptionPanel, resources.GetString("EncryptionPanel.ToolTip"));
             //
             // UserPasswordCheckBox
             //
             resources.ApplyResources(this.UserPasswordCheckBox, "UserPasswordCheckBox");
             this.UserPasswordCheckBox.Name = "UserPasswordCheckBox";
-            this.PathLintToolTip.SetToolTip(this.UserPasswordCheckBox, resources.GetString("UserPasswordCheckBox.ToolTip"));
             this.UserPasswordCheckBox.UseVisualStyleBackColor = true;
             //
             // OperationLabel
             //
             resources.ApplyResources(this.OperationLabel, "OperationLabel");
             this.OperationLabel.Name = "OperationLabel";
-            this.PathLintToolTip.SetToolTip(this.OperationLabel, resources.GetString("OperationLabel.ToolTip"));
             //
             // OwnerConfirmTextBox
             //
             resources.ApplyResources(this.OwnerConfirmTextBox, "OwnerConfirmTextBox");
             this.OwnerConfirmTextBox.Name = "OwnerConfirmTextBox";
-            this.PathLintToolTip.SetToolTip(this.OwnerConfirmTextBox, resources.GetString("OwnerConfirmTextBox.ToolTip"));
             this.OwnerConfirmTextBox.UseSystemPasswordChar = true;
             //
             // OwnerConfirmLabel
             //
             resources.ApplyResources(this.OwnerConfirmLabel, "OwnerConfirmLabel");
             this.OwnerConfirmLabel.Name = "OwnerConfirmLabel";
-            this.PathLintToolTip.SetToolTip(this.OwnerConfirmLabel, resources.GetString("OwnerConfirmLabel.ToolTip"));
             //
             // OwnerPasswordTextBox
             //
             resources.ApplyResources(this.OwnerPasswordTextBox, "OwnerPasswordTextBox");
             this.OwnerPasswordTextBox.Name = "OwnerPasswordTextBox";
-            this.PathLintToolTip.SetToolTip(this.OwnerPasswordTextBox, resources.GetString("OwnerPasswordTextBox.ToolTip"));
             this.OwnerPasswordTextBox.UseSystemPasswordChar = true;
             //
             // OwnerPasswordLabel
             //
             resources.ApplyResources(this.OwnerPasswordLabel, "OwnerPasswordLabel");
             this.OwnerPasswordLabel.Name = "OwnerPasswordLabel";
-            this.PathLintToolTip.SetToolTip(this.OwnerPasswordLabel, resources.GetString("OwnerPasswordLabel.ToolTip"));
             //
             // OperationPanel
             //
@@ -610,13 +552,11 @@
             this.OperationPanel.Controls.Add(this.UserPasswordPanel, 0, 0);
             this.OperationPanel.Controls.Add(this.PermissionPanel, 0, 2);
             this.OperationPanel.Name = "OperationPanel";
-            this.PathLintToolTip.SetToolTip(this.OperationPanel, resources.GetString("OperationPanel.ToolTip"));
             //
             // SharePasswordCheckBox
             //
             resources.ApplyResources(this.SharePasswordCheckBox, "SharePasswordCheckBox");
             this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
-            this.PathLintToolTip.SetToolTip(this.SharePasswordCheckBox, resources.GetString("SharePasswordCheckBox.ToolTip"));
             this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
             //
             // UserPasswordPanel
@@ -627,33 +567,28 @@
             this.UserPasswordPanel.Controls.Add(this.UserConfirmLabel, 0, 1);
             this.UserPasswordPanel.Controls.Add(this.UserPasswordLabel, 0, 0);
             this.UserPasswordPanel.Name = "UserPasswordPanel";
-            this.PathLintToolTip.SetToolTip(this.UserPasswordPanel, resources.GetString("UserPasswordPanel.ToolTip"));
             //
             // UserConfirmTextBox
             //
             resources.ApplyResources(this.UserConfirmTextBox, "UserConfirmTextBox");
             this.UserConfirmTextBox.Name = "UserConfirmTextBox";
-            this.PathLintToolTip.SetToolTip(this.UserConfirmTextBox, resources.GetString("UserConfirmTextBox.ToolTip"));
             this.UserConfirmTextBox.UseSystemPasswordChar = true;
             //
             // UserPasswordTextBox
             //
             resources.ApplyResources(this.UserPasswordTextBox, "UserPasswordTextBox");
             this.UserPasswordTextBox.Name = "UserPasswordTextBox";
-            this.PathLintToolTip.SetToolTip(this.UserPasswordTextBox, resources.GetString("UserPasswordTextBox.ToolTip"));
             this.UserPasswordTextBox.UseSystemPasswordChar = true;
             //
             // UserConfirmLabel
             //
             resources.ApplyResources(this.UserConfirmLabel, "UserConfirmLabel");
             this.UserConfirmLabel.Name = "UserConfirmLabel";
-            this.PathLintToolTip.SetToolTip(this.UserConfirmLabel, resources.GetString("UserConfirmLabel.ToolTip"));
             //
             // UserPasswordLabel
             //
             resources.ApplyResources(this.UserPasswordLabel, "UserPasswordLabel");
             this.UserPasswordLabel.Name = "UserPasswordLabel";
-            this.PathLintToolTip.SetToolTip(this.UserPasswordLabel, resources.GetString("UserPasswordLabel.ToolTip"));
             //
             // PermissionPanel
             //
@@ -665,48 +600,41 @@
             this.PermissionPanel.Controls.Add(this.AllowCopyCheckBox, 0, 1);
             this.PermissionPanel.Controls.Add(this.AllowPrintCheckBox, 0, 0);
             this.PermissionPanel.Name = "PermissionPanel";
-            this.PathLintToolTip.SetToolTip(this.PermissionPanel, resources.GetString("PermissionPanel.ToolTip"));
             //
             // AllowAnnotationCheckBox
             //
             resources.ApplyResources(this.AllowAnnotationCheckBox, "AllowAnnotationCheckBox");
             this.AllowAnnotationCheckBox.Name = "AllowAnnotationCheckBox";
-            this.PathLintToolTip.SetToolTip(this.AllowAnnotationCheckBox, resources.GetString("AllowAnnotationCheckBox.ToolTip"));
             this.AllowAnnotationCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowAccessibilityCheckBox
             //
             resources.ApplyResources(this.AllowAccessibilityCheckBox, "AllowAccessibilityCheckBox");
             this.AllowAccessibilityCheckBox.Name = "AllowAccessibilityCheckBox";
-            this.PathLintToolTip.SetToolTip(this.AllowAccessibilityCheckBox, resources.GetString("AllowAccessibilityCheckBox.ToolTip"));
             this.AllowAccessibilityCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowModifyCheckBox
             //
             resources.ApplyResources(this.AllowModifyCheckBox, "AllowModifyCheckBox");
             this.AllowModifyCheckBox.Name = "AllowModifyCheckBox";
-            this.PathLintToolTip.SetToolTip(this.AllowModifyCheckBox, resources.GetString("AllowModifyCheckBox.ToolTip"));
             this.AllowModifyCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowFormCheckBox
             //
             resources.ApplyResources(this.AllowFormCheckBox, "AllowFormCheckBox");
             this.AllowFormCheckBox.Name = "AllowFormCheckBox";
-            this.PathLintToolTip.SetToolTip(this.AllowFormCheckBox, resources.GetString("AllowFormCheckBox.ToolTip"));
             this.AllowFormCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowCopyCheckBox
             //
             resources.ApplyResources(this.AllowCopyCheckBox, "AllowCopyCheckBox");
             this.AllowCopyCheckBox.Name = "AllowCopyCheckBox";
-            this.PathLintToolTip.SetToolTip(this.AllowCopyCheckBox, resources.GetString("AllowCopyCheckBox.ToolTip"));
             this.AllowCopyCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowPrintCheckBox
             //
             resources.ApplyResources(this.AllowPrintCheckBox, "AllowPrintCheckBox");
             this.AllowPrintCheckBox.Name = "AllowPrintCheckBox";
-            this.PathLintToolTip.SetToolTip(this.AllowPrintCheckBox, resources.GetString("AllowPrintCheckBox.ToolTip"));
             this.AllowPrintCheckBox.UseVisualStyleBackColor = true;
             //
             // OtherTabPage
@@ -714,7 +642,6 @@
             resources.ApplyResources(this.OtherTabPage, "OtherTabPage");
             this.OtherTabPage.Controls.Add(this.OtherPanel);
             this.OtherTabPage.Name = "OtherTabPage";
-            this.PathLintToolTip.SetToolTip(this.OtherTabPage, resources.GetString("OtherTabPage.ToolTip"));
             this.OtherTabPage.UseVisualStyleBackColor = true;
             //
             // OtherPanel
@@ -726,19 +653,16 @@
             this.OtherPanel.Controls.Add(this.AboutLabel, 1, 1);
             this.OtherPanel.Controls.Add(this.VersionPanel, 2, 1);
             this.OtherPanel.Name = "OtherPanel";
-            this.PathLintToolTip.SetToolTip(this.OtherPanel, resources.GetString("OtherPanel.ToolTip"));
             //
             // LanguageLabel
             //
             resources.ApplyResources(this.LanguageLabel, "LanguageLabel");
             this.LanguageLabel.Name = "LanguageLabel";
-            this.PathLintToolTip.SetToolTip(this.LanguageLabel, resources.GetString("LanguageLabel.ToolTip"));
             //
             // UpdateCheckBox
             //
             resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
             this.UpdateCheckBox.Name = "UpdateCheckBox";
-            this.PathLintToolTip.SetToolTip(this.UpdateCheckBox, resources.GetString("UpdateCheckBox.ToolTip"));
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
             //
             // LanguageComboBox
@@ -747,25 +671,22 @@
             this.LanguageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.LanguageComboBox.FormattingEnabled = true;
             this.LanguageComboBox.Name = "LanguageComboBox";
-            this.PathLintToolTip.SetToolTip(this.LanguageComboBox, resources.GetString("LanguageComboBox.ToolTip"));
             //
             // AboutLabel
             //
             resources.ApplyResources(this.AboutLabel, "AboutLabel");
             this.AboutLabel.Name = "AboutLabel";
-            this.PathLintToolTip.SetToolTip(this.AboutLabel, resources.GetString("AboutLabel.ToolTip"));
             //
             // VersionPanel
             //
-            resources.ApplyResources(this.VersionPanel, "VersionPanel");
             this.VersionPanel.Copyright = "Copyright © 2010 CubeSoft, Inc.";
             this.VersionPanel.Description = "";
+            resources.ApplyResources(this.VersionPanel, "VersionPanel");
             this.VersionPanel.Image = null;
             this.VersionPanel.Name = "VersionPanel";
             this.VersionPanel.OneLine = true;
             this.VersionPanel.Product = "CubePDF";
             this.VersionPanel.TabStop = false;
-            this.PathLintToolTip.SetToolTip(this.VersionPanel, resources.GetString("VersionPanel.ToolTip"));
             this.VersionPanel.Uri = null;
             this.VersionPanel.Version = "1.0.0 (x64)";
             //
@@ -776,63 +697,56 @@
             this.FooterPanel.Controls.Add(this.ExecButton, 2, 1);
             this.FooterPanel.Controls.Add(this.ExitButton, 3, 1);
             this.FooterPanel.Name = "FooterPanel";
-            this.PathLintToolTip.SetToolTip(this.FooterPanel, resources.GetString("FooterPanel.ToolTip"));
             //
             // ToolPanel
             //
-            resources.ApplyResources(this.ToolPanel, "ToolPanel");
             this.ToolPanel.Controls.Add(this.MainProgressBar);
             this.ToolPanel.Controls.Add(this.SettingButton);
+            resources.ApplyResources(this.ToolPanel, "ToolPanel");
             this.ToolPanel.Name = "ToolPanel";
-            this.PathLintToolTip.SetToolTip(this.ToolPanel, resources.GetString("ToolPanel.ToolTip"));
             //
             // MainProgressBar
             //
             resources.ApplyResources(this.MainProgressBar, "MainProgressBar");
             this.MainProgressBar.Name = "MainProgressBar";
             this.MainProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.PathLintToolTip.SetToolTip(this.MainProgressBar, resources.GetString("MainProgressBar.ToolTip"));
             //
             // SettingButton
             //
-            resources.ApplyResources(this.SettingButton, "SettingButton");
             this.SettingButton.BackColor = System.Drawing.Color.White;
             this.SettingButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            resources.ApplyResources(this.SettingButton, "SettingButton");
             this.SettingButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.SettingButton.Name = "SettingButton";
-            this.PathLintToolTip.SetToolTip(this.SettingButton, resources.GetString("SettingButton.ToolTip"));
             this.SettingButton.UseVisualStyleBackColor = false;
             //
             // ExecButton
             //
-            resources.ApplyResources(this.ExecButton, "ExecButton");
             this.ExecButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(39)))), ((int)(((byte)(45)))));
             this.ExecButton.DialogResult = System.Windows.Forms.DialogResult.OK;
+            resources.ApplyResources(this.ExecButton, "ExecButton");
             this.ExecButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(32)))), ((int)(((byte)(38)))));
             this.ExecButton.ForeColor = System.Drawing.Color.White;
             this.ExecButton.Name = "ExecButton";
-            this.PathLintToolTip.SetToolTip(this.ExecButton, resources.GetString("ExecButton.ToolTip"));
             this.ExecButton.UseVisualStyleBackColor = false;
             //
             // ExitButton
             //
-            resources.ApplyResources(this.ExitButton, "ExitButton");
             this.ExitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(153)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
             this.ExitButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.ExitButton, "ExitButton");
             this.ExitButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.ExitButton.ForeColor = System.Drawing.Color.White;
             this.ExitButton.Name = "ExitButton";
-            this.PathLintToolTip.SetToolTip(this.ExitButton, resources.GetString("ExitButton.ToolTip"));
             this.ExitButton.UseVisualStyleBackColor = false;
             //
             // HeaderPictureBox
             //
-            resources.ApplyResources(this.HeaderPictureBox, "HeaderPictureBox");
             this.RootPanel.SetColumnSpan(this.HeaderPictureBox, 3);
+            resources.ApplyResources(this.HeaderPictureBox, "HeaderPictureBox");
             this.HeaderPictureBox.Image = global::Cube.Pdf.Converter.Properties.Resources.Header;
             this.HeaderPictureBox.Name = "HeaderPictureBox";
             this.HeaderPictureBox.TabStop = false;
-            this.PathLintToolTip.SetToolTip(this.HeaderPictureBox, resources.GetString("HeaderPictureBox.ToolTip"));
             //
             // PathLintToolTip
             //
@@ -843,13 +757,12 @@
             // MainWindow
             //
             this.AcceptButton = this.ExecButton;
-            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.ExitButton;
+            resources.ApplyResources(this, "$this");
             this.Controls.Add(this.RootPanel);
             this.MaximizeBox = false;
             this.Name = "MainWindow";
-            this.PathLintToolTip.SetToolTip(this, resources.GetString("$this.ToolTip"));
             this.RootPanel.ResumeLayout(false);
             this.SettingTabControl.ResumeLayout(false);
             this.GeneralTabPage.ResumeLayout(false);
