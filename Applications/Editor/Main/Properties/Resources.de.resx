@@ -221,10 +221,10 @@
     <value>Metadaten</value>
   </data>
   <data name="MenuMoveNext" xml:space="preserve">
-    <value>Weiter</value>
+    <value>Mext</value>
   </data>
   <data name="MenuMovePrevious" xml:space="preserve">
-    <value>Zurück</value>
+    <value>Prev</value>
   </data>
   <data name="MenuOk" xml:space="preserve">
     <value>OK</value>
@@ -278,7 +278,7 @@
     <value>Kürzlich verwendete Dateien zeigen</value>
   </data>
   <data name="MenuRedo" xml:space="preserve">
-    <value>Wiederherstellen (Redo)</value>
+    <value>Redo</value>
   </data>
   <data name="MenuRedraw" xml:space="preserve">
     <value>Refresh</value>
@@ -344,7 +344,7 @@
     <value>Titel</value>
   </data>
   <data name="MenuUndo" xml:space="preserve">
-    <value>Rückgängig (Undo)</value>
+    <value>Undo</value>
   </data>
   <data name="MenuUp" xml:space="preserve">
     <value>Nach oben</value>
@@ -392,7 +392,7 @@
     <value>{0} Seite(n)</value>
   </data>
   <data name="MessagePassword" xml:space="preserve">
-    <value>Bitte geben Sie das Eigentümer-Passwort zum Öffnen und Editieren ein {0}.</value>
+    <value>Bitte geben Sie das Eigentümer-Passwort zum Öffnen und Editieren ein - {0}.</value>
   </data>
   <data name="MessageRangeError" xml:space="preserve">
     <value>Der Entfernungsbereich konnte nicht geparst werden.</value>
@@ -401,10 +401,10 @@
     <value>Zum Beispiel: 1,2,4-7,9</value>
   </data>
   <data name="MessageSaved" xml:space="preserve">
-    <value>Gespeichert bei {0}</value>
+    <value>Gespeichert als {0}</value>
   </data>
   <data name="MessageSaving" xml:space="preserve">
-    <value>Speichern in {0} ...</value>
+    <value>Speicherung als {0} ...</value>
   </data>
   <data name="MessageSelection" xml:space="preserve">
     <value>{0} Seite(n) ausgewählt</value>
@@ -416,7 +416,7 @@
     <value>Wählen Sie einen Backup-Ordner aus.</value>
   </data>
   <data name="TitleEncryption" xml:space="preserve">
-    <value>Verschlüsselung</value>
+    <value>Verschlüsselung (Sicherheit)</value>
   </data>
   <data name="TitleExtract" xml:space="preserve">
     <value>Details zur Extraktion</value>
