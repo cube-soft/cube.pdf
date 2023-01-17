@@ -71,8 +71,8 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.ExtractOthers.Text, Is.EqualTo("Extract with other settings"));
             Assert.That(dest.Remove.Text,        Is.EqualTo("Remove"));
             Assert.That(dest.RemoveOthers.Text,  Is.EqualTo("Remove other pages"));
-            Assert.That(dest.MovePrevious.Text,  Is.EqualTo("Prev"));
-            Assert.That(dest.MoveNext.Text,      Is.EqualTo("Next"));
+            Assert.That(dest.MovePrevious.Text,  Is.EqualTo("Back"));
+            Assert.That(dest.MoveNext.Text,      Is.EqualTo("Forth"));
             Assert.That(dest.RotateLeft.Text,    Is.EqualTo("Left"));
             Assert.That(dest.RotateRight.Text,   Is.EqualTo("Right"));
             Assert.That(dest.Metadata.Text,      Is.EqualTo("Metadata"));
@@ -104,7 +104,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
             Assert.That(dest.Save.Tooltip,          Is.EqualTo("Save"));
-            Assert.That(dest.Close.Tooltip,        Is.EqualTo(dest.Close.Text));
+            Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
             Assert.That(dest.Exit.Tooltip,          Is.EqualTo(dest.Exit.Text));
             Assert.That(dest.Undo.Tooltip,          Is.EqualTo(dest.Undo.Text));
             Assert.That(dest.Redo.Tooltip,          Is.EqualTo(dest.Redo.Text));
@@ -202,7 +202,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Others.Tooltip,        Is.EqualTo(dest.Others.Text));
             Assert.That(dest.Open.Tooltip,          Is.EqualTo(dest.Open.Text));
             Assert.That(dest.Save.Tooltip,          Is.EqualTo("上書き保存"));
-            Assert.That(dest.Close.Tooltip,        Is.EqualTo(dest.Close.Text));
+            Assert.That(dest.Close.Tooltip,         Is.EqualTo(dest.Close.Text));
             Assert.That(dest.Exit.Tooltip,          Is.EqualTo(dest.Exit.Text));
             Assert.That(dest.Undo.Tooltip,          Is.EqualTo(dest.Undo.Text));
             Assert.That(dest.Redo.Tooltip,          Is.EqualTo(dest.Redo.Text));
