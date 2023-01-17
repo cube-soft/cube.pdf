@@ -416,7 +416,7 @@
     <value>Wählen Sie einen Backup-Ordner aus.</value>
   </data>
   <data name="TitleEncryption" xml:space="preserve">
-    <value>Verschlüsselung (Sicherheit)</value>
+    <value>Sicherheit</value>
   </data>
   <data name="TitleExtract" xml:space="preserve">
     <value>Details zur Extraktion</value>
