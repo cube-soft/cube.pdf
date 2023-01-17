@@ -221,10 +221,10 @@
     <value>Metadata</value>
   </data>
   <data name="MenuMoveNext" xml:space="preserve">
-    <value>Next</value>
+    <value>Forth</value>
   </data>
   <data name="MenuMovePrevious" xml:space="preserve">
-    <value>Prev</value>
+    <value>Back</value>
   </data>
   <data name="MenuOk" xml:space="preserve">
     <value>OK</value>
