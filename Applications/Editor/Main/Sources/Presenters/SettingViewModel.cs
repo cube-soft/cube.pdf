@@ -207,8 +207,8 @@ namespace Cube.Pdf.Editor
         {
             Cube.Language.Auto,
             Cube.Language.English,
-            Cube.Language.Japanese,
             Cube.Language.German,
+            Cube.Language.Japanese,
         };
 
         /* ----------------------------------------------------------------- */
