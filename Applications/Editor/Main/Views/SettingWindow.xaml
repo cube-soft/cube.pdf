@@ -28,7 +28,7 @@
     mc:Ignorable="d"
     Title="{Binding Title}"
     Height="400"
-    Width="500"
+    Width="550"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
     ResizeMode="NoResize"
@@ -72,7 +72,7 @@
             <TabItem Header="{Binding Summary.Text}">
                 <Grid Margin="20">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="120" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
