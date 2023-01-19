@@ -416,7 +416,7 @@
     <value>Select a backup folder.</value>
   </data>
   <data name="TitleEncryption" xml:space="preserve">
-    <value>Encryption</value>
+    <value>Security</value>
   </data>
   <data name="TitleExtract" xml:space="preserve">
     <value>Extraction details</value>

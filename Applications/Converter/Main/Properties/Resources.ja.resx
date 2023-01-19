@@ -73,6 +73,9 @@
   <data name="ErrorOwnerPassword" xml:space="preserve">
     <value>パスワードが入力されていないか、または確認欄と一致しません。パスワードおよびパスワード確認欄を確認して下さい。</value>
   </data>
+  <data name="ErrorPostProcess" xml:space="preserve">
+    <value>変換処理は正常に完了しましたが、ポストプロセスの実行に失敗しました。ファイルの関連付けやユーザープログラムの設定を確認して下さい。</value>
+  </data>
   <data name="ErrorSource" xml:space="preserve">
     <value>入力ファイルが指定されていません。正常な手順で CubePDF が実行されたかどうか確認して下さい。</value>
   </data>
