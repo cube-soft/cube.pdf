@@ -93,7 +93,17 @@ internal sealed class ProcessLauncher
     /* --------------------------------------------------------------------- */
     public void Invoke(IEnumerable<string> src)
     {
-        if (_handlers.TryGetValue(Settings.Value.PostProcess, out var dest)) dest(src);
+        var key = Settings.Value.PostProcess;
+
+        try
+        {
+            if (_handlers.TryGetValue(key, out var dest)) dest(src);
+        }
+        catch (Exception err)
+        {
+            var user = key == PostProcess.Others ? Settings.Value.UserProgram : string.Empty;
+            throw new PostProcessException(key, user, err);
+        }
     }
 
     #endregion

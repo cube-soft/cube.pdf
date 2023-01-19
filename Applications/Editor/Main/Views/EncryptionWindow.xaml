@@ -68,7 +68,7 @@
 
             <Grid IsEnabled="{Binding Enabled.Value}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="120" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 

@@ -220,6 +220,7 @@ public static class Message
     {
         CryptographicException => Properties.Resources.ErrorDigest,
         EncryptionException    => Properties.Resources.ErrorMergePassword,
+        PostProcessException   => Properties.Resources.ErrorPostProcess,
         GsApiException e       => string.Format(Properties.Resources.ErrorGhostscript, e.Status),
         ArgumentException      => src.Message,
         _                      => $"{src.Message} ({src.GetType().Name})",

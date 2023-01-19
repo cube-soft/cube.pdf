@@ -126,7 +126,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             evm.AllowForm.Value          = src.Permission.InputForm.IsAllowed();
             evm.AllowAccessibility.Value = src.Permission.Accessibility.IsAllowed();
 
-            Assert.That(evm.Title,           Is.EqualTo("Encryption"));
+            Assert.That(evm.Title,           Is.EqualTo("Security"));
             Assert.That(evm.Methods.Count(), Is.EqualTo(4));
             Assert.That(evm.Operation.Value);
             Assert.That(evm.OK.Command.CanExecute());

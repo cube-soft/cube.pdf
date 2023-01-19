@@ -73,6 +73,9 @@
   <data name="ErrorOwnerPassword" xml:space="preserve">
     <value>Owner password is empty or does not match the confirmation. Please check your password and confirmation again.</value>
   </data>
+  <data name="ErrorPostProcess" xml:space="preserve">
+    <value>Post-process failed, although the conversion was completed. Check the file association settings or the user program is correct.</value>
+  </data>
   <data name="ErrorSource" xml:space="preserve">
     <value>Input file not specified. Please check if CubePDF was executed through the normal procedure.</value>
   </data>

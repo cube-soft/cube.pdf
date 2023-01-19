@@ -18,7 +18,6 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter;
 
-using System;
 using System.Runtime.Serialization;
 using Cube.Pdf.Ghostscript;
 
