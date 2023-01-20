@@ -17,7 +17,6 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
-using System.Globalization;
 using Cube.Forms;
 using Cube.Web.Extensions;
 
@@ -43,7 +42,18 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public static Uri ProductUri => GetUri("https://www.cube-soft.jp/cubepdfpage/");
+        public static Uri ProductUri => MakeUri("https://www.cube-soft.jp/cubepdfpage/");
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentUri
+        ///
+        /// <summary>
+        /// Gets the URL of the document Web page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Uri DocumentUri => MakeUri("https://docs.cube-soft.jp/entry/cubepdf-page");
 
         #region Methods
 
@@ -126,15 +136,15 @@ namespace Cube.Pdf.Pages
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetUri
+        /// MakeUri
         ///
         /// <summary>
         /// Gets the Uri object from the specified URL string.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static Uri GetUri(string url) =>
-            new Uri(url).With("lang", CultureInfo.CurrentCulture.Name.ToLowerInvariant());
+        private static Uri MakeUri(string url) =>
+            new Uri(url).With("lang", Locale.Language.ToCultureInfo().Name.ToLowerInvariant());
 
         #endregion
     }

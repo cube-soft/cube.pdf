@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
 using Cube.DataContract;
 using Cube.FileSystem;
@@ -131,7 +130,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri ProductUri => GetUri("https://www.cube-soft.jp/cubepdfutility/");
+        public Uri ProductUri => MakeUri("https://www.cube-soft.jp/cubepdfutility/");
 
         /* ----------------------------------------------------------------- */
         ///
@@ -142,7 +141,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri DocumentUri => GetUri("https://docs.cube-soft.jp/entry/cubepdf-utility");
+        public Uri DocumentUri => MakeUri("https://docs.cube-soft.jp/entry/cubepdf-utility");
 
         #endregion
 
@@ -215,15 +214,15 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
-        /// GetUri
+        /// MakeUri
         ///
         /// <summary>
         /// Gets the Uri object from the specified URL string.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Uri GetUri(string url) =>
-            new Uri(url).With("lang", CultureInfo.CurrentCulture.Name.ToLowerInvariant());
+        private Uri MakeUri(string url) =>
+            new Uri(url).With("lang", Locale.Language.ToCultureInfo().Name.ToLowerInvariant());
 
         #endregion
     }

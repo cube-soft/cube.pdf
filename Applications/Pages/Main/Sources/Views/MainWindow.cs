@@ -110,6 +110,7 @@ namespace Cube.Pdf.Pages
             Behaviors.Add(new ClickEventBehavior(TitleButton, vm.Setting));
             Behaviors.Add(new EventBehavior(MainGridView, "DoubleClick", () => vm.Preview(SelectedIndices)));
             Behaviors.Add(new CloseBehavior(this, vm));
+            Behaviors.Add(new ProcessBehavior(vm));
             Behaviors.Add(new DialogBehavior(vm));
             Behaviors.Add(new OpenFileBehavior(vm));
             Behaviors.Add(new OpenDirectoryBehavior(vm));
@@ -153,6 +154,7 @@ namespace Cube.Pdf.Pages
         private void MakeShortcut(MainViewModel vm)
         {
             ShortcutKeys.Clear();
+            ShortcutKeys.Add(Keys.F1, vm.Help);
             ShortcutKeys.Add(Keys.Delete, () => vm.Remove(SelectedIndices));
             ShortcutKeys.Add(Keys.Control | Keys.Shift | Keys.D, vm.Clear);
             ShortcutKeys.Add(Keys.Control | Keys.Q, Close);

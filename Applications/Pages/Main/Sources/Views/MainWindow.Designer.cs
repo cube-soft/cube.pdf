@@ -74,8 +74,8 @@
             this.MainGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.MainGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.MainGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.MainGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             resources.ApplyResources(this.MainGridView, "MainGridView");
+            this.MainGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.MainGridView.GridColor = System.Drawing.SystemColors.Control;
             this.MainGridView.Name = "MainGridView";
             this.MainGridView.ReadOnly = true;

@@ -314,7 +314,7 @@
     <value>Deselect all</value>
   </data>
   <data name="MenuSelectFlip" xml:space="preserve">
-    <value>Flip selection</value>
+    <value>Invert selection</value>
   </data>
   <data name="MenuSetting" xml:space="preserve">
     <value>Settings</value>
