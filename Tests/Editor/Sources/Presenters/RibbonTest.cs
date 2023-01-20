@@ -61,7 +61,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.Redo.Text,          Is.EqualTo("Redo"));
             Assert.That(dest.Select.Text,        Is.EqualTo("Select"));
             Assert.That(dest.SelectAll.Text,     Is.EqualTo("Select all"));
-            Assert.That(dest.SelectFlip.Text,    Is.EqualTo("Flip selection"));
+            Assert.That(dest.SelectFlip.Text,    Is.EqualTo("Invert selection"));
             Assert.That(dest.SelectClear.Text,   Is.EqualTo("Deselect all"));
             Assert.That(dest.Insert.Text,        Is.EqualTo("Insert"));
             Assert.That(dest.InsertFront.Text,   Is.EqualTo("Insert at the beginning"));
