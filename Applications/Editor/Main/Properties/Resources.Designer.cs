@@ -826,7 +826,7 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
-        ///   Flip selection に類似しているローカライズされた文字列を検索します。
+        ///   Invert selection に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuSelectFlip {
             get {

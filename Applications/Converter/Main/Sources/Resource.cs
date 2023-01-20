@@ -20,7 +20,6 @@ namespace Cube.Pdf.Converter;
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Cube.Forms;
 using Cube.Pdf.Ghostscript;
@@ -293,7 +292,7 @@ public static class Resource
     ///
     /* --------------------------------------------------------------------- */
     private static Uri MakeUri(string src) =>
-        new Uri(src).With("lang", CultureInfo.CurrentCulture.Name.ToLowerInvariant());
+        new Uri(src).With("lang", Locale.Language.ToCultureInfo().Name.ToLowerInvariant());
 
     #endregion
 }

@@ -77,7 +77,7 @@
     <value>109, 189</value>
   </data>
   <data name="ViewOptionComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>342, 23</value>
+    <value>372, 23</value>
   </data>
   <data name="ViewOptionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -179,7 +179,7 @@
     <value>109, 131</value>
   </data>
   <data name="CreatorTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>342, 23</value>
+    <value>372, 23</value>
   </data>
   <data name="CreatorTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -242,7 +242,7 @@
     <value>109, 102</value>
   </data>
   <data name="KeywordTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>342, 23</value>
+    <value>372, 23</value>
   </data>
   <data name="KeywordTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -305,7 +305,7 @@
     <value>109, 73</value>
   </data>
   <data name="SubjectTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>342, 23</value>
+    <value>372, 23</value>
   </data>
   <data name="SubjectTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -368,7 +368,7 @@
     <value>109, 44</value>
   </data>
   <data name="AuthorTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>342, 23</value>
+    <value>372, 23</value>
   </data>
   <data name="AuthorTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -467,7 +467,7 @@
     <value>109, 15</value>
   </data>
   <data name="TitleTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>342, 23</value>
+    <value>372, 23</value>
   </data>
   <data name="TitleTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -491,7 +491,7 @@
     <value>109, 160</value>
   </data>
   <data name="VersionComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>342, 23</value>
+    <value>372, 23</value>
   </data>
   <data name="VersionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -518,7 +518,7 @@
     <value>9</value>
   </data>
   <data name="MetadataPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>460, 233</value>
+    <value>490, 233</value>
   </data>
   <data name="MetadataPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -545,7 +545,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="MetadataTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>466, 378</value>
+    <value>496, 378</value>
   </data>
   <data name="MetadataTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -590,7 +590,7 @@
     <value>103, 3, 3, 3</value>
   </data>
   <data name="SharePasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 19</value>
+    <value>242, 19</value>
   </data>
   <data name="SharePasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -656,7 +656,7 @@
     <value>103, 32</value>
   </data>
   <data name="OwnerConfirmTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 23</value>
+    <value>342, 23</value>
   </data>
   <data name="OwnerConfirmTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -758,7 +758,7 @@
     <value>103, 3</value>
   </data>
   <data name="OwnerPasswordTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 23</value>
+    <value>342, 23</value>
   </data>
   <data name="OwnerPasswordTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -788,7 +788,7 @@
     <value>103, 61</value>
   </data>
   <data name="UserPasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 23</value>
+    <value>342, 23</value>
   </data>
   <data name="UserPasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -818,7 +818,7 @@
     <value>103, 32</value>
   </data>
   <data name="UserConfirmTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 23</value>
+    <value>242, 23</value>
   </data>
   <data name="UserConfirmTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -881,7 +881,7 @@
     <value>103, 3</value>
   </data>
   <data name="UserPasswordTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 23</value>
+    <value>242, 23</value>
   </data>
   <data name="UserPasswordTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -950,7 +950,7 @@
     <value>2</value>
   </data>
   <data name="UserPasswordPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 58</value>
+    <value>348, 58</value>
   </data>
   <data name="UserPasswordPanel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -986,7 +986,7 @@
     <value>3, 128</value>
   </data>
   <data name="AllowAnnotationCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
+    <value>342, 19</value>
   </data>
   <data name="AllowAnnotationCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -1019,7 +1019,7 @@
     <value>3, 103</value>
   </data>
   <data name="AllowFormCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
+    <value>342, 19</value>
   </data>
   <data name="AllowFormCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -1052,7 +1052,7 @@
     <value>3, 78</value>
   </data>
   <data name="AllowAccessibilityCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
+    <value>342, 19</value>
   </data>
   <data name="AllowAccessibilityCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -1085,7 +1085,7 @@
     <value>3, 53</value>
   </data>
   <data name="AllowModifyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
+    <value>342, 19</value>
   </data>
   <data name="AllowModifyCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1118,7 +1118,7 @@
     <value>3, 28</value>
   </data>
   <data name="AllowCopyCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
+    <value>342, 19</value>
   </data>
   <data name="AllowCopyCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1151,7 +1151,7 @@
     <value>3, 3</value>
   </data>
   <data name="AllowPrintCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>308, 19</value>
+    <value>342, 19</value>
   </data>
   <data name="AllowPrintCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1184,7 +1184,7 @@
     <value>6</value>
   </data>
   <data name="PermissionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 150</value>
+    <value>348, 150</value>
   </data>
   <data name="PermissionPanel.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -1217,7 +1217,7 @@
     <value>6</value>
   </data>
   <data name="EncryptionSubPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>414, 320</value>
+    <value>448, 320</value>
   </data>
   <data name="EncryptionSubPanel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1247,7 +1247,7 @@
     <value>9, 9</value>
   </data>
   <data name="OwnerPasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>408, 19</value>
+    <value>442, 19</value>
   </data>
   <data name="OwnerPasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1277,7 +1277,7 @@
     <value>4</value>
   </data>
   <data name="EncryptionPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>426, 363</value>
+    <value>460, 363</value>
   </data>
   <data name="EncryptionPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1304,7 +1304,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="EncryptionTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>432, 378</value>
+    <value>466, 378</value>
   </data>
   <data name="EncryptionTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1331,7 +1331,7 @@
     <value>12, 12</value>
   </data>
   <data name="MainTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>474, 406</value>
+    <value>504, 406</value>
   </data>
   <data name="MainTabControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1358,7 +1358,7 @@
     <value>Flat</value>
   </data>
   <data name="ExecButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>260, 12</value>
+    <value>290, 12</value>
   </data>
   <data name="ExecButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 36</value>
@@ -1388,7 +1388,7 @@
     <value>Flat</value>
   </data>
   <data name="ExitButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>386, 12</value>
+    <value>416, 12</value>
   </data>
   <data name="ExitButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 36</value>
@@ -1424,7 +1424,7 @@
     <value>3</value>
   </data>
   <data name="FooterPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>498, 60</value>
+    <value>528, 60</value>
   </data>
   <data name="FooterPanel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1454,7 +1454,7 @@
     <value>3</value>
   </data>
   <data name="RootPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>498, 481</value>
+    <value>528, 481</value>
   </data>
   <data name="RootPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1478,7 +1478,7 @@
     <value>True</value>
   </metadata>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>498, 481</value>
+    <value>528, 481</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Meiryo UI, 12px</value>
