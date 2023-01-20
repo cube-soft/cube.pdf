@@ -44,6 +44,17 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public static Uri ProductUri => MakeUri("https://www.cube-soft.jp/cubepdfpage/");
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// DocumentUri
+        ///
+        /// <summary>
+        /// Gets the URL of the document Web page.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public static Uri DocumentUri => MakeUri("https://docs.cube-soft.jp/entry/cubepdf-page");
+
         #region Methods
 
         /* ----------------------------------------------------------------- */

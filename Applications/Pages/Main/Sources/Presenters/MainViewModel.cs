@@ -288,6 +288,17 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Setting() => Send(new SettingViewModel(Facade.Settings, Context));
 
+        /* --------------------------------------------------------------------- */
+        ///
+        /// Help
+        ///
+        /// <summary>
+        /// Shows the help page.
+        /// </summary>
+        ///
+        /* --------------------------------------------------------------------- */
+        public void Help() => Send(new ProcessMessage(Resource.DocumentUri.ToString()));
+
         #endregion
 
         #region Implementations
