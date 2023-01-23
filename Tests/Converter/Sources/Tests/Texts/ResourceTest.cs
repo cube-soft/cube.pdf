@@ -90,17 +90,17 @@ class ResourceTest
 
         var c4 = Resource.ViewerOptions.ToArray();
         Assert.That(c4.Length,  Is.EqualTo(6), nameof(Resource.ViewerOptions));
-        Assert.That(c4[0].Key,  Is.EqualTo("Single page"));
-        Assert.That(c4[1].Key,  Is.EqualTo("One column"));
-        Assert.That(c4[2].Key,  Is.EqualTo("Two page (left)"));
-        Assert.That(c4[3].Key,  Is.EqualTo("Two page (right)"));
-        Assert.That(c4[4].Key,  Is.EqualTo("Two column (left)"));
-        Assert.That(c4[5].Key,  Is.EqualTo("Two column (right)"));
+        Assert.That(c4[0].Key,  Is.EqualTo("Single Page"));
+        Assert.That(c4[1].Key,  Is.EqualTo("One Column"));
+        Assert.That(c4[2].Key,  Is.EqualTo("Two Page (Left)"));
+        Assert.That(c4[3].Key,  Is.EqualTo("Two Page (Right)"));
+        Assert.That(c4[4].Key,  Is.EqualTo("Two Column (Left)"));
+        Assert.That(c4[5].Key,  Is.EqualTo("Two Column (Right)"));
 
         var c5 = Resource.PostProcesses.ToArray();
         Assert.That(c5.Length,  Is.EqualTo(4), nameof(Resource.PostProcesses));
         Assert.That(c5[0].Key,  Is.EqualTo("Open"));
-        Assert.That(c5[1].Key,  Is.EqualTo("Open directory"));
+        Assert.That(c5[1].Key,  Is.EqualTo("Open Directory"));
         Assert.That(c5[2].Key,  Is.EqualTo("None"));
         Assert.That(c5[3].Key,  Is.EqualTo("Others"));
 

@@ -162,7 +162,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(mvm.Length.Value,        Is.GreaterThan(0));
             Assert.That(mvm.CreationTime.Text,   Is.EqualTo("Creation"));
             Assert.That(mvm.CreationTime.Value,  Is.GreaterThan(DateTime.MinValue));
-            Assert.That(mvm.LastWriteTime.Text,  Is.EqualTo("Last updated"));
+            Assert.That(mvm.LastWriteTime.Text,  Is.EqualTo("Last Updated"));
             Assert.That(mvm.LastWriteTime.Value, Is.GreaterThan(DateTime.MinValue));
             Assert.That(mvm.Summary.Text,        Is.EqualTo("Summary"));
             Assert.That(mvm.Details.Text,        Is.EqualTo("Details"));

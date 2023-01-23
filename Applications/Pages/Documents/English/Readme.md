@@ -10,7 +10,7 @@ https://www.cube-soft.jp/cubepdfpage/
 
 ![CubePDF Page overview](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/overview.en.png)
 
-CubPDF Page is a software for merging or splitting existing PDF and image files. You can also add various PDF metadata and encryption settings to the merged or split PDF file. To use CubPDF Page, first add PDF or image files you wish to merge or split to the file list on the main window. There are two ways to add PDF files:
+CubPDF Page is a software for merging or splitting existing PDF and image files. You can also add various PDF metadata and security settings to the merged or split PDF file. To use CubPDF Page, first add PDF or image files you wish to merge or split to the file list on the main window. There are two ways to add PDF files:
 
 1. Click the **Open** button and choose from the popup dialog.
 2. Drag&Drop PDF and/or image files to be merged or split to the file list on the main window.
@@ -30,12 +30,12 @@ Adding source files and completing the necessary operations, click either of the
 
 There are two types of passwords for PDF files: **User password**, which allows only viewing and pre-authorized operations, and **Owner password**, which allows all operations.
 
-CubePDF Utility always requires **Owner password** when opening PDF files due to the feature of editing PDF files. For this reason, you cannot open a PDF file with the **User password**.
+CubePDF Page always requires **Owner password** when opening PDF files due to the feature of editing PDF files. For this reason, you cannot open a PDF file with the **User password**.
 Note that even if a PDF file can be opened without any password, **Owner password** may be set. If you want to edit the PDF file, please ask the creator of the PDF file for the **Owner password**.
 
 ### Edit a PDF file page by page
 
-Although CubePDF Page does not provide a way to reorder pages, extract or delete specific pages, this can be achieved indirectly by using the merge and split functions together. If you want to edit existing PDF files in detail, please consider using [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/).
+Although CubePDF Page does not provide a way to reorder pages, extract or delete specific pages, this can be achieved indirectly by using the merge and split functions together. If you want to edit existing PDF files in detail, please consider using [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/).
 
 ## List of editing operations
 
@@ -56,7 +56,7 @@ The buttons and other features displayed on the CubePDF Page main window are as 
 * **Clear**  
   Remove all items in the file list from the merge or split target.
 * **Metadata**  
-  Configure various PDF metadata and encryption settings for the merged or split PDF file.
+  Configure various PDF metadata and security settings for the merged or split PDF file.
 * **Merge**  
   Merge files registered in the file list as a single PDF file.
 * **Split**  
@@ -70,11 +70,11 @@ The buttons and other features displayed on the CubePDF Page main window are as 
 
 In the **Metadata** dialog, you can register information such as the title and creator. The information registered here can be viewed in the properties dialog of PDF viewer such as Adobe Acrobat Reader DC. In addition, the **Layout** item allows you to change the way the document will be displayed when opened in PDF viewer.
 
-### Encryption (Security)
+### Security
 
-![Encryption dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/encryption.png)
+![Security dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/encryption.png)
 
-The **Metadata** dialog displays the **Encryption** tab in addition to the **Summary (Metadata)** tab. In the **Encryption** tab, you can protect the PDF file with a password. To set a password, first enable the **Encrypt the PDF with password** option, and then enter the same password twice in the **Password** and **Confirm** fields.
+The **Metadata** dialog displays the **Security** tab in addition to the **Summary (Metadata)** tab. In the **Security** tab, you can protect the PDF file with a password. To set a password, first enable the **Encrypt the PDF with password** option, and then enter the same password twice in the **Password** and **Confirm** fields.
 
 In the **Operations** item, specify the operations to be allowed or restricted to users. The following items can be set.
 
@@ -86,7 +86,7 @@ In the **Operations** item, specify the operations to be allowed or restricted t
 * Allow filling in form fields
 * Allow creating and editing annotations
 
-Note that if you enable the item **Open with password** and also enable the item **Use owner password**, CubePDF Utility will set the same password as the owner password for user password.
+Note that if you enable the item **Open with password** and also enable the item **Use owner password**, CubePDF Page will set the same password as the owner password for user password.
 
 However, **if you share both passwords, the restrictions on printing and copying operations may not work properly depending on the PDF viwer**. This is probably because the PDF viewer recognizes that the PDF file was opened with the owner password. For this reason, CubePDF Page is designed not to accept permission settings when it is shared with the owner password.
 
@@ -108,7 +108,7 @@ If the **Keep bookmarks of source PDF files** item is enabled, the resulting mer
 
 The **Temp** section is the folder where temporary files are created when CubePDF Page performs the merging or splitting process. If the device is located on a different terminal, processing speed may be significantly reduced. In such a case, you can avoid this problem by selecting a working folder in advance. If you do not have any problem with the default settings, leave this field blank.
 
-The **Language** section allows you to set the display language of the CubePDF Page main window. There are two supported languages: **English** and **Japanese**. When **Auto** is selected as the display language, one of the languages will be automatically selected according to the Windows language setting.
+The **Language** section allows you to set the display language of the CubePDF Page main window. There are three supported languages: **English**, **German** and **Japanese**. When **Auto** is selected as the display language, one of the languages will be automatically selected according to the Windows language setting.
 
 If you enable the **Check for updates on startup** item, you will be notified in the lower right corner of your computer when the new CubePDF Page version has been released. Checking for updates will be performed when your computer starts up. The information sent to confirm the update is the version number of CubePDF Page, Windows, and .NET.
 
@@ -124,7 +124,7 @@ The keyboard shortcuts available in CubePDF Page are as follows.
 
 * Ctrl + M ... Merge PDF files
 * Ctrl + S ... Split PDF files
-* Ctrl + E ... Display PDF metadata and encryption settings window
+* Ctrl + E ... Display PDF metadata and security settings window
 * Ctrl + H ... Display CubePDF Page settings window
 * Ctrl + Q ... Exit the application
 * Ctrl + O ... Display dialog to add PDF, PNG, JPEG, BMP files
@@ -142,6 +142,6 @@ To uninstall CubePDF Page, first select **Uninstall a program** in **Control Pan
 ![Uninstall for Windows 8 and later](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/uninstall-01.png)
 ![Uninstall in the control pannel](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/uninstall-02.png)
 
-## Having problems with CubePDF Utility?
+## Having problems with CubePDF Page?
 
 CubePDF Page outputs logs in the ```C:\Users\%UserName%\AppData\Local\CubeSoft\CubePdfPage\Log``` folder. If you encounter any problems, please contact us at support@cube-soft.jp with these logs attached (Replace %UserName% with the name of the user currently logged on).

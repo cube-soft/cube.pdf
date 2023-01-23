@@ -116,7 +116,7 @@
     <value>0</value>
   </data>
   <data name="ColorModeLabel.Text" xml:space="preserve">
-    <value>ColorMode</value>
+    <value>Color Mode</value>
   </data>
   <data name="ColorModeLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -728,7 +728,7 @@
     <value>0</value>
   </data>
   <data name="PostProcessLabel.Text" xml:space="preserve">
-    <value>Post process</value>
+    <value>Post Process</value>
   </data>
   <data name="PostProcessLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
@@ -2615,7 +2615,7 @@
     <value>0</value>
   </data>
   <data name="SettingButton.Text" xml:space="preserve">
-    <value>Save settings</value>
+    <value>Save Settings</value>
   </data>
   <data name="&gt;&gt;SettingButton.Name" xml:space="preserve">
     <value>SettingButton</value>

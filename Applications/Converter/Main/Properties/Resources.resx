@@ -138,13 +138,13 @@
     <value>None</value>
   </data>
   <data name="MenuOneColumn" xml:space="preserve">
-    <value>One column</value>
+    <value>One Column</value>
   </data>
   <data name="MenuOpen" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="MenuOpenDirectory" xml:space="preserve">
-    <value>Open directory</value>
+    <value>Open Directory</value>
   </data>
   <data name="MenuOthers" xml:space="preserve">
     <value>Others</value>
@@ -162,19 +162,19 @@
     <value>RGB</value>
   </data>
   <data name="MenuSinglePage" xml:space="preserve">
-    <value>Single page</value>
+    <value>Single Page</value>
   </data>
   <data name="MenuTwoColumnLeft" xml:space="preserve">
-    <value>Two column (left)</value>
+    <value>Two Column (Left)</value>
   </data>
   <data name="MenuTwoColumnRight" xml:space="preserve">
-    <value>Two column (right)</value>
+    <value>Two Column (Right)</value>
   </data>
   <data name="MenuTwoPageLeft" xml:space="preserve">
-    <value>Two page (left)</value>
+    <value>Two Page (Left)</value>
   </data>
   <data name="MenuTwoPageRight" xml:space="preserve">
-    <value>Two page (right)</value>
+    <value>Two Page (Right)</value>
   </data>
   <data name="TitleSelectDestination" xml:space="preserve">
     <value>Save as</value>

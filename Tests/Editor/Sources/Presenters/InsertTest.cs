@@ -402,7 +402,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(src.FileType.Command,      Is.Null);
             Assert.That(src.FileLength.Text,       Is.EqualTo("Filesize"));
             Assert.That(src.FileLength.Command,    Is.Null);
-            Assert.That(src.LastWriteTime.Text,    Is.EqualTo("Last updated"));
+            Assert.That(src.LastWriteTime.Text,    Is.EqualTo("Last Updated"));
             Assert.That(src.LastWriteTime.Command, Is.Null);
             Assert.That(src.DragAdd,               Is.Not.Null);
             Assert.That(src.DragMove,              Is.Not.Null);

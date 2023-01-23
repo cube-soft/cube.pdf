@@ -47,7 +47,7 @@ Note that for file formats that cannot hold multiple pages, such as PNG, a file 
 
 If the selected format is PDF, you can select the PDF version, which can be found to the right of the **Format** selection.
 
-The **ColorMode** item allows you to specify the color of the converted fonts, shapes, and embedded images. The items that can be set are as follows:
+The **Color Mode** item allows you to specify the color of the converted fonts, shapes, and embedded images. The items that can be set are as follows:
 
 * **Auto**  
   Preserves the colors of the print data as they are.
@@ -76,11 +76,11 @@ Other options for conversion are as follows:
 * **Optimize PDF for fast Web view**  
   When viewing a PDF file on the Web, you usually have to wait until all the data has been downloaded. If you enable this option, it will be optimized in such a way that you can view the part that has been downloaded first. This is a specification called Linearized PDF. However, this option cannot be applied to an encrypted PDF file. CubePDF will ignore this option if any security settings are enabled.
 
-The **Post process** item allows you to set the operation to be performed after the conversion by CubePDF is finished. The items that can be set are as follows:
+The **Post Process** item allows you to set the operation to be performed after the conversion by CubePDF is finished. The items that can be set are as follows:
 
 * **Open**  
   Open the converted file in its associated application.
-* **Open directory**  
+* **Open Directory**  
   Open the folder where you saved the converted file.
 * **None**  
   Exit without doing anything.
@@ -97,11 +97,11 @@ If the selected format is PDF, you can register information such as the title, c
 
 If you omit these information, CubePDF will create PDF files with Title, Author, Subtitle, Keywords left blank and Creator set to "CubePDF".
 
-### Encryption
+### Security
 
 If the selected format is PDF, you can set a password to protect the created PDF file. To set a password, first enable the **Encrypt the PDF with password** option, then enter the same password twice in the **Password** and **Confirm** fields.
 
-![Encryption](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/encryption.png)
+![Security](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/encryption.png)
 
 Next, in the **Operations** section, specify the operations to be allowed or restricted to users. Available settings are as follows:
 
@@ -125,13 +125,13 @@ The **About** section displays the version information of CubePDF. If you enable
 
 ![Language](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/version.png)
 
-In the **Language** section, you can set the display language for the menu and other items on the CubePDF main window. There are two supported languages, **English** and **Japanese**. If you select **Auto** for the display language, one of the languages will be automatically selected according to the Windows language settings.
+In the **Language** section, you can set the display language for the menu and other items on the CubePDF main window. There are three supported languages, **English**, **German** and **Japanese**. If you select **Auto** for the display language, one of the languages will be automatically selected according to the Windows language settings.
 
-### Save settings
+### Save Settings
 
-When you change any item in the CubePDF main window, the **Save settings** button will become clickable. If you click it at this time, the current settings will be saved, and will be used as the initial settings for the next time CubePDF is executed.
+When you change any item in the CubePDF main window, the **Save Settings** button will become clickable. If you click it at this time, the current settings will be saved, and will be used as the initial settings for the next time CubePDF is executed.
 
-For example, CubePDF will save the converted files on the desktop by default, but if you click the **Save settings** button after specifying a different folder as the destination, CubePDF will use the specified folder as the default setting for the saving folder from next time on.
+For example, CubePDF will save the converted files on the desktop by default, but if you click the **Save Settings** button after specifying a different folder as the destination, CubePDF will use the specified folder as the default setting for the saving folder from next time on.
 
 However, various security items and the file name part of the destination are not covered by the function to save settings.
 
@@ -145,7 +145,7 @@ You can also do the same from **Settings** in Windows 8 or later. From **Setting
 
 ![Printer settings for Windows 8 and later](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/printer-02.png)
 
-In the print settings, the **Paper/Quality** tab allows you to change the settings for printing in black and white or color. For other settings, click the **Advanced...** button at the bottom right.
+In the print settings, the **Paper/Quality** tab allows you to change the settings for printing in black and white or color. For other settings, click the **Advanced ...** button at the bottom right.
 
 ![Advanced settings for printer](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/printer-03.png)
 

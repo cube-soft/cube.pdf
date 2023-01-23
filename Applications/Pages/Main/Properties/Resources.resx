@@ -63,7 +63,7 @@
     <value>..\Assets\Background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ColumnDate" xml:space="preserve">
-    <value>Last updated</value>
+    <value>Last Updated</value>
   </data>
   <data name="ColumnLength" xml:space="preserve">
     <value>Filesize</value>
@@ -102,7 +102,7 @@
     <value>Down</value>
   </data>
   <data name="MenuOneColumn" xml:space="preserve">
-    <value>One column</value>
+    <value>One Column</value>
   </data>
   <data name="MenuPreview" xml:space="preserve">
     <value>Preview</value>
@@ -111,19 +111,19 @@
     <value>Remove from file list</value>
   </data>
   <data name="MenuSinglePage" xml:space="preserve">
-    <value>Single page</value>
+    <value>Single Page</value>
   </data>
   <data name="MenuTwoColumnLeft" xml:space="preserve">
-    <value>Two column (left)</value>
+    <value>Two Column (Left)</value>
   </data>
   <data name="MenuTwoColumnRight" xml:space="preserve">
-    <value>Two column (right)</value>
+    <value>Two Column (Right)</value>
   </data>
   <data name="MenuTwoPageLeft" xml:space="preserve">
-    <value>Two page (left)</value>
+    <value>Two Page (Left)</value>
   </data>
   <data name="MenuTwoPageRight" xml:space="preserve">
-    <value>Two page (right)</value>
+    <value>Two Page (Right)</value>
   </data>
   <data name="MenuUp" xml:space="preserve">
     <value>Up</value>

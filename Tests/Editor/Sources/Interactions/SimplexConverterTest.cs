@@ -205,11 +205,11 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        [TestCase(ViewerOption.SinglePage,     Language.English,  ExpectedResult = "Single page")]
+        [TestCase(ViewerOption.SinglePage,     Language.English,  ExpectedResult = "Single Page")]
         [TestCase(ViewerOption.OneColumn,      Language.Japanese, ExpectedResult = "連続ページ")]
-        [TestCase(ViewerOption.TwoPageLeft,    Language.English,  ExpectedResult = "Two page (left)")]
+        [TestCase(ViewerOption.TwoPageLeft,    Language.English,  ExpectedResult = "Two Page (Left)")]
         [TestCase(ViewerOption.TwoPageRight,   Language.Japanese, ExpectedResult = "見開きページ (右綴じ)")]
-        [TestCase(ViewerOption.TwoColumnLeft,  Language.English,  ExpectedResult = "Two column (left)")]
+        [TestCase(ViewerOption.TwoColumnLeft,  Language.English,  ExpectedResult = "Two Column (Left)")]
         [TestCase(ViewerOption.TwoColumnRight, Language.Japanese, ExpectedResult = "連続見開きページ (右綴じ)")]
         public string ViewerOptionsConverter(ViewerOption src, Language lang) =>
             Convert<string>(new ViewerOptionsConverter(), src, lang);

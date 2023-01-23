@@ -8,7 +8,7 @@ https://www.cube-soft.jp/cubepdf/
 
 ### Introduction
 
-This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF](https://www.cube-soft.jp/cubepdf/?lang=en). For more information on using CubePDF, please refer to [CubePDF Documents](https://en.cube-soft.jp/entry/cubepdf).
+This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF](https://www.cube-soft.jp/en/cubepdf/). For more information on using CubePDF, please refer to [CubePDF Documents](https://en.cube-soft.jp/entry/cubepdf).
 
 ### I don't know how to use CubePDF
 
@@ -24,9 +24,9 @@ CubePDF is a software called **Virtual Printer**, so you cannot run CubePDF dire
 
 CubeSoft, Inc. provides the following software under the name of **CubePDF Series**.
 
-* [CubePDF](https://www.cube-soft.jp/cubepdf/?lang=en) ... Virtual Printer
-* [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/?lang=en) ... PDF page based editor
-* [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/) ... PDF file based editor (Japanese)
+* [CubePDF](https://www.cube-soft.jp/en/cubepdf/) ... Virtual Printer
+* [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/) ... PDF page based editor
+* [CubePDF Page](https://www.cube-soft.jp/en/cubepdfpage/) ... PDF file based editor
 * [CubePDF Clip](https://clown.cube-soft.jp/entry/2017/03/24/cubepdf-clip-1.0.0) ... Software for attaching to PDF files (Japanese)
 * [CubePDF Viewer](https://www.cube-soft.jp/cubepdfviewer/) ... PDF viewer (Japanese)
 * [CubePDF ImagePicker](https://www.cube-soft.jp/cubepdfimagepicker/) ... PDF embedded image picker (Japanese)
@@ -53,7 +53,7 @@ However, if there is a large difference in the file size of the converted PDF fi
 
 ![In case the PDF file is encrypted by a password](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/faq-security-01.png)
 
-If the merging of PDF files fails, one of the possible causes is that the destination PDF file is encrypted by a password. For example, if you see the word **Protected** or **Secured** when you open a PDF file with Adobe Acrobat Reader DC, the PDF file is encrypted. In this case, you need to enter the **Owner Password** of the PDF file to be merged in the **Encryption** tab of the CubePDF main window.
+If the merging of PDF files fails, one of the possible causes is that the destination PDF file is encrypted by a password. For example, if you see the word **Protected** or **Secured** when you open a PDF file with Adobe Acrobat Reader DC, the PDF file is encrypted. In this case, you need to enter the **Owner Password** of the PDF file to be merged in the **Security** tab of the CubePDF main window.
 
 ![In case the PDF file is opened in another application](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/faq-security-02.png)
 
@@ -61,7 +61,7 @@ Also, if you receive the error message "The process cannot access the file becau
 
 ### Can I edit a PDF file?
 
-CubePDF is basically a software for converting PDF files, although you can merge them with other PDF files and set document properties, passwords, etc. during conversion. If you want to edit an existing PDF file in page units such as merging, splitting, rotating, etc., you can use [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) or [CubePDF Page (Japanese)](https://www.cube-soft.jp/cubepdfpage/).
+CubePDF is basically a software for converting PDF files, although you can merge them with other PDF files and set document properties, passwords, etc. during conversion. If you want to edit an existing PDF file in page units such as merging, splitting, rotating, etc., you can use [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/) or [CubePDF Page](https://www.cube-soft.jp/en/cubepdfpage/).
 
 ### Does network communication occur during execution?
 
@@ -82,13 +82,13 @@ As for Windows Server, for the same reason, we expect it to work basically witho
 
 ### Are any runtimes, frameworks, etc. required?
 
-.NET Framework 3.5 or later (4.5.2 or later is strongly recommended) is required to use CubePDF as it is developed using it. .NET Framework should already be installed in most cases, but if you need to install it, you can download it from [Download .NET Framework](https://dotnet.microsoft.com/download/dotnet-framework).
+.NET Framework 3.5 or later (4.7 or later is strongly recommended) is required to use CubePDF as it is developed using it. .NET Framework should already be installed in most cases, but if you need to install it, you can download it from [Download .NET Framework](https://dotnet.microsoft.com/download/dotnet-framework).
 
 Also, CubePDF uses PScript5, which is a standard Windows printer driver, to build a virtual printer. Therefore, if the corresponding modules (pscript5.dll and ps5ui.dll) do not exist on your PC, the installation will fail. If the installation fails, please contact us at support@cube-soft.jp with ```C:\ProgramData\CubeSoft\CubePDF\Log\CubeVpc.log``` as an attachment.
 
 ### How do I update my version?
 
-To update CubePDF, download the latest version of the installer from the [CubePDF download page](https://www.cube-soft.jp/cubepdf/?lang=en) and run it again, as you did when you first installed it.
+To update CubePDF, download the latest version of the installer from the [CubePDF download page](https://www.cube-soft.jp/en/cubepdf/) and run it again, as you did when you first installed it.
 
 ### What are the install options?
 

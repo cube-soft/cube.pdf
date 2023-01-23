@@ -2,6 +2,7 @@ CubePDF Utility Documnets
 ====
 
 Copyright © 2013 CubeSoft, Inc.  
+GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
 
@@ -9,7 +10,7 @@ https://www.cube-soft.jp/cubepdfutility/
 
 ![CubePDF Utility main window](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/overview.en.png)
 
-CubPDF Utility is a software that allows you to insert, extract, or remove pages, edit document metadata, and encryption settings for existing PDF files. To use CubPDF Utility, first open the PDF file you want to edit in one of the following three ways.
+CubPDF Utility is a software that allows you to insert, extract, or remove pages, edit document metadata, and security settings for existing PDF files. To use CubPDF Utility, first open the PDF file you want to edit in one of the following three ways.
 
 1. Select from **Recent files** displayed in the center of the main window or in the **File** menu.
 2. Click the **Open** button and select from the displayed dialog.
@@ -94,7 +95,7 @@ If the **Save as a separate file per page** option is enabled, for example, extr
 
 ![Reorder menu](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/reorder.png)
 
-The **Next** and **Prev** menus allow you to move the currently selected page in the main window forward or backward by one page, respectively. The page order can also be changed by Drag&Drop operation. Select the pages you want to change, and then Drag&Drop them to the target position.
+The **Forth** and **Back** menus allow you to move the currently selected page in the main window forward or backward by one page, respectively. The page order can also be changed by Drag&Drop operation. Select the pages you want to change, and then Drag&Drop them to the target position.
 
 ### Rotate
 
@@ -108,11 +109,11 @@ The **Left** and **Right** menus allow you to rotate the currently selected page
 
 In the **Metadata** dialog, you can register information such as the title and creator. The information registered here can be viewed in the properties dialog of PDF viewer such as Adobe Acrobat Reader DC. In addition, the **Layout** item allows you to change the way the document will be displayed when opened in PDF viewer.
 
-### Encryption (Security)
+### Security
 
-![Encryption dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/encryption.png)
+![Security dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfutility/doc/v1/en/encryption.png)
 
-In the **Encryption (Security)** dialog, you can protect the PDF file with a password. To set a password, first enable the **Encrypt the PDF with password** option, and then enter the same password twice in the **Password** and **Confirm** fields. Currently, four encryption methods are supported: **40-bit RC4**, **128-bit RC4**, **128-bit AES**, and **256-bit AES**.
+In the **Security** dialog, you can protect the PDF file with a password. To set a password, first enable the **Encrypt the PDF with password** option, and then enter the same password twice in the **Password** and **Confirm** fields. Currently, four encryption methods are supported: **40-bit RC4**, **128-bit RC4**, **128-bit AES**, and **256-bit AES**.
 
 In the **Operations** item, specify the operations to be allowed or restricted to users. The following items can be set.
 
@@ -154,7 +155,7 @@ If the **Enable backup** item is enabled, CubePDF Utility will keep a backup of 
 
 In **Temporary folder** section, you can specify the folder where temporary files etc. are created when CubePDF Utility performs some operations. If the section is empty, CubePDF Utility will also use the destination folder as a temporary folder.
 
-In **Language** section, you can select the display language for the menu of the CubePDF Utility. There are two supported languages, English and Japanese. If you select **Auto** for the display language, one of the languages will be automatically selected according to the language setting of Windows.
+In **Language** section, you can select the display language for the menu of the CubePDF Utility. There are three supported languages, English, German and Japanese. If you select **Auto** for the display language, one of the languages will be automatically selected according to the language setting of Windows.
 
 If the **Show recently used files** item is enabled, CubePDF Utility will display a list of the recently opened PDF files at startup.
 
@@ -180,7 +181,7 @@ The keyboard shortcuts available in CubePDF Utility are as follows.
 * Ctrl + L ... Rotate the selected page 90 degrees left
 * Ctrl + R ... Rotate the selected page 90 degrees right
 * Ctrl + M ... Show the Metadata dialog
-* Ctrl + K ... Show the Encryption dialog
+* Ctrl + K ... Show the Security dialog
 * Ctrl + A ... Select all
 * Ctrl + Z ... Undo
 * Ctrl + Y ... Redo

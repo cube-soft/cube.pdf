@@ -212,7 +212,7 @@
     <value>Language</value>
   </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
-    <value>Last updated</value>
+    <value>Last Updated</value>
   </data>
   <data name="MenuLayout" xml:space="preserve">
     <value>Layout</value>
@@ -356,22 +356,22 @@
     <value>Version</value>
   </data>
   <data name="MenuViewOneColumn" xml:space="preserve">
-    <value>One column</value>
+    <value>One Column</value>
   </data>
   <data name="MenuViewSinglePage" xml:space="preserve">
-    <value>Single page</value>
+    <value>Single Page</value>
   </data>
   <data name="MenuViewTwoColumnLeft" xml:space="preserve">
-    <value>Two column (left)</value>
+    <value>Two Column (Left)</value>
   </data>
   <data name="MenuViewTwoColumnRight" xml:space="preserve">
-    <value>Two column (right)</value>
+    <value>Two Column (Right)</value>
   </data>
   <data name="MenuViewTwoPageLeft" xml:space="preserve">
-    <value>Two page (left)</value>
+    <value>Two Page (Left)</value>
   </data>
   <data name="MenuViewTwoPageRight" xml:space="preserve">
-    <value>Two page (right)</value>
+    <value>Two Page (Right)</value>
   </data>
   <data name="MenuZoomIn" xml:space="preserve">
     <value>ZoomIn</value>
