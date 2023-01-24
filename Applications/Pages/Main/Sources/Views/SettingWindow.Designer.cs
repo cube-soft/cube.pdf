@@ -99,8 +99,9 @@ namespace Cube.Pdf.Pages
             //
             // UpdateCheckBox
             //
-            resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
+            this.UpdateCheckBox.AutoEllipsis = true;
             this.SettingPanel.SetColumnSpan(this.UpdateCheckBox, 2);
+            resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
             this.UpdateCheckBox.Name = "UpdateCheckBox";
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
             //
@@ -134,15 +135,17 @@ namespace Cube.Pdf.Pages
             //
             // KeepOutlineCheckBox
             //
-            resources.ApplyResources(this.KeepOutlineCheckBox, "KeepOutlineCheckBox");
+            this.KeepOutlineCheckBox.AutoEllipsis = true;
             this.SettingPanel.SetColumnSpan(this.KeepOutlineCheckBox, 2);
+            resources.ApplyResources(this.KeepOutlineCheckBox, "KeepOutlineCheckBox");
             this.KeepOutlineCheckBox.Name = "KeepOutlineCheckBox";
             this.KeepOutlineCheckBox.UseVisualStyleBackColor = true;
             //
             // ShrinkResourceCheckBox
             //
-            resources.ApplyResources(this.ShrinkResourceCheckBox, "ShrinkResourceCheckBox");
+            this.ShrinkResourceCheckBox.AutoEllipsis = true;
             this.SettingPanel.SetColumnSpan(this.ShrinkResourceCheckBox, 2);
+            resources.ApplyResources(this.ShrinkResourceCheckBox, "ShrinkResourceCheckBox");
             this.ShrinkResourceCheckBox.Name = "ShrinkResourceCheckBox";
             this.ShrinkResourceCheckBox.UseVisualStyleBackColor = true;
             //

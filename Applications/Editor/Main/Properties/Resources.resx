@@ -323,7 +323,7 @@
     <value>Use owner password</value>
   </data>
   <data name="MenuShrinkResources" xml:space="preserve">
-    <value>Shrink duplicated resources</value>
+    <value>Reduce duplicated resources</value>
   </data>
   <data name="MenuSplit" xml:space="preserve">
     <value>Save as a separate file per page</value>

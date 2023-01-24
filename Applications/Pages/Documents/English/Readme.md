@@ -102,7 +102,7 @@ Click **CubePDF Page** in the header section of the main window to show the Cube
 
 The **Settings** tab allows you to change several settings related to the behavior of CubePDF Page.
 
-If the **Shrink duplicated resources** item is enabled, CubePDF Page will attempt to reduce file size by removing duplicated portions of font information and other resources as much as possible when merging multiple PDF files. Currently, there are reports that some annotations look different when this feature is enabled than they did before being combined. If you encounter such a phenomenon, please consider disabling this item.
+If the **Reduce duplicated resources** item is enabled, CubePDF Page will attempt to reduce file size by removing duplicated portions of font information and other resources as much as possible when merging multiple PDF files. Currently, there are reports that some annotations look different when this feature is enabled than they did before being combined. If you encounter such a phenomenon, please consider disabling this item.
 
 If the **Keep bookmarks of source PDF files** item is enabled, the resulting merged PDF file will include the bookmark information of each of the merging sources. Currently, there are several reports of PDF file merging failures in CubePDF Utility and CubePDF Page, most of which seem to be caused by the bookmark information. If you encounter such a phenomenon, please consider disabling this item.
 

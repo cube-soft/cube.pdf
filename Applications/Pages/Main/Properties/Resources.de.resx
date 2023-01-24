@@ -114,16 +114,16 @@
     <value>Einzelne Seite</value>
   </data>
   <data name="MenuTwoColumnLeft" xml:space="preserve">
-    <value>Zwei Spalten (links)</value>
+    <value>Zwei Spalten (Links)</value>
   </data>
   <data name="MenuTwoColumnRight" xml:space="preserve">
-    <value>Zwei Spalten (rechts)</value>
+    <value>Zwei Spalten (Rechts)</value>
   </data>
   <data name="MenuTwoPageLeft" xml:space="preserve">
-    <value>Zwei Seiten (links)</value>
+    <value>Zwei Seiten (Links)</value>
   </data>
   <data name="MenuTwoPageRight" xml:space="preserve">
-    <value>Zwei Seiten (rechts)</value>
+    <value>Zwei Seiten (Rechts)</value>
   </data>
   <data name="MenuUp" xml:space="preserve">
     <value>Nach oben</value>

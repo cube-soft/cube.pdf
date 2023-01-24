@@ -147,7 +147,7 @@ On the **Others** tab of the main window, you can change the view settings of th
 
 Click the **Settings** button on the **Others** tab of the main window to display the version information and related settings. The setting items are as follows.
 
-If the **Shrink duplicate resources** item is enabled, CubePDF Utility will attempt to reduce file size by removing duplicated portions of font information and other resources as much as possible when saving. Currently, there are reports that some annotations look different when this feature is enabled than they did before being merged. If you encounter such a phenomenon, please consider disabling this item.
+If the **Reduce duplicate resources** item is enabled, CubePDF Utility will attempt to reduce file size by removing duplicated portions of font information and other resources as much as possible when saving. Currently, there are reports that some annotations look different when this feature is enabled than they did before being merged. If you encounter such a phenomenon, please consider disabling this item.
 
 If the **Keep bookmarks of source PDF files** item is enabled, the resulting saved PDF file will include the bookmark information of each of the merging sources. Currently, there are several reports of PDF file merging failures in CubePDF Utility and CubePDF Page, most of which seem to be caused by the bookmark information. If you encounter such a phenomenon, please consider disabling this item.
 
