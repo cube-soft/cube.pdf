@@ -71,7 +71,7 @@
     <value>Bookmarks der Quell-PDF-Dateien behalten</value>
   </data>
   <data name="ShrinkResourceCheckBox.Text" xml:space="preserve">
-    <value>Duplizierte Ressourcen schrumpfen</value>
+    <value>Duplizierte Ressourcen reduzieren</value>
   </data>
   <data name="OptionLabel.Text" xml:space="preserve">
     <value>Optionen</value>

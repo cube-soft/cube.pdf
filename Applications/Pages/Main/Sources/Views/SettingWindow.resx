@@ -1146,7 +1146,7 @@
     <value>CenterParent</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>CubePDF Page Settings</value>
+    <value>CubePDF Page settings</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>SettingWindow</value>

@@ -62,7 +62,7 @@
     <value>Allgemein</value>
   </data>
   <data name="ColorModeLabel.Text" xml:space="preserve">
-    <value>Farbmodus</value>
+    <value>Farbe</value>
   </data>
   <data name="LinearizationCheckBox.Text" xml:space="preserve">
     <value>PDF für schnelle Webansicht optimieren</value>

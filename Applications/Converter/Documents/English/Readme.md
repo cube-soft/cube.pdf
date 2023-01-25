@@ -47,7 +47,7 @@ Note that for file formats that cannot hold multiple pages, such as PNG, a file 
 
 If the selected format is PDF, you can select the PDF version, which can be found to the right of the **Format** selection.
 
-The **Color Mode** item allows you to specify the color of the converted fonts, shapes, and embedded images. The items that can be set are as follows:
+The **Color** item allows you to specify the color of the converted fonts, shapes, and embedded images. The items that can be set are as follows:
 
 * **Auto**  
   Preserves the colors of the print data as they are.
@@ -76,11 +76,11 @@ Other options for conversion are as follows:
 * **Optimize PDF for fast Web view**  
   When viewing a PDF file on the Web, you usually have to wait until all the data has been downloaded. If you enable this option, it will be optimized in such a way that you can view the part that has been downloaded first. This is a specification called Linearized PDF. However, this option cannot be applied to an encrypted PDF file. CubePDF will ignore this option if any security settings are enabled.
 
-The **Post Process** item allows you to set the operation to be performed after the conversion by CubePDF is finished. The items that can be set are as follows:
+The **Post process** item allows you to set the operation to be performed after the conversion by CubePDF is finished. The items that can be set are as follows:
 
 * **Open**  
   Open the converted file in its associated application.
-* **Open Directory**  
+* **Open directory**  
   Open the folder where you saved the converted file.
 * **None**  
   Exit without doing anything.

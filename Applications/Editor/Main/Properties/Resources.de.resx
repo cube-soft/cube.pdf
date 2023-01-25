@@ -71,7 +71,7 @@
     <value>PDF-Dateien</value>
   </data>
   <data name="MenuAdd" xml:space="preserve">
-    <value>Hinzufügen ...</value>
+    <value>Hinzufügen</value>
   </data>
   <data name="MenuAllowAccessibility" xml:space="preserve">
     <value>Verwendung von Inhalten für Barrierefreiheit erlauben</value>
@@ -323,7 +323,7 @@
     <value>Eigentümer-Passwort verwenden</value>
   </data>
   <data name="MenuShrinkResources" xml:space="preserve">
-    <value>Duplizierte Ressourcen schrumpfen</value>
+    <value>Duplizierte Ressourcen reduzieren</value>
   </data>
   <data name="MenuSplit" xml:space="preserve">
     <value>Als separate Datei pro Seite speichern</value>
@@ -362,16 +362,16 @@
     <value>Einzelne Seite</value>
   </data>
   <data name="MenuViewTwoColumnLeft" xml:space="preserve">
-    <value>Zwei Spalten (Links)</value>
+    <value>Zwei Spalten (links)</value>
   </data>
   <data name="MenuViewTwoColumnRight" xml:space="preserve">
-    <value>Zwei Spalten (Rechts)</value>
+    <value>Zwei Spalten (rechts)</value>
   </data>
   <data name="MenuViewTwoPageLeft" xml:space="preserve">
-    <value>Zwei Seiten (Links)</value>
+    <value>Zwei Seiten (links)</value>
   </data>
   <data name="MenuViewTwoPageRight" xml:space="preserve">
-    <value>Zwei Seiten (Rechts)</value>
+    <value>Zwei Seiten (rechts)</value>
   </data>
   <data name="MenuZoomIn" xml:space="preserve">
     <value>Heranzoomen</value>

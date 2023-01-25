@@ -71,7 +71,7 @@
     <value>PDF files</value>
   </data>
   <data name="MenuAdd" xml:space="preserve">
-    <value>Add ...</value>
+    <value>Add</value>
   </data>
   <data name="MenuAllowAccessibility" xml:space="preserve">
     <value>Allow using contents for accessibility</value>
@@ -212,7 +212,7 @@
     <value>Language</value>
   </data>
   <data name="MenuLastWriteTime" xml:space="preserve">
-    <value>Last Updated</value>
+    <value>Last updated</value>
   </data>
   <data name="MenuLayout" xml:space="preserve">
     <value>Layout</value>
@@ -356,22 +356,22 @@
     <value>Version</value>
   </data>
   <data name="MenuViewOneColumn" xml:space="preserve">
-    <value>One Column</value>
+    <value>One column</value>
   </data>
   <data name="MenuViewSinglePage" xml:space="preserve">
-    <value>Single Page</value>
+    <value>Single page</value>
   </data>
   <data name="MenuViewTwoColumnLeft" xml:space="preserve">
-    <value>Two Column (Left)</value>
+    <value>Two column (left)</value>
   </data>
   <data name="MenuViewTwoColumnRight" xml:space="preserve">
-    <value>Two Column (Right)</value>
+    <value>Two column (right)</value>
   </data>
   <data name="MenuViewTwoPageLeft" xml:space="preserve">
-    <value>Two Page (Left)</value>
+    <value>Two page (left)</value>
   </data>
   <data name="MenuViewTwoPageRight" xml:space="preserve">
-    <value>Two Page (Right)</value>
+    <value>Two page (right)</value>
   </data>
   <data name="MenuZoomIn" xml:space="preserve">
     <value>ZoomIn</value>
