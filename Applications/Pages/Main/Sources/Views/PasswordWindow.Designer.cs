@@ -124,8 +124,8 @@
             //
             this.AcceptButton = this.ExecButton;
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            resources.ApplyResources(this, "$this");
             this.CancelButton = this.ExitButton;
+            resources.ApplyResources(this, "$this");
             this.Controls.Add(this.RootPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;

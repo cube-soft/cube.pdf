@@ -97,7 +97,7 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
-        ///   Add ... に類似しているローカライズされた文字列を検索します。
+        ///   Add に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuAdd {
             get {
@@ -853,7 +853,7 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
-        ///   Shrink duplicated resources に類似しているローカライズされた文字列を検索します。
+        ///   Reduce duplicated resources に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuShrinkResources {
             get {

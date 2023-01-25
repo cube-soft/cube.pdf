@@ -71,8 +71,8 @@ namespace Cube.Pdf.Pages
         {
             { nameof(Language.Auto),     Language.Auto     },
             { nameof(Language.English),  Language.English  },
-            { nameof(Language.Japanese), Language.Japanese },
             { nameof(Language.German),   Language.German   },
+            { nameof(Language.Japanese), Language.Japanese },
         };
 
         /* ----------------------------------------------------------------- */

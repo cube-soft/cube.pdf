@@ -384,7 +384,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(src.Cancel.Text,           Is.EqualTo("Cancel"));
             Assert.That(src.Cancel.Command,        Is.Not.Null);
 
-            Assert.That(src.Add.Text,              Is.EqualTo("Add ..."));
+            Assert.That(src.Add.Text,              Is.EqualTo("Add"));
             Assert.That(src.Add.Command,           Is.Not.Null);
             Assert.That(src.Preview.Text,          Is.EqualTo("Preview"));
             Assert.That(src.Preview.Command,       Is.Not.Null);

@@ -2,12 +2,13 @@ CubePDF Utility FAQ
 ====
 
 Copyright © 2013 CubeSoft, Inc.  
+GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
 
 ### Introduction
 
-This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/?lang=en). For more information on using CubePDF Utility, please refer to [CubePDF Utility Documents](https://en.cube-soft.jp/entry/cubepdf-utility).
+This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/). For more information on using CubePDF Utility, please refer to [CubePDF Utility Documents](https://en.cube-soft.jp/entry/cubepdf-utility).
 
 
 ### What version of Windows does it work on?
@@ -20,13 +21,13 @@ As for Windows Server, for the same reason, we expect it to work basically witho
 
 ### Are any runtimes, frameworks, etc. required?
 
-.NET Framework 3.5 or later (4.5.2 or later is strongly recommended) is required to use CubePDF Utility as it is developed using it. .NET Framework should already be installed in most cases, but if you need to install it, you can download it from [Download .NET Framework](https://dotnet.microsoft.com/download/dotnet-framework).
+.NET Framework 3.5 or later (4.7 or later is strongly recommended) is required to use CubePDF Utility as it is developed using it. .NET Framework should already be installed in most cases, but if you need to install it, you can download it from [Download .NET Framework](https://dotnet.microsoft.com/download/dotnet-framework).
 
 Note that the executable file to be installed for CubePDF Utility differs depending on the installed version of .NET Framework. Therefore, if you update the .NET Framework version, it is recommended to reinstall the CubePDF Utility as well.
 
 ### How do I update my version?
 
-To update CubePDF Utility, download the latest version of the installer from the [CubePDF Utility download page](https://www.cube-soft.jp/cubepdfutility/?lang=en) and run it again, as you did when you first installed it.
+To update CubePDF Utility, download the latest version of the installer from the [CubePDF Utility download page](https://www.cube-soft.jp/en/cubepdfutility/) and run it again, as you did when you first installed it.
 
 ### What are the install options?
 

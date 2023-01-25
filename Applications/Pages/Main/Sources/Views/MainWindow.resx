@@ -122,7 +122,7 @@
     <value>0</value>
   </data>
   <data name="AddButton.Text" xml:space="preserve">
-    <value>Add ...</value>
+    <value>Add</value>
   </data>
   <data name="&gt;&gt;AddButton.Name" xml:space="preserve">
     <value>AddButton</value>

@@ -68,7 +68,7 @@
     <value>PDF ファイル</value>
   </data>
   <data name="MenuAdd" xml:space="preserve">
-    <value>追加 ...</value>
+    <value>追加</value>
   </data>
   <data name="MenuAllowAccessibility" xml:space="preserve">
     <value>アクセシビリティのための内容の抽出を許可する</value>
