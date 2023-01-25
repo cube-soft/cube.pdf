@@ -68,9 +68,6 @@
   <data name="SettingPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="UpdateCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="UpdateCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -80,10 +77,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="UpdateCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 131</value>
+    <value>109, 128</value>
+  </data>
+  <data name="UpdateCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 0, 0, 0</value>
   </data>
   <data name="UpdateCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 23</value>
+    <value>331, 29</value>
   </data>
   <data name="UpdateCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -110,13 +110,10 @@
     <value>Fill</value>
   </data>
   <data name="OtherLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 131</value>
-  </data>
-  <data name="OtherLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>9, 128</value>
   </data>
   <data name="OtherLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
+    <value>94, 29</value>
   </data>
   <data name="OtherLabel.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -170,13 +167,10 @@
     <value>Fill</value>
   </data>
   <data name="TempLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 73</value>
-  </data>
-  <data name="TempLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>9, 70</value>
   </data>
   <data name="TempLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
+    <value>94, 29</value>
   </data>
   <data name="TempLabel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -230,13 +224,10 @@
     <value>Fill</value>
   </data>
   <data name="LanguageLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 102</value>
-  </data>
-  <data name="LanguageLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>9, 99</value>
   </data>
   <data name="LanguageLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
+    <value>94, 29</value>
   </data>
   <data name="LanguageLabel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -259,9 +250,6 @@
   <data name="&gt;&gt;LanguageLabel.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="KeepOutlineCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="KeepOutlineCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -269,10 +257,13 @@
     <value>NoControl</value>
   </data>
   <data name="KeepOutlineCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 44</value>
+    <value>109, 41</value>
+  </data>
+  <data name="KeepOutlineCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 0, 0, 0</value>
   </data>
   <data name="KeepOutlineCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 23</value>
+    <value>331, 29</value>
   </data>
   <data name="KeepOutlineCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -292,9 +283,6 @@
   <data name="&gt;&gt;KeepOutlineCheckBox.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="ShrinkResourceCheckBox.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="ShrinkResourceCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -302,16 +290,19 @@
     <value>NoControl</value>
   </data>
   <data name="ShrinkResourceCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 15</value>
+    <value>109, 12</value>
+  </data>
+  <data name="ShrinkResourceCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 0, 0, 0</value>
   </data>
   <data name="ShrinkResourceCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>328, 23</value>
+    <value>331, 29</value>
   </data>
   <data name="ShrinkResourceCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="ShrinkResourceCheckBox.Text" xml:space="preserve">
-    <value>Shrink duplicated resources</value>
+    <value>Reduce duplicated resources</value>
   </data>
   <data name="&gt;&gt;ShrinkResourceCheckBox.Name" xml:space="preserve">
     <value>ShrinkResourceCheckBox</value>
@@ -332,13 +323,10 @@
     <value>Fill</value>
   </data>
   <data name="OptionLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 15</value>
-  </data>
-  <data name="OptionLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 3, 3, 3</value>
+    <value>9, 12</value>
   </data>
   <data name="OptionLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 23</value>
+    <value>94, 29</value>
   </data>
   <data name="OptionLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -470,7 +458,7 @@
     <value>VersionControl</value>
   </data>
   <data name="&gt;&gt;VersionControl.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.VersionControl, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.VersionControl, Cube.Forms.Controls, Version=8.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;VersionControl.Parent" xml:space="preserve">
     <value>VersionPanel</value>
@@ -509,13 +497,13 @@
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="VersionControl" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,20,Percent,100,Absolute,20" /&gt;&lt;Rows Styles="Absolute,20,Absolute,100,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="VersionTabPage.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+    <value>4, 28</value>
   </data>
   <data name="VersionTabPage.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="VersionTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>452, 190</value>
+    <value>452, 184</value>
   </data>
   <data name="VersionTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1158,12 +1146,12 @@
     <value>CenterParent</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>CubePDF Page Settings</value>
+    <value>CubePDF Page settings</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>SettingWindow</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.Window, Cube.Forms, Version=7.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Window, Cube.Forms, Version=8.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
 </root>

@@ -213,12 +213,14 @@
             //
             // LinearizationCheckBox
             //
+            this.LinearizationCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.LinearizationCheckBox, "LinearizationCheckBox");
             this.LinearizationCheckBox.Name = "LinearizationCheckBox";
             this.LinearizationCheckBox.UseVisualStyleBackColor = true;
             //
             // JpegCheckBox
             //
+            this.JpegCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.JpegCheckBox, "JpegCheckBox");
             this.JpegCheckBox.Name = "JpegCheckBox";
             this.JpegCheckBox.UseVisualStyleBackColor = true;
@@ -496,6 +498,7 @@
             //
             // EncryptionCheckBox
             //
+            this.EncryptionCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.EncryptionCheckBox, "EncryptionCheckBox");
             this.EncryptionCheckBox.Name = "EncryptionCheckBox";
             this.EncryptionCheckBox.UseVisualStyleBackColor = true;
@@ -514,6 +517,7 @@
             //
             // UserPasswordCheckBox
             //
+            this.UserPasswordCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.UserPasswordCheckBox, "UserPasswordCheckBox");
             this.UserPasswordCheckBox.Name = "UserPasswordCheckBox";
             this.UserPasswordCheckBox.UseVisualStyleBackColor = true;
@@ -555,6 +559,7 @@
             //
             // SharePasswordCheckBox
             //
+            this.SharePasswordCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.SharePasswordCheckBox, "SharePasswordCheckBox");
             this.SharePasswordCheckBox.Name = "SharePasswordCheckBox";
             this.SharePasswordCheckBox.UseVisualStyleBackColor = true;
@@ -603,36 +608,42 @@
             //
             // AllowAnnotationCheckBox
             //
+            this.AllowAnnotationCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.AllowAnnotationCheckBox, "AllowAnnotationCheckBox");
             this.AllowAnnotationCheckBox.Name = "AllowAnnotationCheckBox";
             this.AllowAnnotationCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowAccessibilityCheckBox
             //
+            this.AllowAccessibilityCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.AllowAccessibilityCheckBox, "AllowAccessibilityCheckBox");
             this.AllowAccessibilityCheckBox.Name = "AllowAccessibilityCheckBox";
             this.AllowAccessibilityCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowModifyCheckBox
             //
+            this.AllowModifyCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.AllowModifyCheckBox, "AllowModifyCheckBox");
             this.AllowModifyCheckBox.Name = "AllowModifyCheckBox";
             this.AllowModifyCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowFormCheckBox
             //
+            this.AllowFormCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.AllowFormCheckBox, "AllowFormCheckBox");
             this.AllowFormCheckBox.Name = "AllowFormCheckBox";
             this.AllowFormCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowCopyCheckBox
             //
+            this.AllowCopyCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.AllowCopyCheckBox, "AllowCopyCheckBox");
             this.AllowCopyCheckBox.Name = "AllowCopyCheckBox";
             this.AllowCopyCheckBox.UseVisualStyleBackColor = true;
             //
             // AllowPrintCheckBox
             //
+            this.AllowPrintCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.AllowPrintCheckBox, "AllowPrintCheckBox");
             this.AllowPrintCheckBox.Name = "AllowPrintCheckBox";
             this.AllowPrintCheckBox.UseVisualStyleBackColor = true;
@@ -661,6 +672,7 @@
             //
             // UpdateCheckBox
             //
+            this.UpdateCheckBox.AutoEllipsis = true;
             resources.ApplyResources(this.UpdateCheckBox, "UpdateCheckBox");
             this.UpdateCheckBox.Name = "UpdateCheckBox";
             this.UpdateCheckBox.UseVisualStyleBackColor = true;
@@ -783,15 +795,12 @@
             this.DocumentPanel.PerformLayout();
             this.EncryptionTabPage.ResumeLayout(false);
             this.EncryptionOuterPanel.ResumeLayout(false);
-            this.EncryptionOuterPanel.PerformLayout();
             this.EncryptionPanel.ResumeLayout(false);
             this.EncryptionPanel.PerformLayout();
             this.OperationPanel.ResumeLayout(false);
-            this.OperationPanel.PerformLayout();
             this.UserPasswordPanel.ResumeLayout(false);
             this.UserPasswordPanel.PerformLayout();
             this.PermissionPanel.ResumeLayout(false);
-            this.PermissionPanel.PerformLayout();
             this.OtherTabPage.ResumeLayout(false);
             this.OtherPanel.ResumeLayout(false);
             this.OtherPanel.PerformLayout();

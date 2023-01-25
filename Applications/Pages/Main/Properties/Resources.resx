@@ -138,7 +138,7 @@
     <value>Add files</value>
   </data>
   <data name="TitleBusy" xml:space="preserve">
-    <value>Processing... - {0}</value>
+    <value>Processing ... - {0}</value>
   </data>
   <data name="TitleMerge" xml:space="preserve">
     <value>Save merged file as</value>

@@ -138,7 +138,7 @@
     <value>ファイルを追加</value>
   </data>
   <data name="TitleBusy" xml:space="preserve">
-    <value>処理中です... - {0}</value>
+    <value>処理中です ... - {0}</value>
   </data>
   <data name="TitleMerge" xml:space="preserve">
     <value>結合したファイルの保存</value>

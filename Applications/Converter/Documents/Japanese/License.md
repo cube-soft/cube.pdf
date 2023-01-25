@@ -2,7 +2,6 @@ CubePDF シリーズのライセンスや利用条件等について
 ====
 
 Copyright © 2010 CubeSoft, Inc.  
-GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdf/
 
@@ -50,4 +49,4 @@ AGPLv3 と GPLv3 の違いについては、[GNU Affero GPL の理由](https://w
 
 ### ソースコードは公開されていますか？
 
-はい。CubePDF シリーズのソースコードは [Cube.Pdf - GitHub](https://github.com/cube-soft/Cube.Pdf) から取得できます。尚、現在 CubePDF Viewer のみソースコードの移行が完了していません。そのため、CubePDF Viewer のソースコードは [cubepdfviewer - GitHub](https://github.com/cube-soft/cubepdfviewer) を参照下さい。
+はい。CubePDF シリーズのソースコードは [cube.pdf - GitHub](https://github.com/cube-soft/cube.pdf) から取得できます。尚、現在 CubePDF Viewer のみソースコードの移行が完了していません。そのため、CubePDF Viewer のソースコードは [cubepdfviewer - GitHub](https://github.com/cube-soft/cubepdfviewer) を参照下さい。

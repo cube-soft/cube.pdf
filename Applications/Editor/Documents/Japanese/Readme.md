@@ -2,6 +2,7 @@ CubePDF Utility ユーザーマニュアル
 ====
 
 Copyright © 2013 CubeSoft, Inc.  
+GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
 
@@ -153,7 +154,7 @@ CubePDF Utility では、PDF ファイル中の任意のページを抽出して
 
 **作業フォルダー** は、一時ファイルを保存するフォルダーを指定します。空欄の場合、開いた PDF ファイルの存在するフォルダーを作業フォルダーとしても利用します。
 
-**表示言語** では、CubePDF Utility メイン画面のメニュー等の表示言語を設定する事ができます。対応言語は英語と日本語の 2 種類です。また、表示言語で自動を選択した場合、Windows の言語設定に応じてどちらかの言語が自動的に選択されます。
+**表示言語** では、CubePDF Utility メイン画面のメニュー等の表示言語を設定する事ができます。対応言語は英語、ドイツ語、および日本語の 3 種類です。また、表示言語で自動を選択した場合、Windows の言語設定に応じてどちらかの言語が自動的に選択されます。
 
 **最近開いたファイルを表示する** の項目をを有効にすると、CubePDF Utility 起動時にユーザーが最近開いた PDF ファイルの一覧を表示しています。
 

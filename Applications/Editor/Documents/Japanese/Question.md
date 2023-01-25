@@ -2,24 +2,25 @@ CubePDF Utility のよくある質問 (FAQ)
 ====
 
 Copyright © 2013 CubeSoft, Inc.  
+GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
 https://www.cube-soft.jp/cubepdfutility/
 
 ### はじめに
 
-この記事は [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) について、よくある質問 (FAQ) をまとめたものです。CubePDF Utility の使用方法については、[CubePDF Utility ユーザーマニュアル](https://docs.cube-soft.jp/entry/cubepdfutility) も参照下さい。
+この記事は [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) について、よくある質問 (FAQ) をまとめたものです。CubePDF Utility の使用方法については、[CubePDF Utility ユーザーマニュアル](https://docs.cube-soft.jp/entry/cubepdf-utility) も参照下さい。
 
 ### Windows のどのバージョンで動作しますか？
 
-CubePDF Utility の動作対象となる Windows は、**サポート期限の有効な Windows** としています。2021 年現在では Windows 8.1 以降が対象となります。サポート期限の切れた Windows に関しては、動作するかどうかの保証はありません。また、動作しなくなった場合、そのためだけの修正を行う事もありませんので、ご了承下さい。
+CubePDF Utility の動作対象となる Windows は、**サポート期限の有効な Windows** としています。サポート期限の切れた Windows に関しては、動作するかどうかの保証はありません。また、動作しなくなった場合、そのためだけの修正を行う事もありませんので、ご了承下さい。
 
 Windows 10 や Windows 11 に関しては、利用するフレームワークやライブラリを鑑みても、基本的には特定のバージョンでのみ動作しなくなるような現象が発生する可能性は低いと考えています。そのため、何らかの固有の問題が発生した場合のみ告知する事とし、それ以外の場合には、バージョン毎に動作するかどうかを明示する予定はありません。尚、最終的には、ご自身でインストールする事によって動作および利用の可否を決定して下さい。
 
-Windows Server に関しては、Windows 10 と同様の理由で、基本的には問題なく動作すると予想しています。また、実際に数多くの動作報告も頂いています。ただ、開発環境側で十分なテストができない事もあり、何らかの Server 特有の問題が発生した時に検証や解決を行う事ができない場合があります。その点、ご了承下さい。
+Windows Server に関しては、Windows 10 や Windows 11 と同様の理由で、基本的には問題なく動作すると予想しています。また、実際に数多くの動作報告も頂いています。ただ、開発環境側で十分なテストができない事もあり、何らかの Server 特有の問題が発生した時に検証や解決を行う事ができない場合があります。その点、ご了承下さい。
 
 ### 必要なランタイムやフレームワーク等はありますか？
 
-CubePDF Utility は .NET Framework を用いて開発しています。そのため、CubePDF Utility を使用するためには .NET Framework 3.5 以降がインストールされている必要があります（4.5.2 以降を強く推奨）。.NET Framework は、現在では、ほとんどの場合においてインストール済のはずですが、もしインストールが必要になった場合 [Download .NET Framework](https://dotnet.microsoft.com/download/dotnet-framework) からダウンロードして下さい。
+CubePDF Utility は .NET Framework を用いて開発しています。そのため、CubePDF Utility を使用するためには .NET Framework 3.5 以降がインストールされている必要があります（4.7 以降を強く推奨）。.NET Framework は、現在では、ほとんどの場合においてインストール済のはずですが、もしインストールが必要になった場合 [Download .NET Framework](https://dotnet.microsoft.com/download/dotnet-framework) からダウンロードして下さい。
 
 尚、CubePDF Utility は、インストールされている .NET Framework のバージョンによってインストールする実行ファイルが異なります。そのため、.NET Framework のバージョンを更新した場合、CubePDF Utility も上書きインストールする事をお勧めします。
 
