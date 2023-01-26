@@ -56,8 +56,13 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2023-02-09 version 3.1.0
+    - Fix not to exit when an error occurs.
+    - Add German as a display language. (Thanks Roy)
+    - Adjust GUI layout.
+    - Update iText7 to 7.2.5.
 * 2022-12-01 version 3.0.1
-    - Update iText to 7.2.4.
+    - Update iText7 to 7.2.4.
     - Fix conditions for execution of configuration migration function.
 * 2022-10-05 version 3.0.0
     - Support Windows for ARM64.
@@ -68,7 +73,7 @@ Dependencies of the CubePDF are as follows.
     - Fix an error message when clicking the convert button with no input file specified.
     - Update Ghostscript to 10.0.0.
 * 2022-07-12 version 2.0.2
-    - Update iText to 7.2.3.
+    - Update iText7 to 7.2.3.
     - Fix to download and install the Visual C++ redistributable package as needed.
 * 2022-04-18 version 2.0.1
     - Update Ghostscript to 9.56.1.
