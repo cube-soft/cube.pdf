@@ -10,7 +10,7 @@ https://www.cube-soft.jp/cubepdfpage/
 
 CubePDF Page is a software for merging and splitting PDF files and image files (BMP, JPEG, PNG, GIF, TIFF).
 
-CubePDF Page requires .NET Framework 3.5 or later (4.5.2 or later recommended).  
+CubePDF Page requires .NET Framework 3.5 or later (4.7 or later recommended).  
 The download links are as follows:
 
 * Download .NET Framework  
@@ -69,6 +69,11 @@ Dependencies of the CubePDF Page are as follows.
 
 ## History
 
+* 2023-02-09 version 4.2.0
+    - Add German as a display language. (Thanks Roy)
+    - Adjust GUI layout.
+    - Fix to display the CubePDF Page document page when pressing F1 key.
+    - Update iText7 to 7.2.5.
 * 2022-12-01 version 4.1.0
     - Update iText7 to 7.2.4.
 * 2022-07-11 version 4.0.3
