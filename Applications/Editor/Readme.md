@@ -10,7 +10,7 @@ https://www.cube-soft.jp/cubepdfutility/
 
 CubePDF Utility is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings through GUI.
 
-CubePDF Utility requires .NET Framework 3.5 or later (4.5.2 or later recommended).  
+CubePDF Utility requires .NET Framework 3.5 or later (4.7 or later recommended).  
 The download links are as follows:
 
 * Download .NET Framework  
@@ -119,11 +119,16 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2023-02-09 version 2.2.0
+    - Add German as a display language. (Thanks Roy)
+    - Adjust GUI layout.
+    - Update PDFium to Chromium 110 compatible.
+    - Update iText7 to 7.2.5.
 * 2023-01-11 version 2.1.1
     - Update PDFium to Chromium 109 compatible.
 * 2022-12-01 version 2.1.0
     - Update PDFium to Chromium 108 compatible.
-    - Update iText to 7.2.4.
+    - Update iText7 to 7.2.4.
 * 2022-11-01 version 2.0.5
     - Update PDFium to Chromium 107 compatible.
 * 2022-09-30 version 2.0.4
@@ -132,14 +137,14 @@ Dependencies of the CubePDF Utility are as follows.
     - Update PDFium to Chromium 105 compatible.
 * 2022-08-04 version 2.0.2
     - Update PDFium to Chromium 104 compatible.
-    - Update iText to 7.2.3.
+    - Update iText7 to 7.2.3.
 * 2022-06-23 version 2.0.1
     - Update PDFium to Chromium 103 compatible.
     - Fix an issue that files were not inserted in the order specified in the "Insert at other position" dialog.
 * 2022-06-01 version 2.0.0
     - Change recommended environment to .NET Framework 4.7 or later.
     - Update PDFium to Chromium 102 compatible.
-    - Update iText to 7.2.2.
+    - Update iText7 to 7.2.2.
     - Add settings for deleting duplicate resources.
     - Add settings for bookmark information in the source PDF files.
     - Add settings for displaying recently used PDF files.
@@ -159,7 +164,7 @@ Dependencies of the CubePDF Utility are as follows.
 * 2022-01-07 version 1.6.3
     - Fix an issue that increases the file size unnecessarily when merging image files.
     - Update PDFium to Chromium 97 compatible.
-    - Update iText 7.1.17.
+    - Update iText7 to 7.1.17.
 * 2021-11-19 version 1.6.2
     - Fix problems with thumbnails not being displayed when adding image files.
     - Update PDFium to Chromium 96 compatible.

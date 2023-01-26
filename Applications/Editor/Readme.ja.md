@@ -11,8 +11,7 @@ https://www.cube-soft.jp/cubepdfutility/
 CubPDF Utility は、既存の PDF ファイルのページ挿入や削除、文書プロパティ、
 各種セキュリティ機能などの設定を変更するためのソフトウェアです。
 
-CubePDF Utility を使用するためには、.NET Framework 3.5 以降が
-インストールされている必要があります（4.5.2 以降を強く推奨）。
+CubePDF Utility を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.7 以降を強く推奨）。
 .NET Framework は、以下の URL からダウンロードして下さい。
 
 * Download .NET Framework  
@@ -126,11 +125,16 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2023-02-09 version 2.2.0
+    - 表示言語にドイツ語を追加 (Thanks Roy)
+    - GUI のレイアウトを調整
+    - PDFium を Chromium 110 相当に更新
+    - iText7 を 7.2.5 に更新
 * 2023-01-11 version 2.1.1
     - PDFium を Chromium 109 相当に更新
 * 2022-12-01 version 2.1.0
     - PDFium を Chromium 108 相当に更新
-    - iText を 7.2.4 に更新
+    - iText7 を 7.2.4 に更新
 * 2022-11-01 version 2.0.5
     - PDFium を Chromium 107 相当に更新
 * 2022-09-30 version 2.0.4
@@ -139,14 +143,14 @@ CubePDF Utility は、以下のライブラリを利用しています。
     - PDFium を Chromium 105 相当に更新
 * 2022-08-04 version 2.0.2
     - PDFium を Chromium 104 相当に更新
-    - iText を 7.2.3 に更新
+    - iText7 を 7.2.3 に更新
 * 2022-06-23 version 2.0.1
     - PDFium を Chromium 103 相当に更新
     - 詳細を設定して挿入画面で指定した順序で挿入されない不具合を修正
 * 2022-06-01 version 2.0.0
     - 推奨動作環境を .NET Framework 4.7 以降に変更
     - PDFium を Chromium 102 相当に更新
-    - iText を 7.2.2 に更新
+    - iText7 を 7.2.2 に更新
     - 重複リソースの削除に関する設定を追加
     - 編集元 PDF ファイルのしおり情報に関する設定を追加
     - 最近使用した PDF ファイルの表示設定を追加
@@ -166,7 +170,7 @@ CubePDF Utility は、以下のライブラリを利用しています。
 * 2022-01-07 version 1.6.3
     - 画像ファイル結合時にファイルサイズが必要以上に増大する不具合を修正
     - PDFium を Chromium 97 相当に更新
-    - iText を 7.1.17 に更新
+    - iText7 を 7.1.17 に更新
 * 2021-11-19 version 1.6.2
     - 画像ファイル追加時にサムネイル表示されない不都合を修正
     - PDFium を Chromium 96 相当に更新
