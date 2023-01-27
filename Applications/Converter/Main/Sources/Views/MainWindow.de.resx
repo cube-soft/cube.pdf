@@ -180,7 +180,7 @@
     <value>Über</value>
   </data>
   <data name="SettingButton.Text" xml:space="preserve">
-    <value>Einst. Speichern</value>
+    <value>Einst. speichern</value>
   </data>
   <data name="ExecButton.Text" xml:space="preserve">
     <value>Konvertieren</value>
