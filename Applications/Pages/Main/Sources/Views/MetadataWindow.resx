@@ -1271,7 +1271,7 @@
     <value>1</value>
   </data>
   <data name="EncryptionTabPage.Text" xml:space="preserve">
-    <value>Encryption</value>
+    <value>Security</value>
   </data>
   <data name="&gt;&gt;EncryptionTabPage.Name" xml:space="preserve">
     <value>EncryptionTabPage</value>
