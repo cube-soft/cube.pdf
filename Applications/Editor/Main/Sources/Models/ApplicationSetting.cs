@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Threading;
 
 namespace Cube.Pdf.Editor
 {
@@ -42,10 +43,13 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private ApplicationSetting()
+        private ApplicationSetting() => _dispose = Locale.Subscribe(e =>
         {
-            _dispose = Locale.Subscribe(e => Properties.Resources.Culture = e.ToCultureInfo());
-        }
+            var ci = e.ToCultureInfo();
+            Thread.CurrentThread.CurrentCulture   = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+            Properties.Resources.Culture          = ci;
+        });
 
         #endregion
 
