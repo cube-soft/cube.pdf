@@ -10,6 +10,18 @@ https://www.cube-soft.jp/cubepdfpage/
 
 This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF Page](https://www.cube-soft.jp/en/cubepdfpage/). For more information on using CubePDF Page, please refer to [CubePDF Page Documents](https://en.cube-soft.jp/entry/cubepdf-page).
 
+### Work differently than before
+
+CubeSoft, Inc. provides the following software under the name of **CubePDF Series**.
+
+* [CubePDF](https://www.cube-soft.jp/en/cubepdf/) ... Virtual Printer
+* [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/) ... PDF page based editor
+* [CubePDF Page](https://www.cube-soft.jp/en/cubepdfpage/) ... PDF file based editor
+* [CubePDF Clip](https://clown.cube-soft.jp/entry/2017/03/24/cubepdf-clip-1.0.0) ... Software for attaching to PDF files (Japanese)
+* [CubePDF Viewer](https://www.cube-soft.jp/cubepdfviewer/) ... PDF viewer (Japanese)
+* [CubePDF ImagePicker](https://www.cube-soft.jp/cubepdfimagepicker/) ... PDF embedded image picker (Japanese)
+
+**These are all different software**. First, please make sure that the software installed in your environment is appropriate for your use. In addition, the functions provided and the layout of the GUI may be changed as a result of version updates.
 
 ### What version of Windows does it work on?
 
