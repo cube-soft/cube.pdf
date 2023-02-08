@@ -10,6 +10,20 @@ https://www.cube-soft.jp/cubepdfpage/
 
 この記事は [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/) について、よくある質問 (FAQ) をまとめたものです。CubePDF Page の使用方法については、[CubePDF Page ユーザーマニュアル](https://docs.cube-soft.jp/entry/cubepdf-utility) も参照下さい。
 
+### 以前と動作が異なります
+
+株式会社キューブ・ソフトからは、**CubePDF シリーズ** と銘打って下記のソフトウェアを提供しています。
+
+* [CubePDF](https://www.cube-soft.jp/cubepdf/) ... PDF ファイル等への変換（仮想プリンター）
+* [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) ... PDF ファイルの編集
+* [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/) ... PDF ファイルの結合・分割
+* [CubePDF Clip](https://clown.cube-soft.jp/entry/2017/03/24/cubepdf-clip-1.0.0) ... PDF ファイルへの添付
+* [CubePDF Viewer](https://www.cube-soft.jp/cubepdfviewer/) ... PDF ファイルの閲覧
+* [CubePDF ImagePicker](https://www.cube-soft.jp/cubepdfimagepicker/) ... PDF ファイル中の画像抽出
+
+**これらは全て別のソフトウェアとなります**。まず、ご利用環境にインストールしたソフトウェアが、自分の利用用途に沿ったものであるかどうかを確認して下さい。
+また、提供される機能や GUI のレイアウト等はバージョンアップに伴って変更される事があります。
+
 ### Windows のどのバージョンで動作しますか？
 
 CubePDF Page の動作対象となる Windows は、**サポート期限の有効な Windows** としています。サポート期限の切れた Windows に関しては、動作するかどうかの保証はありません。また、動作しなくなった場合、そのためだけの修正を行う事もありませんので、ご了承下さい。
