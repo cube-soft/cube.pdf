@@ -77,7 +77,7 @@
     <value>112, 105</value>
   </data>
   <data name="ColorModeComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>358, 23</value>
+    <value>378, 23</value>
   </data>
   <data name="ColorModeComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -137,7 +137,7 @@
     <value>112, 47</value>
   </data>
   <data name="SaveOptionComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>358, 23</value>
+    <value>378, 23</value>
   </data>
   <data name="SaveOptionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -167,7 +167,7 @@
     <value>3, 0, 0, 0</value>
   </data>
   <data name="LinearizationCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>361, 25</value>
+    <value>381, 25</value>
   </data>
   <data name="LinearizationCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -200,7 +200,7 @@
     <value>3, 0, 0, 0</value>
   </data>
   <data name="JpegCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>361, 25</value>
+    <value>381, 25</value>
   </data>
   <data name="JpegCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -266,7 +266,7 @@
     <value>112, 134</value>
   </data>
   <data name="ResolutionNumeric.Size" type="System.Drawing.Size, System.Drawing">
-    <value>358, 23</value>
+    <value>378, 23</value>
   </data>
   <data name="ResolutionNumeric.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -293,7 +293,7 @@
     <value>112, 238</value>
   </data>
   <data name="PostProcessComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>358, 23</value>
+    <value>378, 23</value>
   </data>
   <data name="PostProcessComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -320,7 +320,7 @@
     <value>NoControl</value>
   </data>
   <data name="UserProgramButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>323, 2</value>
+    <value>343, 2</value>
   </data>
   <data name="UserProgramButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -353,7 +353,7 @@
     <value>3, 3</value>
   </data>
   <data name="UserProgramTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 23</value>
+    <value>334, 23</value>
   </data>
   <data name="UserProgramTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -383,7 +383,7 @@
     <value>1</value>
   </data>
   <data name="UserProgramPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 29</value>
+    <value>384, 29</value>
   </data>
   <data name="UserProgramPanel.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -512,7 +512,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="OrientationPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 25</value>
+    <value>384, 25</value>
   </data>
   <data name="OrientationPanel.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -575,7 +575,7 @@
     <value>NoControl</value>
   </data>
   <data name="SourceButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>323, 2</value>
+    <value>343, 2</value>
   </data>
   <data name="SourceButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -608,7 +608,7 @@
     <value>3, 3</value>
   </data>
   <data name="SourceTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 23</value>
+    <value>334, 23</value>
   </data>
   <data name="SourceTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -638,7 +638,7 @@
     <value>1</value>
   </data>
   <data name="SourcePanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 29</value>
+    <value>384, 29</value>
   </data>
   <data name="SourcePanel.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -848,7 +848,7 @@
     <value>NoControl</value>
   </data>
   <data name="DestinationButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>323, 2</value>
+    <value>343, 2</value>
   </data>
   <data name="DestinationButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 2, 3, 2</value>
@@ -881,7 +881,7 @@
     <value>3, 3</value>
   </data>
   <data name="DestinationTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>314, 23</value>
+    <value>334, 23</value>
   </data>
   <data name="DestinationTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -911,7 +911,7 @@
     <value>1</value>
   </data>
   <data name="DestinationPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 29</value>
+    <value>384, 29</value>
   </data>
   <data name="DestinationPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -938,10 +938,10 @@
     <value>Fill</value>
   </data>
   <data name="PdfVersionComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>221, 3</value>
+    <value>233, 3</value>
   </data>
   <data name="PdfVersionComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>140, 23</value>
+    <value>148, 23</value>
   </data>
   <data name="PdfVersionComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -965,7 +965,7 @@
     <value>3, 3</value>
   </data>
   <data name="FormatComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>212, 23</value>
+    <value>224, 23</value>
   </data>
   <data name="FormatComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -995,7 +995,7 @@
     <value>1</value>
   </data>
   <data name="FormatPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>364, 29</value>
+    <value>384, 29</value>
   </data>
   <data name="FormatPanel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -1025,7 +1025,7 @@
     <value>12</value>
   </data>
   <data name="GeneralPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>482, 322</value>
+    <value>502, 322</value>
   </data>
   <data name="GeneralPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1049,7 +1049,7 @@
     <value>4, 24</value>
   </data>
   <data name="GeneralTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>482, 368</value>
+    <value>502, 368</value>
   </data>
   <data name="GeneralTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2486,7 +2486,7 @@
     <value>9, 59</value>
   </data>
   <data name="SettingTabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>490, 396</value>
+    <value>510, 396</value>
   </data>
   <data name="SettingTabControl.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2576,7 +2576,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="ToolPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 41</value>
+    <value>248, 41</value>
   </data>
   <data name="ToolPanel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -2603,7 +2603,7 @@
     <value>NoControl</value>
   </data>
   <data name="ExecButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>234, 6</value>
+    <value>254, 6</value>
   </data>
   <data name="ExecButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 35</value>
@@ -2636,7 +2636,7 @@
     <value>NoControl</value>
   </data>
   <data name="ExitButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>370, 6</value>
+    <value>390, 6</value>
   </data>
   <data name="ExitButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 35</value>
@@ -2672,7 +2672,7 @@
     <value>3</value>
   </data>
   <data name="FooterPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>496, 53</value>
+    <value>516, 53</value>
   </data>
   <data name="FooterPanel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -2705,7 +2705,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="HeaderPictureBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>508, 50</value>
+    <value>528, 50</value>
   </data>
   <data name="HeaderPictureBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2732,7 +2732,7 @@
     <value>4</value>
   </data>
   <data name="RootPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>508, 511</value>
+    <value>528, 511</value>
   </data>
   <data name="RootPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -2759,7 +2759,7 @@
     <value>True</value>
   </metadata>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>508, 511</value>
+    <value>528, 511</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Meiryo UI, 12px</value>
