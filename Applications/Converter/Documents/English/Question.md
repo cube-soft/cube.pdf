@@ -12,7 +12,7 @@ This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF](
 
 ### I don't know how to use CubePDF
 
-![How to use CubePDF](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/overview.en.png)
+![How to use CubePDF](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/overview.png)
 
 CubePDF is a software called **Virtual Printer**. First, open the content you want to convert to PDF in a suitable application such as Microsoft Edge, Google Chrome, Microsoft Word, Excel, PowerPoint, etc. Then, select the **Print** menu of those applications and select CubePDF from the list of printers to run it. Finally, make the necessary settings on the CubePDF main window and click the **Convert** button to finish.
 
@@ -35,15 +35,15 @@ CubeSoft, Inc. provides the following software under the name of **CubePDF Serie
 
 ### Unable to open the PDF file
 
-CubePDF is a software that provides only the function of conversion to PDF files. Therefore, you will need an application to view the converted file. For example, you can use [Adobe Acrobat Reader DC](https://get.adobe.com/jp/reader/) as an application to view PDF files.
+CubePDF is a software that provides only the function of conversion to PDF files. Therefore, you will need an application to view the converted file. For example, you can use [Adobe Acrobat Reader DC](https://get.adobe.com/reader/) as an application to view PDF files.
 
-![PostProcess to None](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/faq-postprocess.png)
+![PostProcess to None](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/postproc.png)
 
 Also, if no application to open the converted file is installed on your PC, you may encounter an error when running CubePDF. In this case, please change the **Post process** item on the main window to **None** to avoid this problem.
 
 ### Filesize of PDF files suddenly increased
 
-![Settings for embedded image compression](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/faq-filesize.png)
+![Settings for embedded image compression](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/jpeg.png)
 
 For conversion to PDF files, even if the content looks the same, the file size may vary greatly depending on the settings of the application executing the printing and minor differences in the content itself.
 
@@ -51,11 +51,11 @@ However, if there is a large difference in the file size of the converted PDF fi
 
 ### Fail to merge PDF files
 
-![In case the PDF file is encrypted by a password](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/faq-security-01.png)
+![In case the PDF file is encrypted by a password](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/misc/acrobat.png)
 
 If the merging of PDF files fails, one of the possible causes is that the destination PDF file is encrypted by a password. For example, if you see the word **Protected** or **Secured** when you open a PDF file with Adobe Acrobat Reader DC, the PDF file is encrypted. In this case, you need to enter the **Owner Password** of the PDF file to be merged in the **Security** tab of the CubePDF main window.
 
-![In case the PDF file is opened in another application](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/faq-security-02.png)
+![In case the PDF file is opened in another application](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/error/access-denied.png)
 
 Also, if you receive the error message "The process cannot access the file because the file is being used by another process" as described above, it is expected that the PDF file to be merged is most likely being opened by some application. In this case, please check that you have not opened the PDF file.
 
@@ -67,7 +67,7 @@ CubePDF is basically a software for converting PDF files, although you can merge
 
 CubePDF itself does not intentionally perform network communication at runtime; the only network communication related to CubePDF is the update check performed at PC startup. In the update check, the version numbers of CubePDF, Windows and .NET are sent. If you want to disable the update check, please disable the **Check for updates on startup** item in the **Others** tab of the main window and click the **Save settings** button at the bottom left.
 
-![How to disable update checker](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/en/faq-network.png)
+![How to disable update checker](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/version.png)
 
 Also, please refer to [About communication that occurs when running CubePDF (Japanese)](https://clown.cube-soft.jp/entry/2011/10/26/upnp) for the problems we have received in the past. We recognize that this is done by Windows itself and cannot be controlled by CubePDF.
 

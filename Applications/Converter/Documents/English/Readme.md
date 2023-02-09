@@ -8,7 +8,7 @@ https://www.cube-soft.jp/cubepdf/
 
 ## Overview
 
-![How to convert to PDF](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/overview.png)
+![How to convert to PDF](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/overview.png)
 
 CubePDF is installed as a **Virtual Printer**. Therefore, any application that has a **Print** button, such as Microsoft Edge, Google Chrome, Microsoft Word, Excel, PowerPoint, etc., can be converted to PDF in the following 3 steps.
 
@@ -20,9 +20,9 @@ If a PDF file with the specified name already exists, you can merge it into an e
 
 * **Overwrite**  
   Overwrite an existing PDF file with a new PDF file.
-* **Merge head**  
+* **Merge at the begining**  
   Merge the converted content into the beginning of an existing PDF file.
-* **Merge tail**  
+* **Merge at the end**  
   Merge the converted content at the end of an existing PDF file.
 * **Rename**   
   Save the file automatically under a different name, such as sample(2).pdf.
@@ -43,7 +43,7 @@ CubePDF can also convert to file formats other than PDF. If you want to convert 
 
 Note that for file formats that cannot hold multiple pages, such as PNG, a file will be created for each page to be converted. For example, if you specify Sample.png as the output file name, the file will actually be created as Sample-01.png, Sample-02.png, and so on.
 
-![General settings](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/general.png)
+![General settings](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/format.png)
 
 If the selected format is PDF, you can select the PDF version, which can be found to the right of the **Format** selection.
 
@@ -91,7 +91,7 @@ Note that if you specify any other program, CubePDF will execute it with the pat
 
 ### Metadata
 
-![Metadata](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/metadata.png)
+![Metadata](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/metadata.png)
 
 If the selected format is PDF, you can register information such as the title, creator, etc. The information registered here can be confirmed in the properties window of a PDF viewer such as Adobe Acrobat Reader DC. In addition, the **Layout** item allows you to change the way the PDF is displayed when it is opened with a PDF viewer.
 
@@ -101,7 +101,7 @@ If you omit these information, CubePDF will create PDF files with Title, Author,
 
 If the selected format is PDF, you can set a password to protect the created PDF file. To set a password, first enable the **Encrypt the PDF with password** option, then enter the same password twice in the **Password** and **Confirm** fields.
 
-![Security](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/encryption.png)
+![Security](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/security.png)
 
 Next, in the **Operations** section, specify the operations to be allowed or restricted to users. Available settings are as follows:
 
@@ -119,11 +119,11 @@ However, if you share both passwords, the restrictions on printing, copying, etc
 
 Moreover, if a PDF file is recognized as having been opened with an owner password, all PDF editing, including removal of the user password, will be possible. Please make sure you fully understand these behaviors when you share the user password with the owner password.
 
-### Other settings
+### Other Settings
 
 The **About** section displays the version information of CubePDF. If you enable the **Check for updates on startup** item, you will receive a notification in the lower right corner of your computer when CubePDF is updated. Checking for updates will be performed when your computer starts up. The information sent for checking the update is the version number of CubePDF, Windows, and .NET.
 
-![Language](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/version.png)
+![Language](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/version.png)
 
 In the **Language** section, you can set the display language for the menu and other items on the CubePDF main window. There are three supported languages, **English**, **German** and **Japanese**. If you select **Auto** for the display language, one of the languages will be automatically selected according to the Windows language settings.
 
@@ -137,17 +137,13 @@ However, various security items and the file name part of the destination are no
 
 ## CubePDF printer settings
 
-CubePDF has settings for the **CubePDF printer** in addition to the application settings described above. To change the printer settings, first right-click CubePDF on the window that appears in **Devices and Printers** in **Control Panel** and select **Print preferences**.
+![Printer settings](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/printer/windows8.png)
 
-![Printer settings in the control pannel](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/printer-01.png)
+CubePDF has settings for the **CubePDF printer** in addition to the application settings described above. To change the printer settings, select **Devices**, **Printers & scanners**, **CubePDF**, **Manage**, and **Print preferences** in **Settings**. You can also do the same from **Control Panel** in Windows 7. Right-click CubePDF on the window that appears in **Devices and Printers** and select **Print preferences**.
 
-You can also do the same from **Settings** in Windows 8 or later. From **Settings**, select **Devices**, **Printers & scanners**, **CubePDF**, **Manage**, and **Print preferences**.
-
-![Printer settings for Windows 8 and later](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/printer-02.png)
+![Advanced settings for printer](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/printer/options.png)
 
 In the print settings, the **Paper/Quality** tab allows you to change the settings for printing in black and white or color. For other settings, click the **Advanced ...** button at the bottom right.
-
-![Advanced settings for printer](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/printer-03.png)
 
 **Paper Size** will be reflected in the size of each page after conversion. The values that can be set are mainly those corresponding to the actual paper size, such as A0-A6. Note that **Slide** is the size corresponding to the default value of Microsoft PowerPoint (4:3).
 
@@ -174,10 +170,9 @@ The CubePDF printer settings may not be reflected depending on the application t
 
 ## How to uninstall CubePDF
 
-To uninstall CubePDF, first select **Uninstall a program** in **Control Panel** or **Apps** in **Settings** (Windows 8 or later). Then select the CubePDF icon on the window that appears and run the **Uninstall** item.
+![Uninstall CubePDF](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/uninstall/windows8.png)
 
-![Uninstall for Windows 8 and later](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/uninstall-01.png)
-![Uninstall in the control pannel](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/en/uninstall-02.png)
+To uninstall CubePDF, first select **Apps** in **Settings** or **Uninstall a program** in **Control Panel**. Then select the CubePDF icon on the window that appears and run the **Uninstall** item.
 
 ## Having problems with CubePDF?
 
