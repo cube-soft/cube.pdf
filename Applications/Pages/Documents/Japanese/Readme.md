@@ -38,7 +38,7 @@ CubePDF Page ではページ順序の入れ替え、特定ページの抽出や�
 
 [![CubePDF Utility](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfutility/overview.ja.png)](https://www.cube-soft.jp/cubepdfutility/)
 
-## 編集操作および設定内容
+## 編集操作および設定内容の一覧
 
 ### メイン画面
 
@@ -91,7 +91,7 @@ CubePDF Page メイン画面は、**ファイル一覧** と、それらに対�
 
 また、管理用パスワードで PDF ファイルを開いたと認識された場合、閲覧用パスワードの除去も含めた全ての PDF 編集が可能になります。閲覧用パスワードを管理用パスワードと共用する場合、これらの動作を十分に理解した上でご利用下さい。
 
-### その他の設定およびバージョン情報
+### その他の設定
 
 ![設定画面](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/ja/main/settings.png)
 
@@ -107,29 +107,31 @@ CubePDF Page メイン画面は、**ファイル一覧** と、それらに対�
 
 **表示言語** では、CubePDF Page メイン画面のメニュー等の表示言語を設定する事ができます。対応言語は 英語 (English)、ドイツ語 (German)、および日本語 (Japanese) の 3 種類です。また、表示言語で Auto を選択した場合、Windows の言語設定に応じてどちらかの言語が自動的に選択されます。
 
-**起動時にアップデートを確認する** の項目を有効にすると、CubePDF Page のバージョンアップ時にパソコンの右下に通知されます。アップデートの確認は、パソコンの起動時に実行されます。また、アップデートの確認のために送信する情報は、CubePDF Page, Windows, .NET Framework それぞれのバージョン番号です。
+**起動時にアップデートを確認する** の項目を有効にすると、CubePDF Page のバージョンアップ時にパソコンの右下に通知されます。アップデートの確認は、パソコンの起動時に実行されます。また、アップデートの確認のために送信する情報は、CubePDF Page、Windows、および .NET Framework それぞれのバージョン番号です。
+
+### バージョン情報
 
 ![バージョン情報](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/ja/main/version.png)
 
-**バージョン情報** タブでは、CubePDF Page のバージョン情報が表示されます。
+設定画面の **バージョン情報** タブでは、実行時の CubePDF Page、Windows、および .NET Framework のバージョン情報が表示されます。また、x86、x64、または ARM64 の内、どのエディションが実行されているのかも、ここで確認する事ができます。
 
 ### ショートカットキーの一覧
 
 CubePDF Page で有効なキーボードのショートカットキーは、以下の通りです。
 
-* Ctrl + M ... ファイルの結合を実行
-* Ctrl + S ... ファイルの分割を実行
-* Ctrl + E ... 文書プロパティおよびセキュリティ編集画面を表示
-* Ctrl + H ... CubePDF Page の設定画面を表示
-* Ctrl + Q ... アプリケーションを終了
-* Ctrl + O ... PDF, PNG, JPEG, BMP ファイルを追加するダイアログを表示
-* Ctrl + A ... ファイル一覧の全ての項目を選択
-* Ctrl + R ... 選択中のファイルを関連付けられているアプリケーションで開く
-* Ctrl + K or Ctrl + 上矢印 ... 選択ファイルを 1 つ上に移動
-* Ctrl + J or Ctrl + 下矢印 ... 選択ファイルを 1 つ下に移動
-* Ctrl + D or Delete ... 選択ファイルを一覧から削除
-* Ctrl + Shift + D ... 全てのファイルを一覧から削除
-* F1 ... [CubePDF Page ユーザーマニュアル](https://docs.cube-soft.jp/entry/cubepdf-page) を表示
+* **Ctrl + M** ... ファイルの結合を実行
+* **Ctrl + S** ... ファイルの分割を実行
+* **Ctrl + E** ... 文書プロパティおよびセキュリティ編集画面を表示
+* **Ctrl + H** ... CubePDF Page の設定画面を表示
+* **Ctrl + Q** ... アプリケーションを終了
+* **Ctrl + O** ... PDF, PNG, JPEG, BMP ファイルを追加するダイアログを表示
+* **Ctrl + A** ... ファイル一覧の全ての項目を選択
+* **Ctrl + R** ... 選択中のファイルを関連付けられているアプリケーションで開く
+* **Ctrl + K** or **Ctrl + 上矢印** ... 選択ファイルを 1 つ上に移動
+* **Ctrl + J** or **Ctrl + 下矢印** ... 選択ファイルを 1 つ下に移動
+* **Ctrl + D** or **Delete** ... 選択ファイルを一覧から削除
+* **Ctrl + Shift + D** ... 全てのファイルを一覧から削除
+* **F1** ... [CubePDF Page ユーザーマニュアル](https://docs.cube-soft.jp/entry/cubepdf-page) を表示
 
 ## CubePDF Page のアンインストール
 

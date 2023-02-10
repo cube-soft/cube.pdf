@@ -35,7 +35,7 @@ CubePDF is a software called **Virtual Printer**, which runs via **Printing** in
 
 In addition, CubePDF only provides the conversion function, and another application is required to view the converted files (for example, [Adobe Acrobat Reader DC](https://get.adobe.com/reader/), etc.).
 
-## CubePDF application settings
+## List of converting operations and settings
 
 ### General
 
@@ -119,15 +119,17 @@ However, if you share both passwords, the restrictions on printing, copying, etc
 
 Moreover, if a PDF file is recognized as having been opened with an owner password, all PDF editing, including removal of the user password, will be possible. Please make sure you fully understand these behaviors when you share the user password with the owner password.
 
-### Other Settings
+### Other settings and version information
 
-The **About** section displays the version information of CubePDF. If you enable the **Check for updates on startup** item, you will receive a notification in the lower right corner of your computer when CubePDF is updated. Checking for updates will be performed when your computer starts up. The information sent for checking the update is the version number of CubePDF, Windows, and .NET.
+![Other Settings and version information](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/version.png)
 
-![Language](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/version.png)
+The **About** section displays the version information of CubePDF, Windows, and .NET Framework. You can also check which edition of x86, x64, or ARM64 you are running.
+
+If you enable the **Check for updates on startup** item, you will receive a notification in the lower right corner of your computer when CubePDF is updated. Checking for updates will be performed when your computer starts up. The information sent for checking the update is the version number of CubePDF, Windows, and .NET.
 
 In the **Language** section, you can set the display language for the menu and other items on the CubePDF main window. There are three supported languages, **English**, **German** and **Japanese**. If you select **Auto** for the display language, one of the languages will be automatically selected according to the Windows language settings.
 
-### Save Settings
+### Save settings
 
 When you change any item in the CubePDF main window, the **Save Settings** button will become clickable. If you click it at this time, the current settings will be saved, and will be used as the initial settings for the next time CubePDF is executed.
 
