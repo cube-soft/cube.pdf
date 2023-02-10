@@ -12,7 +12,7 @@ https://www.cube-soft.jp/cubepdf/
 
 ### CubePDF の使い方が分かりません
 
-![CubePDF の使用方法](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/overview.ja.png)
+![CubePDF の使用方法](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/overview.png)
 
 CubePDF は **仮想プリンター** と呼ばれる類のソフトウェアです。まず、PDF に変換したい内容を Google Chrome や Microsoft Word など適当なアプリケーションで開きます。次に、それらのアプリケーションの **印刷** メニューを選択し、プリンター一覧の中から CubePDF を選択して実行します。そうすると CubePDF のメイン画面が表示されるので、必要な設定を行った後に変換ボタンをクリックすれば完了です。
 
@@ -36,15 +36,15 @@ CubePDF は仮想プリンターと呼ばれる種類のソフトウェアなの
 
 ### PDF ファイルが開けません
 
-CubePDF は PDF ファイル等への変換機能のみを提供するソフトウェアです。そのため、変換後のファイルを閲覧するには別途アプリケーションが必要となります。例えば、PDF ファイルを閲覧するアプリケーションとしては [Adobe Acrobat Reader DC](https://get.adobe.com/jp/reader/) 等が挙げられます。
+CubePDF は PDF ファイル等への変換機能のみを提供するソフトウェアです。そのため、変換後のファイルを閲覧するには別途アプリケーションが必要となります。例えば、PDF ファイルを閲覧するアプリケーションとしては [Adobe Acrobat Reader DC](https://get.adobe.com/reader/) 等が挙げられます。
 
-![ポストプロセスを何もしないに変更](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/faq-postprocess.png)
+![ポストプロセスを何もしないに変更](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/main/postproc.png)
 
 また、変換したファイルを開くためのアプリケーションがご利用の PC にインストールされていない場合、CubePDF 実行時にエラーとなる事があります。この場合、メイン画面の **ポストプロセス** の項目を **何もしない** に変更して回避して下さい。
 
 ### PDF ファイルのファイルサイズが突然大きくなりました
 
-![PDF ファイル中の画像を JPEG 形式で圧縮する項目の確認](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/faq-filesize.png)
+![PDF ファイル中の画像を JPEG 形式で圧縮する項目の確認](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/main/jpeg.png)
 
 PDF ファイルへの変換については、一見同じような内容に見えても、印刷を実行するアプリケーションの設定や内容自体の細かな差によりファイルサイズが大きく変化する場合があります。
 
@@ -52,11 +52,11 @@ PDF ファイルへの変換については、一見同じような内容に見�
 
 ### PDF ファイルの結合に失敗しました
 
-![PDF ファイルがパスワードによって保護されている場合](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/faq-security-01.png)
+![PDF ファイルがパスワードによって保護されている場合](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/misc/acrobat.png)
 
 PDF ファイルの結合に失敗した場合、考えられる可能性の一つとして結合先の PDF ファイルがパスワードによって保護されている事が挙げられます。PDF ファイルは、パスワード無しで開く事ができても、パスワードによって保護されている場合があります。例えば、Adobe Acrobat Reader で PDF ファイルを開いた時に「保護」と言う表示がある場合、その PDF ファイルはパスワードによって保護されています。この場合、CubePDF メイン画面 **セキュリティ** タブで、結合先 PDF ファイルの **管理用パスワード** を入力する必要があります。
 
-![PDF ファイルが他のアプリケーションで開かれている場合](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/faq-security-02.png)
+![PDF ファイルが他のアプリケーションで開かれている場合](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/error/access-denied.png)
 
 また、上記のように「ファイルが別のプロセスで使用されているため、プロセスはファイルにアクセスできません」と言うエラーメッセージが表示された場合、結合先 PDF ファイルが何らかのアプリケーションで開かれている可能性が高いと予想されます。この場合は、PDF ファイルを開いていないか再度ご確認をお願いします。
 
@@ -68,7 +68,7 @@ CubePDF は、変換時に他の PDF ファイルに結合したり、文書プ�
 
 CubePDF は、実行時に CubePDF 自体が意図的にネットワーク通信を行う事はありません。CubePDF に関連するネットワーク通信は、PC 起動時に実行されるアップデート確認のみです。アップデート確認では、CubePDF、Windows、.NET Framework のバージョン番号を送信します。このアップデート確認を無効にしたい場合、メイン画面「その他」タブの「起動時にアップデートを確認する」項目を無効にした上で、左下にある「設定を保存」ボタンをクリックして下さい。
 
-![アップデート確認の無効方法](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v1/ja/faq-network.png)
+![アップデート確認の無効方法](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/main/version.png)
 
 尚、過去にお問い合わせ頂いた問題については、[CubePDF 実行時に発生する通信について](https://clown.cube-soft.jp/entry/2011/10/26/upnp) をご覧ください。これに関しては Windows 自体が行っているものであり CubePDF 側で制御する事はできないと認識しています。
 

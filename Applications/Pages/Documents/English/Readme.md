@@ -8,16 +8,16 @@ https://www.cube-soft.jp/cubepdfpage/
 
 ## Overview
 
-![CubePDF Page overview](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/overview.en.png)
+![CubePDF Page overview](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/en/main/dragdrop.png)
 
 CubPDF Page is a software for merging or splitting existing PDF and image files. You can also add various PDF metadata and security settings to the merged or split PDF file. To use CubPDF Page, first add PDF or image files you wish to merge or split to the file list on the main window. There are two ways to add PDF files:
 
-1. Click the **Open** button and choose from the popup dialog.
+1. Click the **Add** button and choose from the popup dialog.
 2. Drag&Drop PDF and/or image files to be merged or split to the file list on the main window.
 
 If the selected PDF file is protected by a password, a dialog box will appear asking you to enter the administrative password. Please enter the correct password.
 
-![Password dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/password.png)
+![Password dialog](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/en/main/password.png)
 
 Adding source files and completing the necessary operations, click either of the following buttons at the end to complete the process.
 
@@ -37,16 +37,16 @@ Note that even if a PDF file can be opened without any password, **Owner passwor
 
 Although CubePDF Page does not provide a way to reorder pages, extract or delete specific pages, this can be achieved indirectly by using the merge and split functions together. If you want to edit existing PDF files in detail, please consider using [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/).
 
-## List of editing operations
+[![CubePDF Utility](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfutility/overview.en.png)](https://www.cube-soft.jp/en/cubepdfutility/)
+
+## List of editing operations and settings
 
 ### Main window
 
-![CubePDF Page main window](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/main.png)
+![CubePDF Page main window](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/en/overview.png)
 
-The buttons and other features displayed on the CubePDF Page main window are as follows:
+CubePDF Page consists of a list of files and a set of buttons to operate on them. The left side shows the list of files to be merged or split. PDF files or image files (BMP, PNG, JPEG, GIF, TIFF) can be registered in this area. When you double-click on a filename displayed, the file will be opened in the associated application. The roles of the other buttons are as follows
 
-* **File list**  
-  On the left side of the main window, a list of files to be merged or split is displayed. PDF files or image files (BMP, PNG, JPEG, GIF, TIFF) can be registered in this file list. Double-clicking on a registered file will open it in its associated application for preview.
 * **Add**  
   Display a dialog for adding new PDF or image files to the file list.
 * **Up**, **Down**  
@@ -66,13 +66,13 @@ The buttons and other features displayed on the CubePDF Page main window are as 
 
 ### Metadata
 
-![Metadata dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/metadata.png)
+![Metadata](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/en/main/metadata.png)
 
 In the **Metadata** dialog, you can register information such as the title and creator. The information registered here can be viewed in the properties dialog of PDF viewer such as Adobe Acrobat Reader DC. In addition, the **Layout** item allows you to change the way the document will be displayed when opened in PDF viewer.
 
 ### Security
 
-![Security dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/encryption.png)
+![Security](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/en/main/security.png)
 
 The **Metadata** dialog displays the **Security** tab in addition to the **Summary (Metadata)** tab. In the **Security** tab, you can protect the PDF file with a password. To set a password, first enable the **Encrypt the PDF with password** option, and then enter the same password twice in the **Password** and **Confirm** fields.
 
@@ -92,13 +92,11 @@ However, **if you share both passwords, the restrictions on printing and copying
 
 Moreover, if a PDF file is recognized as having been opened with the owner password, all PDF editing, including removal of the user password, will be possible. Please make sure you fully understand these behaviors when you share the user password with the owner password.
 
-## Other settings and version information
+### Application settings
 
-![Settings dialog](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/settings.png)
+![Settings](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/en/main/settings.png)
 
 Click **CubePDF Page** in the header section of the main window to show the CubePDF Page version information and related settings dialog.
-
-### Application settings
 
 The **Settings** tab allows you to change several settings related to the behavior of CubePDF Page.
 
@@ -112,35 +110,35 @@ The **Language** section allows you to set the display language of the CubePDF P
 
 If you enable the **Check for updates on startup** item, you will be notified in the lower right corner of your computer when the new CubePDF Page version has been released. Checking for updates will be performed when your computer starts up. The information sent to confirm the update is the version number of CubePDF Page, Windows, and .NET.
 
-### Version
+### Version information
 
-![Version information](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/version.png)
+![Version](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/en/main/version.png)
 
-The **Version** tab displays version information for CubePDF Page.
+The **Version** tab of the settings dialog displays the version information of CubePDF Page, Windows, and .NET Framework. You can also check which edition of x86, x64, or ARM64 you are running.
 
-## List of keyboard shortcuts
+### List of keyboard shortcuts
 
 The keyboard shortcuts available in CubePDF Page are as follows.
 
-* Ctrl + M ... Merge PDF files
-* Ctrl + S ... Split PDF files
-* Ctrl + E ... Display PDF metadata and security settings window
-* Ctrl + H ... Display CubePDF Page settings window
-* Ctrl + Q ... Exit the application
-* Ctrl + O ... Display dialog to add PDF, PNG, JPEG, BMP files
-* Ctrl + A ... Select all items in the file list
-* Ctrl + R ... Open the selected file in the associated application
-* Ctrl + K or Ctrl + Up ... Move selected files down up level
-* Ctrl + J or Ctrl + Down ... Move selected files down one level
-* Ctrl + D or Delete ... Delete selected files from the list
-* Ctrl + Shift + D ... Delete all files from the list
+* **Ctrl + M** ... Merge PDF files
+* **Ctrl + S** ... Split PDF files
+* **Ctrl + E** ... Display PDF metadata and security settings window
+* **Ctrl + H** ... Display CubePDF Page settings window
+* **Ctrl + Q** ... Exit the application
+* **Ctrl + O** ... Display dialog to add PDF, PNG, JPEG, BMP files
+* **Ctrl + A** ... Select all items in the file list
+* **Ctrl + R** ... Open the selected file in the associated application
+* **Ctrl + K** or **Ctrl + Up** ... Move selected files down up level
+* **Ctrl + J** or **Ctrl + Down** ... Move selected files down one level
+* **Ctrl + D** or **Delete** ... Delete selected files from the list
+* **Ctrl + Shift + D** ... Delete all files from the list
+* **F1** ... Show [CubePDF Page Documents](https://docs.cube-soft.jp/entry/cubepdf-page)
 
 ## How to uninstall CubePDF Page
 
-To uninstall CubePDF Page, first select **Uninstall a program** in **Control Panel** or **Apps** in **Settings** (Windows 8 or later). Then select the CubePDF Page icon on the window that appears and run the **Uninstall** item.
+![Uninstall CubePDF Page](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v3/en/uninstall/windows8.png)
 
-![Uninstall for Windows 8 and later](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/uninstall-01.png)
-![Uninstall in the control pannel](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdfpage/doc/v2/en/uninstall-02.png)
+To uninstall CubePDF Page, first select **Apps** in **Settings** or **Uninstall a program** in **Control Panel**. Then select the CubePDF Page icon on the window that appears and run the **Uninstall** item.
 
 ## Having problems with CubePDF Page?
 

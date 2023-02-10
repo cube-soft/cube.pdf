@@ -8,7 +8,7 @@ https://www.cube-soft.jp/cubepdf/
 
 ## CubePDF による変換手順
 
-![PDF への変換手順](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/overview.png)
+![PDF への変換手順](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/overview.png)
 
 CubePDF は **仮想プリンター** としてインストールされます。そのため、Microsoft Edge や Google Chrome やなどの Web ブラウザ、Microsoft Word, Excel, PowerPoint など **印刷** ボタンのあるアプリケーションであれば何でも、次の 3 ステップで PDF へ変換する事ができます。
 
@@ -33,9 +33,9 @@ CubePDF は **仮想プリンター** としてインストールされます。
 
 CubePDF は **仮想プリンター** と呼ばれるソフトウェアで、他のアプリケーションの **印刷** を介して実行されます。そのため、通常のアプリケーションのようにデスクトップやスタートメニュー等から直接 CubePDF を 実行したり、PDF ファイル等に関連付けたりして利用する事はできません。
 
-また、CubePDF は変換機能のみを提供し、変換後のファイルを閲覧するには別途アプリケーションが必要です。例えば、PDF ファイルを閲覧するアプリケーションとしては [Adobe Acrobat Reader DC](https://get.adobe.com/jp/reader/) 等が挙げられます。
+また、CubePDF は変換機能のみを提供し、変換後のファイルを閲覧するには別途アプリケーションが必要です。例えば、PDF ファイルを閲覧するアプリケーションとしては [Adobe Acrobat Reader DC](https://get.adobe.com/reader/) 等が挙げられます。
 
-## CubePDF の設定
+## 変換操作および設定内容の一覧
 
 ### 一般
 
@@ -43,7 +43,7 @@ CubePDF は PDF 以外のファイル形式にも変換する事ができます�
 
 尚、PNG のように複数のページを保持できないファイル形式の場合、変換するページ数だけファイルが作成されます。例えば、出力ファイル名が Sample.png の場合、実際には Sample-01.png, Sample-02.png, ... と言った名前のファイルが作成されます。
 
-![CubePDF の設定内容一覧](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/general.png)
+![CubePDF の設定内容一覧](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/main/format.png)
 
 ファイルタイプが PDF の場合、PDF のバージョンを選択することができます。PDF のバージョンはファイルタイプの右側にある選択項目の中から必要なものを選択して下さい。
 
@@ -90,10 +90,9 @@ CubePDF は PDF 以外のファイル形式にも変換する事ができます�
 
 ### 文書プロパティ
 
-![文書プロパティ](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/metadata.png)
+![文書プロパティ](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/main/metadata.png)
 
-ファイルタイプで PDF を選択した場合、タイトルや作成者などの情報を登録する事ができます。ここで登録した情報は、Adobe Acrobat Reader DC などの PDF 閲覧ソフトのプロパティ画面で
-閲覧する事ができます。また、**表示オプション** の項目は、PDF 閲覧ソフトで開いた時の表示方法を変更する事ができます。
+ファイルタイプで PDF を選択した場合、タイトルや作成者などの情報を登録する事ができます。ここで登録した情報は、Adobe Acrobat Reader DC などの PDF 閲覧ソフトのプロパティ画面で閲覧する事ができます。また、**ページレイアウト** の項目は、PDF 閲覧ソフトで開いた時の表示方法を変更する事ができます。
 
 尚、これらの情報の入力を省略した場合、CubePDF は、タイトル、作成者、サブタイトル、キーワードの情報は空欄に、変換ソフトの情報は「CubePDF」に設定した状態で PDF ファイルを作成します。
 
@@ -101,7 +100,7 @@ CubePDF は PDF 以外のファイル形式にも変換する事ができます�
 
 ファイルタイプで PDF を選択した場合、作成された PDF ファイルにパスワードを設定する事ができます。パスワードを設定する場合は、まず **PDF ファイルをパスワードで保護する** の項目を有効にし、**管理用パスワード** とパスワード確認の項目に同じパスワードを 2 回 入力してください。
 
-![セキュリティ](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/encryption.png)
+![セキュリティ](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/main/security.png)
 
 次に、**操作** の項目で、ユーザに許可・制限する操作を指定します。設定可能な項目は以下の通りです。
 
@@ -119,11 +118,13 @@ CubePDF は PDF 以外のファイル形式にも変換する事ができます�
 
 また、管理用パスワードで PDF ファイルを開いたと認識された場合、閲覧用パスワードの除去も含めた全ての PDF 編集が可能になります。閲覧用パスワードを管理用パスワードと共用する場合、これらの動作を十分に理解した上でご利用下さい。
 
-### その他の設定
+### その他の設定およびバージョン情報
 
-**バージョン情報** では、CubePDF のバージョン情報が表示されます。また、その下にある **起動時にアップデートを確認する** の項目を有効にすると、CubePDF のバージョンアップ時にパソコンの右下に通知されます。アップデートの確認は、1 日 1 回、パソコンの起動時に実行されます。また、アップデートの確認のために送信する情報は、CubePDF, Windows, .NET Framework それぞれのバージョン番号です。
+![その他の設定およびバージョン情報](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/main/version.png)
 
-![表示言語](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/version.png)
+**バージョン情報** では、実行時の CubePDF、Windows、および .NET Framework のバージョン情報が表示されます。また、x86、x64、または ARM64 の内、どのエディションが実行されているのかも、ここで確認する事ができます。
+
+**起動時にアップデートを確認する** の項目を有効にすると、CubePDF のバージョンアップ時にパソコンの右下に通知されます。アップデートの確認は、1 日 1 回、パソコンの起動時に実行されます。また、アップデートの確認のために送信する情報は、CubePDF, Windows, .NET Framework それぞれのバージョン番号です。
 
 **表示言語** では、CubePDF メイン画面のメニュー等の表示言語を設定する事ができます。対応言語は英語 (English)、ドイツ語 (German)、および日本語の (Japanese) 3 種類です。また、表示言語で自動を選択した場合、Windows の言語設定に応じてどちらかの言語が自動的に選択されます。
 
@@ -137,17 +138,13 @@ CubePDF のメイン画面において、左下の **設定を保存** ボタン
 
 ## CubePDF プリンターの設定
 
-CubePDF は、これまでに説明したアプリケーションの設定以外に、**CubePDF プリンター** に対する設定も存在します。プリンターの設定を変更するためには、まず **コントロールパネル** の **デバイスとプリンターの表示** で表示される画面で CubePDF を右クリックし **印刷設定** を選択して下さい。
+![印刷設定](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/printer/windows8.png)
 
-![印刷設定（コントロールパネル）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/printer-01.png)
+CubePDF は、これまでに説明したアプリケーションの設定以外に、**CubePDF プリンター** に対する設定も存在します。プリンターの設定を変更するためには、**設定** から **デバイス**、**プリンターとスキャナー** の順で表示される画面で CubePDF を選択し、さらに **管理**、**印刷設定** の順で選択して下さい。尚、Windows 7 以前の場合、**コントロールパネル** の **デバイスとプリンターの表示** で表示される画面で CubePDF を右クリックし **印刷設定** を選択して下さい。
 
-また、Windows 8 以降は **設定** からも同様の操作を行う事ができます。設定から、**デバイス**、**プリンターとスキャナー** で表示される画面で CubePDF を選択し、さらに **管理**、**印刷設定** の順で選択して下さい。
-
-![印刷設定（設定）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/printer-02.png)
+![印刷の詳細オプション](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/printer/options.png)
 
 印刷設定では、**用紙/品質** タブで白黒またはカラーで印刷する設定を変更する事ができます。また、それ以外の設定を行う場合、右下にある **詳細設定** ボタンをクリックします。
-
-![印刷の詳細オプション](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/printer-03.png)
 
 **用紙サイズ** は、変換後の各ページのサイズに反映されます。設定可能な値は、A0-A6、B0-B6、はがき、角形 1 号-角形 4 号など実際の用紙サイズに対応した値が中心となります。尚、**Slide** は Microsoft PowerPoint の初期値 (4:3) に相当するサイズとなります。
 
@@ -174,10 +171,9 @@ CubePDF は、これまでに説明したアプリケーションの設定以外
 
 ## CubePDF のアンインストール
 
-CubePDF をアンインストールするには、まず、コントロールパネルの **プログラムのアンインストール**、または、設定の **アプリと機能（Windows 8 以降）** を選択します。そして、表示される画面で CubePDF のアイコンを選択してアンインストールの項目を実行して下さい。
+![CubePDF のアンインストール](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/ja/uninstall/windows8.png)
 
-![アンインストール（設定）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/uninstall-01.png)
-![アンインストール（コントロールパネル）](https://raw.githubusercontent.com/cube-soft/Cube.Assets/master/cubepdf/doc/v3/ja/uninstall-02.png)
+CubePDF をアンインストールするには、設定の **アプリと機能**、またはコントロールパネルの **プログラムのアンインストール** を選択します。そして、表示される画面で CubePDF のアイコンを選択してアンインストールの項目を実行して下さい。
 
 ## CubePDF で問題が発生した場合
 
