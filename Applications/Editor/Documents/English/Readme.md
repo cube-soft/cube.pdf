@@ -55,6 +55,8 @@ When **Insert at other position** is selected, the following dialog will be disp
 
 #### Insert by Drag&Drop
 
+![Insert by Drag&Drop](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfutility/doc/v2/en/main/insert-dragdrop.png)
+
 In CubePDF Utility, you can also insert a file at the end by Drag&Drop with the Ctrl key pressed. (This feature was introduced in 2.0.0.) Note that if you Drag&Drop a file without pressing the Ctrl key, the file will be opened in a new window.
 
 #### Insert by pages
@@ -77,12 +79,9 @@ The **Remove** menu allows you to remove some pages of an opened PDF file. When 
 
 ![Extract](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfutility/doc/v2/en/main/ribbon/extract.png)
 
-CubePDF Utility allows you to extract any page in a PDF file and save it in the following file formats.
+CubePDF Utility allows you to extract any page in a PDF file and save it in the PDF or PNG file formats. Note that if you select the **Extract** or **Extract the selected pages** menu, the saved format will be PDF. If you want to extract in PNG format, please make the necessary settings in the following dialog after selecting the **Extract with other settings** menu.
 
-* PDF
-* PNG (Bitmap image file)
-
-Note that if you select the **Extract** or **Extract the selected pages** menu, the saved format will be PDF. If you want to extract in PNG format, please make the necessary settings in the following dialog after selecting the **Extract with other settings** menu.
+#### Extract as PNG file format
 
 ![Extract with other settings](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfutility/doc/v2/en/main/extract.png)
 
@@ -131,7 +130,9 @@ In the **Operations** item, specify the operations to be allowed or restricted t
 * Allow filling in form fields
 * Allow creating and editing annotations
 
-Note that if you enable the item **Open with password** and also enable the item **Use owner password**, CubePDF Utility will set the same password as the owner password for user password.
+#### Attention about password sharing
+
+if you enable the item **Open with password** and also enable the item **Use owner password**, CubePDF Utility will set the same password as the owner password for user password.
 
 However, **if you share both passwords, the restrictions on printing and copying operations may not work properly depending on the PDF viwer**. This is probably because the PDF viewer recognizes that the PDF file was opened with the owner password. For this reason, CubePDF Utility is designed not to accept permission settings when it is shared with the owner password.
 
