@@ -15,45 +15,44 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf.Extensions;
+namespace Cube.Pdf;
+
+using System;
+using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// MetadataExtension
+/// PageOption
 ///
 /// <summary>
-/// Describes extended methods for the Metadata class.
+/// Represents editing options for an existing PDF page.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public static class MetadataExtension
+[Serializable]
+public class PageOption : SerializableBase
 {
-    #region Methods
+    #region Properties
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Copy
+    /// Rotation
     ///
     /// <summary>
-    /// Gets the copied Metadata object.
+    /// Gets or sets the angle to rotate a an existing PDF page.
     /// </summary>
     ///
-    /// <param name="src">Original object.</param>
-    ///
-    /// <returns>Copied object.</returns>
+    /// <remarks>
+    /// The final angle may be calculated by adding the value of the
+    /// Page.Rotation property to this value.
+    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public static Metadata Copy(this Metadata src) => new()
+    public Angle Rotation
     {
-        Title    = src.Title,
-        Author   = src.Author,
-        Subject  = src.Subject,
-        Keywords = src.Keywords,
-        Version  = src.Version,
-        Creator  = src.Creator,
-        Producer = src.Producer,
-        Options  = src.Options,
-    };
+        get => Get(() => new Angle());
+        set => Set(value);
+    }
 
     #endregion
 }

@@ -15,6 +15,9 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Cube.Pdf.Extensions;
 
 /* ------------------------------------------------------------------------- */
@@ -38,12 +41,11 @@ public static class DocumentWriterExtension
     /// Adds a new page.
     /// </summary>
     ///
-    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="src">Source writer object.</param>
     /// <param name="page">Page information.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Add(this IDocumentWriter src, Page page) =>
-        src.Add(new[] { page });
+    public static void Add(this IDocumentWriter src, NewPage page) => src.Add(new[] { page });
 
     /* --------------------------------------------------------------------- */
     ///
@@ -53,16 +55,26 @@ public static class DocumentWriterExtension
     /// Adds a new page.
     /// </summary>
     ///
-    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="src">Source writer object.</param>
     /// <param name="page">Page information.</param>
-    /// <param name="hint">
-    /// Document reader object to get more detailed information about
-    /// the specified pages.
-    /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Add(this IDocumentWriter src, Page page, IDocumentReader hint) =>
-        src.Add(new[] { page }, hint);
+    public static void Add(this IDocumentWriter src, Page page) => src.Add(new[] { page });
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Add
+    ///
+    /// <summary>
+    /// Adds new pages.
+    /// </summary>
+    ///
+    /// <param name="src">Source writer object.</param>
+    /// <param name="pages">Page collection.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static void Add(this IDocumentWriter src, IEnumerable<Page> pages) =>
+        src.Add(pages.Select(e => new NewPage { Source = e, Options = new() }));
 
     /* --------------------------------------------------------------------- */
     ///
@@ -72,27 +84,25 @@ public static class DocumentWriterExtension
     /// Adds all pages of the specified document.
     /// </summary>
     ///
-    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="src">Source writer object.</param>
     /// <param name="reader">IDocumentReader object.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Add(this IDocumentWriter src, IDocumentReader reader) =>
-        src.Add(reader.Pages, reader);
+    public static void Add(this IDocumentWriter src, IDocumentReader reader) => src.Add(reader.Pages);
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Attach
+    /// Add
     ///
     /// <summary>
     /// Adds a new attached file.
     /// </summary>
     ///
-    /// <param name="src">IDocumentWriter object.</param>
+    /// <param name="src">Source writer object.</param>
     /// <param name="file">Attached file.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Attach(this IDocumentWriter src, Attachment file) =>
-        src.Add(new[] { file });
+    public static void Add(this IDocumentWriter src, Attachment file) => src.Add(new[] { file });
 
     #endregion
 }

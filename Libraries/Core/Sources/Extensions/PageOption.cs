@@ -15,51 +15,34 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Pdf;
-
-using System.Drawing;
+namespace Cube.Pdf.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// IDocumentRenderer
+/// PageOptionExtension
 ///
 /// <summary>
-/// Provides functionality to render the document contents.
+/// Provides extended methods of the PageOption class.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public interface IDocumentRenderer
+public static class PageOptionExtension
 {
     /* --------------------------------------------------------------------- */
     ///
-    /// Render
+    /// Copy
     ///
     /// <summary>
-    /// Gets an Image object in which the Page content is rendered.
+    /// Gets the copied PageOption object.
     /// </summary>
     ///
-    /// <param name="page">Page object.</param>
-    /// <param name="size">Rendering size.</param>
+    /// <param name="src">Original object.</param>
     ///
-    /// <returns>Image object</returns>
-    ///
-    /* --------------------------------------------------------------------- */
-    Image Render(Page page, SizeF size);
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Render
-    ///
-    /// <summary>
-    /// Render the Page content to the Graphics object with the
-    /// specified parameters
-    /// </summary>
-    ///
-    /// <param name="dest">Graphics object.</param>
-    /// <param name="page">Page object.</param>
-    /// <param name="point">Start point to render.</param>
-    /// <param name="size">Rendering size.</param>
+    /// <returns>Copied object.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    void Render(Graphics dest, Page page, PointF point, SizeF size);
+    public static PageOption Copy(this PageOption src) => new()
+    {
+        Rotation = src.Rotation,
+    };
 }

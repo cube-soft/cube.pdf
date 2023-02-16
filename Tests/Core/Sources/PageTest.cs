@@ -124,7 +124,7 @@ namespace Cube.Pdf.Tests
         [TestCase(315, 1016.1f, 1016.1f)]
         public void GetViewSize(int degree, float w, float h)
         {
-            var src = new Page
+            var src = new Page2
             {
                 File       = null,
                 Number     = 1,

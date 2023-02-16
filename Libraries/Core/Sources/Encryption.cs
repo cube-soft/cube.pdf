@@ -30,7 +30,7 @@ using Cube.DataContract;
 ///
 /* ------------------------------------------------------------------------- */
 [Serializable]
-public class Encryption : SerializableBase
+public sealed class Encryption : SerializableBase
 {
     #region Properties
 

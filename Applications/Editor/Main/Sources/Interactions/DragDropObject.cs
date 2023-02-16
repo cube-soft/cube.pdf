@@ -127,7 +127,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page> Pages { get; set; }
+        public IEnumerable<Page2> Pages { get; set; }
 
         #endregion
     }

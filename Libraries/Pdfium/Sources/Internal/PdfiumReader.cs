@@ -141,7 +141,7 @@ namespace Cube.Pdf.Pdfium
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Page> Pages { get; private set; }
+        public IEnumerable<Page2> Pages { get; private set; }
 
         #endregion
 

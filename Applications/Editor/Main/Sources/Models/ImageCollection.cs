@@ -146,7 +146,7 @@ namespace Cube.Pdf.Editor
         /// <param name="items">Page collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IEnumerable<Page> items) => items.Each(e => _inner.Add(this.NewItem(Count, e)));
+        public void Add(IEnumerable<Page2> items) => items.Each(e => _inner.Add(this.NewItem(Count, e)));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -179,7 +179,7 @@ namespace Cube.Pdf.Editor
         /// <param name="items">Page collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, IEnumerable<Page> items) => SetIndex(() =>
+        public void Insert(int index, IEnumerable<Page2> items) => SetIndex(() =>
         {
             var pos = index;
             foreach (var item in items)

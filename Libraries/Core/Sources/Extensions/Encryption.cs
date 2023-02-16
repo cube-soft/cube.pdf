@@ -35,7 +35,7 @@ public static class EncryptionExtension
     /// Copy
     ///
     /// <summary>
-    /// Gets the copied Encryption.
+    /// Gets the copied Encryption object.
     /// </summary>
     ///
     /// <param name="src">Original object.</param>

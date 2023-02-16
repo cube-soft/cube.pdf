@@ -52,7 +52,7 @@ namespace Cube.Pdf.Editor
         /// <returns>ImageItem object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static ImageItem NewItem(this ImageCollection src, int index, Page item) =>
+        public static ImageItem NewItem(this ImageCollection src, int index, Page2 item) =>
             new(src.GetImageSource, src.Selection, src.Preferences)
         {
             Index     = index,
@@ -128,7 +128,7 @@ namespace Cube.Pdf.Editor
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static HistoryItem Insert(this ImageCollection src, IEnumerable<Page> items) =>
+        public static HistoryItem Insert(this ImageCollection src, IEnumerable<Page2> items) =>
             src.InsertAt(src.Selection.Last + 1, items);
 
         /* ----------------------------------------------------------------- */
@@ -148,7 +148,7 @@ namespace Cube.Pdf.Editor
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static HistoryItem InsertAt(this ImageCollection src, int index, IEnumerable<Page> items)
+        public static HistoryItem InsertAt(this ImageCollection src, int index, IEnumerable<Page2> items)
         {
             var copy    = items.ToList();
             var indices = Enumerable.Range(index, copy.Count);
@@ -268,9 +268,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static IList<KeyValuePair<int, Page>> GetPair(ImageCollection src,
+        private static IList<KeyValuePair<int, Page2>> GetPair(ImageCollection src,
             IEnumerable<int> indices) =>
-            indices.Select(i => new KeyValuePair<int, Page>(i, src[i].RawObject)).ToList();
+            indices.Select(i => new KeyValuePair<int, Page2>(i, src[i].RawObject)).ToList();
 
         #endregion
     }

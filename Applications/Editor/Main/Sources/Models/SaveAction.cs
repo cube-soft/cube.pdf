@@ -158,7 +158,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SaveAsDocument(string dest,
             IDocumentReader src,
-            IEnumerable<Page> pages,
+            IEnumerable<Page2> pages,
             Action<Entity> prev,
             Action<Entity> next
         ) {

@@ -30,8 +30,10 @@ using System;
 ///
 /* ------------------------------------------------------------------------- */
 [Serializable]
-public class Angle
+public sealed class Angle
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// Angle
@@ -56,6 +58,8 @@ public class Angle
     ///
     /* --------------------------------------------------------------------- */
     public Angle(int degree) => Degree = Normalize(degree);
+
+    #endregion
 
     #region Properties
 
@@ -128,10 +132,10 @@ public class Angle
     /* --------------------------------------------------------------------- */
     private int Normalize(int src)
     {
-        var dest = src;
-        while (dest <    0) dest += 360;
-        while (dest >= 360) dest -= 360;
-        return dest;
+        var degree = src;
+        while (degree <    0) degree += 360;
+        while (degree >= 360) degree -= 360;
+        return degree;
     }
 
     #endregion

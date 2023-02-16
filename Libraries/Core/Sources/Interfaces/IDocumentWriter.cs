@@ -18,102 +18,92 @@
 namespace Cube.Pdf;
 
 using System;
-using System.Drawing;
+using System.Collections.Generic;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// Page
+/// IDocumentWriter
 ///
 /// <summary>
-/// Represents information of a document page.
+/// Represents properties and methods to create or modify a PDF document.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-[Serializable]
-public sealed class Page
+public interface IDocumentWriter : IDisposable
 {
-    #region Constructors
-
     /* --------------------------------------------------------------------- */
     ///
-    /// Page
+    /// Reset
     ///
     /// <summary>
-    /// Initializes a new instance of the Page class with the specified
-    /// source object.
-    /// </summary>
-    ///
-    /// <param name="src">Page source object.</param>
-    ///
-    /* --------------------------------------------------------------------- */
-    public Page(IPageSource src) => _source = src ?? throw new ArgumentNullException();
-
-    #endregion
-
-    #region Properties
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// File
-    ///
-    /// <summary>
-    /// Get the file information that owns this Page.
+    /// Resets values.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public File File => _source.File;
+    void Reset();
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Number
+    /// Save
     ///
     /// <summary>
-    /// Get the page number.
+    /// Saves the document to the specified path.
     /// </summary>
     ///
-    /// <remarks>
-    /// 1 for first page.
-    /// </remarks>
+    /// <param name="dest">Path to save.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public int Number => _source.Number;
+    void Save(string dest);
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Rotation
+    /// Add
     ///
     /// <summary>
-    /// Get the rotation of this Page.
+    /// Adds pages to the document.
     /// </summary>
     ///
+    /// <param name="pages">Collection of pages.</param>
+    ///
     /* --------------------------------------------------------------------- */
-    public Angle Rotation => _source.Rotation;
+    void Add(IEnumerable<NewPage> pages);
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Resolution
+    /// Add
     ///
     /// <summary>
-    /// Get the horizontal and vertical resolution (dpi) of this Page.
+    /// Adds attached objects to the document.
     /// </summary>
     ///
+    /// <param name="files">Collection of attached files.</param>
+    ///
     /* --------------------------------------------------------------------- */
-    public PointF Resolution => _source.Resolution;
+    void Add(IEnumerable<Attachment> files);
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Size
+    /// Set
     ///
     /// <summary>
-    /// Get the page size.
+    /// Sets the PDF metadata.
     /// </summary>
     ///
+    /// <param name="metadata">PDF metadata.</param>
+    ///
     /* --------------------------------------------------------------------- */
-    public SizeF Size => _source.Size;
+    void Set(Metadata metadata);
 
-    #endregion
-
-    #region Fields
-    private IPageSource _source;
-    #endregion
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Set
+    ///
+    /// <summary>
+    /// Sets the encryption settings.
+    /// </summary>
+    ///
+    /// <param name="encryption">Encryption settings.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    void Set(Encryption encryption);
 }

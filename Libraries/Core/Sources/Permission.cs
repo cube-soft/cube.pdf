@@ -32,7 +32,7 @@ using Cube.DataContract;
 ///
 /* ------------------------------------------------------------------------- */
 [Serializable]
-public class Permission : SerializableBase
+public sealed class Permission : SerializableBase
 {
     #region Constructors
 

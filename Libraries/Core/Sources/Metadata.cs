@@ -32,7 +32,7 @@ using Cube.DataContract;
 /* ------------------------------------------------------------------------- */
 [Serializable]
 [DataContract]
-public class Metadata : SerializableBase
+public sealed class Metadata : SerializableBase
 {
     #region Properties
 

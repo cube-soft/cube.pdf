@@ -176,14 +176,14 @@ public class ImagePageCollection : EnumerableBase<Page>, IReadOnlyList<Page>
             var x = image.HorizontalResolution;
             var y = image.VerticalResolution;
 
-            _inner.Add(new()
+            _inner.Add(new(new PageSource
             {
                 File       = File,
                 Number     = i + 1,
                 Size       = image.Size,
-                Rotation   = new Angle(),
-                Resolution = new PointF(x, y),
-            });
+                Rotation   = new(),
+                Resolution = new(x, y),
+            }));
         }
     }
 

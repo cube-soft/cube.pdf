@@ -34,7 +34,7 @@ using Cube.Text.Extensions;
 /* ------------------------------------------------------------------------- */
 [Serializable]
 [DataContract]
-public class PdfVersion : SerializableBase
+public sealed class PdfVersion : SerializableBase
 {
     #region Constructors
 

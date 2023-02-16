@@ -17,60 +17,37 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Extensions;
 
-using System;
-using System.Drawing;
-
 /* ------------------------------------------------------------------------- */
 ///
 /// PageExtension
 ///
 /// <summary>
-/// Provides extended methods for the Page class.
+/// Provides extended methods of the Page class.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
 public static class PageExtension
 {
-    #region Methods
-
     /* --------------------------------------------------------------------- */
     ///
-    /// GetViewSize
+    /// Copy
     ///
     /// <summary>
-    /// Gets the display size of this Page.
+    /// Gets the copied Page object. Since the copied Page object uses the
+    /// PageSource object, it is portable.
     /// </summary>
     ///
-    /// <param name="src">Page object.</param>
+    /// <param name="src">Original object.</param>
     ///
-    /// <remarks>Display size.</remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static SizeF GetViewSize(this Page src) => src.GetViewSize(1.0);
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// GetViewSize
-    ///
-    /// <summary>
-    /// Gets the display size of this Page from the specified values.
-    /// </summary>
-    ///
-    /// <param name="src">Page object.</param>
-    /// <param name="scale">Scale factor.</param>
-    ///
-    /// <remarks>Display size.</remarks>
+    /// <returns>Copied object.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static SizeF GetViewSize(this Page src, double scale)
+    public static Page Copy(this Page src) => new(new PageSource
     {
-        var angle  = src.Rotation + src.Delta;
-        var sin    = Math.Abs(Math.Sin(angle.Radian));
-        var cos    = Math.Abs(Math.Cos(angle.Radian));
-        var width  = src.Size.Width * cos + src.Size.Height * sin;
-        var height = src.Size.Width * sin + src.Size.Height * cos;
-        return new((float)(width * scale), (float)(height * scale));
-    }
-
-    #endregion
+        File       = src.File,
+        Number     = src.Number,
+        Resolution = src.Resolution,
+        Size       = src.Size,
+        Rotation   = src.Rotation,
+    });
 }

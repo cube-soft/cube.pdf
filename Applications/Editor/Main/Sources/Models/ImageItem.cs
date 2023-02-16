@@ -150,9 +150,9 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Page RawObject
+        public Page2 RawObject
         {
-            get => Get<Page>();
+            get => Get<Page2>();
             set { if (Set(value)) UpdateSize(); }
         }
 

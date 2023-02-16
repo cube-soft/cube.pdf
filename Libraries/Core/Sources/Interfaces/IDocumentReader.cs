@@ -18,81 +18,71 @@
 namespace Cube.Pdf;
 
 using System;
-using System.Drawing;
-using Cube.DataContract;
+using System.Collections.Generic;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// PageBase
+/// IDocumentReader
 ///
 /// <summary>
-/// Represents information of a document page.
+/// Represents properties and methods to read a PDF document.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-[Serializable]
-public class PageBase : SerializableBase
+public interface IDocumentReader : IDisposable
 {
-    #region Properties
-
     /* --------------------------------------------------------------------- */
     ///
     /// File
     ///
     /// <summary>
-    /// Get the file information that owns this Page.
+    /// Gets a file information of the document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public File File { get; init; }
+    File File { get; }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Number
+    /// Metadata
     ///
     /// <summary>
-    /// Get the page number.
+    /// Gets a PDF metadata of the document.
     /// </summary>
     ///
-    /// <remarks>
-    /// 1 for first page.
-    /// </remarks>
-    ///
     /* --------------------------------------------------------------------- */
-    public int Number { get; init; }
+    Metadata Metadata { get; }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Rotation
+    /// Encryption
     ///
     /// <summary>
-    /// Get the rotation of this Page.
+    /// Gets an encryption settings of the document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public Angle Rotation { get; init; }
+    Encryption Encryption { get; }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Resolution
+    /// Pages
     ///
     /// <summary>
-    /// Get the horizontal and vertical resolution (dpi) of this Page.
+    /// Gets a collection of pages in the document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public PointF Resolution { get; init; }
+    IEnumerable<Page> Pages { get; }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Size
+    /// Attachments
     ///
     /// <summary>
-    /// Get the page size.
+    /// Gets a collection of attached files to the document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public SizeF Size { get; init; }
-
-    #endregion
+    IEnumerable<Attachment> Attachments { get; }
 }

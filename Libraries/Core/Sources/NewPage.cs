@@ -18,65 +18,47 @@
 namespace Cube.Pdf;
 
 using System;
+using Cube.DataContract;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// PermissionValue
+/// NewPage
 ///
 /// <summary>
-/// Specifies the permission method for operations.
+/// Represents information for an editing page.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
 [Serializable]
-public enum PermissionValue
+public sealed class NewPage : SerializableBase
 {
-    /// <summary>Operation is denied.</summary>
-    Deny,
-    /// <summary>Part of the operation is allowed.</summary>
-    Restrict,
-    /// <summary>Operation is allowed.</summary>
-    Allow,
-}
-
-/* ------------------------------------------------------------------------- */
-///
-/// PermissionValueExtension
-///
-/// <summary>
-/// Provides extended methods of the PermissionValue enum.
-/// </summary>
-///
-/* ------------------------------------------------------------------------- */
-public static class PermissionValueExtension
-{
-    /* --------------------------------------------------------------------- */
-    ///
-    /// IsAllowed
-    ///
-    /// <summary>
-    /// Determines whether the specified operation is allowed.
-    /// </summary>
-    ///
-    /// <param name="src">PermissionMethod object.</param>
-    ///
-    /// <returns>true for allowed.</returns>
-    ///
-    /* --------------------------------------------------------------------- */
-    public static bool IsAllowed(this PermissionValue src) => src == PermissionValue.Allow;
+    #region Properties
 
     /* --------------------------------------------------------------------- */
     ///
-    /// IsDenid
+    /// Source
     ///
     /// <summary>
-    /// Determines whether the specified operation is denied.
+    /// Gets the information of the original PDF page.
     /// </summary>
     ///
-    /// <param name="src">PermissionMethod object.</param>
+    /* --------------------------------------------------------------------- */
+    public Page Source { get; init; }
+
+    /* --------------------------------------------------------------------- */
     ///
-    /// <returns>true for denied.</returns>
+    /// Options
+    ///
+    /// <summary>
+    /// Gets or sets the editing options to the source page.
+    /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static bool IsDenid(this PermissionValue src) => src == PermissionValue.Deny;
+    public PageOption Options
+    {
+        get => Get(() => new PageOption());
+        set => Set(value);
+    }
+
+    #endregion
 }
