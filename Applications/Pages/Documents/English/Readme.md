@@ -86,7 +86,9 @@ In the **Operations** item, specify the operations to be allowed or restricted t
 * Allow filling in form fields
 * Allow creating and editing annotations
 
-Note that if you enable the item **Open with password** and also enable the item **Use owner password**, CubePDF Page will set the same password as the owner password for user password.
+#### Attention about password sharing
+
+If you enable the item **Open with password** and also enable the item **Use owner password**, CubePDF Page will set the same password as the owner password for user password.
 
 However, **if you share both passwords, the restrictions on printing and copying operations may not work properly depending on the PDF viwer**. This is probably because the PDF viewer recognizes that the PDF file was opened with the owner password. For this reason, CubePDF Page is designed not to accept permission settings when it is shared with the owner password.
 
