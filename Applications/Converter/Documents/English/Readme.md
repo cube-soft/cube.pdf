@@ -93,9 +93,13 @@ Note that if you specify any other program, CubePDF will execute it with the pat
 
 ![Metadata](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v4/en/main/metadata.png)
 
-If the selected format is PDF, you can register information such as the title, creator, etc. The information registered here can be confirmed in the properties window of a PDF viewer such as Adobe Acrobat Reader DC. In addition, the **Layout** item allows you to change the way the PDF is displayed when it is opened with a PDF viewer.
+If the selected format is PDF, you can register information such as the title, author, etc. The information registered here can be confirmed in the properties window of a PDF viewer such as Adobe Acrobat Reader DC. In addition, the **Layout** item allows you to change the way the PDF is displayed when it is opened with a PDF viewer.
 
 If you omit these information, CubePDF will create PDF files with Title, Author, Subtitle, Keywords left blank and Creator set to "CubePDF".
+
+#### About the source metadata
+
+We have seen cases where metadata (document properties) such as title, author, etc., set in the original printed file is unintentionally leaked when the converted PDF file is published. Due to the facts, CubePDF has a policy of automatically erasing such information.
 
 ### Security
 
@@ -113,11 +117,19 @@ Next, in the **Operations** section, specify the operations to be allowed or res
 * Allow filling in forms
 * Allow creating adn editing annotations
 
-Note that if you enable the item **Open with password** and also enable the item **Use owner password**, CubePDF will set the user password to the same password as the owner password.
+#### Attention about password sharing
 
-However, if you share both passwords, the restrictions on printing, copying, etc. may not work properly depending on the PDF viewer. This is probably because the PDF viewer recognizes that the PDF file was opened with the owner password. For this reason, CubePDF is designed not to accept permission settings when it is shared with the owner password.
+If you enable the item **Open with password** and also enable the item **Use owner password**, CubePDF will set the user password to the same password as the owner password.
+
+However, **if you share both passwords, the restrictions on printing and copying operations may not work properly depending on the PDF viwer**. This is probably because the PDF viewer recognizes that the PDF file was opened with the owner password. For this reason, CubePDF is designed not to accept permission settings when it is shared with the owner password.
 
 Moreover, if a PDF file is recognized as having been opened with an owner password, all PDF editing, including removal of the user password, will be possible. Please make sure you fully understand these behaviors when you share the user password with the owner password.
+
+#### Attention about reconversion for the purpose of setting/removing passwords
+
+In some cases, CubePDF is used to reconvert PDF files in order to set a password for the PDF file (e.g., by displaying the PDF file in Microsoft Edge or Adobe Acrobat Reader DC and then printing it). If you use this operation, the appearance of the PDF may differ from the original PDF due to the fact that the printing process is performed once. If your goal is to set a password for a PDF file, please consider using [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/) or [CubePDF Page](https://www.cube-soft.jp/en/cubepdfpage/).
+
+Conversely, we have seen cases where PDF files are reconverted to remove passwords and other security settings set in the PDF file. However, some applications propagate various security settings when printing, in which case CubePDF will fail to convert. This operation is completely unsupported. And please note that no modifications will be made to change this behavior.
 
 ### Other settings and version information
 
