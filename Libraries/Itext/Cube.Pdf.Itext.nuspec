@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>8.0.0</version>
+        <version>8.1.1</version>
         <id>Cube.Pdf.Itext</id>
         <title>Cube.Pdf.Itext</title>
         <authors>clown,cube-soft</authors>
@@ -16,15 +16,15 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="netstandard2.0">
-                <dependency id="Cube.Pdf" version="8.0.0" />
-                <dependency id="itext7" version="7.2.3" />
+                <dependency id="Cube.Pdf" version="8.1.1" />
+                <dependency id="itext7" version="7.2.5" />
             </group>
             <group targetFramework="net47">
-                <dependency id="Cube.Pdf" version="8.0.0" />
-                <dependency id="itext7" version="7.2.3" />
+                <dependency id="Cube.Pdf" version="8.1.1" />
+                <dependency id="itext7" version="7.2.5" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.Pdf" version="8.0.0" />
+                <dependency id="Cube.Pdf" version="8.1.1" />
                 <dependency id="iTextSharp" version="5.5.13.3" />
             </group>
         </dependencies>

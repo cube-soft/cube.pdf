@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>8.0.0</version>
+        <version>8.1.1</version>
         <id>Cube.Pdf</id>
         <title>Cube.Pdf</title>
         <authors>clown,cube-soft</authors>
