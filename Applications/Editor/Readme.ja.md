@@ -125,6 +125,8 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2023-03-08 version 2.2.1
+    - PDFium を Chromium 111 相当に更新
 * 2023-02-09 version 2.2.0
     - 表示言語にドイツ語を追加 (Thanks Roy)
     - GUI のレイアウトを調整
