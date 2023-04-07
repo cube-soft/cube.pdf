@@ -141,8 +141,8 @@ public sealed class Facade : ObservableBase
         using (var fs = new FileTransfer(Settings, GetTemp()))
         {
             Run(() => new DigestChecker(Settings).Invoke());
-            RunGhostscript(fs.Value);
-            Run(() => new FileDecorator(Settings).Invoke(fs.Value));
+            RunGhostscript(fs.Temp);
+            Run(() => new FileDecorator(Settings).Invoke(fs.Temp));
             Run(() => fs.Invoke(dest));
             Run(() => new ProcessLauncher(Settings).Invoke(dest));
         }
