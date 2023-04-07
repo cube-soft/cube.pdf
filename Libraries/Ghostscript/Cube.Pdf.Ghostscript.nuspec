@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>8.1.1</version>
+        <version>8.2.0</version>
         <id>Cube.Pdf.Ghostscript</id>
         <title>Cube.Pdf.Ghostscript</title>
         <authors>clown,cube-soft</authors>
@@ -16,16 +16,16 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="netstandard2.0">
-                <dependency id="Cube.Pdf" version="8.1.1" />
-                <dependency id="Cube.Native.Ghostscript" version="10.0.0" />
+                <dependency id="Cube.Pdf" version="8.2.0" />
+                <dependency id="Cube.Native.Ghostscript" version="10.1.1" />
             </group>
             <group targetFramework="net47">
-                <dependency id="Cube.Pdf" version="8.1.1" />
-                <dependency id="Cube.Native.Ghostscript" version="10.0.0" />
+                <dependency id="Cube.Pdf" version="8.2.0" />
+                <dependency id="Cube.Native.Ghostscript" version="10.1.1" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.Pdf" version="8.1.1" />
-                <dependency id="Cube.Native.Ghostscript" version="10.0.0" />
+                <dependency id="Cube.Pdf" version="8.2.0" />
+                <dependency id="Cube.Native.Ghostscript" version="10.1.1" />
             </group>
         </dependencies>
     </metadata>
