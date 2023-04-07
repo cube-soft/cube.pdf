@@ -19,6 +19,10 @@ All CubePDF series are licensed under the [GNU Affero General Public License ver
 
 This article describes Frequently Asked Questions (FAQ) about the license and terms of use of CubePDF series. Note that since the [CubeVP (Japanese)](https://www.cube-soft.jp/cubevp/) is not AGPLv3 but proprietary license, it is excluded from this article. excluded in this article.
 
+### Why is the software available for free?
+
+CubePDF series sometimes bundles other software with the installer and asks if you want to install them as well. This distribution method is commonly referred to as bundleware. These bundled software bundles directly or indirectly defray the cost of ongoing development and maintenance of the Cube series, and are offered free of charge. With regard to bundling with CubePDF series, we are following the policy of not installing the software by default (opt-in).
+
 ### Can I use it within my company or for commercial purposes?
 
 Yes, CubePDF series can be used freely by both individuals and corporations. For example, you can use it for your company's business, or use it as a part of the system you sell, etc. You can also use it for commercial purposes.

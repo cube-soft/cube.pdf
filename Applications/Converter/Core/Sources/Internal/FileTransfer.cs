@@ -47,15 +47,14 @@ internal sealed class FileTransfer : DisposableBase
     /// </summary>
     ///
     /// <param name="src">User settings.</param>
-    /// <param name="temp">Temp directory.</param>
+    /// <param name="dir">Root directory for the operation.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public FileTransfer(SettingFolder src, string temp)
+    public FileTransfer(SettingFolder src, string dir)
     {
         Settings = src;
-        Temp     = GetTempDirectory(temp);
-        Target   = Io.Get(src.Value.Destination);
-        Value    = Io.Combine(Temp, GetName());
+        _work = GetWorkDirectory(dir);
+        Temp = Io.Combine(_work, GetName());
     }
 
     #endregion
@@ -75,39 +74,17 @@ internal sealed class FileTransfer : DisposableBase
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Target
-    ///
-    /// <summary>
-    /// Gets a value that represents the path to save the file.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public Entity Target { get; }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Value
-    ///
-    /// <summary>
-    /// Gets the path to save, which represents the temporary filename.
-    /// </summary>
-    ///
-    /// <remarks>
-    /// In the user program, save the file to the path specified by Value,
-    /// and then use the Invoke method to move the file to the location
-    /// where it should be saved.
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    public string Value { get; }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// Temp
     ///
     /// <summary>
-    /// Gets the path of the temp directory.
+    /// Gets the temporary file path.
     /// </summary>
+    ///
+    /// <remarks>
+    /// CubePDF SDK will once save the file to the path specified by the Temp
+    /// property, and then move the file to the location where it should be
+    /// saved when the Invoke method of the class is executed.
+    /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
     public string Temp { get; }
@@ -139,7 +116,7 @@ internal sealed class FileTransfer : DisposableBase
     /* --------------------------------------------------------------------- */
     public void Invoke(IList<string> dest)
     {
-        var src = Io.GetFiles(Temp);
+        var src = Io.GetFiles(_work);
         var n   = src.Count();
         var i   = 0;
 
@@ -200,18 +177,18 @@ internal sealed class FileTransfer : DisposableBase
     /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    protected override void Dispose(bool disposing) => Logger.Warn(() => Io.Delete(Temp));
+    protected override void Dispose(bool disposing) => Logger.Warn(() => Io.Delete(_work));
 
     /* --------------------------------------------------------------------- */
     ///
-    /// GetTempDirectory
+    /// GetWorkDirectory
     ///
     /// <summary>
     /// Gets the path of the working directory.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private string GetTempDirectory(string src) =>
+    private string GetWorkDirectory(string src) =>
         Enumerable.Range(1, int.MaxValue)
                   .Select(e => Io.Combine(src, e.ToString()))
                   .First(e => !Io.Exists(e));
@@ -227,8 +204,8 @@ internal sealed class FileTransfer : DisposableBase
     /* --------------------------------------------------------------------- */
     private string GetName() =>
         DocumentConverter.SupportedFormats.Contains(Settings.Value.Format) ?
-        $"tmp{Target.Extension}" :
-        $"tmp-%08d{Target.Extension}";
+        $"tmp{Io.GetExtension(Settings.Value.Destination)}" :
+        $"tmp-%08d{Io.GetExtension(Settings.Value.Destination)}";
 
     /* --------------------------------------------------------------------- */
     ///
@@ -256,15 +233,20 @@ internal sealed class FileTransfer : DisposableBase
     /* --------------------------------------------------------------------- */
     private string GetDestinationCore(int index, int count)
     {
-        if (count <= 1) return Target.FullName;
+        var src = Settings.Value.Destination;
+        if (count <= 1) return src;
 
-        var name  = Target.BaseName;
-        var ext   = Target.Extension;
+        var name  = Io.GetBaseName(src);
+        var ext   = Io.GetExtension(src);
         var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
         var dest  = string.Format("{0}-{1}{2}", name, index.ToString(digit), ext);
 
-        return Io.Combine(Target.DirectoryName, dest);
+        return Io.Combine(Io.GetDirectoryName(src), dest);
     }
 
+    #endregion
+
+    #region Fields
+    private readonly string _work;
     #endregion
 }
