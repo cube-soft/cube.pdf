@@ -119,6 +119,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2023-04-07 version 2.2.2
+    - Update PDFium to Chromium 112 compatible.
 * 2023-03-08 version 2.2.1
     - Update PDFium to Chromium 111 compatible.
 * 2023-02-09 version 2.2.0
