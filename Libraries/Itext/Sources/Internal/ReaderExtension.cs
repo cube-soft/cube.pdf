@@ -99,18 +99,22 @@ namespace Cube.Pdf.Itext
         /* ----------------------------------------------------------------- */
         public static Metadata GetMetadata(this PdfDocument src)
         {
-            var info = src.GetDocumentInfo();
-            return new()
+            try
             {
-                Version  = GetVersion(src),
-                Author   = info.GetAuthor(),
-                Title    = info.GetTitle(),
-                Subject  = info.GetSubject(),
-                Keywords = info.GetKeywords(),
-                Creator  = info.GetCreator(),
-                Producer = info.GetProducer(),
-                Options  = GetViewerOption(src.GetCatalog()),
-            };
+                var info = src.GetDocumentInfo();
+                return new()
+                {
+                    Version  = GetVersion(src),
+                    Author   = info.GetAuthor(),
+                    Title    = info.GetTitle(),
+                    Subject  = info.GetSubject(),
+                    Keywords = info.GetKeywords(),
+                    Creator  = info.GetCreator(),
+                    Producer = info.GetProducer(),
+                    Options  = GetViewerOption(src.GetCatalog()),
+                };
+            }
+            catch (Exception err) { throw new MetadataException("Failed to get PDF metadata.", err); }
         }
 
         /* ----------------------------------------------------------------- */

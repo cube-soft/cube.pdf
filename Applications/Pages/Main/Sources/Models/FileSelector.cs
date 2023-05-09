@@ -49,7 +49,7 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public IEnumerable<string> Get(IEnumerable<string> src) =>
-            src.GroupBy(e => Io.Get(e).IsDirectory)
+            src.GroupBy(e => Io.IsDirectory(e))
                .OrderByDescending(e => e.Key)
                .SelectMany(e => GetCore(e));
 
@@ -95,8 +95,7 @@ namespace Cube.Pdf.Pages
         private bool IsTarget(string src)
         {
             var cmp = new[] { ".pdf", ".bmp", ".png", ".jpg", ".jpeg", ".tif", ".tiff" };
-            var cvt = Io.Get(src);
-            return !cvt.IsDirectory && cmp.Any(e => cvt.Extension.FuzzyEquals(e));
+            return !Io.IsDirectory(src) && cmp.Any(e => Io.GetExtension(src).FuzzyEquals(e));
         }
 
         #endregion

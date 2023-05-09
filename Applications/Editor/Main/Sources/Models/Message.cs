@@ -48,11 +48,17 @@ namespace Cube.Pdf.Editor
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage From(Exception src) => DialogMessage.From(
-            src is PdfiumException ?
-            new ArgumentException(Properties.Resources.MessageOpenError) :
-            src
-        );
+        public static DialogMessage From(Exception src)
+        {
+            var cvt = src switch
+            {
+                PdfiumException   => new ArgumentException(Properties.Resources.MessageOpenError),
+                MetadataException => new ArgumentException(Properties.Resources.MessageMetadataError),
+                _ => src
+            };
+
+            return DialogMessage.From(cvt);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
