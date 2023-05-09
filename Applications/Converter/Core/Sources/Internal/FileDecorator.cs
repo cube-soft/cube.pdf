@@ -160,7 +160,7 @@ internal sealed class FileDecorator
 
         if (value.SaveOption != so || !Io.Exists(path)) return;
 
-        var options  = new OpenOption { SaveMemory = true };
+        var options  = new OpenOption { SaveMemory = false };
         var password = value.Encryption.Enabled ?
                        value.Encryption.OwnerPassword :
                        string.Empty;
