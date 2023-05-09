@@ -403,7 +403,7 @@ namespace Cube.Pdf.Editor
         private void LazyLoad()
         {
             if (Source == null) return;
-            using var reader = Source.GetItext(Query, true);
+            using var reader = Source.GetItext(Query, false);
             Set(reader.Metadata, reader.Encryption);
         }
 
