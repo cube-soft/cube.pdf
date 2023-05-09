@@ -28,9 +28,9 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
-        <PackageReference Include="Cube.Forms.Controls" Version="8.0.0" />
-        <PackageReference Include="Cube.Logging.NLog" Version="8.0.0" />
-        <PackageReference Include="Cube.Trick" Version="8.0.0" />
+        <PackageReference Include="Cube.Forms.Controls" Version="8.1.0" />
+        <PackageReference Include="Cube.Logging.NLog" Version="8.1.0" />
+        <PackageReference Include="Cube.Trick" Version="8.1.0" />
         <Reference Include="WindowsBase" />
     </ItemGroup>
     <ItemGroup>

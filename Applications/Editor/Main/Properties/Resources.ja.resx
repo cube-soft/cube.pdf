@@ -379,6 +379,9 @@
   <data name="MessageLoading" xml:space="preserve">
     <value>{0} を開いています ...</value>
   </data>
+  <data name="MessageMetadataError" xml:space="preserve">
+    <value>文書プロパティの取得に失敗しました。</value>
+  </data>
   <data name="MessageOpenError" xml:space="preserve">
     <value>ファイルが PDF 形式ではないか、またはデータが破損している可能性があります。</value>
   </data>

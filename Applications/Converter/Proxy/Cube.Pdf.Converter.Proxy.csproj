@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>8.2.0</Version>
+        <Version>8.3.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubeProxy</Product>
@@ -26,8 +26,8 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.Core" Version="8.0.0" />
-        <PackageReference Include="Cube.Logging.NLog" Version="8.0.0" />
+        <PackageReference Include="Cube.Core" Version="8.1.0" />
+        <PackageReference Include="Cube.Logging.NLog" Version="8.1.0" />
     </ItemGroup>
     <ItemGroup>
         <None Include="App.*" />

@@ -53,8 +53,7 @@ internal static class PathExplorer
         try
         {
             if (!src.HasValue()) return desktop;
-            var dest = Io.Get(src);
-            return dest.IsDirectory ? dest.FullName : dest.DirectoryName;
+            return Io.IsDirectory(src) ? src : Io.GetDirectoryName(src);
         }
         catch (Exception e) { Logger.Warn(e); }
 

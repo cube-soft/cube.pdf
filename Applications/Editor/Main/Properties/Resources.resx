@@ -382,6 +382,9 @@
   <data name="MessageLoading" xml:space="preserve">
     <value>Loading {0} ...</value>
   </data>
+  <data name="MessageMetadataError" xml:space="preserve">
+    <value>Failed to get PDF metadata.</value>
+  </data>
   <data name="MessageOpenError" xml:space="preserve">
     <value>File is not in PDF format or corrupted.</value>
   </data>
