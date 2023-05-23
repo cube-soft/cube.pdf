@@ -65,7 +65,7 @@ namespace Cube.Pdf.Pages
         [DataMember]
         public string Temp
         {
-            get => Get(() => string.Empty);
+            get => Get(System.IO.Path.GetTempPath);
             set => Set(value);
         }
 

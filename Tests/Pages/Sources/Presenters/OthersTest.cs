@@ -213,23 +213,27 @@ namespace Cube.Pdf.Pages.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
-        /// About
+        /// Settings
         ///
         /// <summary>
-        /// Tests the About method.
+        /// Tests the Settings method.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
         [Test]
-        public void About()
+        public void Settings()
         {
             using (var vm = new MainViewModel(new(), Enumerable.Empty<string>(), new()))
             using (vm.Subscribe<SettingViewModel>(e =>
             {
                 var prev = e.CheckUpdate;
                 e.CheckUpdate = false;
-                Assert.That(e.CheckUpdate, Is.False);
-                Assert.That(e.Version, Does.StartWith("4.2.0 ("));
+                Assert.That(e.ShrinkResources, Is.True);
+                Assert.That(e.KeepOutlines,    Is.True);
+                Assert.That(e.CheckUpdate,     Is.False);
+                Assert.That(e.Version,         Does.StartWith("4.2.0 ("));
+                Assert.That(e.Temp,            Does.EndWith(@"AppData\Local\Temp\"));
+                Assert.That(e.Uri.ToString(),  Does.StartWith("https://www.cube-soft.jp/cubepdfpage/?lang="));
                 e.CheckUpdate = prev;
                 e.Apply();
             })) vm.Setting();
