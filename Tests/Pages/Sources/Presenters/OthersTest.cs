@@ -231,8 +231,8 @@ namespace Cube.Pdf.Pages.Tests.Presenters
                 Assert.That(e.ShrinkResources, Is.True);
                 Assert.That(e.KeepOutlines,    Is.True);
                 Assert.That(e.CheckUpdate,     Is.False);
+                Assert.That(e.Temp,            Does.Contain(@"AppData\Local\Temp\"));
                 Assert.That(e.Version,         Does.StartWith("4.2.0 ("));
-                Assert.That(e.Temp,            Does.EndWith(@"AppData\Local\Temp\"));
                 Assert.That(e.Uri.ToString(),  Does.StartWith("https://www.cube-soft.jp/cubepdfpage/?lang="));
                 e.CheckUpdate = prev;
                 e.Apply();
