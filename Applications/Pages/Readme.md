@@ -69,6 +69,10 @@ Dependencies of the CubePDF Page are as follows.
 
 ## History
 
+* 2023-06-06 version 4.3.0
+    - Change the initial settings of temp directory to the system's default value.
+    - Update iText to 8.0.0.
+    - Improve some implementations.
 * 2023-02-09 version 4.2.0
     - Add German as a display language. (Thanks Roy)
     - Adjust GUI layout.
