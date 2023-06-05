@@ -2414,7 +2414,7 @@
     <value>VersionPanel</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.VersionControl, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.VersionControl, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Parent" xml:space="preserve">
     <value>OtherPanel</value>
@@ -3229,6 +3229,6 @@
     <value>MainWindow</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.Window, Cube.Forms, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Window, Cube.Forms, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
 </root>

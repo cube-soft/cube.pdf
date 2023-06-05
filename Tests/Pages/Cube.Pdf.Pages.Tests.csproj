@@ -22,7 +22,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Pages\Main\Cube.Pdf.Pages.csproj" />
-        <PackageReference Include="Cube.Private.Tests" Version="8.1.0" />
+        <PackageReference Include="Cube.Private.Tests" Version="8.2.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
         <PackageReference Include="NUnit3TestAdapter" Version="*" />
         <PackageReference Include="Appveyor.TestLogger" Version="*" />

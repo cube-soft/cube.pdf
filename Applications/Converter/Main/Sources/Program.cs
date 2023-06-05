@@ -48,7 +48,7 @@ static class Program
     ///
     /* --------------------------------------------------------------------- */
     [STAThread]
-    static void Main(string[] raw) => Logger.Error(() =>
+    static void Main(string[] raw) => Logger.Try(() =>
     {
         Logger.Configure(new Logging.NLog.LoggerSource());
         Logger.ObserveTaskException();

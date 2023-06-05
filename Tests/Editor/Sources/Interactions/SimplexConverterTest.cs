@@ -62,7 +62,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         [TestCase("",                  true,  ExpectedResult = "CubePDF Utility")]
         public string TitleConverter(string src, bool modified)
         {
-            var fi   = src.HasValue() ? Io.Get(src) : null;
+            var fi   = src.HasValue() ? new Entity(src) : null;
             var args = new object[] { fi, modified };
             var type = typeof(string);
             var ci   = CultureInfo.CurrentCulture;
@@ -126,7 +126,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         [TestCase("",           ExpectedResult = false)]
         public bool IconConverter(string src) => Convert<ImageSource>(
             new IconConverter(),
-            src.HasValue() ? Io.Get(GetSource(src)) : null
+            src.HasValue() ? new Entity(GetSource(src)) : null
         ) != null;
 
         #endregion

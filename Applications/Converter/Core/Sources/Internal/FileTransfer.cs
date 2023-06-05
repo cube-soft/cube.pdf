@@ -177,7 +177,7 @@ internal sealed class FileTransfer : DisposableBase
     /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    protected override void Dispose(bool disposing) => Logger.Warn(() => Io.Delete(_work));
+    protected override void Dispose(bool disposing) => Logger.Try(() => Io.Delete(_work));
 
     /* --------------------------------------------------------------------- */
     ///

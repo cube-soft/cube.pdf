@@ -53,7 +53,7 @@ namespace Cube.Pdf.Editor
         {
             _selection = selection;
 
-            var fi = Io.Get(src);
+            var fi = new Entity(src);
             Name          = fi.Name;
             FullName      = fi.FullName;
             Length        = fi.Length;

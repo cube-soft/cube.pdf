@@ -128,7 +128,7 @@
     <value>AddButton</value>
   </data>
   <data name="&gt;&gt;AddButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;AddButton.Parent" xml:space="preserve">
     <value>RightPanel</value>
@@ -164,7 +164,7 @@
     <value>UpButton</value>
   </data>
   <data name="&gt;&gt;UpButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;UpButton.Parent" xml:space="preserve">
     <value>RightPanel</value>
@@ -197,7 +197,7 @@
     <value>DownButton</value>
   </data>
   <data name="&gt;&gt;DownButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;DownButton.Parent" xml:space="preserve">
     <value>RightPanel</value>
@@ -230,7 +230,7 @@
     <value>RemoveButton</value>
   </data>
   <data name="&gt;&gt;RemoveButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;RemoveButton.Parent" xml:space="preserve">
     <value>RightPanel</value>
@@ -263,7 +263,7 @@
     <value>ClearButton</value>
   </data>
   <data name="&gt;&gt;ClearButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;ClearButton.Parent" xml:space="preserve">
     <value>RightPanel</value>
@@ -425,7 +425,7 @@
     <value>MetadataButton</value>
   </data>
   <data name="&gt;&gt;MetadataButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;MetadataButton.Parent" xml:space="preserve">
     <value>FooterPanel</value>
@@ -458,7 +458,7 @@
     <value>ExitButton</value>
   </data>
   <data name="&gt;&gt;ExitButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;ExitButton.Parent" xml:space="preserve">
     <value>FooterPanel</value>
@@ -491,7 +491,7 @@
     <value>SplitButton</value>
   </data>
   <data name="&gt;&gt;SplitButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;SplitButton.Parent" xml:space="preserve">
     <value>FooterPanel</value>
@@ -524,7 +524,7 @@
     <value>MergeButton</value>
   </data>
   <data name="&gt;&gt;MergeButton.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.Button, Cube.Forms.Controls, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;MergeButton.Parent" xml:space="preserve">
     <value>FooterPanel</value>
@@ -1071,6 +1071,6 @@
     <value>MainWindow</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.Window, Cube.Forms, Version=8.1.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Window, Cube.Forms, Version=8.2.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
 </root>

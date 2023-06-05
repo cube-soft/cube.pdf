@@ -138,7 +138,7 @@ public class Attachment
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    protected virtual long GetLength() => Io.Get(Source)?.Length ?? 0;
+    protected virtual long GetLength() => new Entity(Source)?.Length ?? 0;
 
     /* --------------------------------------------------------------------- */
     ///

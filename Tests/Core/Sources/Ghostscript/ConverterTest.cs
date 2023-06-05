@@ -73,7 +73,7 @@ class ConverterTest : FileFixture
         converter.Temp  = Get(".tmp");
         converter.Invoke(sp, dp);
 
-        Assert.That(Io.Get(dp).Length, Is.AtLeast(1));
+        Assert.That(new Entity(dp).Length, Is.AtLeast(1));
     }
 
     /* --------------------------------------------------------------------- */

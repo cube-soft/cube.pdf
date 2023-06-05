@@ -64,7 +64,7 @@ namespace Cube.Pdf.Tests.Itext
                 w.Save(dest);
             }
 
-            Assert.That(Io.Get(dest).Length, Is.LessThan(threshold));
+            Assert.That(new Entity(dest).Length, Is.LessThan(threshold));
         }
 
         /* ----------------------------------------------------------------- */
