@@ -218,7 +218,7 @@ namespace Cube.Pdf.Editor
         [DataMember]
         public string Temp
         {
-            get => Get(() => string.Empty);
+            get => Get(System.IO.Path.GetTempPath);
             set => Set(value);
         }
 

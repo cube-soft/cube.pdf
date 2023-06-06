@@ -327,7 +327,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendRemove() => Send(new RemoveViewModel(
-            e => Facade.Remove(e),
+            Facade.Remove,
             Facade.Value.Count,
             Context
         ));
@@ -343,7 +343,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected void SendExtract() => Send(new ExtractViewModel(
-            e => Facade.Extract(e),
+            Facade.Extract,
             Facade.Value.Images.Selection,
             Facade.Value.Count,
             Context
@@ -359,12 +359,12 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void SendMetadata() => Send(new MetadataViewModel(
-            e => Facade.Update(e),
+        protected void SendMetadata() => Run(() =>Send(new MetadataViewModel(
+            Facade.Update,
             Facade.Value.Metadata.Copy(),
             Facade.Value.Source,
             Context
-        ));
+        )), true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -376,11 +376,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void SendEncryption() => Send(new EncryptionViewModel(
-            e => Facade.Update(e),
+        protected void SendEncryption() => Run(() => Send(new EncryptionViewModel(
+            Facade.Update,
             Facade.Value.Encryption.Copy(),
             Context
-        ));
+        )), true);
 
         /* ----------------------------------------------------------------- */
         ///
@@ -392,8 +392,11 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        protected void SendPreview() =>
-            Send(new PreviewViewModel(Facade.Value.Images, Facade.Value.Source, Context));
+        protected void SendPreview() => Send(new PreviewViewModel(
+            Facade.Value.Images,
+            Facade.Value.Source,
+            Context
+        ));
 
         /* ----------------------------------------------------------------- */
         ///

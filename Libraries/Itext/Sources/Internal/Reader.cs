@@ -102,13 +102,20 @@ namespace Cube.Pdf.Itext
                     var dest  = new PdfReader(src, bytes, options.SaveMemory);
                     if (dest.IsOpenedWithFullPermissions || !options.FullAccess) return dest;
                     dest.Dispose();
-                    throw new BadPasswordException("Owner password is required.");
+                    throw new BadPasswordException("Not owner password.");
                 }
-                catch (BadPasswordException)
+                catch (BadPasswordException e)
                 {
+                    if (password.Source is null)
+                    {
+                        var s = password.Value.HasValue() ?
+                                "Incorrect password or unsupported encryption method" :
+                                "No password query resolver";
+                        throw new EncryptionException(s, e);
+                    }
                     var msg = password.Source.Request(src);
-                    if (!msg.Cancel) password.Value = msg.Value;
-                    else throw new OperationCanceledException();
+                    if (msg.Cancel) throw new OperationCanceledException();
+                    password.Value = msg.Value;
                 }
             }
         }
@@ -216,9 +223,9 @@ namespace Cube.Pdf.Itext
                 var dest = Query.NewMessage(src);
                 query.Request(dest);
                 if (dest.Cancel || dest.Value.HasValue()) return dest;
-                throw new ArgumentException("Password is empty.");
+                throw new ArgumentException("Empty password");
             }
-            catch (Exception e) { throw new EncryptionException("Input password may be incorrect.", e); }
+            catch (Exception e) { throw new EncryptionException("Incorrect password", e); }
         }
 
         #endregion

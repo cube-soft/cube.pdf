@@ -76,7 +76,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("Sample.pdf", 9, false)]
         public void Close(string file, int n, bool modify)
         {
-            var fi  = Io.Get(GetSource(file));
+            var fi  = new Entity(GetSource(file));
             var src = Get(Args(fi.BaseName, modify));
             Io.Copy(fi.FullName, src, true);
 

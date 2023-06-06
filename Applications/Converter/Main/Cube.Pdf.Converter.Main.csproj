@@ -29,8 +29,8 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Converter.csproj" />
-        <PackageReference Include="Cube.Forms.Controls" Version="8.1.0" />
-        <PackageReference Include="Cube.Logging.NLog" Version="8.1.0" />
+        <PackageReference Include="Cube.Forms.Controls" Version="8.2.0" />
+        <PackageReference Include="Cube.Logging.NLog" Version="8.2.0" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />

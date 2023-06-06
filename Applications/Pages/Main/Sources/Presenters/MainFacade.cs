@@ -177,7 +177,7 @@ namespace Cube.Pdf.Pages
                 Io.Move(tmp, dest, true);
                 Reset();
             }
-            finally { Logger.Warn(() => Io.Delete(tmp)); }
+            finally { Logger.Try(() => Io.Delete(tmp)); }
         });
 
         /* ----------------------------------------------------------------- */
