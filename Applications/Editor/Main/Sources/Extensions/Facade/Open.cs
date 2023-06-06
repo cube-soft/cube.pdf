@@ -75,7 +75,7 @@ namespace Cube.Pdf.Editor
             {
                 var cancel = err is OperationCanceledException ||
                              err is TwiceException;
-                if (!cancel) Logger.Warn(() => Io.Delete(link?.FullName));
+                if (!cancel) Logger.Try(() => Io.Delete(link?.FullName));
                 throw;
             }
         }

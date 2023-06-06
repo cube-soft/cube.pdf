@@ -162,7 +162,7 @@ namespace Cube.Pdf.Editor
             Action<Entity> prev,
             Action<Entity> next
         ) {
-            var fi  = Io.Get(dest);
+            var fi  = new Entity(dest);
             var dir = Options.Temp.HasValue() ? Options.Temp : fi.DirectoryName;
             var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
 
@@ -182,7 +182,7 @@ namespace Cube.Pdf.Editor
                 Io.Copy(tmp, fi.FullName, true);
                 next(fi);
             }
-            finally { Logger.Warn(() => Io.Delete(tmp)); }
+            finally { Logger.Try(() => Io.Delete(tmp)); }
         }
 
         /* ----------------------------------------------------------------- */
@@ -213,7 +213,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SplitAsDocument(Action<Entity> prev, Action<Entity> next)
         {
-            var fi = Io.Get(Options.Destination);
+            var fi = new Entity(Options.Destination);
             GetTarget(Options).Each(i => SaveAsDocument(
                 GetPath(fi, i, Images.Count),
                 null,
@@ -234,12 +234,12 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void SplitAsImage(Action<Entity> prev, Action<Entity> next)
         {
-            var fi = Io.Get(Options.Destination);
+            var fi = new Entity(Options.Destination);
             foreach (var i in GetTarget(Options))
             {
                 var ratio = Options.Resolution / Images[i].RawObject.Resolution.X;
                 using var image = Images.GetImage(i, ratio);
-                var dest = Io.Get(GetPath(fi, i, Images.Count));
+                var dest = new Entity(GetPath(fi, i, Images.Count));
                 prev(dest);
                 image.Save(dest.FullName, ImageFormat.Png);
                 next(dest);

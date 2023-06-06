@@ -84,7 +84,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.FrameOnly,       Is.False);
             Assert.That(dest.ShrinkResources, Is.True);
             Assert.That(dest.RecentVisible,   Is.True);
-            Assert.That(dest.Temp,            Is.Empty);
+            Assert.That(dest.Temp,            Does.Contain(@"AppData\Local\Temp\"));
 
             vm.Value.Settings.Width  = 1024;
             vm.Value.Settings.Height = 768;

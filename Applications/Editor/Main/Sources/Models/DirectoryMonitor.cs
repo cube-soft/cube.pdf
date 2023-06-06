@@ -191,7 +191,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private IEnumerable<Entity> Get() =>
             Io.GetFiles(Directory, Filter)
-              .Select(e => Io.Get(e))
+              .Select(e => new Entity(e))
               .OrderByDescending(e => e.LastWriteTime);
 
         #endregion

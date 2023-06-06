@@ -348,7 +348,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private Entity GetEntity(string src) => src.HasValue() ? Io.Get(src) : default;
+        private Entity GetEntity(string src) => src.HasValue() ? new(src) : default;
 
         #endregion
     }
