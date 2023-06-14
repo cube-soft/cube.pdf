@@ -120,6 +120,7 @@ Dependencies of the CubePDF Utility are as follows.
 ## History
 
 * 2023-06-15 version 2.4.0
+    - Change the initial settings of temp directory to the system's default value.
     - Update iText to 8.0.0.
     - Update PDFium to Chromium 114 compatible.
     - Improve some implementations.
