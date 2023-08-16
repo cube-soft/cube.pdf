@@ -25,7 +25,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.Core" Version="8.2.0" />
+        <PackageReference Include="Cube.Core" Version="8.5.0" />
         <Reference Include="System.Security" />
     </ItemGroup>
     <ItemGroup>
