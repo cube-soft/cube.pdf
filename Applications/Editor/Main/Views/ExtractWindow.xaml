@@ -28,11 +28,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title}"
-    Height="330"
+    Height="310"
+    MinHeight="310"
     Width="520"
+    MinWidth="480"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
-    ResizeMode="NoResize"
     ShowInTaskbar="False">
 
     <!-- **********************************************************************
@@ -56,6 +57,7 @@
     *********************************************************************** -->
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
@@ -63,7 +65,7 @@
         <!-- ******************************************************************
           Extraction settings
         ******************************************************************* -->
-        <Grid VerticalAlignment="Center" Margin="20,0">
+        <Grid VerticalAlignment="Center" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="28" />
                 <RowDefinition Height="28" />
@@ -214,7 +216,7 @@
         ******************************************************************* -->
         <StackPanel
             Style="{StaticResource DialogFooterStyle}"
-            Grid.Row="1">
+            Grid.Row="2">
             <Button
                 Content="{Binding Cancel.Text}"
                 Command="{Binding Cancel.Command}"
