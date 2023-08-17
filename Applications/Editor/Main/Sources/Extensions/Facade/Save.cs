@@ -136,7 +136,7 @@ namespace Cube.Pdf.Editor
         public static void Extract(this MainFacade src, SaveOption options) => src.Save(
             null,
             options,
-            e => src.Backup.Invoke(e),
+            src.Backup.Invoke,
             e => src.Value.SetMessage(Properties.Resources.MessageSaved, e.FullName)
         );
 
