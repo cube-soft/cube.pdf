@@ -182,7 +182,6 @@ namespace Cube.Pdf.Editor
                 if (fi.Exists)
                 {
                     Io.SetCreationTime(tmp, fi.CreationTime);
-                    Io.SetLastWriteTime(tmp, fi.LastWriteTime);
                     Io.SetAttributes(tmp, fi.Attributes);
                 }
                 Io.Move(tmp, fi.FullName, true);
