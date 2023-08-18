@@ -27,11 +27,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title}"
-    Height="540"
+    Height="520"
+    MinHeight="520"
     Width="500"
+    MinWidth="480"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
-    ResizeMode="NoResize"
     ShowInTaskbar="False">
 
     <!-- **********************************************************************

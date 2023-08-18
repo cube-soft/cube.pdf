@@ -28,10 +28,11 @@
     mc:Ignorable="d"
     Title="{Binding Title}"
     Height="380"
+    MinHeight="360"
     Width="680"
+    MinWidth="600"
     FontFamily="Meiryo UI"
     WindowStartupLocation="CenterOwner"
-    ResizeMode="NoResize"
     ShowInTaskbar="False">
 
     <!-- **********************************************************************

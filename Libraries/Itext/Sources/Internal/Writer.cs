@@ -58,7 +58,7 @@ namespace Cube.Pdf.Itext
         {
             var dir = options.Temp.HasValue() ?
                       options.Temp :
-                      Io.Get(path).DirectoryName;
+                      Io.GetDirectoryName(path);
 
             _options = options;
             _dest     = path;
@@ -184,7 +184,7 @@ namespace Cube.Pdf.Itext
             _writer.Close();
 
             Stamp();
-            Logger.Warn(() => Io.Delete(_tmp));
+            Logger.Try(() => Io.Delete(_tmp));
         }
 
         /* ----------------------------------------------------------------- */

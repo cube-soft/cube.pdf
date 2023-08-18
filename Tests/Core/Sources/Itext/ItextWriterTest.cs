@@ -88,6 +88,7 @@ namespace Cube.Pdf.Tests.Itext
         {
             var dest = Path(Args(filename));
             Io.Copy(GetSource(filename), dest, true);
+            Io.SetAttributes(dest, System.IO.FileAttributes.Normal);
 
             var op = new OpenOption { SaveMemory = false };
             var r  = new DocumentReader(dest, password, op);

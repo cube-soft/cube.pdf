@@ -164,7 +164,7 @@ namespace Cube.Pdf.Editor
         ) {
             var fi  = new Entity(dest);
             var dir = Options.Temp.HasValue() ? Options.Temp : fi.DirectoryName;
-            var tmp = Io.Combine(dir, Guid.NewGuid().ToString("N"));
+            var tmp = Io.Combine(dir, Guid.NewGuid().ToString("n"));
 
             try
             {
@@ -179,7 +179,13 @@ namespace Cube.Pdf.Editor
                 }
 
                 prev(fi);
-                Io.Copy(tmp, fi.FullName, true);
+                if (fi.Exists)
+                {
+                    Io.SetCreationTime(tmp, fi.CreationTime);
+                    Io.SetLastWriteTime(tmp, fi.LastWriteTime);
+                    Io.SetAttributes(tmp, fi.Attributes);
+                }
+                Io.Move(tmp, fi.FullName, true);
                 next(fi);
             }
             finally { Logger.Try(() => Io.Delete(tmp)); }
