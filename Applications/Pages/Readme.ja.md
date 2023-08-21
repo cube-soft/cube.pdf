@@ -56,7 +56,7 @@ CubePDF Page は、以下のフォルダに実行ログを出力しています�
 CubePDF Page は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
-* iText7 (net47) or iTextSharp (net35)
+* iText (net47) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
     - https://www.nuget.org/packages/itext7/
@@ -72,6 +72,9 @@ CubePDF Page は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2023-08-21 version 4.3.1
+    - iText を 8.0.1 に更新
+    - 内部処理を改善
 * 2023-06-06 version 4.3.0
     - 作業フォルダーの初期設定をシステムの規定値に変更
     - iText を 8.0.0 に更新
