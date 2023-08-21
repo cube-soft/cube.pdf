@@ -53,7 +53,7 @@ When you have some troubles, please contact support@cube-soft.jp along with thes
 
 Dependencies of the CubePDF Page are as follows.
 
-* iText7 (net47) or iTextSharp (net35)
+* iText (net47) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
     - https://www.nuget.org/packages/itext7/
@@ -69,6 +69,9 @@ Dependencies of the CubePDF Page are as follows.
 
 ## History
 
+* 2023-08-21 version 4.3.1
+    - Update iText to 8.0.1.
+    - Improve some implementations.
 * 2023-06-06 version 4.3.0
     - Change the initial settings of temp directory to the system's default value.
     - Update iText to 8.0.0.
