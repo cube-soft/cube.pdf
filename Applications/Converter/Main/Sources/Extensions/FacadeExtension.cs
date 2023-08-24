@@ -79,7 +79,7 @@ static class FacadeExtension
 
         foreach (Format fmt in Enum.GetValues(typeof(Format)))
         {
-            if (ss.Extensions.GetCandidates(fmt).Any(e => cmp.EndsWith(e)))
+            if (ss.Extensions.GetCandidates(fmt).Any(cmp.EndsWith))
             {
                 ss.Format = fmt;
                 break;

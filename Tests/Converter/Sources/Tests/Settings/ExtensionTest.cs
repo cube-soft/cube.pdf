@@ -39,6 +39,32 @@ class ExtensionTest : MockFixture
     /// Test
     ///
     /// <summary>
+    /// Tests to change the extension.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [TestCase("Default.txt", "Default.pdf")]
+    [TestCase("Sample.7z", "Sample.pdf")]
+    [TestCase("Number.123", "Number.123.pdf")]
+    [TestCase("TooLong.Extension", "TooLong.Extension.pdf")]
+    [TestCase("2023.08.24", "2023.08.24.pdf")]
+    [TestCase("日本語.区切り", "日本語.区切り.pdf")]
+    [TestCase("FullWidth.ｔｘｔ", "FullWidth.ｔｘｔ.pdf")]
+    [TestCase("FullWidth.７z", "FullWidth.７z.pdf")]
+    public void Test(string src, string expected)
+    {
+        var ss = new SettingFolder(DataContract.Format.Registry, GetKeyName());
+        ss.Load();
+        ss.Normalize();
+        ss.Set(new MockArguments(src, GetSource("Sample.ps"), ss.Value.Temp));
+        Assert.That(ss.Value.Destination, Does.EndWith(expected));
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Test_CustomExtension
+    ///
+    /// <summary>
     /// Tests the ChangeExtension method with customized file extensions.
     /// </summary>
     ///
@@ -52,7 +78,7 @@ class ExtensionTest : MockFixture
     [TestCase(Format.Tiff,           ".test_tif")]
     [TestCase(Format.Png8bppIndexed, ".test_png")]
     [TestCase(Format.Psd,            ".psd"     )]
-    public void Test(Format src, string expected)
+    public void Test_CustomExtension(Format src, string expected)
     {
         var ss = new SettingFolder(DataContract.Format.Registry, GetKeyName());
         ss.Load();
@@ -65,7 +91,7 @@ class ExtensionTest : MockFixture
         ss.Value.Extensions.Jpeg = ".test_jpg";
         ss.Value.Extensions.Bmp  = ".test_bmp";
         ss.Value.Extensions.Tiff = ".test_tif";
-        ss.Set(new MockArguments(nameof(Test), GetSource("Sample.ps"), ss.Value.Temp));
+        ss.Set(new MockArguments(nameof(Test_CustomExtension), GetSource("Sample.ps"), ss.Value.Temp));
 
         using var vm = new MainViewModel(ss);
         Assert.That(vm.Settings.Format, Is.EqualTo(Format.Pdf));
