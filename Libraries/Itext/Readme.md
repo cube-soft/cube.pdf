@@ -1,4 +1,4 @@
-Cube.Pdf.Pdfium
+Cube.Pdf.Itext
 ====
 
 [![Package](https://badgen.net/nuget/v/cube.pdf.itext?label=itext)](https://www.nuget.org/packages/cube.pdf.itext/)
