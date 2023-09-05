@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>8.4.0</version>
+        <version>8.5.0</version>
         <id>Cube.Pdf.Converter</id>
         <title>Cube.Pdf.Converter</title>
         <authors>clown,cube-soft</authors>
@@ -16,16 +16,16 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="netstandard2.0">
-                <dependency id="Cube.Pdf.Ghostscript" version="8.4.0" />
-                <dependency id="Cube.Pdf.Itext" version="8.4.0" />
+                <dependency id="Cube.Pdf.Ghostscript" version="8.5.0" />
+                <dependency id="Cube.Pdf.Itext" version="8.5.0" />
             </group>
             <group targetFramework="net461">
-                <dependency id="Cube.Pdf.Ghostscript" version="8.4.0" />
-                <dependency id="Cube.Pdf.Itext" version="8.4.0" />
+                <dependency id="Cube.Pdf.Ghostscript" version="8.5.0" />
+                <dependency id="Cube.Pdf.Itext" version="8.5.0" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.Pdf.Ghostscript" version="8.4.0" />
-                <dependency id="Cube.Pdf.Itext" version="8.4.0" />
+                <dependency id="Cube.Pdf.Ghostscript" version="8.5.0" />
+                <dependency id="Cube.Pdf.Itext" version="8.5.0" />
             </group>
         </dependencies>
     </metadata>
