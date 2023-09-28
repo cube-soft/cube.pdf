@@ -1902,6 +1902,6 @@
     <value>MetadataWindow</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.Window, Cube.Forms, Version=8.5.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Window, Cube.Forms, Version=8.5.1.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
 </root>
