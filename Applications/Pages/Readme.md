@@ -69,6 +69,8 @@ Dependencies of the CubePDF Page are as follows.
 
 ## History
 
+* 2023-11-01 version 4.3.2
+    - Update iText to 8.0.2.
 * 2023-08-21 version 4.3.1
     - Update iText to 8.0.1.
     - Improve some implementations.
