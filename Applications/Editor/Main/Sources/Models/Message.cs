@@ -122,7 +122,7 @@ namespace Cube.Pdf.Editor
             Multiselect     = true,
             Filters         = new FileDialogFilter[]
             {
-                new(Properties.Resources.FilterInsertable, true, ".pdf", ".png", ".jpg", ".jpeg", ".bmp"),
+                new(Properties.Resources.FilterInsertable, true, ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff"),
                 new(Properties.Resources.FilterAll, true, ".*"),
             },
         };
