@@ -111,7 +111,7 @@ namespace Cube.Pdf.Editor
         public static bool CanInsert(this MainFacade src, string path)
         {
             var ext = Io.GetExtension(path).ToLowerInvariant();
-            var cmp = new List<string> { ".pdf", ".png", ".jpg", ".jpeg", ".bmp" };
+            var cmp = new List<string> { ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff" };
             return cmp.Contains(ext);
         }
 
