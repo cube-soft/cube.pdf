@@ -56,6 +56,10 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2023-11-21 version 3.3.1
+    - Fix bugs for Arm64 edition.
+    - Update iText to 8.0.2.
+    - Update Ghostscript to 10.2.1.
 * 2023-08-25 version 3.3.0
     - Fix the way to determine the initial value of the output path.
     - Adjust timeout value when adding/deleting the CubePDF virtual printer.
