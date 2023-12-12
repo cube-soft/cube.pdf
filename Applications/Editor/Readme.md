@@ -119,6 +119,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2023-12-14 version 2.5.4
+    - Update PDFium to Chromium 120 compatible.
 * 2023-11-13 version 2.5.3
     - Fix to allow insertion of Tiff files.
     - Update iText to 8.0.2.
