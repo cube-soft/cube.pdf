@@ -31,9 +31,9 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Cube.Xui" Version="8.5.1" />
-        <PackageReference Include="Cube.Logging.NLog" Version="8.5.1" />
-        <PackageReference Include="Cube.Trick" Version="8.5.1" />
+        <PackageReference Include="Cube.Xui" Version="8.6.0" />
+        <PackageReference Include="Cube.Logging.NLog" Version="8.6.0" />
+        <PackageReference Include="Cube.Trick" Version="8.6.0" />
         <PackageReference Include="Fluent.Ribbon" Version="9.0.1" />
         <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
     </ItemGroup>
