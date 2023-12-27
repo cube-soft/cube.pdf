@@ -16,6 +16,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Editor;
+
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
@@ -24,266 +26,279 @@ using Cube.FileSystem;
 using Cube.Syntax.Extensions;
 using Cube.Text.Extensions;
 
-namespace Cube.Pdf.Editor
+/* ------------------------------------------------------------------------- */
+///
+/// SaveAction
+///
+/// <summary>
+/// Provides functionality to save the document.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public sealed class SaveAction : DisposableBase
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// SaveAction
     ///
     /// <summary>
-    /// Provides functionality to save the document.
+    /// Initializes a new instance of the SaveAction class with
+    /// the specified arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Source reader.</param>
+    /// <param name="images">Image collection.</param>
+    /// <param name="options">Save options.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public SaveAction(IDocumentReader src, ImageCollection images, SaveOption options)
+    {
+        Source  = src;
+        Images  = images;
+        Options = options;
+    }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Source
+    ///
+    /// <summary>
+    /// Gets the object to reader the source PDF document.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class SaveAction : DisposableBase
+    public IDocumentReader Source { get; }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Images
+    ///
+    /// <summary>
+    /// Gets the collection of images.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public ImageCollection Images { get; }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Options
+    ///
+    /// <summary>
+    /// Gets the save options.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public SaveOption Options { get; }
+
+    #endregion
+
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Invoke
+    ///
+    /// <summary>
+    /// Invokes the save action.
+    /// </summary>
+    ///
+    /// <param name="prev">Action to be invoked before saving.</param>
+    /// <param name="next">Action to be invoked after saving.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public void Invoke(Action<Entity> prev, Action<Entity> next)
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveAction
-        ///
-        /// <summary>
-        /// Initializes a new instance of the SaveAction class with
-        /// the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Source reader.</param>
-        /// <param name="images">Image collection.</param>
-        /// <param name="options">Save options.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SaveAction(IDocumentReader src, ImageCollection images, SaveOption options)
+        if (Options.Format == SaveFormat.Pdf)
         {
-            Source  = src;
-            Images  = images;
-            Options = options;
+            if (Options.Split) SplitAsDocument(prev, next);
+            else SaveAsDocument(prev, next);
         }
+        else SplitAsImage(prev, next);
+    }
 
-        #endregion
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Dispose
+    ///
+    /// <summary>
+    /// Releases the unmanaged resources used by the object
+    /// and optionally releases the managed resources.
+    /// </summary>
+    ///
+    /// <param name="disposing">
+    /// true to release both managed and unmanaged resources;
+    /// false to release only unmanaged resources.
+    /// </param>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) Source.Dispose();
+    }
 
-        #region Properties
+    #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Source
-        ///
-        /// <summary>
-        /// Gets the object to reader the source PDF document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IDocumentReader Source { get; }
+    #region Implementations
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Images
-        ///
-        /// <summary>
-        /// Gets the collection of images.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public ImageCollection Images { get; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SaveAsDocument
+    ///
+    /// <summary>
+    /// Saves pages as a PDF document.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void SaveAsDocument(Action<Entity> prev, Action<Entity> next) => SaveAsDocument(
+        Options.Destination,
+        Source,
+        GetIndices(Options).Select(i => Images[i].RawObject),
+        prev,
+        next
+    );
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Options
-        ///
-        /// <summary>
-        /// Gets the save options.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SaveOption Options { get; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SaveAsDocument
+    ///
+    /// <summary>
+    /// Saves pages as a PDF document.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void SaveAsDocument(string dest, IDocumentReader src, IEnumerable<Page> pages,
+        Action<Entity> prev, Action<Entity> next
+    ) {
+        var exist = Io.Exists(dest);
+        var dir   = Options.Temp.HasValue() ? Options.Temp : Io.GetDirectoryName(dest);
+        var tmp   = Io.Combine(dir, Guid.NewGuid().ToString("n"));
 
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Invokes the save action.
-        /// </summary>
-        ///
-        /// <param name="prev">Action to be invoked before saving.</param>
-        /// <param name="next">Action to be invoked after saving.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Invoke(Action<Entity> prev, Action<Entity> next)
+        try
         {
-            if (Options.Format == SaveFormat.Pdf)
+            SaveWithItext(tmp, src, pages);
+            Logger.Debug($"[Temp] {tmp.Quote()} ({Io.Exists(tmp)})");
+
+            var e = new Entity(dest);
+            prev(e);
+            if (exist)
             {
-                if (Options.Split) SplitAsDocument(prev, next);
-                else SaveAsDocument(prev, next);
+                Io.SetCreationTime(tmp, e.CreationTime);
+                Io.SetAttributes(tmp, e.Attributes);
             }
-            else SplitAsImage(prev, next);
+            Io.Copy(tmp, dest, true);
+            next(e);
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Dispose
-        ///
-        /// <summary>
-        /// Releases the unmanaged resources used by the object
-        /// and optionally releases the managed resources.
-        /// </summary>
-        ///
-        /// <param name="disposing">
-        /// true to release both managed and unmanaged resources;
-        /// false to release only unmanaged resources.
-        /// </param>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing)
+        finally
         {
-            if (disposing) Source.Dispose();
+            Logger.Try(() => Io.Delete(tmp));
+            Logger.Debug($"[Save] {dest.Quote()} ({exist} -> {Io.Exists(dest)})");
         }
+    }
 
-        #endregion
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SaveWithItext
+    ///
+    /// <summary>
+    /// Saves pages as a PDF document using iText.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void SaveWithItext(string dest, IDocumentReader src, IEnumerable<Page> pages)
+    {
+        using var writer = new Itext.DocumentWriter(Options.ToItext());
 
-        #region Implementations
+        if (Options.Attachments != null) writer.Add(Options.Attachments);
+        if (Options.Metadata    != null) writer.Set(Options.Metadata);
+        if (Options.Encryption  != null) writer.Set(Options.Encryption);
+        if (src != null) writer.Add(pages, src);
+        else writer.Add(pages);
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveAsDocument
-        ///
-        /// <summary>
-        /// Saves pages as a PDF document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SaveAsDocument(string dest,
-            IDocumentReader src,
-            IEnumerable<Page> pages,
-            Action<Entity> prev,
-            Action<Entity> next
-        ) {
-            var dir = Options.Temp.HasValue() ? Options.Temp : Io.GetDirectoryName(dest);
-            var tmp = Io.Combine(dir, Guid.NewGuid().ToString("n"));
+        writer.Save(dest);
+    }
 
-            try
-            {
-                using (var writer = new Itext.DocumentWriter(Options.ToItext()))
-                {
-                    if (Options.Attachments != null) writer.Add(Options.Attachments);
-                    if (Options.Metadata    != null) writer.Set(Options.Metadata);
-                    if (Options.Encryption  != null) writer.Set(Options.Encryption);
-                    if (src != null) writer.Add(pages, Source);
-                    else writer.Add(pages);
-                    writer.Save(tmp);
-                }
-
-                Logger.Debug($"Save:{dest.Quote()}");
-                Logger.Debug($"Temp:{tmp.Quote()}");
-
-                var fi = new Entity(dest);
-                prev(fi);
-                if (Io.Exists(dest))
-                {
-                    Io.SetCreationTime(tmp, fi.CreationTime);
-                    Io.SetAttributes(tmp, fi.Attributes);
-                }
-                Io.Copy(tmp, dest, true);
-                next(fi);
-            }
-            finally { Logger.Try(() => Io.Delete(tmp)); }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SaveAsDocument
-        ///
-        /// <summary>
-        /// Saves pages as a PDF document.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SaveAsDocument(Action<Entity> prev, Action<Entity> next) => SaveAsDocument(
-            Options.Destination,
-            Source,
-            GetTarget(Options).Select(i => Images[i].RawObject),
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SplitAsDocument
+    ///
+    /// <summary>
+    /// Saves as a PDF file per page.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void SplitAsDocument(Action<Entity> prev, Action<Entity> next)
+    {
+        var e = new Entity(Options.Destination);
+        GetIndices(Options).Each(i => SaveAsDocument(
+            GetPath(e, i, Images.Count),
+            null,
+            new[] { Images[i].RawObject },
             prev,
             next
-        );
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SplitAsDocument
-        ///
-        /// <summary>
-        /// Saves as a PDF file per page.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SplitAsDocument(Action<Entity> prev, Action<Entity> next)
-        {
-            var fi = new Entity(Options.Destination);
-            GetTarget(Options).Each(i => SaveAsDocument(
-                GetPath(fi, i, Images.Count),
-                null,
-                new[] { Images[i].RawObject },
-                prev,
-                next
-            ));
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SplitAsImage
-        ///
-        /// <summary>
-        /// Saves as an image file per page.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private void SplitAsImage(Action<Entity> prev, Action<Entity> next)
-        {
-            var fi = new Entity(Options.Destination);
-            foreach (var i in GetTarget(Options))
-            {
-                var ratio = Options.Resolution / Images[i].RawObject.Resolution.X;
-                using var image = Images.GetImage(i, ratio);
-                var dest = new Entity(GetPath(fi, i, Images.Count));
-                prev(dest);
-                image.Save(dest.FullName, ImageFormat.Png);
-                next(dest);
-            }
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetPath
-        ///
-        /// <summary>
-        /// Gets the output path with the specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private string GetPath(Entity src, int index, int count)
-        {
-            var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
-            var name  = string.Format("{0}-{1}{2}", src.BaseName, (index + 1).ToString(digit), src.Extension);
-            return Io.Combine(src.DirectoryName, name);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetTarget
-        ///
-        /// <summary>
-        /// Gets the target indices according to the specified options.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<int> GetTarget(SaveOption e) =>
-            e.Target == SaveTarget.All      ? Images.Count.Make(i => i) :
-            e.Target == SaveTarget.Selected ? Images.GetSelectedIndices().OrderBy(i => i) :
-            new Range(e.Range, Images.Count).Select(i => i - 1);
-
-        #endregion
+        ));
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SplitAsImage
+    ///
+    /// <summary>
+    /// Saves as an image file per page.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void SplitAsImage(Action<Entity> prev, Action<Entity> next)
+    {
+        var fi = new Entity(Options.Destination);
+        foreach (var i in GetIndices(Options))
+        {
+            var ratio = Options.Resolution / Images[i].RawObject.Resolution.X;
+            using var image = Images.GetImage(i, ratio);
+            var dest = new Entity(GetPath(fi, i, Images.Count));
+            prev(dest);
+            image.Save(dest.FullName, ImageFormat.Png);
+            next(dest);
+        }
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GetPath
+    ///
+    /// <summary>
+    /// Gets the output path with the specified arguments.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private string GetPath(Entity src, int index, int count)
+    {
+        var digit = $"D{Math.Max(count.ToString("D").Length, 2)}";
+        var name  = $"{src.BaseName}-{(index + 1).ToString(digit)}{src.Extension}";
+        return Io.Combine(src.DirectoryName, name);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GetIndices
+    ///
+    /// <summary>
+    /// Gets the target indices according to the specified options.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private IEnumerable<int> GetIndices(SaveOption e) => e.Target switch
+    {
+        SaveTarget.All      => Images.Count.Make(i => i),
+        SaveTarget.Selected => Images.GetSelectedIndices().OrderBy(i => i),
+        _ => new Range(e.Range, Images.Count).Select(i => i - 1)
+    };
+
+    #endregion
 }
