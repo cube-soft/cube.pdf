@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editor
                 ?.ToBitmapImage(true)
             );
             _cache.Created += (s, e) => e.Key.Refresh();
-            _cache.Failed  += (s, e) => Logger.Debug($"[{e.Key.Index}] {e.Value.GetType().Name}");
+            _cache.Failed  += (s, e) => Logger.Warn($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
             Dispatcher  = dispatcher;
             Selection   = new ImageSelection(dispatcher);

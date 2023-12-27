@@ -20,7 +20,6 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Cube.FileSystem;
-using Cube.Pdf.Pdfium;
 
 namespace Cube.Pdf.Editor
 {
