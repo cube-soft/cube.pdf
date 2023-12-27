@@ -192,7 +192,8 @@ public sealed class SaveAction : DisposableBase
                 Io.SetCreationTime(tmp, e.CreationTime);
                 Io.SetAttributes(tmp, e.Attributes);
             }
-            Io.Copy(tmp, dest, true);
+            if (exist) Io.Copy(tmp, dest, true);
+            else Io.Move(tmp, dest, true);
             next(e);
         }
         finally
