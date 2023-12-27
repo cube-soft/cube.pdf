@@ -125,7 +125,7 @@ internal sealed class FileTransfer : DisposableBase
             var path = GetDestination(i + 1, n);
             MoveOrCopy(e, path, true);
             dest.Add(path);
-            Logger.Debug(path);
+            Logger.Debug($"[Save] {path}");
             ++i;
         }
     }

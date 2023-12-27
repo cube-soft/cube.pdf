@@ -138,7 +138,7 @@ namespace Cube.Pdf.Itext
 
             var user  = src.GetUserPassword(file);
             var value = (uint)src.Permissions;
-            Logger.Debug($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
+            Logger.Trace($"Permission:0x{value:X}", $"Mode:{src.GetCryptoMode()}");
 
             return new()
             {
