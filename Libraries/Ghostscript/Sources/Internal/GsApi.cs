@@ -113,10 +113,10 @@ internal static class GsApi
                 Io.CreateDirectory(tmp);
 
                 SetVariable("Tmp", tmp);
-                Logger.Debug($"Tmp:{e0.Quote()} -> {tmp.Quote()}");
+                Logger.Debug($"[Tmp] {e0.Quote()} -> {tmp.Quote()}");
 
                 SetVariable("Temp", tmp);
-                Logger.Debug($"Temp:{e1.Quote()} -> {tmp.Quote()}");
+                Logger.Debug($"[Temp] {e1.Quote()} -> {tmp.Quote()}");
             }
             callback();
         }
