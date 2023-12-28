@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -149,11 +150,24 @@ internal sealed class FileTransfer : DisposableBase
     /* --------------------------------------------------------------------- */
     public static void MoveOrCopy(string src, string dest, bool overwrite)
     {
-        try { Io.Move(src, dest, overwrite); }
+        try
+        {
+            if (Io.Exists(dest)) Io.Copy(src, dest, overwrite);
+            else Io.Move(src, dest, overwrite);
+        }
         catch (Exception e)
         {
-            Logger.Debug($"{e.Message} ({src} -> {dest})");
-            Io.Copy(src, dest, overwrite);
+            if (Io.Exists(src))
+            {
+                Logger.Warn($"{e.Message} ({src.Quote()} -> {dest.Quote()})");
+                Logger.Warn(e);
+                Io.Copy(src, dest, overwrite);
+            }
+            else
+            {
+                Logger.Warn($"{src.Quote()} not found");
+                throw;
+            }
         }
     }
 
@@ -219,7 +233,7 @@ internal sealed class FileTransfer : DisposableBase
     private string GetDestination(int index, int count)
     {
         var dest = GetDestinationCore(index, count);
-        return (AutoRename && Io.Exists(dest)) ? IoEx.GetUniqueName(dest) : dest;
+        return AutoRename && Io.Exists(dest) ? IoEx.GetUniqueName(dest) : dest;
     }
 
     /* --------------------------------------------------------------------- */
@@ -238,8 +252,8 @@ internal sealed class FileTransfer : DisposableBase
 
         var name  = Io.GetBaseName(src);
         var ext   = Io.GetExtension(src);
-        var digit = string.Format("D{0}", Math.Max(count.ToString("D").Length, 2));
-        var dest  = string.Format("{0}-{1}{2}", name, index.ToString(digit), ext);
+        var digit = $"D{Math.Max(count.ToString("D").Length, 2)}";
+        var dest  = $"{name}-{index.ToString(digit)}{ext}";
 
         return Io.Combine(Io.GetDirectoryName(src), dest);
     }

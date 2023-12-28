@@ -192,8 +192,7 @@ public sealed class SaveAction : DisposableBase
                 Io.SetCreationTime(tmp, e.CreationTime);
                 Io.SetAttributes(tmp, e.Attributes);
             }
-            if (exist) Io.Copy(tmp, dest, true);
-            else Io.Move(tmp, dest, true);
+            MoveOrCopy(tmp, dest, true);
             next(e);
         }
         finally
@@ -266,6 +265,38 @@ public sealed class SaveAction : DisposableBase
             prev(dest);
             image.Save(dest.FullName, ImageFormat.Png);
             next(dest);
+        }
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// MoveOrCopy
+    ///
+    /// <summary>
+    /// Moves or copies the specified file.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void MoveOrCopy(string src, string dest, bool overwrite)
+    {
+        try
+        {
+            if (Io.Exists(dest)) Io.Copy(src, dest, overwrite);
+            else Io.Move(src, dest, overwrite);
+        }
+        catch (Exception e)
+        {
+            if (Io.Exists(src))
+            {
+                Logger.Warn($"{e.Message} ({src.Quote()} -> {dest.Quote()})");
+                Logger.Warn(e);
+                Io.Copy(src, dest, overwrite);
+            }
+            else
+            {
+                Logger.Warn($"{src.Quote()} not found");
+                throw;
+            }
         }
     }
 
