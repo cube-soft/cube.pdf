@@ -70,7 +70,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             vp.Source = GetSource(file);
             vm.Select(2);
             vm.Test(vm.Ribbon.Insert);
-            Assert.That(vm.Value.Count, Is.EqualTo(n));
+            Assert.That(Wait.For(() => vm.Value.Count == n));
 
             var dest = vm.Value.Images.ToList();
             Assert.That(dest[0].RawObject.Number, Is.EqualTo(1));
