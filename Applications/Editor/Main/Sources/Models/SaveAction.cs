@@ -190,8 +190,8 @@ public sealed class SaveAction : DisposableBase
             prev(e);
             if (exist)
             {
-                Io.SetCreationTime(tmp, e.CreationTime);
-                Io.SetAttributes(tmp, e.Attributes);
+                Logger.Try(() => Io.SetCreationTime(tmp, e.CreationTime));
+                Logger.Try(() => Io.SetAttributes(tmp, e.Attributes));
             }
             MoveOrCopy(tmp, dest, true);
             next(e);
