@@ -27,8 +27,8 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.Core" Version="8.5.1" />
-        <PackageReference Include="Cube.Logging.NLog" Version="8.5.1" />
+        <PackageReference Include="Cube.Core" Version="8.6.1" />
+        <PackageReference Include="Cube.Logging.NLog" Version="8.6.1" />
     </ItemGroup>
     <ItemGroup>
         <None Include="App.*" />

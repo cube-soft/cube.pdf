@@ -178,7 +178,8 @@ public sealed class SaveAction : DisposableBase
     ) {
         var exist = Io.Exists(dest);
         var dir   = Options.Temp.HasValue() ? Options.Temp : Io.GetDirectoryName(dest);
-        var tmp   = Io.Combine(dir, Guid.NewGuid().ToString("n"));
+        var ext   = Io.GetExtension(dest);
+        var tmp   = Io.Combine(dir, $"{Guid.NewGuid():n}{ext}");
 
         try
         {
@@ -189,8 +190,8 @@ public sealed class SaveAction : DisposableBase
             prev(e);
             if (exist)
             {
-                Io.SetCreationTime(tmp, e.CreationTime);
-                Io.SetAttributes(tmp, e.Attributes);
+                Logger.Try(() => Io.SetCreationTime(tmp, e.CreationTime));
+                Logger.Try(() => Io.SetAttributes(tmp, e.Attributes));
             }
             MoveOrCopy(tmp, dest, true);
             next(e);
@@ -261,9 +262,10 @@ public sealed class SaveAction : DisposableBase
         {
             var ratio = Options.Resolution / Images[i].RawObject.Resolution.X;
             using var image = Images.GetImage(i, ratio);
-            var dest = new Entity(GetPath(fi, i, Images.Count));
+            var path = GetPath(fi, i, Images.Count);
+            var dest = new Entity(path);
             prev(dest);
-            image.Save(dest.FullName, ImageFormat.Png);
+            image.Save(path, ImageFormat.Png);
             next(dest);
         }
     }
