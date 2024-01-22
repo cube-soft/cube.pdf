@@ -16,15 +16,15 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="netstandard2.0">
-                <dependency id="System.Drawing.Common" version="8.0.0" />
+                <dependency id="System.Drawing.Common" version="8.0.1" />
                 <dependency id="System.Security.Cryptography.Csp" version="4.3.0" />
-                <dependency id="Cube.Core" version="8.6.0" />
+                <dependency id="Cube.Core" version="8.6.1" />
             </group>
             <group targetFramework="net46">
-                <dependency id="Cube.Core" version="8.6.0" />
+                <dependency id="Cube.Core" version="8.6.1" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.Core" version="8.6.0" />
+                <dependency id="Cube.Core" version="8.6.1" />
             </group>
         </dependencies>
     </metadata>

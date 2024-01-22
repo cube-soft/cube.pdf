@@ -16,7 +16,6 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-using System.Linq;
 using Cube.FileSystem;
 using Cube.Tests;
 using NUnit.Framework;
@@ -80,13 +79,14 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         [TestCase("Sample.pdf", "")]
         public void Overwrite(string file, string password)
         {
-            var vp = new VmParam
+            var src = new Entity(GetSource(file));
+            var vp  = new VmParam
             {
-                Source   = Get(Args(Io.GetBaseName(GetSource(file)))),
+                Source   = Get(Args(src.BaseName)),
                 Password = password,
             };
 
-            Io.Copy(GetSource(file), vp.Source, true);
+            Io.Copy(src.FullName, vp.Source, true);
 
             using var vm = NewVM();
             using var z0 = vm.Boot(vp);
@@ -94,6 +94,11 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             vm.Select(0);
             vm.Test(vm.Ribbon.RotateLeft);
             vm.Test(vm.Ribbon.Save);
+
+            var dest = new Entity(vp.Source);
+            Assert.That(dest.CreationTime, Is.EqualTo(src.CreationTime));
+            Assert.That(dest.LastWriteTime, Is.GreaterThan(src.LastWriteTime));
+            Assert.That(dest.LastAccessTime, Is.GreaterThan(src.LastAccessTime));
         }
 
         #endregion

@@ -17,15 +17,15 @@
         <dependencies>
             <group targetFramework="netstandard2.0">
                 <dependency id="Cube.Pdf" version="8.6.0" />
-                <dependency id="Cube.Native.Pdfium.Lite" version="120.0.6099" />
+                <dependency id="Cube.Native.Pdfium.Lite" version="121.0.6167" />
             </group>
             <group targetFramework="net46">
                 <dependency id="Cube.Pdf" version="8.6.0" />
-                <dependency id="Cube.Native.Pdfium.Lite" version="120.0.6099" />
+                <dependency id="Cube.Native.Pdfium.Lite" version="121.0.6167" />
             </group>
             <group targetFramework="net35">
                 <dependency id="Cube.Pdf" version="8.6.0" />
-                <dependency id="Cube.Native.Pdfium.Lite" version="120.0.6099" />
+                <dependency id="Cube.Native.Pdfium.Lite" version="121.0.6167" />
             </group>
         </dependencies>
     </metadata>
