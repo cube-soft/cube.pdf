@@ -59,7 +59,7 @@ Dependencies of the CubePDF are as follows.
 * 2024-02-20 version 3.4.0
     - Improve I/O processing.
     - Change file structures for Arm64 edition.
-    - Update iText to 8.0.2.
+    - Update iText to 8.0.3.
 * 2023-11-21 version 3.3.1
     - Fix bugs for Arm64 edition.
     - Update iText to 8.0.2.
