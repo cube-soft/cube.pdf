@@ -17,8 +17,19 @@
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+        <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
+        <SelfContained>false</SelfContained>
+        <Prefer32Bit>true</Prefer32Bit>
         <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+        <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
+        <SelfContained>false</SelfContained>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+        <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
+        <SelfContained>false</SelfContained>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Libraries\Core\Cube.Pdf.Core.csproj" />
