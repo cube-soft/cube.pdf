@@ -59,7 +59,7 @@ CubePDF Page は、以下のライブラリを利用しています。
 * iText (net47) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
-    - https://www.nuget.org/packages/itext7/
+    - https://www.nuget.org/packages/itext/
     - https://www.nuget.org/packages/iTextSharp/
 * NLog
     - 3-clause BSD License
@@ -72,6 +72,10 @@ CubePDF Page は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2024-02-21 version 4.4.0
+    - ファイル入出力関係の処理を改善
+    - 選択ファイル自動ソート機能の有効・無効オプションをテスト導入
+    - iText を 8.0.3 に更新
 * 2023-11-01 version 4.3.2
     - iText を 8.0.2 に更新
 * 2023-08-21 version 4.3.1

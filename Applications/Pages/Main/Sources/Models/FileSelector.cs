@@ -16,88 +16,113 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Pages;
+
 using System.Collections.Generic;
 using System.Linq;
 using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Text.Extensions;
 
-namespace Cube.Pdf.Pages
+/* ------------------------------------------------------------------------- */
+///
+/// FileSelector
+///
+/// <summary>
+/// Provides functionality to select target files.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public class FileSelector
 {
+    #region Properties
+
     /* --------------------------------------------------------------------- */
     ///
-    /// FileSelector
+    /// Sort
     ///
     /// <summary>
-    /// Provides functionality to select target files.
+    /// Gets or sets a value indicating whether to sort provided files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class FileSelector
+    public bool Sort { get; set; } = true;
+
+    #endregion
+
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Get
+    ///
+    /// <summary>
+    /// Gets the target files from the specified file collection.
+    /// </summary>
+    ///
+    /// <param name="src">Source file collection.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public IEnumerable<string> Get(IEnumerable<string> src) =>
+        src.GroupBy(Io.IsDirectory)
+           .OrderByDescending(e => e.Key)
+           .SelectMany(GetCore);
+
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GetCore
+    ///
+    /// <summary>
+    /// Gets the target files from the specified file collection.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private IEnumerable<string> GetCore(IGrouping<bool, string> src) =>
+        src.Key ?
+        SortItems(src).SelectMany(e => Filter(Io.GetFiles(e))) :
+        Filter(src);
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Filter
+    ///
+    /// <summary>
+    /// Applies the filter to the specified files.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private IEnumerable<string> Filter(IEnumerable<string> src) => SortItems(src.Where(IsTarget));
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// IsTarget
+    ///
+    /// <summary>
+    /// Determines whether the specified path is the target file.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private bool IsTarget(string src)
     {
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Get
-        ///
-        /// <summary>
-        /// Gets the target files from the specified file collection.
-        /// </summary>
-        ///
-        /// <param name="src">Source file collection.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public IEnumerable<string> Get(IEnumerable<string> src) =>
-            src.GroupBy(e => Io.IsDirectory(e))
-               .OrderByDescending(e => e.Key)
-               .SelectMany(e => GetCore(e));
-
-        #endregion
-
-        #region Implementations
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetCore
-        ///
-        /// <summary>
-        /// Gets the target files from the specified file collection.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<string> GetCore(IGrouping<bool, string> src) =>
-            src.Key ?
-            src.OrderBy(e => e, new NumericStringComparer()).SelectMany(e => Filter(Io.GetFiles(e))) :
-            Filter(src);
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Filter
-        ///
-        /// <summary>
-        /// Applies the filter to the specified files.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private IEnumerable<string> Filter(IEnumerable<string> src) =>
-            src.Where(e => IsTarget(e)).OrderBy(e => e, new NumericStringComparer());
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// IsTarget
-        ///
-        /// <summary>
-        /// Determines whether the specified path is the target file.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        private bool IsTarget(string src)
-        {
-            var cmp = new[] { ".pdf", ".bmp", ".png", ".jpg", ".jpeg", ".tif", ".tiff" };
-            return !Io.IsDirectory(src) && cmp.Any(e => Io.GetExtension(src).FuzzyEquals(e));
-        }
-
-        #endregion
+        var cmp = new[] { ".pdf", ".bmp", ".png", ".jpg", ".jpeg", ".tif", ".tiff" };
+        return !Io.IsDirectory(src) && cmp.Any(e => Io.GetExtension(src).FuzzyEquals(e));
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// SortItems
+    ///
+    /// <summary>
+    /// Sorts the specified items.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private IEnumerable<string> SortItems(IEnumerable<string> src) =>
+        Sort ? src.OrderBy(e => e, new NumericStringComparer()) : src;
+
+    #endregion
 }
