@@ -211,7 +211,8 @@ namespace Cube.Pdf.Pages
         /* ----------------------------------------------------------------- */
         public void Add(IEnumerable<string> src) => Lock(() =>
         {
-            foreach (var f in new FileSelector().Get(src))
+            var selector = new FileSelector { Sort = Settings.Value.AutoSort };
+            foreach (var f in selector.Get(src))
             {
                 if (_inner.Any(e => e.FullName == f)) continue;
                 if (Io.GetExtension(f).ToLower() == ".pdf")

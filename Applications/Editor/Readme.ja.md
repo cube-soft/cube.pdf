@@ -96,10 +96,10 @@ CubePDF Utility は、以下のフォルダに実行ログを出力していま�
 CubePDF Utility は、以下のライブラリを利用しています。
 それぞれのライブラリについては、記載した URL から取得することができます。
 
-* iText7 (net47) or iTextSharp (net35)
+* iText (net47) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
-    - https://www.nuget.org/packages/itext7/
+    - https://www.nuget.org/packages/itext/
     - https://www.nuget.org/packages/iTextSharp/
 * PDFium
     - 3-clause BSD License

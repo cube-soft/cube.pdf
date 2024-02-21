@@ -90,10 +90,10 @@ When you lost files in some unexpected errors, please recover them from the back
 
 Dependencies of the CubePDF Utility are as follows.
 
-* iText7 (net47) or iTextSharp (net35)
+* iText (net47) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
-    - https://www.nuget.org/packages/itext7/
+    - https://www.nuget.org/packages/itext/
     - https://www.nuget.org/packages/iTextSharp/
 * PDFium
     - 3-clause BSD License

@@ -40,10 +40,10 @@ Dependencies of the CubePDF are as follows.
 * Ghostscript
     - GNU Affero General Public License
     - https://www.ghostscript.com/
-* iText7 (net45) or iTextSharp (net35)
+* iText (net47) or iTextSharp (net35)
     - GNU Affero General Public License
     - https://itextpdf.com/
-    - https://www.nuget.org/packages/itext7/
+    - https://www.nuget.org/packages/itext/
     - https://www.nuget.org/packages/iTextSharp/
 * NLog
     - 3-clause BSD License
@@ -59,7 +59,7 @@ Dependencies of the CubePDF are as follows.
 * 2024-02-20 version 3.4.0
     - Improve I/O processing.
     - Change file structures for Arm64 edition.
-    - Update iText to 8.0.2.
+    - Update iText to 8.0.3.
 * 2023-11-21 version 3.3.1
     - Fix bugs for Arm64 edition.
     - Update iText to 8.0.2.

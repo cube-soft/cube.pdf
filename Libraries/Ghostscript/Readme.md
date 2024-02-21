@@ -6,7 +6,7 @@ Cube.Pdf.Ghostscript
 [![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
 [![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
-Cube.Pdf.Ghostscript provides the wrapper APIs for the [Ghostscript](https://www.ghostscript.com/) in the .NET Framework 3.5, 4.5, .NET Standard 2.0, or later. Note that the Cube.Pdf.Ghostscript reuqires the gsdll32.dll. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) NuGet package.
+Cube.Pdf.Ghostscript provides the wrapper APIs for the [Ghostscript](https://www.ghostscript.com/) in the .NET Framework 3.5, 4.6, .NET Standard 2.0, or later. Note that the Cube.Pdf.Ghostscript reuqires the gsdll32.dll. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) NuGet package.
 
 ## Usage
 
@@ -53,12 +53,12 @@ converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 When you set values to the properties, Converter inherited classes automatically add the corresponding arguments or PostScript codes to the Ghostscript API.
 The library provides the following variations. All available formats and other options are defined in the [Parameters](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Ghostscript/Sources/Parameters) directory.
 
-* [DocumentConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/DocumentConverter.cs) ... PS/EPS/PDF
-    * [PdfConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/PdfConverter.cs)
-* [ImageConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/ImageConverter.cs) ... PNG/JPEG/BMP/TIFF
-    * [JpegConverter](https://github.com/cube-soft/Cube.Pdf/blob/master/Libraries/Ghostscript/Sources/JpegConverter.cs)
+* [DocumentConverter](https://github.com/cube-soft/cube.pdf/blob/master/Libraries/Ghostscript/Sources/DocumentConverter.cs) ... PS/EPS/PDF
+    * [PdfConverter](https://github.com/cube-soft/cube.pdf/blob/master/Libraries/Ghostscript/Sources/PdfConverter.cs)
+* [ImageConverter](https://github.com/cube-soft/cube.pdf/blob/master/Libraries/Ghostscript/Sources/ImageConverter.cs) ... PNG/JPEG/BMP/TIFF
+    * [JpegConverter](https://github.com/cube-soft/cube.pdf/blob/master/Libraries/Ghostscript/Sources/JpegConverter.cs)
 
-When you need to add some options manually, you create a new instance of the [Argument](https://github.com/cube-soft/Cube.Pdf/tree/master/Libraries/Ghostscript/Sources/Argument.cs) class and add it to the Options property. Constructors of the Argument class are as follows:
+When you need to add some options manually, you create a new instance of the [Argument](https://github.com/cube-soft/cube.pdf/tree/master/Libraries/Ghostscript/Sources/Argument.cs) class and add it to the Options property. Constructors of the Argument class are as follows:
 
 ```cs
 // using Cube.Pdf.Ghostscript;
@@ -80,8 +80,8 @@ public class Argument
 
 ## Contributing
 
-1. Fork [Cube.Pdf](https://github.com/cube-soft/Cube.Pdf/fork) repository.
-2. Create a feature branch from the master branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clobber](https://github.com/cube-soft/Cube.Pdf/blob/master/Rakefile) and copy commands when build errors occur.
+1. Fork [Cube.Pdf](https://github.com/cube-soft/cube.pdf/fork) repository.
+2. Create a feature branch from the master branch (e.g. git checkout -b my-new-feature origin/master). Note that the master branch may refer to some pre-release NuGet packages. Try the [rake clobber](https://github.com/cube-soft/cube.pdf/blob/master/Rakefile) and copy commands when build errors occur.
 3. Commit your changes.
 4. Rebase your local changes to the master branch.
 5. Run the dotnet test command or the Visual Studio (NUnit 3 test adapter) and confirm that it passes.
@@ -90,4 +90,4 @@ public class Argument
 ## License
  
 Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.jp/)
-See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
+See [License.md](https://github.com/cube-soft/cube.pdf/blob/master/License.md) for more information.
