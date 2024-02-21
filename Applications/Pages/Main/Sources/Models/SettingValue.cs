@@ -103,6 +103,23 @@ namespace Cube.Pdf.Pages
             set => Set(value);
         }
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AutoSort
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to sort automatically
+        /// when multiple files are selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [DataMember]
+        public bool AutoSort
+        {
+            get => Get(() => true);
+            set => Set(value);
+        }
+
         #endregion
     }
 }
