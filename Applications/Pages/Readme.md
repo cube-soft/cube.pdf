@@ -69,6 +69,10 @@ Dependencies of the CubePDF Page are as follows.
 
 ## History
 
+* 2024-02-21 version 4.4.0
+    - Improve I/O processing.
+    - Add an option to enable/disable automatic sorting of selected files.
+    - Update iText to 8.0.3.
 * 2023-11-01 version 4.3.2
     - Update iText to 8.0.2.
 * 2023-08-21 version 4.3.1
