@@ -50,17 +50,19 @@ namespace Cube.Pdf.Editor
         /// <param name="callback">Callback function.</param>
         /// <param name="index">Selected index.</param>
         /// <param name="count">Number of pages.</param>
+        /// <param name="settings">User settings.</param>
         /// <param name="context">Synchronization context.</param>
         ///
         /* ----------------------------------------------------------------- */
         public InsertViewModel(Action<int, IEnumerable<FileItem>> callback,
             int index,
             int count,
+            SettingValue settings,
             SynchronizationContext context
-        ) : base(new(index, count, new ContextDispatcher(context, false)), new(), context)
+        ) : base(new(index, count, settings, new ContextDispatcher(context, false)), new(), context)
         {
             Position   = new(Value, Aggregator, context);
-            DragMove   = new((f, t) => Facade.Move(f, t));
+            DragMove   = new(Facade.Move);
             OK.Command = GetOkCommand(callback);
         }
 
