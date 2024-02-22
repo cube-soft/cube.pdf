@@ -296,8 +296,11 @@ namespace Cube.Pdf.Editor
         /// <param name="index">Insertion index.</param>
         ///
         /* ----------------------------------------------------------------- */
-        protected void SendInsert(int index) =>
-            Send(Message.ForInsert(), e => Facade.Insert(index, e.Sort()), false);
+        protected void SendInsert(int index) => Send(
+            Message.ForInsert(),
+            e => Facade.Insert(index, Facade.Folder.Value.AutoSort ? e.Sort() : e),
+            false
+        );
 
         /* ----------------------------------------------------------------- */
         ///
@@ -313,6 +316,7 @@ namespace Cube.Pdf.Editor
             (i, v) => Run(() => Facade.Insert(i + 1, v.Select(e => e.FullName)), false),
             Facade.Value.Images.Selection.First,
             Facade.Value.Count,
+            Facade.Folder.Value,
             Context
         ));
 
