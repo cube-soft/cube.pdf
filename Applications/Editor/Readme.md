@@ -119,6 +119,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2024-03-22 version 2.6.2
+    - Update PDFium to Chromium 123 compatible.
 * 2024-02-22 version 2.6.1
     - Add an option to enable/disable automatic sorting of selected files.
     - Update iText to 8.0.3.
