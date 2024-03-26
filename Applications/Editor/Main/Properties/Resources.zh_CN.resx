@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="FilterAll" xml:space="preserve">
+    <value>所有文件</value>
+  </data>
+	<data name="FilterExtract" xml:space="preserve">
+    <value>支持的文件</value>
+  </data>
+	<data name="FilterInsertable" xml:space="preserve">
+    <value>可插入文件</value>
+  </data>
+	<data name="FilterPdf" xml:space="preserve">
+    <value>PDF 文件</value>
+  </data>
+	<data name="MenuAdd" xml:space="preserve">
+    <value>添加</value>
+  </data>
+	<data name="MenuAllowAccessibility" xml:space="preserve">
+    <value>允许使用内容进行辅助访问</value>
+  </data>
+	<data name="MenuAllowAnnotation" xml:space="preserve">
+    <value>允许创建和编辑注释</value>
+  </data>
+	<data name="MenuAllowAssemble" xml:space="preserve">
+    <value>允许插入和删除页面</value>
+  </data>
+	<data name="MenuAllowCopy" xml:space="preserve">
+    <value>允许复制文本和图像</value>
+  </data>
+	<data name="MenuAllowExtract" xml:space="preserve">
+    <value>允许提取页面</value>
+  </data>
+	<data name="MenuAllowForm" xml:space="preserve">
+    <value>允许填写表单字段</value>
+  </data>
+	<data name="MenuAllowPrint" xml:space="preserve">
+    <value>允许打印</value>
+  </data>
+	<data name="MenuAuthor" xml:space="preserve">
+    <value>作者</value>
+  </data>
+	<data name="MenuBackup" xml:space="preserve">
+    <value>备份</value>
+  </data>
+	<data name="MenuBackupEnabled" xml:space="preserve">
+    <value>启用备份</value>
+  </data>
+	<data name="MenuCancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+	<data name="MenuCheckUpdate" xml:space="preserve">
+    <value>启动时检查更新</value>
+  </data>
+	<data name="MenuClear" xml:space="preserve">
+    <value>清除</value>
+  </data>
+	<data name="MenuClose" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+	<data name="MenuConfirmPassword" xml:space="preserve">
+    <value>确认</value>
+  </data>
+	<data name="MenuCreationTime" xml:space="preserve">
+    <value>创建</value>
+  </data>
+	<data name="MenuCreator" xml:space="preserve">
+    <value>创作者</value>
+  </data>
+	<data name="MenuDestination" xml:space="preserve">
+    <value>保存路径</value>
+  </data>
+	<data name="MenuDetails" xml:space="preserve">
+    <value>详细信息</value>
+  </data>
+	<data name="MenuDown" xml:space="preserve">
+    <value>向下</value>
+  </data>
+	<data name="MenuDpi" xml:space="preserve">
+    <value>分辨率</value>
+  </data>
+	<data name="MenuEdit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+	<data name="MenuEncryption" xml:space="preserve">
+    <value>安全</value>
+  </data>
+	<data name="MenuEncryptionEnabled" xml:space="preserve">
+    <value>使用密码加密 PDF</value>
+  </data>
+	<data name="MenuEncryptionMethod" xml:space="preserve">
+    <value>方法</value>
+  </data>
+	<data name="MenuExit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+	<data name="MenuExtract" xml:space="preserve">
+    <value>提取</value>
+  </data>
+	<data name="MenuExtractAll" xml:space="preserve">
+    <value>所有页面</value>
+  </data>
+	<data name="MenuExtractOthers" xml:space="preserve">
+    <value>使用其他设置提取</value>
+  </data>
+	<data name="MenuExtractRange" xml:space="preserve">
+    <value>指定范围</value>
+  </data>
+	<data name="MenuExtractSelected" xml:space="preserve">
+    <value>所选页面</value>
+  </data>
+	<data name="MenuFile" xml:space="preserve">
+    <value>文件</value>
+  </data>
+	<data name="MenuFilename" xml:space="preserve">
+    <value>文件名</value>
+  </data>
+	<data name="MenuFilesize" xml:space="preserve">
+    <value>文件大小</value>
+  </data>
+	<data name="MenuFiletype" xml:space="preserve">
+    <value>类型</value>
+  </data>
+	<data name="MenuFormat" xml:space="preserve">
+    <value>格式</value>
+  </data>
+	<data name="MenuFrameOnly" xml:space="preserve">
+    <value>仅边框</value>
+  </data>
+	<data name="MenuHelp" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+	<data name="MenuInsert" xml:space="preserve">
+    <value>插入</value>
+  </data>
+	<data name="MenuInsertBack" xml:space="preserve">
+    <value>插入结尾</value>
+  </data>
+	<data name="MenuInsertFront" xml:space="preserve">
+    <value>插入起始</value>
+  </data>
+	<data name="MenuInsertOthers" xml:space="preserve">
+    <value>插入其他位置</value>
+  </data>
+	<data name="MenuInsertPosition" xml:space="preserve">
+    <value>插入位置</value>
+  </data>
+	<data name="MenuKeepOutlines" xml:space="preserve">
+    <value>保留源 PDF 文件的书签</value>
+  </data>
+	<data name="MenuKeywords" xml:space="preserve">
+    <value>关键词</value>
+  </data>
+	<data name="MenuLanguage" xml:space="preserve">
+    <value>语言</value>
+  </data>
+	<data name="MenuLastWriteTime" xml:space="preserve">
+    <value>最近更新</value>
+  </data>
+	<data name="MenuLayout" xml:space="preserve">
+    <value>布局</value>
+  </data>
+	<data name="MenuMetadata" xml:space="preserve">
+    <value>元数据</value>
+  </data>
+	<data name="MenuMoveNext" xml:space="preserve">
+    <value>向前</value>
+  </data>
+	<data name="MenuMovePrevious" xml:space="preserve">
+    <value>返回</value>
+  </data>
+	<data name="MenuOk" xml:space="preserve">
+    <value>确定</value>
+  </data>
+	<data name="MenuOpen" xml:space="preserve">
+    <value>打开</value>
+  </data>
+	<data name="MenuOpenWithPassword" xml:space="preserve">
+    <value>使用密码打开</value>
+  </data>
+	<data name="MenuOperations" xml:space="preserve">
+    <value>操作</value>
+  </data>
+	<data name="MenuOptions" xml:space="preserve">
+    <value>选项</value>
+  </data>
+	<data name="MenuOthers" xml:space="preserve">
+    <value>其它</value>
+  </data>
+	<data name="MenuOwnerPassword" xml:space="preserve">
+    <value>密码</value>
+  </data>
+	<data name="MenuPageCount" xml:space="preserve">
+    <value>页数</value>
+  </data>
+	<data name="MenuPdfVersion" xml:space="preserve">
+    <value>PDF 版本</value>
+  </data>
+	<data name="MenuPositionFirst" xml:space="preserve">
+    <value>开始</value>
+  </data>
+	<data name="MenuPositionLast" xml:space="preserve">
+    <value>结束</value>
+  </data>
+	<data name="MenuPositionSelected" xml:space="preserve">
+    <value>所选位置</value>
+  </data>
+	<data name="MenuPositionSpecified" xml:space="preserve">
+    <value>后面的数字是</value>
+  </data>
+	<data name="MenuPreview" xml:space="preserve">
+    <value>预览</value>
+  </data>
+	<data name="MenuProducer" xml:space="preserve">
+    <value>制作者</value>
+  </data>
+	<data name="MenuRecent" xml:space="preserve">
+    <value>最近的文件</value>
+  </data>
+	<data name="MenuRecentVisible" xml:space="preserve">
+    <value>显示最近使用的文件</value>
+  </data>
+	<data name="MenuRedo" xml:space="preserve">
+    <value>重做</value>
+  </data>
+	<data name="MenuRedraw" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+	<data name="MenuRemove" xml:space="preserve">
+    <value>移除</value>
+  </data>
+	<data name="MenuRemoveOthers" xml:space="preserve">
+    <value>移除其他页面</value>
+  </data>
+	<data name="MenuRotateLeft" xml:space="preserve">
+    <value>列表</value>
+  </data>
+	<data name="MenuRotateRight" xml:space="preserve">
+    <value>右侧</value>
+  </data>
+	<data name="MenuSave" xml:space="preserve">
+    <value>保存</value>
+  </data>
+	<data name="MenuSaveAs" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+	<data name="MenuSaveOptions" xml:space="preserve">
+    <value>保存选项</value>
+  </data>
+	<data name="MenuSelect" xml:space="preserve">
+    <value>选择</value>
+  </data>
+	<data name="MenuSelectAll" xml:space="preserve">
+    <value>全选</value>
+  </data>
+	<data name="MenuSelectClear" xml:space="preserve">
+    <value>取消全选</value>
+  </data>
+	<data name="MenuSelectFlip" xml:space="preserve">
+    <value>反选</value>
+  </data>
+	<data name="MenuSetting" xml:space="preserve">
+    <value>设置</value>
+  </data>
+	<data name="MenuSharePassword" xml:space="preserve">
+    <value>使用所有者密码</value>
+  </data>
+	<data name="MenuShrinkResources" xml:space="preserve">
+    <value>减少重复资源</value>
+  </data>
+	<data name="MenuSplit" xml:space="preserve">
+    <value>每页另存为一个单独的文件</value>
+  </data>
+	<data name="MenuSubject" xml:space="preserve">
+    <value>主题</value>
+  </data>
+	<data name="MenuSummary" xml:space="preserve">
+    <value>摘要</value>
+  </data>
+	<data name="MenuTarget" xml:space="preserve">
+    <value>目标页面</value>
+  </data>
+	<data name="MenuTemp" xml:space="preserve">
+    <value>临时</value>
+  </data>
+	<data name="MenuTitle" xml:space="preserve">
+    <value>标题</value>
+  </data>
+	<data name="MenuUndo" xml:space="preserve">
+    <value>撤销</value>
+  </data>
+	<data name="MenuUp" xml:space="preserve">
+    <value>向上</value>
+  </data>
+	<data name="MenuUserPassword" xml:space="preserve">
+    <value>密码</value>
+  </data>
+	<data name="MenuVersion" xml:space="preserve">
+    <value>版本</value>
+  </data>
+	<data name="MenuViewOneColumn" xml:space="preserve">
+    <value>一列</value>
+  </data>
+	<data name="MenuViewSinglePage" xml:space="preserve">
+    <value>单页</value>
+  </data>
+	<data name="MenuViewTwoColumnLeft" xml:space="preserve">
+    <value>两列（左侧）</value>
+  </data>
+	<data name="MenuViewTwoColumnRight" xml:space="preserve">
+    <value>两列（右侧）</value>
+  </data>
+	<data name="MenuViewTwoPageLeft" xml:space="preserve">
+    <value>两页（左侧）</value>
+  </data>
+	<data name="MenuViewTwoPageRight" xml:space="preserve">
+    <value>两页（右侧）</value>
+  </data>
+	<data name="MenuZoomIn" xml:space="preserve">
+    <value>放大</value>
+  </data>
+	<data name="MenuZoomOut" xml:space="preserve">
+    <value>缩小</value>
+  </data>
+	<data name="MessageLoading" xml:space="preserve">
+    <value>正在加载 {0} ...</value>
+  </data>
+	<data name="MessageMetadataError" xml:space="preserve">
+    <value>获取 PDF 元数据失败。</value>
+  </data>
+	<data name="MessageOpenError" xml:space="preserve">
+    <value>文件不是 PDF 格式或已损坏。</value>
+  </data>
+	<data name="MessageOverwrite" xml:space="preserve">
+    <value>PDF 已修改。 您想覆盖吗？</value>
+  </data>
+	<data name="MessagePage" xml:space="preserve">
+    <value>{0} 页面</value>
+  </data>
+	<data name="MessagePassword" xml:space="preserve">
+    <value>请输入所有者密码以打开和编辑 {0}。</value>
+  </data>
+	<data name="MessageRangeError" xml:space="preserve">
+    <value>无法解析删除范围。</value>
+  </data>
+	<data name="MessageRangeExample" xml:space="preserve">
+    <value>例如：1,2,4-7,9</value>
+  </data>
+	<data name="MessageSaved" xml:space="preserve">
+    <value>另存为 {0}</value>
+  </data>
+	<data name="MessageSaving" xml:space="preserve">
+    <value>正在保存为 {0} ...</value>
+  </data>
+	<data name="MessageSelection" xml:space="preserve">
+    <value>已选择 {0} 页</value>
+  </data>
+	<data name="MessageTotalPage" xml:space="preserve">
+    <value>{0} 页</value>
+  </data>
+	<data name="TitleBackup" xml:space="preserve">
+    <value>选择备份文件夹。</value>
+  </data>
+	<data name="TitleEncryption" xml:space="preserve">
+    <value>安全</value>
+  </data>
+	<data name="TitleExtract" xml:space="preserve">
+    <value>提取详细信息</value>
+  </data>
+	<data name="TitleInsert" xml:space="preserve">
+    <value>插入详细信息</value>
+  </data>
+	<data name="TitleMetadata" xml:space="preserve">
+    <value>PDF 元数据</value>
+  </data>
+	<data name="TitleOpen" xml:space="preserve">
+    <value>打开文件</value>
+  </data>
+	<data name="TitlePassword" xml:space="preserve">
+    <value>输入密码</value>
+  </data>
+	<data name="TitlePreview" xml:space="preserve">
+    <value>{0} ({1}/{2} 页面)</value>
+  </data>
+	<data name="TitleRemove" xml:space="preserve">
+    <value>移除详细信息</value>
+  </data>
+	<data name="TitleSaveAs" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+	<data name="TitleSetting" xml:space="preserve">
+    <value>CubePDF Utility 设置</value>
+  </data>
+	<data name="TitleTemp" xml:space="preserve">
+    <value>选择临时文件夹。 如果不指定临时文件夹，将使用与源文件相同的文件夹。</value>
+  </data>
+	<data name="TooltipExtract" xml:space="preserve">
+    <value>提取所选页面</value>
+  </data>
+	<data name="TooltipInsert" xml:space="preserve">
+    <value>插入到所选位置后面</value>
+  </data>
+	<data name="TooltipMetadata" xml:space="preserve">
+    <value>PDF 文档元数据</value>
+  </data>
+	<data name="TooltipRemove" xml:space="preserve">
+    <value>移除所选页面</value>
+  </data>
+	<data name="TooltipSave" xml:space="preserve">
+    <value>保存</value>
+  </data>
+	<data name="UnitByte" xml:space="preserve">
+    <value>字节</value>
+  </data>
+</root>
