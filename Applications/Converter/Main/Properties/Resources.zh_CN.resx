@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="ErrorDigest" xml:space="preserve">
+    <value>源文件的消息摘要不匹配。</value>
+  </data>
+	<data name="ErrorGhostscript" xml:space="preserve">
+    <value>Ghostscript 错误 ({0:D})</value>
+  </data>
+	<data name="ErrorInvalidChars" xml:space="preserve">
+    <value>路径不能包含以下任何字符</value>
+  </data>
+	<data name="ErrorMergePassword" xml:space="preserve">
+    <value>在“安全”选项卡中设置要合并的 PDF 文件的所有者密码。</value>
+  </data>
+	<data name="ErrorOwnerPassword" xml:space="preserve">
+    <value>所有者密码为空或与确认信息不匹配。 请再次检查您的密码并确认。</value>
+  </data>
+	<data name="ErrorPostProcess" xml:space="preserve">
+    <value>虽然转换已完成，但后处理失败。 检查文件关联设置或用户程序是否正确。</value>
+  </data>
+	<data name="ErrorSource" xml:space="preserve">
+    <value>未指定输入文件。 请检查 CubePDF 是否按照正常程序执行。</value>
+  </data>
+	<data name="ErrorUserPassword" xml:space="preserve">
+    <value>用户密码为空或与确认信息不符。 请检查用户密码或启用“使用所有者密码”复选框。</value>
+  </data>
+	<data name="FilterAll" xml:space="preserve">
+    <value>所有文件</value>
+  </data>
+	<data name="FilterBmp" xml:space="preserve">
+    <value>BMP 文件</value>
+  </data>
+	<data name="FilterEps" xml:space="preserve">
+    <value>EPS 文件</value>
+  </data>
+	<data name="FilterExecutable" xml:space="preserve">
+    <value>可执行文件</value>
+  </data>
+	<data name="FilterJpeg" xml:space="preserve">
+    <value>JPEG 文件</value>
+  </data>
+	<data name="FilterPdf" xml:space="preserve">
+    <value>PDF 文件</value>
+  </data>
+	<data name="FilterPng" xml:space="preserve">
+    <value>PNG 文件</value>
+  </data>
+	<data name="FilterPs" xml:space="preserve">
+    <value>PS 文件</value>
+  </data>
+	<data name="FilterTiff" xml:space="preserve">
+    <value>TIFF 文件</value>
+  </data>
+	<assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+	<data name="Header" type="System.Resources.ResXFileRef, System.Windows.Forms">
+		<value>..\Assets\Header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+	</data>
+	<data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+		<value>..\Assets\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+	</data>
+	<data name="MenuAuto" xml:space="preserve">
+    <value>自动</value>
+  </data>
+	<data name="MenuGrayscale" xml:space="preserve">
+    <value>灰度</value>
+  </data>
+	<data name="MenuLandscape" xml:space="preserve">
+    <value>水平</value>
+  </data>
+	<data name="MenuMergeHead" xml:space="preserve">
+    <value>在开头合并</value>
+  </data>
+	<data name="MenuMergeTail" xml:space="preserve">
+    <value>在最后合并</value>
+  </data>
+	<data name="MenuMonochrome" xml:space="preserve">
+    <value>单色</value>
+  </data>
+	<data name="MenuNone" xml:space="preserve">
+    <value>无</value>
+  </data>
+	<data name="MenuOneColumn" xml:space="preserve">
+    <value>一列</value>
+  </data>
+	<data name="MenuOpen" xml:space="preserve">
+    <value>打开</value>
+  </data>
+	<data name="MenuOpenDirectory" xml:space="preserve">
+    <value>打开目录</value>
+  </data>
+	<data name="MenuOthers" xml:space="preserve">
+    <value>其它</value>
+  </data>
+	<data name="MenuOverwrite" xml:space="preserve">
+    <value>覆盖</value>
+  </data>
+	<data name="MenuPortrait" xml:space="preserve">
+    <value>垂直</value>
+  </data>
+	<data name="MenuRename" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+	<data name="MenuRgb" xml:space="preserve">
+    <value>RGB</value>
+  </data>
+	<data name="MenuSinglePage" xml:space="preserve">
+    <value>单页</value>
+  </data>
+	<data name="MenuTwoColumnLeft" xml:space="preserve">
+    <value>两列（左侧）</value>
+  </data>
+	<data name="MenuTwoColumnRight" xml:space="preserve">
+    <value>两列（右侧）</value>
+  </data>
+	<data name="MenuTwoPageLeft" xml:space="preserve">
+    <value>两页（左侧）</value>
+  </data>
+	<data name="MenuTwoPageRight" xml:space="preserve">
+    <value>两页（右侧）</value>
+  </data>
+	<data name="TitleSelectDestination" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+	<data name="TitleSelectSource" xml:space="preserve">
+    <value>选择源文件</value>
+  </data>
+	<data name="TitleSelectUserProgram" xml:space="preserve">
+    <value>选择用户程序</value>
+  </data>
+	<data name="WarnExists" xml:space="preserve">
+    <value>{0} 已存在。</value>
+  </data>
+	<data name="WarnMergeHead" xml:space="preserve">
+    <value>您想在现有文件的开头合并吗？</value>
+  </data>
+	<data name="WarnMergeTail" xml:space="preserve">
+    <value>您想在现有文件的末尾合并吗？</value>
+  </data>
+	<data name="WarnOverwrite" xml:space="preserve">
+    <value>您想覆盖该文件吗？</value>
+  </data>
+	<data name="WarnSaveSettings" xml:space="preserve">
+    <value>在标题、作者、主题或关键字字段中输入一些值。 您想保存设置吗？</value>
+  </data>
+</root>
