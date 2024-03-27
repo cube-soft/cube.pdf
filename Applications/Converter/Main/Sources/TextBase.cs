@@ -45,10 +45,11 @@ abstract class TextBase : LocalizableText
     /* --------------------------------------------------------------------- */
     private static TextGroup Make(Language src) => src switch
     {
-        Language.Auto     => Make(Locale.GetDefaultLanguage()),
-        Language.English  => EnglishText.Get(),
-        Language.German   => GermanText.Get(),
-        Language.Japanese => JapaneseText.Get(),
+        Language.Auto              => Make(Locale.GetDefaultLanguage()),
+        Language.English           => EnglishText.Get(),
+        Language.German            => GermanText.Get(),
+        Language.Japanese          => JapaneseText.Get(),
+        Language.SimplifiedChinese => SimplifiedChineseText.Get(),
         _ => default,
     };
 
