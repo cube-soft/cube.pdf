@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using Cube.Forms;
+using Cube.Globalization;
 using Cube.Web.Extensions;
 
 namespace Cube.Pdf.Pages
@@ -144,7 +145,7 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         private static Uri MakeUri(string url) =>
-            new Uri(url).With("lang", Locale.Language.ToCultureInfo().Name.ToLowerInvariant());
+            new Uri(url).With("lang", Locale.GetCurrentLanguage().ToCultureInfo().Name.ToLowerInvariant());
 
         #endregion
     }

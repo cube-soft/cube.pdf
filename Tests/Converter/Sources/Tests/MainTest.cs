@@ -77,15 +77,15 @@ class MainTest : MockFixture
         using var vm = new MainViewModel(ss);
         using var dc = new DisposableContainer();
 
-        dc.Add(new PropertyChangedCounter(vm, vm.Settings, vm.Metadata, vm.Encryption));
+        dc.Add(new PropertyChangedCounter(vm, vm.Settings, vm.Metadata, vm.Security));
         dc.Add(new MockDialogBehavior(vm));
         dc.Add(new MockSaveFileBehavior(dest, vm));
         dc.Add(new MockFailBehavior<OpenFileMessage>(vm));
         dc.Add(new MockFailBehavior<ProcessMessage>(vm));
 
-        Set(vm.Settings,   value);
-        Set(vm.Metadata,   value.Metadata);
-        Set(vm.Encryption, value.Encryption);
+        Set(vm.Settings, value);
+        Set(vm.Metadata, value.Metadata);
+        Set(vm.Security, value.Encryption);
 
         vm.SelectDestination();
 
@@ -173,7 +173,7 @@ class MainTest : MockFixture
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private void Set(EncryptionViewModel src, Encryption value)
+    private void Set(SecurityViewModel src, Encryption value)
     {
         src.Enabled            = value.Enabled;
         src.OwnerPassword      = value.OwnerPassword;

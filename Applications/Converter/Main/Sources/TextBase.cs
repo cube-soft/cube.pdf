@@ -18,74 +18,68 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter;
 
-using System.Runtime.Serialization;
-using Cube.DataContract;
+using System.Threading;
 using Cube.Globalization;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// SettingValueEx
+/// TextBase
 ///
 /// <summary>
-/// Represents user settings not directly related to the main conversion
-/// process.
+/// Provides functionality to switch texts.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-[DataContract]
-public class SettingValueEx : SerializableBase
+abstract class TextBase : LocalizableText
 {
-    #region Properties
+    #region Methods
 
     /* --------------------------------------------------------------------- */
     ///
-    /// SourceVisible
+    /// Make
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether to display the
-    /// path of the source file.
+    /// Gets the text group from the specified Language value.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [DataMember]
-    public bool SourceVisible
+    private static TextGroup Make(Language src) => src switch
     {
-        get => Get(() => false);
-        set => Set(value);
-    }
+        Language.Auto     => Make(Locale.GetDefaultLanguage()),
+        Language.English  => EnglishText.Get(),
+        Language.German   => GermanText.Get(),
+        Language.Japanese => JapaneseText.Get(),
+        _ => default,
+    };
 
     /* --------------------------------------------------------------------- */
     ///
-    /// ExplicitDirectory
+    /// Text
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether to set a value to the
-    /// InitialDirectory property explicitly when showing a dialog
-    /// that selects the file or directory name.
+    /// Initializes a new instance of the Text class.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [DataMember]
-    public bool ExplicitDirectory
-    {
-        get => Get(() => false);
-        set => Set(value);
-    }
+    protected TextBase() : base(Make, EnglishText.Get()) { }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Language
+    /// OnReset
     ///
     /// <summary>
-    /// Gets or sets the displayed language.
+    /// Occurs when the Reset method is invoked.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [DataMember]
-    public Language Language
+    protected override void OnReset(Language src)
     {
-        get => Get(() => Language.Auto);
-        set => Set(value);
+        base.OnReset(src);
+
+        var ci = src.ToCultureInfo();
+        Thread.CurrentThread.CurrentCulture = ci;
+        Thread.CurrentThread.CurrentUICulture = ci;
+        Properties.Resources.Culture = ci;
     }
 
     #endregion

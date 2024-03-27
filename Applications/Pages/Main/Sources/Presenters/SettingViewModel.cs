@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Threading;
+using Cube.Globalization;
 
 namespace Cube.Pdf.Pages
 {

@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
+using Cube.Globalization;
 using Cube.Reflection.Extensions;
 using Cube.Xui;
 
@@ -221,10 +222,10 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IEnumerable<Language> Languages { get; } = new[]
         {
-            Cube.Language.Auto,
-            Cube.Language.English,
-            Cube.Language.German,
-            Cube.Language.Japanese,
+            Globalization.Language.Auto,
+            Globalization.Language.English,
+            Globalization.Language.German,
+            Globalization.Language.Japanese,
         };
 
         /* ----------------------------------------------------------------- */

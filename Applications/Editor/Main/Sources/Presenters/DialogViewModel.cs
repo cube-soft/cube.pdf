@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Threading;
+using Cube.Globalization;
 using Cube.Xui;
 
 namespace Cube.Pdf.Editor

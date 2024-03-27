@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Threading;
 using System.Windows.Forms;
+using Cube.Globalization;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Converter.Tests;
@@ -57,10 +58,10 @@ class ViewTest
         view.Show();
 
         Assert.That(view.Busy, Is.False);
-        Assert.That(Locale.Language, Is.EqualTo(Language.Auto));
-        Assert.That(view.Text, Does.StartWith("WindowTest - CubePDF 3.4.1 ("));
-        Locale.Set(Language.Japanese);
-        Assert.That(view.Text, Does.StartWith("WindowTest - CubePDF 3.4.1 ("));
+        Assert.That(Locale.GetCurrentLanguage(), Is.EqualTo(Language.Auto));
+        Assert.That(view.Text, Does.StartWith("WindowTest - CubePDF 3.4.0 ("));
+        Locale.Reset(Language.Japanese);
+        Assert.That(view.Text, Does.StartWith("WindowTest - CubePDF 3.4.0 ("));
 
         view.Close();
     }
