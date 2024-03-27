@@ -19,6 +19,7 @@
 namespace Cube.Pdf.Converter;
 
 using System.Runtime.Serialization;
+using Cube.Globalization;
 using Cube.Pdf.Ghostscript;
 
 /* ------------------------------------------------------------------------- */

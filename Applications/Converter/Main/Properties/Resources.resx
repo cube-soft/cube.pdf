@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -58,146 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorDigest" xml:space="preserve">
-    <value>Message digest of the source file does not match.</value>
-  </data>
-  <data name="ErrorGhostscript" xml:space="preserve">
-    <value>Ghostscript error ({0:D})</value>
-  </data>
-  <data name="ErrorInvalidChars" xml:space="preserve">
-    <value>Path cannot contain any of the following characters</value>
-  </data>
-  <data name="ErrorMergePassword" xml:space="preserve">
-    <value>Set the owner password of the PDF file to be merged in the Security tab.</value>
-  </data>
-  <data name="ErrorOwnerPassword" xml:space="preserve">
-    <value>Owner password is empty or does not match the confirmation. Please check your password and confirmation again.</value>
-  </data>
-  <data name="ErrorPostProcess" xml:space="preserve">
-    <value>Post-process failed, although the conversion was completed. Check the file association settings or the user program is correct.</value>
-  </data>
-  <data name="ErrorSource" xml:space="preserve">
-    <value>Input file not specified. Please check if CubePDF was executed through the normal procedure.</value>
-  </data>
-  <data name="ErrorUserPassword" xml:space="preserve">
-    <value>User password is empty or does not match the confirmation. Please check the user password or enable the "Use owner password" checkbox.</value>
-  </data>
-  <data name="FilterAll" xml:space="preserve">
-    <value>All files</value>
-  </data>
-  <data name="FilterBmp" xml:space="preserve">
-    <value>BMP files</value>
-  </data>
-  <data name="FilterEps" xml:space="preserve">
-    <value>EPS files</value>
-  </data>
-  <data name="FilterExecutable" xml:space="preserve">
-    <value>Executable files</value>
-  </data>
-  <data name="FilterJpeg" xml:space="preserve">
-    <value>JPEG files</value>
-  </data>
-  <data name="FilterPdf" xml:space="preserve">
-    <value>PDF files</value>
-  </data>
-  <data name="FilterPng" xml:space="preserve">
-    <value>PNG files</value>
-  </data>
-  <data name="FilterPs" xml:space="preserve">
-    <value>PS files</value>
-  </data>
-  <data name="FilterTiff" xml:space="preserve">
-    <value>TIFF files</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Header" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Header.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MenuAuto" xml:space="preserve">
-    <value>Auto</value>
-  </data>
-  <data name="MenuGrayscale" xml:space="preserve">
-    <value>Grayscale</value>
-  </data>
-  <data name="MenuLandscape" xml:space="preserve">
-    <value>Landscape</value>
-  </data>
-  <data name="MenuMergeHead" xml:space="preserve">
-    <value>Merge at the beginning</value>
-  </data>
-  <data name="MenuMergeTail" xml:space="preserve">
-    <value>Merge at the end</value>
-  </data>
-  <data name="MenuMonochrome" xml:space="preserve">
-    <value>Monochrome</value>
-  </data>
-  <data name="MenuNone" xml:space="preserve">
-    <value>None</value>
-  </data>
-  <data name="MenuOneColumn" xml:space="preserve">
-    <value>One column</value>
-  </data>
-  <data name="MenuOpen" xml:space="preserve">
-    <value>Open</value>
-  </data>
-  <data name="MenuOpenDirectory" xml:space="preserve">
-    <value>Open directory</value>
-  </data>
-  <data name="MenuOthers" xml:space="preserve">
-    <value>Others</value>
-  </data>
-  <data name="MenuOverwrite" xml:space="preserve">
-    <value>Overwrite</value>
-  </data>
-  <data name="MenuPortrait" xml:space="preserve">
-    <value>Portrait</value>
-  </data>
-  <data name="MenuRename" xml:space="preserve">
-    <value>Rename</value>
-  </data>
-  <data name="MenuRgb" xml:space="preserve">
-    <value>RGB</value>
-  </data>
-  <data name="MenuSinglePage" xml:space="preserve">
-    <value>Single page</value>
-  </data>
-  <data name="MenuTwoColumnLeft" xml:space="preserve">
-    <value>Two column (left)</value>
-  </data>
-  <data name="MenuTwoColumnRight" xml:space="preserve">
-    <value>Two column (right)</value>
-  </data>
-  <data name="MenuTwoPageLeft" xml:space="preserve">
-    <value>Two page (left)</value>
-  </data>
-  <data name="MenuTwoPageRight" xml:space="preserve">
-    <value>Two page (right)</value>
-  </data>
-  <data name="TitleSelectDestination" xml:space="preserve">
-    <value>Save as</value>
-  </data>
-  <data name="TitleSelectSource" xml:space="preserve">
-    <value>Select source file</value>
-  </data>
-  <data name="TitleSelectUserProgram" xml:space="preserve">
-    <value>Select user program</value>
-  </data>
-  <data name="WarnExists" xml:space="preserve">
-    <value>{0} already exists.</value>
-  </data>
-  <data name="WarnMergeHead" xml:space="preserve">
-    <value>Do you want to merge at the beginning of the existing file?</value>
-  </data>
-  <data name="WarnMergeTail" xml:space="preserve">
-    <value>Do you want to merge at the end of the existing file?</value>
-  </data>
-  <data name="WarnOverwrite" xml:space="preserve">
-    <value>Do you want to overwrite the file?</value>
-  </data>
-  <data name="WarnSaveSettings" xml:space="preserve">
-    <value>Some value is entered in the Title, Author, Subject, or Keywords field. Do you want to save the settings?</value>
   </data>
 </root>

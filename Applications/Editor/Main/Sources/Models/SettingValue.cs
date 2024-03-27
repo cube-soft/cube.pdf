@@ -22,6 +22,7 @@ using System;
 using System.Runtime.Serialization;
 using Cube.DataContract;
 using Cube.FileSystem;
+using Cube.Globalization;
 
 /* ------------------------------------------------------------------------- */
 ///

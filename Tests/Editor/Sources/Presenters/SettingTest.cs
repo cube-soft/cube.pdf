@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System.Linq;
+using Cube.Globalization;
 using Cube.Xui.Commands.Extensions;
 using NUnit.Framework;
 

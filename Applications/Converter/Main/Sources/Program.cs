@@ -23,6 +23,7 @@ using System.Windows.Forms;
 using Cube.Collections;
 using Cube.Collections.Extensions;
 using Cube.DataContract;
+using Cube.Globalization;
 using Cube.Pdf.Converter.Extensions;
 
 /* ------------------------------------------------------------------------- */
@@ -101,6 +102,7 @@ static class Program
     /* --------------------------------------------------------------------- */
     private static void Show(SettingFolder src)
     {
+        Locale.Subscribe(Surface.Texts);
         var view = new MainWindow();
         view.Bind(new MainViewModel(src));
         Application.Run(view);

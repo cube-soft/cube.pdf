@@ -14,7 +14,6 @@
         <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
-        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
@@ -24,7 +23,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Editor\Main\Cube.Pdf.Editor.csproj" />
-        <PackageReference Include="Cube.Private.Tests" Version="8.6.1" />
+        <PackageReference Include="Cube.Private.Tests" Version="9.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
         <PackageReference Include="NUnit3TestAdapter" Version="*" />
         <PackageReference Include="Appveyor.TestLogger" Version="*" />

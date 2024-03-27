@@ -163,15 +163,15 @@ sealed class ErrorTestCase : TestCaseBase<Func<MainViewModel, Task>>
 
         using var dc = vm.Subscribe<DialogMessage>(e => msg = e);
 
-        vm.Encryption.Enabled       = true;
-        vm.Encryption.OwnerPassword = name;
+        vm.Security.Enabled       = true;
+        vm.Security.OwnerPassword = name;
         vm.Invoke();
 
         Assert.That(msg, Is.Not.Null);
         Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
 
         msg = default;
-        vm.Encryption.OwnerConfirm = "dummy";
+        vm.Security.OwnerConfirm = "dummy";
         vm.Invoke();
 
         Assert.That(msg, Is.Not.Null);
@@ -198,19 +198,19 @@ sealed class ErrorTestCase : TestCaseBase<Func<MainViewModel, Task>>
 
         using var dc = vm.Subscribe<DialogMessage>(e => msg = e);
 
-        vm.Encryption.Enabled          = true;
-        vm.Encryption.OwnerPassword    = "owner";
-        vm.Encryption.OwnerConfirm     = "owner";
-        vm.Encryption.OpenWithPassword = true;
-        vm.Encryption.SharePassword    = false;
-        vm.Encryption.UserPassword     = name;
+        vm.Security.Enabled          = true;
+        vm.Security.OwnerPassword    = "owner";
+        vm.Security.OwnerConfirm     = "owner";
+        vm.Security.OpenWithPassword = true;
+        vm.Security.SharePassword    = false;
+        vm.Security.UserPassword     = name;
         vm.Invoke();
 
         Assert.That(msg, Is.Not.Null);
         Assert.That(msg.Icon, Is.EqualTo(DialogIcon.Error), msg.Text);
 
         msg = default;
-        vm.Encryption.UserConfirm = "dummy";
+        vm.Security.UserConfirm = "dummy";
         vm.Invoke();
 
         Assert.That(msg, Is.Not.Null);

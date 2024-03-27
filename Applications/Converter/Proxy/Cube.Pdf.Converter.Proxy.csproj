@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>8.7.1</Version>
+        <Version>8.5.4</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubeProxy</Product>
@@ -16,7 +16,6 @@
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
         <ApplicationIcon>App.ico</ApplicationIcon>
         <ApplicationManifest>App.manifest</ApplicationManifest>
@@ -27,8 +26,8 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cube.Core" Version="8.6.1" />
-        <PackageReference Include="Cube.Logging.NLog" Version="8.6.1" />
+        <PackageReference Include="Cube.Core" Version="9.0.0" />
+        <PackageReference Include="Cube.Logging.NLog" Version="9.0.0" />
     </ItemGroup>
     <ItemGroup>
         <None Include="App.*" />

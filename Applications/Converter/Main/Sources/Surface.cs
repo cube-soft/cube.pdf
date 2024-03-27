@@ -22,20 +22,32 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.Forms;
+using Cube.Globalization;
 using Cube.Pdf.Ghostscript;
 using Cube.Web.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// Resource
+/// Surface
 ///
 /// <summary>
 /// Provides resources for display.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public static class Resource
+public static class Surface
 {
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Texts
+    ///
+    /// <summary>
+    /// Get texts for UI.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    internal static Text Texts { get; } = new();
+
     #region ComboListSource
 
     /* --------------------------------------------------------------------- */
@@ -109,10 +121,10 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static ComboListSource<SaveOption> SaveOptions => new()
     {
-        { Properties.Resources.MenuOverwrite, SaveOption.Overwrite },
-        { Properties.Resources.MenuMergeHead, SaveOption.MergeHead },
-        { Properties.Resources.MenuMergeTail, SaveOption.MergeTail },
-        { Properties.Resources.MenuRename,    SaveOption.Rename    },
+        { Texts.General_Overwrite, SaveOption.Overwrite },
+        { Texts.General_MergeHead, SaveOption.MergeHead },
+        { Texts.General_MergeTail, SaveOption.MergeTail },
+        { Texts.General_Rename,    SaveOption.Rename    },
     };
 
     /* --------------------------------------------------------------------- */
@@ -127,12 +139,12 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static ComboListSource<ViewerOption> ViewerOptions => new()
     {
-        { Properties.Resources.MenuSinglePage,     ViewerOption.SinglePage     },
-        { Properties.Resources.MenuOneColumn,      ViewerOption.OneColumn      },
-        { Properties.Resources.MenuTwoPageLeft,    ViewerOption.TwoPageLeft    },
-        { Properties.Resources.MenuTwoPageRight,   ViewerOption.TwoPageRight   },
-        { Properties.Resources.MenuTwoColumnLeft,  ViewerOption.TwoColumnLeft  },
-        { Properties.Resources.MenuTwoColumnRight, ViewerOption.TwoColumnRight },
+        { Texts.Metadata_SinglePage,     ViewerOption.SinglePage     },
+        { Texts.Metadata_OneColumn,      ViewerOption.OneColumn      },
+        { Texts.Metadata_TwoPageLeft,    ViewerOption.TwoPageLeft    },
+        { Texts.Metadata_TwoPageRight,   ViewerOption.TwoPageRight   },
+        { Texts.Metadata_TwoColumnLeft,  ViewerOption.TwoColumnLeft  },
+        { Texts.Metadata_TwoColumnRight, ViewerOption.TwoColumnRight },
     };
 
     /* --------------------------------------------------------------------- */
@@ -147,10 +159,10 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static ComboListSource<PostProcess> PostProcesses => new()
     {
-        { Properties.Resources.MenuOpen,          PostProcess.Open          },
-        { Properties.Resources.MenuOpenDirectory, PostProcess.OpenDirectory },
-        { Properties.Resources.MenuNone,          PostProcess.None          },
-        { Properties.Resources.MenuOthers,        PostProcess.Others        },
+        { Texts.General_Open,          PostProcess.Open          },
+        { Texts.General_OpenDirectory, PostProcess.OpenDirectory },
+        { Texts.General_None,          PostProcess.None          },
+        { Texts.General_UserProgram,   PostProcess.Others        },
     };
 
     /* --------------------------------------------------------------------- */
@@ -165,9 +177,9 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static ComboListSource<Orientation> Orientations => new()
     {
-        { Properties.Resources.MenuPortrait,  Orientation.Portrait  },
-        { Properties.Resources.MenuLandscape, Orientation.Landscape },
-        { Properties.Resources.MenuAuto,      Orientation.Auto      },
+        { Texts.General_Portrait,  Orientation.Portrait  },
+        { Texts.General_Landscape, Orientation.Landscape },
+        { Texts.General_Auto,      Orientation.Auto      },
     };
 
     /* --------------------------------------------------------------------- */
@@ -182,10 +194,10 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static ComboListSource<ColorMode> ColorModes => new()
     {
-        { Properties.Resources.MenuAuto,       ColorMode.SameAsSource },
-        { Properties.Resources.MenuRgb,        ColorMode.Rgb          },
-        { Properties.Resources.MenuGrayscale,  ColorMode.Grayscale    },
-        { Properties.Resources.MenuMonochrome, ColorMode.Monochrome   },
+        { Texts.General_Auto,       ColorMode.SameAsSource },
+        { Texts.General_Rgb,        ColorMode.Rgb          },
+        { Texts.General_Grayscale,  ColorMode.Grayscale    },
+        { Texts.General_Monochrome, ColorMode.Monochrome   },
     };
 
     #endregion
@@ -207,10 +219,10 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static IList<FileDialogFilter> GetSourceFilters(this ExtensionList src) => new FileDialogFilter[]
     {
-        new(Properties.Resources.FilterPs,  src.GetCandidates(Format.Ps ).ToArray()),
-        new(Properties.Resources.FilterEps, src.GetCandidates(Format.Eps).ToArray()),
-        new(Properties.Resources.FilterPdf, src.GetCandidates(Format.Pdf).ToArray()),
-        new(Properties.Resources.FilterAll, ".*"),
+        new(Texts.Filter_Ps,  src.GetCandidates(Format.Ps ).ToArray()),
+        new(Texts.Filter_Eps, src.GetCandidates(Format.Eps).ToArray()),
+        new(Texts.Filter_Pdf, src.GetCandidates(Format.Pdf).ToArray()),
+        new(Texts.Filter_All, ".*"),
     };
 
     /* --------------------------------------------------------------------- */
@@ -228,13 +240,13 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static IList<FileDialogFilter> GetDestinationFilters(this ExtensionList src) => new FileDialogFilter[]
     {
-        new(Properties.Resources.FilterPdf,  src.GetCandidates(Format.Pdf ).ToArray()),
-        new(Properties.Resources.FilterPs,   src.GetCandidates(Format.Ps  ).ToArray()),
-        new(Properties.Resources.FilterEps,  src.GetCandidates(Format.Eps ).ToArray()),
-        new(Properties.Resources.FilterPng,  src.GetCandidates(Format.Png ).ToArray()),
-        new(Properties.Resources.FilterJpeg, src.GetCandidates(Format.Jpeg).ToArray()),
-        new(Properties.Resources.FilterBmp,  src.GetCandidates(Format.Bmp ).ToArray()),
-        new(Properties.Resources.FilterTiff, src.GetCandidates(Format.Tiff).ToArray()),
+        new(Texts.Filter_Pdf,  src.GetCandidates(Format.Pdf ).ToArray()),
+        new(Texts.Filter_Ps,   src.GetCandidates(Format.Ps  ).ToArray()),
+        new(Texts.Filter_Eps,  src.GetCandidates(Format.Eps ).ToArray()),
+        new(Texts.Filter_Png,  src.GetCandidates(Format.Png ).ToArray()),
+        new(Texts.Filter_Jpeg, src.GetCandidates(Format.Jpeg).ToArray()),
+        new(Texts.Filter_Bmp,  src.GetCandidates(Format.Bmp ).ToArray()),
+        new(Texts.Filter_Tiff, src.GetCandidates(Format.Tiff).ToArray()),
     };
 
     /* --------------------------------------------------------------------- */
@@ -252,8 +264,8 @@ public static class Resource
     /* --------------------------------------------------------------------- */
     public static IList<FileDialogFilter> GetProgramFilters(this ExtensionList src) => new FileDialogFilter[]
     {
-        new(Properties.Resources.FilterExecutable, ".exe", ".bat"),
-        new(Properties.Resources.FilterAll, ".*"),
+        new(Texts.Filter_Exe, ".exe", ".bat"),
+        new(Texts.Filter_All, ".*"),
     };
 
     #endregion
@@ -292,7 +304,7 @@ public static class Resource
     ///
     /* --------------------------------------------------------------------- */
     private static Uri MakeUri(string src) =>
-        new Uri(src).With("lang", Locale.Language.ToCultureInfo().Name.ToLowerInvariant());
+        new Uri(src).With("lang", Locale.GetCurrentLanguage().ToCultureInfo().Name.ToLowerInvariant());
 
     #endregion
 }

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Globalization;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests
@@ -56,10 +57,10 @@ namespace Cube.Pdf.Editor.Tests
             Assert.That(dest.LargeIcon, Is.EqualTo($"pack://application:,,,/Assets/Large/{name}.png"));
             Assert.That(dest.SmallIcon, Is.EqualTo($"pack://application:,,,/Assets/Small/{name}.png"));
 
-            Locale.Set(Language.French);
+            Locale.Reset(Language.French);
             Assert.That(dest.Text,      Is.EqualTo(text));
             Assert.That(dest.Tooltip,   Is.EqualTo(text));
-            Locale.Set(Language.Japanese);
+            Locale.Reset(Language.Japanese);
         }
 
         #endregion

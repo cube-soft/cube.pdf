@@ -22,6 +22,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Cube.Globalization;
 using Cube.Observable.Extensions;
 
 namespace Cube.Pdf.Pages
@@ -71,7 +72,7 @@ namespace Cube.Pdf.Pages
         public MainViewModel(SettingFolder src, IEnumerable<string> args, SynchronizationContext context) :
             base(new(src), new(), context)
         {
-            Locale.Set(src.Value.Language);
+            Locale.Reset(src.Value.Language);
 
             Arguments = args;
             Files = new() { DataSource = Facade.Files };
@@ -80,7 +81,7 @@ namespace Cube.Pdf.Pages
             Assets.Add(Facade.Forward(this));
             Assets.Add(ObserveCollection());
             Assets.Add(src.Subscribe(e => {
-                if (e == nameof(src.Value.Language)) Locale.Set(src.Value.Language);
+                if (e == nameof(src.Value.Language)) Locale.Reset(src.Value.Language);
             }));
         }
 

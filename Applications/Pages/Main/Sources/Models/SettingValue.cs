@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System.Runtime.Serialization;
 using Cube.DataContract;
+using Cube.Globalization;
 
 namespace Cube.Pdf.Pages
 {
