@@ -18,10 +18,8 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Editor;
 
-using System;
 using System.Runtime.Serialization;
 using Cube.DataContract;
-using Cube.FileSystem;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -231,10 +229,7 @@ public sealed class SettingValue : SerializableBase
     [DataMember]
     public string Backup
     {
-        get => Get(() => Io.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "CubeSoft", "CubePdfUtility2", "Backup"
-        ));
+        get => Get(Editor.Backup.GetDefaultDirectory);
         set => Set(value);
     }
 

@@ -59,6 +59,24 @@ public sealed class Backup
 
     /* --------------------------------------------------------------------- */
     ///
+    /// GetDefaultRootDirectory
+    ///
+    /// <summary>
+    /// Gets the path of the default backup root directory.
+    /// </summary>
+    ///
+    /// <returns>Path of the default backup root directory.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static string GetDefaultRootDirectory() => Io.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "CubeSoft",
+        "CubePdfUtility2",
+        "Backup"
+    );
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// Invoke
     ///
     /// <summary>
