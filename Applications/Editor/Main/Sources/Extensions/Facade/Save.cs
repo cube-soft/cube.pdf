@@ -68,6 +68,7 @@ namespace Cube.Pdf.Editor
             dest,
             e => { src.Backup.Invoke(e); src.Cache?.Clear(); },
             e => {
+                src.Backup.Cleanup();
                 if (reopen) src.Reload(e.FullName);
                 src.Value.SetMessage(Properties.Resources.MessageSaved, e.FullName);
             }

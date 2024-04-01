@@ -90,8 +90,8 @@ namespace Cube.Pdf.Editor
         {
             if (!_settings.Value.BackupEnabled) return;
 
-            var src = Io.GetDirectories(_settings.Value.Backup);
-            var n   = src.Count() - _settings.Value.BackupDays;
+            var src = Io.GetDirectories(_settings.Value.Backup).ToList();
+            var n   = src.Count - _settings.Value.BackupDays;
 
             if (n <= 0) return;
             foreach (var f in src.OrderBy(e => e).Take(n)) Logger.Try(() => Io.Delete(f));
