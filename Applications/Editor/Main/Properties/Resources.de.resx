@@ -382,6 +382,9 @@
   <data name="MenuZoomOut" xml:space="preserve">
     <value>Herauszoomen</value>
   </data>
+  <data name="MessageBackupError" xml:space="preserve">
+    <value>Backup-Prozess fehlgeschlagen.</value>
+  </data>
   <data name="MessageLoading" xml:space="preserve">
     <value>Geladen wird {0} ...</value>
   </data>

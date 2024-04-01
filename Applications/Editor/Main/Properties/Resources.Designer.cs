@@ -1033,6 +1033,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Backup process failed..
+        /// </summary>
+        internal static string MessageBackupError {
+            get {
+                return ResourceManager.GetString("MessageBackupError", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Loading {0} ....
         /// </summary>
         internal static string MessageLoading {

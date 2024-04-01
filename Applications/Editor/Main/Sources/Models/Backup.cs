@@ -16,53 +16,55 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Editor;
+
 using System;
 using System.Linq;
 using Cube.FileSystem;
 
-namespace Cube.Pdf.Editor
+/* ------------------------------------------------------------------------- */
+///
+/// Backup
+///
+/// <summary>
+/// Provides functionality to backup files.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public sealed class Backup
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
-    /// Backup
+    /// DirectoryMonitor
     ///
     /// <summary>
-    /// Provides functionality to backup files.
+    /// Initializes a new instance of the Backup class with the specified
+    /// arguments.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class Backup
+    public Backup(SettingFolder settings) => _settings = settings;
+
+    #endregion
+
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Invoke
+    ///
+    /// <summary>
+    /// Copies the specified file to the backup directory.
+    /// </summary>
+    ///
+    /// <param name="src">Source file.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public void Invoke(Entity src)
     {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DirectoryMonitor
-        ///
-        /// <summary>
-        /// Initializes a new instance of the Backup class with the
-        /// specified arguments.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Backup(SettingFolder settings) => _settings = settings;
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Invoke
-        ///
-        /// <summary>
-        /// Copies the specified file to the backup directory.
-        /// </summary>
-        ///
-        /// <param name="src">Source file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Invoke(Entity src)
+        try
         {
             if (!_settings.Value.BackupEnabled || !src.Exists) return;
 
@@ -71,36 +73,41 @@ namespace Cube.Pdf.Editor
 
             if (!Io.Exists(dest)) Io.Copy(src.FullName, dest, false);
         }
+        catch (Exception err) { throw new BackupException(err); }
+    }
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Cleanup
-        ///
-        /// <summary>
-        /// Deletes expired files.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// Up to the number of directories equal to the number of days
-        /// retained will be retained without deleting them.
-        /// </remarks>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Cleanup()
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Cleanup
+    ///
+    /// <summary>
+    /// Deletes expired files.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// Up to the number of directories equal to the number of days
+    /// retained will be retained without deleting them.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public void Cleanup()
+    {
+        try
         {
             if (!_settings.Value.BackupEnabled || !_settings.Value.BackupAutoDelete) return;
 
             var src = Io.GetDirectories(_settings.Value.Backup).ToList();
-            var n   = src.Count - _settings.Value.BackupDays;
+            var n = src.Count - _settings.Value.BackupDays;
 
             if (n <= 0) return;
-            foreach (var f in src.OrderBy(e => e).Take(n)) Logger.Try(() => Io.Delete(f));
+            foreach (var f in src.OrderBy(e => e).Take(n)) Io.Delete(f);
         }
-
-        #endregion
-
-        #region Fields
-        private readonly SettingFolder _settings;
-        #endregion
+        catch (Exception err) { throw new BackupException(err); }
     }
+
+    #endregion
+
+    #region Fields
+    private readonly SettingFolder _settings;
+    #endregion
 }

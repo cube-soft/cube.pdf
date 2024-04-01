@@ -379,6 +379,9 @@
   <data name="MenuZoomOut" xml:space="preserve">
     <value>縮小</value>
   </data>
+  <data name="MessageBackupError" xml:space="preserve">
+    <value>バックアップ処理が失敗しました。</value>
+  </data>
   <data name="MessageLoading" xml:space="preserve">
     <value>{0} を開いています ...</value>
   </data>
