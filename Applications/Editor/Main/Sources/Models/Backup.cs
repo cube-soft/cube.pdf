@@ -21,6 +21,7 @@ namespace Cube.Pdf.Editor;
 using System;
 using System.Linq;
 using Cube.FileSystem;
+using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -45,7 +46,12 @@ public sealed class Backup
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public Backup(SettingFolder settings) => _settings = settings;
+    public Backup(SettingFolder settings)
+    {
+        _settings = settings;
+        var v = _settings.Value;
+        Logger.Debug($"[Backup] Root:{v.Backup.Quote()}, Enable:{v.BackupEnabled}, Delete:{v.BackupAutoDelete}");
+    }
 
     #endregion
 
@@ -71,7 +77,10 @@ public sealed class Backup
             var date = DateTime.Today.ToString("yyyyMMdd");
             var dest = Io.Combine(_settings.Value.Backup, date, src.Name);
 
-            if (!Io.Exists(dest)) Io.Copy(src.FullName, dest, false);
+            if (Io.Exists(dest)) return;
+
+            Logger.Debug($"[Backup] {dest}");
+            Io.Copy(src.FullName, dest, false);
         }
         catch (Exception err) { throw new BackupException(err); }
     }
@@ -97,12 +106,44 @@ public sealed class Backup
             if (!_settings.Value.BackupEnabled || !_settings.Value.BackupAutoDelete) return;
 
             var src = Io.GetDirectories(_settings.Value.Backup).ToList();
-            var n = src.Count - _settings.Value.BackupDays;
+            var cvt = src.Where(IsTarget).ToList();
+            if (src.Count != cvt.Count) Logger.Warn($"[Cleanup] Folders:{cvt.Count}/{src.Count}");
 
+            var n = cvt.Count - _settings.Value.BackupDays;
             if (n <= 0) return;
-            foreach (var f in src.OrderBy(e => e).Take(n)) Io.Delete(f);
+
+            foreach (var f in cvt.OrderBy(e => e).Take(n))
+            {
+                Io.Delete(f);
+                Logger.Debug($"[Cleanup] {f}");
+            }
         }
         catch (Exception err) { throw new BackupException(err); }
+    }
+
+    #endregion
+
+    #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// IsTarget
+    ///
+    /// <summary>
+    /// Determines if the specified path is a target folder for backup.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private static bool IsTarget(string src)
+    {
+        if (!src.HasValue()) return false;
+        if (!Io.IsDirectory(src)) return false;
+
+        var name = Io.GetFileName(src);
+        if (name.Length != 8) return false;
+
+        if (!int.TryParse(name, out var dest)) return false;
+        return dest is >= 20130520 and <= 21991231; // 2013/05/20 ~ 2199/12/31
     }
 
     #endregion
