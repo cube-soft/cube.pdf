@@ -100,6 +100,9 @@
   <data name="MenuBackup" xml:space="preserve">
     <value>Backup</value>
   </data>
+  <data name="MenuBackupAutoDelete" xml:space="preserve">
+    <value>Löschen Sie alte Backup-Dateien automatisch</value>
+  </data>
   <data name="MenuBackupEnabled" xml:space="preserve">
     <value>Backup aktivieren</value>
   </data>

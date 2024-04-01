@@ -187,6 +187,15 @@ namespace Cube.Pdf.Editor.Properties {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Delete old backup files automatically.
+        /// </summary>
+        internal static string MenuBackupAutoDelete {
+            get {
+                return ResourceManager.GetString("MenuBackupAutoDelete", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Enable backup.
         /// </summary>
         internal static string MenuBackupEnabled {

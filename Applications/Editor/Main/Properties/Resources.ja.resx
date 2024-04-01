@@ -97,6 +97,9 @@
   <data name="MenuBackup" xml:space="preserve">
     <value>バックアップ</value>
   </data>
+  <data name="MenuBackupAutoDelete" xml:space="preserve">
+    <value>古いバックアップファイルを自動的に削除する</value>
+  </data>
   <data name="MenuBackupEnabled" xml:space="preserve">
     <value>バックアップ機能を有効にする</value>
   </data>

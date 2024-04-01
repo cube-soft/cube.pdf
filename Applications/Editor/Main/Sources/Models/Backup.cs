@@ -88,7 +88,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Cleanup()
         {
-            if (!_settings.Value.BackupEnabled) return;
+            if (!_settings.Value.BackupEnabled || !_settings.Value.BackupAutoDelete) return;
 
             var src = Io.GetDirectories(_settings.Value.Backup).ToList();
             var n   = src.Count - _settings.Value.BackupDays;

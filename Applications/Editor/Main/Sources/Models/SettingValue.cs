@@ -123,8 +123,8 @@ public sealed class SettingValue : SerializableBase
     /// ShrinkResources
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether to shrink deduplicated
-    /// resources when saving PDF files.
+    /// Gets or sets a value indicating whether to shrink duplicated resources
+    /// when saving PDF files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -140,8 +140,8 @@ public sealed class SettingValue : SerializableBase
     /// KeepOutlines
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether to keep outline
-    /// information when saving PDF files.
+    /// Gets or sets a value indicating whether to keep outline information
+    /// when saving PDF files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -181,6 +181,23 @@ public sealed class SettingValue : SerializableBase
     /* --------------------------------------------------------------------- */
     [DataMember]
     public bool BackupEnabled
+    {
+        get => Get(() => true);
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// BackupAutoDelete
+    ///
+    /// <summary>
+    /// Gets or sets a value indicating whether to delete old backup files
+    /// automatically.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public bool BackupAutoDelete
     {
         get => Get(() => true);
         set => Set(value);
