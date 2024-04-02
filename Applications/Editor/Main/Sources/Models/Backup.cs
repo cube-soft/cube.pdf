@@ -162,7 +162,7 @@ public sealed class Backup
 
             var src = Io.GetDirectories(GetRootDirectory()).ToList();
             var cvt = src.Where(IsClean).ToList();
-            if (src.Count != cvt.Count) Logger.Warn($"[{cvt.Count}/{src.Count}] Non-targeted folders detected");
+            if (src.Count != cvt.Count) Logger.Warn($"Non-targeted folders detected ({cvt.Count}/{src.Count})");
 
             var n = cvt.Count - _settings.Value.BackupDays;
             if (n <= 0) return;
