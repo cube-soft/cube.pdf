@@ -50,7 +50,12 @@ public sealed class Backup
     {
         _settings = settings;
         var v = _settings.Value;
-        Logger.Debug($"[Backup] Root:{v.Backup.Quote()}, Enable:{v.BackupEnabled}, Delete:{v.BackupAutoDelete}");
+        Logger.Debug($"Enable:{v.BackupEnabled}, Delete:{v.BackupAutoDelete}");
+
+        var src = _settings.Value.Backup;
+        var cvt = GetRootDirectory();
+        Logger.Debug(cvt.Quote());
+        if (src != cvt) Logger.Debug($"{src.Quote()} (Original)");
     }
 
     #endregion
@@ -71,9 +76,43 @@ public sealed class Backup
     public static string GetDefaultRootDirectory() => Io.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
         "CubeSoft",
-        "CubePdfUtility2",
-        "Backup"
+        ProductFolder,
+        BackupFolder
     );
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GetRootDirectory
+    ///
+    /// <summary>
+    /// Gets the path of the backup root directory.
+    /// </summary>
+    ///
+    /// <returns>Path of the backup root directory.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public string GetRootDirectory()
+    {
+        var src = _settings.Value.Backup?.TrimEnd(
+            System.IO.Path.DirectorySeparatorChar,
+            System.IO.Path.AltDirectorySeparatorChar
+        ) ?? string.Empty;
+
+        if (!src.HasValue()) return GetDefaultRootDirectory();
+        if (src.Length == 2 && src[1] == ':') return Io.Combine($@"{src}\", ProductFolder, BackupFolder);
+
+        var dir = Io.GetFileName(src);
+        if (!dir.HasValue()) return Io.Combine(src, ProductFolder, BackupFolder);
+        if (dir.FuzzyEquals(ProductFolder)) return Io.Combine(src, BackupFolder);
+        if (dir.FuzzyEquals(BackupFolder))
+        {
+            var parent = Io.GetFileName(Io.GetDirectoryName(src));
+            return parent.HasValue() && parent.FuzzyEquals(ProductFolder) ?
+                   src :
+                   Io.Combine(src, ProductFolder, BackupFolder);
+        }
+        return Io.Combine(src, ProductFolder, BackupFolder);
+    }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -92,12 +131,10 @@ public sealed class Backup
         {
             if (!_settings.Value.BackupEnabled || !src.Exists) return;
 
-            var date = DateTime.Today.ToString("yyyyMMdd");
-            var dest = Io.Combine(_settings.Value.Backup, date, src.Name);
-
+            var dest = Io.Combine(GetRootDirectory(), DateTime.Today.ToString("yyyyMMdd"), src.Name);
             if (Io.Exists(dest)) return;
 
-            Logger.Debug($"[Backup] {dest}");
+            Logger.Debug($"[Backup] {dest.Quote()}");
             Io.Copy(src.FullName, dest, false);
         }
         catch (Exception err) { throw new BackupException(err); }
@@ -123,9 +160,9 @@ public sealed class Backup
         {
             if (!_settings.Value.BackupEnabled || !_settings.Value.BackupAutoDelete) return;
 
-            var src = Io.GetDirectories(_settings.Value.Backup).ToList();
-            var cvt = src.Where(IsTarget).ToList();
-            if (src.Count != cvt.Count) Logger.Warn($"[Cleanup] Folders:{cvt.Count}/{src.Count}");
+            var src = Io.GetDirectories(GetRootDirectory()).ToList();
+            var cvt = src.Where(IsClean).ToList();
+            if (src.Count != cvt.Count) Logger.Warn($"[{cvt.Count}/{src.Count}] Non-targeted folders detected");
 
             var n = cvt.Count - _settings.Value.BackupDays;
             if (n <= 0) return;
@@ -133,7 +170,7 @@ public sealed class Backup
             foreach (var f in cvt.OrderBy(e => e).Take(n))
             {
                 Io.Delete(f);
-                Logger.Debug($"[Cleanup] {f}");
+                Logger.Debug($"[Clean] {f.Quote()}");
             }
         }
         catch (Exception err) { throw new BackupException(err); }
@@ -145,28 +182,39 @@ public sealed class Backup
 
     /* --------------------------------------------------------------------- */
     ///
-    /// IsTarget
+    /// IsClean
     ///
     /// <summary>
-    /// Determines if the specified path is a target folder for backup.
+    /// Determines if the specified path is a target folder for cleaning up.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static bool IsTarget(string src)
+    private static bool IsClean(string src)
     {
         if (!src.HasValue()) return false;
         if (!Io.IsDirectory(src)) return false;
 
-        var name = Io.GetFileName(src);
-        if (name.Length != 8) return false;
+        var s = Io.GetFileName(src);
+        if (s.Length != 8) return false;
+        if (!int.TryParse(s, out var ymd)) return false;
 
-        if (!int.TryParse(name, out var dest)) return false;
-        return dest is >= 20130520 and <= 21991231; // 2013/05/20 ~ 2199/12/31
+        var d = ymd % 100;
+        if (d is < 1 or > 31) return false;
+
+        ymd /= 100;
+        var m = ymd % 100;
+        if (m is < 1 or > 12) return false;
+
+        ymd /= 100;
+        var y = ymd % 10000;
+        return y is >= 2000 and <= 2200;
     }
 
     #endregion
 
     #region Fields
     private readonly SettingFolder _settings;
+    private const string ProductFolder = "CubePdfUtility2";
+    private const string BackupFolder = "Backup";
     #endregion
 }

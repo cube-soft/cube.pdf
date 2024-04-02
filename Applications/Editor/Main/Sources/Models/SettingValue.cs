@@ -213,7 +213,7 @@ public sealed class SettingValue : SerializableBase
     [DataMember]
     public int BackupDays
     {
-        get => Get(() => 10);
+        get => Get(() => 15);
         set => Set(value);
     }
 
@@ -229,7 +229,7 @@ public sealed class SettingValue : SerializableBase
     [DataMember]
     public string Backup
     {
-        get => Get(Editor.Backup.GetDefaultDirectory);
+        get => Get(Editor.Backup.GetDefaultRootDirectory);
         set => Set(value);
     }
 
