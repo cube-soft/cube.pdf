@@ -54,14 +54,15 @@ namespace Cube.Pdf.Editor
         public SettingViewModel(SettingFolder src, SynchronizationContext context) :
             base(src, new(), context)
         {
-            ShrinkResources.Value = Facade.Value.ShrinkResources;
-            KeepOutlines.Value    = Facade.Value.KeepOutlines;
-            BackupEnabled.Value   = Facade.Value.BackupEnabled;
-            Backup.Value          = Facade.Value.Backup;
-            Temp.Value            = Facade.Value.Temp;
-            Language.Value        = Facade.Value.Language;
-            RecentVisible.Value   = Facade.Value.RecentVisible;
-            CheckUpdate.Value     = Facade.Startup.Enabled;
+            ShrinkResources.Value  = Facade.Value.ShrinkResources;
+            KeepOutlines.Value     = Facade.Value.KeepOutlines;
+            BackupEnabled.Value    = Facade.Value.BackupEnabled;
+            BackupAutoDelete.Value = Facade.Value.BackupAutoDelete;
+            Backup.Value           = Facade.Value.Backup;
+            Temp.Value             = Facade.Value.Temp;
+            Language.Value         = Facade.Value.Language;
+            RecentVisible.Value    = Facade.Value.RecentVisible;
+            CheckUpdate.Value      = Facade.Startup.Enabled;
 
             OK.Command = new DelegateCommand(() => Quit(Apply, true));
         }
@@ -75,7 +76,7 @@ namespace Cube.Pdf.Editor
         /// ShrinkResources
         ///
         /// <summary>
-        /// Gets the menu indicating whether to shrink deduplicated resources
+        /// Gets the menu indicating whether to shrink duplicated resources
         /// when saving PDF files.
         /// </summary>
         ///
@@ -141,6 +142,21 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> BackupEnabled => Get(() => new BindableElement<bool>(
             () => Properties.Resources.MenuBackupEnabled,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// BackupAutoDelete
+        ///
+        /// <summary>
+        /// Gets the menu indicating whether to enable the backup auto-delete
+        /// function.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<bool> BackupAutoDelete => Get(() => new BindableElement<bool>(
+            () => Properties.Resources.MenuBackupAutoDelete,
             GetDispatcher(false)
         ));
 
@@ -340,14 +356,15 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Apply()
         {
-            Facade.Value.ShrinkResources = ShrinkResources.Value;
-            Facade.Value.KeepOutlines    = KeepOutlines.Value;
-            Facade.Value.BackupEnabled   = BackupEnabled.Value;
-            Facade.Value.Backup          = Backup.Value;
-            Facade.Value.Temp            = Temp.Value;
-            Facade.Value.Language        = Language.Value;
-            Facade.Value.RecentVisible   = RecentVisible.Value;
-            Facade.Startup.Enabled       = CheckUpdate.Value;
+            Facade.Value.ShrinkResources  = ShrinkResources.Value;
+            Facade.Value.KeepOutlines     = KeepOutlines.Value;
+            Facade.Value.BackupEnabled    = BackupEnabled.Value;
+            Facade.Value.BackupAutoDelete = BackupAutoDelete.Value;
+            Facade.Value.Backup           = Backup.Value;
+            Facade.Value.Temp             = Temp.Value;
+            Facade.Value.Language         = Language.Value;
+            Facade.Value.RecentVisible    = RecentVisible.Value;
+            Facade.Startup.Enabled        = CheckUpdate.Value;
         }
 
         #endregion

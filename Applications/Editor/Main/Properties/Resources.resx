@@ -100,6 +100,9 @@
   <data name="MenuBackup" xml:space="preserve">
     <value>Backup</value>
   </data>
+  <data name="MenuBackupAutoDelete" xml:space="preserve">
+    <value>Delete old backup files automatically</value>
+  </data>
   <data name="MenuBackupEnabled" xml:space="preserve">
     <value>Enable backup</value>
   </data>
@@ -378,6 +381,9 @@
   </data>
   <data name="MenuZoomOut" xml:space="preserve">
     <value>ZoomOut</value>
+  </data>
+  <data name="MessageBackupError" xml:space="preserve">
+    <value>Backup process failed.</value>
   </data>
   <data name="MessageLoading" xml:space="preserve">
     <value>Loading {0} ...</value>

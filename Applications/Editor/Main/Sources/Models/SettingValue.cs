@@ -18,10 +18,8 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Editor;
 
-using System;
 using System.Runtime.Serialization;
 using Cube.DataContract;
-using Cube.FileSystem;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -123,8 +121,8 @@ public sealed class SettingValue : SerializableBase
     /// ShrinkResources
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether to shrink deduplicated
-    /// resources when saving PDF files.
+    /// Gets or sets a value indicating whether to shrink duplicated resources
+    /// when saving PDF files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -140,8 +138,8 @@ public sealed class SettingValue : SerializableBase
     /// KeepOutlines
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether to keep outline
-    /// information when saving PDF files.
+    /// Gets or sets a value indicating whether to keep outline information
+    /// when saving PDF files.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -188,6 +186,23 @@ public sealed class SettingValue : SerializableBase
 
     /* --------------------------------------------------------------------- */
     ///
+    /// BackupAutoDelete
+    ///
+    /// <summary>
+    /// Gets or sets a value indicating whether to delete old backup files
+    /// automatically.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DataMember]
+    public bool BackupAutoDelete
+    {
+        get => Get(() => true);
+        set => Set(value);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// BackupDays
     ///
     /// <summary>
@@ -198,7 +213,7 @@ public sealed class SettingValue : SerializableBase
     [DataMember]
     public int BackupDays
     {
-        get => Get(() => 10);
+        get => Get(() => 15);
         set => Set(value);
     }
 
@@ -214,10 +229,7 @@ public sealed class SettingValue : SerializableBase
     [DataMember]
     public string Backup
     {
-        get => Get(() => Io.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "CubeSoft", "CubePdfUtility2", "Backup"
-        ));
+        get => Get(Editor.Backup.GetDefaultRootDirectory);
         set => Set(value);
     }
 

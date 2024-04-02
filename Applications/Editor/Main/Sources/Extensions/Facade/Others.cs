@@ -53,7 +53,6 @@ namespace Cube.Pdf.Editor
             foreach (var ps in src.Folder.GetSplashProcesses()) ps.Kill();
             var path = args.FirstPdf();
             if (path.HasValue()) src.Open(path);
-            src.Backup.Cleanup();
         }
 
         /* ----------------------------------------------------------------- */

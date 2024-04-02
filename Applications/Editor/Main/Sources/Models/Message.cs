@@ -52,8 +52,9 @@ namespace Cube.Pdf.Editor
         {
             var cvt = src switch
             {
-                PdfiumException   => new ArgumentException(Properties.Resources.MessageOpenError),
+                BackupException   => new ArgumentException(Properties.Resources.MessageBackupError),
                 MetadataException => new ArgumentException(Properties.Resources.MessageMetadataError),
+                PdfiumException   => new ArgumentException(Properties.Resources.MessageOpenError),
                 _ => src
             };
 

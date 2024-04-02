@@ -97,6 +97,9 @@
   <data name="MenuBackup" xml:space="preserve">
     <value>バックアップ</value>
   </data>
+  <data name="MenuBackupAutoDelete" xml:space="preserve">
+    <value>古いバックアップファイルを自動的に削除する</value>
+  </data>
   <data name="MenuBackupEnabled" xml:space="preserve">
     <value>バックアップ機能を有効にする</value>
   </data>
@@ -375,6 +378,9 @@
   </data>
   <data name="MenuZoomOut" xml:space="preserve">
     <value>縮小</value>
+  </data>
+  <data name="MessageBackupError" xml:space="preserve">
+    <value>バックアップ処理に失敗しました。バックアップ用フォルダー等の設定内容を確認して下さい。</value>
   </data>
   <data name="MessageLoading" xml:space="preserve">
     <value>{0} を開いています ...</value>
