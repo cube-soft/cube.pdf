@@ -50,7 +50,7 @@ public sealed class Backup
     {
         _settings = settings;
         var v = _settings.Value;
-        Logger.Debug($"Enable:{v.BackupEnabled}, Delete:{v.BackupAutoDelete}");
+        Logger.Debug($"Enable:{v.BackupEnabled}, Delete:{v.BackupAutoDelete}, Gen:{v.BackupDays}");
 
         var src = _settings.Value.Backup;
         var cvt = GetRootDirectory();
@@ -134,8 +134,8 @@ public sealed class Backup
             var dest = Io.Combine(GetRootDirectory(), DateTime.Today.ToString("yyyyMMdd"), src.Name);
             if (Io.Exists(dest)) return;
 
-            Logger.Debug($"[Backup] {dest.Quote()}");
             Io.Copy(src.FullName, dest, false);
+            Logger.Debug($"[Backup] {dest.Quote()}");
         }
         catch (Exception err) { throw new BackupException(err); }
     }
@@ -158,11 +158,15 @@ public sealed class Backup
     {
         try
         {
-            if (!_settings.Value.BackupEnabled || !_settings.Value.BackupAutoDelete) return;
+            if (!_settings.Value.BackupEnabled || !_settings.Value.BackupAutoDelete)
+            {
+                Logger.Debug("[Clean] Skip");
+                return;
+            }
 
             var src = Io.GetDirectories(GetRootDirectory()).ToList();
-            var cvt = src.Where(IsClean).ToList();
-            if (src.Count != cvt.Count) Logger.Warn($"Non-targeted folders detected ({cvt.Count}/{src.Count})");
+            var cvt = src.Where(IsBackupFolder).ToList();
+            if (src.Count != cvt.Count) Logger.Warn($"Folders:{cvt.Count}/{src.Count}");
 
             var n = cvt.Count - _settings.Value.BackupDays;
             if (n <= 0) return;
@@ -182,14 +186,14 @@ public sealed class Backup
 
     /* --------------------------------------------------------------------- */
     ///
-    /// IsClean
+    /// IsBackupFolder
     ///
     /// <summary>
     /// Determines if the specified path is a target folder for cleaning up.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private static bool IsClean(string src)
+    private static bool IsBackupFolder(string src)
     {
         if (!src.HasValue()) return false;
         if (!Io.IsDirectory(src)) return false;
