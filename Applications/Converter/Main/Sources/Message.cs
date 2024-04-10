@@ -136,7 +136,7 @@ public static class Message
     public static OpenFileMessage ForSource(SettingFolder src)
     {
         var path = src.Value.Source;
-        var dest = new OpenFileMessage(Surface.Texts.Title_Source)
+        var dest = new OpenFileMessage(Surface.Texts.Window_Source)
         {
             Value   = GetFileNames(path),
             Filters = src.Value.Extensions.GetSourceFilters(),
@@ -164,7 +164,7 @@ public static class Message
     public static SaveFileMessage ForDestination(SettingFolder src)
     {
         var path = src.Value.Destination;
-        var dest = new SaveFileMessage(Surface.Texts.Title_Destination)
+        var dest = new SaveFileMessage(Surface.Texts.Window_Destination)
         {
             Value   = GetFileName(path),
             Filters = src.Value.Extensions.GetDestinationFilters(),
@@ -192,7 +192,7 @@ public static class Message
     public static OpenFileMessage ForUserProgram(SettingFolder src)
     {
         var path = src.Value.UserProgram;
-        var dest = new OpenFileMessage(Surface.Texts.Title_UserProgram)
+        var dest = new OpenFileMessage(Surface.Texts.Window_UserProgram)
         {
             Value   = GetFileNames(path),
             Filters = src.Value.Extensions.GetProgramFilters(),
