@@ -16,97 +16,115 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Pages;
+
 using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
 using Cube.Forms.Binding;
 
-namespace Cube.Pdf.Pages
+/* ------------------------------------------------------------------------- */
+///
+/// PasswordWindow
+///
+/// <summary>
+/// Represents the window to input password.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public partial class PasswordWindow : Window
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// PasswordWindow
     ///
     /// <summary>
-    /// Represents the window to input password.
+    /// Initializes a new instance.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class PasswordWindow : Window
+    public PasswordWindow() => InitializeComponent();
+
+    #endregion
+
+    #region Bindings
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OnBind
+    ///
+    /// <summary>
+    /// Invokes the binding to the specified object.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected override void OnBind(IBindable src)
     {
-        #region Constructors
+        base.OnBind(src);
+        if (src is not PasswordViewModel vm) return;
 
-        /* --------------------------------------------------------------------- */
-        ///
-        /// PasswordWindow
-        ///
-        /// <summary>
-        /// Initializes a new instance of the PasswordWindow class.
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        public PasswordWindow() => InitializeComponent();
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnBind
-        ///
-        /// <summary>
-        /// Invokes the binding to the specified object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnBind(IBindable src)
-        {
-            base.OnBind(src);
-            if (src is not PasswordViewModel vm) return;
-
-            var bs = Behaviors.Hook(new BindingSource(vm, ""));
-            bs.Bind(nameof(vm.Password), PasswordTextBox, nameof(TextBox.Text));
-            bs.Bind(nameof(vm.Message), PasswordLabel, nameof(Label.Text), true);
-            bs.Bind(nameof(vm.Ready), ExecButton, nameof(Enabled), true);
-
-            Behaviors.Add(new CloseBehavior(this, vm));
-            Behaviors.Add(new ShownEventBehavior(this, Setup));
-            Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
-            Behaviors.Add(new EventBehavior(ShowPasswordCheckBox, nameof(CheckBox.CheckedChanged), UpdatePasswordMask));
-        }
-
-        #endregion
-
-        #region Implementations
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// Setup
-        ///
-        /// <summary>
-        /// Initializes the settings when the window is shown.
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void Setup()
-        {
-            ActiveControl = PasswordTextBox;
-            _ = PasswordTextBox.Focus();
-        }
-
-        /* --------------------------------------------------------------------- */
-        ///
-        /// UpdatePasswordMask
-        ///
-        /// <summary>
-        /// Sets or resets the password mask.
-        /// </summary>
-        ///
-        /* --------------------------------------------------------------------- */
-        private void UpdatePasswordMask() =>
-            PasswordTextBox.UseSystemPasswordChar = !ShowPasswordCheckBox.Checked;
-
-        #endregion
+        BindCore(vm);
+        BindTexts(vm);
+        BindBehaviors(vm);
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// BindCore
+    ///
+    /// <summary>
+    /// Invokes the binding settings.
+    /// </summary>
+    ///
+    /// <param name="vm">VM object to bind.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void BindCore(PasswordViewModel vm)
+    {
+        var bs = Behaviors.Hook(new BindingSource(vm, ""));
+        bs.Bind(nameof(vm.Password), PasswordTextBox, nameof(TextBox.Text));
+        bs.Bind(nameof(vm.Message), PasswordLabel, nameof(Label.Text), true);
+        bs.Bind(nameof(vm.Ready), ExecButton, nameof(Enabled), true);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// BindTexts
+    ///
+    /// <summary>
+    /// Sets the displayed text with the specified language.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void BindTexts(PasswordViewModel _)
+    {
+        Text = Surface.Texts.Password_Window;
+        ExecButton.Text = Surface.Texts.Menu_Ok;
+        ExitButton.Text = Surface.Texts.Menu_Cancel;
+        ShowPasswordCheckBox.Text = Surface.Texts.Password_Show;
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// BindBehaviors
+    ///
+    /// <summary>
+    /// Invokes the binding settings about behaviors.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void BindBehaviors(PasswordViewModel vm)
+    {
+        void setup()  { ActiveControl = PasswordTextBox; PasswordTextBox.Focus(); }
+        void invert() { PasswordTextBox.UseSystemPasswordChar = !ShowPasswordCheckBox.Checked; }
+
+        Behaviors.Add(new CloseBehavior(this, vm));
+        Behaviors.Add(new ShownEventBehavior(this, setup));
+        Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
+        Behaviors.Add(new EventBehavior(ShowPasswordCheckBox, nameof(CheckBox.CheckedChanged), invert));
+    }
+
+    #endregion
 }

@@ -343,8 +343,8 @@ namespace Cube.Pdf.Pages
         public bool Apply()
         {
             bool fail(string s) { Send(Message.ForError(s)); return false; }
-            if (Enabled && !OwnerCorrect) return fail(Properties.Resources.ErrorOwnerPassword);
-            if (Enabled && !UserCorrect ) return fail(Properties.Resources.ErrorUserPassword);
+            if (Enabled && !OwnerCorrect) return fail(Surface.Texts.Error_OwnerPassword);
+            if (Enabled && !UserCorrect ) return fail(Surface.Texts.Error_UserPassword);
 
             Facade.Enabled          = Enabled;
             Facade.OwnerPassword    = OwnerPassword;

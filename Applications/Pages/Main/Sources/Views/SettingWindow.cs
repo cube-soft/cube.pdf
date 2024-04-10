@@ -16,72 +16,113 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Pages;
+
 using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
 using Cube.Forms.Binding;
 
-namespace Cube.Pdf.Pages
+/* ------------------------------------------------------------------------- */
+///
+/// SettingWindow
+///
+/// <summary>
+/// Represents the setting window.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public partial class SettingWindow : Window
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// SettingWindow
     ///
     /// <summary>
-    /// Represents the setting window.
+    /// Initializes a new instance.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public partial class SettingWindow : Window
+    public SettingWindow() => InitializeComponent();
+
+    #endregion
+
+    #region Bindings
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OnBind
+    ///
+    /// <summary>
+    /// Invokes the binding to the specified object.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected override void OnBind(IBindable src)
     {
-        #region Constructors
+        base.OnBind(src);
+        if (src is not SettingViewModel vm) return;
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// SettingWindow
-        ///
-        /// <summary>
-        /// Initializes a new instance of the SettingWindow class.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public SettingWindow() => InitializeComponent();
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// OnBind
-        ///
-        /// <summary>
-        /// Invokes the binding to the specified object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        protected override void OnBind(IBindable src)
-        {
-            base.OnBind(src);
-            if (src is not SettingViewModel vm) return;
-
-            var bs = Behaviors.Hook(new BindingSource(vm, ""));
-            bs.Bind(nameof(vm.Language),        LanguageComboBox,       nameof(ComboBox.SelectedValue));
-            bs.Bind(nameof(vm.Temp),            TempTextBox,            nameof(TextBox.Text));
-            bs.Bind(nameof(vm.ShrinkResources), ShrinkResourceCheckBox, nameof(CheckBox.Checked));
-            bs.Bind(nameof(vm.KeepOutlines),    KeepOutlineCheckBox,    nameof(CheckBox.Checked));
-            bs.Bind(nameof(vm.CheckUpdate),     UpdateCheckBox,         nameof(CheckBox.Checked));
-            bs.Bind(nameof(vm.Version),         VersionControl,         nameof(VersionControl.Version), true);
-            bs.Bind(nameof(vm.Uri),             VersionControl,         nameof(VersionControl.Uri), true);
-
-            Behaviors.Add(new CloseBehavior(this, vm));
-            Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
-            Behaviors.Add(new ClickEventBehavior(TempButton, vm.SelectTemp));
-            Behaviors.Add(new OpenDirectoryBehavior(vm));
-
-            LanguageComboBox.Bind(Resource.Languages);
-        }
-
-        #endregion
+        BindCore(vm);
+        BindTexts(vm);
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// BindCore
+    ///
+    /// <summary>
+    /// Invokes the binding settings.
+    /// </summary>
+    ///
+    /// <param name="vm">VM object to bind.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void BindCore(SettingViewModel vm)
+    {
+        var bs = Behaviors.Hook(new BindingSource(vm, ""));
+        bs.Bind(nameof(vm.Language), LanguageComboBox, nameof(ComboBox.SelectedValue));
+        bs.Bind(nameof(vm.Temp), TempTextBox, nameof(TextBox.Text));
+        bs.Bind(nameof(vm.ShrinkResources), ShrinkResourceCheckBox, nameof(CheckBox.Checked));
+        bs.Bind(nameof(vm.KeepOutlines), KeepOutlineCheckBox, nameof(CheckBox.Checked));
+        bs.Bind(nameof(vm.CheckUpdate), UpdateCheckBox, nameof(CheckBox.Checked));
+        bs.Bind(nameof(vm.Version), VersionControl, nameof(VersionControl.Version), true);
+        bs.Bind(nameof(vm.Uri), VersionControl, nameof(VersionControl.Uri), true);
+
+        Behaviors.Add(new CloseBehavior(this, vm));
+        Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Apply));
+        Behaviors.Add(new ClickEventBehavior(TempButton, vm.SelectTemp));
+        Behaviors.Add(new OpenDirectoryBehavior(vm));
+
+        LanguageComboBox.Bind(Surface.Languages);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// BindTexts
+    ///
+    /// <summary>
+    /// Sets the displayed text with the specified language.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void BindTexts(SettingViewModel _)
+    {
+        Text = Surface.Texts.Setting_Window;
+        ExecButton.Text = Surface.Texts.Menu_Ok;
+        ExitButton.Text = Surface.Texts.Menu_Cancel;
+        SettingTabPage.Text = Surface.Texts.Setting_Tab;
+        VersionTabPage.Text = Surface.Texts.Setting_Version;
+        OptionLabel.Text = Surface.Texts.Setting_Options;
+        TempLabel.Text = Surface.Texts.Setting_Temp;
+        LanguageLabel.Text = Surface.Texts.Setting_Language;
+        OtherLabel.Text = Surface.Texts.Setting_Others;
+        ShrinkResourceCheckBox.Text = Surface.Texts.Setting_Shrink;
+        KeepOutlineCheckBox.Text = Surface.Texts.Setting_KeepOutline;
+        UpdateCheckBox.Text = Surface.Texts.Setting_CheckUpdate;
+    }
+
+    #endregion
 }

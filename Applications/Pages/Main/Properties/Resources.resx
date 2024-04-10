@@ -62,91 +62,10 @@
   <data name="Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColumnDate" xml:space="preserve">
-    <value>Last updated</value>
-  </data>
-  <data name="ColumnLength" xml:space="preserve">
-    <value>Filesize</value>
-  </data>
-  <data name="ColumnName" xml:space="preserve">
-    <value>Filename</value>
-  </data>
-  <data name="ColumnPages" xml:space="preserve">
-    <value>Pages</value>
-  </data>
-  <data name="ColumnType" xml:space="preserve">
-    <value>Type</value>
-  </data>
-  <data name="ErrorOwnerPassword" xml:space="preserve">
-    <value>Owner password is empty or does not match the confirmation. Please check your password and confirmation again.</value>
-  </data>
-  <data name="ErrorUserPassword" xml:space="preserve">
-    <value>User password is empty or does not match the confirmation. Please check the user password or enable the "Use owner password" checkbox.</value>
-  </data>
-  <data name="FilterAll" xml:space="preserve">
-    <value>All files</value>
-  </data>
-  <data name="FilterPdf" xml:space="preserve">
-    <value>PDF files</value>
-  </data>
-  <data name="FilterSupported" xml:space="preserve">
-    <value>All supported files</value>
-  </data>
   <data name="HeaderTitle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\HeaderTitle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Assets\Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="MenuDown" xml:space="preserve">
-    <value>Down</value>
-  </data>
-  <data name="MenuOneColumn" xml:space="preserve">
-    <value>One column</value>
-  </data>
-  <data name="MenuPreview" xml:space="preserve">
-    <value>Preview</value>
-  </data>
-  <data name="MenuRemove" xml:space="preserve">
-    <value>Remove from file list</value>
-  </data>
-  <data name="MenuSinglePage" xml:space="preserve">
-    <value>Single page</value>
-  </data>
-  <data name="MenuTwoColumnLeft" xml:space="preserve">
-    <value>Two column (left)</value>
-  </data>
-  <data name="MenuTwoColumnRight" xml:space="preserve">
-    <value>Two column (right)</value>
-  </data>
-  <data name="MenuTwoPageLeft" xml:space="preserve">
-    <value>Two page (left)</value>
-  </data>
-  <data name="MenuTwoPageRight" xml:space="preserve">
-    <value>Two page (right)</value>
-  </data>
-  <data name="MenuUp" xml:space="preserve">
-    <value>Up</value>
-  </data>
-  <data name="MessagePassword" xml:space="preserve">
-    <value>{0} is protected. Enter the owner password to edit.</value>
-  </data>
-  <data name="MessageSettings" xml:space="preserve">
-    <value>CubePDF Page settings</value>
-  </data>
-  <data name="TitleAdd" xml:space="preserve">
-    <value>Add files</value>
-  </data>
-  <data name="TitleBusy" xml:space="preserve">
-    <value>Processing ... - {0}</value>
-  </data>
-  <data name="TitleMerge" xml:space="preserve">
-    <value>Save merged file as</value>
-  </data>
-  <data name="TitleSplit" xml:space="preserve">
-    <value>Select a folder to save the split files.</value>
-  </data>
-  <data name="TitleTemp" xml:space="preserve">
-    <value>Select a temp folder. If you do not specify a temp folder, the same folder as the source files will be used.</value>
   </data>
 </root>
