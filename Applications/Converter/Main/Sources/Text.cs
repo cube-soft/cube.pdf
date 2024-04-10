@@ -29,8 +29,9 @@ namespace Cube.Pdf.Converter;
 /* ------------------------------------------------------------------------- */
 internal class Text : TextBase
 {
+    // ReSharper disable InconsistentNaming
     #region General tab
-    public string General_Header => Get();
+    public string General_Tab => Get();
     public string General_Source => Get();
     public string General_Destination => Get();
     public string General_Format => Get();
@@ -60,13 +61,13 @@ internal class Text : TextBase
     #endregion
 
     #region Metadata tab
-    public string Metadata_Header => Get();
+    public string Metadata_Tab => Get();
     public string Metadata_Title => Get();
-    public string Metadata__Author => Get();
-    public string Metadata__Subject => Get();
-    public string Metadata__Keyword => Get();
-    public string Metadata__Creator => Get();
-    public string Metadata__ViewOption => Get();
+    public string Metadata_Author => Get();
+    public string Metadata_Subject => Get();
+    public string Metadata_Keyword => Get();
+    public string Metadata_Creator => Get();
+    public string Metadata_Layout => Get();
 
     // Menus for Metadata tab (ComboBox, CheckBox, ...)
     public string Metadata_SinglePage => Get();
@@ -78,7 +79,7 @@ internal class Text : TextBase
     #endregion
 
     #region Security tab
-    public string Security_Header => Get();
+    public string Security_Tab => Get();
     public string Security_OwnerPassword => Get();
     public string Security_UserPassword => Get();
     public string Security_ConfirmPassword => Get();
@@ -97,24 +98,24 @@ internal class Text : TextBase
     #endregion
 
     #region Misc tab
-    public string Misc_Header => Get();
+    public string Misc_Tab => Get();
     public string Misc_About => Get();
     public string Misc_Language => Get();
 
     // Menus for Misc tab (ComboBox, CheckBox, ...)
-    public string MIsc_CheckUpdate => Get();
+    public string Misc_CheckUpdate => Get();
     #endregion
 
-    #region Buttons
-    public string Button_Convert => Get();
-    public string Button_Cancel => Get();
-    public string Button_Save => Get();
+    #region Menus
+    public string Menu_Convert => Get();
+    public string Menu_Cancel => Get();
+    public string Menu_Save => Get();
     #endregion
 
     #region Titles for dialogs
-    public string Title_Source => Get();
-    public string Title_Destination => Get();
-    public string Title_UserProgram => Get();
+    public string Window_Source => Get();
+    public string Window_Destination => Get();
+    public string Window_UserProgram => Get();
     #endregion
 
     #region Error messages

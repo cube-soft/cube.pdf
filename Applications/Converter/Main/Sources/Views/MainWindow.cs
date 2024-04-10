@@ -20,7 +20,6 @@ namespace Cube.Pdf.Converter;
 
 using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
@@ -234,15 +233,15 @@ public partial class MainWindow : Window
         PortraitRadioButton.Text = Surface.Texts.General_Portrait;
 
         // Buttons
-        ConvertButton.Text = Surface.Texts.Button_Convert;
-        ExitButton.Text = Surface.Texts.Button_Cancel;
-        SettingButton.Text = Surface.Texts.Button_Save;
+        ConvertButton.Text = Surface.Texts.Menu_Convert;
+        ExitButton.Text = Surface.Texts.Menu_Cancel;
+        SettingButton.Text = Surface.Texts.Menu_Save;
 
         // Tabs
-        GeneralTabPage.Text = Surface.Texts.General_Header;
-        MetadataTabPage.Text = Surface.Texts.Metadata_Header;
-        SecurityTabPage.Text = Surface.Texts.Security_Header;
-        MiscTabPage.Text = Surface.Texts.Misc_Header;
+        GeneralTabPage.Text = Surface.Texts.General_Tab;
+        MetadataTabPage.Text = Surface.Texts.Metadata_Tab;
+        SecurityTabPage.Text = Surface.Texts.Security_Tab;
+        MiscTabPage.Text = Surface.Texts.Misc_Tab;
 
         // Labels for General tab
         SourceLabel.Text = Surface.Texts.General_Source;
@@ -256,11 +255,11 @@ public partial class MainWindow : Window
 
         // Labels for Metadata tab
         TitleLabel.Text = Surface.Texts.Metadata_Title;
-        AuthorLabel.Text = Surface.Texts.Metadata__Author;
-        SubjectLabel.Text = Surface.Texts.Metadata__Subject;
-        KeywordLabel.Text = Surface.Texts.Metadata__Keyword;
-        CreatorLabel.Text = Surface.Texts.Metadata__Creator;
-        ViewOptionLabel.Text = Surface.Texts.Metadata__ViewOption;
+        AuthorLabel.Text = Surface.Texts.Metadata_Author;
+        SubjectLabel.Text = Surface.Texts.Metadata_Subject;
+        KeywordLabel.Text = Surface.Texts.Metadata_Keyword;
+        CreatorLabel.Text = Surface.Texts.Metadata_Creator;
+        ViewOptionLabel.Text = Surface.Texts.Metadata_Layout;
 
         // Labels for Security tab
         OwnerPasswordLabel.Text = Surface.Texts.Security_OwnerPassword;
@@ -292,7 +291,7 @@ public partial class MainWindow : Window
         AllowAnnotationCheckBox.Text = Surface.Texts.Security_AllowAnnotation;
 
         // Menus for Misc tab (CheckBox, RadioButton, ...)
-        UpdateCheckBox.Text = Surface.Texts.MIsc_CheckUpdate;
+        UpdateCheckBox.Text = Surface.Texts.Misc_CheckUpdate;
 
         // ComboBox items
         SaveOptionComboBox.Bind(Surface.SaveOptions);
