@@ -298,7 +298,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* --------------------------------------------------------------------- */
-        public void Help() => Send(new ProcessMessage(Resource.DocumentUri.ToString()));
+        public void Help() => Send(new ProcessMessage(Surface.DocumentUri.ToString()));
 
         #endregion
 

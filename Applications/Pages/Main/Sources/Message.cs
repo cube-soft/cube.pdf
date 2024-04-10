@@ -16,167 +16,166 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Pages;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.Reflection.Extensions;
 
-namespace Cube.Pdf.Pages
+/* ------------------------------------------------------------------------- */
+///
+/// Message
+///
+/// <summary>
+/// Provides functionality to create message objects.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+internal static class Message
 {
+    #region DialogMessage
+
     /* --------------------------------------------------------------------- */
     ///
-    /// Message
+    /// ForError
     ///
     /// <summary>
-    /// Provides functionality to create message objects.
+    /// Create a message to show a DialogBox with an error icon
+    /// and OK button.
     /// </summary>
     ///
+    /// <param name="src">Error message.</param>
+    ///
+    /// <returns>DialogMessage object.</returns>
+    ///
     /* --------------------------------------------------------------------- */
-    internal static class Message
+    public static DialogMessage ForError(string src) => new(src)
     {
-        #region DialogMessage
+        Title   = typeof(Message).Assembly.GetTitle(),
+        Icon    = DialogIcon.Error,
+        Buttons = DialogButtons.Ok,
+    };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ForError
-        ///
-        /// <summary>
-        /// Create a message to show a DialogBox with an error icon
-        /// and OK button.
-        /// </summary>
-        ///
-        /// <param name="src">Error message.</param>
-        ///
-        /// <returns>DialogMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static DialogMessage ForError(string src) => new(src)
+    #endregion
+
+    #region FileDialogMessage
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ForAdd
+    ///
+    /// <summary>
+    /// Creates a message to show an OpenFileDialog dialog.
+    /// </summary>
+    ///
+    /// <returns>OpenFileMessage object.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static OpenFileMessage ForAdd() => new(Surface.Texts.Window_Add)
+    {
+        CheckPathExists = true,
+        Multiselect     = true,
+        Filters         = new FileDialogFilter[]
         {
-            Title   = typeof(Message).Assembly.GetTitle(),
-            Icon    = DialogIcon.Error,
-            Buttons = DialogButtons.Ok,
-        };
+            new(Surface.Texts.Filter_Support, true,
+                ".pdf", ".bmp", ".gif", ".jpg", ".jpeg", ".png", ".tiff"),
+            new(Surface.Texts.Filter_All, true, ".*"),
+        },
+    };
 
-        #endregion
-
-        #region FileDialogMessage
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ForAdd
-        ///
-        /// <summary>
-        /// Creates a message to show an OpenFileDialog dialog.
-        /// </summary>
-        ///
-        /// <returns>OpenFileMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static OpenFileMessage ForAdd() => new(Properties.Resources.TitleAdd)
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ForMerge
+    ///
+    /// <summary>
+    /// Creates a message to show a SaveFileDialog dialog.
+    /// </summary>
+    ///
+    /// <returns>SaveFileMessage object.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static SaveFileMessage ForMerge() => new(Surface.Texts.Window_Merge)
+    {
+        OverwritePrompt = true,
+        CheckPathExists = false,
+        Filters         = new FileDialogFilter[]
         {
-            CheckPathExists = true,
-            Multiselect     = true,
-            Filters         = new FileDialogFilter[]
-            {
-                new(Properties.Resources.FilterSupported, true,
-                    ".pdf", ".bmp", ".gif", ".jpg", ".jpeg", ".png", ".tiff"),
-                new(Properties.Resources.FilterAll, true, ".*"),
-            },
-        };
+            new(Surface.Texts.Filter_Pdf, true, ".pdf"),
+            new(Surface.Texts.Filter_All, true, ".*"),
+        },
+    };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ForMerge
-        ///
-        /// <summary>
-        /// Creates a message to show a SaveFileDialog dialog.
-        /// </summary>
-        ///
-        /// <returns>SaveFileMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static SaveFileMessage ForMerge() => new(Properties.Resources.TitleMerge)
-        {
-            OverwritePrompt = true,
-            CheckPathExists = false,
-            Filters         = new FileDialogFilter[]
-            {
-                new(Properties.Resources.FilterPdf, true, ".pdf"),
-                new(Properties.Resources.FilterAll, true, ".*"),
-            },
-        };
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ForSplit
+    ///
+    /// <summary>
+    /// Creates a message to show a BrowserFolder dialog.
+    /// </summary>
+    ///
+    /// <returns>OpenDirectoryMessage object.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static OpenDirectoryMessage ForSplit() => new(Surface.Texts.Window_Split)
+    {
+        NewButton = true,
+    };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ForSplit
-        ///
-        /// <summary>
-        /// Creates a message to show a BrowserFolder dialog.
-        /// </summary>
-        ///
-        /// <returns>OpenDirectoryMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage ForSplit() => new(Properties.Resources.TitleSplit)
-        {
-            NewButton = true,
-        };
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ForTemp
+    ///
+    /// <summary>
+    /// Creates a message to show a BrowserFolder dialog.
+    /// </summary>
+    ///
+    /// <returns>OpenDirectoryMessage object.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static OpenDirectoryMessage ForTemp() => new(Surface.Texts.Window_Temp)
+    {
+        NewButton = true,
+    };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ForTemp
-        ///
-        /// <summary>
-        /// Creates a message to show a BrowserFolder dialog.
-        /// </summary>
-        ///
-        /// <returns>OpenDirectoryMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage ForTemp() => new(Properties.Resources.TitleTemp)
-        {
-            NewButton = true,
-        };
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ForSelect
+    ///
+    /// <summary>
+    /// Creates a message to select items of the specified indices.
+    /// </summary>
+    ///
+    /// <param name="indices">Source selected indices.</param>
+    /// <param name="offset">Offset to move.</param>
+    /// <param name="count">Number of files.</param>
+    ///
+    /// <returns>SelectMessage object.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static SelectMessage ForSelect(IEnumerable<int> indices, int offset, int count) => new()
+    {
+        Value = indices.Select(e => Math.Max(Math.Min(e + offset, count - 1), 0)),
+    };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ForSelect
-        ///
-        /// <summary>
-        /// Creates a message to select items of the specified indices.
-        /// </summary>
-        ///
-        /// <param name="indices">Source selected indices.</param>
-        /// <param name="offset">Offset to move.</param>
-        /// <param name="count">Number of files.</param>
-        ///
-        /// <returns>SelectMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static SelectMessage ForSelect(IEnumerable<int> indices, int offset, int count) => new()
-        {
-            Value = indices.Select(e => Math.Max(Math.Min(e + offset, count - 1), 0)),
-        };
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ForPreview
+    ///
+    /// <summary>
+    /// Creates a message to preview the specified files.
+    /// </summary>
+    ///
+    /// <param name="src">File list.</param>
+    /// <param name="indices">Source selected indices.</param>
+    ///
+    /// <returns>PreviewMessage object.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static PreviewMessage ForPreview(IList<File> src, IEnumerable<int> indices) => new()
+    {
+        Value = src[indices.First()].FullName,
+    };
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// ForPreview
-        ///
-        /// <summary>
-        /// Creates a message to preview the specified files.
-        /// </summary>
-        ///
-        /// <param name="src">File list.</param>
-        /// <param name="indices">Source selected indices.</param>
-        ///
-        /// <returns>PreviewMessage object.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public static PreviewMessage ForPreview(IList<File> src, IEnumerable<int> indices) => new()
-        {
-            Value = src[indices.First()].FullName,
-        };
-
-        #endregion
-    }
+    #endregion
 }
