@@ -82,7 +82,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         protected override string GetTitle() => string.Format(
-            Properties.Resources.TitlePreview,
+            Surface.Texts.Window_Preview,
             Facade.Value.File.Name,
             Facade.Value.Source.Selection.First + 1,
             Facade.Value.Source.Count

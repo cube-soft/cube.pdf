@@ -115,7 +115,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Preview => Get(() => new BindableElement(
-            () => Properties.Resources.MenuPreview,
+            () => Surface.Texts.Insert_Menu_Preview,
             GetDispatcher(false)
         ) { Command = IsSelected(() => Run(Facade.Preview, false)) });
 
@@ -133,7 +133,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Add => Get(() => new BindableElement(
-            () => Properties.Resources.MenuAdd,
+            () => Surface.Texts.Insert_Menu_Add,
             GetDispatcher(false)
         ) { Command = new DelegateCommand(SendOpen) });
 
@@ -147,7 +147,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Remove => Get(() => new BindableElement(
-            () => Properties.Resources.MenuRemove,
+            () => Surface.Texts.Insert_Menu_Remove,
             GetDispatcher(false)
         ) { Command = IsSelected(() => Run(Facade.Remove, true)) });
 
@@ -161,7 +161,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Clear => Get(() => new BindableElement(
-            () => Properties.Resources.MenuClear,
+            () => Surface.Texts.Insert_Menu_Clear,
             GetDispatcher(false)
         ) { Command = new DelegateCommand(() => Run(Facade.Clear, true)) });
 
@@ -175,7 +175,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Up => Get(() => new BindableElement(
-            () => Properties.Resources.MenuUp,
+            () => Surface.Texts.Insert_Menu_Up,
             GetDispatcher(false)
         ) { Command = IsSelected(() => Run(() => Facade.Move(-1), true)) });
 
@@ -189,7 +189,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Down => Get(() => new BindableElement(
-            () => Properties.Resources.MenuDown,
+            () => Surface.Texts.Insert_Menu_Down,
             GetDispatcher(false)
         ) { Command = IsSelected(() => Run(() => Facade.Move(1), true)) });
 
@@ -203,7 +203,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement FileName => Get(() => new BindableElement(
-            () => Properties.Resources.MenuFilename,
+            () => Surface.Texts.Insert_Column_Filename,
             GetDispatcher(false)
         ));
 
@@ -217,7 +217,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement FileType => Get(() => new BindableElement(
-            () => Properties.Resources.MenuFiletype,
+            () => Surface.Texts.Insert_Column_Filetype,
             GetDispatcher(false)
         ));
 
@@ -231,7 +231,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement FileLength => Get(() => new BindableElement(
-            () => Properties.Resources.MenuFilesize,
+            () => Surface.Texts.Insert_Column_Filesize,
             GetDispatcher(false)
         ));
 
@@ -245,7 +245,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement LastWriteTime => Get(() => new BindableElement(
-            () => Properties.Resources.MenuLastWriteTime,
+            () => Surface.Texts.Insert_Column_LastWriteTime,
             GetDispatcher(false)
         ));
 
@@ -296,7 +296,7 @@ namespace Cube.Pdf.Editor
         /// <returns>String value.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected override string GetTitle() => Properties.Resources.TitleInsert;
+        protected override string GetTitle() => Surface.Texts.Insert_Window;
 
         /* ----------------------------------------------------------------- */
         ///

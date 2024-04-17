@@ -54,6 +54,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.File.Text,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("Edit"));
             Assert.That(dest.Others.Text,        Is.EqualTo("Others"));
+            Assert.That(dest.Help.Text,          Is.EqualTo("Help"));
             Assert.That(dest.Open.Text,          Is.EqualTo("Open"));
             Assert.That(dest.Save.Text,          Is.EqualTo("Save"));
             Assert.That(dest.Close.Text,         Is.EqualTo("Close"));
@@ -152,9 +153,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("編集"));
             Assert.That(dest.Others.Text,        Is.EqualTo("その他"));
+            Assert.That(dest.Help.Text,          Is.EqualTo("ヘルプ"));
             Assert.That(dest.Open.Text,          Is.EqualTo("開く"));
             Assert.That(dest.Save.Text,          Is.EqualTo("保存"));
-            Assert.That(dest.Close.Text,        Is.EqualTo("閉じる"));
+            Assert.That(dest.Close.Text,         Is.EqualTo("閉じる"));
             Assert.That(dest.Exit.Text,          Is.EqualTo("終了"));
             Assert.That(dest.Undo.Text,          Is.EqualTo("元に戻す"));
             Assert.That(dest.Redo.Text,          Is.EqualTo("やり直し"));

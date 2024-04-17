@@ -83,7 +83,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> ShrinkResources => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuShrinkResources,
+            () => Surface.Texts.Setting_Shrink,
             GetDispatcher(false)
         ));
 
@@ -98,7 +98,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> KeepOutlines => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuKeepOutlines,
+            () => Surface.Texts.Setting_KeepOutline,
             GetDispatcher(false)
         ));
 
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> RecentVisible => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuRecentVisible,
+            () => Surface.Texts.Setting_Recent,
             GetDispatcher(false)
         ));
 
@@ -128,7 +128,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> CheckUpdate => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuCheckUpdate,
+            () => Surface.Texts.Setting_CheckUpdate,
             GetDispatcher(false)
         ));
 
@@ -142,7 +142,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> BackupEnabled => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuBackupEnabled,
+            () => Surface.Texts.Setting_Backup_Enable,
             GetDispatcher(false)
         ));
 
@@ -171,7 +171,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Backup => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuBackup,
+            () => Surface.Texts.Setting_Backup,
             new DelegateCommand(
                 () => Send(Message.ForBackup(Backup.Value),
                 e => Backup.Value = e, true
@@ -189,7 +189,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Temp => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuTemp,
+            () => Surface.Texts.Setting_Temp,
             new DelegateCommand(
                 () => Send(Message.ForTemp(Temp.Value),
                 e => Temp.Value = e, true
@@ -207,7 +207,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<Language> Language => Get(() => new BindableElement<Language>(
-            () => Properties.Resources.MenuLanguage,
+            () => Surface.Texts.Setting_Language,
             GetDispatcher(false)
         ));
 
@@ -226,6 +226,7 @@ namespace Cube.Pdf.Editor
             Globalization.Language.English,
             Globalization.Language.German,
             Globalization.Language.Japanese,
+            Globalization.Language.SimplifiedChinese,
         };
 
         /* ----------------------------------------------------------------- */
@@ -238,7 +239,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Version => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuVersion,
+            () => Surface.Texts.Setting_Version,
             () => $"{Facade.Title} {Facade.Version.ToString(3, true)}",
             GetDispatcher(false)
         ));
@@ -297,7 +298,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Summary => Get(() => new BindableElement(
-            () => Properties.Resources.MenuSetting,
+            () => Surface.Texts.Setting_Tab,
             GetDispatcher(false)
         ));
 
@@ -311,7 +312,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement SaveOptions => Get(() => new BindableElement(
-            () => Properties.Resources.MenuSaveOptions,
+            () => Surface.Texts.Setting_Options,
             GetDispatcher(false)
         ));
 
@@ -325,7 +326,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement OtherOptions => Get(() => new BindableElement(
-            () => Properties.Resources.MenuOthers,
+            () => Surface.Texts.Setting_Others,
             GetDispatcher(false)
         ));
 
@@ -344,7 +345,7 @@ namespace Cube.Pdf.Editor
         /// <returns>String value.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected override string GetTitle() => Properties.Resources.TitleSetting;
+        protected override string GetTitle() => Surface.Texts.Setting_Window;
 
         /* ----------------------------------------------------------------- */
         ///

@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Cube.Collections.Extensions;
+using Cube.Globalization;
 using Cube.Xui;
 using Cube.Xui.Logging.Extensions;
 
@@ -119,7 +120,7 @@ namespace Cube.Pdf.Editor
             Logger.ObserveTaskException();
             this.ObserveUiException();
 
-            ApplicationSetting.Configure();
+            Locale.Subscribe(Surface.Texts);
             base.OnStartup(e);
         }
 
