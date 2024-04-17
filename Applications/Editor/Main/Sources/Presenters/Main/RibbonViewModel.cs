@@ -71,7 +71,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement File => Get(() => new RibbonElement(
             nameof(File),
-            () => Properties.Resources.MenuFile,
+            () => Surface.Texts.Menu_File,
             GetDispatcher(false)
         ));
 
@@ -86,7 +86,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Edit => Get(() => new RibbonElement(
             nameof(Edit),
-            () => Properties.Resources.MenuEdit,
+            () => Surface.Texts.Menu_Edit,
             GetDispatcher(false)
         ));
 
@@ -101,7 +101,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Others => Get(() => new RibbonElement(
             nameof(Others),
-            () => Properties.Resources.MenuOthers,
+            () => Surface.Texts.Menu_Misc,
             GetDispatcher(false)
         ));
 
@@ -119,7 +119,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public BindableElement Preview => Get(() => new BindableElement(
-            () => Properties.Resources.MenuPreview,
+            () => Surface.Texts.Menu_Preview,
             GetDispatcher(false)
         ) { Command = IsSelected(SendPreview) });
 
@@ -134,7 +134,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Open => Get(() => new RibbonElement(
             nameof(Open),
-            () => Properties.Resources.MenuOpen,
+            () => Surface.Texts.Menu_Open,
             GetDispatcher(false)
         ) { Command = GetCommand(() => SendOpen(e => Facade.Open(e))) });
 
@@ -149,8 +149,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Save => Get(() => new RibbonElement(
             nameof(Save),
-            () => Properties.Resources.MenuSave,
-            () => Properties.Resources.TooltipSave,
+            () => Surface.Texts.Menu_Save,
+            () => Surface.Texts.Menu_Save_Long,
             GetDispatcher(false)
         ) { Command = IsOpen(() => Run(Facade.Overwrite, false)) });
 
@@ -165,7 +165,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement SaveAs => Get(() => new RibbonElement(
             nameof(SaveAs),
-            () => Properties.Resources.MenuSaveAs,
+            () => Surface.Texts.Menu_Save_As,
             GetDispatcher(false)
         ) { Command = IsOpen(() => SendSave(Facade.Save)) });
 
@@ -180,7 +180,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Close => Get(() => new RibbonElement(
             nameof(Close),
-            () => Properties.Resources.MenuClose,
+            () => Surface.Texts.Menu_Close,
             GetDispatcher(false)
         ) { Command = GetCloseCommand() });
 
@@ -195,7 +195,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Exit => Get(() => new RibbonElement(
             nameof(Exit),
-            () => Properties.Resources.MenuExit,
+            () => Surface.Texts.Menu_Exit,
             GetDispatcher(false)
         ) { Command = GetCommand(() => Send(new CloseMessage())) });
 
@@ -210,7 +210,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Undo => Get(() => new RibbonElement(
             nameof(Undo),
-            () => Properties.Resources.MenuUndo,
+            () => Surface.Texts.Menu_Undo,
             GetDispatcher(false)
         ) { Command = IsUndoable(() => Run(Facade.Undo, true)) });
 
@@ -225,7 +225,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Redo => Get(() => new RibbonElement(
             nameof(Redo),
-            () => Properties.Resources.MenuRedo,
+            () => Surface.Texts.Menu_Redo,
             GetDispatcher(false)
         ) { Command = IsRedoable(() => Run(Facade.Redo, true)) });
 
@@ -240,7 +240,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Select => Get(() => new RibbonElement(
             nameof(Select),
-            () => Properties.Resources.MenuSelect,
+            () => Surface.Texts.Menu_Select,
             GetDispatcher(false)
         ) { Command = IsOpen(() => Run(Facade.Select, true)) });
 
@@ -255,7 +255,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement SelectAll => Get(() => new RibbonElement(
             nameof(Select),
-            () => Properties.Resources.MenuSelectAll,
+            () => Surface.Texts.Menu_Select_All,
             GetDispatcher(false)
         ) { Command = IsOpen(() => Run(() => Facade.Select(true), true)) });
 
@@ -270,7 +270,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement SelectFlip => Get(() => new RibbonElement(
             nameof(Select),
-            () => Properties.Resources.MenuSelectFlip,
+            () => Surface.Texts.Menu_Select_Flip,
             GetDispatcher(false)
         ) { Command = IsOpen(() => Run(Facade.Flip, true)) });
 
@@ -285,7 +285,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement SelectClear => Get(() => new RibbonElement(
             nameof(Select),
-            () => Properties.Resources.MenuSelectClear,
+            () => Surface.Texts.Menu_Select_Clear,
             GetDispatcher(false)
         ) { Command = IsOpen(() => Run(() => Facade.Select(false), true)) });
 
@@ -300,8 +300,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Insert => Get(() => new RibbonElement(
             nameof(Insert),
-            () => Properties.Resources.MenuInsert,
-            () => Properties.Resources.TooltipInsert,
+            () => Surface.Texts.Menu_Insert,
+            () => Surface.Texts.Menu_Insert_Long,
             () => !Facade.Value.Busy,
             GetDispatcher(false)
         ) {
@@ -319,7 +319,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement InsertFront => Get(() => new RibbonElement(
             nameof(Insert),
-            () => Properties.Resources.MenuInsertFront,
+            () => Surface.Texts.Menu_Insert_Head,
             GetDispatcher(false)
         ) { Command = IsOpen(() => SendInsert(0)) });
 
@@ -334,7 +334,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement InsertBack => Get(() => new RibbonElement(
             nameof(Insert),
-            () => Properties.Resources.MenuInsertBack,
+            () => Surface.Texts.Menu_Insert_Tail,
             GetDispatcher(false)
         ) { Command = IsOpen(() => SendInsert(int.MaxValue)) });
 
@@ -349,7 +349,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement InsertOthers => Get(() => new RibbonElement(
             nameof(InsertOthers),
-            () => Properties.Resources.MenuInsertOthers,
+            () => Surface.Texts.Menu_Insert_Custom,
             GetDispatcher(false)
         ) { Command = IsOpen(SendInsert) });
 
@@ -364,8 +364,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Extract => Get(() => new RibbonElement(
             nameof(Extract),
-            () => Properties.Resources.MenuExtract,
-            () => Properties.Resources.TooltipExtract,
+            () => Surface.Texts.Menu_Extract,
+            () => Surface.Texts.Menu_Extract_Long,
             () => !Facade.Value.Busy,
             GetDispatcher(false)
         ) {
@@ -383,7 +383,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement ExtractOthers => Get(() => new RibbonElement(
             nameof(ExtractOthers),
-            () => Properties.Resources.MenuExtractOthers,
+            () => Surface.Texts.Menu_Extract_Custom,
             GetDispatcher(false)
         ) { Command = IsOpen(SendExtract) });
 
@@ -398,8 +398,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Remove => Get(() => new RibbonElement(
             nameof(Remove),
-            () => Properties.Resources.MenuRemove,
-            () => Properties.Resources.TooltipRemove,
+            () => Surface.Texts.Menu_Remove,
+            () => Surface.Texts.Menu_Remove_Long,
             () => !Facade.Value.Busy,
             GetDispatcher(false)
         ) {
@@ -417,7 +417,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement RemoveOthers => Get(() => new RibbonElement(
             nameof(RemoveOthers),
-            () => Properties.Resources.MenuRemoveOthers,
+            () => Surface.Texts.Menu_Remove_Custom,
             GetDispatcher(false)
         ) { Command = IsOpen(SendRemove) });
 
@@ -432,7 +432,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement MoveNext => Get(() => new RibbonElement(
             nameof(MoveNext),
-            () => Properties.Resources.MenuMoveNext,
+            () => Surface.Texts.Menu_Move_Forth,
             GetDispatcher(false)
         ) { Command = IsSelected(() => Run(() => Facade.Move(1), true)) });
 
@@ -447,7 +447,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement MovePrevious => Get(() => new RibbonElement(
             nameof(MovePrevious),
-            () => Properties.Resources.MenuMovePrevious,
+            () => Surface.Texts.Menu_Move_Back,
             GetDispatcher(false)
         ) { Command = IsSelected(() => Run(() => Facade.Move(-1), true)) });
 
@@ -462,7 +462,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement RotateLeft => Get(() => new RibbonElement(
             nameof(RotateLeft),
-            () => Properties.Resources.MenuRotateLeft,
+            () => Surface.Texts.Menu_Rotate_Left,
             GetDispatcher(false)
         ) { Command = IsSelected(() => Run(() => Facade.Rotate(-90), true)) });
 
@@ -477,7 +477,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement RotateRight => Get(() => new RibbonElement(
             nameof(RotateRight),
-            () => Properties.Resources.MenuRotateRight,
+            () => Surface.Texts.Menu_Rotate_Right,
             GetDispatcher(false)
         ) { Command = IsSelected(() => Run(() => Facade.Rotate(90), true)) });
 
@@ -492,8 +492,8 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Metadata => Get(() => new RibbonElement(
             nameof(Metadata),
-            () => Properties.Resources.MenuMetadata,
-            () => Properties.Resources.TooltipMetadata,
+            () => Surface.Texts.Menu_Metadata,
+            () => Surface.Texts.Menu_Metadata_Long,
             GetDispatcher(false)
         ) { Command = IsOpen(SendMetadata) });
 
@@ -508,7 +508,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Encryption => Get(() => new RibbonElement(
             nameof(Encryption),
-            () => Properties.Resources.MenuEncryption,
+            () => Surface.Texts.Menu_Security,
             GetDispatcher(false)
         ) { Command = IsOpen(SendEncryption) });
 
@@ -523,7 +523,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Redraw => Get(() => new RibbonElement(
             nameof(Redraw),
-            () => Properties.Resources.MenuRedraw,
+            () => Surface.Texts.Menu_Redraw,
             GetDispatcher(false)
         ) { Command = IsOpen(() => Run(Facade.Redraw, true)) });
 
@@ -538,7 +538,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement ZoomIn => Get(() => new RibbonElement(
             nameof(ZoomIn),
-            () => Properties.Resources.MenuZoomIn,
+            () => Surface.Texts.Menu_Zoom_In,
             GetDispatcher(false)
         ) { Command = GetCommand(() => Run(() => Facade.Zoom(1), true)) });
 
@@ -553,7 +553,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement ZoomOut => Get(() => new RibbonElement(
             nameof(ZoomOut),
-            () => Properties.Resources.MenuZoomOut,
+            () => Surface.Texts.Menu_Zoom_Out,
             GetDispatcher(false)
         ) { Command = GetCommand(() => Run(() => Facade.Zoom(-1), true)) });
 
@@ -568,7 +568,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Help => Get(() => new RibbonElement(
             nameof(Help),
-            () => Properties.Resources.MenuHelp,
+            () => Surface.Texts.Menu_Help,
             GetDispatcher(false)
         ) { Command = GetCommand(() => Send(new ProcessMessage(Facade.Folder.DocumentUri.ToString()))) });
 
@@ -583,7 +583,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public RibbonElement Setting => Get(() => new RibbonElement(
             nameof(Setting),
-            () => Properties.Resources.MenuSetting,
+            () => Surface.Texts.Menu_Setting,
             GetDispatcher(false)
         ) { Command = GetCommand(SendSetting) });
 
@@ -601,7 +601,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> FrameOnly => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuFrameOnly,
+            () => Surface.Texts.Menu_Frame,
             () => Facade.Value.Settings.FrameOnly,
             e  => Facade.Value.Settings.FrameOnly = e,
             GetDispatcher(false)

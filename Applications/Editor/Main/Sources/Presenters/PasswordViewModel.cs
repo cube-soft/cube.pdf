@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Password => Get(() => new BindableElement<string>(
-            () => string.Format(Properties.Resources.MessagePassword, GetFileName(Facade.Source)),
+            () => string.Format(Surface.Texts.Warn_Password, GetFileName(Facade.Source)),
             () => Facade.Value,
             e  => Facade.Value = e,
             GetDispatcher(false)
@@ -94,7 +94,7 @@ namespace Cube.Pdf.Editor
         /// <returns>String value.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected override string GetTitle() => Properties.Resources.TitlePassword;
+        protected override string GetTitle() => Surface.Texts.Window_Password;
 
         /* ----------------------------------------------------------------- */
         ///

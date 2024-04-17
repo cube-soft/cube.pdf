@@ -82,7 +82,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement OK => Get(() => new BindableElement(
-            () => Properties.Resources.MenuOk,
+            () => Surface.Texts.Menu_Ok,
             GetDispatcher(false)
         ));
 
@@ -96,7 +96,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Cancel => Get(() => new BindableElement(
-            () => Properties.Resources.MenuCancel,
+            () => Surface.Texts.Menu_Cancel,
             new DelegateCommand(() => Send(new CloseMessage())),
             GetDispatcher(false)
         ));

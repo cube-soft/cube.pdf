@@ -95,7 +95,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Destination => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuDestination,
+            () => Surface.Texts.Extract_Destination,
             () => Facade.Value.Destination,
             e  => Facade.Value.Destination = e,
             GetDispatcher(false)
@@ -117,7 +117,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<SaveFormat> Format => Get(() => new BindableElement<SaveFormat>(
-            () => Properties.Resources.MenuFormat,
+            () => Surface.Texts.Extract_Format,
             () => Facade.Value.Format,
             e  => Facade.Value.Format = e,
             GetDispatcher(false)
@@ -133,7 +133,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<int> Count => Get(() => new BindableElement<int>(
-            () => Properties.Resources.MenuPageCount,
+            () => Surface.Texts.Extract_Page,
             () => Facade.Count,
             GetDispatcher(false)
         ));
@@ -152,7 +152,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Target => Get(() => new BindableElement(
-            () => Properties.Resources.MenuTarget,
+            () => Surface.Texts.Extract_Target,
             GetDispatcher(false)
         ));
 
@@ -167,7 +167,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> Selected => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuExtractSelected,
+            () => Surface.Texts.Extract_Target_Select,
             () => Facade.Value.Target == SaveTarget.Selected,
             e  => e.Then(() => Facade.Value.Target = SaveTarget.Selected),
             GetDispatcher(false)
@@ -189,7 +189,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> All => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuExtractAll,
+            () => Surface.Texts.Extract_Target_All,
             () => Facade.Value.Target == SaveTarget.All,
             e  => e.Then(() => Facade.Value.Target = SaveTarget.All),
             GetDispatcher(false)
@@ -206,7 +206,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> Specified => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuExtractRange,
+            () => Surface.Texts.Extract_Target_Custom,
             () => Facade.Value.Target == SaveTarget.Range,
             e  => e.Then(() => Facade.Value.Target = SaveTarget.Range),
             GetDispatcher(false)
@@ -222,7 +222,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Range => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MessageRangeExample,
+            () => Surface.Texts.Message_Range,
             () => Facade.Value.Range,
             e  => Facade.Value.Range = e,
             GetDispatcher(false)
@@ -238,7 +238,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<int> Resolution => Get(() => new BindableElement<int>(
-            () => Properties.Resources.MenuDpi,
+            () => Surface.Texts.Message_Dpi,
             () => Facade.Value.Resolution,
             e  => Facade.Value.Resolution = e,
             GetDispatcher(false)
@@ -255,7 +255,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> Split => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuSplit,
+            () => Surface.Texts.Extract_Split,
             () => Facade.Value.Split,
             e  => Facade.Value.Split = e,
             GetDispatcher(false)
@@ -276,7 +276,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Option => Get(() => new BindableElement(
-            () => Properties.Resources.MenuOptions,
+            () => Surface.Texts.Extract_Options,
             GetDispatcher(false)
         ));
 
@@ -295,7 +295,7 @@ namespace Cube.Pdf.Editor
         /// <returns>String value.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected override string GetTitle() => Properties.Resources.TitleExtract;
+        protected override string GetTitle() => Surface.Texts.Extract_Window;
 
         #endregion
     }

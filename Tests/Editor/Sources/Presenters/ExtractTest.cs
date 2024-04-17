@@ -114,7 +114,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         /* ----------------------------------------------------------------- */
         private void AssertObject(ExtractViewModel src)
         {
-            Assert.That(src.Title,               Is.EqualTo("Extraction details"));
+            Assert.That(src.Title,               Is.EqualTo("Extraction Details"));
             Assert.That(src.Formats.Count(),     Is.EqualTo(2));
             Assert.That(src.Destination.Text,    Is.EqualTo("Save path"));
             Assert.That(src.Destination.Value,   Is.Empty, nameof(src.Destination));

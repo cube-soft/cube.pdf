@@ -165,7 +165,7 @@ public sealed class MainFacade : DisposableBase
     /* --------------------------------------------------------------------- */
     public void Save(IDocumentReader src, SaveOption options, Action<Entity> prev, Action<Entity> next) => Invoke(() =>
     {
-        Value.SetMessage(Properties.Resources.MessageSaving, options.Destination);
+        Value.SetMessage(Surface.Texts.Message_Saving, options.Destination);
         var itext = src ?? Value.Source.GetItext(Value.Query, false);
         Value.Set(itext.Metadata, itext.Encryption);
         using var dest = new SaveAction(itext, Value.Images, options);
@@ -214,7 +214,7 @@ public sealed class MainFacade : DisposableBase
         Invoke(() => Value.Images.InsertAt(
             Math.Min(Math.Max(index, 0), Value.Images.Count),
             src.SelectMany(e => {
-                Value.SetMessage(Properties.Resources.MessageLoading, e);
+                Value.SetMessage(Surface.Texts.Message_Loading, e);
                 return !this.CanInsert(e) ? Enumerable.Empty<Page>() :
                     e.IsImageFile()    ? new ImagePageCollection(e) :
                     Cache.GetOrAdd(e).GetPdfium().Pages;
