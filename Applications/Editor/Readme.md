@@ -119,6 +119,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2024-04-18 version 3.0.1
+    - Update PDFium to Chromium 124 compatible.
 * 2024-04-03 version 3.0.0
     - Fix issues with backup functionality.
     - Add settings for automatically deleting old backup files.
