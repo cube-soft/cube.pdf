@@ -18,6 +18,8 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Editor;
 
+using Cube.Globalization;
+
 /* ------------------------------------------------------------------------- */
 ///
 /// Surface
@@ -39,4 +41,19 @@ public static class Surface
     ///
     /* --------------------------------------------------------------------- */
     internal static Text Texts { get; } = new();
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Texts
+    ///
+    /// <summary>
+    /// Get the localizable object.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// This object is mainly used for hooking in other DLLs.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static ILocalizable Localizable => Texts;
 }

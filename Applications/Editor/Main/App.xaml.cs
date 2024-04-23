@@ -120,7 +120,7 @@ namespace Cube.Pdf.Editor
             Logger.ObserveTaskException();
             this.ObserveUiException();
 
-            Locale.Subscribe(Surface.Texts);
+            Locale.Subscribe(Surface.Localizable);
             base.OnStartup(e);
         }
 

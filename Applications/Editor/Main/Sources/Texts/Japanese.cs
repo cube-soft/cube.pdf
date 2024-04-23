@@ -49,7 +49,7 @@ internal class JapaneseText() : Globalization.TextGroup(new()
     { nameof(Text.Menu_Save_As), "名前を付けて保存" },
     { nameof(Text.Menu_Redraw), "更新" },
     { nameof(Text.Menu_Undo), "元に戻す" },
-    { nameof(Text.Menu_Redo), "なり直し" },
+    { nameof(Text.Menu_Redo), "やり直し" },
     { nameof(Text.Menu_Select), "選択" },
     { nameof(Text.Menu_Select_All), "すべて選択" },
     { nameof(Text.Menu_Select_Flip), "選択の切り替え" },
@@ -108,10 +108,10 @@ internal class JapaneseText() : Globalization.TextGroup(new()
     { nameof(Text.Metadata_LastWriteTime), "最終更新日時" },
     { nameof(Text.Metadata_SinglePage), "単一ページ" },
     { nameof(Text.Metadata_OneColumn), "連続ページ" },
-    { nameof(Text.Metadata_TwoPageLeft), "見開きページ（左綴じ）" },
-    { nameof(Text.Metadata_TwoPageRight), "見開きページ（右綴じ）" },
-    { nameof(Text.Metadata_TwoColumnLeft), "連続見開きページ（左綴じ）" },
-    { nameof(Text.Metadata_TwoColumnRight), "連続見開きページ（右綴じ）" },
+    { nameof(Text.Metadata_TwoPageLeft), "見開きページ (左綴じ)" },
+    { nameof(Text.Metadata_TwoPageRight), "見開きページ (右綴じ)" },
+    { nameof(Text.Metadata_TwoColumnLeft), "連続見開きページ (左綴じ)" },
+    { nameof(Text.Metadata_TwoColumnRight), "連続見開きページ (右綴じ)" },
 
     // Security window
     { nameof(Text.Security_Window), "セキュリティ設定" },

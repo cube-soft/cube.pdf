@@ -77,10 +77,10 @@ internal class JapaneseText() : Globalization.TextGroup(new()
     // Menus for Metadata window (ComboBox, CheckBox, RadioButton, ...)
     { nameof(Text.Metadata_SinglePage), "単一ページ" },
     { nameof(Text.Metadata_OneColumn), "連続ページ" },
-    { nameof(Text.Metadata_TwoPageLeft), "見開きページ（左綴じ）" },
-    { nameof(Text.Metadata_TwoPageRight), "見開きページ（右綴じ）" },
-    { nameof(Text.Metadata_TwoColumnLeft), "連続見開きページ（左綴じ）" },
-    { nameof(Text.Metadata_TwoColumnRight), "連続見開きページ（右綴じ）" },
+    { nameof(Text.Metadata_TwoPageLeft), "見開きページ (左綴じ)" },
+    { nameof(Text.Metadata_TwoPageRight), "見開きページ (右綴じ)" },
+    { nameof(Text.Metadata_TwoColumnLeft), "連続見開きページ (左綴じ)" },
+    { nameof(Text.Metadata_TwoColumnRight), "連続見開きページ (右綴じ)" },
 
     // Labels for Security window
     { nameof(Text.Security_Tab), "セキュリティ" },

@@ -225,7 +225,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.MoveNext.Tooltip,      Is.EqualTo(dest.MoveNext.Text));
             Assert.That(dest.RotateLeft.Tooltip,    Is.EqualTo(dest.RotateLeft.Text));
             Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
-            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("PDF 文書プロパティ"));
+            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("文書プロパティ"));
             Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
             Assert.That(dest.Redraw.Tooltip,        Is.EqualTo(dest.Redraw.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));
