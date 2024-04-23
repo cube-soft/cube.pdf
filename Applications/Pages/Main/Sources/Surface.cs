@@ -47,6 +47,21 @@ public static class Surface
 
     /* --------------------------------------------------------------------- */
     ///
+    /// Texts
+    ///
+    /// <summary>
+    /// Get the localizable object.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// This object is mainly used for hooking in other DLLs.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static ILocalizable Localizable => Texts;
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// ProductUri
     ///
     /// <summary>

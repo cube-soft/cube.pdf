@@ -328,7 +328,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public CountToText() : base(e => string.Format(
-            Surface.Texts.Message_Pages, e.TryCast<int>()
+            Surface.Texts.Message_Total, e.TryCast<int>()
         )) { }
     }
 
