@@ -57,11 +57,12 @@ class ResourceTest
         vm.Settings.Language = Language.English;
 
         var c0 = Surface.Languages.ToArray();
-        Assert.That(c0.Length,  Is.EqualTo(4), nameof(Surface.Languages));
+        Assert.That(c0.Length,  Is.EqualTo(5), nameof(Surface.Languages));
         Assert.That(c0[0].Key,  Is.EqualTo("Auto"));
         Assert.That(c0[1].Key,  Is.EqualTo("English"));
         Assert.That(c0[2].Key,  Is.EqualTo("German"));
         Assert.That(c0[3].Key,  Is.EqualTo("Japanese"));
+        Assert.That(c0[4].Key,  Is.EqualTo("SimplifiedChinese"));
 
         var c1 = Surface.Formats.ToArray();
         Assert.That(c1.Length,  Is.EqualTo(7), nameof(Surface.Formats));
@@ -160,11 +161,12 @@ class ResourceTest
         vm.Settings.Language = Language.Japanese;
 
         var c0 = Surface.Languages.ToArray();
-        Assert.That(c0.Length,  Is.EqualTo(4), nameof(Surface.Languages));
+        Assert.That(c0.Length,  Is.EqualTo(5), nameof(Surface.Languages));
         Assert.That(c0[0].Key,  Is.EqualTo("Auto"));
         Assert.That(c0[1].Key,  Is.EqualTo("English"));
         Assert.That(c0[2].Key,  Is.EqualTo("German"));
         Assert.That(c0[3].Key,  Is.EqualTo("Japanese"));
+        Assert.That(c0[4].Key,  Is.EqualTo("SimplifiedChinese"));
 
         var c1 = Surface.Formats.ToArray();
         Assert.That(c1.Length,  Is.EqualTo(7), nameof(Surface.Formats));
