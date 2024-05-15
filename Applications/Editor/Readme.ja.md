@@ -125,6 +125,8 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2024-05-16 version 3.0.2
+    - PDFium を Chromium 125 相当に更新
 * 2024-04-18 version 3.0.1
     - PDFium を Chromium 124 相当に更新
 * 2024-04-03 version 3.0.0
