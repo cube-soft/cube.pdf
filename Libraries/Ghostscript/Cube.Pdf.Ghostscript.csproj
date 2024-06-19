@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>8.7.4</Version>
+        <Version>9.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>Ghostscript based PDF library.</Description>
@@ -25,7 +25,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="Cube.Native.Ghostscript" Version="10.3.0" />
+        <PackageReference Include="Cube.Native.Pdfgen" Version="10.3.1" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\Icon.png" Pack="true" PackagePath="images" />
