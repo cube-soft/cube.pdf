@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Cube.Globalization;
 using Cube.Observable.Extensions;
 
 /* ------------------------------------------------------------------------- */
@@ -67,11 +68,11 @@ public sealed class MainViewModel : PresentableBase<Facade>
     public MainViewModel(SettingFolder src, SynchronizationContext ctx) :
         base(new(src), new(12), ctx)
     {
-        Locale.Set(src.Value.Appendix.Language);
+        Locale.Reset(src.Value.Appendix.Language);
 
-        Settings   = new(src, Aggregator, ctx);
-        Metadata   = new(src.Value.Metadata, Aggregator, ctx);
-        Encryption = new(src.Value.Encryption, Aggregator, ctx);
+        Settings = new(src, Aggregator, ctx);
+        Metadata = new(src.Value.Metadata, Aggregator, ctx);
+        Security = new(src.Value.Encryption, Aggregator, ctx);
 
         void select_if() { if (src.Value.PostProcess == PostProcess.Others) SelectUserProgram(); }
 
@@ -91,8 +92,7 @@ public sealed class MainViewModel : PresentableBase<Facade>
     /// Settings
     ///
     /// <summary>
-    /// Gets the ViewModel object that represents General and Others
-    /// tabs.
+    /// Gets the ViewModel object that represents General and Misc tabs.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -111,14 +111,14 @@ public sealed class MainViewModel : PresentableBase<Facade>
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Encryption
+    /// Security
     ///
     /// <summary>
-    /// Gets the ViewModel object that represents an Encryption tab.
+    /// Gets the ViewModel object that represents an Security tab.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public EncryptionViewModel Encryption { get; }
+    public SecurityViewModel Security { get; }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -162,7 +162,7 @@ public sealed class MainViewModel : PresentableBase<Facade>
     /* --------------------------------------------------------------------- */
     public void Invoke()
     {
-        var ready = Encryption.Confirm() && Settings.Confirm();
+        var ready = Security.Confirm() && Settings.Confirm();
         if (ready) Run(() => {
             Facade.Invoke();
             Send(new CloseMessage());
@@ -189,7 +189,7 @@ public sealed class MainViewModel : PresentableBase<Facade>
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public void Help() => Send(new ProcessMessage(Resource.DocumentUri.ToString()));
+    public void Help() => Send(new ProcessMessage(Surface.DocumentUri.ToString()));
 
     /* --------------------------------------------------------------------- */
     ///

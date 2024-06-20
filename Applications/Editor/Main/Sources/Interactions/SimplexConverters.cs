@@ -143,7 +143,7 @@ namespace Cube.Pdf.Editor
         public ByteConverter() : base(e =>
         {
             var n  = e.TryCast<long>();
-            return string.Format("{0} ({1:#,0} {2})", n.ToRoughBytes(), n, Properties.Resources.UnitByte);
+            return string.Format("{0} ({1:#,0} {2})", n.ToRoughBytes(), n, Surface.Texts.Message_Byte);
         }) { }
     }
 
@@ -237,12 +237,12 @@ namespace Cube.Pdf.Editor
         public ViewerOptionsConverter() : base(e =>
         {
             var src = e.TryCast<ViewerOption>();
-            if (src.HasFlag(ViewerOption.SinglePage))     return Properties.Resources.MenuViewSinglePage;
-            if (src.HasFlag(ViewerOption.OneColumn))      return Properties.Resources.MenuViewOneColumn;
-            if (src.HasFlag(ViewerOption.TwoPageLeft))    return Properties.Resources.MenuViewTwoPageLeft;
-            if (src.HasFlag(ViewerOption.TwoPageRight))   return Properties.Resources.MenuViewTwoPageRight;
-            if (src.HasFlag(ViewerOption.TwoColumnLeft))  return Properties.Resources.MenuViewTwoColumnLeft;
-            if (src.HasFlag(ViewerOption.TwoColumnRight)) return Properties.Resources.MenuViewTwoColumnRight;
+            if (src.HasFlag(ViewerOption.SinglePage))     return Surface.Texts.Metadata_SinglePage;
+            if (src.HasFlag(ViewerOption.OneColumn))      return Surface.Texts.Metadata_OneColumn;
+            if (src.HasFlag(ViewerOption.TwoPageLeft))    return Surface.Texts.Metadata_TwoPageLeft;
+            if (src.HasFlag(ViewerOption.TwoPageRight))   return Surface.Texts.Metadata_TwoPageRight;
+            if (src.HasFlag(ViewerOption.TwoColumnLeft))  return Surface.Texts.Metadata_TwoColumnLeft;
+            if (src.HasFlag(ViewerOption.TwoColumnRight)) return Surface.Texts.Metadata_TwoColumnRight;
             return "Unknown";
         }) { }
     }
@@ -328,7 +328,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public CountToText() : base(e => string.Format(
-            Properties.Resources.MessageTotalPage, e.TryCast<int>()
+            Surface.Texts.Message_Total, e.TryCast<int>()
         )) { }
     }
 
@@ -385,7 +385,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SelectionToText() : base(e => string.Format(
-            Properties.Resources.MessageSelection, e.TryCast<int>()
+            Surface.Texts.Message_Selection, e.TryCast<int>()
         )) { }
     }
 

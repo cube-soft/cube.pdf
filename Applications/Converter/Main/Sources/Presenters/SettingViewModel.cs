@@ -21,6 +21,7 @@ namespace Cube.Pdf.Converter;
 using System;
 using System.Threading;
 using Cube.FileSystem;
+using Cube.Globalization;
 using Cube.Observable.Extensions;
 using Cube.Pdf.Converter.Extensions;
 using Cube.Pdf.Ghostscript;
@@ -30,8 +31,8 @@ using Cube.Pdf.Ghostscript;
 /// SettingViewModel
 ///
 /// <summary>
-/// Represents the ViewModel for the general and others tabs in
-/// the main window.
+/// Represents the ViewModel for the General and Misc tabs in the
+/// MainWindow object.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
@@ -58,7 +59,7 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
     {
         Assets.Add(src.Forward(this));
         Assets.Add(src.Value.Appendix.Subscribe(new() {
-            { nameof(src.Value.Appendix.Language), _ => Locale.Set(src.Value.Appendix.Language) },
+            { nameof(src.Value.Appendix.Language), _ => Locale.Reset(src.Value.Appendix.Language) },
         }, Refresh));
     }
 
@@ -217,7 +218,7 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public Uri Uri => Resource.ProductUri;
+    public Uri Uri => Surface.ProductUri;
 
     /* --------------------------------------------------------------------- */
     ///
@@ -405,7 +406,7 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
     public bool Confirm()
     {
         bool fail(string s) { Send(Message.Error(s)); return false; }
-        if (!Io.Exists(Source)) return fail(Properties.Resources.ErrorSource);
+        if (!Io.Exists(Source)) return fail(Surface.Texts.Error_Source);
         if (!Io.Exists(Destination) || SaveOption == SaveOption.Rename) return true;
 
         var msg = Message.From(Destination, SaveOption);

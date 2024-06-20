@@ -4,11 +4,11 @@ CubePDF FAQ
 Copyright © 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
-https://www.cube-soft.jp/cubepdf/
+https://www.cube-soft.com/cubepdf/
 
 ### Introduction
 
-This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF](https://www.cube-soft.jp/en/cubepdf/). For more information on using CubePDF, please refer to [CubePDF Documents](https://en.cube-soft.jp/entry/cubepdf).
+This article contains Frequently Asked Questions (FAQ) about usage of [CubePDF](https://www.cube-soft.com/cubepdf/). For more information on using CubePDF, please refer to [CubePDF Documents](https://en.cube-soft.jp/entry/cubepdf).
 
 ### I don't know how to use CubePDF
 
@@ -24,12 +24,12 @@ CubePDF is a software called **Virtual Printer**, so you cannot run CubePDF dire
 
 CubeSoft, Inc. provides the following software under the name of **CubePDF Series**.
 
-* [CubePDF](https://www.cube-soft.jp/en/cubepdf/) ... Virtual Printer
-* [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/) ... PDF page based editor
-* [CubePDF Page](https://www.cube-soft.jp/en/cubepdfpage/) ... PDF file based editor
+* [CubePDF](https://www.cube-soft.com/cubepdf/) ... Virtual Printer
+* [CubePDF Utility](https://www.cube-soft.com/cubepdfutility/) ... PDF page based editor
+* [CubePDF Page](https://www.cube-soft.com/cubepdfpage/) ... PDF file based editor
 * [CubePDF Clip](https://clown.cube-soft.jp/entry/2017/03/24/cubepdf-clip-1.0.0) ... Software for attaching to PDF files (Japanese)
-* [CubePDF Viewer](https://www.cube-soft.jp/cubepdfviewer/) ... PDF viewer (Japanese)
-* [CubePDF ImagePicker](https://www.cube-soft.jp/cubepdfimagepicker/) ... PDF embedded image picker (Japanese)
+* [CubePDF Viewer](https://www.cube-soft.com/cubepdfviewer/) ... PDF viewer (Japanese)
+* [CubePDF ImagePicker](https://www.cube-soft.com/cubepdfimagepicker/) ... PDF embedded image picker (Japanese)
 
 **These are all different software**. First, please make sure that the software installed in your environment is appropriate for your use. In addition, the functions provided and the layout of the GUI may be changed as a result of version updates.
 
@@ -61,7 +61,7 @@ Also, if you receive the error message "The process cannot access the file becau
 
 ### Can I edit a PDF file?
 
-CubePDF is basically a software for converting PDF files, although you can merge them with other PDF files and set document properties, passwords, etc. during conversion. If you want to edit an existing PDF file in page units such as merging, splitting, rotating, etc., you can use [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/) or [CubePDF Page](https://www.cube-soft.jp/en/cubepdfpage/).
+CubePDF is basically a software for converting PDF files, although you can merge them with other PDF files and set document properties, passwords, etc. during conversion. If you want to edit an existing PDF file in page units such as merging, splitting, rotating, etc., you can use [CubePDF Utility](https://www.cube-soft.com/cubepdfutility/) or [CubePDF Page](https://www.cube-soft.com/cubepdfpage/).
 
 ### Does network communication occur during execution?
 
@@ -88,7 +88,7 @@ Also, CubePDF uses PScript5, which is a standard Windows printer driver, to buil
 
 ### How do I update my version?
 
-To update CubePDF, download the latest version of the installer from the [CubePDF download page](https://www.cube-soft.jp/en/cubepdf/) and run it again, as you did when you first installed it.
+To update CubePDF, download the latest version of the installer from the [CubePDF download page](https://www.cube-soft.com/cubepdf/) and run it again, as you did when you first installed it.
 
 ### What are the install options?
 
@@ -100,4 +100,4 @@ CubePDF outputs installation and execution logs in ```C:\ProgramData\CubeSoft\Cu
 
 ### Can I hide the GUI and automate the conversion?
 
-No, there is no setting to hide the CubePDF main window. However, [CubeVP (Japanese)](https://www.cube-soft.jp/cubevp/) allows users to create more flexible custom virtual printers by programming, including hiding the main window. CubeVP can be used free for personal use, so please consider it as well. In addition, [Tutorial (Japanese)](https://clown.cube-soft.jp/entry/cubevp/tutorial) describes how to register a virtual printer to run CubePDF without the main window.
+No, there is no setting to hide the CubePDF main window. However, [CubeVP (Japanese)](https://www.cube-soft.com/cubevp/) allows users to create more flexible custom virtual printers by programming, including hiding the main window. CubeVP can be used free for personal use, so please consider it as well. In addition, [Tutorial (Japanese)](https://clown.cube-soft.jp/entry/cubevp/tutorial) describes how to register a virtual printer to run CubePDF without the main window.

@@ -98,7 +98,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public static void Load(this MainFacade src, string path)
         {
-            src.Value.SetMessage(Properties.Resources.MessageLoading, path);
+            src.Value.SetMessage(Surface.Texts.Message_Loading, path);
 
             var doc = src.Cache.GetOrAdd(path).GetPdfium();
             src.Value.Source = doc.File;

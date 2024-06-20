@@ -97,7 +97,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Filename => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuFilename,
+            () => Surface.Texts.Metadata_Filename,
             () => Facade.File.Name,
             GetDispatcher(false)
         ));
@@ -113,7 +113,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Document => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuTitle,
+            () => Surface.Texts.Metadata_Title,
             () => Facade.Value.Title,
             e  => Facade.Value.Title = e,
             GetDispatcher(false)
@@ -130,7 +130,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Author => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuAuthor,
+            () => Surface.Texts.Metadata_Author,
             () => Facade.Value.Author,
             e  => Facade.Value.Author = e,
             GetDispatcher(false)
@@ -147,7 +147,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Subject => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuSubject,
+            () => Surface.Texts.Metadata_Subject,
             () => Facade.Value.Subject,
             e  => Facade.Value.Subject = e,
             GetDispatcher(false)
@@ -164,7 +164,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Keywords => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuKeywords,
+            () => Surface.Texts.Metadata_Keyword,
             () => Facade.Value.Keywords,
             e  => Facade.Value.Keywords = e,
             GetDispatcher(false)
@@ -181,7 +181,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Creator => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuCreator,
+            () => Surface.Texts.Metadata_Creator,
             () => Facade.Value.Creator,
             e  => Facade.Value.Creator = e,
             GetDispatcher(false)
@@ -198,7 +198,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Producer => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuProducer,
+            () => Surface.Texts.Metadata_Producer,
             () => Facade.Value.Producer,
             GetDispatcher(false)
         ));
@@ -214,7 +214,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<PdfVersion> Version => Get(() => new BindableElement<PdfVersion>(
-            () => Properties.Resources.MenuVersion,
+            () => Surface.Texts.Metadata_Version,
             () => Facade.Value.Version,
             e  => Facade.Value.Version = e,
             GetDispatcher(false)
@@ -231,7 +231,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<ViewerOption> Option => Get(() => new BindableElement<ViewerOption>(
-            () => Properties.Resources.MenuLayout,
+            () => Surface.Texts.Metadata_Layout,
             () => Facade.Value.Options,
             e  => Facade.Value.Options = e,
             GetDispatcher(false)
@@ -247,7 +247,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<long> Length => Get(() => new BindableElement<long>(
-            () => Properties.Resources.MenuFilesize,
+            () => Surface.Texts.Metadata_Filesize,
             () => Facade.File.Length,
             GetDispatcher(false)
         ));
@@ -263,7 +263,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<DateTime> CreationTime => Get(() => new BindableElement<DateTime>(
-            () => Properties.Resources.MenuCreationTime,
+            () => Surface.Texts.Metadata_CreationTime,
             () => Facade.File.CreationTime,
             GetDispatcher(false)
         ));
@@ -279,7 +279,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<DateTime> LastWriteTime => Get(() => new BindableElement<DateTime>(
-            () => Properties.Resources.MenuLastWriteTime,
+            () => Surface.Texts.Metadata_LastWriteTime,
             () => Facade.File.LastWriteTime,
             GetDispatcher(false)
         ));
@@ -294,7 +294,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Summary => Get(() => new BindableElement(
-            () => Properties.Resources.MenuSummary,
+            () => Surface.Texts.Metadata_Summary,
             GetDispatcher(false)
         ));
 
@@ -308,7 +308,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Details => Get(() => new BindableElement(
-            () => Properties.Resources.MenuDetails,
+            () => Surface.Texts.Metadata_Detail,
             GetDispatcher(false)
         ));
 
@@ -327,7 +327,7 @@ namespace Cube.Pdf.Editor
         /// <returns>String value.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected override string GetTitle() => Properties.Resources.TitleMetadata;
+        protected override string GetTitle() => Surface.Texts.Metadata_Window;
 
         #endregion
     }

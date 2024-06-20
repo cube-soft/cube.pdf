@@ -20,5 +20,5 @@ The Cube.Pdf.Pdfium package is a library to use the [PDFium](https://pdfium.goog
 
 ## License
  
-Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.jp/)
+Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.com/)
 See [License.md](https://github.com/cube-soft/cube.pdf/blob/master/License.md) for more information.

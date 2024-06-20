@@ -27,8 +27,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="{Binding Title}"
-    Height="420"
-    MinHeight="420"
+    Height="445"
+    MinHeight="445"
     Width="550"
     MinWidth="500"
     FontFamily="Meiryo UI"
@@ -85,6 +85,7 @@
                         <RowDefinition Height="26" />
                         <RowDefinition Height="28" />
                         <RowDefinition Height="28" />
+                        <RowDefinition Height="26" />
                         <RowDefinition Height="26" />
                         <RowDefinition Height="26" />
                         <RowDefinition Height="*"/>
@@ -205,10 +206,16 @@
                         Grid.Row="7" />
 
                     <CheckBox
+                        Content="{Binding AutoSort.Text}"
+                        IsChecked="{Binding AutoSort.Value, Mode=TwoWay}"
+                        Grid.Column="1"
+                        Grid.Row="8" />
+
+                    <CheckBox
                         Content="{Binding CheckUpdate.Text}"
                         IsChecked="{Binding CheckUpdate.Value, Mode=TwoWay}"
                         Grid.Column="1"
-                        Grid.Row="8" />
+                        Grid.Row="9" />
                 </Grid>
             </TabItem>
 

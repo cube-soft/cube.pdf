@@ -147,7 +147,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private DataGridViewColumn MakeColumn(string name, string text, float weight, bool right)
+        private static DataGridViewColumn MakeColumn(string name, string text, float weight, bool right)
         {
             var dest = new DataGridViewColumn
             {
@@ -176,13 +176,13 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private string GetColumnText(int column) => column switch
+        private static string GetColumnText(int column) => column switch
         {
-            0 => Properties.Resources.ColumnName,
-            1 => Properties.Resources.ColumnType,
-            2 => Properties.Resources.ColumnPages,
-            3 => Properties.Resources.ColumnDate,
-            4 => Properties.Resources.ColumnLength,
+            0 => Surface.Texts.Column_Filename,
+            1 => Surface.Texts.Column_Filetype,
+            2 => Surface.Texts.Column_Pages,
+            3 => Surface.Texts.Column_Date,
+            4 => Surface.Texts.Column_Filesize,
             _ => "Unknown"
         };
 

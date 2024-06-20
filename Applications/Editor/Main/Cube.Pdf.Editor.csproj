@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>3.0.2</Version>
+        <Version>4.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePdfUtility</Product>
@@ -18,7 +18,6 @@
         <IsPackable>false</IsPackable>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
-        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
         <ApplicationIcon>App.ico</ApplicationIcon>
         <ApplicationManifest>App.manifest</ApplicationManifest>
@@ -41,9 +40,9 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
-        <PackageReference Include="Cube.Xui" Version="8.6.1" />
-        <PackageReference Include="Cube.Logging.NLog" Version="8.6.1" />
-        <PackageReference Include="Cube.Trick" Version="8.6.1" />
+        <PackageReference Include="Cube.Xui" Version="9.0.0" />
+        <PackageReference Include="Cube.Logging.NLog" Version="9.0.0" />
+        <PackageReference Include="Cube.Trick" Version="9.0.0" />
         <PackageReference Include="Fluent.Ribbon" Version="9.0.1" />
         <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
     </ItemGroup>

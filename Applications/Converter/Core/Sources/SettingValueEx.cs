@@ -20,6 +20,7 @@ namespace Cube.Pdf.Converter;
 
 using System.Runtime.Serialization;
 using Cube.DataContract;
+using Cube.Globalization;
 
 /* ------------------------------------------------------------------------- */
 ///

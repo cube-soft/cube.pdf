@@ -19,6 +19,7 @@
 namespace Cube.Pdf.Converter.Tests.Texts;
 
 using System.Threading;
+using Cube.Globalization;
 using Cube.Pdf.Ghostscript;
 using NUnit.Framework;
 
@@ -137,7 +138,7 @@ class MessageTest
     ///
     /* ----------------------------------------------------------------- */
     [TearDown]
-    public void Teardown() => Locale.Set(Language.Auto);
+    public void Teardown() => Locale.Reset(Language.Auto);
 
     #endregion
 }

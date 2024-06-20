@@ -22,6 +22,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Cube.FileSystem;
+using Cube.Globalization;
 using Cube.Tests;
 using Cube.Text.Extensions;
 using Cube.Xui.Converters;
@@ -394,7 +395,7 @@ namespace Cube.Pdf.Editor.Tests.Interactions
         /* ----------------------------------------------------------------- */
         private T Convert<T>(SimplexConverter src, object value, Language lang)
         {
-            Locale.Set(lang);
+            Locale.Reset(lang);
             return Convert<T>(src, value);
         }
 

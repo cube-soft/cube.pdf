@@ -19,7 +19,6 @@
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
         <ApplicationIcon>App.ico</ApplicationIcon>
         <ApplicationManifest>App.manifest</ApplicationManifest>
@@ -41,15 +40,14 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Converter.csproj" />
-        <PackageReference Include="Cube.Forms.Controls" Version="8.6.1" />
-        <PackageReference Include="Cube.Logging.NLog" Version="8.6.1" />
+        <PackageReference Include="Cube.Forms.Controls" Version="9.0.0" />
+        <PackageReference Include="Cube.Logging.NLog" Version="9.0.0" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
         <Compile Update="Sources\Views\*Window.cs" SubType="Form" />
         <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
         <EmbeddedResource Update="Sources\Views\*Window.resx" DependentUpon="%(FIlename).cs" />
-        <EmbeddedResource Update="Sources\Views\MainWindow.*.resx" DependentUpon="MainWindow.cs" />
         <None Include="Assets\**\*" />
         <None Include="App.*" />
         <None Include="NLog.config" CopyToOutputDirectory="Always" />

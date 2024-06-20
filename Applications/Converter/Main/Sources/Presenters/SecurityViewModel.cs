@@ -24,24 +24,24 @@ using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// EncryptionViewModel
+/// SecurityViewModel
 ///
 /// <summary>
 /// Represents the ViewModel for the security tab in the main window.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public sealed class EncryptionViewModel : PresentableBase<Encryption>
+public sealed class SecurityViewModel : PresentableBase<Encryption>
 {
     #region Constructors
 
     /* --------------------------------------------------------------------- */
     ///
-    /// EncryptionViewModel
+    /// SecurityViewModel
     ///
     /// <summary>
-    /// Initializes a new instance of the EncryptionViewModel class
-    /// with the specified arguments.
+    /// Initializes a new instance of the SecurityViewModel class with the
+    /// specified arguments.
     /// </summary>
     ///
     /// <param name="src">PDF encryption information.</param>
@@ -49,7 +49,7 @@ public sealed class EncryptionViewModel : PresentableBase<Encryption>
     /// <param name="ctx">Synchronization context.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public EncryptionViewModel(Encryption src, Aggregator proxy, SynchronizationContext ctx) :
+    public SecurityViewModel(Encryption src, Aggregator proxy, SynchronizationContext ctx) :
         base(src, proxy, ctx) => Assets.Add(src.Forward(this));
 
     #endregion
@@ -332,8 +332,8 @@ public sealed class EncryptionViewModel : PresentableBase<Encryption>
     public bool Confirm()
     {
         bool fail(string s) { Send(Message.Error(s)); return false; }
-        if (Enabled && !OwnerCorrect) return fail(Properties.Resources.ErrorOwnerPassword);
-        if (Enabled && !UserCorrect ) return fail(Properties.Resources.ErrorUserPassword);
+        if (Enabled && !OwnerCorrect) return fail(Surface.Texts.Error_OwnerPassword);
+        if (Enabled && !UserCorrect ) return fail(Surface.Texts.Error_UserPassword);
         return true;
     }
 

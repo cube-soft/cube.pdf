@@ -1,12 +1,12 @@
-Cube.Pdf.Ghostscript
+Cube.Pdf.Generating
 ====
 
-[![Ghostscript](https://badgen.net/nuget/v/cube.pdf.ghostscript?label=gs)](https://www.nuget.org/packages/cube.pdf.ghostscript/)
-[![Native](https://badgen.net/nuget/v/cube.native.ghostscript?label=gs.native)](https://www.nuget.org/packages/cube.native.ghostscript/)
+[![Generating]](https://badgen.net/nuget/v/cube.pdf.generating?label=gs)](https://www.nuget.org/packages/cube.pdf.generating/)
+[![Native](https://badgen.net/nuget/v/cube.native.pdfgen?label=gs.native)](https://www.nuget.org/packages/cube.native.pdfgen/)
 [![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
 [![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
-Cube.Pdf.Ghostscript provides the wrapper APIs for the [Ghostscript](https://www.ghostscript.com/) in the .NET Framework 3.5, 4.6, .NET Standard 2.0, or later. Note that the Cube.Pdf.Ghostscript reuqires the gsdll32.dll. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) NuGet package.
+Cube.Pdf.Generating (Cube.Pdf.Ghostscript) provides the wrapper APIs for the [Ghostscript](https://www.ghostscript.com/) in the .NET Framework 3.5, 4.6, .NET Standard 2.0, or later. Note that the Cube.Pdf.Generating library reuqires the gsdll32.dll. You can download the DLL from [www.ghostscript.com](https://www.ghostscript.com/) or [Cube.Native.Pdfgen](https://www.nuget.org/packages/Cube.Native.Pdfgen) NuGet package.
 
 ## Usage
 
@@ -89,5 +89,5 @@ public class Argument
 
 ## License
  
-Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.jp/)
+Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.com/)
 See [License.md](https://github.com/cube-soft/cube.pdf/blob/master/License.md) for more information.

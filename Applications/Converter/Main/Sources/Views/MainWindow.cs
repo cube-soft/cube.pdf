@@ -24,7 +24,7 @@ using System.Windows.Forms;
 using Cube.Forms;
 using Cube.Forms.Behaviors;
 using Cube.Forms.Binding;
-using Cube.Forms.Globalization;
+using Cube.Globalization;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -72,7 +72,7 @@ public partial class MainWindow : Window
         {
             SettingTabControl.Enabled = !value;
             SettingButton.Visible     = !value;
-            ExecButton.Enabled        = !value;
+            ConvertButton.Enabled     = !value;
             MainProgressBar.Visible   =  value;
             Cursor = value ? Cursors.WaitCursor : Cursors.Default;
         }
@@ -125,32 +125,15 @@ public partial class MainWindow : Window
         if (src is not MainViewModel vm) return;
 
         BindCore(vm);
-
-        Behaviors.Add(new ClickEventBehavior(ExecButton, vm.Invoke));
-        Behaviors.Add(new ClickEventBehavior(SourceButton, vm.SelectSource));
-        Behaviors.Add(new ClickEventBehavior(DestinationButton, vm.SelectDestination));
-        Behaviors.Add(new ClickEventBehavior(UserProgramButton, vm.SelectUserProgram));
-        Behaviors.Add(new ClickEventBehavior(SettingButton, vm.Save));
-        Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
-        Behaviors.Add(new EventBehavior(DestinationTextBox, nameof(LostFocus), vm.ChangeExtension));
-        Behaviors.Add(new PathLintBehavior(SourceTextBox, PathLintToolTip));
-        Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathLintToolTip));
-        Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathLintToolTip));
-        Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
-        Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
-        Behaviors.Add(new CloseBehavior(this, vm));
-        Behaviors.Add(new DialogBehavior(vm));
-        Behaviors.Add(new OpenFileBehavior(vm));
-        Behaviors.Add(new SaveFileBehavior(vm));
-        Behaviors.Add(new ProcessBehavior(vm));
-        Behaviors.Add(Locale.Subscribe(_ => BindText(vm)));
+        BindTexts(vm); // i18n
+        BindBehaviors(vm);
 
         ShortcutKeys.Add(Keys.F1, vm.Help);
     }
 
     #endregion
 
-    #region Implementations
+    #region Bindings
 
     /* --------------------------------------------------------------------- */
     ///
@@ -169,14 +152,14 @@ public partial class MainWindow : Window
         var b0 = Behaviors.Hook(new BindingSource(s0, ""));
         b0.Bind(nameof(s0.Busy), this, nameof(Busy), true);
 
-        // General and Others tab
+        // General and Misc tab
         var s1 = vm.Settings;
         var b1 = Behaviors.Hook(new BindingSource(s1, ""));
         b1.Bind(nameof(s1.Destination),         DestinationTextBox,     nameof(DestinationTextBox.Text));
         b1.Bind(nameof(s1.SaveOption),          SaveOptionComboBox,     nameof(SaveOptionComboBox.SelectedValue));
         b1.Bind(nameof(s1.Format),              FormatComboBox,         nameof(FormatComboBox.SelectedValue));
         b1.Bind(nameof(s1.IsPdf),               PdfVersionComboBox,     nameof(PdfVersionComboBox.Enabled), true);
-        b1.Bind(nameof(s1.ColorMode),           ColorModeComboBox,      nameof(ColorModeComboBox.SelectedValue));
+        b1.Bind(nameof(s1.ColorMode),           ColorComboBox,          nameof(ColorComboBox.SelectedValue));
         b1.Bind(nameof(s1.Resolution),          ResolutionNumeric,      nameof(ResolutionNumeric.Value));
         b1.Bind(nameof(s1.IsPortrait),          PortraitRadioButton,    nameof(PortraitRadioButton.Checked));
         b1.Bind(nameof(s1.IsLandscape),         LandscapeRadioButton,   nameof(LandscapeRadioButton.Checked));
@@ -208,11 +191,11 @@ public partial class MainWindow : Window
         b2.Bind(nameof(s2.Creator),  CreatorTextBox,     nameof(CreatorTextBox.Text));
         b2.Bind(nameof(s2.Options),  ViewOptionComboBox, nameof(ViewOptionComboBox.SelectedValue));
 
-        // Encryption
-        var s3 = vm.Encryption;
+        // Security
+        var s3 = vm.Security;
         var b3 = Behaviors.Hook(new BindingSource(s3, ""));
-        b3.Bind(nameof(s3.Enabled),            EncryptionCheckBox,         nameof(EncryptionCheckBox.Checked));
-        b3.Bind(nameof(s3.Enabled),            EncryptionPanel,            nameof(EncryptionPanel.Enabled), true);
+        b3.Bind(nameof(s3.Enabled),            SecurityInnerPanel,         nameof(SecurityInnerPanel.Enabled), true);
+        b3.Bind(nameof(s3.Enabled),            OwnerPasswordCheckBox,      nameof(OwnerPasswordCheckBox.Checked));
         b3.Bind(nameof(s3.OwnerPassword),      OwnerPasswordTextBox,       nameof(OwnerPasswordTextBox.Text));
         b3.Bind(nameof(s3.OwnerConfirm),       OwnerConfirmTextBox,        nameof(OwnerConfirmTextBox.Text));
         b3.Bind(nameof(s3.OpenWithPassword),   UserPasswordCheckBox,       nameof(UserPasswordCheckBox.Checked));
@@ -229,33 +212,123 @@ public partial class MainWindow : Window
         b3.Bind(nameof(s3.AllowForm),          AllowFormCheckBox,          nameof(AllowFormCheckBox.Checked));
         b3.Bind(nameof(s3.AllowAnnotation),    AllowAnnotationCheckBox,    nameof(AllowAnnotationCheckBox.Checked));
 
-        FormatComboBox.Bind(Resource.Formats);
-        PdfVersionComboBox.Bind(Resource.PdfVersions);
-        LanguageComboBox.Bind(Resource.Languages);
-        BindText(vm); // Text (i18n)
+        FormatComboBox.Bind(Surface.Formats);
+        PdfVersionComboBox.Bind(Surface.PdfVersions);
+        LanguageComboBox.Bind(Surface.Languages);
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// BindText
+    /// BindTexts
     ///
     /// <summary>
-    /// Sets the displayed text with the specified language.
+    /// Sets the displayed texts and related settings.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private void BindText(MainViewModel vm)
+    private void BindTexts(MainViewModel vm)
     {
-        this.Update(vm.Settings.Language);
-        Properties.Resources.Culture = vm.Settings.Language.ToCultureInfo();
-
         Text = vm.Settings.Title;
-        PathLintToolTip.ToolTipTitle = Properties.Resources.ErrorInvalidChars;
+        PathLintToolTip.ToolTipTitle = Surface.Texts.Error_InvalidChars;
+        PortraitRadioButton.Text = Surface.Texts.General_Portrait;
 
-        SaveOptionComboBox.Bind(Resource.SaveOptions);
-        ViewOptionComboBox.Bind(Resource.ViewerOptions);
-        PostProcessComboBox.Bind(Resource.PostProcesses);
-        ColorModeComboBox.Bind(Resource.ColorModes);
+        // Buttons
+        ConvertButton.Text = Surface.Texts.Menu_Convert;
+        ExitButton.Text = Surface.Texts.Menu_Cancel;
+        SettingButton.Text = Surface.Texts.Menu_Save;
+
+        // Tabs
+        GeneralTabPage.Text = Surface.Texts.General_Tab;
+        MetadataTabPage.Text = Surface.Texts.Metadata_Tab;
+        SecurityTabPage.Text = Surface.Texts.Security_Tab;
+        MiscTabPage.Text = Surface.Texts.Misc_Tab;
+
+        // Labels for General tab
+        SourceLabel.Text = Surface.Texts.General_Source;
+        DestinationLabel.Text = Surface.Texts.General_Destination;
+        FormatLabel.Text = Surface.Texts.General_Format;
+        ColorLabel.Text = Surface.Texts.General_Color;
+        ResolutionLabel.Text = Surface.Texts.General_Resolution;
+        OrientationLabel.Text = Surface.Texts.General_Orientation;
+        OptionLabel.Text = Surface.Texts.General_Options;
+        PostProcessLabel.Text = Surface.Texts.General_PostProcess;
+
+        // Labels for Metadata tab
+        TitleLabel.Text = Surface.Texts.Metadata_Title;
+        AuthorLabel.Text = Surface.Texts.Metadata_Author;
+        SubjectLabel.Text = Surface.Texts.Metadata_Subject;
+        KeywordLabel.Text = Surface.Texts.Metadata_Keyword;
+        CreatorLabel.Text = Surface.Texts.Metadata_Creator;
+        ViewOptionLabel.Text = Surface.Texts.Metadata_Layout;
+
+        // Labels for Security tab
+        OwnerPasswordLabel.Text = Surface.Texts.Security_OwnerPassword;
+        OwnerConfirmLabel.Text = Surface.Texts.Security_ConfirmPassword;
+        UserPasswordLabel.Text = Surface.Texts.Security_UserPassword;
+        UserConfirmLabel.Text = Surface.Texts.Security_ConfirmPassword;
+        OperationLabel.Text = Surface.Texts.Security_Operations;
+
+        // Labels for Misc tab
+        AboutLabel.Text = Surface.Texts.Misc_About;
+        LanguageLabel.Text = Surface.Texts.Misc_Language;
+
+        // Menus for General tab (CheckBox, RadioButton, ...)
+        PortraitRadioButton.Text = Surface.Texts.General_Portrait;
+        LandscapeRadioButton.Text = Surface.Texts.General_Landscape;
+        AutoRadioButton.Text = Surface.Texts.General_Auto;
+        LinearizationCheckBox.Text = Surface.Texts.General_Linearization;
+        JpegCheckBox.Text = Surface.Texts.General_Jpeg;
+
+        // Menus for Security tab (CheckBox, RadioButton, ...)
+        OwnerPasswordCheckBox.Text = Surface.Texts.Security_Enable;
+        UserPasswordCheckBox.Text = Surface.Texts.Security_OpenWithPassword;
+        SharePasswordCheckBox.Text = Surface.Texts.Security_SharePassword;
+        AllowPrintCheckBox.Text = Surface.Texts.Security_AllowPrint;
+        AllowCopyCheckBox.Text = Surface.Texts.Security_AllowCopy;
+        AllowModifyCheckBox.Text = Surface.Texts.Security_AllowModify;
+        AllowAccessibilityCheckBox.Text = Surface.Texts.Security_AllowAccessibility;
+        AllowFormCheckBox.Text = Surface.Texts.Security_AllowForm;
+        AllowAnnotationCheckBox.Text = Surface.Texts.Security_AllowAnnotation;
+
+        // Menus for Misc tab (CheckBox, RadioButton, ...)
+        UpdateCheckBox.Text = Surface.Texts.Misc_CheckUpdate;
+
+        // ComboBox items
+        SaveOptionComboBox.Bind(Surface.SaveOptions);
+        ViewOptionComboBox.Bind(Surface.ViewerOptions);
+        PostProcessComboBox.Bind(Surface.PostProcesses);
+        ColorComboBox.Bind(Surface.ColorModes);
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// BindCore
+    ///
+    /// <summary>
+    /// Invokes the binding settings about behaviors.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private void BindBehaviors(MainViewModel vm)
+    {
+        Behaviors.Add(new ClickEventBehavior(ConvertButton, vm.Invoke));
+        Behaviors.Add(new ClickEventBehavior(SourceButton, vm.SelectSource));
+        Behaviors.Add(new ClickEventBehavior(DestinationButton, vm.SelectDestination));
+        Behaviors.Add(new ClickEventBehavior(UserProgramButton, vm.SelectUserProgram));
+        Behaviors.Add(new ClickEventBehavior(SettingButton, vm.Save));
+        Behaviors.Add(new ClickEventBehavior(ExitButton, Close));
+        Behaviors.Add(new EventBehavior(DestinationTextBox, nameof(LostFocus), vm.ChangeExtension));
+        Behaviors.Add(new PathLintBehavior(SourceTextBox, PathLintToolTip));
+        Behaviors.Add(new PathLintBehavior(DestinationTextBox, PathLintToolTip));
+        Behaviors.Add(new PathLintBehavior(UserProgramTextBox, PathLintToolTip));
+        Behaviors.Add(new PasswordLintBehavior(OwnerPasswordTextBox, OwnerConfirmTextBox));
+        Behaviors.Add(new PasswordLintBehavior(UserPasswordTextBox, UserConfirmTextBox));
+        Behaviors.Add(new CloseBehavior(this, vm));
+        Behaviors.Add(new DialogBehavior(vm));
+        Behaviors.Add(new OpenFileBehavior(vm));
+        Behaviors.Add(new SaveFileBehavior(vm));
+        Behaviors.Add(new ProcessBehavior(vm));
+        Behaviors.Add(Locale.Subscribe(_ => BindTexts(vm)));
     }
 
     #endregion

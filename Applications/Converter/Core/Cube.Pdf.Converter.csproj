@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>8.7.4</Version>
+        <Version>9.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>CubePDF SDK.</Description>
@@ -24,7 +24,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
+        <ProjectReference Include="..\..\..\Libraries\Generating\Cube.Pdf.Generating.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
     </ItemGroup>
     <ItemGroup>

@@ -69,65 +69,65 @@
     <value>4</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ColorModeComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="ColorComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ColorModeComboBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ColorComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>112, 105</value>
   </data>
-  <data name="ColorModeComboBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ColorComboBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>378, 23</value>
   </data>
-  <data name="ColorModeComboBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="ColorComboBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;ColorModeComboBox.Name" xml:space="preserve">
-    <value>ColorModeComboBox</value>
+  <data name="&gt;&gt;ColorComboBox.Name" xml:space="preserve">
+    <value>ColorComboBox</value>
   </data>
-  <data name="&gt;&gt;ColorModeComboBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;ColorComboBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ColorModeComboBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ColorComboBox.Parent" xml:space="preserve">
     <value>GeneralPanel</value>
   </data>
-  <data name="&gt;&gt;ColorModeComboBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ColorComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="ColorModeLabel.AutoSize" type="System.Boolean, mscorlib">
+  <data name="ColorLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="ColorModeLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="ColorLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="ColorModeLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="ColorLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="ColorModeLabel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ColorLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 102</value>
   </data>
-  <data name="ColorModeLabel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ColorLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>94, 29</value>
   </data>
-  <data name="ColorModeLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="ColorLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="ColorModeLabel.Text" xml:space="preserve">
+  <data name="ColorLabel.Text" xml:space="preserve">
     <value>Color</value>
   </data>
-  <data name="ColorModeLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="ColorLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <data name="&gt;&gt;ColorModeLabel.Name" xml:space="preserve">
-    <value>ColorModeLabel</value>
+  <data name="&gt;&gt;ColorLabel.Name" xml:space="preserve">
+    <value>ColorLabel</value>
   </data>
-  <data name="&gt;&gt;ColorModeLabel.Type" xml:space="preserve">
+  <data name="&gt;&gt;ColorLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ColorModeLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ColorLabel.Parent" xml:space="preserve">
     <value>GeneralPanel</value>
   </data>
-  <data name="&gt;&gt;ColorModeLabel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ColorLabel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="SaveOptionComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1043,7 +1043,7 @@
     <value>0</value>
   </data>
   <data name="GeneralPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ColorModeComboBox" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="ColorModeLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SaveOptionComboBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="LinearizationCheckBox" Row="8" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="JpegCheckBox" Row="7" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="OptionLabel" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionNumeric" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessComboBox" Row="9" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserProgramPanel" Row="10" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="OrientationPanel" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="OrientationLabel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SourcePanel" Row="11" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="SourceLabel" Row="11" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessLabel" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DestinationLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FormatLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DestinationPanel" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="FormatPanel" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Absolute,100,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,15,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,25,Absolute,25,Absolute,25,Absolute,29,Absolute,29,Absolute,29" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ColorComboBox" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="ColorLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SaveOptionComboBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="LinearizationCheckBox" Row="8" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="JpegCheckBox" Row="7" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="OptionLabel" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionNumeric" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessComboBox" Row="9" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="UserProgramPanel" Row="10" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="OrientationPanel" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="OrientationLabel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SourcePanel" Row="11" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="SourceLabel" Row="11" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="PostProcessLabel" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DestinationLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ResolutionLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FormatLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="DestinationPanel" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="FormatPanel" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Absolute,100,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,15,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,25,Absolute,25,Absolute,25,Absolute,29,Absolute,29,Absolute,29" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="GeneralTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -1069,7 +1069,7 @@
   <data name="&gt;&gt;GeneralTabPage.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="DocumentPage.AutoScroll" type="System.Boolean, mscorlib">
+  <data name="MetadataTabPage.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="DocumentPanel.ColumnCount" type="System.Int32, mscorlib">
@@ -1099,40 +1099,40 @@
   <data name="&gt;&gt;ViewOptionComboBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="ViewerOptionLabel.AutoSize" type="System.Boolean, mscorlib">
+  <data name="ViewOptionLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="ViewerOptionLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="ViewOptionLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="ViewerOptionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="ViewOptionLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="ViewerOptionLabel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ViewOptionLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 160</value>
   </data>
-  <data name="ViewerOptionLabel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ViewOptionLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>94, 29</value>
   </data>
-  <data name="ViewerOptionLabel.TabIndex" type="System.Int32, mscorlib">
+  <data name="ViewOptionLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="ViewerOptionLabel.Text" xml:space="preserve">
+  <data name="ViewOptionLabel.Text" xml:space="preserve">
     <value>Layout</value>
   </data>
-  <data name="ViewerOptionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+  <data name="ViewOptionLabel.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
-  <data name="&gt;&gt;ViewerOptionLabel.Name" xml:space="preserve">
-    <value>ViewerOptionLabel</value>
+  <data name="&gt;&gt;ViewOptionLabel.Name" xml:space="preserve">
+    <value>ViewOptionLabel</value>
   </data>
-  <data name="&gt;&gt;ViewerOptionLabel.Type" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ViewerOptionLabel.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionLabel.Parent" xml:space="preserve">
     <value>DocumentPanel</value>
   </data>
-  <data name="&gt;&gt;ViewerOptionLabel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ViewOptionLabel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="CreatorTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1457,78 +1457,78 @@
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;DocumentPanel.Parent" xml:space="preserve">
-    <value>DocumentPage</value>
+    <value>MetadataTabPage</value>
   </data>
   <data name="&gt;&gt;DocumentPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="DocumentPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ViewOptionComboBox" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="ViewerOptionLabel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsTextBox" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="KeywordLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Absolute,100,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,15,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ViewOptionComboBox" Row="6" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="ViewOptionLabel" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="CreatorTextBox" Row="5" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="CreatorLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeywordsTextBox" Row="4" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="KeywordLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SubjectTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="SubjectLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="AuthorTextBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="AuthorLabel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TitleTextBox" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="TitleLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Absolute,100,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,15,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <data name="DocumentPage.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="MetadataTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
   </data>
-  <data name="DocumentPage.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MetadataTabPage.Size" type="System.Drawing.Size, System.Drawing">
     <value>482, 368</value>
   </data>
-  <data name="DocumentPage.TabIndex" type="System.Int32, mscorlib">
+  <data name="MetadataTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="DocumentPage.Text" xml:space="preserve">
+  <data name="MetadataTabPage.Text" xml:space="preserve">
     <value>Metadata</value>
   </data>
-  <data name="&gt;&gt;DocumentPage.Name" xml:space="preserve">
-    <value>DocumentPage</value>
+  <data name="&gt;&gt;MetadataTabPage.Name" xml:space="preserve">
+    <value>MetadataTabPage</value>
   </data>
-  <data name="&gt;&gt;DocumentPage.Type" xml:space="preserve">
+  <data name="&gt;&gt;MetadataTabPage.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;DocumentPage.Parent" xml:space="preserve">
+  <data name="&gt;&gt;MetadataTabPage.Parent" xml:space="preserve">
     <value>SettingTabControl</value>
   </data>
-  <data name="&gt;&gt;DocumentPage.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;MetadataTabPage.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="EncryptionTabPage.AutoScroll" type="System.Boolean, mscorlib">
+  <data name="SecurityTabPage.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="EncryptionOuterPanel.ColumnCount" type="System.Int32, mscorlib">
+  <data name="SecurityPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="EncryptionCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="OwnerPasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="EncryptionCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="OwnerPasswordCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="EncryptionCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="OwnerPasswordCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 15</value>
   </data>
-  <data name="EncryptionCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="OwnerPasswordCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 0, 0, 0</value>
   </data>
-  <data name="EncryptionCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="OwnerPasswordCheckBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>461, 25</value>
   </data>
-  <data name="EncryptionCheckBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="OwnerPasswordCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="EncryptionCheckBox.Text" xml:space="preserve">
+  <data name="OwnerPasswordCheckBox.Text" xml:space="preserve">
     <value>Encrypt the PDF with password</value>
   </data>
-  <data name="&gt;&gt;EncryptionCheckBox.Name" xml:space="preserve">
-    <value>EncryptionCheckBox</value>
+  <data name="&gt;&gt;OwnerPasswordCheckBox.Name" xml:space="preserve">
+    <value>OwnerPasswordCheckBox</value>
   </data>
-  <data name="&gt;&gt;EncryptionCheckBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;OwnerPasswordCheckBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;EncryptionCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionOuterPanel</value>
+  <data name="&gt;&gt;OwnerPasswordCheckBox.Parent" xml:space="preserve">
+    <value>SecurityPanel</value>
   </data>
-  <data name="&gt;&gt;EncryptionCheckBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;OwnerPasswordCheckBox.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="EncryptionPanel.ColumnCount" type="System.Int32, mscorlib">
+  <data name="SecurityInnerPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
   <data name="UserPasswordCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1559,7 +1559,7 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;UserPasswordCheckBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>SecurityInnerPanel</value>
   </data>
   <data name="&gt;&gt;UserPasswordCheckBox.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1595,7 +1595,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OperationLabel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>SecurityInnerPanel</value>
   </data>
   <data name="&gt;&gt;OperationLabel.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -1619,7 +1619,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmTextBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>SecurityInnerPanel</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmTextBox.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -1655,7 +1655,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmLabel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>SecurityInnerPanel</value>
   </data>
   <data name="&gt;&gt;OwnerConfirmLabel.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -1679,7 +1679,7 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordTextBox.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>SecurityInnerPanel</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordTextBox.ZOrder" xml:space="preserve">
     <value>4</value>
@@ -1715,7 +1715,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordLabel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>SecurityInnerPanel</value>
   </data>
   <data name="&gt;&gt;OwnerPasswordLabel.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -2171,7 +2171,7 @@
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;OperationPanel.Parent" xml:space="preserve">
-    <value>EncryptionPanel</value>
+    <value>SecurityInnerPanel</value>
   </data>
   <data name="&gt;&gt;OperationPanel.ZOrder" xml:space="preserve">
     <value>6</value>
@@ -2179,97 +2179,97 @@
   <data name="OperationPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SharePasswordCheckBox" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="UserPasswordPanel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="PermissionPanel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Absolute,58,Absolute,25,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <data name="EncryptionPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="SecurityInnerPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="EncryptionPanel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SecurityInnerPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 40</value>
   </data>
-  <data name="EncryptionPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="SecurityInnerPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
-  <data name="EncryptionPanel.RowCount" type="System.Int32, mscorlib">
+  <data name="SecurityInnerPanel.RowCount" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="EncryptionPanel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SecurityInnerPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>464, 316</value>
   </data>
-  <data name="EncryptionPanel.TabIndex" type="System.Int32, mscorlib">
+  <data name="SecurityInnerPanel.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;EncryptionPanel.Name" xml:space="preserve">
-    <value>EncryptionPanel</value>
+  <data name="&gt;&gt;SecurityInnerPanel.Name" xml:space="preserve">
+    <value>SecurityInnerPanel</value>
   </data>
-  <data name="&gt;&gt;EncryptionPanel.Type" xml:space="preserve">
+  <data name="&gt;&gt;SecurityInnerPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;EncryptionPanel.Parent" xml:space="preserve">
-    <value>EncryptionOuterPanel</value>
+  <data name="&gt;&gt;SecurityInnerPanel.Parent" xml:space="preserve">
+    <value>SecurityPanel</value>
   </data>
-  <data name="&gt;&gt;EncryptionPanel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SecurityInnerPanel.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="EncryptionPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+  <data name="SecurityInnerPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="UserPasswordCheckBox" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OperationLabel" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmTextBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerConfirmLabel" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordTextBox" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="OwnerPasswordLabel" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="OperationPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,100,Percent,100" /&gt;&lt;Rows Styles="Absolute,29,Absolute,29,Absolute,25,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <data name="EncryptionOuterPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="SecurityPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="EncryptionOuterPanel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SecurityPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="EncryptionOuterPanel.RowCount" type="System.Int32, mscorlib">
+  <data name="SecurityPanel.RowCount" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="EncryptionOuterPanel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SecurityPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>482, 356</value>
   </data>
-  <data name="EncryptionOuterPanel.TabIndex" type="System.Int32, mscorlib">
+  <data name="SecurityPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;EncryptionOuterPanel.Name" xml:space="preserve">
-    <value>EncryptionOuterPanel</value>
+  <data name="&gt;&gt;SecurityPanel.Name" xml:space="preserve">
+    <value>SecurityPanel</value>
   </data>
-  <data name="&gt;&gt;EncryptionOuterPanel.Type" xml:space="preserve">
+  <data name="&gt;&gt;SecurityPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;EncryptionOuterPanel.Parent" xml:space="preserve">
-    <value>EncryptionTabPage</value>
+  <data name="&gt;&gt;SecurityPanel.Parent" xml:space="preserve">
+    <value>SecurityTabPage</value>
   </data>
-  <data name="&gt;&gt;EncryptionOuterPanel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SecurityPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="EncryptionOuterPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="EncryptionCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="EncryptionPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,15,Absolute,25,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  <data name="SecurityPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="OwnerPasswordCheckBox" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="SecurityInnerPanel" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,15,Absolute,25,Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <data name="EncryptionTabPage.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="SecurityTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
   </data>
-  <data name="EncryptionTabPage.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="SecurityTabPage.Size" type="System.Drawing.Size, System.Drawing">
     <value>482, 368</value>
   </data>
-  <data name="EncryptionTabPage.TabIndex" type="System.Int32, mscorlib">
+  <data name="SecurityTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="EncryptionTabPage.Text" xml:space="preserve">
+  <data name="SecurityTabPage.Text" xml:space="preserve">
     <value>Security</value>
   </data>
-  <data name="&gt;&gt;EncryptionTabPage.Name" xml:space="preserve">
-    <value>EncryptionTabPage</value>
+  <data name="&gt;&gt;SecurityTabPage.Name" xml:space="preserve">
+    <value>SecurityTabPage</value>
   </data>
-  <data name="&gt;&gt;EncryptionTabPage.Type" xml:space="preserve">
+  <data name="&gt;&gt;SecurityTabPage.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;EncryptionTabPage.Parent" xml:space="preserve">
+  <data name="&gt;&gt;SecurityTabPage.Parent" xml:space="preserve">
     <value>SettingTabControl</value>
   </data>
-  <data name="&gt;&gt;EncryptionTabPage.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;SecurityTabPage.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="OtherTabPage.AutoScroll" type="System.Boolean, mscorlib">
+  <data name="MiscTabPage.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="OtherPanel.ColumnCount" type="System.Int32, mscorlib">
+  <data name="MiscPanel.ColumnCount" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="LanguageLabel.AutoSize" type="System.Boolean, mscorlib">
@@ -2303,7 +2303,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LanguageLabel.Parent" xml:space="preserve">
-    <value>OtherPanel</value>
+    <value>MiscPanel</value>
   </data>
   <data name="&gt;&gt;LanguageLabel.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -2336,7 +2336,7 @@
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;UpdateCheckBox.Parent" xml:space="preserve">
-    <value>OtherPanel</value>
+    <value>MiscPanel</value>
   </data>
   <data name="&gt;&gt;UpdateCheckBox.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -2360,7 +2360,7 @@
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;LanguageComboBox.Parent" xml:space="preserve">
-    <value>OtherPanel</value>
+    <value>MiscPanel</value>
   </data>
   <data name="&gt;&gt;LanguageComboBox.ZOrder" xml:space="preserve">
     <value>2</value>
@@ -2393,7 +2393,7 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;AboutLabel.Parent" xml:space="preserve">
-    <value>OtherPanel</value>
+    <value>MiscPanel</value>
   </data>
   <data name="&gt;&gt;AboutLabel.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -2414,66 +2414,66 @@
     <value>VersionPanel</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Type" xml:space="preserve">
-    <value>Cube.Forms.Controls.VersionControl, Cube.Forms.Controls, Version=8.6.1.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Controls.VersionControl, Cube.Forms.Controls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
   <data name="&gt;&gt;VersionPanel.Parent" xml:space="preserve">
-    <value>OtherPanel</value>
+    <value>MiscPanel</value>
   </data>
   <data name="&gt;&gt;VersionPanel.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="OtherPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="MiscPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
-  <data name="OtherPanel.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="MiscPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="OtherPanel.RowCount" type="System.Int32, mscorlib">
+  <data name="MiscPanel.RowCount" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="OtherPanel.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MiscPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>482, 169</value>
   </data>
-  <data name="OtherPanel.TabIndex" type="System.Int32, mscorlib">
+  <data name="MiscPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;OtherPanel.Name" xml:space="preserve">
-    <value>OtherPanel</value>
+  <data name="&gt;&gt;MiscPanel.Name" xml:space="preserve">
+    <value>MiscPanel</value>
   </data>
-  <data name="&gt;&gt;OtherPanel.Type" xml:space="preserve">
+  <data name="&gt;&gt;MiscPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;OtherPanel.Parent" xml:space="preserve">
-    <value>OtherTabPage</value>
+  <data name="&gt;&gt;MiscPanel.Parent" xml:space="preserve">
+    <value>MiscTabPage</value>
   </data>
-  <data name="&gt;&gt;OtherPanel.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;MiscPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="OtherPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+  <data name="MiscPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="LanguageLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="UpdateCheckBox" Row="2" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="AboutLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="VersionPanel" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,9,Absolute,100,Percent,100,Absolute,9" /&gt;&lt;Rows Styles="Absolute,15,Absolute,100,Absolute,25,Absolute,29" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <data name="OtherTabPage.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="MiscTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
   </data>
-  <data name="OtherTabPage.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MiscTabPage.Size" type="System.Drawing.Size, System.Drawing">
     <value>482, 368</value>
   </data>
-  <data name="OtherTabPage.TabIndex" type="System.Int32, mscorlib">
+  <data name="MiscTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="OtherTabPage.Text" xml:space="preserve">
+  <data name="MiscTabPage.Text" xml:space="preserve">
     <value>Others</value>
   </data>
-  <data name="&gt;&gt;OtherTabPage.Name" xml:space="preserve">
-    <value>OtherTabPage</value>
+  <data name="&gt;&gt;MiscTabPage.Name" xml:space="preserve">
+    <value>MiscTabPage</value>
   </data>
-  <data name="&gt;&gt;OtherTabPage.Type" xml:space="preserve">
+  <data name="&gt;&gt;MiscTabPage.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;OtherTabPage.Parent" xml:space="preserve">
+  <data name="&gt;&gt;MiscTabPage.Parent" xml:space="preserve">
     <value>SettingTabControl</value>
   </data>
-  <data name="&gt;&gt;OtherTabPage.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;MiscTabPage.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="SettingTabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -2593,37 +2593,37 @@
   <data name="&gt;&gt;ToolPanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="ExecButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="ConvertButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="ExecButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+  <data name="ConvertButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
-  <data name="ExecButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="ConvertButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="ExecButton.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="ConvertButton.Location" type="System.Drawing.Point, System.Drawing">
     <value>254, 6</value>
   </data>
-  <data name="ExecButton.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ConvertButton.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 35</value>
   </data>
-  <data name="ExecButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="ConvertButton.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="ExecButton.Text" xml:space="preserve">
+  <data name="ConvertButton.Text" xml:space="preserve">
     <value>Convert</value>
   </data>
-  <data name="&gt;&gt;ExecButton.Name" xml:space="preserve">
-    <value>ExecButton</value>
+  <data name="&gt;&gt;ConvertButton.Name" xml:space="preserve">
+    <value>ConvertButton</value>
   </data>
-  <data name="&gt;&gt;ExecButton.Type" xml:space="preserve">
+  <data name="&gt;&gt;ConvertButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ExecButton.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ConvertButton.Parent" xml:space="preserve">
     <value>FooterPanel</value>
   </data>
-  <data name="&gt;&gt;ExecButton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;ConvertButton.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="ExitButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -2690,36 +2690,36 @@
     <value>1</value>
   </data>
   <data name="FooterPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ToolPanel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ExecButton" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="ExitButton" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,3,Percent,100,Absolute,136,Absolute,126,Absolute,3" /&gt;&lt;Rows Styles="Absolute,3,Percent,100,Absolute,9" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="ToolPanel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="ConvertButton" Row="1" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="ExitButton" Row="1" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,3,Percent,100,Absolute,136,Absolute,126,Absolute,3" /&gt;&lt;Rows Styles="Absolute,3,Percent,100,Absolute,9" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
-  <data name="HeaderPictureBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+  <data name="HeaderPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="HeaderPictureBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="HeaderPanel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="HeaderPictureBox.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="HeaderPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="HeaderPictureBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="HeaderPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
-  <data name="HeaderPictureBox.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="HeaderPanel.Size" type="System.Drawing.Size, System.Drawing">
     <value>528, 50</value>
   </data>
-  <data name="HeaderPictureBox.TabIndex" type="System.Int32, mscorlib">
+  <data name="HeaderPanel.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;HeaderPictureBox.Name" xml:space="preserve">
-    <value>HeaderPictureBox</value>
+  <data name="&gt;&gt;HeaderPanel.Name" xml:space="preserve">
+    <value>HeaderPanel</value>
   </data>
-  <data name="&gt;&gt;HeaderPictureBox.Type" xml:space="preserve">
+  <data name="&gt;&gt;HeaderPanel.Type" xml:space="preserve">
     <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;HeaderPictureBox.Parent" xml:space="preserve">
+  <data name="&gt;&gt;HeaderPanel.Parent" xml:space="preserve">
     <value>RootPanel</value>
   </data>
-  <data name="&gt;&gt;HeaderPictureBox.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;HeaderPanel.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="RootPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -2750,7 +2750,7 @@
     <value>0</value>
   </data>
   <data name="RootPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SettingTabControl" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="HeaderPictureBox" Row="0" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,50,Absolute,6,Percent,100,Absolute,53" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="SettingTabControl" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="FooterPanel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="HeaderPanel" Row="0" RowSpan="1" Column="0" ColumnSpan="3" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Percent,100,Absolute,6" /&gt;&lt;Rows Styles="Absolute,50,Absolute,6,Percent,100,Absolute,53" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="PathLintToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -3229,6 +3229,6 @@
     <value>MainWindow</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>Cube.Forms.Window, Cube.Forms, Version=8.6.1.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
+    <value>Cube.Forms.Window, Cube.Forms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=0e74ef67a48f1ba0</value>
   </data>
 </root>

@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 using System;
 using System.Threading;
+using Cube.Globalization;
 
 namespace Cube.Pdf.Pages
 {
@@ -161,7 +162,7 @@ namespace Cube.Pdf.Pages
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public Uri Uri => Resource.ProductUri;
+        public Uri Uri => Surface.ProductUri;
 
         #endregion
 

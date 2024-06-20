@@ -136,7 +136,7 @@ public static class Message
     public static OpenFileMessage ForSource(SettingFolder src)
     {
         var path = src.Value.Source;
-        var dest = new OpenFileMessage(Properties.Resources.TitleSelectSource)
+        var dest = new OpenFileMessage(Surface.Texts.Window_Source)
         {
             Value   = GetFileNames(path),
             Filters = src.Value.Extensions.GetSourceFilters(),
@@ -164,7 +164,7 @@ public static class Message
     public static SaveFileMessage ForDestination(SettingFolder src)
     {
         var path = src.Value.Destination;
-        var dest = new SaveFileMessage(Properties.Resources.TitleSelectDestination)
+        var dest = new SaveFileMessage(Surface.Texts.Window_Destination)
         {
             Value   = GetFileName(path),
             Filters = src.Value.Extensions.GetDestinationFilters(),
@@ -192,7 +192,7 @@ public static class Message
     public static OpenFileMessage ForUserProgram(SettingFolder src)
     {
         var path = src.Value.UserProgram;
-        var dest = new OpenFileMessage(Properties.Resources.TitleSelectUserProgram)
+        var dest = new OpenFileMessage(Surface.Texts.Window_UserProgram)
         {
             Value   = GetFileNames(path),
             Filters = src.Value.Extensions.GetProgramFilters(),
@@ -218,10 +218,10 @@ public static class Message
     /* --------------------------------------------------------------------- */
     private static string GetMessage(Exception src) => src switch
     {
-        CryptographicException => Properties.Resources.ErrorDigest,
-        EncryptionException    => Properties.Resources.ErrorMergePassword,
-        PostProcessException   => Properties.Resources.ErrorPostProcess,
-        GsApiException e       => string.Format(Properties.Resources.ErrorGhostscript, e.Status),
+        CryptographicException => Surface.Texts.Error_Digest,
+        EncryptionException    => Surface.Texts.Error_MergePassword,
+        PostProcessException   => Surface.Texts.Error_PostProcess,
+        GsApiException e       => string.Format(Surface.Texts.Error_Ghostscript, e.Status),
         ArgumentException      => src.Message,
         _                      => $"{src.Message} ({src.GetType().Name})",
     };
@@ -237,7 +237,7 @@ public static class Message
     /* --------------------------------------------------------------------- */
     private static string GetMessage(string src, SaveOption option)
     {
-        var s0 = string.Format(Properties.Resources.WarnExists, src);
+        var s0 = string.Format(Surface.Texts.Warn_Exist, src);
         return $"{s0} {GetMessage(option)}";
     }
 
@@ -252,9 +252,9 @@ public static class Message
     /* --------------------------------------------------------------------- */
     private static string GetMessage(SaveOption src) => src switch
     {
-        SaveOption.Overwrite => Properties.Resources.WarnOverwrite,
-        SaveOption.MergeHead => Properties.Resources.WarnMergeHead,
-        SaveOption.MergeTail => Properties.Resources.WarnMergeTail,
+        SaveOption.Overwrite => Surface.Texts.Warn_Overwrite,
+        SaveOption.MergeHead => Surface.Texts.Warn_MergeHead,
+        SaveOption.MergeTail => Surface.Texts.Warn_MergeTail,
         _                    => string.Empty,
     };
 
