@@ -29,6 +29,7 @@ namespace Cube.Pdf.Editor;
 /* ------------------------------------------------------------------------- */
 internal class GermanText() : Globalization.TextGroup(new()
 {
+    // ReSharper disable StringLiteralTypo
     // Menus. Note that Menu_*_Long values are used for tooltips.
     { nameof(Text.Menu_Ok), "OK" },
     { nameof(Text.Menu_Cancel), "Abbrechen" },
@@ -88,6 +89,7 @@ internal class GermanText() : Globalization.TextGroup(new()
     { nameof(Text.Setting_Shrink), "Duplizierte Ressourcen reduzieren" },
     { nameof(Text.Setting_KeepOutline), "Bookmarks der Quell-PDF-Datei behalten" },
     { nameof(Text.Setting_Recent), "Kürzlich verwendete Dateien zeigen" },
+    { nameof(Text.Setting_AutoSort), "Automatische Sortierung bei Auswahl von Dateien" },
     { nameof(Text.Setting_CheckUpdate), "Beim Start nach Updates suchen" },
 
     // Metadata window

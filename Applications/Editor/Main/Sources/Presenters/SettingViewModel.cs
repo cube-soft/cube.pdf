@@ -63,6 +63,7 @@ namespace Cube.Pdf.Editor
             Temp.Value             = Facade.Value.Temp;
             Language.Value         = Facade.Value.Language;
             RecentVisible.Value    = Facade.Value.RecentVisible;
+            AutoSort.Value         = Facade.Value.AutoSort;
             CheckUpdate.Value      = Facade.Startup.Enabled;
 
             OK.Command = new DelegateCommand(() => Quit(Apply, true));
@@ -114,6 +115,21 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public IElement<bool> RecentVisible => Get(() => new BindableElement<bool>(
             () => Surface.Texts.Setting_Recent,
+            GetDispatcher(false)
+        ));
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AutoSort
+        ///
+        /// <summary>
+        /// Gets the menu indicating whether to sort automatically when
+        /// multiple files are selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public IElement<bool> AutoSort => Get(() => new BindableElement<bool>(
+            () => Surface.Texts.Setting_AutoSort,
             GetDispatcher(false)
         ));
 
@@ -366,6 +382,7 @@ namespace Cube.Pdf.Editor
             Facade.Value.Temp             = Temp.Value;
             Facade.Value.Language         = Language.Value;
             Facade.Value.RecentVisible    = RecentVisible.Value;
+            Facade.Value.AutoSort         = AutoSort.Value;
             Facade.Startup.Enabled        = CheckUpdate.Value;
         }
 

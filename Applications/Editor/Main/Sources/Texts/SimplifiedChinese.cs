@@ -29,6 +29,7 @@ namespace Cube.Pdf.Editor;
 /* ------------------------------------------------------------------------- */
 internal class SimplifiedChineseText() : Globalization.TextGroup(new()
 {
+    // ReSharper disable StringLiteralTypo
     // Menus. Note that Menu_*_Long values are used for tooltips.
     { nameof(Text.Menu_Ok), "确定" },
     { nameof(Text.Menu_Cancel), "取消" },
@@ -88,6 +89,7 @@ internal class SimplifiedChineseText() : Globalization.TextGroup(new()
     { nameof(Text.Setting_Shrink), "减少重复资源" },
     { nameof(Text.Setting_KeepOutline), "保留源 PDF 文件的书签" },
     { nameof(Text.Setting_Recent), "显示最近使用的文件" },
+    { nameof(Text.Setting_AutoSort), "选择文件时自动排序" },
     { nameof(Text.Setting_CheckUpdate), "启动时检查更新" },
 
     // Metadata window
