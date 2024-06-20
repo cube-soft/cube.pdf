@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using Cube.Collections;
 using Cube.FileSystem;
 using Cube.Generics.Extensions;
 using Cube.Icons;
@@ -91,7 +90,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public static IEnumerable<string> Sort(this IEnumerable<string> src) =>
-            src?.OrderBy(e => e, new NumericStringComparer());
+            src?.OrderBy(e => e, new PathComparer());
 
         /* ----------------------------------------------------------------- */
         ///

@@ -22,8 +22,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Cube.Collections;
 using Cube.Collections.Extensions;
+using Cube.FileSystem;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -114,7 +114,7 @@ public sealed class InsertFacade
     /* --------------------------------------------------------------------- */
     public void Add(IEnumerable<string> src)
     {
-        var cvt = Settings.AutoSort ? src.OrderBy(e => e, new NumericStringComparer()) : src;
+        var cvt = Settings.AutoSort ? src.OrderBy(e => e, new PathComparer()) : src;
         foreach (var e in cvt) Value.Files.Add(new(e, Value.Selection));
     }
 

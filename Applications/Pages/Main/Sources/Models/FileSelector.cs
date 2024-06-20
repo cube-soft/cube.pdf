@@ -122,7 +122,7 @@ public class FileSelector
     ///
     /* --------------------------------------------------------------------- */
     private IEnumerable<string> SortItems(IEnumerable<string> src) =>
-        Sort ? src.OrderBy(e => e, new NumericStringComparer()) : src;
+        Sort ? src.OrderBy(e => e, new PathComparer()) : src;
 
     #endregion
 }
