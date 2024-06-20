@@ -9,12 +9,12 @@ The Cube.Pdf package provides basic data structures of the CubePDF SDKs (Cube.Pd
 These packages are available for .NET Framework 3.5, 4.6, .NET Standard 2.0, or later.
 See also:
 
-* [Cube.Pdf.Ghostsript](https://www.nuget.org/packages/cube.pdf.ghostscript/)
-* [Cube.Pdf.Itext](https://www.nuget.org/packages/cube.pdf.itext/)
 * [Cube.Pdf.Pdfium](https://www.nuget.org/packages/cube.pdf.pdfium/)
+* [Cube.Pdf.Itext](https://www.nuget.org/packages/cube.pdf.itext/)
+* [Cube.Pdf.Generating](https://www.nuget.org/packages/cube.pdf.generating/)
 * [Cube.Pdf.Converter](https://www.nuget.org/packages/cube.pdf.converter/)
 
-Note that the Cube.Pdf.Converter package provides the [CubePDF](https://wwww.cube-soft.jp/cubepdf/) conversion functions without GUI.
+Note that the Cube.Pdf.Converter package provides the [CubePDF](https://wwww.cube-soft.com/cubepdf/) conversion functions without GUI.
 
 ## Contributing
 
@@ -27,5 +27,5 @@ Note that the Cube.Pdf.Converter package provides the [CubePDF](https://wwww.cub
 
 ## License
  
-Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.jp/)
+Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.com/)
 See [License.md](https://github.com/cube-soft/cube.pdf/blob/master/License.md) for more information.

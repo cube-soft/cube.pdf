@@ -100,7 +100,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> Enabled => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuEncryptionEnabled,
+            () => Surface.Texts.Security_Enable,
             () => Facade.Value.Enabled,
             e  => Facade.Value.Enabled = e,
             GetDispatcher(false)
@@ -116,7 +116,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> Operation => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuOperations,
+            () => Surface.Texts.Security_Operations,
             () => !OpenPassword.Value || !SharePassword.Value,
             GetDispatcher(false)
         ).Hook(OpenPassword).Hook(SharePassword));
@@ -131,7 +131,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<EncryptionMethod> Method => Get(() => new BindableElement<EncryptionMethod>(
-            () => Properties.Resources.MenuEncryptionMethod,
+            () => Surface.Texts.Security_Method,
             () => Facade.Value.Method,
             e  => Facade.Value.Method = e,
             GetDispatcher(false)
@@ -147,7 +147,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> OwnerPassword => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuOwnerPassword,
+            () => Surface.Texts.Security_OwnerPassword,
             () => Facade.Value.OwnerPassword,
             e  => Facade.Value.OwnerPassword = e,
             GetDispatcher(false)
@@ -163,7 +163,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> OwnerConfirm => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuConfirmPassword,
+            () => Surface.Texts.Security_ConfirmPassword,
             () => Facade.OwnerConfirm,
             e  => Facade.OwnerConfirm = e,
             GetDispatcher(false)
@@ -179,7 +179,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> UserPassword => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuUserPassword,
+            () => Surface.Texts.Security_UserPassword,
             () => Facade.Value.UserPassword,
             e  => Facade.Value.UserPassword = e,
             GetDispatcher(false)
@@ -195,7 +195,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> UserConfirm => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuConfirmPassword,
+            () => Surface.Texts.Security_ConfirmPassword,
             () => Facade.UserConfirm,
             e  => Facade.UserConfirm = e,
             GetDispatcher(false)
@@ -211,7 +211,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> OpenPassword => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuOpenWithPassword,
+            () => Surface.Texts.Security_OpenWithPassword,
             () => Facade.Value.OpenWithPassword,
             e  => Facade.Value.OpenWithPassword = e,
             GetDispatcher(false)
@@ -228,7 +228,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> SharePassword => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuSharePassword,
+            () => Surface.Texts.Security_SharePassword,
             () => Facade.SharePassword,
             e  => Facade.SharePassword = e,
             GetDispatcher(false)
@@ -244,7 +244,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> AllowPrint => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuAllowPrint,
+            () => Surface.Texts.Security_AllowPrint,
             () => Facade.Value.Permission.Print.IsAllowed(),
             e  => Facade.Value.Permission.Print = Facade.GetPermission(e),
             GetDispatcher(false)
@@ -261,7 +261,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> AllowCopy => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuAllowCopy,
+            () => Surface.Texts.Security_AllowCopy,
             () => Facade.Value.Permission.CopyContents.IsAllowed(),
             e  => Facade.Value.Permission.CopyContents = Facade.GetPermission(e),
             GetDispatcher(false)
@@ -278,7 +278,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> AllowModify => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuAllowAssemble,
+            () => Surface.Texts.Security_AllowModify,
             () => Facade.Value.Permission.ModifyContents.IsAllowed(),
             e  => Facade.Value.Permission.ModifyContents = Facade.GetPermission(e),
             GetDispatcher(false)
@@ -295,7 +295,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> AllowAccessibility => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuAllowAccessibility,
+            () => Surface.Texts.Security_AllowAccessibility,
             () => Facade.Value.Permission.Accessibility.IsAllowed(),
             e  => Facade.Value.Permission.Accessibility = Facade.GetPermission(e),
             GetDispatcher(false)
@@ -311,7 +311,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> AllowForm => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuAllowForm,
+            () => Surface.Texts.Security_AllowForm,
             () => Facade.Value.Permission.InputForm.IsAllowed(),
             e  => Facade.Value.Permission.InputForm = Facade.GetPermission(e),
             GetDispatcher(false)
@@ -328,7 +328,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> AllowAnnotation => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuAllowAnnotation,
+            () => Surface.Texts.Security_AllowAnnotation,
             () => Facade.Value.Permission.ModifyAnnotations.IsAllowed(),
             e  => Facade.Value.Permission.ModifyAnnotations = Facade.GetPermission(e),
             GetDispatcher(false)
@@ -351,7 +351,7 @@ namespace Cube.Pdf.Editor
         /// <returns>String value.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected override string GetTitle() => Properties.Resources.TitleEncryption;
+        protected override string GetTitle() => Surface.Texts.Security_Window;
 
         #endregion
     }

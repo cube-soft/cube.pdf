@@ -2,7 +2,7 @@ CubePDF Series
 ====
 
 [![Core](https://badgen.net/nuget/v/cube.pdf?label=core)](https://www.nuget.org/packages/cube.pdf/)
-[![Ghostscript](https://badgen.net/nuget/v/cube.pdf.ghostscript?label=gs)](https://www.nuget.org/packages/cube.pdf.ghostscript/)
+[![Ghostscript](https://badgen.net/nuget/v/cube.pdf.generating?label=gs)](https://www.nuget.org/packages/cube.pdf.generating/)
 [![iText](https://badgen.net/nuget/v/cube.pdf.itext?label=itext)](https://www.nuget.org/packages/cube.pdf.itext/)
 [![PDFium](https://badgen.net/nuget/v/cube.pdf.pdfium?label=pdfium)](https://www.nuget.org/packages/cube.pdf.pdfium/)
 [![CubePDF](https://badgen.net/nuget/v/cube.pdf.converter?label=cubepdf)](https://www.nuget.org/packages/cube.pdf.converter/)
@@ -14,9 +14,9 @@ CubePDF Series
 
 The project provides the following Windows desktop applications:
 
-* [CubePDF](https://www.cube-soft.jp/cubepdf/) ... Virtual printer-based PDF conversion software
-* [CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) ... Thumbnail-based PDF editing software
-* [CubePDF Page](https://www.cube-soft.jp/cubepdfpage/) ... PDF editing software specialized in file-based merging
+* [CubePDF](https://www.cube-soft.com/cubepdf/) ... Virtual printer-based PDF conversion software
+* [CubePDF Utility](https://www.cube-soft.com/cubepdfutility/) ... Thumbnail-based PDF editing software
+* [CubePDF Page](https://www.cube-soft.com/cubepdfpage/) ... PDF editing software specialized in file-based merging
 
 Moreover, CubePDF SDK provides wrapper APIs for the [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), and [iText](https://itextpdf.com/) libraries.
 
@@ -26,25 +26,25 @@ Libraries and applications are available for .NET Framework 3.5, 4.7, .NET Stand
 
 ![CubePDF overview](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdf/doc/v2/en/overview.png)
 
-[CubePDF](https://www.cube-soft.jp/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries. For more information, see [CubePDF Documents](https://docs.cube-soft.jp/entry/cubepdf).
+[CubePDF](https://www.cube-soft.com/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries. For more information, see [CubePDF Documents](https://docs.cube-soft.jp/entry/cubepdf).
 
-You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Converter) (except for the virtual printer).
+You can get the executable installer from the [download page](https://www.cube-soft.com/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Converter) (except for the virtual printer).
 
 ## CubePDF Utility
 
 ![CubePDF Utility overview](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfutility/doc/v1/en/overview.png)
 
-[CubePDF Utility](https://www.cube-soft.jp/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries. For more information, see [CubePDF Utility Documents](https://docs.cube-soft.jp/entry/cubepdf-utility).
+[CubePDF Utility](https://www.cube-soft.com/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries. For more information, see [CubePDF Utility Documents](https://docs.cube-soft.jp/entry/cubepdf-utility).
 
-You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Editor).
+You can get the executable installer from the [download page](https://www.cube-soft.com/cubepdfutility/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Editor).
 
 ## CubePDF Page
 
 ![CubePDF Page overview](https://raw.githubusercontent.com/cube-soft/cube.assets/master/cubepdfpage/doc/v2/en/main.png)
 
-[CubPDF Page](https://www.cube-soft.jp/cubepdfpage/) is a software for merging or splitting existing PDF and image files. You can also add various PDF metadata and encryption settings to the merged or split PDF file. For more information, see [CubePDF Page Documents](https://docs.cube-soft.jp/entry/cubepdf-page).
+[CubPDF Page](https://www.cube-soft.com/cubepdfpage/) is a software for merging or splitting existing PDF and image files. You can also add various PDF metadata and encryption settings to the merged or split PDF file. For more information, see [CubePDF Page Documents](https://docs.cube-soft.jp/entry/cubepdf-page).
 
-You can get the executable installer from the [download page](https://www.cube-soft.jp/cubepdfutility/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF Page are in the [Applications/Pages](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Pages).
+You can get the executable installer from the [download page](https://www.cube-soft.com/cubepdfpage/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF Page are in the [Applications/Pages](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Pages).
 
 ## CubePDF SDK
 
@@ -97,7 +97,7 @@ using (var writer = new DocumentWriter())
 
 ### Ghostscript wrapper
 
-When you convert from PostScript to any other formats, you can use the Cube.Pdf.Ghostscript library.
+When you convert from PostScript to any other formats, you can use the Cube.Pdf.Generating (Cube.Pdf.Ghostscript) library.
 The following code converts to the PDF file.
 
 ```cs
@@ -138,5 +138,5 @@ Dependencies of [Libraries](https://github.com/cube-soft/cube.pdf/tree/master/Li
 
 ## License
  
-Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.jp/)
+Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.com/)
 See [License.md](https://github.com/cube-soft/cube.pdf/blob/master/License.md) for more information.

@@ -16,6 +16,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using Cube.Globalization;
 using NUnit.Framework;
 
 namespace Cube.Pdf.Editor.Tests.Presenters
@@ -53,6 +54,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.File.Text,          Is.EqualTo("File"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("Edit"));
             Assert.That(dest.Others.Text,        Is.EqualTo("Others"));
+            Assert.That(dest.Help.Text,          Is.EqualTo("Help"));
             Assert.That(dest.Open.Text,          Is.EqualTo("Open"));
             Assert.That(dest.Save.Text,          Is.EqualTo("Save"));
             Assert.That(dest.Close.Text,         Is.EqualTo("Close"));
@@ -151,9 +153,10 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.File.Text,          Is.EqualTo("ファイル"));
             Assert.That(dest.Edit.Text,          Is.EqualTo("編集"));
             Assert.That(dest.Others.Text,        Is.EqualTo("その他"));
+            Assert.That(dest.Help.Text,          Is.EqualTo("ヘルプ"));
             Assert.That(dest.Open.Text,          Is.EqualTo("開く"));
             Assert.That(dest.Save.Text,          Is.EqualTo("保存"));
-            Assert.That(dest.Close.Text,        Is.EqualTo("閉じる"));
+            Assert.That(dest.Close.Text,         Is.EqualTo("閉じる"));
             Assert.That(dest.Exit.Text,          Is.EqualTo("終了"));
             Assert.That(dest.Undo.Text,          Is.EqualTo("元に戻す"));
             Assert.That(dest.Redo.Text,          Is.EqualTo("やり直し"));
@@ -222,7 +225,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(dest.MoveNext.Tooltip,      Is.EqualTo(dest.MoveNext.Text));
             Assert.That(dest.RotateLeft.Tooltip,    Is.EqualTo(dest.RotateLeft.Text));
             Assert.That(dest.RotateRight.Tooltip,   Is.EqualTo(dest.RotateRight.Text));
-            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("PDF 文書プロパティ"));
+            Assert.That(dest.Metadata.Tooltip,      Is.EqualTo("文書プロパティ"));
             Assert.That(dest.Encryption.Tooltip,    Is.EqualTo(dest.Encryption.Text));
             Assert.That(dest.Redraw.Tooltip,        Is.EqualTo(dest.Redraw.Text));
             Assert.That(dest.ZoomIn.Tooltip,        Is.EqualTo(dest.ZoomIn.Text));

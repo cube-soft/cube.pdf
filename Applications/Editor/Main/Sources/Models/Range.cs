@@ -159,6 +159,6 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public RangeException() : base(Properties.Resources.MessageRangeError) { }
+        public RangeException() : base(Surface.Texts.Error_Range) { }
     }
 }

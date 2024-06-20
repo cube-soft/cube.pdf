@@ -4,7 +4,7 @@ CubePDF Documents
 Copyright © 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
-https://www.cube-soft.jp/cubepdf/
+https://www.cube-soft.com/cubepdf/
 
 ## Overview
 
@@ -127,7 +127,7 @@ Moreover, if a PDF file is recognized as having been opened with an owner passwo
 
 #### Attention about reconversion for the purpose of setting/removing passwords
 
-In some cases, CubePDF is used to reconvert PDF files in order to set a password for the PDF file (e.g., by displaying the PDF file in Microsoft Edge or Adobe Acrobat Reader DC and then printing it). If you use this operation, the appearance of the PDF may differ from the original PDF due to the fact that the printing process is performed once. If your goal is to set a password for a PDF file, please consider using [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/) or [CubePDF Page](https://www.cube-soft.jp/en/cubepdfpage/).
+In some cases, CubePDF is used to reconvert PDF files in order to set a password for the PDF file (e.g., by displaying the PDF file in Microsoft Edge or Adobe Acrobat Reader DC and then printing it). If you use this operation, the appearance of the PDF may differ from the original PDF due to the fact that the printing process is performed once. If your goal is to set a password for a PDF file, please consider using [CubePDF Utility](https://www.cube-soft.com/cubepdfutility/) or [CubePDF Page](https://www.cube-soft.com/cubepdfpage/).
 
 Conversely, we have seen cases where PDF files are reconverted to remove passwords and other security settings set in the PDF file. However, some applications propagate various security settings when printing, in which case CubePDF will fail to convert. This operation is completely unsupported. And please note that no modifications will be made to change this behavior.
 

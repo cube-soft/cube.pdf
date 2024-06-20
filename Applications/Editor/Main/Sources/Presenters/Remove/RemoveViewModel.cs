@@ -77,7 +77,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<int> Count => Get(() => new BindableElement<int>(
-            () => Properties.Resources.MenuPageCount,
+            () => Surface.Texts.Remove_Page,
             () => Facade.Count,
             GetDispatcher(false)
         ));
@@ -92,7 +92,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<string> Range => Get(() => new BindableElement<string>(
-            () => Properties.Resources.MenuTarget,
+            () => Surface.Texts.Remove_Target,
             () => Facade.Range,
             e  => Facade.Range = e,
             GetDispatcher(false)
@@ -108,7 +108,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement Example => Get(() => new BindableElement(
-            () => Properties.Resources.MessageRangeExample,
+            () => Surface.Texts.Message_Range,
             GetDispatcher(false)
         ));
 
@@ -127,7 +127,7 @@ namespace Cube.Pdf.Editor
         /// <returns>String value.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        protected override string GetTitle() => Properties.Resources.TitleRemove;
+        protected override string GetTitle() => Surface.Texts.Remove_Window;
 
         #endregion
     }

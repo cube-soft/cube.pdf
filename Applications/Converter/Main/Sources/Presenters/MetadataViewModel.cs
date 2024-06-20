@@ -182,7 +182,7 @@ public sealed class MetadataViewModel : PresentableBase<Metadata>
         var src = new[] { Title, Author, Subject, Keywords };
         if (src.All(e => !e.HasValue())) return true;
 
-        var msg = Message.Warn(Properties.Resources.WarnSaveSettings);
+        var msg = Message.Warn(Surface.Texts.Warn_Metadata);
         Send(msg);
         return !msg.Cancel;
     }

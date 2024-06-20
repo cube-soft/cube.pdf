@@ -19,6 +19,7 @@
 namespace Cube.Pdf.Converter.Tests;
 
 using System.Threading;
+using Cube.Globalization;
 using Cube.Tests;
 using NUnit.Framework;
 
@@ -46,6 +47,6 @@ class MockFixture : RegistryFixture
     protected virtual void Setup()
     {
         SynchronizationContext.SetSynchronizationContext(new());
-        Locale.Set(Language.Auto);
+        Locale.Reset(Language.Auto);
     }
 }

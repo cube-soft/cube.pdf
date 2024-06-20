@@ -18,6 +18,7 @@
 namespace Cube.Pdf.Pages.Tests;
 
 using System;
+using Cube.Globalization;
 using NUnit.Framework;
 
 /* ------------------------------------------------------------------------- */
@@ -47,6 +48,7 @@ static class Program
         Logger.Configure(new Logging.NLog.LoggerSource());
         Logger.ObserveTaskException();
         Logger.Info(typeof(Program).Assembly);
+        Locale.Subscribe(Surface.Localizable);
     }
 
     /* --------------------------------------------------------------------- */

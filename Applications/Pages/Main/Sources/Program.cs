@@ -19,6 +19,7 @@
 using System;
 using System.Windows.Forms;
 using Cube.Collections.Extensions;
+using Cube.Globalization;
 
 namespace Cube.Pdf.Pages
 {
@@ -56,6 +57,7 @@ namespace Cube.Pdf.Pages
             var src = new SettingFolder();
             src.Load();
 
+            Locale.Subscribe(Surface.Texts);
             var view = new MainWindow();
             view.Bind(new MainViewModel(src, args));
             Application.Run(view);

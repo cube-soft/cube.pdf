@@ -95,7 +95,7 @@ public static class SettingExtension
     ///
     /* --------------------------------------------------------------------- */
     private static Format GetFormat(SettingValue src) =>
-        Resource.Formats.Any(e => e.Value == src.Format) ?
+        Surface.Formats.Any(e => e.Value == src.Format) ?
         src.Format :
         Format.Pdf;
 
@@ -109,7 +109,7 @@ public static class SettingExtension
     ///
     /* --------------------------------------------------------------------- */
     private static Orientation GetOrientation(SettingValue src) =>
-        Resource.Orientations.Any(e => e.Value == src.Orientation) ?
+        Surface.Orientations.Any(e => e.Value == src.Orientation) ?
         src.Orientation :
         Orientation.Auto;
 

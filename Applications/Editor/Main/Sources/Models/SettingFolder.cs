@@ -23,6 +23,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Cube.DataContract;
 using Cube.FileSystem;
+using Cube.Globalization;
 using Cube.Reflection.Extensions;
 using Cube.Web.Extensions;
 
@@ -175,7 +176,7 @@ namespace Cube.Pdf.Editor
         protected override void OnLoad()
         {
             base.OnLoad();
-            Locale.Set(Value.Language);
+            Locale.Reset(Value.Language);
         }
 
         /* ----------------------------------------------------------------- */
@@ -207,7 +208,7 @@ namespace Cube.Pdf.Editor
             try
             {
                 if (e.PropertyName != nameof(Value.Language)) return;
-                Locale.Set(Value.Language);
+                Locale.Reset(Value.Language);
             }
             finally { base.OnPropertyChanged(e); }
         }
@@ -222,7 +223,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private Uri MakeUri(string url) =>
-            new Uri(url).With("lang", Locale.Language.ToCultureInfo().Name.ToLowerInvariant());
+            new Uri(url).With("lang", Locale.GetCurrentLanguage().ToCultureInfo().Name.ToLowerInvariant());
 
         #endregion
     }
