@@ -82,14 +82,14 @@ internal class GermanText() : Globalization.TextGroup(new()
     { nameof(Text.Setting_Options), "Speicheroptionen" },
     { nameof(Text.Setting_Backup), "Backup" },
     { nameof(Text.Setting_Backup_Enable), "Backup aktivieren" },
-    { nameof(Text.Setting_Backup_Clean), "Delete old backup files automatically" },
+    { nameof(Text.Setting_Backup_Clean), "Alte Sicherungsdateien automatisch löschen" },
     { nameof(Text.Setting_Temp), "Temp" },
     { nameof(Text.Setting_Language), "Sprache" },
     { nameof(Text.Setting_Others), "Sonstiges" },
     { nameof(Text.Setting_Shrink), "Duplizierte Ressourcen reduzieren" },
     { nameof(Text.Setting_KeepOutline), "Bookmarks der Quell-PDF-Datei behalten" },
     { nameof(Text.Setting_Recent), "Kürzlich verwendete Dateien zeigen" },
-    { nameof(Text.Setting_AutoSort), "Automatische Sortierung bei Auswahl von Dateien" },
+    { nameof(Text.Setting_AutoSort), "Ausgewählte Dateien automatisch sortieren" },
     { nameof(Text.Setting_CheckUpdate), "Beim Start nach Updates suchen" },
 
     // Metadata window
