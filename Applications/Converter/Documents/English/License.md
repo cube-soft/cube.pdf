@@ -4,20 +4,20 @@ License FAQ about CubePDF series
 Copyright © 2010 CubeSoft, Inc.  
 GNU Affero General Public License version 3 (AGPLv3)  
 support@cube-soft.jp  
-https://www.cube-soft.jp/cubepdf/
+https://www.cube-soft.com/cubepdf/
 
 ### Introduction
 
 All CubePDF series are licensed under the [GNU Affero General Public License version 3 (AGPLv3)](https://www.gnu.org/licenses/agpl-3.0.en.html). AGPLv 3 is an [Open source license](https://en.wikipedia.org/wiki/Open-source_license), and CubePDF series refer to the following applications.
 
-* [CubePDF](https://www.cube-soft.jp/en/cubepdf/)
-* [CubePDF Utility](https://www.cube-soft.jp/en/cubepdfutility/)
-* [CubePDF Page](https://www.cube-soft.jp/en/cubepdfpage/)
+* [CubePDF](https://www.cube-soft.com/cubepdf/)
+* [CubePDF Utility](https://www.cube-soft.com/cubepdfutility/)
+* [CubePDF Page](https://www.cube-soft.com/cubepdfpage/)
 * [CubePDF Clip (Japanese)](https://clown.cube-soft.jp/entry/2017/03/24/cubepdf-clip-1.0.0)
-* [CubePDF Viewer (Japanese)](https://www.cube-soft.jp/cubepdfviewer/)
-* [CubePDF ImagePicker (Japanese)](https://www.cube-soft.jp/cubepdfimagepicker/)
+* [CubePDF Viewer (Japanese)](https://www.cube-soft.com/cubepdfviewer/)
+* [CubePDF ImagePicker (Japanese)](https://www.cube-soft.com/cubepdfimagepicker/)
 
-This article describes Frequently Asked Questions (FAQ) about the license and terms of use of CubePDF series. Note that since the [CubeVP (Japanese)](https://www.cube-soft.jp/cubevp/) is not AGPLv3 but proprietary license, it is excluded from this article. excluded in this article.
+This article describes Frequently Asked Questions (FAQ) about the license and terms of use of CubePDF series. Note that since the [CubeVP (Japanese)](https://www.cube-soft.com/cubevp/) is not AGPLv3 but proprietary license, it is excluded from this article. excluded in this article.
 
 ### Why is the software available for free?
 
@@ -31,7 +31,7 @@ Yes, CubePDF series can be used freely by both individuals and corporations. For
 
 No, there is no limit to the number of installations of CubePDF Series, and you can use it in any way you want, as long as it is feasible.
 
-However, in principle, you are responsible for your own use. CubeSoft, Inc. provides a support e-mail address, support@cube-soft.jp, and we will try to respond to you as much as possible. However, some of your inquiries may be related to special conditions, and we may not be able to answer them. In particular, since [CubePDF](https://www.cube-soft.jp/en/cubepdf/) works with a wide variety of applications (through printing) due to its nature, there are many things that we cannot understand.
+However, in principle, you are responsible for your own use. CubeSoft, Inc. provides a support e-mail address, support@cube-soft.jp, and we will try to respond to you as much as possible. However, some of your inquiries may be related to special conditions, and we may not be able to answer them. In particular, since [CubePDF](https://www.cube-soft.com/cubepdf/) works with a wide variety of applications (through printing) due to its nature, there are many things that we cannot understand.
 
 ### Can I distribute the software from my company's server?
 

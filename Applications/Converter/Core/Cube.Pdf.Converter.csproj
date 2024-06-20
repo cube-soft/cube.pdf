@@ -24,7 +24,7 @@
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
+        <ProjectReference Include="..\..\..\Libraries\Generating\Cube.Pdf.Generating.csproj" />
         <ProjectReference Include="..\..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
     </ItemGroup>
     <ItemGroup>

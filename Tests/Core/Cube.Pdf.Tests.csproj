@@ -22,7 +22,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Libraries\Core\Cube.Pdf.Core.csproj" />
-        <ProjectReference Include="..\..\Libraries\Ghostscript\Cube.Pdf.Ghostscript.csproj" />
+        <ProjectReference Include="..\..\Libraries\Generating\Cube.Pdf.Generating.csproj" />
         <ProjectReference Include="..\..\Libraries\Itext\Cube.Pdf.Itext.csproj" />
         <ProjectReference Include="..\..\Libraries\Pdfium\Cube.Pdf.Pdfium.csproj" />
         <PackageReference Include="Cube.Private.Tests" Version="9.0.0" />

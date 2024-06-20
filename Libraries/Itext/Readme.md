@@ -18,5 +18,5 @@ The Cube.Pdf.Itext package is a wrapper library of the [iText](https://itextpdf.
 
 ## License
  
-Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.jp/)
+Copyright © 2010 [CubeSoft, Inc.](https://www.cube-soft.com/)
 See [License.md](https://github.com/cube-soft/cube.pdf/blob/master/License.md) for more information.

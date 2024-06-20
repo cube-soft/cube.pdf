@@ -5,10 +5,11 @@
         <Company>CubeSoft</Company>
         <Description>Ghostscript based PDF library.</Description>
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
-        <PackageTags>Cube;PDF;Ghostscript</PackageTags>
+        <PackageProjectUrl>https://github.com/cube-soft/cube.pdf</PackageProjectUrl>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+        <PackageTags>Cube;PDF</PackageTags>
         <PackageIcon>images\Icon.png</PackageIcon>
-        <PackageProjectUrl>https://github.com/cube-soft/Cube.Pdf</PackageProjectUrl>
+        <RootNamespace>Cube.Pdf.Ghostscript</RootNamespace>
         <TargetFramework>net46</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Optimize>true</Optimize>
