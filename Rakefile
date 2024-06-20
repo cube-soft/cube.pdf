@@ -22,7 +22,7 @@ require 'rake/clean'
 # configuration
 # --------------------------------------------------------------------------- #
 PROJECT     = "Cube.Pdf"
-LATEST      = "v8"
+LATEST      = "v9"
 BRANCHES    = ["net47", "net60", "net35"]
 PLATFORMS   = ["Any CPU", "x86", "x64"]
 PACKAGES    = ["Libraries/Core/Cube.Pdf.Core",
