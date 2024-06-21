@@ -185,6 +185,7 @@ internal class Text : TextBase
 
     #region Error messages
     public string Error_Open => Get();
+    public string Error_Backup => Get();
     public string Error_Metadata => Get();
     public string Error_Range => Get();
     #endregion

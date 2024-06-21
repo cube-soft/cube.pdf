@@ -69,7 +69,7 @@ internal static class SaveExtension
         e => { src.Backup.Invoke(e); src.Cache?.Clear(); },
         e => {
             if (reopen) src.Reload(e.FullName);
-            src.Value.SetMessage(Properties.Resources.MessageSaved, e.FullName);
+            src.Value.SetMessage(Surface.Texts.Message_Saved, e.FullName);
             src.Backup.Cleanup();
         }
     );
@@ -138,7 +138,7 @@ internal static class SaveExtension
         null,
         options,
         src.Backup.Invoke,
-        e => src.Value.SetMessage(Properties.Resources.MessageSaved, e.FullName)
+        e => src.Value.SetMessage(Surface.Texts.Message_Saved, e.FullName)
     );
 
     /* --------------------------------------------------------------------- */

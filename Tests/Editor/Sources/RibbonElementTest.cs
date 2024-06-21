@@ -47,7 +47,7 @@ namespace Cube.Pdf.Editor.Tests
         [Test]
         public void Check()
         {
-            var name = nameof(Properties);
+            var name = "Name";
             var text = "GetText";
 
             using var dest = new RibbonElement(name, () => text, Dispatcher.Vanilla);
