@@ -41,8 +41,6 @@
         <Page Update="Views\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
         <Page Update="Themes\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
         <Compile Update="Views\**\*.xaml.cs" SubType="Code" DependentUpon="%(Filename)" />
-        <Compile Update="Properties\Resources.Designer.cs" DependentUpon="Resources.resx" AutoGen="True" DesignTime="True" />
-        <EmbeddedResource Update="Properties\Resources.resx" Generator="ResXFileCodeGenerator" LastGenOutput="Resources.Designer.cs" />
         <Resource Include="Assets\**\*" />
         <Resource Include="App.ico" />
         <None Include="App.config" />

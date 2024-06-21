@@ -167,8 +167,6 @@ internal class GermanText() : Globalization.TextGroup(new()
     { nameof(Text.Remove_Page), "Seitenzahl" },
     { nameof(Text.Remove_Target), "Zielseiten" },
 
-    // Password window
-
     // Titles for other dialogs
     { nameof(Text.Window_Open), "Datei öffnen" },
     { nameof(Text.Window_Save), "Speichern unter" },
@@ -179,6 +177,7 @@ internal class GermanText() : Globalization.TextGroup(new()
 
     // Error messages
     { nameof(Text.Error_Open), "Datei ist nicht im PDF-Format oder ist beschädigt." },
+    { nameof(Text.Error_Backup), "Sicherungsprozess fehlgeschlagen." },
     { nameof(Text.Error_Metadata), "PDF-Metadaten konnten nicht abgerufen werden." },
     { nameof(Text.Error_Range), "Der Entfernungsbereich konnte nicht geparst werden." },
 

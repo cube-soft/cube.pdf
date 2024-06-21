@@ -80,7 +80,6 @@ internal abstract class TextBase : LocalizableText
         var ci = src.ToCultureInfo();
         Thread.CurrentThread.CurrentCulture = ci;
         Thread.CurrentThread.CurrentUICulture = ci;
-        Properties.Resources.Culture = ci;
     }
 
     #endregion

@@ -52,9 +52,9 @@ namespace Cube.Pdf.Editor
         {
             var cvt = src switch
             {
-                BackupException   => new ArgumentException(Properties.Resources.MessageBackupError),
-                MetadataException => new ArgumentException(Properties.Resources.MessageMetadataError),
-                PdfiumException   => new ArgumentException(Properties.Resources.MessageOpenError),
+                BackupException   => new ArgumentException(Surface.Texts.Error_Backup),
+                MetadataException => new ArgumentException(Surface.Texts.Error_Metadata),
+                PdfiumException   => new ArgumentException(Surface.Texts.Error_Open),
                 _ => src
             };
 
@@ -73,7 +73,7 @@ namespace Cube.Pdf.Editor
         /// <returns>DialogMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static DialogMessage ForOverwrite() => new(Properties.Resources.MessageOverwrite)
+        public static DialogMessage ForOverwrite() => new(Surface.Texts.Warn_Overwrite)
         {
             Title   = typeof(App).Assembly.GetTitle(),
             Buttons = DialogButtons.YesNoCancel,
@@ -95,15 +95,15 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage ForOpen() => new(Properties.Resources.TitleOpen)
+        public static OpenFileMessage ForOpen() => new(Surface.Texts.Window_Open)
         {
             CheckPathExists = true,
-            Multiselect     = false,
-            Filters         = new FileDialogFilter[]
-            {
-                new(Properties.Resources.FilterPdf, true, ".pdf"),
-                new(Properties.Resources.FilterAll, true, ".*"),
-            },
+            Multiselect = false,
+            Filters =
+            [
+                new(Surface.Texts.Filter_Pdf, true, ".pdf"),
+                new(Surface.Texts.Filter_All, true, ".*"),
+            ],
         };
 
         /* ----------------------------------------------------------------- */
@@ -117,15 +117,15 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenFileMessage ForInsert() => new(Properties.Resources.TitleOpen)
+        public static OpenFileMessage ForInsert() => new(Surface.Texts.Window_Open)
         {
             CheckPathExists = true,
-            Multiselect     = true,
-            Filters         = new FileDialogFilter[]
-            {
-                new(Properties.Resources.FilterInsertable, true, ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff"),
-                new(Properties.Resources.FilterAll, true, ".*"),
-            },
+            Multiselect = true,
+            Filters =
+            [
+                new(Surface.Texts.Filter_Insertable, true, ".pdf", ".png", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff"),
+                new(Surface.Texts.Filter_All, true, ".*"),
+            ],
         };
 
         /* ----------------------------------------------------------------- */
@@ -139,10 +139,10 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenDirectoryMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage ForBackup(string src) => new(Properties.Resources.TitleBackup)
+        public static OpenDirectoryMessage ForBackup(string src) => new(Surface.Texts.Window_Backup)
         {
             NewButton = true,
-            Value     = src,
+            Value = src,
         };
 
         /* ----------------------------------------------------------------- */
@@ -156,10 +156,10 @@ namespace Cube.Pdf.Editor
         /// <returns>OpenDirectoryMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static OpenDirectoryMessage ForTemp(string src) => new(Properties.Resources.TitleTemp)
+        public static OpenDirectoryMessage ForTemp(string src) => new(Surface.Texts.Window_Temp)
         {
             NewButton = true,
-            Value     = src,
+            Value = src,
         };
 
         /* ----------------------------------------------------------------- */
@@ -173,15 +173,15 @@ namespace Cube.Pdf.Editor
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage ForExtract() => new(Properties.Resources.MenuSaveAs)
+        public static SaveFileMessage ForExtract() => new(Surface.Texts.Window_Save)
         {
             OverwritePrompt = true,
             CheckPathExists = false,
-            Filters         = new FileDialogFilter[]
-            {
-                new(Properties.Resources.FilterExtract, true, ".pdf", ".png"),
-                new(Properties.Resources.FilterAll, true, ".*"),
-            },
+            Filters =
+            [
+                new(Surface.Texts.Filter_Extractable, true, ".pdf", ".png"),
+                new(Surface.Texts.Filter_All, true, ".*"),
+            ],
         };
 
         /* ----------------------------------------------------------------- */
@@ -195,15 +195,15 @@ namespace Cube.Pdf.Editor
         /// <returns>SaveFileMessage object.</returns>
         ///
         /* ----------------------------------------------------------------- */
-        public static SaveFileMessage ForSave() => new(Properties.Resources.TitleSaveAs)
+        public static SaveFileMessage ForSave() => new(Surface.Texts.Window_Save)
         {
             OverwritePrompt = true,
             CheckPathExists = false,
-            Filters         = new FileDialogFilter[]
-            {
-                new(Properties.Resources.FilterPdf, true, ".pdf"),
-                new(Properties.Resources.FilterAll, true, ".*"),
-            },
+            Filters =
+            [
+                new(Surface.Texts.Filter_Pdf, true, ".pdf"),
+                new(Surface.Texts.Filter_All, true, ".*"),
+            ],
         };
 
         #endregion
