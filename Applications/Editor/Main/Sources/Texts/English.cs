@@ -166,8 +166,6 @@ internal class EnglishText() : Globalization.TextGroup(new()
     { nameof(Text.Remove_Page), "Page count" },
     { nameof(Text.Remove_Target), "Target pages" },
 
-    // Password window
-
     // Titles for other dialogs
     { nameof(Text.Window_Open), "Open file" },
     { nameof(Text.Window_Save), "Save as" },
@@ -178,6 +176,7 @@ internal class EnglishText() : Globalization.TextGroup(new()
 
     // Error messages
     { nameof(Text.Error_Open), "File is not in PDF format or corrupted." },
+    { nameof(Text.Error_Backup), "Backup process failed." },
     { nameof(Text.Error_Metadata), "Failed to get PDF metadata." },
     { nameof(Text.Error_Range), "Failed to parse the removal range." },
 

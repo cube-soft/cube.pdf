@@ -166,8 +166,6 @@ internal class JapaneseText() : Globalization.TextGroup(new()
     { nameof(Text.Remove_Page), "総ページ数" },
     { nameof(Text.Remove_Target), "対象ページ" },
 
-    // Password window
-
     // Titles for other dialogs
     { nameof(Text.Window_Open), "ファイルを開く" },
     { nameof(Text.Window_Save), "名前を付けて保存" },
@@ -178,6 +176,7 @@ internal class JapaneseText() : Globalization.TextGroup(new()
 
     // Error messages
     { nameof(Text.Error_Open), "ファイルが PDF 形式ではないか、またはデータが破損している可能性があります。" },
+    { nameof(Text.Error_Backup), "バックアップ処理に失敗しました。" },
     { nameof(Text.Error_Metadata), "文書プロパティの取得に失敗しました。" },
     { nameof(Text.Error_Range), "指定範囲の解析に失敗しました。不適切な文字が含まれていないか確認して下さい。" },
 

@@ -179,6 +179,7 @@ internal class SimplifiedChineseText() : Globalization.TextGroup(new()
 
     // Error messages
     { nameof(Text.Error_Open), "文件不是 PDF 格式或已损坏。" },
+    { nameof(Text.Error_Backup), "备份过程失败。" },
     { nameof(Text.Error_Metadata), "获取 PDF 元数据失败。" },
     { nameof(Text.Error_Range), "无法解析删除范围。" },
 

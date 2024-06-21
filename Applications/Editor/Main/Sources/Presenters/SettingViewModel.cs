@@ -173,7 +173,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public IElement<bool> BackupAutoDelete => Get(() => new BindableElement<bool>(
-            () => Properties.Resources.MenuBackupAutoDelete,
+            () => Surface.Texts.Setting_Backup_Clean,
             GetDispatcher(false)
         ));
 
