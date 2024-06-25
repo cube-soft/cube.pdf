@@ -1,11 +1,11 @@
 Cube.Pdf.Itext
 ====
 
-[![Package](https://badgen.net/nuget/v/cube.pdf.itext?label=itext)](https://www.nuget.org/packages/cube.pdf.itext/)
-[![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
-[![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
+[![Package](https://img.shields.io/nuget/v/cube.pdf.itext)](https://www.nuget.org/packages/cube.pdf.itext/)
+[![AppVeyor](https://img.shields.io/appveyor/build/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
+[![Codecov](https://img.shields.io/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
-The Cube.Pdf.Itext package is a wrapper library of the [iText](https://itextpdf.com/) in the .NET Framework 3.5, 4.6.2, .NET Standard 2.0, or later. Note that the package uses the [iTextSharp](https://www.nuget.org/packages/iTextSharp/) only in the .NET Framework 3.5, and uses the [itext](https://www.nuget.org/packages/itext/) in other target frameworks.
+The Cube.Pdf.Itext package is a wrapper library of the [iText](https://itextpdf.com/) in the .NET Framework 3.5, 4.6.2, .NET Standard 2.0, or later. Note that the package uses the [iTextSharp](https://www.nuget.org/packages/iTextSharp/) only in the .NET Framework 3.5, and uses the [iText](https://www.nuget.org/packages/itext/) in other target frameworks.
 
 ## Contributing
 
