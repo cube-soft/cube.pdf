@@ -1,16 +1,16 @@
 CubePDF Series
 ====
 
-[![Core](https://badgen.net/nuget/v/cube.pdf?label=core)](https://www.nuget.org/packages/cube.pdf/)
-[![Ghostscript](https://badgen.net/nuget/v/cube.pdf.generating?label=gs)](https://www.nuget.org/packages/cube.pdf.generating/)
-[![iText](https://badgen.net/nuget/v/cube.pdf.itext?label=itext)](https://www.nuget.org/packages/cube.pdf.itext/)
-[![PDFium](https://badgen.net/nuget/v/cube.pdf.pdfium?label=pdfium)](https://www.nuget.org/packages/cube.pdf.pdfium/)
-[![CubePDF](https://badgen.net/nuget/v/cube.pdf.converter?label=cubepdf)](https://www.nuget.org/packages/cube.pdf.converter/)
-[![GS.Native](https://badgen.net/nuget/v/cube.native.ghostscript?label=gs.native)](https://www.nuget.org/packages/cube.native.ghostscript/)
-[![PDFium.Native](https://badgen.net/nuget/v/cube.native.pdfium?label=pdfium.native)](https://www.nuget.org/packages/cube.native.pdfium/)
-[![PDFium.Native.Lite](https://badgen.net/nuget/v/cube.native.pdfium.lite?label=pdfium.native.lite)](https://www.nuget.org/packages/cube.native.pdfium.lite/)
-[![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
-[![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
+[![Core](https://img.shields.io/nuget/v/cube.pdf?label=core)](https://www.nuget.org/packages/cube.pdf/)
+[![PDFium](https://img.shields.io/nuget/v/cube.pdf.pdfium?label=pdfium)](https://www.nuget.org/packages/cube.pdf.pdfium/)
+[![iText](https://img.shields.io/nuget/v/cube.pdf.itext?label=itext)](https://www.nuget.org/packages/cube.pdf.itext/)
+[![Ghostscript](https://img.shields.io/nuget/v/cube.pdf.generating?label=gs)](https://www.nuget.org/packages/cube.pdf.generating/)
+[![CubePDF](https://img.shields.io/nuget/v/cube.pdf.converter?label=cubepdf)](https://www.nuget.org/packages/cube.pdf.converter/)
+[![GS.Native](https://img.shields.io/nuget/v/cube.native.pdfgen?label=gs.native)](https://www.nuget.org/packages/cube.native.pdfgen/)
+[![PDFium.Native](https://img.shields.io/nuget/v/cube.native.pdfium?label=pdfium.native)](https://www.nuget.org/packages/cube.native.pdfium/)
+[![PDFium.Native.Lite](https://img.shields.io/nuget/v/cube.native.pdfium.lite?label=pdfium.native.lite)](https://www.nuget.org/packages/cube.native.pdfium.lite/)
+[![AppVeyor](https://img.shields.io/appveyor/build/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
+[![Codecov](https://img.shields.io/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
 The project provides the following Windows desktop applications:
 
@@ -20,7 +20,7 @@ The project provides the following Windows desktop applications:
 
 Moreover, CubePDF SDK provides wrapper APIs for the [PDFium](https://pdfium.googlesource.com/pdfium/), [Ghostscript](https://www.ghostscript.com/), and [iText](https://itextpdf.com/) libraries.
 
-Libraries and applications are available for .NET Framework 3.5, 4.7, .NET Standard 2.0, .NET Core 6, or later. Note that some projects are licensed under the GNU AGPLv3 and the others under the Apache 2.0. See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
+Libraries and applications are available for .NET Framework 3.5, 4.6, .NET Standard 2.0, .NET Core 6, or later. Note that some projects are licensed under the GNU AGPLv3 and the others under the Apache 2.0. See [License.md](https://github.com/cube-soft/Cube.Pdf/blob/master/License.md) for more information.
 
 ## CubePDF
 
@@ -28,7 +28,7 @@ Libraries and applications are available for .NET Framework 3.5, 4.7, .NET Stand
 
 [CubePDF](https://www.cube-soft.com/cubepdf/) is a PDF converter which allows you to convert files from any applications (for example, Google Chrome, Firefox, Microsoft Edge, Microsoft Word, Excel, PowerPoint, and more), whenever you need it. The converter allows you to convert the files as easy as you can print the files; as a matter of fact, you can do it in the same manner as you print files. The application depends on the Ghostscript and iText libraries. For more information, see [CubePDF Documents](https://docs.cube-soft.jp/entry/cubepdf).
 
-You can get the executable installer from the [download page](https://www.cube-soft.com/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Converter) (except for the virtual printer).
+You can get the executable installer from the [Download page](https://www.cube-soft.com/cubepdf/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF are in the [Applications/Converter](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Converter) directory (except for the virtual printer).
 
 ## CubePDF Utility
 
@@ -36,7 +36,7 @@ You can get the executable installer from the [download page](https://www.cube-s
 
 [CubePDF Utility](https://www.cube-soft.com/cubepdfutility/) is a PDF editor which can insert, remove, move, rotate pages, add or modify some metadata (PDF version, title, author, subject, keywords, creator, page layout), and encryption settings GUI. The application depends on the PDFium and iText libraries. For more information, see [CubePDF Utility Documents](https://docs.cube-soft.jp/entry/cubepdf-utility).
 
-You can get the executable installer from the [download page](https://www.cube-soft.com/cubepdfutility/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Editor).
+You can get the executable installer from the [Download page](https://www.cube-soft.com/cubepdfutility/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF Utility are in the [Applications/Editor](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Editor) directory.
 
 ## CubePDF Page
 
@@ -44,7 +44,7 @@ You can get the executable installer from the [download page](https://www.cube-s
 
 [CubPDF Page](https://www.cube-soft.com/cubepdfpage/) is a software for merging or splitting existing PDF and image files. You can also add various PDF metadata and encryption settings to the merged or split PDF file. For more information, see [CubePDF Page Documents](https://docs.cube-soft.jp/entry/cubepdf-page).
 
-You can get the executable installer from the [download page](https://www.cube-soft.com/cubepdfpage/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF Page are in the [Applications/Pages](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Pages).
+You can get the executable installer from the [Download page](https://www.cube-soft.com/cubepdfpage/) or [GitHub Releases](https://github.com/cube-soft/cube.pdf/releases). Source codes of the CubePDF Page are in the [Applications/Pages](https://github.com/cube-soft/cube.pdf/tree/master/Applications/Pages) directory.
 
 ## CubePDF SDK
 
@@ -97,7 +97,7 @@ using (var writer = new DocumentWriter())
 
 ### Ghostscript wrapper
 
-When you convert from PostScript to any other formats, you can use the Cube.Pdf.Generating (Cube.Pdf.Ghostscript) library.
+When you convert from PostScript to any other formats, you can use the Cube.Pdf.Generating library.
 The following code converts to the PDF file.
 
 ```cs
@@ -117,15 +117,15 @@ var converter = new PdfConverter
 converter.Invoke(@"path\to\src.ps", @"path\to\dest.pdf");
 ```
 
-See the [Readme](https://github.com/cube-soft/cube.pdf/blob/master/Libraries/Ghostscript/Readme.md) in the Ghostscript directory for details.
+See the [Generating/Readme](https://github.com/cube-soft/cube.pdf/blob/master/Libraries/Generating/Readme.md) for more information.
 
 ## Dependencies
 
 Dependencies of [Libraries](https://github.com/cube-soft/cube.pdf/tree/master/Libraries) are as follows. [Applications](https://github.com/cube-soft/cube.pdf/tree/master/Applications) may use some more third-party libraries.
 
-* [PDFium](https://pdfium.googlesource.com/pdfium/) ... [Cube.Native.Pdfium.Lite](https://www.nuget.org/packages/Cube.Native.Pdfium.Lite) is a NuGet package of the PDFium.
-* [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Ghostscript](https://www.nuget.org/packages/Cube.Native.Ghostscript) is a NuGet package of the Ghostscript.
-* [itext7](https://www.nuget.org/packages/itext7/) (other branches) or [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35)
+* [PDFium](https://pdfium.googlesource.com/pdfium/) ... [Cube.Native.Pdfium.Lite](https://www.nuget.org/packages/cube.native.pdfium.lite) is an unofficial NuGet package of the PDFium.
+* [iText](https://www.nuget.org/packages/itext/) (except net35) or [iTextSharp](https://www.nuget.org/packages/iTextSharp/) (net35)
+* [Ghostscript](https://www.ghostscript.com/) ... [Cube.Native.Pdfgen](https://www.nuget.org/packages/cube.native.pdfgen) is an unofficial NuGet package of the Ghostscript.
 
 ## Contributing
 
