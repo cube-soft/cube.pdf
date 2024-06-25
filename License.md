@@ -10,8 +10,8 @@ Projects are respectively licensed as follows:
 | ---- | ------- |
 | [Cube.Pdf](https://github.com/cube-soft/cube.pdf/tree/master/Libraries/Core)                    | Apache 2.0 |
 | [Cube.Pdf.Pdfium](https://github.com/cube-soft/cube.pdf/tree/master/Libraries/Pdfium)           | Apache 2.0 |
-| [Cube.Pdf.Generating](https://github.com/cube-soft/cube.pdf/tree/master/Libraries/Generating)   | GNU AGPLv3 |
 | [Cube.Pdf.Itext](https://github.com/cube-soft/cube.pdf/tree/master/Libraries/Itext)             | GNU AGPLv3 |
+| [Cube.Pdf.Generating](https://github.com/cube-soft/cube.pdf/tree/master/Libraries/Generating)   | GNU AGPLv3 |
 
 ### Applications
 

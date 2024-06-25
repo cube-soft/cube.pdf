@@ -1,9 +1,9 @@
 Cube.Pdf
 ====
 
-[![Package](https://badgen.net/nuget/v/cube.pdf?label=core)](https://www.nuget.org/packages/cube.pdf/)
-[![AppVeyor](https://badgen.net/appveyor/ci/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
-[![Codecov](https://badgen.net/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
+[![Package](https://img.shields.io/nuget/v/cube.pdf)](https://www.nuget.org/packages/cube.pdf/)
+[![AppVeyor](https://img.shields.io/appveyor/build/clown/cube-pdf)](https://ci.appveyor.com/project/clown/cube-pdf)
+[![Codecov](https://img.shields.io/codecov/c/github/cube-soft/cube.pdf)](https://codecov.io/gh/cube-soft/cube.pdf)
 
 The Cube.Pdf package provides basic data structures of the CubePDF SDKs (Cube.Pdf.*).
 These packages are available for .NET Framework 3.5, 4.6, .NET Standard 2.0, or later.
