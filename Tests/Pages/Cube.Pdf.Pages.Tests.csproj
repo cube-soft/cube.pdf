@@ -20,6 +20,14 @@
         <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+        <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
+        <SelfContained>false</SelfContained>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+        <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
+        <SelfContained>false</SelfContained>
+    </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Pages\Main\Cube.Pdf.Pages.csproj" />
         <PackageReference Include="Cube.Private.Tests" Version="9.0.0" />
