@@ -29,6 +29,7 @@ namespace Cube.Pdf.Pages;
 /* ------------------------------------------------------------------------- */
 internal class SimplifiedChineseText() : Globalization.TextGroup(new()
 {
+    // ReSharper disable StringLiteralTypo
     // Menus
     { nameof(Text.Menu_Ok), "确定" },
     { nameof(Text.Menu_Cancel), "取消" },
@@ -61,6 +62,7 @@ internal class SimplifiedChineseText() : Globalization.TextGroup(new()
     { nameof(Text.Setting_Others), "其它" },
     { nameof(Text.Setting_Shrink), "减少重复资源" },
     { nameof(Text.Setting_KeepOutline), "保留源 PDF 文件的书签" },
+    { nameof(Text.Setting_AutoSort), "自动排序选定文件" },
     { nameof(Text.Setting_CheckUpdate), "启动时检查更新" },
 
     // Labels for Metadata window

@@ -83,11 +83,12 @@ public partial class SettingWindow : Window
     private void BindCore(SettingViewModel vm)
     {
         var bs = Behaviors.Hook(new BindingSource(vm, ""));
-        bs.Bind(nameof(vm.Language), LanguageComboBox, nameof(ComboBox.SelectedValue));
-        bs.Bind(nameof(vm.Temp), TempTextBox, nameof(TextBox.Text));
-        bs.Bind(nameof(vm.ShrinkResources), ShrinkResourceCheckBox, nameof(CheckBox.Checked));
-        bs.Bind(nameof(vm.KeepOutlines), KeepOutlineCheckBox, nameof(CheckBox.Checked));
-        bs.Bind(nameof(vm.CheckUpdate), UpdateCheckBox, nameof(CheckBox.Checked));
+        bs.Bind(nameof(vm.Language), LanguageComboBox, nameof(LanguageComboBox.SelectedValue));
+        bs.Bind(nameof(vm.Temp), TempTextBox, nameof(TempTextBox.Text));
+        bs.Bind(nameof(vm.ShrinkResources), ShrinkResourceCheckBox, nameof(ShrinkResourceCheckBox.Checked));
+        bs.Bind(nameof(vm.KeepOutlines), KeepOutlineCheckBox, nameof(KeepOutlineCheckBox.Checked));
+        bs.Bind(nameof(vm.AutoSort), AutoSortCheckBox, nameof(AutoSortCheckBox.Checked));
+        bs.Bind(nameof(vm.CheckUpdate), UpdateCheckBox, nameof(UpdateCheckBox.Checked));
         bs.Bind(nameof(vm.Version), VersionControl, nameof(VersionControl.Version), true);
         bs.Bind(nameof(vm.Uri), VersionControl, nameof(VersionControl.Uri), true);
 
@@ -121,6 +122,7 @@ public partial class SettingWindow : Window
         OtherLabel.Text = Surface.Texts.Setting_Others;
         ShrinkResourceCheckBox.Text = Surface.Texts.Setting_Shrink;
         KeepOutlineCheckBox.Text = Surface.Texts.Setting_KeepOutline;
+        AutoSortCheckBox.Text = Surface.Texts.Setting_AutoSort;
         UpdateCheckBox.Text = Surface.Texts.Setting_CheckUpdate;
     }
 
