@@ -69,6 +69,12 @@ Dependencies of the CubePDF Page are as follows.
 
 ## History
 
+* 2024-06-27 version 5.0.0
+    - Improve processing of i18n support
+    - Add Simplified Chinese as a display language.
+    - Fix auto-sorting of selected files
+    - Add setting for auto-sorting of selected files
+    - Update iText to 8.0.4.
 * 2024-02-21 version 4.4.0
     - Improve I/O processing.
     - Add an option to enable/disable automatic sorting of selected files.
