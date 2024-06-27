@@ -55,6 +55,7 @@ namespace Cube.Pdf.Pages
             Temp            = src.Value.Temp;
             ShrinkResources = src.Value.ShrinkResources;
             KeepOutlines    = src.Value.KeepOutlines;
+            AutoSort        = src.Value.AutoSort;
             CheckUpdate     = src.Startup.Enabled;
         }
 
@@ -121,6 +122,22 @@ namespace Cube.Pdf.Pages
         ///
         /* ----------------------------------------------------------------- */
         public bool KeepOutlines
+        {
+            get => Get(() => true);
+            set => Set(value);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// AutoSort
+        ///
+        /// <summary>
+        /// Gets or sets a value indicating whether to sort automatically
+        /// when multiple files are selected.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        public bool AutoSort
         {
             get => Get(() => true);
             set => Set(value);
@@ -195,6 +212,7 @@ namespace Cube.Pdf.Pages
             Facade.Value.Temp            = Temp;
             Facade.Value.ShrinkResources = ShrinkResources;
             Facade.Value.KeepOutlines    = KeepOutlines;
+            Facade.Value.AutoSort        = AutoSort;
             Facade.Save();
         }, true);
 

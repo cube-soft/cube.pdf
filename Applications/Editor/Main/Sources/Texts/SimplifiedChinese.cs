@@ -167,8 +167,6 @@ internal class SimplifiedChineseText() : Globalization.TextGroup(new()
     { nameof(Text.Remove_Page), "页数" },
     { nameof(Text.Remove_Target), "目标页面" },
 
-    // Password window
-
     // Titles for other dialogs
     { nameof(Text.Window_Open), "打开文件" },
     { nameof(Text.Window_Save), "另存为" },

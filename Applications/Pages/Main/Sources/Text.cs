@@ -64,6 +64,7 @@ internal class Text : TextBase
     public string Setting_Others => Get();
     public string Setting_Shrink => Get();
     public string Setting_KeepOutline => Get();
+    public string Setting_AutoSort => Get();
     public string Setting_CheckUpdate => Get();
     #endregion
 

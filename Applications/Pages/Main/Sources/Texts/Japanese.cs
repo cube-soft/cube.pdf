@@ -61,6 +61,7 @@ internal class JapaneseText() : Globalization.TextGroup(new()
     { nameof(Text.Setting_Others), "その他" },
     { nameof(Text.Setting_Shrink), "重複リソースを削除してファイルサイズを削減する" },
     { nameof(Text.Setting_KeepOutline), "結合元 PDF ファイルのしおり情報を維持する" },
+    { nameof(Text.Setting_AutoSort), "選択ファイルを自動的に並び変える" },
     { nameof(Text.Setting_CheckUpdate), "起動時にアップデートを確認する" },
 
     // Labels for Metadata window

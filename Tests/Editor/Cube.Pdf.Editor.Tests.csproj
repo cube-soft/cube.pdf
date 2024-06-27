@@ -9,8 +9,8 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <UseWpf>true</UseWpf>
         <UseWindowsForms>true</UseWindowsForms>
-        <Platforms>AnyCPU;x86;x64</Platforms>
-        <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
+        <Platforms>AnyCPU;x86;x64;ARM64</Platforms>
+        <RuntimeIdentifiers>win7-x86;win7-x64;win10-arm64</RuntimeIdentifiers>
         <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
@@ -29,6 +29,10 @@
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
         <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
+        <SelfContained>false</SelfContained>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Platform)' == 'ARM64' ">
+        <RuntimeIdentifier>win10-arm64</RuntimeIdentifier>
         <SelfContained>false</SelfContained>
     </PropertyGroup>
     <ItemGroup>

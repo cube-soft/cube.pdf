@@ -69,15 +69,48 @@
     <value>5</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AutoSortCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="AutoSortCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="AutoSortCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>109, 128</value>
+  </data>
+  <data name="AutoSortCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 0, 0, 0</value>
+  </data>
+  <data name="AutoSortCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>331, 29</value>
+  </data>
+  <data name="AutoSortCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="AutoSortCheckBox.Text" xml:space="preserve">
+    <value>Sort selected files automatically</value>
+  </data>
+  <data name="&gt;&gt;AutoSortCheckBox.Name" xml:space="preserve">
+    <value>AutoSortCheckBox</value>
+  </data>
+  <data name="&gt;&gt;AutoSortCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AutoSortCheckBox.Parent" xml:space="preserve">
+    <value>SettingPanel</value>
+  </data>
+  <data name="&gt;&gt;AutoSortCheckBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="UpdateCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="UpdateCheckBox.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="UpdateCheckBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 128</value>
+    <value>109, 157</value>
   </data>
   <data name="UpdateCheckBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 0, 0, 0</value>
@@ -86,7 +119,7 @@
     <value>331, 29</value>
   </data>
   <data name="UpdateCheckBox.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="UpdateCheckBox.Text" xml:space="preserve">
     <value>Check for updates on startup</value>
@@ -101,13 +134,16 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;UpdateCheckBox.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="OtherLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="OtherLabel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="OtherLabel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="OtherLabel.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 128</value>
@@ -134,7 +170,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;OtherLabel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="TempTextBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -158,7 +194,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;TempTextBox.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="TempLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -191,7 +227,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;TempLabel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="LanguageComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -215,7 +251,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;LanguageComboBox.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="LanguageLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -248,7 +284,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;LanguageLabel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="KeepOutlineCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -281,7 +317,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;KeepOutlineCheckBox.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="ShrinkResourceCheckBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -314,7 +350,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;ShrinkResourceCheckBox.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="OptionLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -347,7 +383,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;OptionLabel.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="TempButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -377,7 +413,7 @@
     <value>SettingPanel</value>
   </data>
   <data name="&gt;&gt;TempButton.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="SettingPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -386,10 +422,10 @@
     <value>3, 3</value>
   </data>
   <data name="SettingPanel.RowCount" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="SettingPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>446, 175</value>
+    <value>446, 195</value>
   </data>
   <data name="SettingPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -407,7 +443,7 @@
     <value>0</value>
   </data>
   <data name="SettingPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="UpdateCheckBox" Row="5" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OtherLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TempTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="TempLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="4" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="LanguageLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeepOutlineCheckBox" Row="2" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="ShrinkResourceCheckBox" Row="1" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OptionLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TempButton" Row="3" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Percent,100,Absolute,66,Absolute,6" /&gt;&lt;Rows Styles="Absolute,12,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,12" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="AutoSortCheckBox" Row="5" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="UpdateCheckBox" Row="6" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OtherLabel" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TempTextBox" Row="3" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="TempLabel" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="LanguageComboBox" Row="4" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="LanguageLabel" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="KeepOutlineCheckBox" Row="2" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="ShrinkResourceCheckBox" Row="1" RowSpan="1" Column="2" ColumnSpan="2" /&gt;&lt;Control Name="OptionLabel" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="TempButton" Row="3" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,6,Absolute,100,Percent,100,Absolute,66,Absolute,6" /&gt;&lt;Rows Styles="Absolute,12,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,29,Absolute,12" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="SettingTabPage.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 24</value>
@@ -416,7 +452,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="SettingTabPage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>452, 188</value>
+    <value>452, 211</value>
   </data>
   <data name="SettingTabPage.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -530,7 +566,7 @@
     <value>12, 12</value>
   </data>
   <data name="MainTabPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>460, 216</value>
+    <value>460, 239</value>
   </data>
   <data name="MainTabPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -620,7 +656,7 @@
     <value>Fill</value>
   </data>
   <data name="FooterPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 231</value>
+    <value>0, 254</value>
   </data>
   <data name="FooterPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -659,7 +695,7 @@
     <value>3</value>
   </data>
   <data name="RootPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>484, 291</value>
+    <value>484, 314</value>
   </data>
   <data name="RootPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -683,7 +719,7 @@
     <value>True</value>
   </metadata>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>484, 291</value>
+    <value>484, 314</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Meiryo UI, 12px</value>

@@ -61,6 +61,7 @@ internal class EnglishText() : Globalization.TextGroup(new()
     { nameof(Text.Setting_Others), "Others" },
     { nameof(Text.Setting_Shrink), "Reduce duplicated resources" },
     { nameof(Text.Setting_KeepOutline), "Keep bookmarks of source PDF files" },
+    { nameof(Text.Setting_AutoSort), "Sort selected files automatically" },
     { nameof(Text.Setting_CheckUpdate), "Check for updates on startup" },
 
     // Labels for Metadata window

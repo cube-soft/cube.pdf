@@ -50,6 +50,7 @@ namespace Cube.Pdf.Pages
             this.FooterPanel = new System.Windows.Forms.TableLayoutPanel();
             this.ExitButton = new System.Windows.Forms.Button();
             this.ExecButton = new System.Windows.Forms.Button();
+            this.AutoSortCheckBox = new System.Windows.Forms.CheckBox();
             this.RootPanel.SuspendLayout();
             this.MainTabPanel.SuspendLayout();
             this.SettingTabPage.SuspendLayout();
@@ -85,7 +86,8 @@ namespace Cube.Pdf.Pages
             // SettingPanel
             //
             resources.ApplyResources(this.SettingPanel, "SettingPanel");
-            this.SettingPanel.Controls.Add(this.UpdateCheckBox, 2, 5);
+            this.SettingPanel.Controls.Add(this.AutoSortCheckBox, 2, 5);
+            this.SettingPanel.Controls.Add(this.UpdateCheckBox, 2, 6);
             this.SettingPanel.Controls.Add(this.OtherLabel, 1, 5);
             this.SettingPanel.Controls.Add(this.TempTextBox, 2, 3);
             this.SettingPanel.Controls.Add(this.TempLabel, 1, 3);
@@ -212,6 +214,14 @@ namespace Cube.Pdf.Pages
             this.ExecButton.Name = "ExecButton";
             this.ExecButton.UseVisualStyleBackColor = false;
             //
+            // AutoSortCheckBox
+            //
+            this.AutoSortCheckBox.AutoEllipsis = true;
+            this.SettingPanel.SetColumnSpan(this.AutoSortCheckBox, 2);
+            resources.ApplyResources(this.AutoSortCheckBox, "AutoSortCheckBox");
+            this.AutoSortCheckBox.Name = "AutoSortCheckBox";
+            this.AutoSortCheckBox.UseVisualStyleBackColor = true;
+            //
             // SettingWindow
             //
             this.AcceptButton = this.ExecButton;
@@ -254,5 +264,6 @@ namespace Cube.Pdf.Pages
         private System.Windows.Forms.CheckBox UpdateCheckBox;
         private System.Windows.Forms.TableLayoutPanel VersionPanel;
         private Forms.Controls.VersionControl VersionControl;
+        private System.Windows.Forms.CheckBox AutoSortCheckBox;
     }
 }

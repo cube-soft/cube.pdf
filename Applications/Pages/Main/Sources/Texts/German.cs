@@ -29,6 +29,7 @@ namespace Cube.Pdf.Pages;
 /* ------------------------------------------------------------------------- */
 internal class GermanText() : Globalization.TextGroup(new()
 {
+    // ReSharper disable StringLiteralTypo
     // Menus
     { nameof(Text.Menu_Ok), "OK" },
     { nameof(Text.Menu_Cancel), "Abbrechen" },
@@ -61,6 +62,7 @@ internal class GermanText() : Globalization.TextGroup(new()
     { nameof(Text.Setting_Others), "Sonstiges" },
     { nameof(Text.Setting_Shrink), "Duplizierte Ressourcen reduzieren" },
     { nameof(Text.Setting_KeepOutline), "Bookmarks der Quell-PDF-Dateien behalten" },
+    { nameof(Text.Setting_AutoSort), "Ausgewählte Dateien automatisch sortieren" },
     { nameof(Text.Setting_CheckUpdate), "Beim Start nach Updates suchen" },
 
     // Labels for Metadata window
