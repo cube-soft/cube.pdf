@@ -20,13 +20,11 @@ namespace Cube.Pdf.Converter;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Cube.Collections;
 using Cube.DataContract;
 using Cube.FileSystem;
 using Cube.Reflection.Extensions;
-using Cube.Text.Extensions;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -180,41 +178,11 @@ public class SettingFolder : SettingFolder<SettingValue>
         if (op.TryGetValue("Digest", out var digest)) Digest = digest;
 
         var dest = Io.Combine(PathExplorer.GetDirectoryName(Value.Destination), DocumentName.Value);
-        var name = HasExtension(dest) ? Io.GetBaseName(dest) : Io.GetFileName(dest);
+        var name = PathExplorer.HasExtension(dest) ? Io.GetBaseName(dest) : Io.GetFileName(dest);
         var ext  = Value.Extensions.Get(Value.Format);
 
         Value.Destination  = Io.Combine(Io.GetDirectoryName(dest), $"{name}{ext}");
         Value.DeleteSource = op.ContainsKey("DeleteOnClose");
-    }
-
-    #endregion
-
-    #region Implementations
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// HasExtension
-    ///
-    /// <summary>
-    /// Gets a value indicating whether the specified string has an extension.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private bool HasExtension(string src)
-    {
-        var ext = Io.GetExtension(src);
-        if (!ext.HasValue() || ext.First() != '.' || ext.Length > 5) return false;
-
-        var ok = false;
-        foreach (var c in ext.Skip(1))
-        {
-            var alpha = ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
-            var num   = ('0' <= c && c <= '9');
-
-            if (!alpha && !num) return false;
-            if (alpha) ok = true;
-        }
-        return ok;
     }
 
     #endregion

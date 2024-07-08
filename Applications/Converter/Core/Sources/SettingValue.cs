@@ -252,7 +252,7 @@ public class SettingValue : DataContract.SerializableBase
     [DataMember]
     public string Temp
     {
-        get => Get(PathExplorer.GetDeaultDirectoryName);
+        get => Get(PathExplorer.GetDefaultDirectoryName);
         set => Set(value);
     }
 
