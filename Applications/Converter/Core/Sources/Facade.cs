@@ -74,7 +74,7 @@ public sealed class Facade : ObservableBase
     /// <param name="settings">User settings.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public Facade(SettingFolder settings) { Settings = settings; }
+    public Facade(SettingFolder settings) => Settings = settings;
 
     #endregion
 
@@ -105,7 +105,7 @@ public sealed class Facade : ObservableBase
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    public IEnumerable<string> Results { get; private set; } = Enumerable.Empty<string>();
+    public IEnumerable<string> Results { get; private set; } = [];
 
     /* --------------------------------------------------------------------- */
     ///
