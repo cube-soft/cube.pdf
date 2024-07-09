@@ -56,6 +56,12 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2024-07-10 version 4.0.0
+    - Improve method of determining initial file name.
+    - Improve processing of i18n support
+    - Add Simplified Chinese as a display language.
+    - Update Ghostscript to 10.3.1.
+    - Update iText to 8.0.4.
 * 2024-04-01 version 3.4.1
     - Update Ghostscript to 10.3.0.
 * 2024-02-20 version 3.4.0
