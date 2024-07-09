@@ -47,6 +47,7 @@ internal static class PathExplorer
     /* --------------------------------------------------------------------- */
     public static bool HasExtension(string src)
     {
+        if (!src.HasValue()) return false;
         var ext = Io.GetExtension(src);
         if (!ext.HasValue() || ext.First() != '.' || ext.Length > 5) return false;
 
