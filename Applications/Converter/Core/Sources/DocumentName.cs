@@ -18,6 +18,10 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter;
 
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Cube.Collections.Extensions;
 using Cube.FileSystem;
 using Cube.Text.Extensions;
 
@@ -120,22 +124,32 @@ public sealed class DocumentName
     {
         if (!Source.HasValue()) return alternate;
 
-        var dest = Io.GetFileName(src.Value);
-        var key  = " - ";
-        var pos  = dest.LastIndexOf(key);
-        if (pos == -1) return dest;
+        var parts = Regex.Split(Io.GetFileName(src.Value), " - ")
+                         .Select(e => e.Trim())
+                         .Where(e => e.HasValue() && e != "-")
+                         .ToList();
 
-        var head = dest.Substring(0, pos);
-        var tail = dest.Substring(pos);
+        if (parts.Count == 0) return alternate;
+        if (parts.Count == 1) return parts.First();
 
-        return System.IO.Path.HasExtension(head) ? head :
-               System.IO.Path.HasExtension(tail) ? tail.Substring(key.Length) :
-               dest;
+        static string join(IEnumerable<string> e) => e.Join(" - ");
+        if (_apps.Contains(parts.First())) return join(parts.Skip(1));
+        if (_apps.Contains(parts.Last()))  return join(parts.Take(parts.Count - 1));
+
+        var i = parts.FindIndex(PathExplorer.HasExtension);
+        if (i == -1) return join(parts);
+        if (i == parts.Count - 1) return join(parts.Skip(1));
+        return join(parts.Take(i + 1));
     }
 
     #endregion
 
     #region Fields
     private readonly SafePath _path;
+    private readonly string[] _apps = [
+        "Microsoft Word",
+        "Microsoft Excel",
+        "Microsoft PowerPoint",
+    ];
     #endregion
 }

@@ -19,6 +19,7 @@
 namespace Cube.Pdf.Converter;
 
 using System;
+using System.Linq;
 using Cube.FileSystem;
 using Cube.Text.Extensions;
 
@@ -33,6 +34,35 @@ using Cube.Text.Extensions;
 /* ------------------------------------------------------------------------- */
 internal static class PathExplorer
 {
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// HasExtension
+    ///
+    /// <summary>
+    /// Gets a value indicating whether the specified string has an extension.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static bool HasExtension(string src)
+    {
+        if (!src.HasValue()) return false;
+        var ext = Io.GetExtension(src);
+        if (!ext.HasValue() || ext.First() != '.' || ext.Length > 5) return false;
+
+        var ok = false;
+        foreach (var c in ext.Skip(1))
+        {
+            var alpha = ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
+            var num = ('0' <= c && c <= '9');
+
+            if (!alpha && !num) return false;
+            if (alpha) ok = true;
+        }
+        return ok;
+    }
+
     /* --------------------------------------------------------------------- */
     ///
     /// GetDirectoryName
@@ -77,12 +107,12 @@ internal static class PathExplorer
     {
         try { return Environment.GetFolderPath(Environment.SpecialFolder.Desktop); }
         catch (Exception e) { Logger.Warn(e); }
-        return GetDeaultDirectoryName();
+        return GetDefaultDirectoryName();
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// GetDeaultDirectoryName
+    /// GetDefaultDirectoryName
     ///
     /// <summary>
     /// Gets the path of the default directory.
@@ -91,9 +121,11 @@ internal static class PathExplorer
     /// <returns>Path of the default directory.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    public static string GetDeaultDirectoryName() => Io.Combine(
+    public static string GetDefaultDirectoryName() => Io.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
         "CubeSoft",
         "CubePDF"
     );
+
+    #endregion
 }

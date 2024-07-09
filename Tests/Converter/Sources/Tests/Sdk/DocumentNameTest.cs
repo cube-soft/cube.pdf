@@ -41,17 +41,33 @@ class DocumentNameTest
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    [TestCase("Sample",                            "Sample")]
-    [TestCase("Sample.png",                        "Sample.png")]
-    [TestCase("Symbol*:?\"<>|",                    "Symbol_______")]
-    [TestCase("Head.txt - Application",            "Head.txt")]
-    [TestCase("Application - Tail.txt",            "Tail.txt")]
-    [TestCase("File - Application",                "File - Application")]
-    [TestCase("- Application",                     "- Application")]
-    [TestCase("File - .txt",                       ".txt")] // any more better way?
+    [TestCase("Sample", "Sample")]
+    [TestCase("Sample.png", "Sample.png")]
+    [TestCase("Symbol*:?\"<>|", "Symbol_______")]
+    [TestCase("Head.txt - Apps", "Head.txt")]
+    [TestCase("Head.txt - Apps - Sub", "Head.txt")]
+    [TestCase("Apps - Tail.txt", "Tail.txt")]
+    [TestCase("Apps - Foo - Bar.txt", "Foo - Bar.txt")]
+    [TestCase("Apps - Foo - Bar", "Apps - Foo - Bar")]
+    [TestCase("Apps-Sub - Foo - Bar.txt", "Foo - Bar.txt")]
+    [TestCase("Foo - Bar - Apps", "Foo - Bar - Apps")]
+    [TestCase("Foo - Bar.txt - Apps - Sub", "Foo - Bar.txt")]
+    [TestCase("Foo - Bar.abcde - Apps - Sub", "Foo - Bar.abcde - Apps - Sub")]
+    [TestCase("Foo  -  Bar  -  Apps", "Foo - Bar - Apps")]
+    [TestCase("Microsoft Word - File", "File")]
+    [TestCase("Microsoft Excel - File", "File")]
+    [TestCase("Microsoft PowerPoint - File", "File")]
+    [TestCase("- Apps", "- Apps")]
+    [TestCase(" - Apps", "Apps")]
+    [TestCase(" - Apps - Foo", "Apps - Foo")]
+    [TestCase(" - Apps - - - Foo", "Apps - Foo")]
+    [TestCase("File - .txt", ".txt")] // any better way?
     [TestCase("http://www.example.com/index.html", "index.html")]
-    [TestCase("",                                  "Default")]
-    [TestCase(null,                                "Default")]
+    [TestCase("Apps - http://www.example.com/index.html", "index.html")]
+    [TestCase("-", "Default")]
+    [TestCase("- - -", "Default")]
+    [TestCase("", "Default")]
+    [TestCase(null, "Default")]
     public void Test(string src, string expected) =>
         Assert.That(new DocumentName(src, "Default").Value, Is.EqualTo(expected));
 }

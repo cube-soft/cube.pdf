@@ -21,7 +21,6 @@ namespace Cube.Pdf.Converter;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using Cube.Collections.Extensions;
 using Cube.DataContract;
 using GsFormat = Ghostscript.Format;
 
@@ -189,8 +188,8 @@ public class ExtensionList : SerializableBase
         GsFormat.Jpeg => Combine(Jpeg, ".jpg", ".jpeg"),
         GsFormat.Bmp  => Combine(Bmp, ".bmp"),
         GsFormat.Tiff => Combine(Tiff, ".tiff", ".tif"),
-        GsFormat.Text => new[] { ".txt" },
-        _ => new[] { $".{src.ToString().ToLowerInvariant()}" },
+        GsFormat.Text => [ ".txt" ],
+        _ => [ $".{src.ToString().ToLowerInvariant()}" ],
     };
 
     #endregion
@@ -211,7 +210,7 @@ public class ExtensionList : SerializableBase
     /// <returns>Collection of file extension candidates.</returns>
     ///
     /* --------------------------------------------------------------------- */
-    private IEnumerable<string> Combine(string src, params string[] latter) =>
+    private static IEnumerable<string> Combine(string src, params string[] latter) =>
         new[] { src }.Concat(latter.Where(e => e != src));
 
     #endregion
