@@ -119,6 +119,9 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2024-07-29 version 4.0.1
+    - Update iText to 8.0.5.
+    - Update PDFium to Chromium 127 compatible.
 * 2024-06-21 version 4.0.0
     - Improve processing of i18n support
     - Add Simplified Chinese as a display language.
