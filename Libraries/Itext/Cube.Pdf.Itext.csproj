@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>9.0.0</Version>
+        <Version>9.0.1</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>iText based PDF library.</Description>
@@ -25,8 +25,8 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="itext" Version="8.0.4" />
-        <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.4" />
+        <PackageReference Include="itext" Version="8.0.5" />
+        <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.5" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\Icon.png" Pack="true" PackagePath="images" />
