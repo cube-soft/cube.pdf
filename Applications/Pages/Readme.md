@@ -69,6 +69,8 @@ Dependencies of the CubePDF Page are as follows.
 
 ## History
 
+* 2024-07-31 version 5.0.1
+    - Update iText to 8.0.5.
 * 2024-06-27 version 5.0.0
     - Improve processing of i18n support
     - Add Simplified Chinese as a display language.
