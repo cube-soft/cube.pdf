@@ -50,16 +50,7 @@ internal sealed class ProcessLauncher
     /// <param name="src">User settings.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public ProcessLauncher(SettingFolder src)
-    {
-        Settings  = src;
-        _handlers = new()
-        {
-            { PostProcess.Open,          Open           },
-            { PostProcess.OpenDirectory, OpenDirectory  },
-            { PostProcess.Others,        RunUserProgram },
-        };
-    }
+    public ProcessLauncher(SettingFolder src) => Settings = src;
 
     #endregion
 
@@ -93,14 +84,19 @@ internal sealed class ProcessLauncher
     /* --------------------------------------------------------------------- */
     public void Invoke(IEnumerable<string> src)
     {
-        var key = Settings.Value.PostProcess;
-
         try
         {
-            if (_handlers.TryGetValue(key, out var dest)) dest(src);
+            _ = Settings.Value.PostProcess switch
+            {
+                PostProcess.Open          => Open(src),
+                PostProcess.OpenDirectory => OpenDirectory(src),
+                PostProcess.Others        => RunUserProgram(src),
+                _                         => default,
+            };
         }
         catch (Exception err)
         {
+            var key  = Settings.Value.PostProcess;
             var user = key == PostProcess.Others ? Settings.Value.UserProgram : string.Empty;
             throw new PostProcessException(key, user, err);
         }
@@ -119,7 +115,7 @@ internal sealed class ProcessLauncher
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private void Open(IEnumerable<string> src) => Start(Create(src.First(), string.Empty));
+    private static Process Open(IEnumerable<string> src) => Start(src.First(), string.Empty);
 
     /* --------------------------------------------------------------------- */
     ///
@@ -130,10 +126,10 @@ internal sealed class ProcessLauncher
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private void OpenDirectory(IEnumerable<string> src) => Start(Create(
+    private static Process OpenDirectory(IEnumerable<string> src) => Start(
         "explorer.exe",
         Io.GetDirectoryName(src.First()).Quote()
-    ));
+    );
 
     /* --------------------------------------------------------------------- */
     ///
@@ -144,34 +140,21 @@ internal sealed class ProcessLauncher
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private void RunUserProgram(IEnumerable<string> src)
-    {
-        if (!Settings.Value.UserProgram.HasValue()) return;
-        Start(Create(Settings.Value.UserProgram, src.First().Quote()));
-    }
+    private Process RunUserProgram(IEnumerable<string> src) =>
+        Settings.Value.UserProgram.HasValue() ?
+        Start(Settings.Value.UserProgram, src.First().Quote()) :
+        default;
 
     /* --------------------------------------------------------------------- */
     ///
     /// Start
     ///
     /// <summary>
-    /// Executes the process.
+    /// Executes the process with the specified arguments.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    private void Start(ProcessStartInfo src) => new Process { StartInfo = src }.Start();
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Create
-    ///
-    /// <summary>
-    /// Creates a new instance of the ProcessStartInfo class with the
-    /// specified arguments.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private ProcessStartInfo Create(string exec, string args) => new()
+    private static Process Start(string exec, string args) => Process.Start(new ProcessStartInfo
     {
         FileName        = exec,
         Arguments       = args,
@@ -179,11 +162,7 @@ internal sealed class ProcessLauncher
         UseShellExecute = true,
         LoadUserProfile = false,
         WindowStyle     = ProcessWindowStyle.Normal,
-    };
+    });
 
-    #endregion
-
-    #region Fields
-    private readonly Dictionary<PostProcess, Action<IEnumerable<string>>> _handlers;
     #endregion
 }
