@@ -56,6 +56,9 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2024-08-13 version 4.1.0
+    - Add workaround for image files not displaying in Microsoft Photo.
+    - Update iText to 8.0.5.
 * 2024-07-10 version 4.0.0
     - Improve method of determining initial file name.
     - Improve processing of i18n support
