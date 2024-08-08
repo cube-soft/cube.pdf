@@ -165,6 +165,16 @@ public sealed class MainViewModel : PresentableBase<Facade>
         var ready = Security.Confirm() && Settings.Confirm();
         if (ready) Run(() => {
             Facade.Invoke();
+
+            // NOTE: We are currently aware of an issue where the window does not
+            // show when attempting to open an image file associated with Microsoft
+            // Photo (version 2024.11060.20006.0 and later). This issue is caused by
+            // CubePDF exiting immediately after the Microsoft Photo process is
+            // launched, and can be worked around by waiting a short time before
+            // exiting. Therefore, we have implemented Sleep as a workaround.
+            // The fundamental solution is a future issue.
+            if (Facade.Settings.Value.PostProcess == PostProcess.Open) Thread.Sleep(500);
+
             Send(new CloseMessage());
         }, false);
     }
