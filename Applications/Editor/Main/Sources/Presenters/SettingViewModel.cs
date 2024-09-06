@@ -236,14 +236,15 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IEnumerable<Language> Languages { get; } = new[]
-        {
+        public IEnumerable<Language> Languages { get; } =
+        [
             Globalization.Language.Auto,
             Globalization.Language.English,
             Globalization.Language.German,
             Globalization.Language.Japanese,
+            Globalization.Language.Russian,
             Globalization.Language.SimplifiedChinese,
-        };
+        ];
 
         /* ----------------------------------------------------------------- */
         ///

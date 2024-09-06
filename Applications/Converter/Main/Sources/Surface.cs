@@ -126,6 +126,7 @@ public static class Surface
         { nameof(Language.English),           Language.English           },
         { nameof(Language.German),            Language.German            },
         { nameof(Language.Japanese),          Language.Japanese          },
+        { nameof(Language.Russian),           Language.Russian           },
         { nameof(Language.SimplifiedChinese), Language.SimplifiedChinese },
     };
 
