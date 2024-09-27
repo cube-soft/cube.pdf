@@ -116,7 +116,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             Assert.That(src.Title,                 Is.Not.Null.And.Not.Empty);
             Assert.That(src.Version.Text,          Is.Not.Null.And.Not.Empty);
-            Assert.That(src.Version.Value,         Does.StartWith("CubePDF Utility 4.0.2 "));
+            Assert.That(src.Version.Value,         Does.StartWith("CubePDF Utility 4.1.0 "));
             Assert.That(src.Windows.Text,          Does.StartWith("Microsoft Windows"));
             Assert.That(src.Framework.Text,        Does.StartWith("Microsoft .NET Framework"));
             Assert.That(src.Link.Text,             Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));
@@ -124,7 +124,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             Assert.That(src.CheckUpdate.Text,      Is.Not.Null.And.Not.Empty);
             Assert.That(src.Language.Text,         Is.Not.Null.And.Not.Empty);
             Assert.That(src.Language.Value,        Is.EqualTo(Language.English)); // see remarks.
-            Assert.That(src.Languages.Count(),     Is.EqualTo(5));
+            Assert.That(src.Languages.Count(),     Is.EqualTo(6));
         }
 
         #endregion
