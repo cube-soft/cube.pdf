@@ -106,7 +106,6 @@ class SettingTest : MockFixture
         Assert.That(src.IsPortrait,        Is.False, nameof(src.IsPortrait));
         Assert.That(src.IsLandscape,       Is.False, nameof(src.IsLandscape));
         Assert.That(src.IsUserProgram,     Is.False, nameof(src.IsUserProgram));
-        Assert.That(src.Linearization,     Is.False, nameof(src.Linearization));
         Assert.That(src.SourceVisible,     Is.False, nameof(src.SourceVisible));
         Assert.That(src.SourceEditable,    Is.True,  nameof(src.SourceEditable));
         Assert.That(src.CheckUpdate,       Is.False, nameof(src.CheckUpdate));

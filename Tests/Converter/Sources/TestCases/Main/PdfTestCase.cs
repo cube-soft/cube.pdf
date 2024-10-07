@@ -132,13 +132,11 @@ sealed class PdfTestCase : TestCaseBase<SettingValue>
             Options  = ViewerOption.SinglePage,
         };
 
-        foreach (var e in new Tuple<string, Metadata, bool>[]
+        foreach (var e in new Tuple<string, Metadata>[]
         {
-            new("Metadata",         en, false),
-            new("Metadata_Web",     en, true ),
-            new("Metadata_Cjk",     ja, false),
-            new("Metadata_Cjk_Web", ja, true ),
-        }) yield return Make(e.Item1, new() { Metadata = e.Item2, Linearization = e.Item3 });
+            new("Metadata",     en),
+            new("Metadata_Cjk", ja),
+        }) yield return Make(e.Item1, new() { Metadata = e.Item2 });
     }
 
     /* --------------------------------------------------------------------- */
@@ -169,11 +167,10 @@ sealed class PdfTestCase : TestCaseBase<SettingValue>
             }
         };
 
-        foreach (var e in new Tuple<string, Encryption, bool>[]
+        foreach (var e in new Tuple<string, Encryption>[]
         {
-            new("Encryption",     crypt, false),
-            new("Encryption_Web", crypt, true ),
-        }) yield return Make(e.Item1, new() { Encryption = e.Item2, Linearization = e.Item3 });
+            new("Encryption", crypt),
+        }) yield return Make(e.Item1, new() { Encryption = e.Item2 });
     }
 
     /* --------------------------------------------------------------------- */
@@ -187,7 +184,6 @@ sealed class PdfTestCase : TestCaseBase<SettingValue>
     /* --------------------------------------------------------------------- */
     private IEnumerable<TestCaseData> GetOtherTestCases()
     {
-        yield return Make("Web", new() { Linearization = true });
         yield return Make("日本語 PDF サンプル", "Sample.ps", new() { });
     }
 

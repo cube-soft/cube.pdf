@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Ghostscript;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cube.Collections.Extensions;
@@ -124,11 +125,11 @@ public class PdfConverter : DocumentConverter
     /// Linearization
     ///
     /// <summary>
-    /// Gets or sets a value indicating whether to enable linearization
-    /// (a.k.a PDF Web optimization).
+    /// Gets or sets a value indicating whether to enable linearization.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
+    [Obsolete("Linearized PDF is no longer supported")]
     public bool Linearization { get; set; } = false;
 
     #endregion
@@ -150,8 +151,7 @@ public class PdfConverter : DocumentConverter
         .Concat(CreateImages("Color", Compression))
         .Concat(CreateImages("Gray",  Compression))
         .Concat(CreateImages("Mono",  MonoCompression))
-        .Concat(new Argument('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}"))
-        .Concat(Linearization ? new Argument('d', "FastWebView") : default);
+        .Concat(new Argument('d', "CompatibilityLevel", $"{Version.Major}.{Version.Minor}"));
 
     #endregion
 
@@ -167,7 +167,7 @@ public class PdfConverter : DocumentConverter
     ///
     /// <param name="kind">Color, Gray, or Mono.</param>
     /// <param name="value">Compression encoding.</param>
-    /// 
+    ///
     /// <returns>Collection of Argument objects.</returns>
     ///
     /* --------------------------------------------------------------------- */

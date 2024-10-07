@@ -137,7 +137,6 @@ class MainTest : MockFixture
         src.PostProcess       = value.PostProcess;
         src.UserProgram       = value.UserProgram;
         src.Resolution        = value.Resolution;
-        src.Linearization     = value.Linearization;
         src.IsJpegEncoding    = value.Encoding == Encoding.Jpeg;
         src.IsAutoOrientation = value.Orientation == Orientation.Auto;
         src.IsPortrait        = value.Orientation == Orientation.Portrait;

@@ -166,8 +166,6 @@ public partial class MainWindow : Window
         b1.Bind(nameof(s1.IsAutoOrientation),   AutoRadioButton,        nameof(AutoRadioButton.Checked));
         b1.Bind(nameof(s1.IsJpegEncoding),      JpegCheckBox,           nameof(JpegCheckBox.Checked));
         b1.Bind(nameof(s1.IsPdf),               JpegCheckBox,           nameof(JpegCheckBox.Enabled), true);
-        b1.Bind(nameof(s1.Linearization),       LinearizationCheckBox,  nameof(LinearizationCheckBox.Checked));
-        b1.Bind(nameof(s1.IsPdf),               LinearizationCheckBox,  nameof(LinearizationCheckBox.Enabled), true);
         b1.Bind(nameof(s1.PostProcess),         PostProcessComboBox,    nameof(PostProcessComboBox.SelectedValue));
         b1.Bind(nameof(s1.IsUserProgram),       UserProgramPanel,       nameof(UserProgramPanel.Enabled), true);
         b1.Bind(nameof(s1.UserProgram),         UserProgramTextBox,     nameof(UserProgramTextBox.Text));
@@ -276,7 +274,6 @@ public partial class MainWindow : Window
         PortraitRadioButton.Text = Surface.Texts.General_Portrait;
         LandscapeRadioButton.Text = Surface.Texts.General_Landscape;
         AutoRadioButton.Text = Surface.Texts.General_Auto;
-        LinearizationCheckBox.Text = Surface.Texts.General_Linearization;
         JpegCheckBox.Text = Surface.Texts.General_Jpeg;
 
         // Menus for Security tab (CheckBox, RadioButton, ...)

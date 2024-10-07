@@ -52,7 +52,6 @@ internal class SimplifiedChineseText() : Globalization.TextGroup(new()
     { nameof(Text.General_Portrait), "肖像" },
     { nameof(Text.General_Landscape), "风景" },
     { nameof(Text.General_Jpeg), "压缩 PDF 图像为 JPEG" },
-    { nameof(Text.General_Linearization), "优化 PDF 以实现快速 Web 查看" },
     { nameof(Text.General_Open), "打开" },
     { nameof(Text.General_OpenDirectory), "打开目录" },
     { nameof(Text.General_None), "无" },

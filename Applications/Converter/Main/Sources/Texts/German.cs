@@ -52,7 +52,6 @@ internal class GermanText() : Globalization.TextGroup(new()
     { nameof(Text.General_Portrait), "Hochformat" },
     { nameof(Text.General_Landscape), "Querformat" },
     { nameof(Text.General_Jpeg), "PDF-Bilder als JPEG komprimieren" },
-    { nameof(Text.General_Linearization), "PDF für schnelle Webansicht optimieren" },
     { nameof(Text.General_Open), "Öffnen" },
     { nameof(Text.General_OpenDirectory), "Verzeichnis öffnen" },
     { nameof(Text.General_None), "Keine" },

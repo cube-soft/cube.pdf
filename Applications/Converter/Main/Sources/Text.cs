@@ -53,7 +53,6 @@ internal class Text : TextBase
     public string General_Portrait => Get();
     public string General_Landscape => Get();
     public string General_Jpeg => Get();
-    public string General_Linearization => Get();
     public string General_Open => Get();
     public string General_OpenDirectory => Get();
     public string General_None => Get();
