@@ -79,7 +79,6 @@ public static class SettingMigration
         v3.Downsampling       = v2.Downsampling;
         v3.Resolution         = v2.Resolution;
         v3.EmbedFonts         = v2.EmbedFonts;
-        v3.Linearization      = v2.Linearization;
         v3.PostProcess        = v2.PostProcess;
         v3.UserProgram        = v2.UserProgram;
         v3.Destination        = v2.Destination;

@@ -56,6 +56,10 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2024-10-15 version 4.2.0
+    - Remove "Optimize PDF for fast Web view" funciton.
+    - Update Ghostscript to 10.4.0.
+    - Add Russian as a display language.
 * 2024-08-13 version 4.1.0
     - Add workaround for image files not displaying in Microsoft Photo.
     - Update iText to 8.0.5.

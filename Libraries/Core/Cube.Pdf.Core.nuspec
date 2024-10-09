@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>9.0.3</version>
+        <version>9.1.0</version>
         <id>Cube.Pdf</id>
         <title>Cube.Pdf</title>
         <authors>clown,cube-soft</authors>
@@ -16,7 +16,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="netstandard2.0">
-                <dependency id="System.Drawing.Common" version="8.0.6" />
+                <dependency id="System.Drawing.Common" version="8.0.10" />
                 <dependency id="System.Security.Cryptography.Csp" version="4.3.0" />
                 <dependency id="Cube.Core" version="9.0.0" />
             </group>

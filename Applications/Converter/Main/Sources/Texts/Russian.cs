@@ -52,7 +52,6 @@ internal class RussianText() : Globalization.TextGroup(new()
     { nameof(Text.General_Portrait), "Книжная" },
     { nameof(Text.General_Landscape), "Альбомная" },
     { nameof(Text.General_Jpeg), "Сжимать изображения в PDF документе" },
-    { nameof(Text.General_Linearization), "Оптимизировать PDF документ для веб-просмотра" },
     { nameof(Text.General_Open), "Открыть документ" },
     { nameof(Text.General_OpenDirectory), "Открыть папку" },
     { nameof(Text.General_None), "Ничего не делать" },

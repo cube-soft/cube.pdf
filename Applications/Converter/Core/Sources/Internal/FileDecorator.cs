@@ -85,9 +85,7 @@ internal sealed class FileDecorator
     public void Invoke(string src)
     {
         if (Settings.Value.Format != Format.Pdf) return;
-
         InvokeItext(src);
-        InvokeLinearization(src);
     }
 
     #endregion
@@ -121,28 +119,6 @@ internal sealed class FileDecorator
         }
 
         FileTransfer.MoveOrCopy(tmp, src, true);
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// InvokeLinearization
-    ///
-    /// <summary>
-    /// Invokes the linearization on the specified PDF file.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    private void InvokeLinearization(string src)
-    {
-        if (!Settings.Value.Linearization || Settings.Value.Encryption.Enabled) return;
-        if (GhostscriptFactory.Create(Settings) is PdfConverter gs)
-        {
-            var tmp = GetTemp(src);
-            gs.Linearization = true;
-            gs.ColorMode = ColorMode.SameAsSource;
-            gs.Invoke(src, tmp);
-            FileTransfer.MoveOrCopy(tmp, src, true);
-        }
     }
 
     /* --------------------------------------------------------------------- */

@@ -37,7 +37,6 @@
             this.ColorComboBox = new System.Windows.Forms.ComboBox();
             this.ColorLabel = new System.Windows.Forms.Label();
             this.SaveOptionComboBox = new System.Windows.Forms.ComboBox();
-            this.LinearizationCheckBox = new System.Windows.Forms.CheckBox();
             this.JpegCheckBox = new System.Windows.Forms.CheckBox();
             this.OptionLabel = new System.Windows.Forms.Label();
             this.ResolutionNumeric = new System.Windows.Forms.NumericUpDown();
@@ -174,17 +173,16 @@
             this.GeneralPanel.Controls.Add(this.ColorComboBox, 2, 4);
             this.GeneralPanel.Controls.Add(this.ColorLabel, 1, 4);
             this.GeneralPanel.Controls.Add(this.SaveOptionComboBox, 2, 2);
-            this.GeneralPanel.Controls.Add(this.LinearizationCheckBox, 2, 8);
             this.GeneralPanel.Controls.Add(this.JpegCheckBox, 2, 7);
             this.GeneralPanel.Controls.Add(this.OptionLabel, 1, 7);
             this.GeneralPanel.Controls.Add(this.ResolutionNumeric, 2, 5);
-            this.GeneralPanel.Controls.Add(this.PostProcessComboBox, 2, 9);
-            this.GeneralPanel.Controls.Add(this.UserProgramPanel, 2, 10);
+            this.GeneralPanel.Controls.Add(this.PostProcessComboBox, 2, 8);
+            this.GeneralPanel.Controls.Add(this.UserProgramPanel, 2, 9);
             this.GeneralPanel.Controls.Add(this.OrientationPanel, 2, 6);
             this.GeneralPanel.Controls.Add(this.OrientationLabel, 1, 6);
-            this.GeneralPanel.Controls.Add(this.SourcePanel, 2, 11);
-            this.GeneralPanel.Controls.Add(this.SourceLabel, 1, 11);
-            this.GeneralPanel.Controls.Add(this.PostProcessLabel, 1, 9);
+            this.GeneralPanel.Controls.Add(this.SourcePanel, 2, 10);
+            this.GeneralPanel.Controls.Add(this.SourceLabel, 1, 10);
+            this.GeneralPanel.Controls.Add(this.PostProcessLabel, 1, 8);
             this.GeneralPanel.Controls.Add(this.DestinationLabel, 1, 1);
             this.GeneralPanel.Controls.Add(this.ResolutionLabel, 1, 5);
             this.GeneralPanel.Controls.Add(this.FormatLabel, 1, 3);
@@ -210,13 +208,6 @@
             this.SaveOptionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.SaveOptionComboBox.FormattingEnabled = true;
             this.SaveOptionComboBox.Name = "SaveOptionComboBox";
-            //
-            // LinearizationCheckBox
-            //
-            this.LinearizationCheckBox.AutoEllipsis = true;
-            resources.ApplyResources(this.LinearizationCheckBox, "LinearizationCheckBox");
-            this.LinearizationCheckBox.Name = "LinearizationCheckBox";
-            this.LinearizationCheckBox.UseVisualStyleBackColor = true;
             //
             // JpegCheckBox
             //
@@ -893,7 +884,6 @@
         private System.Windows.Forms.Label AboutLabel;
         private Forms.Controls.VersionControl VersionPanel;
         private System.Windows.Forms.ProgressBar MainProgressBar;
-        private System.Windows.Forms.CheckBox LinearizationCheckBox;
         private System.Windows.Forms.CheckBox JpegCheckBox;
         private System.Windows.Forms.Label OptionLabel;
         private System.Windows.Forms.CheckBox AllowAnnotationCheckBox;

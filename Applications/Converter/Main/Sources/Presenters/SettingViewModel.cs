@@ -325,22 +325,6 @@ public sealed class SettingViewModel : PresentableBase<SettingFacade>
 
     /* --------------------------------------------------------------------- */
     ///
-    /// Linearization
-    ///
-    /// <summary>
-    /// Gets or sets a value indicating whether to linearize the
-    /// PDF (a.k.a PDF web optimization).
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public bool Linearization
-    {
-        get => Facade.Settings.Value.Linearization;
-        set => Facade.Settings.Value.Linearization = value;
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
     /// CheckUpdate
     ///
     /// <summary>

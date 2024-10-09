@@ -18,6 +18,7 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter;
 
+using System;
 using System.Runtime.Serialization;
 using Cube.Pdf.Ghostscript;
 
@@ -165,23 +166,6 @@ public class SettingValue : DataContract.SerializableBase
     public bool EmbedFonts
     {
         get => Get(() => true);
-        set => Set(value);
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Linearization
-    ///
-    /// <summary>
-    /// Gets or sets a value indicating whether to apply the
-    /// linearization option (a.k.a Web optimization).
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    [DataMember]
-    public bool Linearization
-    {
-        get => Get(() => false);
         set => Set(value);
     }
 
@@ -355,6 +339,19 @@ public class SettingValue : DataContract.SerializableBase
         get => Get(() => false);
         set => Set(value);
     }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Linearization
+    ///
+    /// <summary>
+    /// Gets or sets a value indicating whether to apply the
+    /// linearization option.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [Obsolete("Linearized PDF is no longer supported")]
+    public bool Linearization { get; set; } = false;
 
     #endregion
 }

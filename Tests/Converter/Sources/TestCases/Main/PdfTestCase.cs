@@ -134,11 +134,9 @@ sealed class PdfTestCase : TestCaseBase<SettingValue>
 
         foreach (var e in new TestCaseArgument<Metadata>[]
         {
-            new("Metadata",         en, false),
-            new("Metadata_Web",     en, true ),
-            new("Metadata_Cjk",     ja, false),
-            new("Metadata_Cjk_Web", ja, true ),
-        }) yield return Make(e.Name, new() { Metadata = e.Value, Linearization = e.Linearization });
+            new("Metadata",     en),
+            new("Metadata_Cjk", ja),
+        }) yield return Make(e.Name, new() { Metadata = e.Value });
     }
 
     /* --------------------------------------------------------------------- */
@@ -171,9 +169,8 @@ sealed class PdfTestCase : TestCaseBase<SettingValue>
 
         foreach (var e in new TestCaseArgument<Encryption>[]
         {
-            new("Encryption",     crypt, false),
-            new("Encryption_Web", crypt, true ),
-        }) yield return Make(e.Name, new() { Encryption = e.Value, Linearization = e.Linearization });
+            new("Encryption", crypt),
+        }) yield return Make(e.Name, new() { Encryption = e.Value });
     }
 
     /* --------------------------------------------------------------------- */
@@ -187,7 +184,6 @@ sealed class PdfTestCase : TestCaseBase<SettingValue>
     /* --------------------------------------------------------------------- */
     private IEnumerable<TestCaseData> GetOtherTestCases()
     {
-        yield return Make("Web", new() { Linearization = true });
         yield return Make("日本語 PDF サンプル", "Sample.ps", new() { });
     }
 
@@ -241,15 +237,13 @@ sealed class PdfTestCase : TestCaseBase<SettingValue>
     /* --------------------------------------------------------------------- */
     private class TestCaseArgument<T>
     {
-        public TestCaseArgument(string s, T v, bool x)
+        public TestCaseArgument(string s, T v)
         {
             Name          = s;
             Value         = v;
-            Linearization = x;
         }
         public string Name { get; set; }
         public T Value { get; set; }
-        public bool Linearization { get; set; }
     }
 
     #endregion
