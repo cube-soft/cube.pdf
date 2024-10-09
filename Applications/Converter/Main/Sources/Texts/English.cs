@@ -52,7 +52,6 @@ internal class EnglishText() : Globalization.TextGroup(new()
     { nameof(Text.General_Portrait), "Portrait" },
     { nameof(Text.General_Landscape), "Landscape" },
     { nameof(Text.General_Jpeg), "Compress PDF images as JPEG" },
-    { nameof(Text.General_Linearization), "Optimize PDF for fast Web view" },
     { nameof(Text.General_Open), "Open" },
     { nameof(Text.General_OpenDirectory), "Open directory" },
     { nameof(Text.General_None), "None" },

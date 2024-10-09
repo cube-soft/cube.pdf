@@ -88,8 +88,8 @@ class SettingTest : MockFixture
     /* --------------------------------------------------------------------- */
     private void Check(SettingViewModel src)
     {
-        Assert.That(src.Title,             Does.StartWith("CubePDF 4.1.0 ("));
-        Assert.That(src.Version,           Does.StartWith("4.1.0 ("));
+        Assert.That(src.Title,             Does.StartWith("CubePDF 4.2.0 ("));
+        Assert.That(src.Version,           Does.StartWith("4.2.0 ("));
         Assert.That(src.Uri.ToString(),    Does.StartWith("https://www.cube-soft.jp/cubepdf/?lang="));
         Assert.That(src.Format,            Is.EqualTo(Format.Pdf));
         Assert.That(src.SaveOption,        Is.EqualTo(SaveOption.Overwrite));
@@ -106,7 +106,6 @@ class SettingTest : MockFixture
         Assert.That(src.IsPortrait,        Is.False, nameof(src.IsPortrait));
         Assert.That(src.IsLandscape,       Is.False, nameof(src.IsLandscape));
         Assert.That(src.IsUserProgram,     Is.False, nameof(src.IsUserProgram));
-        Assert.That(src.Linearization,     Is.False, nameof(src.Linearization));
         Assert.That(src.SourceVisible,     Is.False, nameof(src.SourceVisible));
         Assert.That(src.SourceEditable,    Is.True,  nameof(src.SourceEditable));
         Assert.That(src.CheckUpdate,       Is.False, nameof(src.CheckUpdate));

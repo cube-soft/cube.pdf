@@ -52,7 +52,6 @@ internal class JapaneseText() : Globalization.TextGroup(new()
     { nameof(Text.General_Portrait), "縦" },
     { nameof(Text.General_Landscape), "横" },
     { nameof(Text.General_Jpeg), "PDF ファイル中の画像を JPEG 形式で圧縮する" },
-    { nameof(Text.General_Linearization), "PDF ファイルを Web 表示用に最適化する" },
     { nameof(Text.General_Open), "開く" },
     { nameof(Text.General_OpenDirectory), "フォルダーを開く" },
     { nameof(Text.General_None), "何もしない" },
