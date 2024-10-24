@@ -119,6 +119,8 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2024-10-23 version 4.1.1
+    - Update PDFium to Chromium 130 compatible.
 * 2024-09-27 version 4.1.0
     - Update PDFium to Chromium 129 compatible.
     - Add Russian as a display language.
