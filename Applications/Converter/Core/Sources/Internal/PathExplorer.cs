@@ -49,7 +49,7 @@ internal static class PathExplorer
     {
         if (!src.HasValue()) return false;
         var ext = Io.GetExtension(src);
-        if (!ext.HasValue() || ext.First() != '.' || ext.Length > 5) return false;
+        if (!ext.HasValue() || ext.First() != '.' || ext.Length > 6) return false;
 
         var ok = false;
         foreach (var c in ext.Skip(1))
