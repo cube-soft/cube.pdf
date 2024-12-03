@@ -68,7 +68,9 @@ namespace Cube.Pdf.Itext
             SetMetadata(metadata, _document);
 
             var keep = options.KeepOutlines;
-            _merger = new(_document, keep, keep);
+            var prop = new PdfMergerProperties();
+            _ = prop.SetMergeTags(keep).SetMergeOutlines(keep);
+            _merger = new(_document, prop);
             _ = _merger.SetCloseSourceDocuments(false);
         }
 
