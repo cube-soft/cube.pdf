@@ -92,7 +92,7 @@
     <value>MainGridView</value>
   </data>
   <data name="&gt;&gt;MainGridView.Type" xml:space="preserve">
-    <value>Cube.Pdf.Pages.FileGridView, CubePdfPage, Version=4.1.1.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Cube.Pdf.Pages.FileGridView, CubePdfPage, Version=5.0.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;MainGridView.Parent" xml:space="preserve">
     <value>FilePanel</value>

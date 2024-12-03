@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
     <metadata>
-        <version>9.1.0</version>
+        <version>9.2.0</version>
         <id>Cube.Pdf.Generating</id>
         <title>Cube.Pdf.Generating</title>
         <authors>clown,cube-soft</authors>
@@ -16,15 +16,15 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <dependencies>
             <group targetFramework="netstandard2.0">
-                <dependency id="Cube.Pdf" version="9.1.0" />
+                <dependency id="Cube.Pdf" version="9.2.0" />
                 <dependency id="Cube.Native.Pdfgen" version="10.4.0" />
             </group>
             <group targetFramework="net46">
-                <dependency id="Cube.Pdf" version="9.1.0" />
+                <dependency id="Cube.Pdf" version="9.2.0" />
                 <dependency id="Cube.Native.Pdfgen" version="10.4.0" />
             </group>
             <group targetFramework="net35">
-                <dependency id="Cube.Pdf" version="9.1.0" />
+                <dependency id="Cube.Pdf" version="9.2.0" />
                 <dependency id="Cube.Native.Pdfgen" version="10.4.0" />
             </group>
         </dependencies>
