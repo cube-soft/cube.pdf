@@ -49,6 +49,7 @@ internal abstract class TextBase : LocalizableText
         Language.English           => new EnglishText(),
         Language.German            => new GermanText(),
         Language.Japanese          => new JapaneseText(),
+        Language.Russian           => new RussianText(),
         Language.SimplifiedChinese => new SimplifiedChineseText(),
         _ => default,
     };

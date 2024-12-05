@@ -96,11 +96,12 @@ public static class Surface
     /* --------------------------------------------------------------------- */
     public static ComboListSource<Language> Languages => new()
     {
-        { nameof(Language.Auto),     Language.Auto     },
-        { nameof(Language.English),  Language.English  },
-        { nameof(Language.German),   Language.German   },
-        { nameof(Language.Japanese), Language.Japanese },
-        { "Simplified Chinese",      Language.SimplifiedChinese },
+        { nameof(Language.Auto),              Language.Auto              },
+        { nameof(Language.English),           Language.English           },
+        { nameof(Language.German),            Language.German            },
+        { nameof(Language.Japanese),          Language.Japanese          },
+        { nameof(Language.Russian),           Language.Russian           },
+        { nameof(Language.SimplifiedChinese), Language.SimplifiedChinese },
     };
 
     /* --------------------------------------------------------------------- */

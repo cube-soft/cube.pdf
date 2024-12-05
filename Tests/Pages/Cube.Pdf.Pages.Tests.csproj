@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>5.0.1</Version>
+        <Version>5.1.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Copyright>Copyright © 2013 CubeSoft, Inc.</Copyright>
