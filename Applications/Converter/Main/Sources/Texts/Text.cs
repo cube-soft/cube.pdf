@@ -16,6 +16,9 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
+using System.Threading;
+using Cube.Globalization;
+
 namespace Cube.Pdf.Converter;
 
 /* ------------------------------------------------------------------------- */
@@ -27,9 +30,10 @@ namespace Cube.Pdf.Converter;
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-internal class Text : TextBase
+internal class Text() : LocalizableText(Make, new EnglishText())
 {
-    // ReSharper disable InconsistentNaming
+    #region Properties
+
     #region General tab
     public string General_Tab => Get();
     public string General_Source => Get();
@@ -146,5 +150,50 @@ internal class Text : TextBase
     public string Filter_Jpeg => Get();
     public string Filter_Tiff => Get();
     public string Filter_Exe => Get();
+    #endregion
+
+    #endregion
+
+    #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Make
+    ///
+    /// <summary>
+    /// Makes a text group with the specified Language value.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    private static TextGroup Make(Language src) => src switch
+    {
+        Language.Auto     => Make(Locale.GetDefaultLanguage()),
+        Language.English  => new EnglishText(),
+        Language.German   => new GermanText(),
+        Language.Japanese => new JapaneseText(),
+        Language.Russian  => new RussianText(),
+        Language.SimplifiedChinese => new SimplifiedChineseText(),
+        _ => default,
+    };
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// OnReset
+    ///
+    /// <summary>
+    /// Occurs when the Reset method is invoked.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    protected override void OnReset(Language src)
+    {
+        base.OnReset(src);
+
+        var ci = src.ToCultureInfo();
+        Thread.CurrentThread.CurrentCulture = ci;
+        Thread.CurrentThread.CurrentUICulture = ci;
+        Properties.Resources.Culture = ci;
+    }
+
     #endregion
 }
