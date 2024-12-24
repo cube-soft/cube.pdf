@@ -18,12 +18,12 @@
             <group targetFramework="netstandard2.0">
                 <dependency id="Cube.Pdf" version="9.2.0" />
                 <dependency id="itext" version="9.0.0" />
-                <dependency id="itext.bouncy-castle-adapter" version="8.0.5" />
+                <dependency id="itext.bouncy-castle-adapter" version="9.0.0" />
             </group>
             <group targetFramework="net461">
                 <dependency id="Cube.Pdf" version="9.2.0" />
                 <dependency id="itext" version="9.0.0" />
-                <dependency id="itext.bouncy-castle-adapter" version="8.0.5" />
+                <dependency id="itext.bouncy-castle-adapter" version="9.0.0" />
             </group>
             <group targetFramework="net35">
                 <dependency id="Cube.Pdf" version="9.2.0" />
