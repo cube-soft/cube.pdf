@@ -16,15 +16,11 @@ PDF 形式などの文書を作成する事のできる、とても便利なソ�
 * CubePDF ユーザーマニュアル  
   https://docs.cube-soft.jp/entry/cubepdf
 
-x86/x64 版 CubePDF を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.7 以降を推奨）。
-また、ARM64 版 CubePDF では .NET 6.0 がインストールされている必要があります。
-尚、ARM64 版 CubePDF では、x86/ARM64 両方の .NET 6.0 デスクトップランタイムを必要とします。
-各種 .NET ランタイムは、以下の URL からダウンロードして下さい。
+CubePDF を使用するためには、.NET Framework 3.5 以降がインストールされている必要があります（4.7 以降を強く推奨）。
+.NET Framework は、以下の URL からダウンロードして下さい。
 
 * Download .NET Framework  
   https://dotnet.microsoft.com/download/dotnet-framework
-* Download .NET 6.0 Runtime  
-  https://dotnet.microsoft.com/download/dotnet/6.0/runtime
 
 ## 問題が発生した場合
 
