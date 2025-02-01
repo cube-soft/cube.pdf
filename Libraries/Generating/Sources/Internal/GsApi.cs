@@ -76,13 +76,25 @@ internal static class GsApi
         _ = NativeMethods.NewInstance(out var core, IntPtr.Zero);
         if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
 
+        IntPtr[] utf8argv = new IntPtr[args.Length];
+        for (int i = 0; i < utf8argv.Length; i++)
+        {
+            utf8argv[i] = NativeUtf8FromString(args[i]);
+        }
+
         try
         {
-            var code = NativeMethods.InitWithArgs(core, args.Length, args);
+            NativeMethods.SetArgEncoding(core, 1 /*GS_ARG_ENCODING_UTF8*/ );
+            var code = NativeMethods.InitWithArgs(core, utf8argv.Length, utf8argv);
             if (code < 0 && code != (int)GsApiStatus.Quit && code != (int)GsApiStatus.Info) throw new GsApiException(code);
         }
         finally
         {
+            for (int i = 0; i < utf8argv.Length; i++)
+            {
+                Marshal.FreeHGlobal(utf8argv[i]);
+            }
+
             _ = NativeMethods.Exit(core);
             NativeMethods.DeleteInstance(core);
         }
@@ -91,7 +103,24 @@ internal static class GsApi
     #endregion
 
     #region Implementations
-
+    /* --------------------------------------------------------------------- */
+    ///
+    /// NativeUtf8FromString
+    ///
+    /// <summary>
+    /// Convert string to nativeUTF8 ptr. *remember to clean up with a call to Marshal.FreeHGlobal.*
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public static IntPtr NativeUtf8FromString(string managedString)
+    {
+        int len = System.Text.Encoding.UTF8.GetByteCount(managedString);
+        byte[] buffer = new byte[len + 1]; // null-terminator allocated
+        System.Text.Encoding.UTF8.GetBytes(managedString, 0, managedString.Length, buffer, 0);
+        IntPtr nativeUtf8 = Marshal.AllocHGlobal(buffer.Length);
+        Marshal.Copy(buffer, 0, nativeUtf8, buffer.Length);
+        return nativeUtf8;
+    }
     /* --------------------------------------------------------------------- */
     ///
     /// SetTemp
