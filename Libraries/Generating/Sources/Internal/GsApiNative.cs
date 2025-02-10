@@ -60,6 +60,18 @@ internal static class NativeMethods
 
     /* --------------------------------------------------------------------- */
     ///
+    /// SetArgEncoding
+    ///
+    /// <summary>
+    /// Sets encoding of arguments supplied via the gsapi interface
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    [DllImport(LibName, EntryPoint = "gsapi_set_arg_encoding")]
+    public static extern int SetArgEncoding(IntPtr instance, int encoding);
+
+    /* --------------------------------------------------------------------- */
+    ///
     /// InitWithArgs
     ///
     /// <summary>
@@ -68,7 +80,7 @@ internal static class NativeMethods
     ///
     /* --------------------------------------------------------------------- */
     [DllImport(LibName, EntryPoint = "gsapi_init_with_args")]
-    public static extern int InitWithArgs(IntPtr instance, int argc, string[] argv);
+    public static extern int InitWithArgs(IntPtr instance, int argc, IntPtr[] argv);
 
     /* --------------------------------------------------------------------- */
     ///
