@@ -63,7 +63,7 @@ internal static class NativeMethods
     /// SetArgEncoding
     ///
     /// <summary>
-    /// Sets encoding of arguments supplied via the gsapi interface
+    /// Sets encoding of arguments supplied via the Ghostscript API.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */

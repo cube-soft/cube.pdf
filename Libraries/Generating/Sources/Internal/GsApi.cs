@@ -19,6 +19,8 @@
 namespace Cube.Pdf.Ghostscript;
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Cube.FileSystem;
 using Cube.Text.Extensions;
@@ -71,30 +73,22 @@ internal static class GsApi
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Invoke(string[] args, string tmp) => SetTemp(tmp, () =>
+    public static void Invoke(string[] raw, string tmp) => SetTemp(tmp, () =>
     {
         _ = NativeMethods.NewInstance(out var core, IntPtr.Zero);
         if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
-
-        IntPtr[] utf8argv = new IntPtr[args.Length];
-        for (int i = 0; i < utf8argv.Length; i++)
-        {
-            utf8argv[i] = NativeUtf8FromString(args[i]);
-        }
+        var args = new List<IntPtr>();
 
         try
         {
+            foreach (var e in raw) args.Add(ToUtf8(e));
             NativeMethods.SetArgEncoding(core, 1 /*GS_ARG_ENCODING_UTF8*/ );
-            var code = NativeMethods.InitWithArgs(core, utf8argv.Length, utf8argv);
+            var code = NativeMethods.InitWithArgs(core, args.Count, args.ToArray());
             if (code < 0 && code != (int)GsApiStatus.Quit && code != (int)GsApiStatus.Info) throw new GsApiException(code);
         }
         finally
         {
-            for (int i = 0; i < utf8argv.Length; i++)
-            {
-                Marshal.FreeHGlobal(utf8argv[i]);
-            }
-
+            foreach (var e in args) Marshal.FreeHGlobal(e);
             _ = NativeMethods.Exit(core);
             NativeMethods.DeleteInstance(core);
         }
@@ -103,24 +97,31 @@ internal static class GsApi
     #endregion
 
     #region Implementations
+
     /* --------------------------------------------------------------------- */
     ///
-    /// NativeUtf8FromString
+    /// ToUtf8
     ///
     /// <summary>
-    /// Convert string to nativeUTF8 ptr. *remember to clean up with a call to Marshal.FreeHGlobal.*
+    /// Convert string to Native UTF-8 pointer.
     /// </summary>
     ///
+    /// <remarks>
+    /// Remember to clean up with a call to Marshal.FreeHGlobal.
+    /// </remarks>
+    ///
     /* --------------------------------------------------------------------- */
-    public static IntPtr NativeUtf8FromString(string managedString)
+    private static IntPtr ToUtf8(string src)
     {
-        int len = System.Text.Encoding.UTF8.GetByteCount(managedString);
-        byte[] buffer = new byte[len + 1]; // null-terminator allocated
-        System.Text.Encoding.UTF8.GetBytes(managedString, 0, managedString.Length, buffer, 0);
-        IntPtr nativeUtf8 = Marshal.AllocHGlobal(buffer.Length);
-        Marshal.Copy(buffer, 0, nativeUtf8, buffer.Length);
-        return nativeUtf8;
+        var bytes  = System.Text.Encoding.UTF8.GetByteCount(src);
+        var buffer = new byte[bytes + 1]; // Null-terminator allocated
+        System.Text.Encoding.UTF8.GetBytes(src, 0, src.Length, buffer, 0);
+
+        var dest = Marshal.AllocHGlobal(buffer.Length);
+        Marshal.Copy(buffer, 0, dest, buffer.Length);
+        return dest;
     }
+
     /* --------------------------------------------------------------------- */
     ///
     /// SetTemp
