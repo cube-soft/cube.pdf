@@ -55,6 +55,22 @@ public class GsApiException : Exception
     ///
     /// <summary>
     /// Initializes a new instance of the GsApiException class with
+    /// the specified status and message, log.
+    /// </summary>
+    ///
+    /// <param name="status">Status code.</param>
+    /// <param name="message">Message.</param>
+    /// <param name="log"> Filepath of GS log.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public GsApiException(int status, string log) : 
+        this((GsApiStatus)Enum.ToObject(typeof(GsApiStatus), status), $"{status} ({status:D})", log) { }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GsApiException
+    ///
+    /// <summary>
+    /// Initializes a new instance of the GsApiException class with
     /// the specified status.
     /// </summary>
     ///
@@ -76,8 +92,28 @@ public class GsApiException : Exception
     /// <param name="message">Message.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public GsApiException(GsApiStatus status, string message) :
-        base(message) => Status = status;
+    public GsApiException(GsApiStatus status, string message) : this(status, message, null) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// GsApiException
+    ///
+    /// <summary>
+    /// Initializes a new instance of the GsApiException class with
+    /// the specified status and message, log.
+    /// </summary>
+    ///
+    /// <param name="status">Status code.</param>
+    /// <param name="message">Message.</param>
+    /// <param name="log"> Filepath of GS log.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public GsApiException(GsApiStatus status, string message, string log) :
+        base(message)
+    {
+        Status = status;
+        logPath = log;
+    }
 
     #endregion
 
@@ -93,6 +129,16 @@ public class GsApiException : Exception
     ///
     /* --------------------------------------------------------------------- */
     public GsApiStatus Status { get; }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// logPath
+    ///
+    /// <summary>
+    /// Gets the GS log filepath.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public string logPath { get; }
 
     #endregion
 }
