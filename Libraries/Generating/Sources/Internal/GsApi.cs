@@ -73,7 +73,7 @@ internal static class GsApi
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Invoke(string[] raw, string tmp) => SetTemp(tmp, () =>
+    public static void Invoke(string[] raw, string tmp, string log) => SetTemp(tmp, () =>
     {
         _ = NativeMethods.NewInstance(out var core, IntPtr.Zero);
         if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
@@ -84,7 +84,7 @@ internal static class GsApi
             foreach (var e in raw) args.Add(ToUtf8(e));
             NativeMethods.SetArgEncoding(core, 1 /*GS_ARG_ENCODING_UTF8*/ );
             var code = NativeMethods.InitWithArgs(core, args.Count, args.ToArray());
-            if (code < 0 && code != (int)GsApiStatus.Quit && code != (int)GsApiStatus.Info) throw new GsApiException(code);
+            if (code < 0 && code != (int)GsApiStatus.Quit && code != (int)GsApiStatus.Info) throw new GsApiException(code, log);
         }
         finally
         {
