@@ -53,6 +53,7 @@ sealed class PdfTestCase : TestCaseBase<PdfConverter>
         yield return Make("Web", "SampleWeb.ps", new() { Linearization = true });
         yield return Make("Version_12", new() { Version = new PdfVersion(1, 2) });
         yield return Make("Metadata", "SampleMetadata.ps", new());
+        yield return Make("CJKファイル", new());
     }
 
     /* --------------------------------------------------------------------- */

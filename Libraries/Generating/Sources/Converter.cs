@@ -276,7 +276,7 @@ public class Converter
 
         Logger.Debug(args.Join(" "));
         Io.CreateDirectory(Io.GetDirectoryName(dest));
-        GsApi.Invoke(args, Temp);
+        GsApi.Invoke(args, Temp, Log);
     }
 
     /* --------------------------------------------------------------------- */

@@ -19,6 +19,7 @@
 namespace Cube.Pdf.Ghostscript;
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Cube.FileSystem;
 using Cube.Text.Extensions;
@@ -71,18 +72,22 @@ internal static class GsApi
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Invoke(string[] args, string tmp) => SetTemp(tmp, () =>
+    public static void Invoke(string[] raw, string tmp, string log) => SetTemp(tmp, () =>
     {
         _ = NativeMethods.NewInstance(out var core, IntPtr.Zero);
         if (core == IntPtr.Zero) throw new GsApiException(GsApiStatus.UnknownError, "gsapi_new_instance");
+        var args = new List<IntPtr>();
 
         try
         {
-            var code = NativeMethods.InitWithArgs(core, args.Length, args);
-            if (code < 0 && code != (int)GsApiStatus.Quit && code != (int)GsApiStatus.Info) throw new GsApiException(code);
+            foreach (var e in raw) args.Add(ToUtf8(e));
+            NativeMethods.SetArgEncoding(core, 1 /*GS_ARG_ENCODING_UTF8*/ );
+            var code = NativeMethods.InitWithArgs(core, args.Count, args.ToArray());
+            if (code < 0 && code != (int)GsApiStatus.Quit && code != (int)GsApiStatus.Info) throw new GsApiException(code) { Log = log };
         }
         finally
         {
+            foreach (var e in args) Marshal.FreeHGlobal(e);
             _ = NativeMethods.Exit(core);
             NativeMethods.DeleteInstance(core);
         }
@@ -91,6 +96,30 @@ internal static class GsApi
     #endregion
 
     #region Implementations
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// ToUtf8
+    ///
+    /// <summary>
+    /// Convert string to Native UTF-8 pointer.
+    /// </summary>
+    ///
+    /// <remarks>
+    /// Remember to clean up with a call to Marshal.FreeHGlobal.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    private static IntPtr ToUtf8(string src)
+    {
+        var bytes  = System.Text.Encoding.UTF8.GetByteCount(src);
+        var buffer = new byte[bytes + 1]; // Null-terminator allocated
+        System.Text.Encoding.UTF8.GetBytes(src, 0, src.Length, buffer, 0);
+
+        var dest = Marshal.AllocHGlobal(buffer.Length);
+        Marshal.Copy(buffer, 0, dest, buffer.Length);
+        return dest;
+    }
 
     /* --------------------------------------------------------------------- */
     ///

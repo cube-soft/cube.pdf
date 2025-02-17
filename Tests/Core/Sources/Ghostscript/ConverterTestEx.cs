@@ -19,9 +19,7 @@
 namespace Cube.Pdf.Tests.Ghostscript;
 
 using System;
-using System.IO;
 using System.Linq;
-using Cube.FileSystem;
 using Cube.Pdf.Ghostscript;
 using Cube.Tests;
 using NUnit.Framework;
@@ -94,37 +92,6 @@ class ConverterTestEx : FileFixture
     #endregion
 
     #region Tests for irregular cases
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// Test_Cjk_Throws
-    ///
-    /// <summary>
-    /// Confirm the behavior when CJK characters are set as output
-    /// path.
-    /// </summary>
-    ///
-    /// <remarks>
-    /// The Ghostscript API currently fails to invoke the conversion
-    /// process if a path containing CJK characters is specified.
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    [Test]
-    public void Test_Cjk_Throws() => Assert.That(() =>
-    {
-        var src  = GetSource("Sample.ps");
-        var dest = Get("Pdf", $"CJKファイル.pdf");
-
-        new PdfConverter
-        {
-            Quiet = false,
-            Log   = Get($"{nameof(Test_Cjk_Throws)}.log"),
-            Temp  = Get("Tmp"),
-        }.Invoke(src, dest);
-
-        if (!Io.Exists(dest)) throw new FileNotFoundException();
-    }, Throws.TypeOf<FileNotFoundException>().Or.TypeOf<GsApiException>());
 
     /* ----------------------------------------------------------------- */
     ///
