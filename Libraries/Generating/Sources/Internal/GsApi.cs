@@ -20,7 +20,6 @@ namespace Cube.Pdf.Ghostscript;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using Cube.FileSystem;
 using Cube.Text.Extensions;
@@ -84,7 +83,7 @@ internal static class GsApi
             foreach (var e in raw) args.Add(ToUtf8(e));
             NativeMethods.SetArgEncoding(core, 1 /*GS_ARG_ENCODING_UTF8*/ );
             var code = NativeMethods.InitWithArgs(core, args.Count, args.ToArray());
-            if (code < 0 && code != (int)GsApiStatus.Quit && code != (int)GsApiStatus.Info) throw new GsApiException(code, log);
+            if (code < 0 && code != (int)GsApiStatus.Quit && code != (int)GsApiStatus.Info) throw new GsApiException(code) { Log = log };
         }
         finally
         {

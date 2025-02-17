@@ -221,7 +221,7 @@ public static class Message
         CryptographicException => Surface.Texts.Error_Digest,
         EncryptionException    => Surface.Texts.Error_MergePassword,
         PostProcessException   => Surface.Texts.Error_PostProcess,
-        GsApiException e       => System.IO.File.ReadAllText(e.logPath),
+        GsApiException e       => string.Format(Surface.Texts.Error_Ghostscript, e.Status),
         ArgumentException      => src.Message,
         _                      => $"{src.Message} ({src.GetType().Name})",
     };
