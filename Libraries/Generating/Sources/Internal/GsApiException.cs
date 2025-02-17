@@ -46,8 +46,7 @@ public class GsApiException : Exception
     /// <param name="status">Status code.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public GsApiException(int status) :
-        this((GsApiStatus)Enum.ToObject(typeof(GsApiStatus), status)) { }
+    public GsApiException(int status) : this((GsApiStatus)Enum.ToObject(typeof(GsApiStatus), status)) { }
 
     /* --------------------------------------------------------------------- */
     ///
@@ -76,8 +75,7 @@ public class GsApiException : Exception
     /// <param name="message">Message.</param>
     ///
     /* --------------------------------------------------------------------- */
-    public GsApiException(GsApiStatus status, string message) :
-        base(message) => Status = status;
+    public GsApiException(GsApiStatus status, string message) : base(message) => Status = status;
 
     #endregion
 
@@ -93,6 +91,17 @@ public class GsApiException : Exception
     ///
     /* --------------------------------------------------------------------- */
     public GsApiStatus Status { get; }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// logPath
+    ///
+    /// <summary>
+    /// Gets the GS log filepath.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    public string Log { get; init; }
 
     #endregion
 }
