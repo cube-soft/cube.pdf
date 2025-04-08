@@ -59,9 +59,9 @@ class ViewTest
 
         Assert.That(view.Busy, Is.False);
         Assert.That(Locale.GetCurrentLanguage(), Is.EqualTo(Language.Auto));
-        Assert.That(view.Text, Does.StartWith("WindowTest - CubePDF 4.3.0 ("));
+        Assert.That(view.Text, Does.StartWith("WindowTest - CubePDF 4.3.1 ("));
         Locale.Reset(Language.Japanese);
-        Assert.That(view.Text, Does.StartWith("WindowTest - CubePDF 4.3.0 ("));
+        Assert.That(view.Text, Does.StartWith("WindowTest - CubePDF 4.3.1 ("));
 
         view.Close();
     }
