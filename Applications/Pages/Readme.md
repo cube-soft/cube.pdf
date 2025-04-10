@@ -69,6 +69,8 @@ Dependencies of the CubePDF Page are as follows.
 
 ## History
 
+* 2025-04-10 version 5.1.1
+    - Update iText to 9.1.0.
 * 2024-12-05 version 5.1.0
     - Update iText to 9.0.0.
     - Add Russian as a display language.
