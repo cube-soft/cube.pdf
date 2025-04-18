@@ -179,7 +179,29 @@ namespace Cube.Pdf.Itext
                     .SetCreator(src.Creator);
 
             var pl = src.Options.ToPageLayout();
-            if (pl != ViewerOption.None) _ = dest.GetCatalog().SetPageLayout(new(pl.ToName()));
+            if (pl != ViewerOption.None)
+            {
+                PdfName pageLayout = new(pl.ToName());
+                _ = dest.GetCatalog().SetPageLayout(pageLayout);
+
+                var viewerPreferences = dest.GetCatalog().GetViewerPreferences();
+                if (viewerPreferences is null)
+                {
+                    // Init ViewerPreferences
+                    viewerPreferences = new PdfViewerPreferences();
+                    dest.GetCatalog().SetViewerPreferences(viewerPreferences);
+                }
+
+                // Add Direction to ViewerPreferences
+                if (pl == ViewerOption.TwoColumnRight || pl == ViewerOption.TwoPageRight)
+                {
+                    viewerPreferences.SetDirection(PdfViewerPreferences.PdfViewerPreferencesConstants.RIGHT_TO_LEFT);
+                }
+                else
+                {
+                    viewerPreferences.SetDirection(PdfViewerPreferences.PdfViewerPreferencesConstants.LEFT_TO_RIGHT);
+                }
+            }
 
             var pm = src.Options.ToPageMode();
             if (pm != ViewerOption.None) _ = dest.GetCatalog().SetPageMode(new(pm.ToName()));
