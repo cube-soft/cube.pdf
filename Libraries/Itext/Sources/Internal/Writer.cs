@@ -178,33 +178,31 @@ namespace Cube.Pdf.Itext
                     .SetKeywords(src.Keywords)
                     .SetCreator(src.Creator);
 
-            var pl = src.Options.ToPageLayout();
-            if (pl != ViewerOption.None)
-            {
-                PdfName pageLayout = new(pl.ToName());
-                _ = dest.GetCatalog().SetPageLayout(pageLayout);
+            if (src.Options == ViewerOption.None) return;
 
-                var viewerPreferences = dest.GetCatalog().GetViewerPreferences();
-                if (viewerPreferences is null)
+            var catalog = dest.GetCatalog() ?? throw new ArgumentNullException("PdfCatalog");
+
+            var layout = src.Options.ToPageLayout();
+            if (layout != ViewerOption.None)
+            {
+                _ = catalog.SetPageLayout(new(layout.ToName()));
+
+                var vp = catalog.GetViewerPreferences();
+                if (vp is null)
                 {
-                    // Init ViewerPreferences
-                    viewerPreferences = new PdfViewerPreferences();
-                    dest.GetCatalog().SetViewerPreferences(viewerPreferences);
+                    vp = new PdfViewerPreferences();
+                    catalog.SetViewerPreferences(vp);
                 }
 
                 // Add Direction to ViewerPreferences
-                if (pl == ViewerOption.TwoColumnRight || pl == ViewerOption.TwoPageRight)
-                {
-                    viewerPreferences.SetDirection(PdfViewerPreferences.PdfViewerPreferencesConstants.RIGHT_TO_LEFT);
-                }
-                else
-                {
-                    viewerPreferences.SetDirection(PdfViewerPreferences.PdfViewerPreferencesConstants.LEFT_TO_RIGHT);
-                }
+                var direction = layout == ViewerOption.TwoColumnRight || layout == ViewerOption.TwoPageRight ?
+                                PdfViewerPreferences.PdfViewerPreferencesConstants.RIGHT_TO_LEFT :
+                                PdfViewerPreferences.PdfViewerPreferencesConstants.LEFT_TO_RIGHT ;
+                vp.SetDirection(direction);
             }
 
-            var pm = src.Options.ToPageMode();
-            if (pm != ViewerOption.None) _ = dest.GetCatalog().SetPageMode(new(pm.ToName()));
+            var mode = src.Options.ToPageMode();
+            if (mode != ViewerOption.None) _ = catalog.SetPageMode(new(mode.ToName()));
         }
 
         /* ----------------------------------------------------------------- */
