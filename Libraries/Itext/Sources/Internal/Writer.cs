@@ -194,11 +194,13 @@ namespace Cube.Pdf.Itext
                     catalog.SetViewerPreferences(vp);
                 }
 
-                // Add Direction to ViewerPreferences
-                var direction = layout == ViewerOption.TwoColumnRight || layout == ViewerOption.TwoPageRight ?
-                                PdfViewerPreferences.PdfViewerPreferencesConstants.RIGHT_TO_LEFT :
-                                PdfViewerPreferences.PdfViewerPreferencesConstants.LEFT_TO_RIGHT ;
-                vp.SetDirection(direction);
+                // TODO: Disable direction functionality (L2R/R2L) temporarily,
+                // need more complicated modification such as adding a new name on the ViewerOption side.
+                //
+                // var direction = layout == ViewerOption.TwoColumnRight || layout == ViewerOption.TwoPageRight ?
+                //                 PdfViewerPreferences.PdfViewerPreferencesConstants.RIGHT_TO_LEFT :
+                //                 PdfViewerPreferences.PdfViewerPreferencesConstants.LEFT_TO_RIGHT ;
+                // vp.SetDirection(direction);
             }
 
             var mode = src.Options.ToPageMode();

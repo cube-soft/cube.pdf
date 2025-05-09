@@ -259,7 +259,7 @@ namespace Cube.Pdf.Tests.Itext
                 Creator  = value,
                 Producer = value,
                 Version  = new PdfVersion(1, 5),
-                Options  = ViewerOption.TwoColumnLeft,
+                Options  = ViewerOption.SinglePage,
             };
 
             using (var w = new DocumentWriter(new()))
@@ -280,6 +280,44 @@ namespace Cube.Pdf.Tests.Itext
             Assert.That(m.Version.Major, Is.EqualTo(cmp.Version.Major));
             Assert.That(m.Version.Minor, Is.EqualTo(cmp.Version.Minor));
             Assert.That(m.Options,       Is.EqualTo(cmp.Options));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// SetMetadata
+        ///
+        /// <summary>
+        /// Test to set PDF page layout.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [TestCase(ViewerOption.SinglePage)]
+        [TestCase(ViewerOption.OneColumn)]
+        [TestCase(ViewerOption.TwoColumnLeft)]
+        [TestCase(ViewerOption.TwoColumnRight)]
+        [TestCase(ViewerOption.TwoPageLeft)]
+        [TestCase(ViewerOption.TwoPageRight)]
+        public void SetLayout(ViewerOption value)
+        {
+            var src  = GetSource("SampleViewerOption.pdf");
+            var dest = Path(Args(value));
+            var op   = new OpenOption { SaveMemory = true };
+            var cmp  = new Metadata
+            {
+                Version  = new PdfVersion(1, 7),
+                Options  = value,
+            };
+
+            using (var w = new DocumentWriter(new()))
+            {
+                w.Set(cmp);
+                w.Add(new DocumentReader(src, "", op));
+                w.Save(dest);
+            }
+
+            using var r = new DocumentReader(dest, "", op);
+            var m = r.Metadata;
+            Assert.That(m.Options, Is.EqualTo(cmp.Options));
         }
 
         /* ----------------------------------------------------------------- */
