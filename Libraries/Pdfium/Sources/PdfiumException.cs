@@ -15,94 +15,66 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Pdfium;
+
 using System;
 
-namespace Cube.Pdf.Pdfium
+/* ------------------------------------------------------------------------- */
+///
+/// PdfiumException
+///
+/// <summary>
+/// Represents the exception through the PDFium API.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+[Serializable]
+public class PdfiumException : Exception
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
     /// PdfiumException
     ///
     /// <summary>
-    /// Represents the exception through the PDFium API.
+    /// Initializes a new instance of the PdfiumException class
+    /// with the specified status.
     /// </summary>
     ///
+    /// <param name="status">Status code.</param>
+    ///
     /* --------------------------------------------------------------------- */
-    [Serializable]
-    public class PdfiumException : Exception
-    {
-        #region Constructors
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfiumException
-        ///
-        /// <summary>
-        /// Initializes a new instance of the PdfiumException class
-        /// with the specified status.
-        /// </summary>
-        ///
-        /// <param name="status">Status code.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PdfiumException(PdfiumStatus status) { Status = status; }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// PdfiumException
-        ///
-        /// <summary>
-        /// Initializes a new instance of the PdfiumException class
-        /// with the specified status.
-        /// </summary>
-        ///
-        /// <param name="status">Status code.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        internal PdfiumException(uint status) : this((PdfiumStatus)status) { }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Status
-        ///
-        /// <summary>
-        /// Gets the status code.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public PdfiumStatus Status { get; }
-
-        #endregion
-    }
+    public PdfiumException(PdfiumStatus status) { Status = status; }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// PdfiumStatus
+    /// PdfiumException
     ///
     /// <summary>
-    /// Specifies the status code of PDFium API.
+    /// Initializes a new instance of the PdfiumException class
+    /// with the specified status.
+    /// </summary>
+    ///
+    /// <param name="status">Status code.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    internal PdfiumException(uint status) : this((PdfiumStatus)status) { }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Status
+    ///
+    /// <summary>
+    /// Gets the status code.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public enum PdfiumStatus
-    {
-        /// <summary>No error, success.</summary>
-        Success,
-        /// <summary>Unknown error.</summary>
-        Unknown,
-        /// <summary>File not found or could not be opened.</summary>
-        NotFound,
-        /// <summary>File not in PDF format or corrupted.</summary>
-        FormatError,
-        /// <summary>Password required or incorrect password.</summary>
-        PasswordError,
-        /// <summary>Unsupported security scheme.</summary>
-        UnsupportedEncryption,
-        /// <summary>Page not found or content error.</summary>
-        PageError,
-    }
+    public PdfiumStatus Status { get; }
+
+    #endregion
 }
