@@ -36,9 +36,6 @@
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Editor\Main\Cube.Pdf.Editor.csproj" />
         <PackageReference Include="Cube.Private.Tests" Version="9.0.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
-        <PackageReference Include="NUnit3TestAdapter" Version="*" />
-        <PackageReference Include="Appveyor.TestLogger" Version="*" />
     </ItemGroup>
     <ItemGroup>
         <None Include="NLog.config" CopyToOutputDirectory="Always" />

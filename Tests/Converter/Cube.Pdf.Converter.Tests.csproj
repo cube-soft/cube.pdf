@@ -35,9 +35,6 @@
     <ItemGroup>
         <ProjectReference Include="..\..\Applications\Converter\Main\Cube.Pdf.Converter.Main.csproj" />
         <PackageReference Include="Cube.Private.Tests" Version="9.0.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
-        <PackageReference Include="NUnit3TestAdapter" Version="*" />
-        <PackageReference Include="Appveyor.TestLogger" Version="*" />
     </ItemGroup>
     <ItemGroup>
         <Compile Link="Sources\Helpers\SettingV2.cs" Include="..\..\Applications\Converter\Core\Sources\SettingV2.cs" />
