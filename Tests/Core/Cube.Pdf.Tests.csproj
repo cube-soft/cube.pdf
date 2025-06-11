@@ -6,9 +6,8 @@
         <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
         <StartupObject>Cube.Pdf.Tests.Program</StartupObject>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <Platforms>AnyCPU;x86;x64;ARM64</Platforms>
-        <RuntimeIdentifiers>win7-x86;win7-x64;win10-arm64</RuntimeIdentifiers>
         <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
@@ -16,22 +15,17 @@
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-        <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
         <SelfContained>false</SelfContained>
-        <Prefer32Bit>true</Prefer32Bit>
         <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
         <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
-        <RuntimeIdentifier>win7-x86</RuntimeIdentifier>
         <SelfContained>false</SelfContained>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
-        <RuntimeIdentifier>win7-x64</RuntimeIdentifier>
         <SelfContained>false</SelfContained>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'ARM64' ">
-        <RuntimeIdentifier>win10-arm64</RuntimeIdentifier>
         <SelfContained>false</SelfContained>
     </PropertyGroup>
     <ItemGroup>
