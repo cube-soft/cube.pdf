@@ -52,6 +52,8 @@ CubePDF は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2025-06-11 version 4.3.2
+    - Ghostscript 10.5.1 に更新
 * 2025-04-08 version 4.3.1
     - Ghostscript 10.5.0 に更新
     - iText 9.1.0 に更新

@@ -15,155 +15,154 @@
 // limitations under the License.
 //
 /* ------------------------------------------------------------------------- */
+namespace Cube.Pdf.Pdfium;
+
 using System.Drawing;
 
-namespace Cube.Pdf.Pdfium
+/* ------------------------------------------------------------------------- */
+///
+/// DocumentReader
+///
+/// <summary>
+/// Provides functionality to read a PDF document.
+/// </summary>
+///
+/* ------------------------------------------------------------------------- */
+public class DocumentRenderer : DocumentReader, IDocumentRenderer
 {
+    #region Constructors
+
     /* --------------------------------------------------------------------- */
     ///
-    /// DocumentReader
+    /// DocumentRenderer
     ///
     /// <summary>
-    /// Provides functionality to read a PDF document.
+    /// Initializes a new instance of the DocumentRenderer class
+    /// with the specified arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Path of the PDF file.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public DocumentRenderer(string src) : base(src) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// DocumentRenderer
+    ///
+    /// <summary>
+    /// Initializes a new instance of the DocumentRenderer class
+    /// with the specified arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Path of the PDF file.</param>
+    /// <param name="password">Password string.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public DocumentRenderer(string src, string password) : base(src, password) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// DocumentRenderer
+    ///
+    /// <summary>
+    /// Initializes a new instance of the DocumentRenderer class
+    /// with the specified arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Path of the PDF file.</param>
+    /// <param name="password">Password string.</param>
+    /// <param name="options">Other options.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public DocumentRenderer(string src, string password, OpenOption options) :
+        base(src, password, options) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// DocumentRenderer
+    ///
+    /// <summary>
+    /// Initializes a new instance of the DocumentRenderer class
+    /// with the specified arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Path of the PDF file.</param>
+    /// <param name="query">Password query.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public DocumentRenderer(string src, IQuery<string> query) : base(src, query) { }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// DocumentRenderer
+    ///
+    /// <summary>
+    /// Initializes a new instance of the DocumentRenderer class
+    /// with the specified arguments.
+    /// </summary>
+    ///
+    /// <param name="src">Path of the PDF file.</param>
+    /// <param name="query">Password query.</param>
+    /// <param name="options">Other options.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public DocumentRenderer(string src, IQuery<string> query, OpenOption options) :
+        base(src, query, options) { }
+
+    #endregion
+
+    #region Properties
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// RenderOption
+    ///
+    /// <summary>
+    /// Gets or sets the rendering options.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public class DocumentRenderer : DocumentReader, IDocumentRenderer
-    {
-        #region Constructors
+    public RenderOption RenderOption { get; set; } = new RenderOption();
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentRenderer
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentRenderer class
-        /// with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentRenderer(string src) : base(src) { }
+    #endregion
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentRenderer
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentRenderer class
-        /// with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password string.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentRenderer(string src, string password) : base(src, password) { }
+    #region Methods
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentRenderer
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentRenderer class
-        /// with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="password">Password string.</param>
-        /// <param name="options">Other options.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentRenderer(string src, string password, OpenOption options) :
-            base(src, password, options) { }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Render
+    ///
+    /// <summary>
+    /// Render the Page content to the Graphics object with the
+    /// specified parameters
+    /// </summary>
+    ///
+    /// <param name="dest">Graphics object.</param>
+    /// <param name="page">Page object.</param>
+    /// <param name="point">Start point to render.</param>
+    /// <param name="size">Rendering size.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public void Render(Graphics dest, Page page, PointF point, SizeF size) =>
+        Core.Invoke(e => PdfiumRenderer.Render(e, dest, page.Number, point, size, page.Delta, RenderOption));
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentRenderer
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentRenderer class
-        /// with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="query">Password query.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentRenderer(string src, IQuery<string> query) : base(src, query) { }
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Render
+    ///
+    /// <summary>
+    /// Get an Image object in which the Page content is rendered.
+    /// </summary>
+    ///
+    /// <param name="page">Page object.</param>
+    /// <param name="size">Rendering size.</param>
+    ///
+    /// <returns>Image object</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public Image Render(Page page, SizeF size) =>
+        Core.Invoke(e => PdfiumRenderer.Render(e, page.Number, size, page.Delta, RenderOption));
 
-        /* ----------------------------------------------------------------- */
-        ///
-        /// DocumentRenderer
-        ///
-        /// <summary>
-        /// Initializes a new instance of the DocumentRenderer class
-        /// with the specified arguments.
-        /// </summary>
-        ///
-        /// <param name="src">Path of the PDF file.</param>
-        /// <param name="query">Password query.</param>
-        /// <param name="options">Other options.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public DocumentRenderer(string src, IQuery<string> query, OpenOption options) :
-            base(src, query, options) { }
-
-        #endregion
-
-        #region Properties
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// RenderOption
-        ///
-        /// <summary>
-        /// Gets or sets the rendering options.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        public RenderOption RenderOption { get; set; } = new RenderOption();
-
-        #endregion
-
-        #region Methods
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Render the Page content to the Graphics object with the
-        /// specified parameters
-        /// </summary>
-        ///
-        /// <param name="dest">Graphics object.</param>
-        /// <param name="page">Page object.</param>
-        /// <param name="point">Start point to render.</param>
-        /// <param name="size">Rendering size.</param>
-        ///
-        /* ----------------------------------------------------------------- */
-        public void Render(Graphics dest, Page page, PointF point, SizeF size) =>
-            Core.Invoke(e => PdfiumRenderer.Render(e, dest, page.Number, point, size, page.Delta, RenderOption));
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Render
-        ///
-        /// <summary>
-        /// Get an Image object in which the Page content is rendered.
-        /// </summary>
-        ///
-        /// <param name="page">Page object.</param>
-        /// <param name="size">Rendering size.</param>
-        ///
-        /// <returns>Image object</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        public Image Render(Page page, SizeF size) =>
-            Core.Invoke(e => PdfiumRenderer.Render(e, page.Number, size, page.Delta, RenderOption));
-
-        #endregion
-    }
+    #endregion
 }

@@ -19,25 +19,27 @@ namespace Cube.Pdf.Pdfium;
 
 /* ------------------------------------------------------------------------- */
 ///
-/// OpenOption
+/// PdfiumStatus
 ///
 /// <summary>
-/// Represents the options to open a PDF file with the DocumentReader
-/// class.
+/// Specifies the status code of PDFium API.
 /// </summary>
 ///
 /* ------------------------------------------------------------------------- */
-public class OpenOption
+public enum PdfiumStatus
 {
-    /* --------------------------------------------------------------------- */
-    ///
-    /// FullAccess
-    ///
-    /// <summary>
-    /// Gets or sets a value indicating whether to open with fully
-    /// accessible.
-    /// </summary>
-    ///
-    /* --------------------------------------------------------------------- */
-    public bool FullAccess { get; set; } = false;
+    /// <summary>No error, success.</summary>
+    Success,
+    /// <summary>Unknown error.</summary>
+    Unknown,
+    /// <summary>File not found or could not be opened.</summary>
+    NotFound,
+    /// <summary>File not in PDF format or corrupted.</summary>
+    FormatError,
+    /// <summary>Password required or incorrect password.</summary>
+    PasswordError,
+    /// <summary>Unsupported security scheme.</summary>
+    UnsupportedEncryption,
+    /// <summary>Page not found or content error.</summary>
+    PageError,
 }
