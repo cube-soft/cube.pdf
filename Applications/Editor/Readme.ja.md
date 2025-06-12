@@ -125,6 +125,10 @@ CubePDF Utility は、以下のライブラリを利用しています。
 
 ## バージョン履歴
 
+* 2025-06-13 version 4.3.0
+    - サムネイルの表示サイズを追加 (1200px, 1500px, 1800px)
+    - iText 9.2.0 に更新
+    - PDFium を Chromium 137 相当に更新
 * 2025-05-14 version 4.2.5
     - PDFium を Chromium 136 相当に更新
 * 2025-04-11 version 4.2.4
