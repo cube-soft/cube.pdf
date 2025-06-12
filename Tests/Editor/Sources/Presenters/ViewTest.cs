@@ -125,7 +125,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
             using var z0 = vm.Boot(new() { Source = GetSource("Sample.pdf") });
 
             var ip = vm.Value.Images.Preferences;
-            Assert.That(ip.ItemSizeOptions.Count, Is.EqualTo(9));
+            Assert.That(ip.ItemSizeOptions.Count, Is.EqualTo(12));
             Assert.That(ip.ItemSizeIndex,         Is.EqualTo(3));
             Assert.That(ip.ItemSize,              Is.EqualTo(250));
 
