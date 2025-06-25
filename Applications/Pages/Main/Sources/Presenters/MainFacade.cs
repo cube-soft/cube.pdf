@@ -174,7 +174,7 @@ namespace Cube.Pdf.Pages
             try
             {
                 using (var w = Make(new DocumentWriter(op))) w.Save(tmp);
-                Io.Move(tmp, dest, true);
+                Io.Copy(tmp, dest, true);
                 Reset();
             }
             finally { Logger.Try(() => Io.Delete(tmp)); }
