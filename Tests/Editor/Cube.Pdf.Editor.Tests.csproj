@@ -14,6 +14,7 @@
         <LangVersion>latest</LangVersion>
         <IsPackable>false</IsPackable>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+        <SatelliteResourceLanguages>_</SatelliteResourceLanguages>
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">

@@ -13,6 +13,7 @@
         <IsPackable>false</IsPackable>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <SatelliteResourceLanguages>_</SatelliteResourceLanguages>
         <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
