@@ -44,8 +44,8 @@
         <PackageReference Include="Cube.Xui" Version="9.0.0" />
         <PackageReference Include="Cube.Logging.NLog" Version="9.0.0" />
         <PackageReference Include="Cube.Trick" Version="9.0.0" />
+        <PackageReference Include="Cube.Ribbon" Version="1.0.0" />
         <PackageReference Include="gong-wpf-dragdrop" Version="1.1.0" />
-        <Reference Include="..\..\..\..\resources\net35\RibbonControlsLibrary.dll" />
     </ItemGroup>
     <ItemGroup>
         <ApplicationDefinition Update="App.xaml" SubType="Designer" Generator="MSBuild:Compile" />
