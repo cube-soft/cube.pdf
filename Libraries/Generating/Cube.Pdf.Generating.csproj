@@ -26,7 +26,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="Cube.Native.Pdfgen" Version="10.5.1" />
+        <PackageReference Include="Cube.Native.Pdfgen" Version="10.6.0" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\Icon.png" Pack="true" PackagePath="images" />
