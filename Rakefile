@@ -59,7 +59,7 @@ end
 desc "Create NuGet packages."
 task :pack do
     PACKAGES.each do |e|
-        spec = File.exists?("#{e}.nuspec")
+        spec = File.exist?("#{e}.nuspec")
         pack = spec ?
                %(nuget pack -Properties "Configuration=Release;Platform=AnyCPU") :
                "dotnet pack -c Release --no-restore --no-build -o ."
