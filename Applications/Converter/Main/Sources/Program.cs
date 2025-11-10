@@ -51,23 +51,24 @@ internal static class Program
     [STAThread]
     static void Main(string[] raw) => Logger.Try(() =>
     {
-        Logger.Configure(new Logging.NLog.LoggerSource());
-        Logger.ObserveTaskException();
-        Logger.Info(typeof(Program).Assembly);
-        Logger.Info($"Ghostscript {GetGsVersion()}");
-        Logger.Info($"[ {raw.Join(" ")} ]");
+        //Logger.Configure(new Logging.NLog.LoggerSource());
+        //Logger.ObserveTaskException();
+        //Logger.Info(typeof(Program).Assembly);
+        //Logger.Info($"Ghostscript {GetGsVersion()}");
+        //Logger.Info($"[ {raw.Join(" ")} ]");
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
 
         var args = new ArgumentCollection(raw, Argument.Windows, true);
         using var src = Create(args);
-        src.Migrate(@"CubeSoft\CubePDF\v2");
-        src.Normalize();
-        src.Set(args);
+        //src.Migrate(@"CubeSoft\CubePDF\v2");
+        //src.Normalize();
+        //src.Set(args);
 
-        if (args.Options.ContainsKey("SkipUI")) Invoke(src);
-        else Show(src);
+        //if (args.Options.ContainsKey("SkipUI")) Invoke(src);
+        //else Show(src);
+        Show(src);
     });
 
     #endregion
@@ -102,9 +103,9 @@ internal static class Program
     /* --------------------------------------------------------------------- */
     private static void Show(SettingFolder src)
     {
-        Locale.Subscribe(Surface.Localizable);
+        //Locale.Subscribe(Surface.Localizable);
         var view = new MainWindow();
-        view.Bind(new MainViewModel(src));
+        //view.Bind(new MainViewModel(src));
         Application.Run(view);
     }
 

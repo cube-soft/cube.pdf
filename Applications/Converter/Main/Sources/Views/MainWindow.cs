@@ -94,19 +94,19 @@ public partial class MainWindow : Window
     protected override void OnShown(EventArgs e)
     {
         base.OnShown(e);
-        Activate();
+        //Activate();
 
-        TopMost = true;
-        TopMost = false;
+        //TopMost = true;
+        //TopMost = false;
 
-        static void scroll(TextBox s) {
-            s.SelectionStart  = s.Text?.Length ?? 0;
-            s.SelectionLength = 0;
-        }
+        //static void scroll(TextBox s) {
+        //    s.SelectionStart  = s.Text?.Length ?? 0;
+        //    s.SelectionLength = 0;
+        //}
 
-        scroll(DestinationTextBox);
-        scroll(SourceTextBox);
-        scroll(UserProgramTextBox);
+        //scroll(DestinationTextBox);
+        //scroll(SourceTextBox);
+        //scroll(UserProgramTextBox);
     }
 
     /* --------------------------------------------------------------------- */
