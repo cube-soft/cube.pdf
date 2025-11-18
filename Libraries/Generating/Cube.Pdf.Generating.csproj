@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>9.5.1</Version>
+        <Version>9.5.2</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Description>Ghostscript based PDF library.</Description>
