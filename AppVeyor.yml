@@ -1,4 +1,4 @@
-version: 9.5.1.{build}
+version: 9.5.2.{build}
 environment:
     PROJECT_NAME:  'Cube.Pdf'
     TEST_TOOL:     '..\packages\OpenCover\4.7.1221\tools\OpenCover.Console.exe'
