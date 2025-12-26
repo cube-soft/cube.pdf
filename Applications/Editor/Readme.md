@@ -119,6 +119,9 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2025-12-26 version 4.3.6
+    - Update iText to 9.4.0.
+    - Update PDFium to Chromium 143 compatible.
 * 2025-11-19 version 4.3.5
     - Update PDFium to Chromium 142 compatible.
 * 2025-10-22 version 4.3.4
