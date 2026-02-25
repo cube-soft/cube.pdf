@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>4.3.4</Version>
+        <Version>5.0.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePDF</Product>
@@ -10,7 +10,9 @@
         <AssemblyTitle>CubePDF</AssemblyTitle>
         <RootNamespace>Cube.Pdf.Converter</RootNamespace>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+        <TargetPlatformMinVersion>10.0.26100.0</TargetPlatformMinVersion>
+        <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
         <UseWindowsForms>true</UseWindowsForms>
         <Platforms>AnyCPU;x86;x64;ARM64</Platforms>
         <LangVersion>latest</LangVersion>

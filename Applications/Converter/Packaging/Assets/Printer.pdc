@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<psf2:PrintDeviceCapabilities
+  xmlns:psf="http://schemas.microsoft.com/windows/2003/08/printing/printschemaframework"
+  xmlns:psf2="http://schemas.microsoft.com/windows/2013/12/printing/printschemaframework2"
+  xmlns:psk="http://schemas.microsoft.com/windows/2003/08/printing/printschemakeywords"
+  xmlns:psk12="http://schemas.microsoft.com/windows/2013/12/printing/printschemakeywordsv12"
+  xmlns:ns0000="http://schemas.microsoft.com/windows/2015/02/printing/printschemakeywords/microsoftprinttopdf"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <psk:PageMediaSize psf2:psftype="Feature">
+    <psk:ISOA4 psf2:psftype="Option" psf2:default="true">
+      <psk:MediaSizeWidth xsi:type="xsd:integer" psf2:psftype="ScoredProperty">210000</psk:MediaSizeWidth>
+      <psk:MediaSizeHeight xsi:type="xsd:integer" psf2:psftype="ScoredProperty">297000</psk:MediaSizeHeight>
+      <psk12:PortraitImageableSize xsi:type="psf2:ImageableAreaType" psf2:psftype="Property">3400,5000,203200,287000</psk12:PortraitImageableSize>
+      <psk12:BorderlessImageableSize xsi:type="psf2:ImageableAreaType" psf2:psftype="Property">0,0,210000,297000</psk12:BorderlessImageableSize>
+    </psk:ISOA4>
+
+    <psk:ISOA5 psf2:psftype="Option" psf2:default="false">
+      <psk:MediaSizeWidth xsi:type="xsd:integer" psf2:psftype="ScoredProperty">148000</psk:MediaSizeWidth>
+      <psk:MediaSizeHeight xsi:type="xsd:integer" psf2:psftype="ScoredProperty">210000</psk:MediaSizeHeight>
+      <psk12:PortraitImageableSize xsi:type="psf2:ImageableAreaType" psf2:psftype="Property">3400,5000,141200,200000</psk12:PortraitImageableSize>
+      <psk12:BorderlessImageableSize xsi:type="psf2:ImageableAreaType" psf2:psftype="Property">0,0,148000,210000</psk12:BorderlessImageableSize>
+    </psk:ISOA5>
+  </psk:PageMediaSize>
+
+  <psk:PageOrientation psf2:psftype="Feature">
+    <psk:Portrait psf2:psftype="Option" psf2:default="true"/>
+    <psk:Landscape psf2:psftype="Option"/>
+    <psk:ReverseLandscape psf2:psftype="Option" />
+  </psk:PageOrientation>
+
+  <psk:PageResolution psf2:psftype="Feature">
+    <ns0000:DPI600x600 psf2:psftype="Option" psf2:default="true">
+      <psk:ResolutionX psf2:psftype="ScoredProperty" xsi:type="xsd:integer">600</psk:ResolutionX>
+      <psk:ResolutionY psf2:psftype="ScoredProperty" xsi:type="xsd:integer">600</psk:ResolutionY>
+    </ns0000:DPI600x600>
+  </psk:PageResolution>
+
+  <psk:PageOutputColor psf2:psftype="Feature">
+    <psk:Color psf2:psftype="Option" psf2:default="true"/>
+    <psk:Grayscale psf2:psftype="Option"/>
+	  <psk:Monochrome psf2:psftype="Option"/>
+  </psk:PageOutputColor>
+
+</psf2:PrintDeviceCapabilities>

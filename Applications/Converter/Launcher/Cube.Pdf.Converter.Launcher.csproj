@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>5.0.0</Version>
+    <Authors>cube-soft</Authors>
+    <Company>CubeSoft</Company>
+    <Description>CubePDF DesktopBridge Launcher</Description>
+    <Copyright>Copyright © 2010 CubeSoft, Inc.</Copyright>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>CubePdfLauncher</AssemblyName>
+    <RootNamespace>Cube.Pdf.Converter</RootNamespace>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.26100.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
+    <Platforms>AnyCPU;x86;x64</Platforms>
+    <SelfContained>false</SelfContained>
+    <PublishSelfContained>false</PublishSelfContained>
+    <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+    <GenerateProgramFile>false</GenerateProgramFile>
+    <Nullable>enable</Nullable>
+    <SatelliteResourceLanguages>_</SatelliteResourceLanguages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
+    <DocumentationFile>bin\Any CPU\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Main\Cube.Pdf.Converter.Main.csproj" />
+    <ProjectReference Include="..\Printer\Cube.Pdf.Converter.Printer.csproj" />
+  </ItemGroup>
+</Project>

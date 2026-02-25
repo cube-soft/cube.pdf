@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
+  xmlns:uap12="http://schemas.microsoft.com/appx/manifest/uap/windows10/12"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:printsupport="http://schemas.microsoft.com/appx/manifest/printsupport/windows10"
+  xmlns:printsupport2="http://schemas.microsoft.com/appx/manifest/printsupport/windows10/2"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap10 uap12 desktop printsupport printsupport2 rescap">
+
+  <Identity Name="CubePDF5" Publisher="CN=CubeSoft, Inc." Version="1.0.0.0" />
+
+  <Properties>
+    <DisplayName>CubePDF PSA v4 Test Printer</DisplayName>
+    <PublisherDisplayName>CubeSoft</PublisherDisplayName>
+    <Logo>Assets\Logo\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.26100.0" MaxVersionTested="10.0.26100.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.26100.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-US" />
+  </Resources>
+
+  <Applications>
+    <Application Id="App" Executable="Cube.Pdf.Converter.Launcher\CubePdfLauncher.exe" EntryPoint="Windows.FullTrustApplication" uap10:SupportsMultipleInstances="true">
+      <uap:VisualElements
+        DisplayName="CubePDF PSA v4 Test Printer"
+        Description="CubePDF PSA v4 Test Printer"
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Logo\Square150x150Logo.png"
+        Square44x44Logo="Assets\Logo\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Logo\Wide310x150Logo.png" />
+        <uap:SplashScreen Image="Assets\Logo\SplashScreen.png" />
+      </uap:VisualElements>
+
+      <Extensions>
+        <printsupport:Extension  EntryPoint="Cube.Pdf.Converter.Printer.PsaExtensionTask" Category="windows.printSupportExtension" />
+        <printsupport2:Extension EntryPoint="Cube.Pdf.Converter.Printer.PsaVirtualPrinterTask" Category="windows.printSupportVirtualPrinterWorkflow">
+          <printsupport2:PrintSupportVirtualPrinter
+            DisplayName="ms-resource:PrinterName"
+            PrinterUri="cube-psa-desktop-bridge:ps-printer"
+            PreferredInputFormat="application/postscript"
+            PdcFile="Assets\Printer.pdc">
+            <printsupport2:SupportedFormats>
+              <printsupport2:SupportedFormat Type="application/postscript" />
+            </printsupport2:SupportedFormats>
+          </printsupport2:PrintSupportVirtualPrinter>
+        </printsupport2:Extension>
+
+        <desktop:Extension Executable="Cube.Pdf.Converter.Launcher\CubePdfLauncher.exe" Category="windows.fullTrustProcess">
+          <desktop:FullTrustProcess>
+              <desktop:ParameterGroup GroupId="Launcher" Parameters="" />
+          </desktop:FullTrustProcess>
+        </desktop:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Cube.Pdf.Converter.Launcher\WinRT.Host.dll</Path>
+        <ActivatableClass ActivatableClassId="Cube.Pdf.Converter.Printer.PsaExtensionTask" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Cube.Pdf.Converter.Printer.PsaVirtualPrinterTask" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+
+    <Extension Category="windows.publisherCacheFolders">
+      <PublisherCacheFolders>
+        <Folder Name="printing" />
+      </PublisherCacheFolders>
+    </Extension>
+  </Extensions>
+</Package>
