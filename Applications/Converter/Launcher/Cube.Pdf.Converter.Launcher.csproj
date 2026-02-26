@@ -15,10 +15,12 @@
     <SelfContained>false</SelfContained>
     <PublishSelfContained>false</PublishSelfContained>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
-    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
-    <GenerateProgramFile>false</GenerateProgramFile>
-    <Nullable>enable</Nullable>
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <ApplicationManifest>App.manifest</ApplicationManifest>
     <SatelliteResourceLanguages>_</SatelliteResourceLanguages>
+    <DefineConstants Condition=" '$(Configuration)' == 'Debug' ">DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <OutputPath>bin\Any CPU\$(Configuration)\</OutputPath>
@@ -30,6 +32,10 @@
   <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="Assets\**\*" />
+    <None Include="App.*" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Main\Cube.Pdf.Converter.Main.csproj" />
     <ProjectReference Include="..\Printer\Cube.Pdf.Converter.Printer.csproj" />

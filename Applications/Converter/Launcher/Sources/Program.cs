@@ -2,21 +2,23 @@
 //
 // Copyright (c) 2010 CubeSoft, Inc.
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Affero General Public License as published
+// by the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
-//  http://www.apache.org/licenses/LICENSE-2.0
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Affero General Public License for more details.
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// You should have received a copy of the GNU Affero General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 /* ------------------------------------------------------------------------- */
-namespace Cube.Psa.DesktopBridge;
+namespace Cube.Pdf.Converter;
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using Windows.Storage;
@@ -41,25 +43,41 @@ internal class Program
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static void Main()
+    static void Main() => Logger.Try(() =>
     {
-        var dir = ApplicationData.Current.GetPublisherCacheFolder("printing");
-        if (dir is null) return;
+        Logger.Configure(new Logging.NLog.LoggerSource());
+        Logger.ObserveTaskException();
+        Logger.Info(typeof(Program).Assembly);
 
-        var src = Path.Combine(dir.Path, "source.ps");
-        if (!File.Exists(src)) return;
+        var dir = ApplicationData.Current.GetPublisherCacheFolder("printing") ??
+                  throw new DirectoryNotFoundException("printing");
+        var raw = Path.Combine(dir.Path, "source.ps");
+        if (!File.Exists(raw)) throw new FileNotFoundException(raw);
+
+        var src = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+        File.Move(raw, src);
+        Logger.Debug(src);
 
         try
         {
             var psi = new ProcessStartInfo
             {
-                FileName = "CubePsaApp.exe",
+                FileName = "CubePdf.exe",
                 UseShellExecute = false,
             };
 
+            psi.ArgumentList.Add("-DeleteOnClose");
+            psi.ArgumentList.Add("-DocumentName");
+            psi.ArgumentList.Add("CubePDF PSA v4"); // TODO: How to get printing document name.
+            psi.ArgumentList.Add("-InputFile");
             psi.ArgumentList.Add(src);
+
             Process.Start(psi)?.WaitForExit();
         }
-        finally { if (File.Exists(src)) File.Delete(src); }
-    }
+        finally
+        {
+            if (File.Exists(raw)) File.Delete(raw);
+            if (File.Exists(src)) File.Delete(src);
+        }
+    });
 }

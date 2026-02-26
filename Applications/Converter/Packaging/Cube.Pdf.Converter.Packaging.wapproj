@@ -11,7 +11,7 @@
     <AppxPackageSigningEnabled>true</AppxPackageSigningEnabled>
     <NoWarn>$(NoWarn);NU1702</NoWarn>
     <GenerateAppInstallerFile>false</GenerateAppInstallerFile>
-    <PackageCertificateThumbprint>472582EC0F72391A3F346AA088C02A5D1ECE0A29</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>3C9EB5F00A66EDDA5D44D21B813E0C5D7D8E2FE9</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>false</AppxAutoIncrementPackageRevision>
     <SelfContained>false</SelfContained>
@@ -22,6 +22,7 @@
     <EntryPointProjectUniqueName>..\Launcher\Cube.Pdf.Converter.Launcher.csproj</EntryPointProjectUniqueName>
     <WapProjPath Condition="'$(WapProjPath)'==''">$(MSBuildExtensionsPath)\Microsoft\DesktopBridge\</WapProjPath>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
+    <AppxPackageSigningTimestampServerUrl>http://timestamp.globalsign.com/tsa/advanced</AppxPackageSigningTimestampServerUrl>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -68,21 +69,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <AppxBundle>Never</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
 </Project>

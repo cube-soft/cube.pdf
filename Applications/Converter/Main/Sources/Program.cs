@@ -57,6 +57,8 @@ internal static class Program
         Logger.Info($"Ghostscript {GetGsVersion()}");
         Logger.Info($"[ {raw.Join(" ")} ]");
 
+        if (raw.Length <= 0) return;
+
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
 

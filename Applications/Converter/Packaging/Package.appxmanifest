@@ -11,7 +11,7 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap uap10 uap12 desktop printsupport printsupport2 rescap">
 
-  <Identity Name="CubePDF5" Publisher="CN=CubeSoft, Inc." Version="1.0.0.0" />
+  <Identity Name="CubePDF5" Version="5.0.0.0" Publisher='CN="CubeSoft, Inc.", O="CubeSoft, Inc.", C=JP' />
 
   <Properties>
     <DisplayName>CubePDF PSA v4 Test Printer</DisplayName>
