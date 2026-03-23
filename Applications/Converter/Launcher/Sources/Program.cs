@@ -21,6 +21,9 @@ namespace Cube.Pdf.Converter;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
+using Cube.FileSystem;
+using Cube.Pdf.Converter.Psa;
 using Windows.Storage;
 
 /* ------------------------------------------------------------------------- */
@@ -43,41 +46,41 @@ internal class Program
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    static void Main() => Logger.Try(() =>
+    static async Task Main()
     {
         Logger.Configure(new Logging.NLog.LoggerSource());
         Logger.ObserveTaskException();
         Logger.Info(typeof(Program).Assembly);
 
-        var dir = ApplicationData.Current.GetPublisherCacheFolder("printing") ??
-                  throw new DirectoryNotFoundException("printing");
-        var raw = Path.Combine(dir.Path, "source.ps");
-        if (!File.Exists(raw)) throw new FileNotFoundException(raw);
+        var dir = ApplicationData.Current.GetPublisherCacheFolder(Metadata.DirectoryName) ??
+                  throw new DirectoryNotFoundException(Metadata.DirectoryName);
+        var raw = Io.Combine(dir.Path, Metadata.SourceFileName);
+        if (!Io.Exists(raw)) throw new FileNotFoundException(raw);
 
-        var src = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
-        File.Move(raw, src);
+        var src = Io.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+        Io.Move(raw, src, true);
         Logger.Debug(src);
 
-        try
-        {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "CubePdf.exe",
-                UseShellExecute = false,
-            };
+        var metadata = await Metadata.LoadAsync(Io.Combine(dir.Path, Metadata.FileName));
+        Io.Delete(Io.Combine(dir.Path, Metadata.FileName));
+        Io.Delete(Io.Combine(dir.Path, Metadata.LockFileName));
 
-            psi.ArgumentList.Add("-DeleteOnClose");
-            psi.ArgumentList.Add("-DocumentName");
-            psi.ArgumentList.Add("CubePDF PSA v4"); // TODO: How to get printing document name.
-            psi.ArgumentList.Add("-InputFile");
-            psi.ArgumentList.Add(src);
-
-            Process.Start(psi)?.WaitForExit();
-        }
-        finally
+        var psi = new ProcessStartInfo
         {
-            if (File.Exists(raw)) File.Delete(raw);
-            if (File.Exists(src)) File.Delete(src);
-        }
-    });
+            FileName = "CubePdf.exe",
+            UseShellExecute = false,
+        };
+
+        psi.ArgumentList.Add("-DeleteOnClose");
+        psi.ArgumentList.Add("-InputFile");
+        psi.ArgumentList.Add(src);
+        psi.ArgumentList.Add("-DocumentName");
+        psi.ArgumentList.Add(metadata.JobTitle);
+        psi.ArgumentList.Add("-SessionID");
+        psi.ArgumentList.Add(metadata.SessionId);
+        psi.ArgumentList.Add("-AppName");
+        psi.ArgumentList.Add(metadata.AppName);
+
+        await (Process.Start(psi)?.WaitForExitAsync() ?? Task.CompletedTask);
+    }
 }

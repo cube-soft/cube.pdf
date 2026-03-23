@@ -9,7 +9,10 @@
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
         <PackageIcon>images\Icon.png</PackageIcon>
         <PackageProjectUrl>https://github.com/cube-soft/$(AssemblyName)</PackageProjectUrl>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+        <TargetPlatformMinVersion>10.0.26100.0</TargetPlatformMinVersion>
+        <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
+        <Platforms>AnyCPU;x86;x64</Platforms>
         <LangVersion>latest</LangVersion>
         <Optimize>true</Optimize>
         <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
