@@ -52,34 +52,62 @@ internal class Program
         Logger.ObserveTaskException();
         Logger.Info(typeof(Program).Assembly);
 
-        var dir = CacheFolder.Get() ?? throw new DirectoryNotFoundException(Metadata.DirectoryName);
-        var raw = Io.Combine(dir.Path, Metadata.SourceFileName);
-        if (!Io.Exists(raw)) throw new FileNotFoundException(raw);
+        try
+        {
+            var dir  = CacheFolder.Get() ?? throw new DirectoryNotFoundException(Metadata.DirectoryName);
+            var src  = Io.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.dat");
+            var meta = default(Metadata);
 
-        var src = Io.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
-        Io.Move(raw, src, true);
-        Logger.Debug(src);
+            try
+            {
+                var raw = Io.Combine(dir.Path, Metadata.SourceFileName);
+                if (!Io.Exists(raw)) throw new FileNotFoundException(raw);
 
-        var metadata = await Metadata.LoadAsync(Io.Combine(dir.Path, Metadata.FileName));
-        Io.Delete(Io.Combine(dir.Path, Metadata.FileName));
-        Io.Delete(Io.Combine(dir.Path, Metadata.LockFileName));
+                Io.Move(raw, src, true);
+                Logger.Debug(src);
 
-        var psi = new ProcessStartInfo
+                meta = await Metadata.LoadAsync(Io.Combine(dir.Path, Metadata.FileName));
+                Io.Delete(Io.Combine(dir.Path, Metadata.FileName));
+            }
+            finally { Io.Delete(Io.Combine(dir.Path, Metadata.LockFileName)); }
+
+            await (Process.Start(Create(src, meta))?.WaitForExitAsync() ?? Task.CompletedTask);
+        }
+        catch (Exception err) { Logger.Warn(err); }
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Create
+    ///
+    /// <summary>
+    /// Creates a new instance of the ProcessStartInfo class.
+    /// </summary>
+    ///
+    /* --------------------------------------------------------------------- */
+    static ProcessStartInfo Create(string src, Metadata? metadata)
+    {
+        var dest = new ProcessStartInfo
         {
             FileName = "CubePdf.exe",
             UseShellExecute = false,
         };
 
-        psi.ArgumentList.Add("-DeleteOnClose");
-        psi.ArgumentList.Add("-InputFile");
-        psi.ArgumentList.Add(src);
-        psi.ArgumentList.Add("-DocumentName");
-        psi.ArgumentList.Add(metadata.JobTitle);
-        psi.ArgumentList.Add("-SessionID");
-        psi.ArgumentList.Add(metadata.SessionId);
-        psi.ArgumentList.Add("-AppName");
-        psi.ArgumentList.Add(metadata.AppName);
+        dest.ArgumentList.Add("-DeleteOnClose");
+        dest.ArgumentList.Add("-InputFile");
+        dest.ArgumentList.Add(src);
 
-        await (Process.Start(psi)?.WaitForExitAsync() ?? Task.CompletedTask);
+        if (metadata is not null)
+        {
+            dest.ArgumentList.Add("-DocumentName");
+            dest.ArgumentList.Add(metadata.JobTitle);
+            dest.ArgumentList.Add("-SessionID");
+            dest.ArgumentList.Add(metadata.SessionId);
+            dest.ArgumentList.Add("-AppName");
+            dest.ArgumentList.Add(metadata.AppName);
+        }
+
+        return dest;
     }
+
 }
