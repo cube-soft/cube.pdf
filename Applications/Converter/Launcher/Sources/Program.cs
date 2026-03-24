@@ -24,7 +24,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Cube.FileSystem;
 using Cube.Pdf.Converter.Psa;
-using Windows.Storage;
 
 /* ------------------------------------------------------------------------- */
 ///

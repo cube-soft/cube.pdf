@@ -23,11 +23,9 @@ using System.Windows.Forms;
 using Cube.Collections;
 using Cube.Collections.Extensions;
 using Cube.DataContract;
-using Cube.FileSystem;
 using Cube.Globalization;
 using Cube.Pdf.Converter.Extensions;
 using Cube.Pdf.Converter.Psa;
-using Windows.Storage;
 
 /* ------------------------------------------------------------------------- */
 ///
