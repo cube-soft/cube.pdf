@@ -60,7 +60,7 @@ internal static class Program
         Logger.Info($"Ghostscript {GetGsVersion()}");
         Logger.Info($"[ {raw.Join(" ")} ]");
 
-        if (raw.Length <= 0) { PsaInit(); return; }
+        if (raw.Length <= 0) { CacheFolder.Cleanup(); return; }
 
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
@@ -144,38 +144,6 @@ internal static class Program
         try { return Ghostscript.Converter.Revision; }
         catch (Exception err) { Logger.Warn(err); }
         return -1;
-    }
-
-    /* --------------------------------------------------------------------- */
-    ///
-    /// PsaInit
-    ///
-    /// <summary>
-    /// Initializes the PSA virtual printer environment.
-    /// </summary>
-    ///
-    /// <remarks>
-    /// Called when the application is launched without arguments, which occurs
-    /// during virtual printer installation. If a previous installation was
-    /// interrupted abnormally, a stale lock file may remain and prevent the
-    /// next installation or print job from proceeding. This method checks for
-    /// such a remnant and force-deletes it if found.
-    /// </remarks>
-    ///
-    /* --------------------------------------------------------------------- */
-    private static void PsaInit()
-    {
-        var dir = ApplicationData.Current.GetPublisherCacheFolder(Metadata.DirectoryName);
-        if (dir is not null)
-        {
-            var lok = Io.Combine(dir.Path, Metadata.LockFileName);
-            if (Io.Exists(lok))
-            {
-                Logger.Warn("Lock file remnant detected during installation. Force deleting.");
-                Logger.Try(() => Io.Delete(lok));
-            }
-        }
-        else Logger.Warn($"{Metadata.DirectoryName} directory not found");
     }
 
     #endregion

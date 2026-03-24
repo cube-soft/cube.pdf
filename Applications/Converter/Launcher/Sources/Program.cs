@@ -52,8 +52,7 @@ internal class Program
         Logger.ObserveTaskException();
         Logger.Info(typeof(Program).Assembly);
 
-        var dir = ApplicationData.Current.GetPublisherCacheFolder(Metadata.DirectoryName) ??
-                  throw new DirectoryNotFoundException(Metadata.DirectoryName);
+        var dir = CacheFolder.Get() ?? throw new DirectoryNotFoundException(Metadata.DirectoryName);
         var raw = Io.Combine(dir.Path, Metadata.SourceFileName);
         if (!Io.Exists(raw)) throw new FileNotFoundException(raw);
 
