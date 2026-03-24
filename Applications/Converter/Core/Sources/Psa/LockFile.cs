@@ -56,6 +56,33 @@ public sealed class LockFile(string path) : IDisposable
     /// LockAsync
     ///
     /// <summary>
+    /// Acquires the lock, executes action, and if action succeeds,
+    /// immediately calls ReleaseAsync with user release action.
+    /// </summary>
+    ///
+    /// <param name="action">
+    /// The action to execute under the lock.
+    /// </param>
+    ///
+    /// <param name="release">
+    /// The action to execute after a successful lock.
+    /// </param>
+    ///
+    /// <returns>true on success; false on failure.</returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    public async Task<bool> LockAsync(Func<Task<bool>> action, Func<Task> release)
+    {
+        var done = await LockAsync(action);
+        if (done) await ReleaseAsync(release);
+        return done;
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// LockAsync
+    ///
+    /// <summary>
     /// Acquires the lock if not already held, then executes action.
     /// </summary>
     ///

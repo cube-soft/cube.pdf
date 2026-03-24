@@ -99,22 +99,20 @@ public sealed class PsaVirtualPrinterTask : IBackgroundTask
         var dir = CacheFolder.Get();
         if (dir is null) return false;
 
-        var metadata = CreateMetadata(e.Configuration);
-
         using var file = new LockFile(Path.Combine(dir.Path, Metadata.LockFileName));
-        var done = await file.LockAsync(async () =>
+        return await file.LockAsync(async () =>
         {
             var dest = await dir.CreateFileAsync(Metadata.SourceFileName, CreationCollisionOption.ReplaceExisting);
             if (dest is null) return false;
 
             using var s = await dest.OpenAsync(FileAccessMode.ReadWrite);
             await RandomAccessStream.CopyAndCloseAsync(e.SourceContent.GetInputStream(), s.GetOutputStreamAt(s.Size));
-            await metadata.SaveAsync(Path.Combine(dir.Path, Metadata.FileName));
-            return true;
-        });
 
-        if (done) await file.ReleaseAsync(LaunchAsync);
-        return done;
+            var meta = CreateMetadata(e.Configuration);
+            await meta.SaveAsync(Path.Combine(dir.Path, Metadata.FileName));
+
+            return true;
+        }, LaunchAsync);
     }
 
     /* --------------------------------------------------------------------- */
