@@ -33,15 +33,15 @@
     <Color x:Key="HighlightColor">#FF70C0E7</Color>
 
     <Color x:Key="DarkBackgroundColor">#FF555555</Color>
-    <Color x:Key="DarkForegroundColor">#FFE0E0E0</Color>
+    <Color x:Key="DarkForegroundColor">#FFE6E6E6</Color>
     <Color x:Key="DarkBorderColor">#FFB3B3B3</Color>
 
     <Color x:Key="DarkButtonBackgroundColor">#FF202020</Color>
     <Color x:Key="DarkButtonForegroundColor">#FFE0E0E0</Color>
-    <Color x:Key="DarkButtonBorderColor">#FF303030</Color>
+    <Color x:Key="DarkButtonBorderColor">#FF454545</Color>
 
     <Color x:Key="LightBackgroundColor">#FFF6F6F6</Color>
-    <Color x:Key="LightForegroundColor">#FF303030</Color>
+    <Color x:Key="LightForegroundColor">#FF000000</Color>
     <Color x:Key="LightBorderColor">#FFE6E6E6</Color>
 
     <Color x:Key="LightButtonBackgroundColor">#FFE6E6E6</Color>
@@ -49,18 +49,18 @@
     <Color x:Key="LightButtonBorderColor">#FFA0A0A0</Color>
 
     <Color x:Key="WindowBackgroundColor">#FFFFFFFF</Color>
-    <Color x:Key="WindowForegroundColor">#FF303030</Color>
+    <Color x:Key="WindowForegroundColor">#FF000000</Color>
     <Color x:Key="WindowBorderColor">#FF303030</Color>
 
     <Color x:Key="TabBackgroundColor">#FF2F2F2F</Color>
-    <Color x:Key="TabForegroundColor">#FFE0E0E0</Color>
+    <Color x:Key="TabForegroundColor">#FFE6E6E6</Color>
     <Color x:Key="TabForegroundInactivateColor">#FF909090</Color>
-    <Color x:Key="TabBorderColor">#FF303030</Color>
+    <Color x:Key="TabBorderColor">#FF454545</Color>
 
     <Color x:Key="ScrollBarColor">#FF303030</Color>
     <Color x:Key="ScrollBarHoverColor">#FF272727</Color>
     <Color x:Key="ScrollBarDragColor">#FF202020</Color>
-
+    
     <!-- **********************************************************************
       Brushes
     *********************************************************************** -->
