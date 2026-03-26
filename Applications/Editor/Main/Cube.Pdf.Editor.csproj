@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Version>4.3.8</Version>
+        <Version>4.5.0</Version>
         <Authors>clown;cube-soft</Authors>
         <Company>CubeSoft</Company>
         <Product>CubePdfUtility</Product>
@@ -42,7 +42,7 @@
         <PackageReference Include="Cube.Xui" Version="9.0.0" />
         <PackageReference Include="Cube.Logging.NLog" Version="9.0.0" />
         <PackageReference Include="Cube.Trick" Version="9.0.0" />
-        <PackageReference Include="Fluent.Ribbon" Version="9.0.1" />
+        <PackageReference Include="Fluent.Ribbon" Version="10.1.0" />
         <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
     </ItemGroup>
     <ItemGroup>

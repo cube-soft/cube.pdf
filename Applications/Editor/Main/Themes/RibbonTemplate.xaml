@@ -52,11 +52,11 @@
                 Focusable="false"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Stretch"
-                Style="{DynamicResource ScrollButtonStyle}">
+                Style="{DynamicResource Fluent.Ribbon.Styles.ScrollButton}">
                 <RepeatButton.Visibility>
                     <MultiBinding
                         FallbackValue="Visibility.Collapsed"
-                        Converter="{StaticResource MenuScrollingVisibilityConverter}"
+                        Converter="{StaticResource Fluent.Ribbon.Converters.MenuScrollingVisibilityConverter}"
                         ConverterParameter="0">
                         <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ComputedHorizontalScrollBarVisibility" />
                         <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="HorizontalOffset" />
@@ -88,11 +88,11 @@
                 Focusable="false"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Stretch"
-                Style="{DynamicResource ScrollButtonStyle}">
+                Style="{DynamicResource Fluent.Ribbon.Styles.ScrollButton}">
                 <RepeatButton.Visibility>
                     <MultiBinding
                         FallbackValue="Visibility.Collapsed"
-                        Converter="{StaticResource MenuScrollingVisibilityConverter}"
+                        Converter="{StaticResource Fluent.Ribbon.Converters.MenuScrollingVisibilityConverter}"
                         ConverterParameter="100">
                         <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ComputedHorizontalScrollBarVisibility" />
                         <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="HorizontalOffset" />
@@ -166,7 +166,7 @@
                 Grid.Row="1">
                 <ContentControl Focusable="False">
                     <ContentPresenter
-                        x:Name="PART_SelectedContentPresenter"
+                        x:Name="PART_SelectedContent"
                         ContentSource="SelectedContent"
                         HorizontalAlignment="Stretch" />
                 </ContentControl>
@@ -192,7 +192,7 @@
                 <r:WindowSteeringHelperControl Grid.ColumnSpan="4" />
                 <ContentPresenter ContentSource="Menu" VerticalAlignment="Stretch" />
                 <r:RibbonScrollViewer
-                    Style="{DynamicResource RibbonTabScrollViewer}"
+                    Style="{DynamicResource Fluent.Ribbon.Styles.RibbonTabScrollViewer}"
                     Width="Auto"
                     HorizontalAlignment="Left"
                     HorizontalScrollBarVisibility="Auto"
@@ -219,8 +219,8 @@
     *********************************************************************** -->
     <ControlTemplate x:Key="RibbonRecentCollectionTemplate" TargetType="{x:Type ListBox}">
         <ScrollViewer
-            Background="{StaticResource WindowBackgroundBrush}"
-            Foreground="{StaticResource WindowForegroundBrush}"
+            Background="{StaticResource LightBackgroundBrush}"
+            Foreground="{StaticResource LightForegroundBrush}"
             Template="{StaticResource ScrollViewerTemplate}"
             BorderThickness="0"
             HorizontalScrollBarVisibility="Disabled">

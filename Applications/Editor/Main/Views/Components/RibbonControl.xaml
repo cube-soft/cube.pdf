@@ -422,6 +422,13 @@
                         </ListBox>
                     </DockPanel>
                 </r:ApplicationMenu.RightPaneContent>
+
+                <!-- **********************************************************
+                  Spacer to fix footer bar height
+                *********************************************************** -->
+                <r:ApplicationMenu.FooterPaneContent>
+                    <FrameworkElement Height="24" />
+                </r:ApplicationMenu.FooterPaneContent>
             </r:ApplicationMenu>
         </r:Ribbon.Menu>
     </r:Ribbon>
