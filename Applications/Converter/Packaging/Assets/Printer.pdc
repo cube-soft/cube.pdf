@@ -9,19 +9,35 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <psk:PageMediaSize psf2:psftype="Feature">
-    <psk:ISOA4 psf2:psftype="Option" psf2:default="true">
-      <psk:MediaSizeWidth xsi:type="xsd:integer" psf2:psftype="ScoredProperty">210000</psk:MediaSizeWidth>
-      <psk:MediaSizeHeight xsi:type="xsd:integer" psf2:psftype="ScoredProperty">297000</psk:MediaSizeHeight>
-      <psk12:PortraitImageableSize xsi:type="psf2:ImageableAreaType" psf2:psftype="Property">3400,5000,203200,287000</psk12:PortraitImageableSize>
-      <psk12:BorderlessImageableSize xsi:type="psf2:ImageableAreaType" psf2:psftype="Property">0,0,210000,297000</psk12:BorderlessImageableSize>
+    <psk:ISOA3 psf2:psftype="Option">
+      <psk:MediaSizeWidth psf2:psftype="ScoredProperty" xsi:type="xsd:integer">297000</psk:MediaSizeWidth>
+      <psk:MediaSizeHeight psf2:psftype="ScoredProperty" xsi:type="xsd:integer">420000</psk:MediaSizeHeight>
+      <psk12:PortraitImageableSize psf2:psftype="Property" xsi:type="psf2:ImageableAreaType">0,0,297000,420000</psk12:PortraitImageableSize>
+    </psk:ISOA3>
+
+    <psk:ISOA4 psf2:psftype="Option">
+      <psk:MediaSizeWidth psf2:psftype="ScoredProperty" xsi:type="xsd:integer">210000</psk:MediaSizeWidth>
+      <psk:MediaSizeHeight psf2:psftype="ScoredProperty" xsi:type="xsd:integer">297000</psk:MediaSizeHeight>
+      <psk12:PortraitImageableSize psf2:psftype="Property" xsi:type="psf2:ImageableAreaType">0,0,210000,297000</psk12:PortraitImageableSize>
     </psk:ISOA4>
 
-    <psk:ISOA5 psf2:psftype="Option" psf2:default="false">
-      <psk:MediaSizeWidth xsi:type="xsd:integer" psf2:psftype="ScoredProperty">148000</psk:MediaSizeWidth>
-      <psk:MediaSizeHeight xsi:type="xsd:integer" psf2:psftype="ScoredProperty">210000</psk:MediaSizeHeight>
-      <psk12:PortraitImageableSize xsi:type="psf2:ImageableAreaType" psf2:psftype="Property">3400,5000,141200,200000</psk12:PortraitImageableSize>
-      <psk12:BorderlessImageableSize xsi:type="psf2:ImageableAreaType" psf2:psftype="Property">0,0,148000,210000</psk12:BorderlessImageableSize>
+    <psk:ISOA5 psf2:psftype="Option">
+      <psk:MediaSizeWidth psf2:psftype="ScoredProperty" xsi:type="xsd:integer">148000</psk:MediaSizeWidth>
+      <psk:MediaSizeHeight psf2:psftype="ScoredProperty" xsi:type="xsd:integer">210000</psk:MediaSizeHeight>
+      <psk12:PortraitImageableSize psf2:psftype="Property" xsi:type="psf2:ImageableAreaType">0,0,148000,210000</psk12:PortraitImageableSize>
     </psk:ISOA5>
+
+    <psk:JISB4 psf2:psftype="Option">
+      <psk:MediaSizeWidth psf2:psftype="ScoredProperty" xsi:type="xsd:integer">257000</psk:MediaSizeWidth>
+      <psk:MediaSizeHeight psf2:psftype="ScoredProperty" xsi:type="xsd:integer">364000</psk:MediaSizeHeight>
+      <psk12:PortraitImageableSize psf2:psftype="Property" xsi:type="psf2:ImageableAreaType">0,0,257000,364000</psk12:PortraitImageableSize>
+    </psk:JISB4>
+
+    <psk:JISB5 psf2:psftype="Option">
+      <psk:MediaSizeWidth psf2:psftype="ScoredProperty" xsi:type="xsd:integer">182000</psk:MediaSizeWidth>
+      <psk:MediaSizeHeight psf2:psftype="ScoredProperty" xsi:type="xsd:integer">257000</psk:MediaSizeHeight>
+      <psk12:PortraitImageableSize psf2:psftype="Property" xsi:type="psf2:ImageableAreaType">0,0,182000,257000</psk12:PortraitImageableSize>
+    </psk:JISB5>
   </psk:PageMediaSize>
 
   <psk:PageOrientation psf2:psftype="Feature">
