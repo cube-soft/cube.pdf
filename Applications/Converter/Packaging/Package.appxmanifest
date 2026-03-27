@@ -11,7 +11,7 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap uap10 uap12 desktop printsupport printsupport2 rescap">
 
-  <Identity Name="CubePDF5" Version="5.0.0.0" Publisher='CN="CubeSoft, Inc.", O="CubeSoft, Inc.", C=JP' />
+  <Identity Name="CubePDF5" Version="5.2.0.0" Publisher='CN="CubeSoft, Inc.", O="CubeSoft, Inc.", C=JP' />
 
   <Properties>
     <DisplayName>CubePDF PSA v4 Test Printer</DisplayName>
@@ -45,7 +45,7 @@
         <printsupport2:Extension EntryPoint="Cube.Pdf.Converter.Printer.PsaVirtualPrinterTask" Category="windows.printSupportVirtualPrinterWorkflow">
           <printsupport2:PrintSupportVirtualPrinter
             DisplayName="ms-resource:PrinterName"
-            PrinterUri="cube-psa-desktop-bridge:ps-printer"
+            PrinterUri="cubepdf:psa-ps-printer"
             PreferredInputFormat="application/postscript"
             PdcFile="Assets\Printer.pdc">
             <printsupport2:SupportedFormats>
