@@ -240,8 +240,7 @@ namespace Cube.Pdf.Editor
         {
             if (disposing)
             {
-                Selected = false;
-
+                _selection?.Remove(this);
                 _preferences.PropertyChanged -= WhenPreferencesChanged;
                 _preferences = null;
                 _getter      = null;
