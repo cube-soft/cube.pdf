@@ -18,6 +18,8 @@
 /* ------------------------------------------------------------------------- */
 namespace Cube.Pdf.Converter.Printer;
 
+using System;
+using System.Diagnostics;
 using Windows.ApplicationModel.Background;
 using Windows.Graphics.Printing.PrintSupport;
 
@@ -52,11 +54,11 @@ public sealed class PsaExtensionTask : IBackgroundTask
     /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    public void Run(IBackgroundTaskInstance task)
+    public void Run(IBackgroundTaskInstance task) => Hack(() =>
     {
         var deferral = task?.GetDeferral();
         if (task is null || deferral is null) return;
-        task.Canceled += (_, _) => deferral.Complete();
+        task.Canceled += (_, _) => Hack(() => deferral.Complete());
 
         var details = task.TriggerDetails as PrintSupportExtensionTriggerDetails;
         if (details?.Session is null)
@@ -67,9 +69,37 @@ public sealed class PsaExtensionTask : IBackgroundTask
 
         details.Session.PrintTicketValidationRequested += (_, e) =>
         {
-            using (e.GetDeferral()) e.SetPrintTicketValidationStatus(WorkflowPrintTicketValidationStatus.Resolved);
+            Hack(() => { using (e.GetDeferral()) e.SetPrintTicketValidationStatus(WorkflowPrintTicketValidationStatus.Resolved); });
         };
 
         details.Session.Start();
+    });
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// Hack
+    ///
+    /// <summary>
+    /// Invokes the specified action, writing any exception to the trace log
+    /// instead of letting it propagate.
+    /// </summary>
+    ///
+    /// <param name="action">Action to invoke.</param>
+    ///
+    /// <remarks>
+    /// Used to guard against a race condition specific to in-process
+    /// background tasks: if the task Canceled event fires concurrently,
+    /// the session may be torn down before the call completes, causing it
+    /// to throw 0x3E3 (ERROR_OPERATION_ABORTED). Without a catch, this
+    /// exception propagates into the host process and forces a termination
+    /// — which is why a second printer selection in Edge reliably causes
+    /// a crash.
+    /// </remarks>
+    ///
+    /* --------------------------------------------------------------------- */
+    private static void Hack(Action action)
+    {
+        try { action(); }
+        catch (Exception err) { Trace.WriteLine(err.ToString()); }
     }
 }
