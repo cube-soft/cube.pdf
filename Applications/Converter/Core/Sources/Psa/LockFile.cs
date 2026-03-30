@@ -22,7 +22,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Cube.FileSystem;
 
 /* ------------------------------------------------------------------------- */
 ///
@@ -47,9 +46,22 @@ using Cube.FileSystem;
 /// </remarks>
 ///
 /* ------------------------------------------------------------------------- */
-public sealed class LockFile(string path) : IDisposable
+public sealed class LockFile : IDisposable
 {
     #region Methods
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// LockFile
+    ///
+    /// <summary>
+    /// Initializes a new instance with the specified lock file path.
+    /// </summary>
+    ///
+    /// <param name="path">Path of the lock file to manage.</param>
+    ///
+    /* --------------------------------------------------------------------- */
+    public LockFile(string path) => _path = path;
 
     /* --------------------------------------------------------------------- */
     ///
@@ -87,7 +99,7 @@ public sealed class LockFile(string path) : IDisposable
     /// </summary>
     ///
     /// <param name="action">
-    /// The action to execute under the lock, e.g. writing the print data.
+    /// The action to execute under the lock.
     /// </param>
     ///
     /// <returns>true on success; false on failure.</returns>
@@ -193,7 +205,7 @@ public sealed class LockFile(string path) : IDisposable
     {
         if (_disposed) return;
         _disposed = true;
-        if (IsHeld(_state)) Logger.Try(() => Io.Delete(path));
+        if (IsLocked(_state)) Logger.Try(() => File.Delete(_path));
         _state = LockState.Idle;
     }
 
@@ -210,12 +222,12 @@ public sealed class LockFile(string path) : IDisposable
     /* --------------------------------------------------------------------- */
     private async Task<LockState> CreateAsync(LockState state)
     {
-        if (IsHeld(state)) return state;
+        if (IsLocked(state)) return state;
 
-        var tmp = $"{path}.{Guid.NewGuid()}";
+        var tmp = $"{_path}.{Guid.NewGuid()}";
         File.WriteAllText(tmp, "lock");
         await WaitAsync(600);
-        File.Move(tmp, path, overwrite: true);
+        File.Move(tmp, _path, overwrite: true);
         return LockState.Locked;
     }
 
@@ -229,7 +241,7 @@ public sealed class LockFile(string path) : IDisposable
     /// If the wait exceeds timeout seconds, forcibly deletes the stale
     /// lock file before returning.
     /// </summary>
-    /// 
+    ///
     /// <param name="timeout">
     /// Timeout in seconds. If exceeded, the stale lock file is forcibly
     /// deleted before returning.
@@ -238,30 +250,66 @@ public sealed class LockFile(string path) : IDisposable
     /* --------------------------------------------------------------------- */
     private async Task WaitAsync(int timeout)
     {
-        var dir = Path.GetDirectoryName(path);
+        var dir = Path.GetDirectoryName(_path);
         if (dir is null) return;
 
         var released = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-        using var watcher = new FileSystemWatcher(dir, Path.GetFileName(path))
+        using var watcher = new FileSystemWatcher(dir, Path.GetFileName(_path))
         {
             NotifyFilter = NotifyFilters.FileName,
             EnableRaisingEvents = true,
         };
         watcher.Deleted += (_, _) => released.TrySetResult(true);
 
-        if (!Io.Exists(path)) return;
+        if (!File.Exists(_path)) return;
 
-        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
+        using var cts = new CancellationTokenSource(GetTimeout(timeout));
         try { await released.Task.WaitAsync(cts.Token); }
         catch (OperationCanceledException)
         {
-            Logger.Try(() => Io.Delete(path));
+            Logger.Try(() => File.Delete(_path));
         }
     }
 
     /* --------------------------------------------------------------------- */
     ///
-    /// IsHeld
+    /// GetTimeout
+    ///
+    /// <summary>
+    /// Calculates the remaining timeout for the lock file based on its
+    /// last write time. Returns the full timeout if the time cannot be
+    /// determined.
+    /// </summary>
+    ///
+    /// <param name="timeout">Maximum timeout in seconds.</param>
+    ///
+    /// <returns>
+    /// The remaining wait duration, clamped to [100ms, timeout seconds].
+    /// The 100ms minimum ensures stale files are deleted via the shared
+    /// OperationCanceledException path rather than requiring a separate
+    /// early-exit branch.
+    /// </returns>
+    ///
+    /* --------------------------------------------------------------------- */
+    private TimeSpan GetTimeout(int timeout)
+    {
+        var lower = TimeSpan.FromMilliseconds(100);
+        var upper = TimeSpan.FromSeconds(timeout);
+
+        try
+        {
+            var elapsed = DateTime.UtcNow - File.GetLastWriteTimeUtc(_path);
+            var result = upper - elapsed;
+
+            return result < lower ? lower :
+                   result > upper ? upper : result;
+        }
+        catch { return upper; }
+    }
+
+    /* --------------------------------------------------------------------- */
+    ///
+    /// IsLocked
     ///
     /// <summary>
     /// Determines whether the lock file is currently held by this
@@ -275,13 +323,14 @@ public sealed class LockFile(string path) : IDisposable
     /// </remarks>
     ///
     /* --------------------------------------------------------------------- */
-    private static bool IsHeld(LockState state) => state == LockState.Locked || state == LockState.Ready;
+    private static bool IsLocked(LockState state) => state == LockState.Locked || state == LockState.Ready;
 
     #endregion
 
     #region Fields
     // Tracks the lifecycle of the lock file within a single job.
     private enum LockState { Idle, Locked, Ready, Released }
+    private readonly string _path;
     private LockState _state;
     private bool _disposed;
     #endregion
