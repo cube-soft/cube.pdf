@@ -163,7 +163,7 @@ namespace Cube.Pdf.Editor
         {
             if (disposing)
             {
-                Selected = false;
+                _selection?.Remove(this);
                 _selection = null;
             }
         }
