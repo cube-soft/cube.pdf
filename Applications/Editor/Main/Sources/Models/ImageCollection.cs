@@ -160,9 +160,10 @@ namespace Cube.Pdf.Editor
         public void Clear()
         {
             Interlocked.Exchange(ref _task, null)?.Cancel();
-            foreach (var item in _inner) item.Dispose();
+            var items = _inner.ToList();
             _inner.Clear();
             _cache.Clear();
+            foreach (var item in items) item.Dispose();
         }
 
         #region SetIndex
