@@ -53,6 +53,9 @@ Dependencies of the CubePDF are as follows.
 
 ## History
 
+* 2026-05-08 version 4.3.6
+    - Update Ghostscript to 10.7.0.
+    - Update iText to 9.6.0.
 * 2026-03-04 version 4.3.5
     - Update iText to 9.5.0.
 * 2025-12-25 version 4.3.4

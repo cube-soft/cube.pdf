@@ -50,8 +50,8 @@ class ConverterTestEx : FileFixture
     [Test]
     public void Revision()
     {
-        Assert.That(Converter.Revision, Is.EqualTo(10060));
-        Assert.That(Converter.Revision, Is.EqualTo(10060));
+        Assert.That(Converter.Revision, Is.EqualTo(10070));
+        Assert.That(Converter.Revision, Is.EqualTo(10070));
     }
 
     /* --------------------------------------------------------------------- */
