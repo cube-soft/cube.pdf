@@ -246,7 +246,7 @@ namespace Cube.Pdf.Pages
             var max = src[src.Length - 1] + offset;
             if (min < 0 || max >= Files.Count) return false;
 
-            MoveItems(offset < 0 ? src : src.Reverse(), offset);
+            MoveItems(offset < 0 ? src : Enumerable.Reverse(src), offset);
             return true;
         });
 
