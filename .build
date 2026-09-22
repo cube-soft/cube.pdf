@@ -1,1 +1,1 @@
-msbuild -v:m -p:Configuration=Release
+dotnet build -c Release
