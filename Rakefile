@@ -76,10 +76,7 @@ task :build, [:platform] do |_, e|
     e.with_defaults(:platform => PLATFORMS[0])
 
     Rake::Task[:restore].execute
-    branch = %x(git rev-parse --abbrev-ref HEAD).chomp
-    build  = branch.include?("net60") ?
-             "dotnet build -c Release" :
-             "msbuild -v:m -p:Configuration=Release"
+    build = File.read(".build").strip
     cmd(%(#{build} -p:Platform="#{e.platform}" #{PROJECT}.sln))
 end
 
