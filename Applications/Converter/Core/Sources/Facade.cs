@@ -164,12 +164,15 @@ public sealed class Facade : ObservableBase
     /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    protected override void Dispose(bool disposing) => Lock(() =>
+    protected override void Dispose(bool disposing)
     {
-        Logger.Try(() => Io.Delete(GetTemp()));
-        if (!Settings.Value.DeleteSource) return;
-        Logger.Try(() => Io.Delete(Settings.Value.Source));
-    });
+        lock (_lock)
+        {
+            Logger.Try(() => Io.Delete(GetTemp()));
+            if (!Settings.Value.DeleteSource) return;
+            Logger.Try(() => Io.Delete(Settings.Value.Source));
+        }
+    }
 
     #endregion
 

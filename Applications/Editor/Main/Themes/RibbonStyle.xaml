@@ -24,31 +24,31 @@
     <!-- **********************************************************************
       Ribbon SolidColorBrushes
     *********************************************************************** -->
-    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.LabelTextBrush"
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.LabelText"
                      Color="{StaticResource TabForegroundColor}" />
-    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.HighlightBrush"
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Highlight"
                      Color="{StaticResource TabForegroundColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabItem.Selected.Foreground"
                      Color="{StaticResource TabForegroundColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.RibbonTabItem.Foreground"
                      Color="{StaticResource TabForegroundInactivateColor}" />
-    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.DropDown.BorderBrush"
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.DropDown.Border"
                      Color="{StaticResource TabBorderColor}" />
-    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.MouseOver.BorderBrush"
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.MouseOver.Border"
                      Color="{StaticResource AccentColor}" Opacity="0.4" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.MouseOver.Background"
                      Color="{StaticResource AccentColor}" Opacity="0.2" />
-    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.BorderBrush"
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.Border"
                      Color="{StaticResource AccentColor}" Opacity="0.5" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.Background"
                      Color="{StaticResource AccentColor}" Opacity="0.25" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Separator.Background"
-                     Color="{StaticResource TabBorderColor}" />
-    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Separator.BorderBrush"
+                     Color="{StaticResource TabBackgroundColor}" />
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Separator.Border"
                      Color="{StaticResource TabBorderColor}" />
     <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.ScrollViewer.Button.Background"
                      Color="{StaticResource DarkButtonBackgroundColor}" />
-    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.ScrollViewer.Button.BorderBrush"
+    <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.ScrollViewer.Button.Border"
                      Color="{StaticResource DarkButtonBorderColor}" />
 
     <!-- **********************************************************************
@@ -71,7 +71,7 @@
         Viewport="0,0,4,4" />
 
     <ImageBrush
-        x:Key="Fluent.Ribbon.Brushes.DropDown.BackgroundBrush"
+        x:Key="Fluent.Ribbon.Brushes.DropDown.Background"
         ImageSource="pack://application:,,,/Assets/Background.png"
         TileMode="Tile"
         ViewportUnits="Absolute"
@@ -93,6 +93,7 @@
     *********************************************************************** -->
     <Style TargetType="{x:Type r:RibbonTabControl}">
         <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}" />
+        <Setter Property="Template" Value="{DynamicResource RibbonTabControlControlTemplate}" />
     </Style>
 
     <!-- **********************************************************************
@@ -173,7 +174,14 @@
         <Setter Property="Background" Value="{StaticResource DarkButtonBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource DarkButtonForegroundBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource DarkButtonBorderBrush}" />
-        <Setter Property="Margin" Value="0,0,0,2" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+
+    <!-- **********************************************************************
+      Separator
+    *********************************************************************** -->
+    <Style TargetType="{x:Type Separator}">
+        <Setter Property="Visibility" Value="Collapsed" />
     </Style>
 
     <!-- **********************************************************************
@@ -181,19 +189,21 @@
     *********************************************************************** -->
     <Style TargetType="{x:Type r:MenuItem}">
         <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
-        <Setter Property="Padding" Value="2" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Padding" Value="2,0,2,0" />
     </Style>
 
     <!-- **********************************************************************
       RecentMenu (RightPane for ApplicationMenu)
     *********************************************************************** -->
     <Style x:Key="RibbonRecentMenuStyle" TargetType="{x:Type DockPanel}">
-        <Setter Property="Height" Value="280" />
+        <Setter Property="Height" Value="300" />
+        <Setter Property="VerticalAlignment" Value="Top" />
     </Style>
 
     <Style x:Key="RibbonRecentTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{StaticResource TabForegroundBrush}" />
-        <Setter Property="Padding" Value="8,4,4,8" />
+        <Setter Property="Padding" Value="12,6,0,8" />
         <Setter Property="Margin" Value="0" />
     </Style>
 

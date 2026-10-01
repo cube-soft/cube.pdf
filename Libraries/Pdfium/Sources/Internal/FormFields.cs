@@ -16,6 +16,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Runtime.InteropServices;
 
 namespace Cube.Pdf.Pdfium
 {
@@ -82,8 +83,11 @@ namespace Cube.Pdf.Pdfium
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) =>
+        protected override void Dispose(bool disposing)
+        {
             NativeMethods.FPDFDOC_ExitFormFillEnvironment(_core);
+            if (_args.IsAllocated) _args.Free();
+        }
 
         #endregion
 
@@ -97,13 +101,27 @@ namespace Cube.Pdf.Pdfium
         /// Creates a core object for form fields.
         /// </summary>
         ///
+        /// <remarks>
+        /// PDFium stores a pointer to the FormFillInfo struct for the entire
+        /// lifetime of the form fill environment. The struct must be pinned
+        /// to prevent the GC from moving or collecting it before
+        /// FPDFDOC_ExitFormFillEnvironment is called.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
         private IntPtr Create(IntPtr src)
         {
             for (int i = 1; i <= 2; i++)
             {
-                var dest = NativeMethods.FPDFDOC_InitFormFillEnvironment(src, new FormFillInfo { version = i });
-                if (dest != IntPtr.Zero) return dest;
+                var info = new FormFillInfo { version = i };
+                var pin  = GCHandle.Alloc(info, GCHandleType.Pinned);
+                var dest = NativeMethods.FPDFDOC_InitFormFillEnvironment(src, info);
+                if (dest != IntPtr.Zero)
+                {
+                    _args = pin;
+                    return dest;
+                }
+                else pin.Free();
             }
             return IntPtr.Zero;
         }
@@ -112,6 +130,7 @@ namespace Cube.Pdf.Pdfium
 
         #region Fields
         private readonly IntPtr _core;
+        private GCHandle _args;
         #endregion
     }
 }

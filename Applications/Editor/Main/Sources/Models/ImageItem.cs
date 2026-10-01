@@ -135,8 +135,8 @@ namespace Cube.Pdf.Editor
             set
             {
                 if (!Set(value)) return;
-                if (value) _selection.Add(this);
-                else _selection.Remove(this);
+                if (value) _selection?.Add(this);
+                else _selection?.Remove(this);
             }
         }
 
@@ -240,8 +240,7 @@ namespace Cube.Pdf.Editor
         {
             if (disposing)
             {
-                Selected = false;
-
+                _selection?.Remove(this);
                 _preferences.PropertyChanged -= WhenPreferencesChanged;
                 _preferences = null;
                 _getter      = null;
