@@ -260,7 +260,7 @@ public sealed class SaveAction : DisposableBase
         var fi = new Entity(Options.Destination);
         foreach (var i in GetIndices(Options))
         {
-            var ratio = Options.Resolution / Images[i].RawObject.Resolution.X;
+            var ratio = (double)Options.Resolution / Images[i].RawObject.Resolution.X;
             using var image = Images.GetImage(i, ratio);
             var path = GetPath(fi, i, Images.Count);
             var dest = new Entity(path);
