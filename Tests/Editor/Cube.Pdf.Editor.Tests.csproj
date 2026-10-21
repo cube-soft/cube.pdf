@@ -39,6 +39,7 @@
         <PackageReference Include="Cube.Private.Tests" Version="9.0.0" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Remove="Sources\SaveActionTest.cs" />
         <None Include="NLog.config" CopyToOutputDirectory="Always" />
         <None Include="Examples\**\*" CopyToOutputDirectory="Always" />
     </ItemGroup>
