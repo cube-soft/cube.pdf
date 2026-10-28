@@ -119,6 +119,11 @@ Dependencies of the CubePDF Utility are as follows.
 
 ## History
 
+* 2026-10-29 version 4.6.0
+    - Allow resizing file list columns in the insertion details window.
+    - Fix an issue related to thumbnail image generation.
+    - Update iText to 9.8.0.
+    - Update PDFium to Chromium 156 compatible.
 * 2026-09-24 version 4.5.6
     - Update PDFium to Chromium 154 compatible.
 * 2026-09-01 version 4.5.5
