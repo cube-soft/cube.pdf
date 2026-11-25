@@ -25,8 +25,8 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Core\Cube.Pdf.Core.csproj" />
-        <PackageReference Include="itext" Version="9.8.0" />
-        <PackageReference Include="itext.bouncy-castle-adapter" Version="9.8.0" />
+        <PackageReference Include="itext" Version="9.8.1.1" />
+        <PackageReference Include="itext.bouncy-castle-adapter" Version="9.8.1.1" />
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\Icon.png" Pack="true" PackagePath="images" />
