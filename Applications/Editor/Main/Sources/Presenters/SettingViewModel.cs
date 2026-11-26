@@ -53,7 +53,7 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public SettingViewModel(SettingFolder src, SynchronizationContext context) :
-            base(src, new(), context)
+            base(src, new(), context, owner: false)
         {
             ShrinkResources.Value  = Facade.Value.ShrinkResources;
             KeepOutlines.Value     = Facade.Value.KeepOutlines;

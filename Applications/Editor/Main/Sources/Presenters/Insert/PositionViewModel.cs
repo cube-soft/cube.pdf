@@ -30,7 +30,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public sealed class PositionViewModel : PresentableBase<InsertBindableValue>
+    public sealed class PositionViewModel : ElementViewModel<InsertBindableValue>
     {
         #region Constructors
 

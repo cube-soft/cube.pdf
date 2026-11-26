@@ -48,6 +48,7 @@
     *********************************************************************** -->
     <i:Interaction.Behaviors>
         <xb:CloseBehavior />
+        <xb:ClosedToDispose />
         <xb:DialogBehavior />
         <xb:SaveFileBehavior />
     </i:Interaction.Behaviors>

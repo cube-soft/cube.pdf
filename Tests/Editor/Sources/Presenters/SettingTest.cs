@@ -39,6 +39,27 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Tests that closing the settings dialog releases its elements
+        /// while keeping the application's settings available.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Dispose()
+        {
+            using var folder = new SettingFolder(DataContract.Format.Json, Get("dispose.json"));
+            using var vm = new SettingViewModel(folder, new());
+            var element = (DisposableBase)vm.AutoSort;
+            vm.Dispose();
+            Assert.That(element.Disposed, Is.True);
+            Assert.That(folder.Disposed, Is.False);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Test
         ///
         /// <summary>
