@@ -22,14 +22,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using Cube.Collections;
 using Cube.Collections.Extensions;
 using Cube.Pdf.Extensions;
 using Cube.Syntax.Extensions;
-using Cube.Tasks.Extensions;
 using Cube.Xui.Drawing.Extensions;
 
 namespace Cube.Pdf.Editor
@@ -65,13 +62,10 @@ namespace Cube.Pdf.Editor
         {
             _getter = getter;
 
-            _inner = new();
+            _inner = [];
             _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
 
-            _cache = new(e => getter(e.RawObject.File.FullName)
-                ?.Render(e.RawObject, new(e.Width, e.Height))
-                ?.ToBitmapImage(true)
-            );
+            _cache = new(Prepare);
             _cache.Created += (s, e) => e.Key.Refresh();
             _cache.Failed  += (s, e) => Logger.Warn($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
@@ -146,7 +140,8 @@ namespace Cube.Pdf.Editor
         /// <param name="items">Page collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Add(IEnumerable<Page> items) => items.Each(e => _inner.Add(this.NewItem(Count, e)));
+        public void Add(IEnumerable<Page> items) =>
+            items.Each(e => Dispatcher.Invoke(() => _inner.Add(this.NewItem(Count, e))));
 
         /* ----------------------------------------------------------------- */
         ///
@@ -157,14 +152,13 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Clear()
+        public void Clear() => Dispatcher.Invoke(() =>
         {
-            Interlocked.Exchange(ref _task, null)?.Cancel();
             var items = _inner.ToList();
             _inner.Clear();
             _cache.Clear();
             foreach (var item in items) item.Dispose();
-        }
+        });
 
         #region SetIndex
 
@@ -303,6 +297,38 @@ namespace Cube.Pdf.Editor
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Suspend
+        ///
+        /// <summary>
+        /// Stops scheduling thumbnails and invalidates outstanding requests
+        /// while the source document is being replaced.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal void Suspend() => Dispatcher.Invoke(() =>
+        {
+            _suspended = true;
+            _cache.Clear();
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Resume
+        ///
+        /// <summary>
+        /// Resumes thumbnail creation for the visible pages after a save.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal void Resume() => Dispatcher.Invoke(() =>
+        {
+            if (!_suspended) return;
+            _suspended = false;
+            Schedule();
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// GetImage
         ///
         /// <summary>
@@ -385,42 +411,69 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetIndex(Func<KeyValuePair<int, int>> before)
+        private void SetIndex(Func<KeyValuePair<int, int>> before) => Dispatcher.Invoke(() =>
         {
             var pos = before();
             var min = Math.Max(pos.Key, 0);
             var max = Math.Min(pos.Value, Count);
             for (var i = min; i < max; ++i) _inner[i].Index = i;
-        }
+        });
 
         /* ----------------------------------------------------------------- */
         ///
         /// Reschedule
         ///
         /// <summary>
-        /// Restarts a task that creates images.
+        /// Updates the collection on its dispatcher before scheduling thumbnails.
+        /// </summary>
+        ///
+        /// <param name="before">Action to run before scheduling.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Reschedule(Action before) => Dispatcher.Invoke(() =>
+        {
+            before?.Invoke();
+            Schedule();
+        });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Schedule
+        ///
+        /// <summary>
+        /// Queues thumbnails for the visible pages on the collection dispatcher.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void Reschedule(Action before)
+        private void Schedule()
         {
-            if (Disposed) return;
-
-            var cts = new CancellationTokenSource();
-            Interlocked.Exchange(ref _task, cts)?.Cancel();
-            before?.Invoke();
+            if (Disposed || _suspended) return;
 
             var min = Math.Max(Preferences.VisibleFirst, 0);
             var max = Math.Min(Preferences.VisibleLast, Count);
 
-            Task.Run(() =>
-            {
-                for (var i = min; i < max; ++i)
-                {
-                    if (Disposed || cts.Token.IsCancellationRequested) return;
-                    _ = _cache.GetOrCreate(_inner[i]);
-                }
-            }).Forget();
+            for (var i = min; i < max; ++i) _ = _cache.GetOrCreate(_inner[i]);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Prepare
+        ///
+        /// <summary>
+        /// Captures the page, renderer, and size before background rendering starts.
+        /// </summary>
+        ///
+        /// <param name="item">Item to render.</param>
+        ///
+        /// <returns>Operation that creates the thumbnail.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Func<ImageSource> Prepare(ImageItem item)
+        {
+            var page = item.RawObject;
+            var renderer = _getter(page.File.FullName);
+            var size = new SizeF(item.Width, item.Height);
+            return () => renderer?.Render(page, size)?.ToBitmapImage(true);
         }
 
         /* ----------------------------------------------------------------- */
@@ -443,7 +496,7 @@ namespace Cube.Pdf.Editor
         private readonly Func<string, IDocumentRenderer> _getter;
         private readonly ObservableCollection<ImageItem> _inner;
         private readonly CacheCollection<ImageItem, ImageSource> _cache;
-        private CancellationTokenSource _task;
+        private bool _suspended;
         #endregion
     }
 }

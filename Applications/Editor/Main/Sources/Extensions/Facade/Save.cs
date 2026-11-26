@@ -64,15 +64,23 @@ internal static class SaveExtension
     /// </param>
     ///
     /* --------------------------------------------------------------------- */
-    public static void Save(this MainFacade src, string dest, bool reopen) => src.Save(
-        dest,
-        e => { src.Backup.Invoke(e); src.Cache?.Clear(); },
-        e => {
-            if (reopen) src.Reload(e.FullName);
-            src.Value.SetMessage(Surface.Texts.Message_Saved, e.FullName);
-            src.Backup.Cleanup();
+    public static void Save(this MainFacade src, string dest, bool reopen)
+    {
+        var images = src.Value.Images;
+        try
+        {
+            src.Save(dest, e => {
+                src.Backup.Invoke(e);
+                images.Suspend();
+                src.Cache.Clear();
+            }, e => {
+                if (reopen) src.Reload(e.FullName);
+                src.Value.SetMessage(Surface.Texts.Message_Saved, e.FullName);
+                src.Backup.Cleanup();
+            });
         }
-    );
+        finally { images.Resume(); }
+    }
 
     /* --------------------------------------------------------------------- */
     ///
