@@ -140,8 +140,9 @@ namespace Cube.Pdf.Editor
         protected override void OnAttached()
         {
             base.OnAttached();
-            AssociatedObject.SizeChanged   += WhenChanged;
-            AssociatedObject.ScrollChanged += WhenChanged;
+            AssociatedObject.SizeChanged      += WhenChanged;
+            AssociatedObject.ScrollChanged    += WhenChanged;
+            AssociatedObject.IsVisibleChanged += WhenHidden;
         }
 
         /* ----------------------------------------------------------------- */
@@ -156,8 +157,9 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnDetaching()
         {
-            AssociatedObject.SizeChanged   -= WhenChanged;
-            AssociatedObject.ScrollChanged -= WhenChanged;
+            AssociatedObject.SizeChanged      -= WhenChanged;
+            AssociatedObject.ScrollChanged    -= WhenChanged;
+            AssociatedObject.IsVisibleChanged -= WhenHidden;
             base.OnDetaching();
         }
 
@@ -226,6 +228,25 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         private void WhenChanged(object s, EventArgs e) => Update();
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenHidden
+        ///
+        /// <summary>
+        /// Occurs when the AssociatedObject is shown or hidden.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// A hidden control keeps its scroll position, and the next
+        /// document would start there. Returns to the top when hidden.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenHidden(object s, DependencyPropertyChangedEventArgs e)
+        {
+            if (!AssociatedObject.IsVisible) AssociatedObject.ScrollToHome();
+        }
 
         #endregion
 
