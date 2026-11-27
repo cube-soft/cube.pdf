@@ -450,7 +450,7 @@ namespace Cube.Pdf.Editor
         {
             StopGcTimer();
             Interlocked.Exchange(ref _released, 0);
-            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, false);
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
         }
 
         #endregion
