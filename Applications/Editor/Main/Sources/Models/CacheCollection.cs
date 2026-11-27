@@ -94,10 +94,16 @@ namespace Cube.Pdf.Editor
         /// <param name="factory">
         /// Function that returns the background operation for a key.
         /// </param>
+        /// <param name="disposer">
+        /// Action that releases a removed or canceled value.
+        /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        internal CacheCollection(Func<TKey, Func<TValue>> factory) =>
-            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
+        internal CacheCollection(Func<TKey, Func<TValue>> factory, Action<TKey, TValue> disposer)
+        {
+            _factory  = factory ?? throw new ArgumentNullException(nameof(factory));
+            _disposer = disposer;
+        }
 
         #endregion
 
@@ -113,6 +119,20 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public int Count => _created.Count;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Keys
+        ///
+        /// <summary>
+        /// Gets a snapshot of the keys for both cached and pending items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal TKey[] Keys
+        {
+            get { lock (_pending) return [.. _created.Keys, .. _pending.Keys]; }
+        }
 
         #endregion
 

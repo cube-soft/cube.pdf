@@ -20,9 +20,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Cube.Collections;
 using Cube.Collections.Extensions;
 using Cube.Pdf.Extensions;
@@ -63,18 +67,16 @@ namespace Cube.Pdf.Editor
             _getter = getter;
 
             _inner = [];
-            _inner.CollectionChanged += (s, e) => OnCollectionChanged(e);
+            _inner.CollectionChanged += (_, e) => OnCollectionChanged(e);
 
-            _cache = new(Prepare);
-            _cache.Created += (s, e) => e.Key.Refresh();
-            _cache.Failed  += (s, e) => Logger.Warn($"[{e.Key.Index}] {e.Value.GetType().Name}");
+            _cache = new(GetCreator, (_, e) => TrackReleasedCache(e));
+            _cache.Created += (_, e) => e.Key.Refresh();
+            _cache.Failed  += (_, e) => Logger.Warn($"[{e.Key.Index}] {e.Value.GetType().Name}");
 
             Dispatcher  = dispatcher;
             Selection   = new ImageSelection(dispatcher);
             Preferences = new ImagePreference(dispatcher);
-            Preferences.PropertyChanged += (s, e) => {
-                if (e.PropertyName == nameof(Preferences.VisibleLast)) Reschedule(null);
-            };
+            Preferences.PropertyChanged += WhenPreferencesChanged;
         }
 
         #endregion
@@ -154,13 +156,16 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Clear() => Dispatcher.Invoke(() =>
         {
+            _operation?.Abort();
+            _operation = null;
             var items = _inner.ToList();
             _inner.Clear();
             _cache.Clear();
             foreach (var item in items) item.Dispose();
+            ResetGcTimer(force: items.Count > 0);
         });
 
-        #region SetIndex
+        #region ResetIndex required
 
         /* ----------------------------------------------------------------- */
         ///
@@ -174,7 +179,7 @@ namespace Cube.Pdf.Editor
         /// <param name="items">Page collection.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Insert(int index, IEnumerable<Page> items) => SetIndex(() =>
+        public void Insert(int index, IEnumerable<Page> items) => ResetIndex(() =>
         {
             var pos = index;
             foreach (var item in items)
@@ -197,7 +202,7 @@ namespace Cube.Pdf.Editor
         /// <param name="delta">Moving distance.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Move(IEnumerable<int> indices, int delta) => SetIndex(() =>
+        public void Move(IEnumerable<int> indices, int delta) => ResetIndex(() =>
         {
             var tmp = indices.Within(Count);
             var src = delta < 0 ? tmp.OrderBy(i => i) : tmp.OrderByDescending(i => i);
@@ -228,7 +233,7 @@ namespace Cube.Pdf.Editor
         /// <param name="indices">Indices for removal items.</param>
         ///
         /* ----------------------------------------------------------------- */
-        public void Remove(IEnumerable<int> indices) => SetIndex(() =>
+        public void Remove(IEnumerable<int> indices) => ResetIndex(() =>
         {
             var src = indices.Within(Count).OrderByDescending(i => i).ToList();
             foreach (var item in src.Select(i => _inner[i]))
@@ -242,7 +247,7 @@ namespace Cube.Pdf.Editor
 
         #endregion
 
-        #region Reschedule
+        #region Reschedule required
 
         /* ----------------------------------------------------------------- */
         ///
@@ -278,7 +283,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Zoom(int offset) => Reschedule(() =>
         {
-            _cache.Clear();
+            ClearCache();
             Preferences.ItemSizeIndex += offset;
         });
 
@@ -291,7 +296,7 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public void Redraw() => Reschedule(_cache.Clear);
+        public void Redraw() => Reschedule(() => ClearCache());
 
         #endregion
 
@@ -308,7 +313,7 @@ namespace Cube.Pdf.Editor
         internal void Suspend() => Dispatcher.Invoke(() =>
         {
             _suspended = true;
-            _cache.Clear();
+            ClearCache();
         });
 
         /* ----------------------------------------------------------------- */
@@ -379,7 +384,12 @@ namespace Cube.Pdf.Editor
         /// </param>
         ///
         /* ----------------------------------------------------------------- */
-        protected override void Dispose(bool disposing) { if (disposing) Clear(); }
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing) return;
+            Clear();
+            Dispatcher.Invoke(StopGcTimer);
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -394,7 +404,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            Reschedule(null);
+            if (!_editing && Count > 0) ResetVisibleRange();
             base.OnCollectionChanged(e);
         }
 
@@ -402,22 +412,264 @@ namespace Cube.Pdf.Editor
 
         #region Implementations
 
+        #region Event handlers
+
         /* ----------------------------------------------------------------- */
         ///
-        /// SetIndex
+        /// WhenPreferencesChanged
         ///
         /// <summary>
-        /// Updates the index in the specified items.
+        /// Updates the thumbnails when the viewport or display mode changes.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private void SetIndex(Func<KeyValuePair<int, int>> before) => Dispatcher.Invoke(() =>
+        private void WhenPreferencesChanged(object s, PropertyChangedEventArgs e)
         {
-            var pos = before();
-            var min = Math.Max(pos.Key, 0);
-            var max = Math.Min(pos.Value, Count);
-            for (var i = min; i < max; ++i) _inner[i].Index = i;
+            switch (e.PropertyName)
+            {
+                case nameof(Preferences.VisibleFirst):
+                case nameof(Preferences.VisibleLast):
+                    ResetVisibleRange();
+                    break;
+                case nameof(Preferences.FrameOnly):
+                    Reschedule(() => ClearCache(all: true));
+                    break;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// WhenIdle
+        ///
+        /// <summary>
+        /// Requests garbage collection after thumbnail activity has settled.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void WhenIdle(object s, EventArgs e)
+        {
+            StopGcTimer();
+            Interlocked.Exchange(ref _released, 0);
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, false);
+        }
+
+        #endregion
+
+        #region Getter
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetImageSource
+        ///
+        /// <summary>
+        /// Gets the ImageSource object from the specified image.
+        /// </summary>
+        ///
+        /// <param name="src">Image item.</param>
+        ///
+        /// <returns>ImageSource object.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal ImageSource GetImageSource(ImageItem src) =>
+            Preferences.FrameOnly ? null :
+            _cache.TryGetValue(src, out var dest) ? dest : Preferences.Dummy;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetCreator
+        ///
+        /// <summary>
+        /// Captures the page, renderer, and size before background rendering starts.
+        /// </summary>
+        ///
+        /// <param name="item">Item to render.</param>
+        ///
+        /// <returns>Operation that creates the thumbnail.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private Func<ImageSource> GetCreator(ImageItem item)
+        {
+            var page = item.RawObject;
+            var renderer = _getter(page.File.FullName);
+            var size = new SizeF(item.Width, item.Height);
+            return () => renderer?.Render(page, size)?.ToBitmapImage(true);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// GetUiDispatcher
+        ///
+        /// <summary>
+        /// Gets the current WPF dispatcher if its synchronization context
+        /// is active.
+        /// </summary>
+        ///
+        /// <remarks>
+        /// A worker thread can own a dispatcher without running a message loop.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private static System.Windows.Threading.Dispatcher GetUiDispatcher() =>
+            SynchronizationContext.Current is DispatcherSynchronizationContext ?
+            System.Windows.Threading.Dispatcher.FromThread(Thread.CurrentThread) : null;
+
+        #endregion
+
+        #region Cache operations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TrimCache
+        ///
+        /// <summary>
+        /// Drops cached images and pending requests outside the retained range.
+        /// </summary>
+        ///
+        /// <param name="first">Inclusive start of the retained range.</param>
+        /// <param name="last">Exclusive end of the retained range.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void TrimCache(int first, int last)
+        {
+            foreach (var item in _cache.Keys)
+            {
+                if (item.Index >= first && item.Index < last) continue;
+                if (_cache.Remove(item)) item.Refresh();
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ClearCache
+        ///
+        /// <summary>
+        /// Invalidates cached images and refreshes the affected items.
+        /// </summary>
+        ///
+        /// <param name="all">Refresh even uncached items when their display mode changes.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ClearCache(bool all = false)
+        {
+            IEnumerable<ImageItem> items = all ? _inner : _cache.Keys;
+            _cache.Clear();
+            foreach (var item in items) item.Refresh();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TrackReleasedCache
+        ///
+        /// <summary>
+        /// Accumulates the estimated pixel bytes of discarded thumbnails.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void TrackReleasedCache(ImageSource image)
+        {
+            if (image is BitmapSource bmp)
+            {
+                var bytes = (long)bmp.PixelWidth * bmp.PixelHeight * 4;
+                Interlocked.Add(ref _released, bytes);
+            }
+        }
+
+        #endregion
+
+        #region GC Timer operations
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetGcTimer
+        ///
+        /// <summary>
+        /// Postpones collection until thumbnail activity has settled.
+        /// </summary>
+        ///
+        /// <param name="force">Schedule collection even below the byte threshold.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResetGcTimer(bool force = false)
+        {
+            if (Disposed) return;
+            if (!force && _gctimer == null && Interlocked.Read(ref _released) < GcThreshold) return;
+            var ui = GetUiDispatcher();
+            if (ui == null || ui.HasShutdownStarted) return;
+
+            if (_gctimer == null)
+            {
+                _gctimer = new(DispatcherPriority.ApplicationIdle, ui) { Interval = TimeSpan.FromMilliseconds(500) };
+                _gctimer.Tick += WhenIdle;
+            }
+            _gctimer.Stop();
+            _gctimer.Start();
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// StopGcTimer
+        ///
+        /// <summary>
+        /// Cancels the pending collection and detaches the timer handler.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void StopGcTimer()
+        {
+            if (_gctimer == null) return;
+            _gctimer.Stop();
+            _gctimer.Tick -= WhenIdle;
+            _gctimer = null;
+        }
+
+        #endregion
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetIndex
+        ///
+        /// <summary>
+        /// Resets the index in the specified items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResetIndex(Func<KeyValuePair<int, int>> before) => Dispatcher.Invoke(() =>
+        {
+            _editing = true;
+            try
+            {
+                var pos = before();
+                var min = Math.Max(pos.Key, 0);
+                var max = Math.Min(pos.Value, Count);
+                for (var i = min; i < max; ++i) _inner[i].Index = i;
+            }
+            finally
+            {
+                _editing = false;
+                Reschedule();
+            }
         });
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// ResetVisibleRange
+        ///
+        /// <summary>
+        /// Coalesces changes to both ends of the viewport into one update.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void ResetVisibleRange()
+        {
+            var ui = GetUiDispatcher();
+            if (ui == null) { Reschedule(); return; }
+            if (_operation != null) return;
+
+            _operation = ui.BeginInvoke(DispatcherPriority.Background, new Action(() => {
+                _operation = null;
+                Reschedule();
+            }));
+        }
 
         /* ----------------------------------------------------------------- */
         ///
@@ -430,8 +682,9 @@ namespace Cube.Pdf.Editor
         /// <param name="before">Action to run before scheduling.</param>
         ///
         /* ----------------------------------------------------------------- */
-        private void Reschedule(Action before) => Dispatcher.Invoke(() =>
+        private void Reschedule(Action before = null) => Dispatcher.Invoke(() =>
         {
+            if (Disposed) return;
             before?.Invoke();
             Schedule();
         });
@@ -447,56 +700,30 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         private void Schedule()
         {
-            if (Disposed || _suspended) return;
-
-            var min = Math.Max(Preferences.VisibleFirst, 0);
-            var max = Math.Min(Preferences.VisibleLast, Count);
-
-            for (var i = min; i < max; ++i) _ = _cache.GetOrCreate(_inner[i]);
+            if (Disposed) return;
+            if (!_suspended && !Preferences.FrameOnly)
+            {
+                var first = Math.Max(Preferences.VisibleFirst, 0);
+                var last  = Math.Min(Preferences.VisibleLast, Count);
+                var span  = Math.Max(last - first, 0);
+                TrimCache(first - span, last + span);
+                for (var i = first; i < last; ++i) _ = _cache.GetOrCreate(_inner[i]);
+            }
+            ResetGcTimer();
         }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// Prepare
-        ///
-        /// <summary>
-        /// Captures the page, renderer, and size before background rendering starts.
-        /// </summary>
-        ///
-        /// <param name="item">Item to render.</param>
-        ///
-        /// <returns>Operation that creates the thumbnail.</returns>
-        ///
-        /* ----------------------------------------------------------------- */
-        private Func<ImageSource> Prepare(ImageItem item)
-        {
-            var page = item.RawObject;
-            var renderer = _getter(page.File.FullName);
-            var size = new SizeF(item.Width, item.Height);
-            return () => renderer?.Render(page, size)?.ToBitmapImage(true);
-        }
-
-        /* ----------------------------------------------------------------- */
-        ///
-        /// GetImageSource
-        ///
-        /// <summary>
-        /// Gets the ImageSource object.
-        /// </summary>
-        ///
-        /* ----------------------------------------------------------------- */
-        internal ImageSource GetImageSource(ImageItem src) =>
-            Preferences.FrameOnly ? null :
-            _cache.TryGetValue(src, out var dest) ? dest :
-            Preferences.Dummy;
 
         #endregion
 
         #region Fields
+        private const long GcThreshold = 16L * 1024 * 1024;
         private readonly Func<string, IDocumentRenderer> _getter;
         private readonly ObservableCollection<ImageItem> _inner;
         private readonly CacheCollection<ImageItem, ImageSource> _cache;
+        private DispatcherOperation _operation;
+        private DispatcherTimer _gctimer;
         private bool _suspended;
+        private bool _editing;
+        private long _released;
         #endregion
     }
 }
