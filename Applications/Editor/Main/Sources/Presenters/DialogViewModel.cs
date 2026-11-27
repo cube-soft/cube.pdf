@@ -31,7 +31,7 @@ namespace Cube.Pdf.Editor
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public abstract class DialogViewModel<TModel> : PresentableBase<TModel>
+    public abstract class DialogViewModel<TModel> : ElementViewModel<TModel>
     {
         #region Constructors
 
@@ -47,12 +47,13 @@ namespace Cube.Pdf.Editor
         /// <param name="model">Model object.</param>
         /// <param name="aggregator">Message aggregator.</param>
         /// <param name="context">Synchronization context.</param>
+        /// <param name="owner">Whether to dispose the model with the dialog.</param>
         ///
         /* ----------------------------------------------------------------- */
         protected DialogViewModel(TModel model,
             Aggregator aggregator,
-            SynchronizationContext context
-        ) : base(model, aggregator, context)
+            SynchronizationContext context, bool owner = true
+        ) : base(model, aggregator, context, owner)
         {
             Assets.Add(Locale.Subscribe(e => Refresh(nameof(Title))));
         }

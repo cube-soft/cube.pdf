@@ -24,6 +24,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 using Cube.Backports;
 using Cube.ByteFormat;
 using Cube.FileSystem;
@@ -31,6 +32,7 @@ using Cube.Generics.Extensions;
 using Cube.Icons;
 using Cube.Reflection.Extensions;
 using Cube.Xui.Converters;
+using Cube.Xui.Drawing.Extensions;
 
 namespace Cube.Pdf.Editor
 {
@@ -98,8 +100,7 @@ namespace Cube.Pdf.Editor
     /// IconConverter
     ///
     /// <summary>
-    /// Provides functionality to convert from the specified value to the
-    /// icon image.
+    /// Gets the PDF file type icon for a recent file entry.
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
@@ -107,14 +108,15 @@ namespace Cube.Pdf.Editor
     {
         /* ----------------------------------------------------------------- */
         ///
-        /// SelectionToText
+        /// IconConverter
         ///
         /// <summary>
-        /// Initializes a new instance of the SelectionToText class.
+        /// Initializes a new instance of the IconConverter class.
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        public IconConverter() : base(e => (e as Entity)?.GetIconSource(IconSize.Small)) { }
+        public IconConverter() : base(e => e is Entity ? _obj : null) { }
+        private static readonly ImageSource _obj = FileIcon.GetImage(".pdf", IconSize.Small).ToBitmapImage(true);
     }
 
     #endregion

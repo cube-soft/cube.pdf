@@ -46,6 +46,27 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Tests that closing the insert dialog releases both its own
+        /// elements and the elements of its position selector.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Dispose()
+        {
+            using var vm = new InsertViewModel(null, 0, 1, new(), new());
+            var add = (DisposableBase)vm.Add;
+            var index = (DisposableBase)vm.Position.SelectedIndex;
+            vm.Dispose();
+            Assert.That(add.Disposed, Is.True);
+            Assert.That(index.Disposed, Is.True);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Insert
         ///
         /// <summary>

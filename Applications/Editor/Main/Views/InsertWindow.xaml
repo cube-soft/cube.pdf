@@ -54,6 +54,7 @@
         <xb:DialogBehavior />
         <xb:OpenFileBehavior />
         <xb:CloseBehavior />
+        <xb:ClosedToDispose />
         <my:MouseOpenBehavior Command="{Binding DragAdd}" />
     </i:Interaction.Behaviors>
 

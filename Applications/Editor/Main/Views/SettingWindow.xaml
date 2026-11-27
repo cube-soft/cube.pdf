@@ -55,6 +55,7 @@
         <xb:OpenDirectoryBehavior />
         <xb:ProcessBehavior />
         <xb:CloseBehavior />
+        <xb:ClosedToDispose />
     </i:Interaction.Behaviors>
 
     <!-- **********************************************************************
