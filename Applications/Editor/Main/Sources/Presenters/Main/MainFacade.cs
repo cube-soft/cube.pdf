@@ -147,7 +147,7 @@ public sealed class MainFacade : DisposableBase
     /// </summary>
     ///
     /* --------------------------------------------------------------------- */
-    public void Close() => Invoke(() => { Cache.Clear(); Value.Clear(); });
+    public void Close() => Invoke(() => { Value.Clear(); Cache.Clear(); });
 
     /* --------------------------------------------------------------------- */
     ///
@@ -384,8 +384,8 @@ public sealed class MainFacade : DisposableBase
     protected override void Dispose(bool disposing)
     {
         if (!disposing) return;
-        Cache.Dispose();
         Value.Dispose();
+        Cache.Dispose();
     }
 
     /* --------------------------------------------------------------------- */

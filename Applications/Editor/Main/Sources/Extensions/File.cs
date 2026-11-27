@@ -17,6 +17,7 @@
 //
 /* ------------------------------------------------------------------------- */
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -171,9 +172,16 @@ namespace Cube.Pdf.Editor
         ///
         /// <returns>ImageSource of the requested icon.</returns>
         ///
+        /// <remarks>
+        /// Cache icons by extension and size because each creation leaves
+        /// GDI objects that are not released until the process exits.
+        /// </remarks>
+        ///
         /* ----------------------------------------------------------------- */
-        public static ImageSource GetIconSource(this Entity src, IconSize size) =>
-            FileIcon.GetImage(src?.FullName, size).ToBitmapImage(true);
+        public static ImageSource GetIconSource(this Entity src, IconSize size) => _icons.GetOrAdd(
+            $"{src?.Extension}:{size}",
+            _ => FileIcon.GetImage(src?.FullName, size).ToBitmapImage(true)
+        );
 
         #endregion
 
@@ -188,11 +196,15 @@ namespace Cube.Pdf.Editor
         /// </summary>
         ///
         /* ----------------------------------------------------------------- */
-        private static IEnumerable<string> ImageFormats { get; } = new[]
-        {
+        private static IEnumerable<string> ImageFormats { get; } =
+        [
             ".png", ".jpg", ".jpeg", ".bmp", ".tiff", ".tif",
-        };
+        ];
 
+        #endregion
+
+        #region Fields
+        private static readonly ConcurrentDictionary<string, ImageSource> _icons = new(StringComparer.OrdinalIgnoreCase);
         #endregion
     }
 }

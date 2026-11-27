@@ -39,6 +39,27 @@ namespace Cube.Pdf.Editor.Tests.Presenters
 
         /* ----------------------------------------------------------------- */
         ///
+        /// Dispose
+        ///
+        /// <summary>
+        /// Tests that closing the settings dialog releases its elements
+        /// while keeping the application's settings available.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void Dispose()
+        {
+            using var folder = new SettingFolder(DataContract.Format.Json, Get("dispose.json"));
+            using var vm = new SettingViewModel(folder, new());
+            var element = (DisposableBase)vm.AutoSort;
+            vm.Dispose();
+            Assert.That(element.Disposed, Is.True);
+            Assert.That(folder.Disposed, Is.False);
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
         /// Test
         ///
         /// <summary>
@@ -116,7 +137,7 @@ namespace Cube.Pdf.Editor.Tests.Presenters
         {
             Assert.That(src.Title,                 Is.Not.Null.And.Not.Empty);
             Assert.That(src.Version.Text,          Is.Not.Null.And.Not.Empty);
-            Assert.That(src.Version.Value,         Does.StartWith("CubePDF Utility 4.6.0 "));
+            Assert.That(src.Version.Value,         Does.StartWith("CubePDF Utility 4.7.0 "));
             Assert.That(src.Windows.Text,          Does.StartWith("Microsoft Windows"));
             Assert.That(src.Framework.Text,        Does.StartWith("Microsoft .NET Framework"));
             Assert.That(src.Link.Text,             Is.EqualTo("Copyright © 2013 CubeSoft, Inc."));

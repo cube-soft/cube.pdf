@@ -284,11 +284,6 @@ namespace Cube.Pdf.Editor
 
             History.Clear();
             Images.Clear();
-
-            // for cleared images.
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
         }
 
         /* ----------------------------------------------------------------- */

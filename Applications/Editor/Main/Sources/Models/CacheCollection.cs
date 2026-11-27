@@ -67,8 +67,8 @@ namespace Cube.Pdf.Editor
         ///
         /// <param name="creator">Action that creates an item.</param>
         /// <param name="disposer">
-        /// Action that executes when either the Remove or Clear method
-        /// is called.
+        /// Action that releases a removed value or a value created after
+        /// its request was canceled.
         /// </param>
         ///
         /// <remarks>
@@ -78,8 +78,31 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public CacheCollection(Func<TKey, TValue> creator, Action<TKey, TValue> disposer)
         {
+            if (creator == null) throw new ArgumentNullException(nameof(creator));
+            _factory  = key => () => creator(key);
             _disposer = disposer;
-            _creator  = creator ?? throw new ArgumentNullException(nameof(creator));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// CacheCollection
+        ///
+        /// <summary>
+        /// Initializes a cache that prepares work on the requesting thread.
+        /// </summary>
+        ///
+        /// <param name="factory">
+        /// Function that returns the background operation for a key.
+        /// </param>
+        /// <param name="disposer">
+        /// Action that releases a removed or canceled value.
+        /// </param>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal CacheCollection(Func<TKey, Func<TValue>> factory, Action<TKey, TValue> disposer)
+        {
+            _factory  = factory ?? throw new ArgumentNullException(nameof(factory));
+            _disposer = disposer;
         }
 
         #endregion
@@ -96,6 +119,20 @@ namespace Cube.Pdf.Editor
         ///
         /* ----------------------------------------------------------------- */
         public int Count => _created.Count;
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Keys
+        ///
+        /// <summary>
+        /// Gets a snapshot of the keys for both cached and pending items.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        internal TKey[] Keys
+        {
+            get { lock (_pending) return [.. _created.Keys, .. _pending.Keys]; }
+        }
 
         #endregion
 
@@ -181,8 +218,22 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public TValue GetOrCreate(TKey src)
         {
-            if (_created.TryGetValue(src, out var dest)) return dest;
-            Task.Run(() => Create(src)).Forget();
+            object ticket;
+            lock (_pending)
+            {
+                if (_created.TryGetValue(src, out var dest)) return dest;
+                if (Disposed || _pending.ContainsKey(src)) return default;
+
+                ticket = new object();
+                _pending.Add(src, ticket);
+            }
+
+            try
+            {
+                var creator = _factory(src);
+                Task.Run(() => Create(src, ticket, creator)).Forget();
+            }
+            catch (Exception err) { Fail(src, ticket, err); }
             return default;
         }
 
@@ -223,7 +274,7 @@ namespace Cube.Pdf.Editor
         /// <param name="src">Key value.</param>
         ///
         /// <returns>
-        /// default(TValue) if the item is under creating.
+        /// true if a value has been cached for the key.
         /// </returns>
         ///
         /* ----------------------------------------------------------------- */
@@ -246,10 +297,14 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public bool Remove(TKey src)
         {
-            _ = _creating.TryRemove(src, out _);
-            var dest = _created.TryRemove(src, out var obj);
-            if (dest) _disposer?.Invoke(src, obj);
-            return dest;
+            TValue obj;
+            lock (_pending)
+            {
+                _pending.Remove(src);
+                if (!_created.TryRemove(src, out obj)) return false;
+            }
+            _disposer?.Invoke(src, obj);
+            return true;
         }
 
         /* ----------------------------------------------------------------- */
@@ -263,12 +318,15 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         public void Clear()
         {
-            _creating.Clear();
-            if (_disposer != null)
+            KeyValuePair<TKey, TValue>[] items;
+            lock (_pending)
             {
-                foreach (var kv in _created) _disposer(kv.Key, kv.Value);
+                _pending.Clear();
+                items = _disposer != null ? _created.ToArray() : null;
+                _created.Clear();
             }
-            _created.Clear();
+            if (items == null) return;
+            foreach (var kv in items) _disposer(kv.Key, kv.Value);
         }
 
         /* ----------------------------------------------------------------- */
@@ -309,13 +367,7 @@ namespace Cube.Pdf.Editor
         /* ----------------------------------------------------------------- */
         protected override void Dispose(bool disposing)
         {
-            if (!disposing) return;
-            _creating.Clear();
-            if (_disposer != null)
-            {
-                foreach (var kv in _created) _disposer(kv.Key, kv.Value);
-            }
-            _created.Clear();
+            if (disposing) Clear();
         }
 
         /* ----------------------------------------------------------------- */
@@ -323,34 +375,116 @@ namespace Cube.Pdf.Editor
         /// Create
         ///
         /// <summary>
-        /// Creates the item associated with the specified key.
+        /// Runs a pending request and notifies listeners when its value is cached.
         /// </summary>
         ///
+        /// <param name="src">Cache key.</param>
+        /// <param name="ticket">Identity of the request.</param>
+        /// <param name="creator">Operation that creates the value.</param>
+        ///
         /* ----------------------------------------------------------------- */
-        private void Create(TKey src)
+        private void Create(TKey src, object ticket, Func<TValue> creator)
         {
-            if (_created.ContainsKey(src) || !_creating.TryAdd(src, 0)) return;
+            TValue dest;
+            try
+            {
+                lock (_pending)
+                {
+                    if (!IsPending(src, ticket)) return;
+                }
+                dest = creator();
+            }
+            catch (Exception err)
+            {
+                Fail(src, ticket, err);
+                return;
+            }
 
             try
             {
-                var dest = _creator(src);
-                if (_creating.ContainsKey(src) && _created.TryAdd(src, dest))
-                {
-                    OnCreated(KeyValueEventArgs.Create(src, dest));
-                }
+                if (TryStore(src, ticket, dest)) OnCreated(KeyValueEventArgs.Create(src, dest));
                 else _disposer?.Invoke(src, dest);
             }
             catch (Exception err) { OnFailed(KeyValueEventArgs.Create(src, err)); }
-            finally { _= _creating.TryRemove(src, out _); }
         }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// TryStore
+        ///
+        /// <summary>
+        /// Stores the result if the request still owns the key.
+        /// </summary>
+        ///
+        /// <param name="src">Cache key.</param>
+        /// <param name="ticket">Identity of the request.</param>
+        /// <param name="value">Value created by the request.</param>
+        ///
+        /// <returns>true if the value was stored.</returns>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool TryStore(TKey src, object ticket, TValue value)
+        {
+            lock (_pending)
+            {
+                if (!IsPending(src, ticket)) return false;
+                _pending.Remove(src);
+                _created[src] = value;
+                return true;
+            }
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// Fail
+        ///
+        /// <summary>
+        /// Removes a failed request and reports its error if it is still pending.
+        /// </summary>
+        ///
+        /// <param name="src">Cache key.</param>
+        /// <param name="ticket">Identity of the request.</param>
+        /// <param name="error">Error raised while preparing or creating the value.</param>
+        ///
+        /* ----------------------------------------------------------------- */
+        private void Fail(TKey src, object ticket, Exception error)
+        {
+            lock (_pending)
+            {
+                if (!IsPending(src, ticket)) return;
+                _pending.Remove(src);
+            }
+            OnFailed(KeyValueEventArgs.Create(src, error));
+        }
+
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IsPending
+        ///
+        /// <summary>
+        /// Determines whether the key still belongs to the specified request.
+        /// </summary>
+        ///
+        /// <param name="src">Cache key.</param>
+        /// <param name="ticket">Identity of the request.</param>
+        ///
+        /// <returns>true if the request is still pending.</returns>
+        ///
+        /// <remarks>
+        /// The caller must hold the lock on the pending requests.
+        /// </remarks>
+        ///
+        /* ----------------------------------------------------------------- */
+        private bool IsPending(TKey src, object ticket) =>
+            _pending.TryGetValue(src, out var current) && current == ticket;
 
         #endregion
 
         #region Fields
-        private readonly Func<TKey, TValue> _creator;
+        private readonly Func<TKey, Func<TValue>> _factory;
         private readonly Action<TKey, TValue> _disposer;
         private readonly ConcurrentDictionary<TKey, TValue> _created = new();
-        private readonly ConcurrentDictionary<TKey, byte> _creating = new();
+        private readonly Dictionary<TKey, object> _pending = [];
         #endregion
     }
 }

@@ -130,6 +130,25 @@ namespace Cube.Pdf.Editor.Tests.Interactions
             src.HasValue() ? new Entity(GetSource(src)) : null
         ) != null;
 
+        /* ----------------------------------------------------------------- */
+        ///
+        /// IconConverter_RecentLink
+        ///
+        /// <summary>
+        /// Confirms that recent shortcuts share the PDF icon.
+        /// </summary>
+        ///
+        /* ----------------------------------------------------------------- */
+        [Test]
+        public void IconConverter_RecentLink()
+        {
+            var link = Convert<ImageSource>(new IconConverter(), new Entity(GetSource("cube.pdf.lnk")));
+            var pdf  = Convert<ImageSource>(new IconConverter(), new Entity(GetSource("Sample.pdf")));
+
+            Assert.That(link, Is.Not.Null);
+            Assert.That(link, Is.SameAs(pdf));
+        }
+
         #endregion
 
         #region ByteConverter
